@@ -1,16 +1,15 @@
 import { db } from "./db";
-import { Recipe, WeeklyMenu } from "../domain/types";
 
 export const exportData = async () => {
   try {
     const recipes = await db.recipes.toArray();
-    const menus = await db.menus.toArray();
+    const planning = await db.planning.toArray();
 
     const data = {
       timestamp: new Date().toISOString(),
       version: 1,
       recipes,
-      menus,
+      planning,
     };
 
     // Création du Blob pour le téléchargement
@@ -42,14 +41,14 @@ export const importData = async (file: File) => {
     }
 
     // Transaction atomique pour éviter les données corrompues
-    await db.transaction("rw", db.recipes, db.menus, async () => {
+    await db.transaction("rw", db.recipes, db.planning, async () => {
       // Option A : On efface tout avant d'importer (Reset total)
       // await db.recipes.clear();
-      // await db.menus.clear();
+      // await db.planning.clear();
 
       // Option B (choisie) : On fusionne (BulkPut écrase si l'ID existe déjà)
       await db.recipes.bulkPut(data.recipes);
-      await db.menus.bulkPut(data.menus);
+      await db.planning.bulkPut(data.planning);
     });
 
     alert("Import réussi ! Rechargez la page.");

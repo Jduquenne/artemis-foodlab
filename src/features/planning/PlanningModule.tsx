@@ -18,6 +18,11 @@ export const PlanningModule = () => {
     const [activeSlot, setActiveSlot] = useState<{ day: string, slot: string } | null>(null);
     const planningData = useLiveQuery(() => db.planning.toArray()) || [];
 
+    const handleDeleteMeal = async (day: string, slot: string) => {
+        // On supprime l'entrée par son ID (ex: "Lun-lunch")
+        await db.planning.delete(`${day}-${slot}`);
+    };
+
     // const handleSelectRecipe = async (recipe: SearchRecipeResult) => {
     //     if (!activeSlot) return;
 
@@ -72,6 +77,7 @@ export const PlanningModule = () => {
                                         icon={mealType.icon}
                                         recipeId={savedMeal?.recipeId}
                                         onClick={() => setActiveSlot({ day, slot: mealType.id })}
+                                        onDelete={() => handleDeleteMeal(day, mealType.id)} // AJOUT ICI
                                     />
                                 </div>
                             );

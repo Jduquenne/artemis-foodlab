@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+/* src/index.css */
+
+:root {
+  --app-orange: #f97316;
+  --app-bg: #f8fafc;
+}
+
+body {
+  background-color: var(--app-bg);
+  -webkit-tap-highlight-color: transparent; /* Supprime le flash bleu au clic sur mobile */
+  user-select: none; /* Empêche la sélection de texte accidentelle en cuisinant */
+}
+
+/* Scrollbar personnalisée et discrète */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Animation d'entrée pour les pages */
+main {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer utilities {
+  /* Définit la profondeur de la scène 3D */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  /* Indique que les enfants doivent être dans l'espace 3D */
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  /* Cache la face arrière quand on ne la regarde pas */
+  .backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /* La rotation à 180 degrés sur l'axe Y */
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+}

@@ -6,11 +6,12 @@ interface MealSlotProps {
     label: string;
     icon: string;
     recipeId?: string;
-    onClick: () => void;       // Action pour ajouter/modifier
-    onDelete?: () => void;     // Action pour supprimer
+    onClick: () => void;       // Action principale (Voir ou Ajouter)
+    onModify?: () => void;     // Action spécifique pour changer de plat
+    onDelete?: () => void;
 }
 
-export const MealSlot = ({ label, icon, recipeId, onClick, onDelete }: MealSlotProps) => {
+export const MealSlot = ({ label, icon, recipeId, onClick, onModify, onDelete }: MealSlotProps) => {
     const recipe = useLiveQuery(
         async () => {
             if (!recipeId) return undefined; // On remplace null par undefined
@@ -24,10 +25,7 @@ export const MealSlot = ({ label, icon, recipeId, onClick, onDelete }: MealSlotP
             <button
                 onClick={onClick}
                 className={`relative w-full h-full rounded-xl border-2 transition-all flex flex-col overflow-hidden bg-white
-          ${recipe
-                        ? 'border-slate-100 shadow-sm'
-                        : 'border-dashed border-slate-200 hover:border-orange-300 hover:bg-orange-50/30'
-                    }`}
+                ${recipe ? 'border-slate-100 shadow-sm hover:border-orange-200' : 'border-dashed border-slate-200 hover:bg-orange-50/30'}`}
             >
                 {recipe ? (
                     <div className="flex flex-col h-full w-full">
@@ -52,11 +50,13 @@ export const MealSlot = ({ label, icon, recipeId, onClick, onDelete }: MealSlotP
             {/* BOUTONS D'ACTION (Apparaissent si une recette existe) */}
             {recipe && (
                 <>
-                    {/* Bas gauche : Modifier (ouvre le picker) */}
+                    {/* BOUTON MODIFIER : C'est lui qui ouvrira désormais le Picker */}
                     <button
-                        onClick={(e) => { e.stopPropagation(); onClick(); }}
-                        className="absolute bottom-7 left-1 p-1.5 bg-white/90 text-blue-600 rounded-lg shadow-md border border-slate-100 hover:bg-blue-50 transition-colors z-20"
-                        title="Modifier le plat"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onModify?.(); // On appelle l'action de modification
+                        }}
+                        className="absolute bottom-7 left-1 p-1.5 bg-white/90 text-blue-600 rounded-lg shadow-md border border-slate-100 hover:bg-blue-50 z-20"
                     >
                         <RefreshCw size={14} />
                     </button>
@@ -64,8 +64,7 @@ export const MealSlot = ({ label, icon, recipeId, onClick, onDelete }: MealSlotP
                     {/* Bas droite : Supprimer */}
                     <button
                         onClick={(e) => { e.stopPropagation(); onDelete?.(); }}
-                        className="absolute bottom-7 right-1 p-1.5 bg-white/90 text-red-500 rounded-lg shadow-md border border-slate-100 hover:bg-red-50 transition-colors z-20"
-                        title="Supprimer le plat"
+                        className="absolute bottom-7 right-1 p-1.5 bg-white/90 text-red-500 rounded-lg shadow-md border border-slate-100 hover:bg-red-50 z-20"
                     >
                         <Trash2 size={14} />
                     </button>

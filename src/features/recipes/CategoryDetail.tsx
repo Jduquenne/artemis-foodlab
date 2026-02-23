@@ -12,13 +12,11 @@ export const CategoryDetail = () => {
 
     const categoryInfo = CATEGORIES.find(cat => cat.id === categoryId);
 
-    // 1. On récupère TOUS les éléments de la catégorie (photos, ingredients, recipes)
     const rawItems = useLiveQuery(
         () => db.recipes.where('categoryId').equals(categoryId || '').toArray(),
         [categoryId]
     );
 
-    // 2. On regroupe par recipeId pour avoir un objet { photo: URL, ingredients: URL, ... }
     const recipes = useMemo(() => {
         if (!rawItems) return [];
         const map = new Map();
@@ -29,36 +27,43 @@ export const CategoryDetail = () => {
             const entry = map.get(item.recipeId);
             if (item.type === 'photo') entry.photoUrl = item.url;
             if (item.type === 'ingredients') entry.ingredientsUrl = item.url;
-            if (item.type === 'recipes') entry.recipeUrl = item.url; // Ajout ici
+            if (item.type === 'recipes') entry.recipeUrl = item.url;
         });
         return Array.from(map.values()).filter(r => r.photoUrl);
     }, [rawItems]);
 
     return (
-        <div className="space-y-6 pb-20">
-            <button
-                onClick={() => navigate('/recipes')}
-                className="flex items-center text-slate-500 hover:text-orange-600 transition-colors gap-2"
-            >
-                <ArrowLeft className="w-4 h-4" /> Retour aux catégories
-            </button>
+        <div className="h-full flex flex-col gap-4 overflow-hidden">
 
-            <h1 className="text-4xl font-black text-slate-900">
-                {/* Si on trouve la catégorie, on affiche le nom, sinon on affiche l'ID par défaut */}
-                {categoryInfo ? categoryInfo.name : categoryId}
-            </h1>
+            <div className="flex items-baseline gap-3 shrink-0">
+                <button
+                    onClick={() => navigate('/recipes')}
+                    className="p-2 rounded-xl text-slate-400 hover:text-orange-600 hover:bg-orange-50 transition-colors shrink-0 self-center"
+                >
+                    <ArrowLeft className="w-5 h-5" />
+                </button>
+                <h1 className="text-3xl font-black text-slate-900 truncate">
+                    {categoryInfo ? categoryInfo.name : categoryId}
+                </h1>
+                <span className="shrink-0 text-sm font-bold text-slate-400">{recipes.length} recettes</span>
+            </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-6">
-                {recipes.map(recipe => (
-                    <FlipCard
-                        key={recipe.id}
-                        name={recipe.name}
-                        frontImage={recipe.photoUrl}
-                        backImage={recipe.ingredientsUrl}
-                        recipeUrl={recipe.recipeUrl}
-                        onClick={() => navigate(`/recipes/detail/${recipe.id}`)}
-                    />
-                ))}
+            <div className="flex-1 justify-center min-h-0 overflow-y-auto">
+                <div
+                    className="grid gap-3 pb-2"
+                    style={{ gridTemplateColumns: 'repeat(auto-fill, 5cm)', gridAutoRows: '5.5cm', justifyContent: 'center' }}
+                >
+                    {recipes.map(recipe => (
+                        <FlipCard
+                            key={recipe.id}
+                            name={recipe.name}
+                            frontImage={recipe.photoUrl}
+                            backImage={recipe.ingredientsUrl}
+                            recipeUrl={recipe.recipeUrl}
+                            onClick={() => navigate(`/recipes/detail/${recipe.id}`)}
+                        />
+                    ))}
+                </div>
             </div>
         </div>
     );

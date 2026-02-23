@@ -53,7 +53,7 @@ export const FlipCard = ({ frontImage, backImage, recipeUrl, onClick }: FlipCard
 
     return (
         <div
-            className="group relative w-full aspect-square cursor-pointer perspective-1000"
+            className="group relative w-full h-full cursor-pointer perspective-1000"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             // TACTILE
@@ -75,7 +75,7 @@ export const FlipCard = ({ frontImage, backImage, recipeUrl, onClick }: FlipCard
 
                 {/* FACE AVANT */}
                 <div className="absolute inset-0 w-full h-full backface-hidden z-20 bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm">
-                    <img src={frontImage} className="w-full h-full object-cover" />
+                    <img src={frontImage} className="w-full h-full object-contain" />
                 </div>
 
                 {/* FACE ARRIÈRE (Ingrédients) */}
@@ -88,10 +88,6 @@ export const FlipCard = ({ frontImage, backImage, recipeUrl, onClick }: FlipCard
                             Pas d'ingrédients
                         </div>
                     )}
-                    {/* Petit indicateur pour dire qu'on peut revenir en arrière */}
-                    <div className="absolute bottom-1 w-full text-center text-[8px] font-black text-orange-300 uppercase">
-                        Relâcher ou tap pour retourner
-                    </div>
                 </div>
 
             </div>

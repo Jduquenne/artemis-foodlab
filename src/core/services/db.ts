@@ -1,5 +1,5 @@
 import Dexie, { Table } from "dexie";
-import { getWeekNumber } from "../../shared/utils/dateUtils";
+import { getWeekNumber } from "../../shared/utils/weekUtils";
 
 export interface RecipeEntry {
   id?: string;

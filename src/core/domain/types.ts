@@ -46,12 +46,3 @@ export interface Recipe {
   instructions?: string[];
 }
 
-export interface DailyMenu {
-  lunchRecipeId?: string;
-  dinnerRecipeId?: string;
-}
-
-export interface WeeklyMenu {
-  weekId: string;
-  days: Record<string, DailyMenu>;
-}

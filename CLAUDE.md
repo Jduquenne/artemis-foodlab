@@ -16,9 +16,19 @@ There are no tests in this project.
 
 The app deploys to GitHub Pages at `/artemis-foodlab/` (configured in `vite.config.ts`).
 
-## Architecture
+## Product context
 
-**Artemis Foodlab** is a fully offline meal planning PWA. No external APIs — all data lives in the browser (IndexedDB via Dexie + localStorage).
+**Artemis Foodlab** is a fully offline meal planning PWA. No external APIs — all data lives in the browser (IndexedDB via Dexie + localStorage). This is a production app intended for continuous use and evolution — not a POC. Architecture decisions must always favour scalability, maintainability, and clarity. If something looks like a bad practice, flag it.
+
+## UI constraints
+
+- **Fully responsive**: the app is used on PC, tablet, and smartphone. Every view must adapt correctly at all breakpoints. Use Tailwind responsive prefixes (`sm:`, `md:`, `lg:`) as the primary tool.
+- **No-scroll layout**: the content inside the main `<Layout>` children must fit the viewport without scrolling. Keep content compact. Dense views use `h-[calc(100vh-Xpx)]`, `min-h-0`, `overflow-hidden` and similar constraints to avoid overflow.
+- **Styling**: Tailwind utility classes are the default. Custom CSS (in `src/styles/` or inline `style={}`) is allowed and encouraged when Tailwind cannot express the desired result cleanly.
+- **Language**: UI is in French.
+- **No comments** in generated code.
+
+## Architecture
 
 ### Layer structure
 
@@ -31,9 +41,9 @@ src/
 
 ### Data flow
 
-1. `core/domain/types.ts` — all domain types (`Recipe`, `Ingredient`, `WeeklyMenu`, `Unit` enum, `IngredientCategory` enum, etc.)
+1. `core/domain/types.ts` — domain types (`Recipe`, `Ingredient`, `Unit` enum, `IngredientCategory` enum, etc.)
 2. `core/domain/categories.ts` — static category config (used for routing and display)
-3. `core/services/db.ts` — Dexie schema with two stores: `recipes` (RecipeEntry) and `planning` (MealSlot). Has V3→V4 migration for ISO week format.
+3. `core/services/db.ts` — Dexie schema with two stores: `recipes` (RecipeEntry) and `planning` (MealSlot).
 4. `core/services/seeder.ts` — seeds IndexedDB from JSON recipe files on first load
 5. `shared/store/useMenuStore.ts` — Zustand store tracking `currentWeek`/`currentYear`/`currentWeekId` (persisted in localStorage), plus `initWeek()` which detects week transitions
 
@@ -47,13 +57,15 @@ src/
 /shopping                       → ShoppingModule (aggregated shopping list)
 ```
 
-Root `/` redirects to `/recipes`.
+Root `/` redirects to `/recipes`. Uses `HashRouter` for GitHub Pages compatibility.
 
 ### Key implementation notes
 
-- **Week IDs**: ISO week format (e.g. `"2024-W03"`). `core/utils/dateUtils.ts` handles week ID generation; `shared/utils/dateUtils.ts` handles display formatting — these are separate files with different responsibilities.
-- **Drag & Drop**: `@dnd-kit` (core + sortable) used in `PlanningModule`. `DraggableRecipe` is the drag source; `MealSlot` is the drop target.
+- **Week utilities**: `core/utils/dateUtils.ts` — ISO week ID generation (`getWeekId`, `getDaysOfWeek`) used by the store. `shared/utils/weekUtils.ts` — week navigation helpers for the planning UI (`getWeekNumber`, `getMonday`, `getWeekRange`).
+- **Drag & Drop**: `@dnd-kit/core` used in `PlanningModule`. Each `MealSlot` is both a droppable target and a draggable source via a grip handle. Swap/move logic lives in `PlanningModule.handleDragEnd`.
 - **Shopping logic**: `core/utils/shoppingLogic.ts` aggregates ingredients across planned meals, respecting units.
 - **Asset manifest**: `generate-manifest.cjs` generates `core/domain/assets-manifest.json` listing recipe images under `public/`. Run if adding new images.
-- **Language**: UI is in French.
-- **No comment**: I don't want comment in generate code.
+
+### IndexedDB migrations (critical)
+
+Any change to the Dexie schema (adding/removing stores, indexes, or fields used in queries) **requires a new schema version**. Never modify an existing `.version(n)` block — always add a new `.version(n+1)` with an `.upgrade()` migration to preserve existing user data. The current schema is at **version 4** (`core/services/db.ts`).

@@ -4,7 +4,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../../core/services/db';
 import { MealSlot } from './components/MealSlot';
 import { RecipePicker } from './components/RecipePicker';
-import { getWeekNumber, getMonday, getWeekRange } from '../../shared/utils/dateUtils';
+import { getWeekNumber, getMonday, getWeekRange } from '../../shared/utils/weekUtils';
 import { useNavigate } from 'react-router-dom';
 import {
     DndContext,
@@ -24,6 +24,8 @@ const MEAL_SLOTS = [
     { id: 'snack', label: 'Goûter', icon: '🍎' },
     { id: 'dinner', label: 'Dîner', icon: '🌙' }
 ] as const;
+
+type SlotId = typeof MEAL_SLOTS[number]['id'];
 
 const DAYS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 
@@ -49,7 +51,7 @@ const MealDragOverlay = ({ recipeId }: { recipeId: string }) => {
 
 export const PlanningModule = () => {
     const navigate = useNavigate();
-    const [pickerSlot, setPickerSlot] = useState<{ day: string; slot: string } | null>(null);
+    const [pickerSlot, setPickerSlot] = useState<{ day: string; slot: SlotId } | null>(null);
     const [activeDragId, setActiveDragId] = useState<string | null>(null);
     const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -105,7 +107,7 @@ export const PlanningModule = () => {
         const toId = over.id as string;
         const prefix = `${year}-W${weekNumber}-`;
 
-        const parseSlot = (fullId: string) => {
+        const parseSlot = (fullId: string): { day: string; slot: SlotId } | null => {
             const rest = fullId.slice(prefix.length);
             for (const m of MEAL_SLOTS) {
                 if (rest.endsWith(`-${m.id}`)) {
@@ -134,7 +136,7 @@ export const PlanningModule = () => {
             await db.planning.put({
                 id: toId,
                 day: to.day,
-                slot: to.slot as any,
+                slot: to.slot,
                 recipeId: fromMeal.recipeId,
                 year,
                 week: weekNumber,
@@ -243,7 +245,7 @@ export const PlanningModule = () => {
                             await db.planning.put({
                                 id: `${year}-W${weekNumber}-${pickerSlot.day}-${pickerSlot.slot}`,
                                 day: pickerSlot.day,
-                                slot: pickerSlot.slot as any,
+                                slot: pickerSlot.slot,
                                 recipeId: recipe.recipeId,
                                 year,
                                 week: weekNumber,

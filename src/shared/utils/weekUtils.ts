@@ -24,6 +24,6 @@ export const formatDateShort = (date: Date) => {
 
 export const getWeekRange = (monday: Date) => {
   const sunday = new Date(monday);
-  sunday.setDate(monday.getDate() + 6); // Le dimanche est 6 jours après le lundi
+  sunday.setDate(monday.getDate() + 6);
   return `${formatDateShort(monday)} au ${formatDateShort(sunday)}`;
 };

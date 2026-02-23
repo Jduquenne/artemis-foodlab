@@ -8,17 +8,27 @@ interface MealSlotProps {
     icon: string;
     slotId: string;
     recipeIds: string[];
-    onClick: () => void;
+    onNavigate: () => void;
+    onOpenPicker: () => void;
     onModify?: () => void;
     onDelete?: () => void;
 }
 
-export const MealSlot = ({ label, icon, slotId, recipeIds, onClick, onModify, onDelete }: MealSlotProps) => {
+export const MealSlot = ({ label, icon, slotId, recipeIds, onNavigate, onOpenPicker, onModify, onDelete }: MealSlotProps) => {
     const recipe = useLiveQuery(
         async () => {
             const firstId = recipeIds[0];
             if (!firstId) return undefined;
             return await db.recipes.where({ recipeId: firstId, type: 'photo' }).first();
+        },
+        [recipeIds[0]]
+    );
+
+    const recipeDetail = useLiveQuery(
+        async () => {
+            const firstId = recipeIds[0];
+            if (!firstId) return undefined;
+            return await db.recipes.where({ recipeId: firstId, type: 'recipes' }).first();
         },
         [recipeIds[0]]
     );
@@ -34,6 +44,14 @@ export const MealSlot = ({ label, icon, slotId, recipeIds, onClick, onModify, on
         setDragRef(el);
     };
 
+    const handleMainClick = () => {
+        if (recipe) {
+            if (recipeDetail) onNavigate();
+        } else {
+            onOpenPicker();
+        }
+    };
+
     const borderClass = isDragging
         ? 'opacity-30 border-slate-200'
         : isOver
@@ -45,8 +63,8 @@ export const MealSlot = ({ label, icon, slotId, recipeIds, onClick, onModify, on
     return (
         <div ref={setRef} className="relative w-full h-full group">
             <button
-                onClick={onClick}
-                className={`relative w-full h-full rounded-xl border-2 transition-all overflow-hidden bg-white dark:bg-slate-100 ${borderClass}`}
+                onClick={handleMainClick}
+                className={`relative w-full h-full rounded-xl border-2 transition-all overflow-hidden bg-white dark:bg-slate-100 ${borderClass} ${recipe && !recipeDetail ? 'cursor-default' : ''}`}
             >
                 {recipe ? (
                     <img src={recipe.url} className="w-full h-full object-contain" alt={recipe.name} />

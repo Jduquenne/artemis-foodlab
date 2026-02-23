@@ -7,9 +7,10 @@ interface RecipePickerProps {
     onSelect: (recipe: SearchRecipeResult) => void;
     onClose: () => void;
     slotName: string;
+    existingRecipeIds?: string[];
 }
 
-export const RecipePicker = ({ onSelect, onClose, slotName }: RecipePickerProps) => {
+export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = [] }: RecipePickerProps) => {
     const [query, setQuery] = useState('');
     const [pendingSelection, setPendingSelection] = useState<SearchRecipeResult | null>(null);
     const results = useSearch(query) as SearchRecipeResult[];
@@ -64,22 +65,36 @@ export const RecipePicker = ({ onSelect, onClose, slotName }: RecipePickerProps)
                 {/* Results List */}
                 <div className="flex-1 overflow-y-auto p-4 space-y-3">
                     {results.length > 0 ? (
-                        results.map((recipe) => (
-                            <button
-                                key={recipe.recipeId}
-                                onClick={() => onSelect(recipe)}
-                                className="w-full flex items-center gap-4 p-3 rounded-2xl border border-slate-200 hover:border-orange-200 hover:bg-orange-50 dark:hover:bg-orange-950/20 transition-all group text-left"
-                            >
-                                <img src={recipe.photoUrl} className="w-16 h-16 rounded-xl object-cover shadow-sm" alt="" />
-                                <div className="flex-1">
-                                    <p className="font-black text-slate-800">{recipe.name}</p>
-                                    <p className="text-xs text-slate-400 uppercase font-bold">{recipe.recipeId}</p>
-                                </div>
-                                <div className="opacity-0 group-hover:opacity-100 bg-orange-500 text-white p-2 rounded-full transition-opacity">
-                                    <Check size={20} />
-                                </div>
-                            </button>
-                        ))
+                        results.map((recipe) => {
+                            const alreadyAdded = existingRecipeIds.includes(recipe.recipeId);
+                            return (
+                                <button
+                                    key={recipe.recipeId}
+                                    disabled={alreadyAdded}
+                                    onClick={() => onSelect(recipe)}
+                                    className={`w-full flex items-center gap-4 p-3 rounded-2xl border transition-all group text-left ${
+                                        alreadyAdded
+                                            ? 'opacity-40 cursor-not-allowed border-slate-200'
+                                            : 'border-slate-200 hover:border-orange-200 hover:bg-orange-50 dark:hover:bg-orange-950/20'
+                                    }`}
+                                >
+                                    <img src={recipe.photoUrl} className="w-16 h-16 rounded-xl object-cover shadow-sm" alt="" />
+                                    <div className="flex-1">
+                                        <p className="font-black text-slate-800">{recipe.name}</p>
+                                        <p className="text-xs text-slate-400 uppercase font-bold">{recipe.recipeId}</p>
+                                    </div>
+                                    {alreadyAdded ? (
+                                        <div className="bg-slate-200 dark:bg-slate-300 text-slate-500 p-2 rounded-full">
+                                            <Check size={20} />
+                                        </div>
+                                    ) : (
+                                        <div className="opacity-0 group-hover:opacity-100 bg-orange-500 text-white p-2 rounded-full transition-opacity">
+                                            <Check size={20} />
+                                        </div>
+                                    )}
+                                </button>
+                            );
+                        })
                     ) : (
                         <p className="text-center text-slate-400 mt-10 italic">
                             {query.length < 1 ? "Tapez le nom ou le numéro d'un plat..." : "Aucun plat trouvé."}

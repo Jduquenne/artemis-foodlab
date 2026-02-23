@@ -27,9 +27,17 @@ const RecipeCell = ({
         [recipeId]
     );
 
+    const recipeDetail = useLiveQuery(
+        () => db.recipes.where({ recipeId, type: 'recipes' }).first(),
+        [recipeId]
+    );
+
     return (
         <div className="relative group/cell w-full h-full min-h-0">
-            <button onClick={onNavigate} className="w-full h-full rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-200">
+            <button
+                onClick={recipeDetail ? onNavigate : undefined}
+                className={`w-full h-full rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-200 ${!recipeDetail ? 'cursor-default' : ''}`}
+            >
                 {recipe && <img src={recipe.url} className="w-full h-full object-contain" alt={recipe.name} />}
             </button>
             <button
@@ -56,6 +64,14 @@ export const MultiMealSlot = ({
         async () => {
             if (recipeIds.length !== 1) return undefined;
             return await db.recipes.where({ recipeId: recipeIds[0], type: 'photo' }).first();
+        },
+        [recipeIds.length, recipeIds[0]]
+    );
+
+    const singleRecipeDetail = useLiveQuery(
+        async () => {
+            if (recipeIds.length !== 1) return undefined;
+            return await db.recipes.where({ recipeId: recipeIds[0], type: 'recipes' }).first();
         },
         [recipeIds.length, recipeIds[0]]
     );
@@ -98,7 +114,10 @@ export const MultiMealSlot = ({
                 )}
 
                 {recipeIds.length === 1 && (
-                    <button onClick={() => onNavigateToRecipe(recipeIds[0])} className="w-full h-full">
+                    <button
+                        onClick={singleRecipeDetail ? () => onNavigateToRecipe(recipeIds[0]) : undefined}
+                        className={`w-full h-full ${!singleRecipeDetail ? 'cursor-default' : ''}`}
+                    >
                         {singleRecipe && (
                             <img src={singleRecipe.url} className="w-full h-full object-contain" alt={singleRecipe.name} />
                         )}

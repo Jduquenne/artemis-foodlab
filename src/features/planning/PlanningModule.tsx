@@ -118,6 +118,10 @@ export const PlanningModule = () => {
         const to = parseSlot(toId);
         if (!from || !to) return;
 
+        const fromDef = MEAL_SLOTS.find(m => m.id === from.slot);
+        const toDef = MEAL_SLOTS.find(m => m.id === to.slot);
+        if (!fromDef || !toDef || fromDef.multi !== toDef.multi) return;
+
         const fromMeal = planningData.find(p => p.day === from.day && p.slot === from.slot);
         const toMeal = planningData.find(p => p.day === to.day && p.slot === to.slot);
 
@@ -205,13 +209,8 @@ export const PlanningModule = () => {
                                                 icon={mealType.icon}
                                                 slotId={slotId}
                                                 recipeIds={recipeIds}
-                                                onClick={() => {
-                                                    if (savedMeal) {
-                                                        navigate(`/recipes/detail/${savedMeal.recipeIds[0]}`);
-                                                    } else {
-                                                        setPickerSlot({ day, slot: mealType.id });
-                                                    }
-                                                }}
+                                                onNavigate={() => navigate(`/recipes/detail/${savedMeal!.recipeIds[0]}`)}
+                                                onOpenPicker={() => setPickerSlot({ day, slot: mealType.id })}
                                                 onModify={() => setPickerSlot({ day, slot: mealType.id })}
                                                 onDelete={() => handleDeleteMeal(day, mealType.id)}
                                             />
@@ -226,12 +225,17 @@ export const PlanningModule = () => {
                 {pickerSlot && (
                     <RecipePicker
                         slotName={`${pickerSlot.day} - ${pickerSlot.slot}`}
+                        existingRecipeIds={
+                            MEAL_SLOTS.find(m => m.id === pickerSlot.slot)?.multi
+                                ? (planningData.find(p => p.day === pickerSlot.day && p.slot === pickerSlot.slot)?.recipeIds ?? [])
+                                : []
+                        }
                         onSelect={async (recipe) => {
                             const slotId = `${year}-W${weekNumber}-${pickerSlot.day}-${pickerSlot.slot}`;
                             const isMulti = MEAL_SLOTS.find(m => m.id === pickerSlot.slot)?.multi ?? false;
                             const existing = planningData.find(p => p.day === pickerSlot.day && p.slot === pickerSlot.slot);
 
-                            if (isMulti && existing && existing.recipeIds.length < 4) {
+                            if (isMulti && existing && existing.recipeIds.length < 4 && !existing.recipeIds.includes(recipe.recipeId)) {
                                 await db.planning.put({
                                     ...existing,
                                     recipeIds: [...existing.recipeIds, recipe.recipeId],

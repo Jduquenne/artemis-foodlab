@@ -1,8 +1,9 @@
-import React, { useState, useMemo, useRef } from 'react';
-import { ChevronLeft, ChevronRight, Calendar as CalendarIcon } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../../core/services/db';
 import { MealSlot } from './components/MealSlot';
+import { MultiMealSlot } from './components/MultiMealSlot';
 import { RecipePicker } from './components/RecipePicker';
 import { getWeekNumber, getMonday, getWeekRange } from '../../shared/utils/weekUtils';
 import { useNavigate } from 'react-router-dom';
@@ -19,10 +20,10 @@ import {
 } from '@dnd-kit/core';
 
 const MEAL_SLOTS = [
-    { id: 'breakfast', label: 'Petit Déjeuner', icon: '☕' },
-    { id: 'lunch', label: 'Déjeuner', icon: '🍴' },
-    { id: 'snack', label: 'Goûter', icon: '🍎' },
-    { id: 'dinner', label: 'Dîner', icon: '🌙' }
+    { id: 'breakfast', label: 'Petit Déjeuner', icon: '☕', multi: true },
+    { id: 'lunch',     label: 'Déjeuner',       icon: '🍴', multi: false },
+    { id: 'snack',     label: 'Goûter',          icon: '🍎', multi: true },
+    { id: 'dinner',    label: 'Dîner',           icon: '🌙', multi: false },
 ] as const;
 
 type SlotId = typeof MEAL_SLOTS[number]['id'];
@@ -37,14 +38,7 @@ const MealDragOverlay = ({ recipeId }: { recipeId: string }) => {
     if (!recipe) return null;
     return (
         <div className="rounded-xl border-2 border-orange-400 shadow-2xl overflow-hidden bg-white w-20 h-28 rotate-2 opacity-95 cursor-grabbing">
-            <div className="w-full p-0.5 bg-slate-50 h-[calc(100%-20px)]">
-                <img src={recipe.url} className="w-full h-full object-contain" alt={recipe.name} />
-            </div>
-            <div className="h-5 bg-white flex items-center px-1.5">
-                <span className="text-[8px] font-black text-slate-500 uppercase truncate">
-                    {recipe.name}
-                </span>
-            </div>
+            <img src={recipe.url} className="w-full h-full object-contain" alt={recipe.name} />
         </div>
     );
 };
@@ -55,7 +49,6 @@ export const PlanningModule = () => {
     const [activeDragId, setActiveDragId] = useState<string | null>(null);
     const [selectedDate, setSelectedDate] = useState(new Date());
 
-    const dateInputRef = useRef<HTMLInputElement>(null);
     const monday = useMemo(() => getMonday(selectedDate), [selectedDate]);
     const weekNumber = useMemo(() => getWeekNumber(monday), [monday]);
     const year = monday.getFullYear();
@@ -67,10 +60,7 @@ export const PlanningModule = () => {
     );
 
     const planningData = useLiveQuery(
-        () => db.planning
-            .where('[year+week]')
-            .equals([year, weekNumber])
-            .toArray(),
+        () => db.planning.where('[year+week]').equals([year, weekNumber]).toArray(),
         [year, weekNumber]
     ) || [];
 
@@ -87,12 +77,19 @@ export const PlanningModule = () => {
         setSelectedDate(newDate);
     };
 
-    const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value) setSelectedDate(new Date(e.target.value));
+    const handleDeleteMeal = async (day: string, slot: SlotId) => {
+        await db.planning.delete(`${year}-W${weekNumber}-${day}-${slot}`);
     };
 
-    const handleDeleteMeal = async (day: string, slot: string) => {
-        await db.planning.delete(`${year}-W${weekNumber}-${day}-${slot}`);
+    const handleRemoveRecipe = async (day: string, slot: SlotId, recipeIdToRemove: string) => {
+        const existing = planningData.find(p => p.day === day && p.slot === slot);
+        if (!existing) return;
+        const newRecipeIds = existing.recipeIds.filter(id => id !== recipeIdToRemove);
+        if (newRecipeIds.length === 0) {
+            await db.planning.delete(existing.id);
+        } else {
+            await db.planning.put({ ...existing, recipeIds: newRecipeIds });
+        }
     };
 
     const handleDragStart = ({ active }: DragStartEvent) => {
@@ -128,8 +125,8 @@ export const PlanningModule = () => {
 
         if (toMeal) {
             await db.planning.bulkPut([
-                { ...fromMeal, recipeId: toMeal.recipeId },
-                { ...toMeal, recipeId: fromMeal.recipeId },
+                { ...fromMeal, recipeIds: toMeal.recipeIds },
+                { ...toMeal, recipeIds: fromMeal.recipeIds },
             ]);
         } else {
             await db.planning.delete(fromMeal.id);
@@ -137,7 +134,7 @@ export const PlanningModule = () => {
                 id: toId,
                 day: to.day,
                 slot: to.slot,
-                recipeId: fromMeal.recipeId,
+                recipeIds: fromMeal.recipeIds,
                 year,
                 week: weekNumber,
             });
@@ -153,54 +150,29 @@ export const PlanningModule = () => {
         >
             <div className="w-full h-[calc(100vh-100px)] flex flex-col p-2 gap-2 overflow-hidden">
 
-                {/* HEADER AVEC NAVIGATION */}
-                <div className="flex justify-between items-center mb-4">
-                    <div>
-                        <h1 className="text-3xl font-black mb-0.5 text-slate-900 tracking-tight leading-none">
-                            Ma Semaine
-                        </h1>
-                        <div className="flex items-center gap-2">
-                            <span className="bg-orange-500 text-white px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-widest">
-                                Semaine {weekNumber}
-                            </span>
-                            <p className="text-sm font-bold text-slate-500 italic">
-                                du {weekRange} — {year}
-                            </p>
-                        </div>
+                <div className="flex items-baseline justify-between gap-6 shrink-0 mb-2">
+                    <div className="flex items-baseline gap-3">
+                        <h1 className="text-3xl font-black text-slate-900">Ma Semaine</h1>
+                        <span className="text-sm font-bold text-slate-400">
+                            Sem. {weekNumber} · {weekRange}
+                        </span>
                     </div>
 
-                    <div className="flex items-center gap-2 bg-white p-1.5 rounded-2xl shadow-sm border border-slate-100">
+                    <div className="flex items-center gap-1 self-center bg-white px-2 py-1 rounded-2xl shadow-sm border border-slate-100 shrink-0">
                         <button onClick={() => changeWeek(-1)} className="p-2 hover:bg-slate-50 rounded-xl transition-colors">
-                            <ChevronLeft size={20} className="text-slate-600" />
+                            <ChevronLeft size={18} className="text-slate-600" />
                         </button>
-
-                        <div className="relative group">
-                            <input
-                                type="date"
-                                className="absolute inset-0 opacity-0 cursor-pointer z-10"
-                                onChange={handleDateChange}
-                            />
-                            <div
-                                onClick={() => dateInputRef.current?.showPicker()}
-                                className="h-10 w-10 flex items-center justify-center bg-slate-100 rounded-xl cursor-pointer hover:bg-orange-100 hover:text-orange-600 transition-all"
-                            >
-                                <CalendarIcon size={20} />
-                                <input
-                                    ref={dateInputRef}
-                                    type="date"
-                                    className="absolute w-0 h-0 opacity-0"
-                                    onChange={(e) => e.target.value && setSelectedDate(new Date(e.target.value))}
-                                />
-                            </div>
-                        </div>
-
+                        <input
+                            type="date"
+                            className="h-8 px-2 bg-slate-100 rounded-xl text-xs font-semibold text-slate-500 border-0 outline-none cursor-pointer hover:bg-orange-50 focus:ring-2 focus:ring-orange-400 [color-scheme:light] transition-colors"
+                            onChange={(e) => e.target.value && setSelectedDate(new Date(e.target.value))}
+                        />
                         <button onClick={() => changeWeek(1)} className="p-2 hover:bg-slate-50 rounded-xl transition-colors">
-                            <ChevronRight size={20} className="text-slate-600" />
+                            <ChevronRight size={18} className="text-slate-600" />
                         </button>
                     </div>
                 </div>
 
-                {/* LA GRILLE DYNAMIQUE */}
                 <div className="flex-1 grid grid-cols-[repeat(7,1fr)] grid-rows-[30px_repeat(4,1fr)] gap-3 min-h-0 px-2 pb-2">
                     {DAYS.map(day => (
                         <div key={day} className="flex items-center justify-center font-black text-slate-400 uppercase text-xs tracking-widest">
@@ -213,24 +185,37 @@ export const PlanningModule = () => {
                             {DAYS.map(day => {
                                 const slotId = `${year}-W${weekNumber}-${day}-${mealType.id}`;
                                 const savedMeal = planningData.find(p => p.day === day && p.slot === mealType.id);
+                                const recipeIds = savedMeal?.recipeIds ?? [];
 
                                 return (
-                                    <div key={`${day}-${mealType.id}`} className="relative h-full w-full min-h-0">
-                                        <MealSlot
-                                            label={mealType.label}
-                                            icon={mealType.icon}
-                                            slotId={slotId}
-                                            recipeId={savedMeal?.recipeId}
-                                            onClick={() => {
-                                                if (savedMeal) {
-                                                    navigate(`/recipes/detail/${savedMeal.recipeId}`);
-                                                } else {
-                                                    setPickerSlot({ day, slot: mealType.id });
-                                                }
-                                            }}
-                                            onModify={() => setPickerSlot({ day, slot: mealType.id })}
-                                            onDelete={() => handleDeleteMeal(day, mealType.id)}
-                                        />
+                                    <div key={`${day}-${mealType.id}`} className="relative h-full w-full min-h-0 min-w-0">
+                                        {mealType.multi ? (
+                                            <MultiMealSlot
+                                                label={mealType.label}
+                                                icon={mealType.icon}
+                                                slotId={slotId}
+                                                recipeIds={recipeIds}
+                                                onAdd={() => setPickerSlot({ day, slot: mealType.id })}
+                                                onRemoveRecipe={(rid) => handleRemoveRecipe(day, mealType.id, rid)}
+                                                onNavigateToRecipe={(rid) => navigate(`/recipes/detail/${rid}`)}
+                                            />
+                                        ) : (
+                                            <MealSlot
+                                                label={mealType.label}
+                                                icon={mealType.icon}
+                                                slotId={slotId}
+                                                recipeIds={recipeIds}
+                                                onClick={() => {
+                                                    if (savedMeal) {
+                                                        navigate(`/recipes/detail/${savedMeal.recipeIds[0]}`);
+                                                    } else {
+                                                        setPickerSlot({ day, slot: mealType.id });
+                                                    }
+                                                }}
+                                                onModify={() => setPickerSlot({ day, slot: mealType.id })}
+                                                onDelete={() => handleDeleteMeal(day, mealType.id)}
+                                            />
+                                        )}
                                     </div>
                                 );
                             })}
@@ -242,14 +227,25 @@ export const PlanningModule = () => {
                     <RecipePicker
                         slotName={`${pickerSlot.day} - ${pickerSlot.slot}`}
                         onSelect={async (recipe) => {
-                            await db.planning.put({
-                                id: `${year}-W${weekNumber}-${pickerSlot.day}-${pickerSlot.slot}`,
-                                day: pickerSlot.day,
-                                slot: pickerSlot.slot,
-                                recipeId: recipe.recipeId,
-                                year,
-                                week: weekNumber,
-                            });
+                            const slotId = `${year}-W${weekNumber}-${pickerSlot.day}-${pickerSlot.slot}`;
+                            const isMulti = MEAL_SLOTS.find(m => m.id === pickerSlot.slot)?.multi ?? false;
+                            const existing = planningData.find(p => p.day === pickerSlot.day && p.slot === pickerSlot.slot);
+
+                            if (isMulti && existing && existing.recipeIds.length < 4) {
+                                await db.planning.put({
+                                    ...existing,
+                                    recipeIds: [...existing.recipeIds, recipe.recipeId],
+                                });
+                            } else {
+                                await db.planning.put({
+                                    id: slotId,
+                                    day: pickerSlot.day,
+                                    slot: pickerSlot.slot,
+                                    recipeIds: [recipe.recipeId],
+                                    year,
+                                    week: weekNumber,
+                                });
+                            }
                             setPickerSlot(null);
                         }}
                         onClose={() => setPickerSlot(null)}
@@ -258,7 +254,9 @@ export const PlanningModule = () => {
             </div>
 
             <DragOverlay dropAnimation={null}>
-                {activeMeal && <MealDragOverlay recipeId={activeMeal.recipeId} />}
+                {activeMeal && activeMeal.recipeIds.length > 0 && (
+                    <MealDragOverlay recipeId={activeMeal.recipeIds[0]} />
+                )}
             </DragOverlay>
         </DndContext>
     );

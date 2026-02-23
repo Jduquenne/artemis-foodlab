@@ -18,7 +18,7 @@ export const FlipCard = ({ frontImage, backImage, recipeUrl, onClick }: FlipCard
         if (backImage) {
             timerRef.current = setTimeout(() => {
                 setIsFlipped(true);
-            }, 500); // 0.5 secondes
+            }, 500);
         }
     };
 
@@ -56,30 +56,25 @@ export const FlipCard = ({ frontImage, backImage, recipeUrl, onClick }: FlipCard
             className="group relative w-full h-full cursor-pointer perspective-1000"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            // TACTILE
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
-            // CLIQUER POUR NAVIGUER (Souris uniquement ou fallback)
             onClick={() => {
                 if (!('ontouchstart' in window) && hasRecipe) onClick();
             }}
-            // Empêche le menu contextuel du navigateur de s'ouvrir au long press
             onContextMenu={(e) => e.preventDefault()}
         >
             {/* Container 3D qui tourne */}
             <div
-                className={`relative w-full h-full transition-all duration-700 preserve-3d shadow-xl rounded-2xl ${isFlipped ? 'rotate-y-180' : ''
-                    }`}
+                className={`relative w-full h-full transition-all duration-700 preserve-3d shadow-xl rounded-2xl ${isFlipped ? 'rotate-y-180' : ''}`}
             >
-
                 {/* FACE AVANT */}
-                <div className="absolute inset-0 w-full h-full backface-hidden z-20 bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+                <div className="absolute inset-0 w-full h-full backface-hidden z-20 bg-white dark:bg-slate-100 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
                     <img src={frontImage} className="w-full h-full object-contain" />
                 </div>
 
                 {/* FACE ARRIÈRE (Ingrédients) */}
-                <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 z-10 bg-orange-50 rounded-xl overflow-hidden border-2 border-orange-200">
+                <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 z-10 bg-orange-50 dark:bg-orange-950/40 rounded-xl overflow-hidden border-2 border-orange-200 dark:border-orange-800">
                     {backImage ? (
                         <img src={backImage} alt="Ingrédients" className="w-full h-full object-contain p-2" />
                     ) : (
@@ -89,7 +84,6 @@ export const FlipCard = ({ frontImage, backImage, recipeUrl, onClick }: FlipCard
                         </div>
                     )}
                 </div>
-
             </div>
         </div>
     );

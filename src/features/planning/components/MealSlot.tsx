@@ -39,14 +39,14 @@ export const MealSlot = ({ label, icon, slotId, recipeIds, onClick, onModify, on
         : isOver
             ? 'border-orange-400 bg-orange-50/40'
             : recipe
-                ? 'border-slate-100 shadow-sm hover:border-orange-200'
+                ? 'border-slate-200 shadow-sm hover:border-orange-200'
                 : 'border-dashed border-slate-200 hover:bg-orange-50/30';
 
     return (
         <div ref={setRef} className="relative w-full h-full group">
             <button
                 onClick={onClick}
-                className={`relative w-full h-full rounded-xl border-2 transition-all overflow-hidden bg-white ${borderClass}`}
+                className={`relative w-full h-full rounded-xl border-2 transition-all overflow-hidden bg-white dark:bg-slate-100 ${borderClass}`}
             >
                 {recipe ? (
                     <img src={recipe.url} className="w-full h-full object-contain" alt={recipe.name} />
@@ -64,7 +64,7 @@ export const MealSlot = ({ label, icon, slotId, recipeIds, onClick, onModify, on
                     <div
                         {...listeners}
                         {...attributes}
-                        className="absolute top-1 left-4 -translate-x-1/2 p-0.5 bg-white/90 rounded-md cursor-grab active:cursor-grabbing z-20 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm border border-slate-100"
+                        className="absolute top-1 left-4 -translate-x-1/2 p-0.5 bg-white/90 dark:bg-slate-200/90 rounded-md cursor-grab active:cursor-grabbing z-20 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm border border-slate-200"
                     >
                         <GripVertical size={14} className="text-slate-400" />
                     </div>
@@ -72,7 +72,7 @@ export const MealSlot = ({ label, icon, slotId, recipeIds, onClick, onModify, on
                     <button
                         onPointerDown={(e) => e.stopPropagation()}
                         onClick={(e) => { e.stopPropagation(); onModify?.(); }}
-                        className="absolute bottom-1 left-1 p-1.5 bg-white/90 text-blue-600 rounded-lg shadow-md border border-slate-100 hover:bg-blue-50 z-20 opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="absolute bottom-1 left-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-blue-600 rounded-lg shadow-md border border-slate-200 hover:bg-blue-50 dark:hover:bg-blue-950/40 z-20 opacity-0 group-hover:opacity-100 transition-opacity"
                     >
                         <RefreshCw size={14} />
                     </button>
@@ -80,7 +80,7 @@ export const MealSlot = ({ label, icon, slotId, recipeIds, onClick, onModify, on
                     <button
                         onPointerDown={(e) => e.stopPropagation()}
                         onClick={(e) => { e.stopPropagation(); onDelete?.(); }}
-                        className="absolute bottom-1 right-1 p-1.5 bg-white/90 text-red-500 rounded-lg shadow-md border border-slate-100 hover:bg-red-50 z-20 opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="absolute bottom-1 right-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-red-500 rounded-lg shadow-md border border-slate-200 hover:bg-red-50 dark:hover:bg-red-950/40 z-20 opacity-0 group-hover:opacity-100 transition-opacity"
                     >
                         <Trash2 size={14} />
                     </button>

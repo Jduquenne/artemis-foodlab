@@ -1,68 +1,101 @@
 @import "tailwindcss";
 
-/* src/index.css */
+/* =========================================================
+   DARK MODE — class-based via .dark on <html>
+   ========================================================= */
+@custom-variant dark (&:where(.dark, .dark *));
 
+/* =========================================================
+   THEME VARIABLES
+   Light = tons chauds crème/pierre (ambiance cuisine)
+   Dark  = tons sombres chauds (même palette, inversée)
+   ========================================================= */
 :root {
-  --app-orange: #f97316;
-  --app-bg: #f8fafc;
+    --slate-50:  #f0ebe1;
+    --slate-100: #e8e0d2;
+    --slate-200: #ddd3c0;
+    --slate-300: #c9bbaa;
+    --slate-400: #9e9088;
+    --slate-500: #786860;
+    --slate-600: #5c4d45;
+    --slate-700: #3f332b;
+    --slate-800: #2b2019;
+    --slate-900: #1c1410;
+    --white:     #faf6ef;
+
+    --app-orange: #f97316;
 }
 
+.dark {
+    --slate-50:  #1a1510;
+    --slate-100: #231d15;
+    --slate-200: #38291c;
+    --slate-300: #52402e;
+    --slate-400: #7a6a58;
+    --slate-500: #a89278;
+    --slate-600: #c4ae92;
+    --slate-700: #d8c8b0;
+    --slate-800: #e8dcc8;
+    --slate-900: #f5ede0;
+    /* white n'est PAS overridé : text-white sur fond orange doit rester clair */
+}
+
+/* =========================================================
+   TAILWIND v4 — map le scale slate + white aux variables
+   @theme inline = les classes utilisent la valeur directement
+   (supportant ainsi les transitions dark/light via CSS vars)
+   ========================================================= */
+@theme inline {
+    --color-slate-50:  var(--slate-50);
+    --color-slate-100: var(--slate-100);
+    --color-slate-200: var(--slate-200);
+    --color-slate-300: var(--slate-300);
+    --color-slate-400: var(--slate-400);
+    --color-slate-500: var(--slate-500);
+    --color-slate-600: var(--slate-600);
+    --color-slate-700: var(--slate-700);
+    --color-slate-800: var(--slate-800);
+    --color-slate-900: var(--slate-900);
+    --color-white:     var(--white);
+    /* white reste clair dans les 2 thèmes → text-white sur fond orange toujours lisible */
+}
+
+/* =========================================================
+   BASE
+   ========================================================= */
 body {
-  background-color: var(--app-bg);
-  -webkit-tap-highlight-color: transparent; /* Supprime le flash bleu au clic sur mobile */
-  user-select: none; /* Empêche la sélection de texte accidentelle en cuisinant */
+    background-color: var(--slate-50);
+    color: var(--slate-900);
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
 }
 
-/* Scrollbar personnalisée et discrète */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
+/* Scrollbar discrète */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 10px;
+    background: var(--slate-300);
+    border-radius: 10px;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
+::-webkit-scrollbar-thumb:hover { background: var(--slate-400); }
 
 /* Animation d'entrée pour les pages */
-main {
-  animation: fadeIn 0.3s ease-out;
-}
+main { animation: fadeIn 0.3s ease-out; }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
+/* =========================================================
+   UTILITIES 3D (FlipCard)
+   ========================================================= */
 @layer utilities {
-  /* Définit la profondeur de la scène 3D */
-  .perspective-1000 {
-    perspective: 1000px;
-  }
-
-  /* Indique que les enfants doivent être dans l'espace 3D */
-  .preserve-3d {
-    transform-style: preserve-3d;
-  }
-
-  /* Cache la face arrière quand on ne la regarde pas */
-  .backface-hidden {
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-  }
-
-  /* La rotation à 180 degrés sur l'axe Y */
-  .rotate-y-180 {
-    transform: rotateY(180deg);
-  }
+    .perspective-1000  { perspective: 1000px; }
+    .preserve-3d       { transform-style: preserve-3d; }
+    .backface-hidden   {
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+    }
+    .rotate-y-180      { transform: rotateY(180deg); }
 }

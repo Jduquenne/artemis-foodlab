@@ -36,7 +36,7 @@ export const ShoppingModule = () => {
                 </div>
                 <button
                     onClick={() => window.print()}
-                    className="flex items-center gap-2 bg-white border border-slate-200 px-4 py-2 rounded-xl font-bold hover:bg-slate-50 transition-colors"
+                    className="flex items-center gap-2 bg-white dark:bg-slate-100 border border-slate-200 px-4 py-2 rounded-xl font-bold hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
                 >
                     <Printer className="w-5 h-5" /> Imprimer
                 </button>
@@ -45,7 +45,7 @@ export const ShoppingModule = () => {
             {/* GRILLE DES RAYONS (Scroll interne uniquement ici) */}
             <div className="flex-1 overflow-y-auto pr-2 grid grid-cols-1 tablet:grid-cols-2 lg:grid-cols-3 gap-6">
                 {groupedItems.map(group => (
-                    <div key={group.category} className="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm self-start">
+                    <div key={group.category} className="bg-white dark:bg-slate-100 border border-slate-200 rounded-3xl p-6 shadow-sm self-start">
                         <h2 className="text-orange-600 font-black uppercase tracking-widest text-xs mb-4">
                             {group.category}
                         </h2>

@@ -37,7 +37,7 @@ const MealDragOverlay = ({ recipeId }: { recipeId: string }) => {
     );
     if (!recipe) return null;
     return (
-        <div className="rounded-xl border-2 border-orange-400 shadow-2xl overflow-hidden bg-white w-20 h-28 rotate-2 opacity-95 cursor-grabbing">
+        <div className="rounded-xl border-2 border-orange-400 shadow-2xl overflow-hidden bg-white dark:bg-slate-100 w-20 h-28 rotate-2 opacity-95 cursor-grabbing">
             <img src={recipe.url} className="w-full h-full object-contain" alt={recipe.name} />
         </div>
     );
@@ -158,16 +158,16 @@ export const PlanningModule = () => {
                         </span>
                     </div>
 
-                    <div className="flex items-center gap-1 self-center bg-white px-2 py-1 rounded-2xl shadow-sm border border-slate-100 shrink-0">
-                        <button onClick={() => changeWeek(-1)} className="p-2 hover:bg-slate-50 rounded-xl transition-colors">
+                    <div className="flex items-center gap-1 self-center bg-white dark:bg-slate-100 px-2 py-1 rounded-2xl shadow-sm border border-slate-200 shrink-0">
+                        <button onClick={() => changeWeek(-1)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-200 rounded-xl transition-colors">
                             <ChevronLeft size={18} className="text-slate-600" />
                         </button>
                         <input
                             type="date"
-                            className="h-8 px-2 bg-slate-100 rounded-xl text-xs font-semibold text-slate-500 border-0 outline-none cursor-pointer hover:bg-orange-50 focus:ring-2 focus:ring-orange-400 [color-scheme:light] transition-colors"
+                            className="h-8 px-2 bg-slate-100 dark:bg-slate-200 rounded-xl text-xs font-semibold text-slate-500 border-0 outline-none cursor-pointer hover:bg-orange-50 focus:ring-2 focus:ring-orange-400 [color-scheme:light] dark:[color-scheme:dark] transition-colors"
                             onChange={(e) => e.target.value && setSelectedDate(new Date(e.target.value))}
                         />
-                        <button onClick={() => changeWeek(1)} className="p-2 hover:bg-slate-50 rounded-xl transition-colors">
+                        <button onClick={() => changeWeek(1)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-200 rounded-xl transition-colors">
                             <ChevronRight size={18} className="text-slate-600" />
                         </button>
                     </div>

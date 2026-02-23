@@ -1,9 +1,8 @@
-import { ReactNode } from 'react';
-import { UtensilsCrossed, CalendarDays } from 'lucide-react';
+import { ReactNode, useRef } from 'react';
+import { UtensilsCrossed, CalendarDays, Download, Upload } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
-import { Download, Upload } from 'lucide-react';
 import { exportData, importData } from '../../core/services/dataService';
-import { useRef } from 'react';
+import { ThemeToggle } from './ThemeToggle';
 
 export const Layout = ({ children }: { children: ReactNode }) => {
     const location = useLocation();
@@ -18,7 +17,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
     return (
         <div className="flex h-screen w-full overflow-hidden bg-slate-50">
             {/* ASIDE - Menu latéral (Icônes uniquement) */}
-            <aside className="w-16 tablet:w-20 bg-white border-r border-slate-200 flex flex-col items-center py-8 gap-8">
+            <aside className="w-16 tablet:w-20 bg-white dark:bg-slate-100 border-r border-slate-200 flex flex-col items-center py-8 gap-8">
                 <div className="text-orange-500 font-bold text-xl">AFL</div>
                 <nav className="flex flex-col gap-6">
                     {navItems.map((item) => (
@@ -26,8 +25,8 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                             key={item.path}
                             to={item.path}
                             className={`p-3 rounded-xl transition-colors ${location.pathname.startsWith(item.path)
-                                ? 'bg-orange-100 text-orange-600'
-                                : 'text-slate-400 hover:bg-slate-100'
+                                ? 'bg-orange-100 dark:bg-orange-900/40 text-orange-600 dark:text-orange-400'
+                                : 'text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200'
                                 }`}
                         >
                             {item.icon}
@@ -63,7 +62,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
             {/* MAIN CONTENT AREA */}
             <div className="flex-1 flex flex-col min-w-0">
                 {/* HEADER */}
-                <header className="h-16 bg-white border-b border-slate-200 flex items-center px-6 justify-between">
+                <header className="h-16 bg-white dark:bg-slate-100 border-b border-slate-200 flex items-center px-6 justify-between">
                     <div className="flex-1 max-w-md relative">
                         {/* <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
                         <input
@@ -72,8 +71,11 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                             className="w-full pl-10 pr-4 py-2 bg-slate-100 border-none rounded-lg focus:ring-2 focus:ring-orange-500 outline-none text-sm"
                         /> */}
                     </div>
-                    <div className="ml-4 w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-white font-bold">
-                        VP
+                    <div className="flex items-center gap-2">
+                        <ThemeToggle />
+                        <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-white font-bold">
+                            VP
+                        </div>
                     </div>
                 </header>
 

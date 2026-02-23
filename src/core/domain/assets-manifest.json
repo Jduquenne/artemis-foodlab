@@ -1162,7 +1162,7 @@
   {
     "categoryFolder": "dairy-products",
     "typeFolder": "photo",
-    "fileName": "PL_13_Fromage_blanc_3%_Photo.webp"
+    "fileName": "PL_13_Fromage_blanc_3_Photo.webp"
   },
   {
     "categoryFolder": "dairy-products",
@@ -1347,12 +1347,12 @@
   {
     "categoryFolder": "dry-food",
     "typeFolder": "photo",
-    "fileName": "AS_17_Chocolat_74%_Photo.webp"
+    "fileName": "AS_17_Chocolat_74_Photo.webp"
   },
   {
     "categoryFolder": "dry-food",
     "typeFolder": "photo",
-    "fileName": "AS_18_Chocolat_85%_Photo.webp"
+    "fileName": "AS_18_Chocolat_85_Photo.webp"
   },
   {
     "categoryFolder": "charcuterie",
@@ -6998,6 +6998,11 @@
     "categoryFolder": "white-meat",
     "typeFolder": "photo",
     "fileName": "VB_04_Pâtes,_cordon_bleu_et_petits_pois_carottes_Photo.webp"
+  },
+  {
+    "categoryFolder": "white-meat",
+    "typeFolder": "photo",
+    "fileName": "VB_04_riz_Cordon_bleu_et_petits_pois_carottes_Photo.webp"
   },
   {
     "categoryFolder": "white-meat",

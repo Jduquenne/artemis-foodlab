@@ -12,11 +12,12 @@ export interface RecipeEntry {
 }
 
 export interface MealSlot {
-  id: string; // Format: "2024-W08-monday-lunch" (Année-Semaine-Jour-Créneau)
-  day: string; // monday, tuesday...
+  id: string;
+  day: string;
   slot: "breakfast" | "lunch" | "snack" | "dinner";
-  recipeId: string; // Lien vers la recette sélectionnée
-  date: string; // Pour filtrer par semaine plus tard
+  recipeId: string;
+  year: number;
+  week: number;
 }
 
 export class MyDatabase extends Dexie {

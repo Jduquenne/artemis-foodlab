@@ -16,8 +16,6 @@ export const FlipCard = ({ frontImage, backImage, recipeUrl, onClick }: FlipCard
 
     const handleMouseEnter = () => {
         if (backImage) {
-            console.log(frontImage);
-
             timerRef.current = setTimeout(() => {
                 setIsFlipped(true);
             }, 500); // 0.5 secondes

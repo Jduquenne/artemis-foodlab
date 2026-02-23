@@ -1,31 +1,51 @@
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../../../core/services/db';
-import { Plus, RefreshCw, Trash2 } from 'lucide-react';
+import { Plus, RefreshCw, Trash2, GripVertical } from 'lucide-react';
+import { useDraggable, useDroppable } from '@dnd-kit/core';
 
 interface MealSlotProps {
     label: string;
     icon: string;
+    slotId: string;
     recipeId?: string;
-    onClick: () => void;       // Action principale (Voir ou Ajouter)
-    onModify?: () => void;     // Action spécifique pour changer de plat
+    onClick: () => void;
+    onModify?: () => void;
     onDelete?: () => void;
 }
 
-export const MealSlot = ({ label, icon, recipeId, onClick, onModify, onDelete }: MealSlotProps) => {
+export const MealSlot = ({ label, icon, slotId, recipeId, onClick, onModify, onDelete }: MealSlotProps) => {
     const recipe = useLiveQuery(
         async () => {
-            if (!recipeId) return undefined; // On remplace null par undefined
+            if (!recipeId) return undefined;
             return await db.recipes.where({ recipeId, type: 'photo' }).first();
         },
         [recipeId]
     );
 
+    const { setNodeRef: setDropRef, isOver } = useDroppable({ id: slotId });
+    const { setNodeRef: setDragRef, listeners, attributes, isDragging } = useDraggable({
+        id: slotId,
+        disabled: !recipeId,
+    });
+
+    const setRef = (el: HTMLDivElement | null) => {
+        setDropRef(el);
+        setDragRef(el);
+    };
+
+    const borderClass = isDragging
+        ? 'opacity-30 border-slate-200'
+        : isOver
+        ? 'border-orange-400 bg-orange-50/40'
+        : recipe
+        ? 'border-slate-100 shadow-sm hover:border-orange-200'
+        : 'border-dashed border-slate-200 hover:bg-orange-50/30';
+
     return (
-        <div className="relative w-full h-full group">
+        <div ref={setRef} className="relative w-full h-full group">
             <button
                 onClick={onClick}
-                className={`relative w-full h-full rounded-xl border-2 transition-all flex flex-col overflow-hidden bg-white
-                ${recipe ? 'border-slate-100 shadow-sm hover:border-orange-200' : 'border-dashed border-slate-200 hover:bg-orange-50/30'}`}
+                className={`relative w-full h-full rounded-xl border-2 transition-all flex flex-col overflow-hidden bg-white ${borderClass}`}
             >
                 {recipe ? (
                     <div className="flex flex-col h-full w-full">
@@ -47,22 +67,26 @@ export const MealSlot = ({ label, icon, recipeId, onClick, onModify, onDelete }:
                 )}
             </button>
 
-            {/* BOUTONS D'ACTION (Apparaissent si une recette existe) */}
-            {recipe && (
+            {recipe && !isDragging && (
                 <>
-                    {/* BOUTON MODIFIER : C'est lui qui ouvrira désormais le Picker */}
+                    <div
+                        {...listeners}
+                        {...attributes}
+                        className="absolute top-1 left-1/2 -translate-x-1/2 p-0.5 bg-white/90 rounded-md cursor-grab active:cursor-grabbing z-20 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm border border-slate-100"
+                    >
+                        <GripVertical size={12} className="text-slate-400" />
+                    </div>
+
                     <button
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onModify?.(); // On appelle l'action de modification
-                        }}
+                        onPointerDown={(e) => e.stopPropagation()}
+                        onClick={(e) => { e.stopPropagation(); onModify?.(); }}
                         className="absolute bottom-7 left-1 p-1.5 bg-white/90 text-blue-600 rounded-lg shadow-md border border-slate-100 hover:bg-blue-50 z-20"
                     >
                         <RefreshCw size={14} />
                     </button>
 
-                    {/* Bas droite : Supprimer */}
                     <button
+                        onPointerDown={(e) => e.stopPropagation()}
                         onClick={(e) => { e.stopPropagation(); onDelete?.(); }}
                         className="absolute bottom-7 right-1 p-1.5 bg-white/90 text-red-500 rounded-lg shadow-md border border-slate-100 hover:bg-red-50 z-20"
                     >

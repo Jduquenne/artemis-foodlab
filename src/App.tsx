@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './shared/components/Layout';
 import { useEffect } from 'react';
 import { seedDatabase } from './core/services/seeder';
@@ -23,7 +23,7 @@ function App() {
   }, [initWeek]);
 
   return (
-    <Router basename={import.meta.env.BASE_URL}>
+    <Router>
       <Layout>
         {/* La modale est ici, accessible globalement */}
         <WeekTransitionModal />

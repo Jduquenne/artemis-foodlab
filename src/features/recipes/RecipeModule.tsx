@@ -8,11 +8,18 @@ import { CATEGORIES } from '../../core/domain/categories';
 
 export const RecipeModule = () => {
     const navigate = useNavigate();
-    const [searchQuery, setSearchQuery] = useState('');
+    const [searchQuery, setSearchQuery] = useState(() => {
+        return sessionStorage.getItem('last_recipe_search') || '';
+    });
     const excluded = ["Extérieur"];
 
     // Utilisation du hook
     const searchResults = useSearch(searchQuery);
+
+    const handleSearchChange = (val: string) => {
+        setSearchQuery(val);
+        sessionStorage.setItem('last_recipe_search', val); // On mémorise
+    };
 
     return (
         <div className="space-y-8 pb-20">
@@ -25,7 +32,7 @@ export const RecipeModule = () => {
                 {/* Barre de recherche */}
                 <SearchBar
                     value={searchQuery}
-                    onChange={setSearchQuery}
+                    onChange={handleSearchChange}
                     onClear={() => setSearchQuery('')}
                 />
             </div>

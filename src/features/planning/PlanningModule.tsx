@@ -5,6 +5,7 @@ import { db } from '../../core/services/db';
 import { MealSlot } from './components/MealSlot';
 import { MultiMealSlot } from './components/MultiMealSlot';
 import { RecipePicker } from './components/RecipePicker';
+import { MealDragOverlay } from './components/MealDragOverlay';
 import { getWeekNumber, getMonday, getWeekRange } from '../../shared/utils/weekUtils';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -30,18 +31,6 @@ type SlotId = typeof MEAL_SLOTS[number]['id'];
 
 const DAYS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 
-const MealDragOverlay = ({ recipeId }: { recipeId: string }) => {
-    const recipe = useLiveQuery(
-        () => db.recipes.where({ recipeId, type: 'photo' }).first(),
-        [recipeId]
-    );
-    if (!recipe) return null;
-    return (
-        <div className="rounded-xl border-2 border-orange-400 shadow-2xl overflow-hidden bg-white dark:bg-slate-100 w-20 h-28 rotate-2 opacity-95 cursor-grabbing">
-            <img src={recipe.url} className="w-full h-full object-contain" alt={recipe.name} />
-        </div>
-    );
-};
 
 export const PlanningModule = () => {
     const navigate = useNavigate();

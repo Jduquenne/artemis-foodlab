@@ -1,5 +1,5 @@
 import { ReactNode, useRef } from 'react';
-import { UtensilsCrossed, CalendarDays, Download, Upload } from 'lucide-react';
+import { UtensilsCrossed, CalendarDays, ShoppingCart, Download, Upload } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { exportData, importData } from '../../core/services/dataService';
 import { ThemeToggle } from './ThemeToggle';
@@ -11,7 +11,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
     const navItems = [
         { icon: <UtensilsCrossed />, path: '/recipes', label: 'Recettes' },
         { icon: <CalendarDays />, path: '/planning', label: 'Menu' },
-        // { icon: <ShoppingBasket />, path: '/shopping', label: 'Courses' },
+        { icon: <ShoppingCart />, path: '/shopping', label: 'Courses' },
     ];
 
     return (

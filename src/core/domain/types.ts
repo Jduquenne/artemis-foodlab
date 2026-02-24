@@ -1,35 +1,41 @@
 export enum Unit {
-  KG = "kg",
-  G = "g",
-  L = "l",
+  NONE = "",
+  C = "c",
+  CC = "cc",
   CL = "cl",
+  FEUILLE = "feuille",
+  G = "g",
+  KG = "kg",
+  L = "l",
+  LOUCHE = "louche",
   ML = "ml",
-  PIECE = "pièce",
-  CAC = "c.à.café",
-  CAS = "c.à.soupe",
+  MOYENNE = "moyenne",
+  PART = "part",
+  PETITE = "petite",
+  PORTION = "portion",
+  SACHET = "sachet",
+  TIERS = "tiers",
+  TRANCHE = "tranche",
 }
 
 export enum IngredientCategory {
-  MEAT = "Viandes",
-  VEGETABLE = "Légumes",
-  FRUIT = "Fruits",
-  DAIRY = "Produits frais",
-  DRY = "Produits secs",
-  CONDIMENT = "Condiments",
+  FRUIT_VEGETABLE = "Fruits et légumes",
+  DRIED_FRUIT = "Fruits secs",
+  MEAT = "Viande",
+  SPICE_CONDIMENT = "Epices et condiments",
+  SWEET_GROCERY = "Epicerie sucrée",
   BAKERY = "Boulangerie",
-}
-
-export interface Ingredient {
-  id: string;
-  name: string;
-  category: IngredientCategory;
-  defaultUnit: Unit;
-}
-
-export interface RecipeIngredient {
-  ingredientId: string; // Référence à l'Ingredient
-  quantity: number;
-  unit: Unit;
+  RECIPE = "Recette",
+  DAIRY = "Produits laitiers",
+  FARM = "Ferme",
+  STARCH = "Féculents",
+  DELI = "Charcuterie",
+  CANNED = "Conserves",
+  FISH = "Poisson",
+  NON_PURCHASE = "Hors achats",
+  FROZEN = "Surgelés",
+  INTERNET = "Internet",
+  UNKNOWN = "Inconnu", // Pratique pour votre script de debug !
 }
 
 export interface Recipe {
@@ -42,7 +48,27 @@ export interface Recipe {
   image?: string;
   ingredientsImage?: string;
   instructionsImage?: string;
-  ingredients: RecipeIngredient[];
-  instructions?: string[];
 }
 
+export interface Ingredient {
+  id: string;
+  name: string;
+  quantity: string;
+  unit: string;
+  category: IngredientCategory;
+}
+
+export interface Macronutrients {
+  KCAL: number;
+  proteins: number;
+  lipids: number;
+  carbohydrate: number;
+  fibers: number;
+}
+
+export interface RecipeDetails {
+  name: string;
+  macronutriment: Macronutrients;
+  portion: number;
+  ingredients: Ingredient[];
+}

@@ -91,3 +91,10 @@ The app uses a **CSS variable-based theme** defined in `src/index.css`. Tailwind
 - **`white` is reserved for constant-light contexts** (`text-white` on orange buttons). Using `dark:bg-slate-100` is the correct way to create dark surfaces; never rely on `bg-white` resolving to a dark color.
 - When adding new palette colors (only when explicitly requested), define them as CSS variables in both `:root` and `.dark` in `index.css`, then register them via `@theme inline`.
 - On every scrolling page, use markscrolling on scroll event for overpass the scrolling + click problem
+
+## Component & interface conventions
+
+- **One component per file**: every component that uses hooks, has meaningful logic, or exceeds ~15 lines must live in its own file. Inline sub-components inside a module file are only acceptable for trivial, purely presentational wrappers with no hooks and no props interface.
+- **File location**: feature-specific components go in `src/features/<feature>/components/`. Shared components go in `src/shared/components/`.
+- **Props interfaces**: always named `<ComponentName>Props` (e.g. `CategoryCardProps`), co-located in the same file as the component. Never use generic names like `interface Props`.
+- **Domain/service interfaces**: shared data-model types belong in `core/domain/types.ts`. Service-layer types (e.g. `ConsolidatedIngredient`) stay in their service file. Never define domain types inside component files.

@@ -1,35 +1,112 @@
-import { RecipeIngredient, IngredientCategory } from "../domain/types";
+import { addDays } from "date-fns";
+import { getISOWeek, getISOWeekYear } from "date-fns";
+import { db } from "../services/db";
+import { RecipeDetails, IngredientCategory } from "../domain/types";
+import recipesData from "../domain/recipes-ingredients.json";
+
+export interface IngredientSource {
+  recipeId: string;
+  recipeName: string;
+  day: string;
+  slot: string;
+}
 
 export interface ConsolidatedIngredient {
+  key: string;
   name: string;
   totalQuantity: number;
   unit: string;
-  category: IngredientCategory;
-  checked: boolean;
+  category: IngredientCategory | undefined;
+  sources: IngredientSource[];
 }
 
-export const consolidateIngredients = (
-  ingredients: RecipeIngredient[],
-): ConsolidatedIngredient[] => {
-  const map = new Map<string, ConsolidatedIngredient>();
+function cleanRecipeName(name: string): string {
+  return name
+    .replace(/\s+(ingrédients?|ingredients?|recettes?|recipes?|photo)$/i, "")
+    .trim();
+}
 
-  ingredients.forEach((item) => {
-    // Clé unique basée sur le nom et l'unité pour éviter d'additionner des "g" et des "L"
-    const key = `${item.ingredientId}-${item.unit}`;
-    const existing = map.get(key);
+function toJsonKey(recipeId: string): string {
+  const parts = recipeId.split("-");
+  if (parts.length < 2) return recipeId.toUpperCase();
+  const prefix = parts[0].toUpperCase();
+  const numStr = parts.slice(1).join("-");
+  const numMatch = numStr.match(/^(\d+)(BIS)?$/i);
+  if (numMatch) {
+    const num = parseInt(numMatch[1], 10).toString().padStart(2, "0");
+    const bis = numMatch[2] ? numMatch[2].toUpperCase() : "";
+    return `${prefix}_${num}${bis}`;
+  }
+  return `${prefix}_${numStr.toUpperCase()}`;
+}
 
-    if (existing) {
-      existing.totalQuantity += item.quantity;
-    } else {
-      map.set(key, {
-        name: item.ingredientId, // On utilisera le nom réel via un lookup plus tard
-        totalQuantity: item.quantity,
-        unit: item.unit,
-        category: IngredientCategory.DRY, // Par défaut
-        checked: false,
-      });
+export const getNextWeekShoppingList = async (): Promise<ConsolidatedIngredient[]> => {
+  const nextWeekDate = addDays(new Date(), 7);
+  const nextWeek = getISOWeek(nextWeekDate);
+  const nextYear = getISOWeekYear(nextWeekDate);
+
+  const slots = await db.planning
+    .where("[year+week]")
+    .equals([nextYear, nextWeek])
+    .toArray();
+
+  const allRecipeIds = [...new Set(slots.flatMap((s) => s.recipeIds))];
+
+  const recipeEntries = await db.recipes
+    .where("recipeId")
+    .anyOf(allRecipeIds)
+    .toArray();
+
+  const nameByRecipeId = new Map<string, string>();
+  for (const entry of recipeEntries) {
+    const existing = nameByRecipeId.get(entry.recipeId);
+    if (!existing || entry.type === "photo") {
+      nameByRecipeId.set(entry.recipeId, entry.name);
     }
-  });
+  }
 
-  return Array.from(map.values());
+  const map = new Map<string, ConsolidatedIngredient>();
+  const data = recipesData as unknown as Record<string, RecipeDetails>;
+
+  for (const slot of slots) {
+    for (const recipeId of slot.recipeIds) {
+      const jsonKey = toJsonKey(recipeId);
+      const details = data[recipeId] || data[jsonKey];
+      if (!details) continue;
+
+      const source: IngredientSource = {
+        recipeId,
+        recipeName: cleanRecipeName(nameByRecipeId.get(recipeId) ?? recipeId),
+        day: slot.day,
+        slot: slot.slot,
+      };
+
+      for (const ing of details.ingredients) {
+        const qty = parseFloat(ing.quantity);
+        if (isNaN(qty)) continue;
+        const key = `${ing.name.toLowerCase()}-${ing.unit}`;
+        const existing = map.get(key);
+        if (existing) {
+          existing.totalQuantity += qty;
+          const alreadyListed = existing.sources.some(
+            (s) => s.recipeId === source.recipeId && s.day === source.day && s.slot === source.slot,
+          );
+          if (!alreadyListed) existing.sources.push(source);
+        } else {
+          map.set(key, {
+            key,
+            name: ing.name,
+            totalQuantity: qty,
+            unit: ing.unit,
+            category: ing.category as IngredientCategory | undefined,
+            sources: [source],
+          });
+        }
+      }
+    }
+  }
+
+  return Array.from(map.values()).sort((a, b) =>
+    a.name.localeCompare(b.name, "fr"),
+  );
 };

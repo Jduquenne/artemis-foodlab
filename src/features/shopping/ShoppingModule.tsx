@@ -1,75 +1,116 @@
 import { useState, useMemo } from 'react';
-import { Printer, CheckCircle2, Circle } from 'lucide-react';
+import { Printer, ShoppingCart } from 'lucide-react';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { addDays } from 'date-fns';
 import { IngredientCategory } from '../../core/domain/types';
+import { getNextWeekShoppingList, ConsolidatedIngredient } from '../../core/utils/shoppingLogic';
+import { getMonday, getWeekRange, getWeekNumber } from '../../shared/utils/weekUtils';
+import { markScrolling } from '../../shared/utils/scrollGuard';
+import { CategoryCard } from './components/CategoryCard';
 
-// src/features/shopping/ShoppingModule.tsx
+const CATEGORY_ORDER: IngredientCategory[] = [
+    IngredientCategory.FRUIT_VEGETABLE,
+    IngredientCategory.MEAT,
+    IngredientCategory.FISH,
+    IngredientCategory.DELI,
+    IngredientCategory.DAIRY,
+    IngredientCategory.FARM,
+    IngredientCategory.BAKERY,
+    IngredientCategory.STARCH,
+    IngredientCategory.CANNED,
+    IngredientCategory.SWEET_GROCERY,
+    IngredientCategory.DRIED_FRUIT,
+    IngredientCategory.SPICE_CONDIMENT,
+    IngredientCategory.FROZEN,
+    IngredientCategory.RECIPE,
+    IngredientCategory.INTERNET,
+    IngredientCategory.NON_PURCHASE,
+    IngredientCategory.UNKNOWN,
+];
 
 export const ShoppingModule = () => {
-    // Simulation de données consolidées (À remplacer par le hook de ton store plus tard)
-    const [items, setItems] = useState([
-        { name: 'Tomates', totalQuantity: 5, unit: 'pcs', category: IngredientCategory.VEGETABLE, checked: false },
-        { name: 'Poulet', totalQuantity: 500, unit: 'g', category: IngredientCategory.MEAT, checked: false },
-        { name: 'Pâtes', totalQuantity: 1, unit: 'kg', category: IngredientCategory.DRY, checked: true },
-    ]);
+    const [checked, setChecked] = useState<Set<string>>(new Set());
 
-    const toggleItem = (index: number) => {
-        const newItems = [...items];
-        newItems[index].checked = !newItems[index].checked;
-        setItems(newItems);
+    const nextMonday = useMemo(() => addDays(getMonday(new Date()), 7), []);
+    const nextWeekNumber = useMemo(() => getWeekNumber(nextMonday), [nextMonday]);
+    const nextWeekRange = useMemo(() => getWeekRange(nextMonday), [nextMonday]);
+
+    const ingredients = useLiveQuery(() => getNextWeekShoppingList(), []);
+
+    const toggleItem = (key: string) => {
+        setChecked(prev => {
+            const next = new Set(prev);
+            if (next.has(key)) next.delete(key);
+            else next.add(key);
+            return next;
+        });
     };
 
-    // Groupement par catégories pour l'affichage
     const groupedItems = useMemo(() => {
-        return Object.values(IngredientCategory).map(cat => ({
-            category: cat,
-            list: items.filter(i => i.category === cat)
-        })).filter(group => group.list.length > 0);
-    }, [items]);
+        if (!ingredients) return [];
+        const groups: { label: string; list: ConsolidatedIngredient[] }[] = CATEGORY_ORDER
+            .map(cat => ({ label: cat as string, list: ingredients.filter(i => i.category === cat) }))
+            .filter(g => g.list.length > 0);
+        const uncategorized = ingredients.filter(i => !i.category || !CATEGORY_ORDER.includes(i.category));
+        if (uncategorized.length > 0) groups.push({ label: 'Autres', list: uncategorized });
+        return groups;
+    }, [ingredients]);
+
+    const uncheckedCount = ingredients
+        ? ingredients.filter(i => !checked.has(i.key)).length
+        : 0;
 
     return (
-        <div className="h-full flex flex-col gap-6 overflow-hidden">
-            {/* HEADER ACTIONS */}
-            <div className="flex justify-between items-center shrink-0">
+        <div className="h-full flex flex-col gap-4 overflow-hidden">
+            <div className="flex justify-between items-start shrink-0">
                 <div>
-                    <h1 className="text-3xl font-black text-slate-900">Ma Liste</h1>
-                    <p className="text-slate-500">{items.filter(i => !i.checked).length} articles restants</p>
+                    <h1 className="text-3xl font-black text-slate-900">Liste de courses</h1>
+                    <p className="text-slate-500 text-sm">
+                        Semaine {nextWeekNumber} — {nextWeekRange}
+                    </p>
+                    {ingredients && (
+                        <p className="text-sm font-medium text-orange-600 mt-0.5">
+                            {uncheckedCount} article{uncheckedCount !== 1 ? 's' : ''} restant{uncheckedCount !== 1 ? 's' : ''}
+                        </p>
+                    )}
                 </div>
                 <button
                     onClick={() => window.print()}
-                    className="flex items-center gap-2 bg-white dark:bg-slate-100 border border-slate-200 px-4 py-2 rounded-xl font-bold hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
+                    className="flex items-center gap-2 bg-white dark:bg-slate-100 border border-slate-200 px-4 py-2 rounded-xl font-bold text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors shrink-0"
                 >
-                    <Printer className="w-5 h-5" /> Imprimer
+                    <Printer className="w-4 h-4" />
+                    <span className="hidden sm:inline">Imprimer</span>
                 </button>
             </div>
 
-            {/* GRILLE DES RAYONS (Scroll interne uniquement ici) */}
-            <div className="flex-1 overflow-y-auto pr-2 grid grid-cols-1 tablet:grid-cols-2 lg:grid-cols-3 gap-6">
-                {groupedItems.map(group => (
-                    <div key={group.category} className="bg-white dark:bg-slate-100 border border-slate-200 rounded-3xl p-6 shadow-sm self-start">
-                        <h2 className="text-orange-600 font-black uppercase tracking-widest text-xs mb-4">
-                            {group.category}
-                        </h2>
-                        <div className="space-y-4">
-                            {group.list.map((item, idx) => (
-                                <div
-                                    key={idx}
-                                    onClick={() => toggleItem(items.indexOf(item))}
-                                    className={`flex items-center justify-between cursor-pointer group transition-opacity ${item.checked ? 'opacity-40' : 'opacity-100'}`}
-                                >
-                                    <div className="flex items-center gap-3">
-                                        {item.checked ? <CheckCircle2 className="text-green-500 w-5 h-5" /> : <Circle className="text-slate-300 w-5 h-5" />}
-                                        <span className={`font-medium ${item.checked ? 'line-through' : ''}`}>
-                                            {item.name}
-                                        </span>
-                                    </div>
-                                    <span className="text-slate-400 font-bold text-sm bg-slate-50 px-2 py-1 rounded-lg">
-                                        {item.totalQuantity} {item.unit}
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
+            <div
+                className="flex-1 min-h-0 overflow-y-auto pr-1"
+                onScroll={markScrolling}
+            >
+                {!ingredients ? (
+                    <div className="h-full flex items-center justify-center text-slate-400">
+                        Chargement...
                     </div>
-                ))}
+                ) : ingredients.length === 0 ? (
+                    <div className="h-full flex flex-col items-center justify-center gap-3 text-slate-400">
+                        <ShoppingCart className="w-12 h-12 opacity-30" />
+                        <p className="font-medium">Aucun repas prévu la semaine prochaine</p>
+                        <p className="text-sm">Planifie tes repas pour générer la liste</p>
+                    </div>
+                ) : (
+                    <div className="columns-1 tablet:columns-2 lg:columns-3 gap-4 pb-4">
+                        {groupedItems.map(group => (
+                            <div key={group.label} className="break-inside-avoid mb-4">
+                                <CategoryCard
+                                    label={group.label}
+                                    items={group.list}
+                                    checked={checked}
+                                    onToggle={toggleItem}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );

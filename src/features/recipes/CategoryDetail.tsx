@@ -5,6 +5,7 @@ import { FlipCard } from './components/FlipCard';
 import { ArrowLeft } from 'lucide-react';
 import { useMemo } from 'react';
 import { CATEGORIES } from '../../core/domain/categories';
+import { markScrolling } from '../../shared/utils/scrollGuard';
 
 export const CategoryDetail = () => {
     const { categoryId } = useParams();
@@ -48,7 +49,7 @@ export const CategoryDetail = () => {
                 <span className="shrink-0 text-sm font-bold text-slate-400">{recipes.length} recettes</span>
             </div>
 
-            <div className="flex-1 justify-center min-h-0 overflow-y-auto">
+            <div className="flex-1 justify-center min-h-0 overflow-y-auto" onScroll={markScrolling}>
                 <div
                     className="grid gap-3 pb-2"
                     style={{ gridTemplateColumns: 'repeat(auto-fill, 5cm)', gridAutoRows: '5.5cm', justifyContent: 'center' }}

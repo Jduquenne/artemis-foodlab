@@ -5,6 +5,7 @@ import { CategoryCard } from '../../shared/components/CategoryCard';
 import { FlipCard } from './components/FlipCard';
 import { useSearch } from '../../shared/hooks/useSearch';
 import { CATEGORIES } from '../../core/domain/categories';
+import { markScrolling } from '../../shared/utils/scrollGuard';
 
 export const RecipeModule = () => {
     const navigate = useNavigate();
@@ -39,7 +40,7 @@ export const RecipeModule = () => {
 
             <div className="flex-1 min-h-0 overflow-hidden">
                 {searchQuery.length >= 1 ? (
-                    <div className="h-full overflow-y-auto space-y-4 pr-1">
+                    <div className="h-full overflow-y-auto space-y-4 pr-1" onScroll={markScrolling}>
                         <h2 className="text-xl font-bold text-slate-700">
                             Résultats ({searchResults.length})
                         </h2>

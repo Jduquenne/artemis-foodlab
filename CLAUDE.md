@@ -75,6 +75,7 @@ Any change to the Dexie schema (adding/removing stores, indexes, or fields used 
 The app uses a **CSS variable-based theme** defined in `src/index.css`. Tailwind's `slate` color scale and `white` are remapped to warm food-palette values via `@theme inline`, so all `slate-*` and `white` utilities automatically follow the active theme.
 
 **Color variables** (defined in `:root` for light, `.dark` for dark):
+
 ```
 --slate-50  to --slate-900   warm stone/cream scale
 --white                      warm off-white (#faf6ef) — unchanged between themes
@@ -83,8 +84,10 @@ The app uses a **CSS variable-based theme** defined in `src/index.css`. Tailwind
 **Dark mode** is class-based: `@custom-variant dark (&:where(.dark, .dark *))` in CSS; the `.dark` class is toggled on `<html>` by `ThemeProvider` (`src/shared/contexts/ThemeContext.tsx`). The toggle button lives in the header via `ThemeToggle` (`src/shared/components/ThemeToggle.tsx`).
 
 **Rules:**
+
 - **Never use `bg-white` alone** — always pair it with `dark:bg-slate-100` (card surfaces) or let the page-level `bg-slate-50` handle dark backgrounds.
 - **Never add hardcoded hex colors** or Tailwind colors outside the `slate-*`/`orange-*` palette without being explicitly asked to add a new palette color.
 - **Backdrop overlays** (modals, drawers) must use `bg-black/X` — never `bg-slate-900/X`, because `slate-900` becomes a light color in dark mode.
 - **`white` is reserved for constant-light contexts** (`text-white` on orange buttons). Using `dark:bg-slate-100` is the correct way to create dark surfaces; never rely on `bg-white` resolving to a dark color.
 - When adding new palette colors (only when explicitly requested), define them as CSS variables in both `:root` and `.dark` in `index.css`, then register them via `@theme inline`.
+- On every scrolling page, use markscrolling on scroll event for overpass the scrolling + click problem

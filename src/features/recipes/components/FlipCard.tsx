@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { isScrollingActive } from '../../../shared/utils/scrollGuard';
 
 interface FlipCardProps {
     name: string;
@@ -42,7 +43,7 @@ export const FlipCard = ({ frontImage, backImage, recipeUrl, onClick }: FlipCard
     const handleTouchEnd = () => {
         if (timerRef.current) clearTimeout(timerRef.current);
 
-        if (!isLongPress.current && !isFlipped) {
+        if (!isLongPress.current && !isFlipped && !isScrollingActive()) {
             if (hasRecipe) onClick();
         }
     };

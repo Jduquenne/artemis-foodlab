@@ -9,6 +9,8 @@ export interface IngredientSource {
   recipeName: string;
   day: string;
   slot: string;
+  quantity: number;
+  unit: string;
 }
 
 export interface ConsolidatedIngredient {
@@ -74,17 +76,22 @@ export const getNextWeekShoppingList = async (): Promise<ConsolidatedIngredient[
       const details = data[recipeId] || data[jsonKey];
       if (!details) continue;
 
-      const source: IngredientSource = {
-        recipeId,
-        recipeName: cleanRecipeName(nameByRecipeId.get(recipeId) ?? recipeId),
-        day: slot.day,
-        slot: slot.slot,
-      };
+      const recipeName = cleanRecipeName(nameByRecipeId.get(recipeId) ?? recipeId);
 
       for (const ing of details.ingredients) {
         const qty = parseFloat(ing.quantity);
         if (isNaN(qty)) continue;
         const key = `${ing.name.toLowerCase()}-${ing.unit}`;
+
+        const source: IngredientSource = {
+          recipeId,
+          recipeName,
+          day: slot.day,
+          slot: slot.slot,
+          quantity: qty,
+          unit: ing.unit,
+        };
+
         const existing = map.get(key);
         if (existing) {
           existing.totalQuantity += qty;

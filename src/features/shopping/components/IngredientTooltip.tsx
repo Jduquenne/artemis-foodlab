@@ -83,6 +83,10 @@ export const IngredientTooltip = ({ sources }: IngredientTooltipProps) => {
                                         {DAY_LABELS[src.day] ?? src.day}
                                         <span className="mx-1 text-slate-300">·</span>
                                         {SLOT_LABELS[src.slot] ?? src.slot}
+                                        <span className="mx-1 text-slate-300">·</span>
+                                        <span className="text-orange-500 font-medium">
+                                            {parseFloat(src.quantity.toFixed(2))}&nbsp;{src.unit}
+                                        </span>
                                     </p>
                                 </div>
                             </div>

@@ -22,9 +22,9 @@ import {
 
 const MEAL_SLOTS = [
     { id: 'breakfast', label: 'Petit Déjeuner', icon: '☕', multi: true },
-    { id: 'lunch',     label: 'Déjeuner',       icon: '🍴', multi: false },
-    { id: 'snack',     label: 'Goûter',          icon: '🍎', multi: true },
-    { id: 'dinner',    label: 'Dîner',           icon: '🌙', multi: false },
+    { id: 'lunch', label: 'Déjeuner', icon: '🍴', multi: false },
+    { id: 'snack', label: 'Goûter', icon: '🍎', multi: true },
+    { id: 'dinner', label: 'Dîner', icon: '🌙', multi: false },
 ] as const;
 
 type SlotId = typeof MEAL_SLOTS[number]['id'];
@@ -157,7 +157,7 @@ export const PlanningModule = () => {
                         </button>
                         <input
                             type="date"
-                            className="h-8 px-2 bg-slate-100 dark:bg-slate-200 rounded-xl text-xs font-semibold text-slate-500 border-0 outline-none cursor-pointer hover:bg-orange-50 focus:ring-2 focus:ring-orange-400 [color-scheme:light] dark:[color-scheme:dark] transition-colors"
+                            className="h-8 px-2 bg-slate-100 dark:bg-slate-200 rounded-xl text-xs font-semibold text-slate-500 border-0 outline-none cursor-pointer hover:bg-orange-50 focus:ring-2 focus:ring-orange-400 scheme-light dark:scheme-dark transition-colors"
                             onChange={(e) => e.target.value && setSelectedDate(new Date(e.target.value))}
                         />
                         <button onClick={() => changeWeek(1)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-200 rounded-xl transition-colors">

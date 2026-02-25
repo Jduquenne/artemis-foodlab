@@ -1,8 +1,8 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Printer, ShoppingCart, CalendarDays } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useNavigate } from 'react-router-dom';
-import { IngredientCategory } from '../../core/domain/types';
+import { IngredientCategory, ShoppingDay } from '../../core/domain/types';
 import { getShoppingListForDays, ConsolidatedIngredient } from '../../core/utils/shoppingLogic';
 import { markScrolling } from '../../shared/utils/scrollGuard';
 import { useMenuStore } from '../../shared/store/useMenuStore';
@@ -28,10 +28,42 @@ const CATEGORY_ORDER: IngredientCategory[] = [
     IngredientCategory.UNKNOWN,
 ];
 
+function getPeriodKey(days: ShoppingDay[]): string {
+    return [...days].map(d => `${d.year}-${d.week}-${d.day}`).sort().join('|');
+}
+
 export const ShoppingModule = () => {
     const navigate = useNavigate();
-    const [checked, setChecked] = useState<Set<string>>(new Set());
     const shoppingDays = useMenuStore((s) => s.shoppingDays);
+    const periodKey = useMemo(() => getPeriodKey(shoppingDays), [shoppingDays]);
+
+    const [checked, setChecked] = useState<Set<string>>(() => {
+        try {
+            const s = JSON.parse(localStorage.getItem('cipe_shopping_checked') ?? 'null');
+            if (s?.periodKey === getPeriodKey(useMenuStore.getState().shoppingDays)) {
+                return new Set<string>(s.keys);
+            }
+        } catch {}
+        return new Set<string>();
+    });
+
+    const [stocks, setStocksState] = useState<Record<string, number>>(() => {
+        try {
+            const s = JSON.parse(localStorage.getItem('cipe_shopping_stocks') ?? 'null');
+            if (s?.periodKey === getPeriodKey(useMenuStore.getState().shoppingDays)) {
+                return s.data ?? {};
+            }
+        } catch {}
+        return {};
+    });
+
+    useEffect(() => {
+        localStorage.setItem('cipe_shopping_checked', JSON.stringify({ periodKey, keys: [...checked] }));
+    }, [periodKey, checked]);
+
+    useEffect(() => {
+        localStorage.setItem('cipe_shopping_stocks', JSON.stringify({ periodKey, data: stocks }));
+    }, [periodKey, stocks]);
 
     const ingredients = useLiveQuery(
         () => getShoppingListForDays(shoppingDays),
@@ -41,8 +73,16 @@ export const ShoppingModule = () => {
     const toggleItem = (key: string) => {
         setChecked(prev => {
             const next = new Set(prev);
-            if (next.has(key)) next.delete(key);
-            else next.add(key);
+            next.has(key) ? next.delete(key) : next.add(key);
+            return next;
+        });
+    };
+
+    const setStock = (key: string, value: number) => {
+        setStocksState(prev => {
+            const next = { ...prev };
+            if (value <= 0) delete next[key];
+            else next[key] = value;
             return next;
         });
     };
@@ -57,9 +97,14 @@ export const ShoppingModule = () => {
         return groups;
     }, [ingredients]);
 
-    const uncheckedCount = ingredients
-        ? ingredients.filter(i => !checked.has(i.key)).length
-        : 0;
+    const uncheckedCount = useMemo(() => {
+        if (!ingredients) return 0;
+        return ingredients.filter(i => {
+            if (checked.has(i.key)) return false;
+            if (i.totalQuantity === 0) return true;
+            return Math.max(0, i.totalQuantity - (stocks[i.key] ?? 0)) > 0;
+        }).length;
+    }, [ingredients, checked, stocks]);
 
     const daysLabel = useMemo(() => {
         if (shoppingDays.length === 0) return null;
@@ -129,7 +174,9 @@ export const ShoppingModule = () => {
                                     label={group.label}
                                     items={group.list}
                                     checked={checked}
+                                    stocks={stocks}
                                     onToggle={toggleItem}
+                                    onSetStock={setStock}
                                 />
                             </div>
                         ))}

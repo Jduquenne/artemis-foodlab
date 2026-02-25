@@ -85,7 +85,7 @@ export const IngredientTooltip = ({ sources }: IngredientTooltipProps) => {
                                         {SLOT_LABELS[src.slot] ?? src.slot}
                                         <span className="mx-1 text-slate-300">·</span>
                                         <span className="text-orange-500 font-medium">
-                                            {parseFloat(src.quantity.toFixed(2))}&nbsp;{src.unit}
+                                            {src.quantity === 0 ? '—' : `${parseFloat(src.quantity.toFixed(2))}\u00a0${src.unit}`}
                                         </span>
                                     </p>
                                 </div>

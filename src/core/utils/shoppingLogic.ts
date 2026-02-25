@@ -41,8 +41,8 @@ async function aggregateSlots(slots: MealSlot[]): Promise<ConsolidatedIngredient
       const recipeName = cleanRecipeName(details.name);
 
       for (const ing of details.ingredients) {
-        const qty = parseFloat(ing.quantity);
-        if (isNaN(qty)) continue;
+        const parsed = parseFloat(ing.quantity);
+        const qty = isNaN(parsed) ? 0 : parsed;
         const key = `${ing.name.toLowerCase()}-${ing.unit}`;
 
         const source: IngredientSource = {

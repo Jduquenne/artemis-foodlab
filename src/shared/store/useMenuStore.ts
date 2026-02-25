@@ -1,14 +1,17 @@
 import { create } from "zustand";
 import { getISOWeek, getISOWeekYear } from "date-fns";
 import { getWeekId } from "../../core/utils/dateUtils";
+import { ShoppingDay } from "../../core/domain/types";
 
 interface MenuState {
   currentWeek: number;
   currentYear: number;
   currentWeekId: string;
   isTransitionPopupOpen: boolean;
+  shoppingDays: ShoppingDay[];
   initWeek: () => Promise<void>;
   setTransitionPopup: (open: boolean) => void;
+  setShoppingDays: (days: ShoppingDay[]) => void;
 }
 
 export const useMenuStore = create<MenuState>((set) => ({
@@ -16,6 +19,7 @@ export const useMenuStore = create<MenuState>((set) => ({
   isTransitionPopupOpen: false,
   currentWeek: getISOWeek(new Date()),
   currentYear: getISOWeekYear(new Date()),
+  shoppingDays: JSON.parse(localStorage.getItem("cipe_shopping_days") ?? "[]"),
 
   initWeek: async () => {
     const todayId = getWeekId();
@@ -28,4 +32,9 @@ export const useMenuStore = create<MenuState>((set) => ({
   },
 
   setTransitionPopup: (open) => set({ isTransitionPopupOpen: open }),
+
+  setShoppingDays: (days) => {
+    localStorage.setItem("cipe_shopping_days", JSON.stringify(days));
+    set({ shoppingDays: days });
+  },
 }));

@@ -1,13 +1,16 @@
 import React, { useState, useMemo } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ShoppingCart, Check } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../../core/services/db';
 import { MealSlot } from './components/MealSlot';
 import { MultiMealSlot } from './components/MultiMealSlot';
 import { RecipePicker } from './components/RecipePicker';
 import { MealDragOverlay } from './components/MealDragOverlay';
+import { ShoppingSelectionBar } from './components/ShoppingSelectionBar';
 import { getWeekNumber, getMonday, getWeekRange } from '../../shared/utils/weekUtils';
 import { useNavigate } from 'react-router-dom';
+import { useMenuStore } from '../../shared/store/useMenuStore';
+import { ShoppingDay } from '../../core/domain/types';
 import {
     DndContext,
     DragEndEvent,
@@ -34,9 +37,13 @@ const DAYS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dima
 
 export const PlanningModule = () => {
     const navigate = useNavigate();
+    const { shoppingDays, setShoppingDays } = useMenuStore();
+
     const [pickerSlot, setPickerSlot] = useState<{ day: string; slot: SlotId } | null>(null);
     const [activeDragId, setActiveDragId] = useState<string | null>(null);
     const [selectedDate, setSelectedDate] = useState(new Date());
+    const [isSelectionMode, setIsSelectionMode] = useState(false);
+    const [draftDays, setDraftDays] = useState<ShoppingDay[]>([]);
 
     const monday = useMemo(() => getMonday(selectedDate), [selectedDate]);
     const weekNumber = useMemo(() => getWeekNumber(monday), [monday]);
@@ -134,9 +141,41 @@ export const PlanningModule = () => {
         }
     };
 
+    const enterSelectionMode = () => {
+        setDraftDays([...shoppingDays]);
+        setIsSelectionMode(true);
+        setPickerSlot(null);
+    };
+
+    const cancelSelection = () => {
+        setIsSelectionMode(false);
+    };
+
+    const confirmSelection = () => {
+        setShoppingDays(draftDays);
+        setIsSelectionMode(false);
+    };
+
+    const toggleDraftDay = (y: number, w: number, day: string) => {
+        setDraftDays(prev => {
+            const exists = prev.some(d => d.year === y && d.week === w && d.day === day);
+            if (exists) return prev.filter(d => !(d.year === y && d.week === w && d.day === day));
+            if (prev.length >= 10) return prev;
+            return [...prev, { year: y, week: w, day }];
+        });
+    };
+
+    const isDayDraft = (day: string) =>
+        draftDays.some(d => d.year === year && d.week === weekNumber && d.day === day);
+
+    const isDayConfirmed = (day: string) =>
+        shoppingDays.some(d => d.year === year && d.week === weekNumber && d.day === day);
+
+    const atMax = draftDays.length >= 10;
+
     return (
         <DndContext
-            sensors={sensors}
+            sensors={isSelectionMode ? [] : sensors}
             collisionDetection={closestCenter}
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
@@ -151,27 +190,62 @@ export const PlanningModule = () => {
                         </span>
                     </div>
 
-                    <div className="flex items-center gap-1 self-center bg-white dark:bg-slate-100 px-2 py-1 rounded-2xl shadow-sm border border-slate-200 shrink-0">
-                        <button onClick={() => changeWeek(-1)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-200 rounded-xl transition-colors">
-                            <ChevronLeft size={18} className="text-slate-600" />
-                        </button>
-                        <input
-                            type="date"
-                            className="h-8 px-2 bg-slate-100 dark:bg-slate-200 rounded-xl text-xs font-semibold text-slate-500 border-0 outline-none cursor-pointer hover:bg-orange-50 focus:ring-2 focus:ring-orange-400 scheme-light dark:scheme-dark transition-colors"
-                            onChange={(e) => e.target.value && setSelectedDate(new Date(e.target.value))}
-                        />
-                        <button onClick={() => changeWeek(1)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-200 rounded-xl transition-colors">
-                            <ChevronRight size={18} className="text-slate-600" />
-                        </button>
+                    <div className="flex items-center gap-2 self-center shrink-0">
+                        <div className="flex items-center gap-1 bg-white dark:bg-slate-100 px-2 py-1 rounded-2xl shadow-sm border border-slate-200">
+                            <button onClick={() => changeWeek(-1)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-200 rounded-xl transition-colors">
+                                <ChevronLeft size={18} className="text-slate-600" />
+                            </button>
+                            <input
+                                type="date"
+                                className="h-8 px-2 bg-slate-100 dark:bg-slate-200 rounded-xl text-xs font-semibold text-slate-500 border-0 outline-none cursor-pointer hover:bg-orange-50 focus:ring-2 focus:ring-orange-400 scheme-light dark:scheme-dark transition-colors"
+                                onChange={(e) => e.target.value && setSelectedDate(new Date(e.target.value))}
+                            />
+                            <button onClick={() => changeWeek(1)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-200 rounded-xl transition-colors">
+                                <ChevronRight size={18} className="text-slate-600" />
+                            </button>
+                        </div>
+
+                        {!isSelectionMode && (
+                            <button
+                                onClick={enterSelectionMode}
+                                className={[
+                                    'flex items-center gap-1.5 px-3 py-2 rounded-2xl shadow-sm border font-bold text-sm transition-colors',
+                                    shoppingDays.length > 0
+                                        ? 'bg-orange-500 border-orange-400 text-white hover:bg-orange-600'
+                                        : 'bg-white dark:bg-slate-100 border-slate-200 text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200',
+                                ].join(' ')}
+                            >
+                                <ShoppingCart size={15} />
+                                <span className="hidden sm:inline">Courses</span>
+                            </button>
+                        )}
                     </div>
                 </div>
 
                 <div className="flex-1 grid grid-cols-[repeat(7,1fr)] grid-rows-[30px_repeat(4,1fr)] gap-3 min-h-0 px-2 pb-2">
-                    {DAYS.map(day => (
-                        <div key={day} className="flex items-center justify-center font-black text-slate-400 uppercase text-xs tracking-widest">
-                            {day}
-                        </div>
-                    ))}
+                    {DAYS.map(day => {
+                        const selected = isSelectionMode && isDayDraft(day);
+                        const confirmed = !isSelectionMode && isDayConfirmed(day);
+                        const blocked = isSelectionMode && !selected && atMax;
+
+                        return (
+                            <div
+                                key={day}
+                                onClick={isSelectionMode && !blocked ? () => toggleDraftDay(year, weekNumber, day) : undefined}
+                                className={[
+                                    'flex items-center justify-center gap-1 font-black uppercase text-xs tracking-widest rounded-lg transition-colors select-none',
+                                    isSelectionMode ? (blocked ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer') : '',
+                                    selected ? 'text-orange-500 bg-orange-100 dark:bg-orange-900/30' : '',
+                                    confirmed ? 'text-orange-400' : 'text-slate-400',
+                                    isSelectionMode && !selected && !blocked ? 'hover:bg-slate-100 dark:hover:bg-slate-700/40' : '',
+                                ].join(' ')}
+                            >
+                                {selected && <Check className="w-3 h-3 shrink-0" />}
+                                {confirmed && !isSelectionMode && <ShoppingCart className="w-2.5 h-2.5 shrink-0" />}
+                                <span>{day.slice(0, 3)}</span>
+                            </div>
+                        );
+                    })}
 
                     {MEAL_SLOTS.map((mealType) => (
                         <React.Fragment key={mealType.id}>
@@ -188,8 +262,8 @@ export const PlanningModule = () => {
                                                 icon={mealType.icon}
                                                 slotId={slotId}
                                                 recipeIds={recipeIds}
-                                                onAdd={() => setPickerSlot({ day, slot: mealType.id })}
-                                                onRemoveRecipe={(rid) => handleRemoveRecipe(day, mealType.id, rid)}
+                                                onAdd={isSelectionMode ? () => {} : () => setPickerSlot({ day, slot: mealType.id })}
+                                                onRemoveRecipe={isSelectionMode ? () => {} : (rid) => handleRemoveRecipe(day, mealType.id, rid)}
                                                 onNavigateToRecipe={(rid) => navigate(`/recipes/detail/${rid}`)}
                                             />
                                         ) : (
@@ -199,9 +273,9 @@ export const PlanningModule = () => {
                                                 slotId={slotId}
                                                 recipeIds={recipeIds}
                                                 onNavigate={() => navigate(`/recipes/detail/${savedMeal!.recipeIds[0]}`)}
-                                                onOpenPicker={() => setPickerSlot({ day, slot: mealType.id })}
-                                                onModify={() => setPickerSlot({ day, slot: mealType.id })}
-                                                onDelete={() => handleDeleteMeal(day, mealType.id)}
+                                                onOpenPicker={isSelectionMode ? () => {} : () => setPickerSlot({ day, slot: mealType.id })}
+                                                onModify={isSelectionMode ? () => {} : () => setPickerSlot({ day, slot: mealType.id })}
+                                                onDelete={isSelectionMode ? () => {} : () => handleDeleteMeal(day, mealType.id)}
                                             />
                                         )}
                                     </div>
@@ -211,7 +285,15 @@ export const PlanningModule = () => {
                     ))}
                 </div>
 
-                {pickerSlot && (
+                {isSelectionMode && (
+                    <ShoppingSelectionBar
+                        count={draftDays.length}
+                        onConfirm={confirmSelection}
+                        onCancel={cancelSelection}
+                    />
+                )}
+
+                {!isSelectionMode && pickerSlot && (
                     <RecipePicker
                         slotName={`${pickerSlot.day} - ${pickerSlot.slot}`}
                         existingRecipeIds={

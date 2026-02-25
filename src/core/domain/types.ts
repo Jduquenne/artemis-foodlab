@@ -72,3 +72,9 @@ export interface RecipeDetails {
   portion: number;
   ingredients: Ingredient[];
 }
+
+export interface ShoppingDay {
+  year: number;
+  week: number;
+  day: string;
+}

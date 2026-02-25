@@ -1,7 +1,8 @@
 import { addDays } from "date-fns";
 import { getISOWeek, getISOWeekYear } from "date-fns";
 import { db } from "../services/db";
-import { RecipeDetails, IngredientCategory } from "../domain/types";
+import { MealSlot } from "../services/db";
+import { RecipeDetails, IngredientCategory, ShoppingDay } from "../domain/types";
 import recipesData from "../domain/recipes-ingredients.json";
 
 export interface IngredientSource {
@@ -42,16 +43,7 @@ function toJsonKey(recipeId: string): string {
   return `${prefix}_${numStr.toUpperCase()}`;
 }
 
-export const getNextWeekShoppingList = async (): Promise<ConsolidatedIngredient[]> => {
-  const nextWeekDate = addDays(new Date(), 7);
-  const nextWeek = getISOWeek(nextWeekDate);
-  const nextYear = getISOWeekYear(nextWeekDate);
-
-  const slots = await db.planning
-    .where("[year+week]")
-    .equals([nextYear, nextWeek])
-    .toArray();
-
+async function aggregateSlots(slots: MealSlot[]): Promise<ConsolidatedIngredient[]> {
   const allRecipeIds = [...new Set(slots.flatMap((s) => s.recipeIds))];
 
   const recipeEntries = await db.recipes
@@ -116,4 +108,36 @@ export const getNextWeekShoppingList = async (): Promise<ConsolidatedIngredient[
   return Array.from(map.values()).sort((a, b) =>
     a.name.localeCompare(b.name, "fr"),
   );
+}
+
+export const getNextWeekShoppingList = async (): Promise<ConsolidatedIngredient[]> => {
+  const nextWeekDate = addDays(new Date(), 7);
+  const nextWeek = getISOWeek(nextWeekDate);
+  const nextYear = getISOWeekYear(nextWeekDate);
+
+  const slots = await db.planning
+    .where("[year+week]")
+    .equals([nextYear, nextWeek])
+    .toArray();
+
+  return aggregateSlots(slots);
+};
+
+export const getShoppingListForDays = async (days: ShoppingDay[]): Promise<ConsolidatedIngredient[]> => {
+  if (days.length === 0) return [];
+
+  const weekMap = new Map<string, { year: number; week: number; daySet: Set<string> }>();
+  for (const d of days) {
+    const key = `${d.year}-${d.week}`;
+    if (!weekMap.has(key)) weekMap.set(key, { year: d.year, week: d.week, daySet: new Set() });
+    weekMap.get(key)!.daySet.add(d.day);
+  }
+
+  const slots: MealSlot[] = [];
+  for (const { year, week, daySet } of weekMap.values()) {
+    const weekSlots = await db.planning.where("[year+week]").equals([year, week]).toArray();
+    slots.push(...weekSlots.filter((s) => daySet.has(s.day)));
+  }
+
+  return aggregateSlots(slots);
 };

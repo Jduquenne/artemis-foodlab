@@ -1,11 +1,11 @@
 import { useState, useMemo } from 'react';
-import { Printer, ShoppingCart } from 'lucide-react';
+import { Printer, ShoppingCart, CalendarDays } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { addDays } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 import { IngredientCategory } from '../../core/domain/types';
-import { getNextWeekShoppingList, ConsolidatedIngredient } from '../../core/utils/shoppingLogic';
-import { getMonday, getWeekRange, getWeekNumber } from '../../shared/utils/weekUtils';
+import { getShoppingListForDays, ConsolidatedIngredient } from '../../core/utils/shoppingLogic';
 import { markScrolling } from '../../shared/utils/scrollGuard';
+import { useMenuStore } from '../../shared/store/useMenuStore';
 import { CategoryCard } from './components/CategoryCard';
 
 const CATEGORY_ORDER: IngredientCategory[] = [
@@ -29,13 +29,14 @@ const CATEGORY_ORDER: IngredientCategory[] = [
 ];
 
 export const ShoppingModule = () => {
+    const navigate = useNavigate();
     const [checked, setChecked] = useState<Set<string>>(new Set());
+    const shoppingDays = useMenuStore((s) => s.shoppingDays);
 
-    const nextMonday = useMemo(() => addDays(getMonday(new Date()), 7), []);
-    const nextWeekNumber = useMemo(() => getWeekNumber(nextMonday), [nextMonday]);
-    const nextWeekRange = useMemo(() => getWeekRange(nextMonday), [nextMonday]);
-
-    const ingredients = useLiveQuery(() => getNextWeekShoppingList(), []);
+    const ingredients = useLiveQuery(
+        () => getShoppingListForDays(shoppingDays),
+        [shoppingDays]
+    );
 
     const toggleItem = (key: string) => {
         setChecked(prev => {
@@ -60,15 +61,23 @@ export const ShoppingModule = () => {
         ? ingredients.filter(i => !checked.has(i.key)).length
         : 0;
 
+    const daysLabel = useMemo(() => {
+        if (shoppingDays.length === 0) return null;
+        const n = shoppingDays.length;
+        return `${n} jour${n > 1 ? 's' : ''} sélectionné${n > 1 ? 's' : ''}`;
+    }, [shoppingDays]);
+
     return (
         <div className="h-full flex flex-col gap-4 overflow-hidden">
             <div className="flex justify-between items-start shrink-0">
                 <div>
                     <h1 className="text-3xl font-black text-slate-900">Liste de courses</h1>
-                    <p className="text-slate-500 text-sm">
-                        Semaine {nextWeekNumber} — {nextWeekRange}
-                    </p>
-                    {ingredients && (
+                    {daysLabel ? (
+                        <p className="text-slate-500 text-sm">{daysLabel}</p>
+                    ) : (
+                        <p className="text-slate-400 text-sm italic">Aucune période sélectionnée</p>
+                    )}
+                    {ingredients && shoppingDays.length > 0 && (
                         <p className="text-sm font-medium text-orange-600 mt-0.5">
                             {uncheckedCount} article{uncheckedCount !== 1 ? 's' : ''} restant{uncheckedCount !== 1 ? 's' : ''}
                         </p>
@@ -87,15 +96,30 @@ export const ShoppingModule = () => {
                 className="flex-1 min-h-0 overflow-y-auto pr-1"
                 onScroll={markScrolling}
             >
-                {!ingredients ? (
+                {shoppingDays.length === 0 ? (
+                    <div className="h-full flex flex-col items-center justify-center gap-4 text-slate-400">
+                        <CalendarDays className="w-12 h-12 opacity-30" />
+                        <div className="text-center">
+                            <p className="font-medium text-slate-500">Aucune période de courses sélectionnée</p>
+                            <p className="text-sm mt-1">Va dans le planning pour choisir tes jours</p>
+                        </div>
+                        <button
+                            onClick={() => navigate('/planning')}
+                            className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-5 py-2.5 rounded-xl font-bold transition-colors"
+                        >
+                            <CalendarDays className="w-4 h-4" />
+                            Aller au planning
+                        </button>
+                    </div>
+                ) : !ingredients ? (
                     <div className="h-full flex items-center justify-center text-slate-400">
                         Chargement...
                     </div>
                 ) : ingredients.length === 0 ? (
                     <div className="h-full flex flex-col items-center justify-center gap-3 text-slate-400">
                         <ShoppingCart className="w-12 h-12 opacity-30" />
-                        <p className="font-medium">Aucun repas prévu la semaine prochaine</p>
-                        <p className="text-sm">Planifie tes repas pour générer la liste</p>
+                        <p className="font-medium">Aucun repas planifié sur cette période</p>
+                        <p className="text-sm">Planifie des repas pour générer la liste</p>
                     </div>
                 ) : (
                     <div className="columns-1 tablet:columns-2 lg:columns-3 gap-4 pb-4">

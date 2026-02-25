@@ -66,11 +66,32 @@ export interface Macronutrients {
   fibers: number;
 }
 
+export enum MealType {
+  BREAKFAST = "breakfast",
+  LUNCH = "lunch",
+  DINNER = "dinner",
+  SNACK = "snack",
+}
+
+export enum RecipeKind {
+  DISH = "dish",
+  INGREDIENT = "ingredient",
+  BASE = "base",
+}
+
+export interface RecipeAsset {
+  url: string;
+}
+
 export interface RecipeDetails {
   name: string;
+  categoryId: string;
+  mealType: MealType[];
+  kind: RecipeKind;
   macronutriment: Macronutrients;
   portion: number;
   ingredients: Ingredient[];
+  assets: Partial<Record<"photo" | "ingredients" | "recipes", RecipeAsset>>;
 }
 
 export interface ShoppingDay {

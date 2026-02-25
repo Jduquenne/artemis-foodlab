@@ -1,7 +1,6 @@
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './shared/components/Layout';
 import { useEffect } from 'react';
-import { seedDatabase } from './core/services/seeder';
 import { useMenuStore } from './shared/store/useMenuStore';
 
 // Imports des Modules Fonctionnels
@@ -16,9 +15,6 @@ function App() {
   const initWeek = useMenuStore((state) => state.initWeek);
 
   useEffect(() => {
-    // 1. Initialise la base de données avec des recettes si vide
-    seedDatabase();
-    // 2. Vérifie si on a changé de semaine (pour le Planning)
     initWeek();
   }, [initWeek]);
 

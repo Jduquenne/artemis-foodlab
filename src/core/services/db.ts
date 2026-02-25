@@ -1,16 +1,6 @@
 import Dexie, { Table } from "dexie";
 import { getWeekNumber } from "../../shared/utils/weekUtils";
 
-export interface RecipeEntry {
-  id?: string;
-  recipeId: string;
-  name: string;
-  type: string;
-  url: string;
-  categoryId: string;
-  ingredients: string[];
-}
-
 export interface MealSlot {
   id: string;
   day: string;
@@ -21,7 +11,6 @@ export interface MealSlot {
 }
 
 export class MyDatabase extends Dexie {
-  recipes!: Table<RecipeEntry>;
   planning!: Table<MealSlot>;
 
   constructor() {
@@ -66,6 +55,10 @@ export class MyDatabase extends Dexie {
             }
           });
       });
+    this.version(6).stores({
+      recipes: null,
+      planning: "id, [year+week], year, week",
+    });
   }
 }
 

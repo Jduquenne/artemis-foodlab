@@ -2,23 +2,19 @@ import { db } from "./db";
 
 export const exportData = async () => {
   try {
-    const recipes = await db.recipes.toArray();
     const planning = await db.planning.toArray();
 
     const data = {
       timestamp: new Date().toISOString(),
-      version: 1,
-      recipes,
+      version: 2,
       planning,
     };
 
-    // Création du Blob pour le téléchargement
     const blob = new Blob([JSON.stringify(data, null, 2)], {
       type: "application/json",
     });
     const url = URL.createObjectURL(blob);
 
-    // Déclenchement du téléchargement navigateur
     const link = document.createElement("a");
     link.href = url;
     link.download = `cipe-backup-${new Date().toISOString().slice(0, 10)}.json`;
@@ -36,18 +32,11 @@ export const importData = async (file: File) => {
     const text = await file.text();
     const data = JSON.parse(text);
 
-    if (!data.recipes || !data.menus) {
+    if (!data.planning) {
       throw new Error("Format de fichier invalide");
     }
 
-    // Transaction atomique pour éviter les données corrompues
-    await db.transaction("rw", db.recipes, db.planning, async () => {
-      // Option A : On efface tout avant d'importer (Reset total)
-      // await db.recipes.clear();
-      // await db.planning.clear();
-
-      // Option B (choisie) : On fusionne (BulkPut écrase si l'ID existe déjà)
-      await db.recipes.bulkPut(data.recipes);
+    await db.transaction("rw", db.planning, async () => {
       await db.planning.bulkPut(data.planning);
     });
 

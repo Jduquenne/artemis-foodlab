@@ -3,7 +3,7 @@ import { getISOWeek, getISOWeekYear } from "date-fns";
 import { db } from "../services/db";
 import { MealSlot } from "../services/db";
 import { RecipeDetails, IngredientCategory, ShoppingDay } from "../domain/types";
-import recipesData from "../domain/recipes-ingredients.json";
+import recipesDb from "../domain/recipes-db.json";
 
 export interface IngredientSource {
   recipeId: string;
@@ -29,46 +29,16 @@ function cleanRecipeName(name: string): string {
     .trim();
 }
 
-export function toJsonKey(recipeId: string): string {
-  const parts = recipeId.split("-");
-  if (parts.length < 2) return recipeId.toUpperCase();
-  const prefix = parts[0].toUpperCase();
-  const numStr = parts.slice(1).join("-");
-  const numMatch = numStr.match(/^(\d+)(BIS)?$/i);
-  if (numMatch) {
-    const num = parseInt(numMatch[1], 10).toString().padStart(2, "0");
-    const bis = numMatch[2] ? numMatch[2].toUpperCase() : "";
-    return `${prefix}_${num}${bis}`;
-  }
-  return `${prefix}_${numStr.toUpperCase()}`;
-}
-
 async function aggregateSlots(slots: MealSlot[]): Promise<ConsolidatedIngredient[]> {
-  const allRecipeIds = [...new Set(slots.flatMap((s) => s.recipeIds))];
-
-  const recipeEntries = await db.recipes
-    .where("recipeId")
-    .anyOf(allRecipeIds)
-    .toArray();
-
-  const nameByRecipeId = new Map<string, string>();
-  for (const entry of recipeEntries) {
-    const existing = nameByRecipeId.get(entry.recipeId);
-    if (!existing || entry.type === "photo") {
-      nameByRecipeId.set(entry.recipeId, entry.name);
-    }
-  }
-
+  const data = recipesDb as unknown as Record<string, RecipeDetails>;
   const map = new Map<string, ConsolidatedIngredient>();
-  const data = recipesData as unknown as Record<string, RecipeDetails>;
 
   for (const slot of slots) {
     for (const recipeId of slot.recipeIds) {
-      const jsonKey = toJsonKey(recipeId);
-      const details = data[recipeId] || data[jsonKey];
+      const details = data[recipeId];
       if (!details) continue;
 
-      const recipeName = cleanRecipeName(nameByRecipeId.get(recipeId) ?? recipeId);
+      const recipeName = cleanRecipeName(details.name);
 
       for (const ing of details.ingredients) {
         const qty = parseFloat(ing.quantity);

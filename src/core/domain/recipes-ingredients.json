@@ -31330,60 +31330,67 @@
         "id": "002",
         "name": "Betterave rouge",
         "category": "Fruits et légumes",
-        "quantity": "250g + 500g (crème)",
-        "unit": null
+        "quantity": "250g",
+        "unit": "g"
       },
       {
         "id": "003",
-        "name": "Noix de cajou",
-        "category": "Fruits secs",
-        "quantity": "100g (crème)",
-        "unit": null
+        "name": "Betterave rouge",
+        "category": "Fruits et légumes",
+        "quantity": "500g",
+        "unit": "g"
       },
       {
         "id": "004",
+        "name": "Noix de cajou",
+        "category": "Fruits secs",
+        "quantity": "100g",
+        "unit": "g"
+      },
+      {
+        "id": "005",
         "name": "Salade",
         "category": "Fruits et légumes",
         "quantity": null,
         "unit": null
       },
       {
-        "id": "005",
+        "id": "006",
         "name": "Échalote",
         "category": "Fruits et légumes",
         "quantity": null,
         "unit": null
       },
       {
-        "id": "006",
+        "id": "007",
         "name": "Ail",
         "category": "Fruits et légumes",
         "quantity": "2 (crème)",
         "unit": null
       },
       {
-        "id": "007",
+        "id": "008",
         "name": "Feta ou Fromage frais",
         "category": "Produits laitiers",
         "quantity": "50g/pers",
         "unit": null
       },
       {
-        "id": "008",
+        "id": "009",
         "name": "Huile de colza",
         "category": "Epices et condiments",
         "quantity": null,
         "unit": null
       },
       {
-        "id": "009",
+        "id": "010",
         "name": "Vinaigre balsamique",
         "category": "Epices et condiments",
         "quantity": null,
         "unit": null
       },
       {
-        "id": "010",
+        "id": "011",
         "name": "Persillade",
         "category": "Epices et condiments",
         "quantity": null,

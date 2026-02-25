@@ -1,6 +1,4 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useLiveQuery } from 'dexie-react-hooks';
-import { db } from '../../core/services/db';
 import { FlipCard } from './components/FlipCard';
 import { ArrowLeft, X } from 'lucide-react';
 import { useMemo } from 'react';
@@ -8,10 +6,9 @@ import { CATEGORIES } from '../../core/domain/categories';
 import { markScrolling } from '../../shared/utils/scrollGuard';
 import { MacroFilterButton } from './components/MacroFilterButton';
 import { PREDEFINED_FILTERS } from '../../core/domain/predefinedFilters';
-import { toJsonKey } from '../../core/utils/shoppingLogic';
 import { RecipeDetails } from '../../core/domain/types';
 import { useMenuStore } from '../../shared/store/useMenuStore';
-import recipesData from '../../core/domain/recipes-ingredients.json';
+import recipesDb from '../../core/domain/recipes-db.json';
 
 export const CategoryDetail = () => {
     const { categoryId } = useParams();
@@ -19,34 +16,25 @@ export const CategoryDetail = () => {
     const { activeFilterIds, setActiveFilterIds } = useMenuStore();
 
     const categoryInfo = CATEGORIES.find(cat => cat.id === categoryId);
-
-    const rawItems = useLiveQuery(
-        () => db.recipes.where('categoryId').equals(categoryId || '').toArray(),
-        [categoryId]
-    );
+    const data = recipesDb as unknown as Record<string, RecipeDetails>;
 
     const recipes = useMemo(() => {
-        if (!rawItems) return [];
-        const map = new Map();
-        rawItems.forEach(item => {
-            if (!map.has(item.recipeId)) {
-                map.set(item.recipeId, { id: item.recipeId, name: item.name, photoUrl: '', ingredientsUrl: '', recipeUrl: '' });
-            }
-            const entry = map.get(item.recipeId);
-            if (item.type === 'photo') entry.photoUrl = item.url;
-            if (item.type === 'ingredients') entry.ingredientsUrl = item.url;
-            if (item.type === 'recipes') entry.recipeUrl = item.url;
-        });
-        return Array.from(map.values()).filter(r => r.photoUrl);
-    }, [rawItems]);
+        return Object.entries(data)
+            .filter(([, recipe]) => recipe.categoryId === categoryId && recipe.assets?.photo)
+            .map(([recipeId, recipe]) => ({
+                id: recipeId,
+                name: recipe.name,
+                photoUrl: recipe.assets.photo!.url,
+                ingredientsUrl: recipe.assets.ingredients?.url ?? '',
+                recipeUrl: recipe.assets.recipes?.url ?? '',
+            }));
+    }, [categoryId]);
 
     const filteredRecipes = useMemo(() => {
         if (activeFilterIds.length === 0) return recipes;
-        const data = recipesData as unknown as Record<string, RecipeDetails>;
         const activeFilters = PREDEFINED_FILTERS.filter(f => activeFilterIds.includes(f.id));
         return recipes.filter((recipe) => {
-            const jsonKey = toJsonKey(recipe.id);
-            const macros = data[recipe.id]?.macronutriment ?? data[jsonKey]?.macronutriment;
+            const macros = data[recipe.id]?.macronutriment;
             if (!macros) return false;
             return activeFilters.every(f => f.check(macros));
         });

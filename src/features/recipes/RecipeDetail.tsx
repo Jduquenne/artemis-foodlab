@@ -1,26 +1,17 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useLiveQuery } from 'dexie-react-hooks';
-import { db } from '../../core/services/db';
-import { ArrowLeft, Loader2 } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
+import { RecipeDetails } from '../../core/domain/types';
+import recipesDb from '../../core/domain/recipes-db.json';
 
 export const RecipeDetail = () => {
     const { recipeId } = useParams();
     const navigate = useNavigate();
+    const data = recipesDb as unknown as Record<string, RecipeDetails>;
+    const recipe = recipeId ? data[recipeId] : undefined;
+    const recipeUrl = recipe?.assets?.recipes?.url;
 
-    const recipeData = useLiveQuery(
-        () => db.recipes.where({ recipeId: recipeId, type: 'recipes' }).first(),
-        [recipeId]
-    );
-
-    if (!recipeData) {
-        return (
-            <div className="fixed inset-0 z-50 bg-slate-50 flex items-center justify-center">
-                <div className="flex flex-col items-center gap-4">
-                    <Loader2 className="w-10 h-10 animate-spin text-orange-500" />
-                    <p className="text-slate-500 font-medium">Chargement...</p>
-                </div>
-            </div>
-        );
+    if (!recipe || !recipeUrl) {
+        return null;
     }
 
     return (
@@ -34,14 +25,14 @@ export const RecipeDetail = () => {
                     <ArrowLeft className="w-5 h-5" />
                 </button>
                 <h1 className="text-3xl font-black text-slate-900 truncate">
-                    {recipeData.name}
+                    {recipe.name}
                 </h1>
             </div>
 
             <div className="flex-1 min-h-0 flex items-center justify-center">
                 <img
-                    src={recipeData.url}
-                    alt={recipeData.name}
+                    src={recipeUrl}
+                    alt={recipe.name}
                     className="max-w-full max-h-full object-contain rounded-2xl shadow-sm"
                 />
             </div>

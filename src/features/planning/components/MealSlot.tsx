@@ -1,7 +1,7 @@
-import { useLiveQuery } from 'dexie-react-hooks';
-import { db } from '../../../core/services/db';
 import { Plus, RefreshCw, Trash2, GripVertical } from 'lucide-react';
 import { useDraggable, useDroppable } from '@dnd-kit/core';
+import { RecipeDetails } from '../../../core/domain/types';
+import recipesDb from '../../../core/domain/recipes-db.json';
 
 interface MealSlotProps {
     label: string;
@@ -15,23 +15,11 @@ interface MealSlotProps {
 }
 
 export const MealSlot = ({ label, icon, slotId, recipeIds, onNavigate, onOpenPicker, onModify, onDelete }: MealSlotProps) => {
-    const recipe = useLiveQuery(
-        async () => {
-            const firstId = recipeIds[0];
-            if (!firstId) return undefined;
-            return await db.recipes.where({ recipeId: firstId, type: 'photo' }).first();
-        },
-        [recipeIds[0]]
-    );
-
-    const recipeDetail = useLiveQuery(
-        async () => {
-            const firstId = recipeIds[0];
-            if (!firstId) return undefined;
-            return await db.recipes.where({ recipeId: firstId, type: 'recipes' }).first();
-        },
-        [recipeIds[0]]
-    );
+    const data = recipesDb as unknown as Record<string, RecipeDetails>;
+    const firstId = recipeIds[0];
+    const recipe = firstId ? data[firstId] : undefined;
+    const photoUrl = recipe?.assets?.photo?.url;
+    const hasRecipesPage = Boolean(recipe?.assets?.recipes?.url);
 
     const { setNodeRef: setDropRef, isOver } = useDroppable({ id: slotId });
     const { setNodeRef: setDragRef, listeners, attributes, isDragging } = useDraggable({
@@ -45,8 +33,8 @@ export const MealSlot = ({ label, icon, slotId, recipeIds, onNavigate, onOpenPic
     };
 
     const handleMainClick = () => {
-        if (recipe) {
-            if (recipeDetail) onNavigate();
+        if (photoUrl) {
+            if (hasRecipesPage) onNavigate();
         } else {
             onOpenPicker();
         }
@@ -56,7 +44,7 @@ export const MealSlot = ({ label, icon, slotId, recipeIds, onNavigate, onOpenPic
         ? 'opacity-30 border-slate-200'
         : isOver
             ? 'border-orange-400 bg-orange-50/40'
-            : recipe
+            : photoUrl
                 ? 'border-slate-200 shadow-sm hover:border-orange-200'
                 : 'border-dashed border-slate-200 hover:bg-orange-50/30';
 
@@ -64,10 +52,10 @@ export const MealSlot = ({ label, icon, slotId, recipeIds, onNavigate, onOpenPic
         <div ref={setRef} className="relative w-full h-full group">
             <button
                 onClick={handleMainClick}
-                className={`relative w-full h-full rounded-xl border-2 transition-all overflow-hidden bg-white dark:bg-slate-100 ${borderClass} ${recipe && !recipeDetail ? 'cursor-default' : ''}`}
+                className={`relative w-full h-full rounded-xl border-2 transition-all overflow-hidden bg-white dark:bg-slate-100 ${borderClass} ${photoUrl && !hasRecipesPage ? 'cursor-default' : ''}`}
             >
-                {recipe ? (
-                    <img src={recipe.url} className="w-full h-full object-contain" alt={recipe.name} />
+                {photoUrl ? (
+                    <img src={photoUrl} className="w-full h-full object-contain" alt={recipe!.name} />
                 ) : (
                     <div className="flex flex-col items-center justify-center gap-1 h-full w-full opacity-40">
                         <span className="text-2xl">{icon}</span>
@@ -77,7 +65,7 @@ export const MealSlot = ({ label, icon, slotId, recipeIds, onNavigate, onOpenPic
                 )}
             </button>
 
-            {recipe && !isDragging && (
+            {photoUrl && !isDragging && (
                 <>
                     <div
                         {...listeners}

@@ -1,7 +1,7 @@
-import { useLiveQuery } from 'dexie-react-hooks';
-import { db } from '../../../core/services/db';
 import { Plus, X, GripVertical } from 'lucide-react';
 import { useDraggable, useDroppable } from '@dnd-kit/core';
+import { RecipeDetails } from '../../../core/domain/types';
+import recipesDb from '../../../core/domain/recipes-db.json';
 
 interface MultiMealSlotProps {
     label: string;
@@ -13,6 +13,8 @@ interface MultiMealSlotProps {
     onNavigateToRecipe: (recipeId: string) => void;
 }
 
+const data = recipesDb as unknown as Record<string, RecipeDetails>;
+
 const RecipeCell = ({
     recipeId,
     onNavigate,
@@ -22,23 +24,17 @@ const RecipeCell = ({
     onNavigate: () => void;
     onRemove: () => void;
 }) => {
-    const recipe = useLiveQuery(
-        () => db.recipes.where({ recipeId, type: 'photo' }).first(),
-        [recipeId]
-    );
-
-    const recipeDetail = useLiveQuery(
-        () => db.recipes.where({ recipeId, type: 'recipes' }).first(),
-        [recipeId]
-    );
+    const recipe = data[recipeId];
+    const photoUrl = recipe?.assets?.photo?.url;
+    const hasRecipesPage = Boolean(recipe?.assets?.recipes?.url);
 
     return (
         <div className="relative group/cell w-full h-full min-h-0">
             <button
-                onClick={recipeDetail ? onNavigate : undefined}
-                className={`w-full h-full rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-200 ${!recipeDetail ? 'cursor-default' : ''}`}
+                onClick={hasRecipesPage ? onNavigate : undefined}
+                className={`w-full h-full rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-200 ${!hasRecipesPage ? 'cursor-default' : ''}`}
             >
-                {recipe && <img src={recipe.url} className="w-full h-full object-contain" alt={recipe.name} />}
+                {photoUrl && <img src={photoUrl} className="w-full h-full object-contain" alt={recipe.name} />}
             </button>
             <button
                 onPointerDown={(e) => e.stopPropagation()}
@@ -60,21 +56,9 @@ export const MultiMealSlot = ({
     onRemoveRecipe,
     onNavigateToRecipe,
 }: MultiMealSlotProps) => {
-    const singleRecipe = useLiveQuery(
-        async () => {
-            if (recipeIds.length !== 1) return undefined;
-            return await db.recipes.where({ recipeId: recipeIds[0], type: 'photo' }).first();
-        },
-        [recipeIds.length, recipeIds[0]]
-    );
-
-    const singleRecipeDetail = useLiveQuery(
-        async () => {
-            if (recipeIds.length !== 1) return undefined;
-            return await db.recipes.where({ recipeId: recipeIds[0], type: 'recipes' }).first();
-        },
-        [recipeIds.length, recipeIds[0]]
-    );
+    const firstRecipe = recipeIds.length === 1 ? data[recipeIds[0]] : undefined;
+    const singlePhotoUrl = firstRecipe?.assets?.photo?.url;
+    const singleHasRecipesPage = Boolean(firstRecipe?.assets?.recipes?.url);
 
     const { setNodeRef: setDropRef, isOver } = useDroppable({ id: slotId });
     const { setNodeRef: setDragRef, listeners, attributes, isDragging } = useDraggable({
@@ -115,11 +99,11 @@ export const MultiMealSlot = ({
 
                 {recipeIds.length === 1 && (
                     <button
-                        onClick={singleRecipeDetail ? () => onNavigateToRecipe(recipeIds[0]) : undefined}
-                        className={`w-full h-full ${!singleRecipeDetail ? 'cursor-default' : ''}`}
+                        onClick={singleHasRecipesPage ? () => onNavigateToRecipe(recipeIds[0]) : undefined}
+                        className={`w-full h-full ${!singleHasRecipesPage ? 'cursor-default' : ''}`}
                     >
-                        {singleRecipe && (
-                            <img src={singleRecipe.url} className="w-full h-full object-contain" alt={singleRecipe.name} />
+                        {singlePhotoUrl && (
+                            <img src={singlePhotoUrl} className="w-full h-full object-contain" alt={firstRecipe!.name} />
                         )}
                     </button>
                 )}

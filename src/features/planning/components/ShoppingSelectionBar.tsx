@@ -13,7 +13,7 @@ export const ShoppingSelectionBar = ({ count, onConfirm, onCancel }: ShoppingSel
         <div className="shrink-0 flex items-center justify-between gap-3 bg-orange-50 dark:bg-orange-950/40 border border-orange-200 dark:border-orange-800/50 rounded-2xl px-4 py-2.5">
             <div className="flex items-center gap-2 min-w-0">
                 <ShoppingCart className="w-4 h-4 text-orange-500 shrink-0" />
-                <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">
+                <span className="text-sm font-semibold text-slate-700">
                     {count === 0
                         ? 'Sélectionne les jours de courses'
                         : `${count} / 10 jour${count > 1 ? 's' : ''} sélectionné${count > 1 ? 's' : ''}`}
@@ -27,7 +27,7 @@ export const ShoppingSelectionBar = ({ count, onConfirm, onCancel }: ShoppingSel
             <div className="flex items-center gap-2 shrink-0">
                 <button
                     onClick={onCancel}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-semibold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-semibold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-200/20 transition-colors"
                 >
                     <X className="w-3.5 h-3.5" />
                     Annuler

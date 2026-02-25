@@ -29,7 +29,7 @@ function cleanRecipeName(name: string): string {
     .trim();
 }
 
-function toJsonKey(recipeId: string): string {
+export function toJsonKey(recipeId: string): string {
   const parts = recipeId.split("-");
   if (parts.length < 2) return recipeId.toUpperCase();
   const prefix = parts[0].toUpperCase();

@@ -10,42 +10,35 @@ export interface SearchRecipeResult {
   recipeUrl?: string;
 }
 
-export const useSearch = (query: string) => {
+export const useSearch = (query: string | null) => {
   return (
     useLiveQuery(async () => {
-      if (!query) return [];
+      if (query === null) return [];
 
       const lowerQuery = query.toLowerCase().trim();
 
-      // 1. On trouve d'abord toutes les entrées "photo" qui matchent
-      const photos = await db.recipes
-        .filter((recipe) => {
-          if (recipe.type !== "photo") return false;
+      const photos = lowerQuery
+        ? await db.recipes
+            .filter((recipe) => {
+              if (recipe.type !== "photo") return false;
+              const matchesName = recipe.name.toLowerCase().includes(lowerQuery);
+              const parts = recipe.recipeId.toLowerCase().split("-");
+              const numPart = parts[1];
+              const matchesId =
+                numPart === lowerQuery ||
+                (numPart && parseInt(numPart).toString() === lowerQuery) ||
+                recipe.recipeId.toLowerCase() === lowerQuery;
+              return matchesName || matchesId;
+            })
+            .toArray()
+        : await db.recipes.where("type").equals("photo").toArray();
 
-          const matchesName = recipe.name.toLowerCase().includes(lowerQuery);
-          const parts = recipe.recipeId.toLowerCase().split("-");
-          const numPart = parts[1];
-          const matchesId =
-            numPart === lowerQuery ||
-            (numPart && parseInt(numPart).toString() === lowerQuery) ||
-            recipe.recipeId.toLowerCase() === lowerQuery;
-
-          return matchesName || matchesId;
-        })
-        .toArray();
-
-      // 2. Pour chaque photo, on va chercher l'entrée "ingredients" correspondante
       const consolidatedResults: SearchRecipeResult[] = await Promise.all(
         photos.map(async (photo) => {
           const [ingEntry, recipeEntry] = await Promise.all([
-            db.recipes
-              .where({ recipeId: photo.recipeId, type: "ingredients" })
-              .first(),
-            db.recipes
-              .where({ recipeId: photo.recipeId, type: "recipes" })
-              .first(),
+            db.recipes.where({ recipeId: photo.recipeId, type: "ingredients" }).first(),
+            db.recipes.where({ recipeId: photo.recipeId, type: "recipes" }).first(),
           ]);
-
           return {
             id: photo.recipeId,
             recipeId: photo.recipeId,

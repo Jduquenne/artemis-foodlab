@@ -78,3 +78,9 @@ export interface ShoppingDay {
   week: number;
   day: string;
 }
+
+export interface PredefinedFilter {
+  id: string;
+  label: string;
+  check: (macros: Macronutrients) => boolean;
+}

@@ -4,10 +4,17 @@ export const exportData = async () => {
   try {
     const planning = await db.planning.toArray();
 
+    const rawChecked = localStorage.getItem("cipe_shopping_checked");
+    const rawStocks = localStorage.getItem("cipe_shopping_stocks");
+    const rawDays = localStorage.getItem("cipe_shopping_days");
+
     const data = {
       timestamp: new Date().toISOString(),
       version: 2,
       planning,
+      shoppingChecked: rawChecked ? JSON.parse(rawChecked) : null,
+      shoppingStocks: rawStocks ? JSON.parse(rawStocks) : null,
+      shoppingDays: rawDays ? JSON.parse(rawDays) : null,
     };
 
     const blob = new Blob([JSON.stringify(data, null, 2)], {
@@ -39,6 +46,25 @@ export const importData = async (file: File) => {
     await db.transaction("rw", db.planning, async () => {
       await db.planning.bulkPut(data.planning);
     });
+
+    if (data.shoppingChecked) {
+      localStorage.setItem(
+        "cipe_shopping_checked",
+        JSON.stringify(data.shoppingChecked),
+      );
+    }
+    if (data.shoppingStocks) {
+      localStorage.setItem(
+        "cipe_shopping_stocks",
+        JSON.stringify(data.shoppingStocks),
+      );
+    }
+    if (data.shoppingDays) {
+      localStorage.setItem(
+        "cipe_shopping_days",
+        JSON.stringify(data.shoppingDays),
+      );
+    }
 
     alert("Import réussi ! Rechargez la page.");
     window.location.reload();

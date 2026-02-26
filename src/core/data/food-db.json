@@ -657,7 +657,7 @@
   "ep-059": {
     "id": "ep-059",
     "name": "Semoule",
-    "category": "Epices et condiments"
+    "category": "Féculents"
   },
   "ep-060": {
     "id": "ep-060",
@@ -927,11 +927,6 @@
   "fv-012": {
     "id": "fv-012",
     "name": "Brocoli frais",
-    "category": "Fruits et légumes"
-  },
-  "fv-013": {
-    "id": "fv-013",
-    "name": "Butternut",
     "category": "Fruits et légumes"
   },
   "fv-014": {

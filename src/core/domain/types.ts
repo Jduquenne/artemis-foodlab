@@ -58,11 +58,11 @@ export interface Food {
 
 export interface Ingredient {
   id: string;
-  foodId?: string;
   name: string;
   quantity: string;
   unit: Unit;
   category: IngredientCategory;
+  foodId?: string;
   preparation?: string;
 }
 

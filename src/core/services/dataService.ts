@@ -3,6 +3,7 @@ import { db } from "./db";
 export const exportData = async () => {
   try {
     const planning = await db.planning.toArray();
+    const household = await db.household.toArray();
 
     const rawChecked = localStorage.getItem("cipe_shopping_checked");
     const rawStocks = localStorage.getItem("cipe_shopping_stocks");
@@ -12,6 +13,7 @@ export const exportData = async () => {
       timestamp: new Date().toISOString(),
       version: 2,
       planning,
+      household,
       shoppingChecked: rawChecked ? JSON.parse(rawChecked) : null,
       shoppingStocks: rawStocks ? JSON.parse(rawStocks) : null,
       shoppingDays: rawDays ? JSON.parse(rawDays) : null,
@@ -43,8 +45,11 @@ export const importData = async (file: File) => {
       throw new Error("Format de fichier invalide");
     }
 
-    await db.transaction("rw", db.planning, async () => {
+    await db.transaction("rw", db.planning, db.household, async () => {
       await db.planning.bulkPut(data.planning);
+      if (data.household?.length) {
+        await db.household.bulkPut(data.household);
+      }
     });
 
     if (data.shoppingChecked) {

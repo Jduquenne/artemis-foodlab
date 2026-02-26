@@ -106,6 +106,21 @@ export interface ShoppingDay {
   day: string;
 }
 
+export enum HouseholdCategory {
+  HYGIENE = "Hygiène",
+  CUISINE = "Cuisine",
+  ENTRETIEN = "Entretien",
+  MAISON = "Maison",
+  PHARMACIE = "Pharmacie",
+}
+
+export interface HouseholdItem {
+  id: string;
+  name: string;
+  category: HouseholdCategory;
+  checkIntervalDays: number;
+}
+
 export interface PredefinedFilter {
   id: string;
   label: string;

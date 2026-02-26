@@ -10,8 +10,14 @@ export interface MealSlot {
   week: number;
 }
 
+export interface HouseholdRecord {
+  id: string;
+  lastCheckedAt: string;
+}
+
 export class MyDatabase extends Dexie {
   planning!: Table<MealSlot>;
+  household!: Table<HouseholdRecord>;
 
   constructor() {
     super("CipeDatabase");
@@ -58,6 +64,10 @@ export class MyDatabase extends Dexie {
     this.version(6).stores({
       recipes: null,
       planning: "id, [year+week], year, week",
+    });
+    this.version(7).stores({
+      planning: "id, [year+week], year, week",
+      household: "id",
     });
   }
 }

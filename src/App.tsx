@@ -9,6 +9,7 @@ import { CategoryDetail } from './features/recipes/CategoryDetail';
 import { RecipeDetail } from './features/recipes/RecipeDetail';
 import { PlanningModule } from './features/planning/PlanningModule';
 import { ShoppingModule } from './features/shopping/ShoppingModule';
+import { HouseholdModule } from './features/household/HouseholdModule';
 
 function App() {
   useBackupReminder();
@@ -26,6 +27,9 @@ function App() {
           <Route path="/recipes" element={<RecipeModule />} />
           <Route path="/recipes/category/:categoryId" element={<CategoryDetail />} />
           <Route path="/recipes/detail/:recipeId" element={<RecipeDetail />} />
+
+          {/* --- MODULE QUOTIDIEN --- */}
+          <Route path="/household" element={<HouseholdModule />} />
 
           {/* --- MODULE PLANNING --- */}
           <Route path="/planning" element={<PlanningModule />} />

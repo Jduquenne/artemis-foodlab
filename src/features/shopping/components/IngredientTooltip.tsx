@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Info } from 'lucide-react';
 import { IngredientSource } from '../../../core/utils/shoppingLogic';
+import { pluralizeUnit } from '../../../core/utils/unitUtils';
 
 const DAY_LABELS: Record<string, string> = {
     monday: 'Lundi',
@@ -85,7 +86,7 @@ export const IngredientTooltip = ({ sources }: IngredientTooltipProps) => {
                                         {SLOT_LABELS[src.slot] ?? src.slot}
                                         <span className="mx-1 text-slate-300">·</span>
                                         <span className="text-orange-500 font-medium">
-                                            {src.quantity === 0 ? '—' : `${parseFloat(src.quantity.toFixed(2))}\u00a0${src.unit}`}
+                                            {src.quantity === 0 ? '—' : `${parseFloat(src.quantity.toFixed(2))}\u00a0${pluralizeUnit(src.unit, src.quantity)}`}
                                         </span>
                                     </p>
                                 </div>

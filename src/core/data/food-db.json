@@ -1,0 +1,1957 @@
+{
+  "bk-001": {
+    "id": "bk-001",
+    "name": "Baguette",
+    "category": "Boulangerie"
+  },
+  "bk-002": {
+    "id": "bk-002",
+    "name": "Pain",
+    "category": "Boulangerie"
+  },
+  "bk-003": {
+    "id": "bk-003",
+    "name": "Pain aux céréales",
+    "category": "Boulangerie"
+  },
+  "bk-004": {
+    "id": "bk-004",
+    "name": "Pain complet",
+    "category": "Boulangerie"
+  },
+  "bk-005": {
+    "id": "bk-005",
+    "name": "Pain de mie",
+    "category": "Boulangerie"
+  },
+  "bk-006": {
+    "id": "bk-006",
+    "name": "Pain nordique",
+    "category": "Boulangerie"
+  },
+  "ct-001": {
+    "id": "ct-001",
+    "name": "Charcuterie (optionnel)",
+    "category": "Charcuterie"
+  },
+  "ct-002": {
+    "id": "ct-002",
+    "name": "Jambon",
+    "category": "Charcuterie"
+  },
+  "ct-003": {
+    "id": "ct-003",
+    "name": "Lardons",
+    "category": "Charcuterie"
+  },
+  "ct-004": {
+    "id": "ct-004",
+    "name": "Merguez",
+    "category": "Charcuterie"
+  },
+  "ct-005": {
+    "id": "ct-005",
+    "name": "Saucisse",
+    "category": "Charcuterie"
+  },
+  "ct-006": {
+    "id": "ct-006",
+    "name": "Saucisse de Toulouse",
+    "category": "Charcuterie"
+  },
+  "cn-001": {
+    "id": "cn-001",
+    "name": "Concentré de tomates",
+    "category": "Conserves"
+  },
+  "cn-002": {
+    "id": "cn-002",
+    "name": "Coulis de tomates",
+    "category": "Conserves"
+  },
+  "cn-003": {
+    "id": "cn-003",
+    "name": "Fèves edamame",
+    "category": "Conserves"
+  },
+  "cn-004": {
+    "id": "cn-004",
+    "name": "Maïs",
+    "category": "Conserves"
+  },
+  "cn-005": {
+    "id": "cn-005",
+    "name": "Olives verte",
+    "category": "Conserves"
+  },
+  "cn-006": {
+    "id": "cn-006",
+    "name": "Pousses de haricots mungo",
+    "category": "Conserves"
+  },
+  "cn-007": {
+    "id": "cn-007",
+    "name": "Pulpe de tomates",
+    "category": "Conserves"
+  },
+  "cn-008": {
+    "id": "cn-008",
+    "name": "Purée de tomates",
+    "category": "Conserves"
+  },
+  "cn-009": {
+    "id": "cn-009",
+    "name": "Sardines nature",
+    "category": "Conserves"
+  },
+  "cn-010": {
+    "id": "cn-010",
+    "name": "Sauce tomate",
+    "category": "Conserves"
+  },
+  "cn-011": {
+    "id": "cn-011",
+    "name": "Thon au naturel",
+    "category": "Conserves"
+  },
+  "es-001": {
+    "id": "es-001",
+    "name": "Amandes effilées",
+    "category": "Epicerie sucrée"
+  },
+  "es-002": {
+    "id": "es-002",
+    "name": "Amandes en poudre",
+    "category": "Epicerie sucrée"
+  },
+  "es-003": {
+    "id": "es-003",
+    "name": "Arôme amande amère",
+    "category": "Epicerie sucrée"
+  },
+  "es-004": {
+    "id": "es-004",
+    "name": "Avoine",
+    "category": "Epicerie sucrée"
+  },
+  "es-005": {
+    "id": "es-005",
+    "name": "Cacao non sucré",
+    "category": "Epicerie sucrée"
+  },
+  "es-006": {
+    "id": "es-006",
+    "name": "Café espresso",
+    "category": "Epicerie sucrée"
+  },
+  "es-007": {
+    "id": "es-007",
+    "name": "Cassonade Graeffe",
+    "category": "Epicerie sucrée"
+  },
+  "es-008": {
+    "id": "es-008",
+    "name": "Chapelure de maïs",
+    "category": "Epicerie sucrée"
+  },
+  "es-009": {
+    "id": "es-009",
+    "name": "Chocolat 74% cacao",
+    "category": "Epicerie sucrée"
+  },
+  "es-010": {
+    "id": "es-010",
+    "name": "Chocolat 85% cacao",
+    "category": "Epicerie sucrée"
+  },
+  "es-011": {
+    "id": "es-011",
+    "name": "Chocolat noir",
+    "category": "Epicerie sucrée"
+  },
+  "es-012": {
+    "id": "es-012",
+    "name": "Chocolat noir pâtissier",
+    "category": "Epicerie sucrée"
+  },
+  "es-013": {
+    "id": "es-013",
+    "name": "Cornflakes",
+    "category": "Epicerie sucrée"
+  },
+  "es-014": {
+    "id": "es-014",
+    "name": "Eau de fleur d’oranger",
+    "category": "Epicerie sucrée"
+  },
+  "es-015": {
+    "id": "es-015",
+    "name": "Farine au choix",
+    "category": "Epicerie sucrée"
+  },
+  "es-016": {
+    "id": "es-016",
+    "name": "Farine blanche",
+    "category": "Epicerie sucrée"
+  },
+  "es-017": {
+    "id": "es-017",
+    "name": "Farine complète",
+    "category": "Epicerie sucrée"
+  },
+  "es-018": {
+    "id": "es-018",
+    "name": "Farine complète 5 céréales",
+    "category": "Epicerie sucrée"
+  },
+  "es-019": {
+    "id": "es-019",
+    "name": "Farine d’épeautre",
+    "category": "Epicerie sucrée"
+  },
+  "es-020": {
+    "id": "es-020",
+    "name": "Farine de coco",
+    "category": "Epicerie sucrée"
+  },
+  "es-021": {
+    "id": "es-021",
+    "name": "Farine de maïs",
+    "category": "Epicerie sucrée"
+  },
+  "es-022": {
+    "id": "es-022",
+    "name": "Farine de pois chiches",
+    "category": "Epicerie sucrée"
+  },
+  "es-023": {
+    "id": "es-023",
+    "name": "Farine de sarrasin",
+    "category": "Epicerie sucrée"
+  },
+  "es-024": {
+    "id": "es-024",
+    "name": "Farine de seigle",
+    "category": "Epicerie sucrée"
+  },
+  "es-025": {
+    "id": "es-025",
+    "name": "Farine semi complète",
+    "category": "Epicerie sucrée"
+  },
+  "es-026": {
+    "id": "es-026",
+    "name": "Fécule de maïs",
+    "category": "Epicerie sucrée"
+  },
+  "es-027": {
+    "id": "es-027",
+    "name": "Ferment “Alsa”",
+    "category": "Epicerie sucrée"
+  },
+  "es-028": {
+    "id": "es-028",
+    "name": "Flocons d'avoine",
+    "category": "Epicerie sucrée"
+  },
+  "es-029": {
+    "id": "es-029",
+    "name": "Flocons d'épeautre",
+    "category": "Epicerie sucrée"
+  },
+  "es-030": {
+    "id": "es-030",
+    "name": "Flocons de quinoa",
+    "category": "Epicerie sucrée"
+  },
+  "es-031": {
+    "id": "es-031",
+    "name": "Flocons de sarrasin",
+    "category": "Epicerie sucrée"
+  },
+  "es-032": {
+    "id": "es-032",
+    "name": "Levure boulangère fraîche",
+    "category": "Epicerie sucrée"
+  },
+  "es-033": {
+    "id": "es-033",
+    "name": "Levure boulangère sèche",
+    "category": "Epicerie sucrée"
+  },
+  "es-034": {
+    "id": "es-034",
+    "name": "Miel",
+    "category": "Epicerie sucrée"
+  },
+  "es-035": {
+    "id": "es-035",
+    "name": "Miel ou Sirop d’érable",
+    "category": "Epicerie sucrée"
+  },
+  "es-036": {
+    "id": "es-036",
+    "name": "Pépites de chocolat 70%",
+    "category": "Epicerie sucrée"
+  },
+  "es-037": {
+    "id": "es-037",
+    "name": "Pépites de chocolat ou raisin secs",
+    "category": "Epicerie sucrée"
+  },
+  "es-038": {
+    "id": "es-038",
+    "name": "Perles de sucre",
+    "category": "Epicerie sucrée"
+  },
+  "es-039": {
+    "id": "es-039",
+    "name": "Poudre d'agar-agar",
+    "category": "Epicerie sucrée"
+  },
+  "es-040": {
+    "id": "es-040",
+    "name": "Poudre de noisettes",
+    "category": "Epicerie sucrée"
+  },
+  "es-041": {
+    "id": "es-041",
+    "name": "Raisins secs",
+    "category": "Epicerie sucrée"
+  },
+  "es-042": {
+    "id": "es-042",
+    "name": "Sirop d'agave",
+    "category": "Epicerie sucrée"
+  },
+  "es-043": {
+    "id": "es-043",
+    "name": "Sirop d'érable",
+    "category": "Epicerie sucrée"
+  },
+  "es-044": {
+    "id": "es-044",
+    "name": "Son d’avoine",
+    "category": "Epicerie sucrée"
+  },
+  "es-045": {
+    "id": "es-045",
+    "name": "Sucre",
+    "category": "Epicerie sucrée"
+  },
+  "es-046": {
+    "id": "es-046",
+    "name": "Sucre complet",
+    "category": "Epicerie sucrée"
+  },
+  "es-047": {
+    "id": "es-047",
+    "name": "Sucre de coco",
+    "category": "Epicerie sucrée"
+  },
+  "es-048": {
+    "id": "es-048",
+    "name": "Sucre de coco ou complet",
+    "category": "Epicerie sucrée"
+  },
+  "es-049": {
+    "id": "es-049",
+    "name": "Sucre roux",
+    "category": "Epicerie sucrée"
+  },
+  "es-050": {
+    "id": "es-050",
+    "name": "Vanille",
+    "category": "Epicerie sucrée"
+  },
+  "ep-001": {
+    "id": "ep-001",
+    "name": "Ail semoule",
+    "category": "Epices et condiments"
+  },
+  "ep-002": {
+    "id": "ep-002",
+    "name": "Aneth",
+    "category": "Epices et condiments"
+  },
+  "ep-003": {
+    "id": "ep-003",
+    "name": "Basilic",
+    "category": "Epices et condiments"
+  },
+  "ep-004": {
+    "id": "ep-004",
+    "name": "Bicarbonate alimentaire",
+    "category": "Epices et condiments"
+  },
+  "ep-005": {
+    "id": "ep-005",
+    "name": "Bouillon de bœuf",
+    "category": "Epices et condiments"
+  },
+  "ep-006": {
+    "id": "ep-006",
+    "name": "Bouillon de légumes",
+    "category": "Epices et condiments"
+  },
+  "ep-007": {
+    "id": "ep-007",
+    "name": "Bouillon de volaille",
+    "category": "Epices et condiments"
+  },
+  "ep-008": {
+    "id": "ep-008",
+    "name": "Cannelle moulue",
+    "category": "Epices et condiments"
+  },
+  "ep-009": {
+    "id": "ep-009",
+    "name": "Câpres",
+    "category": "Epices et condiments"
+  },
+  "ep-010": {
+    "id": "ep-010",
+    "name": "Cardamone",
+    "category": "Epices et condiments"
+  },
+  "ep-011": {
+    "id": "ep-011",
+    "name": "Ciboulette",
+    "category": "Epices et condiments"
+  },
+  "ep-012": {
+    "id": "ep-012",
+    "name": "Clous de girofle",
+    "category": "Epices et condiments"
+  },
+  "ep-013": {
+    "id": "ep-013",
+    "name": "Confit d’oignon",
+    "category": "Epices et condiments"
+  },
+  "ep-014": {
+    "id": "ep-014",
+    "name": "Coriandre feuilles",
+    "category": "Epices et condiments"
+  },
+  "ep-015": {
+    "id": "ep-015",
+    "name": "Coriandre moulue",
+    "category": "Epices et condiments"
+  },
+  "ep-016": {
+    "id": "ep-016",
+    "name": "Cornichons",
+    "category": "Epices et condiments"
+  },
+  "ep-017": {
+    "id": "ep-017",
+    "name": "Cumin",
+    "category": "Epices et condiments"
+  },
+  "ep-018": {
+    "id": "ep-018",
+    "name": "Curcuma",
+    "category": "Epices et condiments"
+  },
+  "ep-019": {
+    "id": "ep-019",
+    "name": "Curry",
+    "category": "Epices et condiments"
+  },
+  "ep-020": {
+    "id": "ep-020",
+    "name": "Épices à couscous",
+    "category": "Epices et condiments"
+  },
+  "ep-021": {
+    "id": "ep-021",
+    "name": "Épices asiatiques",
+    "category": "Epices et condiments"
+  },
+  "ep-022": {
+    "id": "ep-022",
+    "name": "Épices au choix",
+    "category": "Epices et condiments"
+  },
+  "ep-023": {
+    "id": "ep-023",
+    "name": "Épices cajun",
+    "category": "Epices et condiments"
+  },
+  "ep-024": {
+    "id": "ep-024",
+    "name": "Epices et/ou herbes aromatiques au choix",
+    "category": "Epices et condiments"
+  },
+  "ep-025": {
+    "id": "ep-025",
+    "name": "Épices Tandoori",
+    "category": "Epices et condiments"
+  },
+  "ep-026": {
+    "id": "ep-026",
+    "name": "Estragon",
+    "category": "Epices et condiments"
+  },
+  "ep-027": {
+    "id": "ep-027",
+    "name": "Fleur de sel",
+    "category": "Epices et condiments"
+  },
+  "ep-028": {
+    "id": "ep-028",
+    "name": "Garam masala",
+    "category": "Epices et condiments"
+  },
+  "ep-029": {
+    "id": "ep-029",
+    "name": "Gingembre en poudre",
+    "category": "Epices et condiments"
+  },
+  "ep-030": {
+    "id": "ep-030",
+    "name": "Gros sel",
+    "category": "Epices et condiments"
+  },
+  "ep-031": {
+    "id": "ep-031",
+    "name": "Herbes aromatiques",
+    "category": "Epices et condiments"
+  },
+  "ep-032": {
+    "id": "ep-032",
+    "name": "Herbes aromatiques au choix",
+    "category": "Epices et condiments"
+  },
+  "ep-033": {
+    "id": "ep-033",
+    "name": "Herbes de Provence",
+    "category": "Epices et condiments"
+  },
+  "ep-034": {
+    "id": "ep-034",
+    "name": "Huile d'olive",
+    "category": "Epices et condiments"
+  },
+  "ep-035": {
+    "id": "ep-035",
+    "name": "Huile d'olive ou colza",
+    "category": "Epices et condiments"
+  },
+  "ep-036": {
+    "id": "ep-036",
+    "name": "Huile de colza",
+    "category": "Epices et condiments"
+  },
+  "ep-037": {
+    "id": "ep-037",
+    "name": "Huile de sésame",
+    "category": "Epices et condiments"
+  },
+  "ep-038": {
+    "id": "ep-038",
+    "name": "Huile de tournesol",
+    "category": "Epices et condiments"
+  },
+  "ep-039": {
+    "id": "ep-039",
+    "name": "Jus de citron",
+    "category": "Epices et condiments"
+  },
+  "ep-040": {
+    "id": "ep-040",
+    "name": "Jus de citron ou vinaigre de cidre",
+    "category": "Epices et condiments"
+  },
+  "ep-041": {
+    "id": "ep-041",
+    "name": "Levure de bière",
+    "category": "Epices et condiments"
+  },
+  "ep-042": {
+    "id": "ep-042",
+    "name": "Mayonnaise",
+    "category": "Epices et condiments"
+  },
+  "ep-043": {
+    "id": "ep-043",
+    "name": "Menthe",
+    "category": "Epices et condiments"
+  },
+  "ep-044": {
+    "id": "ep-044",
+    "name": "Moutarde",
+    "category": "Epices et condiments"
+  },
+  "ep-045": {
+    "id": "ep-045",
+    "name": "Muscade",
+    "category": "Epices et condiments"
+  },
+  "ep-046": {
+    "id": "ep-046",
+    "name": "Origan",
+    "category": "Epices et condiments"
+  },
+  "ep-047": {
+    "id": "ep-047",
+    "name": "Paprika",
+    "category": "Epices et condiments"
+  },
+  "ep-048": {
+    "id": "ep-048",
+    "name": "Paprika fumé",
+    "category": "Epices et condiments"
+  },
+  "ep-049": {
+    "id": "ep-049",
+    "name": "Persil",
+    "category": "Epices et condiments"
+  },
+  "ep-050": {
+    "id": "ep-050",
+    "name": "Persil ou coriandre",
+    "category": "Epices et condiments"
+  },
+  "ep-051": {
+    "id": "ep-051",
+    "name": "Persillade",
+    "category": "Epices et condiments"
+  },
+  "ep-052": {
+    "id": "ep-052",
+    "name": "Piment d’Espelette",
+    "category": "Epices et condiments"
+  },
+  "ep-053": {
+    "id": "ep-053",
+    "name": "Poivre",
+    "category": "Epices et condiments"
+  },
+  "ep-054": {
+    "id": "ep-054",
+    "name": "Romarin",
+    "category": "Epices et condiments"
+  },
+  "ep-055": {
+    "id": "ep-055",
+    "name": "Sauce soja",
+    "category": "Epices et condiments"
+  },
+  "ep-056": {
+    "id": "ep-056",
+    "name": "Sauce tamari",
+    "category": "Epices et condiments"
+  },
+  "ep-057": {
+    "id": "ep-057",
+    "name": "Sauge",
+    "category": "Epices et condiments"
+  },
+  "ep-058": {
+    "id": "ep-058",
+    "name": "Sel",
+    "category": "Epices et condiments"
+  },
+  "ep-059": {
+    "id": "ep-059",
+    "name": "Semoule",
+    "category": "Epices et condiments"
+  },
+  "ep-060": {
+    "id": "ep-060",
+    "name": "Thym",
+    "category": "Epices et condiments"
+  },
+  "ep-061": {
+    "id": "ep-061",
+    "name": "Vinaigre balsamique",
+    "category": "Epices et condiments"
+  },
+  "ep-062": {
+    "id": "ep-062",
+    "name": "Vinaigre de cidre",
+    "category": "Epices et condiments"
+  },
+  "fc-001": {
+    "id": "fc-001",
+    "name": "Blé",
+    "category": "Féculents"
+  },
+  "fc-002": {
+    "id": "fc-002",
+    "name": "Boulgour",
+    "category": "Féculents"
+  },
+  "fc-003": {
+    "id": "fc-003",
+    "name": "Coquillettes",
+    "category": "Féculents"
+  },
+  "fc-004": {
+    "id": "fc-004",
+    "name": "Crozets au sarrasin",
+    "category": "Féculents"
+  },
+  "fc-005": {
+    "id": "fc-005",
+    "name": "Ebly",
+    "category": "Féculents"
+  },
+  "fc-006": {
+    "id": "fc-006",
+    "name": "Féculent au choix",
+    "category": "Féculents"
+  },
+  "fc-007": {
+    "id": "fc-007",
+    "name": "Flageolets secs",
+    "category": "Féculents"
+  },
+  "fc-008": {
+    "id": "fc-008",
+    "name": "Fusilli",
+    "category": "Féculents"
+  },
+  "fc-009": {
+    "id": "fc-009",
+    "name": "Haricots blancs secs",
+    "category": "Féculents"
+  },
+  "fc-010": {
+    "id": "fc-010",
+    "name": "Haricots rouges sec",
+    "category": "Féculents"
+  },
+  "fc-011": {
+    "id": "fc-011",
+    "name": "Lentille vertes sèches",
+    "category": "Féculents"
+  },
+  "fc-012": {
+    "id": "fc-012",
+    "name": "Lentilles corail sèches",
+    "category": "Féculents"
+  },
+  "fc-013": {
+    "id": "fc-013",
+    "name": "Linguines",
+    "category": "Féculents"
+  },
+  "fc-014": {
+    "id": "fc-014",
+    "name": "Macaronis",
+    "category": "Féculents"
+  },
+  "fc-015": {
+    "id": "fc-015",
+    "name": "Noix de coco râpée",
+    "category": "Féculents"
+  },
+  "fc-016": {
+    "id": "fc-016",
+    "name": "Orzo",
+    "category": "Féculents"
+  },
+  "fc-017": {
+    "id": "fc-017",
+    "name": "Orzo ou autres pâtes",
+    "category": "Féculents"
+  },
+  "fc-018": {
+    "id": "fc-018",
+    "name": "Pâtes",
+    "category": "Féculents"
+  },
+  "fc-019": {
+    "id": "fc-019",
+    "name": "Pâtes colorées",
+    "category": "Féculents"
+  },
+  "fc-020": {
+    "id": "fc-020",
+    "name": "Pâtes complètes",
+    "category": "Féculents"
+  },
+  "fc-021": {
+    "id": "fc-021",
+    "name": "Pâtes complètes ou riz",
+    "category": "Féculents"
+  },
+  "fc-022": {
+    "id": "fc-022",
+    "name": "Perles de couscous",
+    "category": "Féculents"
+  },
+  "fc-023": {
+    "id": "fc-023",
+    "name": "Pois chiches secs",
+    "category": "Féculents"
+  },
+  "fc-024": {
+    "id": "fc-024",
+    "name": "Polenta",
+    "category": "Féculents"
+  },
+  "fc-025": {
+    "id": "fc-025",
+    "name": "Quinoa",
+    "category": "Féculents"
+  },
+  "fc-026": {
+    "id": "fc-026",
+    "name": "Riz Basmati",
+    "category": "Féculents"
+  },
+  "fc-027": {
+    "id": "fc-027",
+    "name": "Riz rond",
+    "category": "Féculents"
+  },
+  "fc-028": {
+    "id": "fc-028",
+    "name": "Riz semi complet de Camargue",
+    "category": "Féculents"
+  },
+  "fc-029": {
+    "id": "fc-029",
+    "name": "Riz thaï",
+    "category": "Féculents"
+  },
+  "fc-030": {
+    "id": "fc-030",
+    "name": "Sarrasin",
+    "category": "Féculents"
+  },
+  "fc-031": {
+    "id": "fc-031",
+    "name": "Semoule de blé dur",
+    "category": "Féculents"
+  },
+  "fc-032": {
+    "id": "fc-032",
+    "name": "Semoule fine",
+    "category": "Féculents"
+  },
+  "fc-033": {
+    "id": "fc-033",
+    "name": "Semoule semi complète",
+    "category": "Féculents"
+  },
+  "fc-034": {
+    "id": "fc-034",
+    "name": "Spaghetti",
+    "category": "Féculents"
+  },
+  "fc-035": {
+    "id": "fc-035",
+    "name": "Spaghetti ou nouilles soba",
+    "category": "Féculents"
+  },
+  "fc-036": {
+    "id": "fc-036",
+    "name": "Vermicelles ou pâtes alphabet",
+    "category": "Féculents"
+  },
+  "fm-001": {
+    "id": "fm-001",
+    "name": "Blanc d’œuf",
+    "category": "Ferme"
+  },
+  "fm-002": {
+    "id": "fm-002",
+    "name": "Jaune d’œuf",
+    "category": "Ferme"
+  },
+  "fm-003": {
+    "id": "fm-003",
+    "name": "Œuf",
+    "category": "Ferme"
+  },
+  "fv-001": {
+    "id": "fv-001",
+    "name": "Abricot",
+    "category": "Fruits et légumes"
+  },
+  "fv-002": {
+    "id": "fv-002",
+    "name": "Ail",
+    "category": "Fruits et légumes"
+  },
+  "fv-003": {
+    "id": "fv-003",
+    "name": "Ananas",
+    "category": "Fruits et légumes"
+  },
+  "fv-004": {
+    "id": "fv-004",
+    "name": "Asperges blanches",
+    "category": "Fruits et légumes"
+  },
+  "fv-005": {
+    "id": "fv-005",
+    "name": "Asperges vertes fines",
+    "category": "Fruits et légumes"
+  },
+  "fv-006": {
+    "id": "fv-006",
+    "name": "Aubergine",
+    "category": "Fruits et légumes"
+  },
+  "fv-007": {
+    "id": "fv-007",
+    "name": "Avocat",
+    "category": "Fruits et légumes"
+  },
+  "fv-008": {
+    "id": "fv-008",
+    "name": "Banane",
+    "category": "Fruits et légumes"
+  },
+  "fv-009": {
+    "id": "fv-009",
+    "name": "Betterave rouge",
+    "category": "Fruits et légumes"
+  },
+  "fv-010": {
+    "id": "fv-010",
+    "name": "Blanc de Poireau",
+    "category": "Fruits et légumes"
+  },
+  "fv-011": {
+    "id": "fv-011",
+    "name": "Brocoli",
+    "category": "Fruits et légumes"
+  },
+  "fv-012": {
+    "id": "fv-012",
+    "name": "Brocoli frais",
+    "category": "Fruits et légumes"
+  },
+  "fv-013": {
+    "id": "fv-013",
+    "name": "Butternut",
+    "category": "Fruits et légumes"
+  },
+  "fv-014": {
+    "id": "fv-014",
+    "name": "Carotte ou potimarron",
+    "category": "Fruits et légumes"
+  },
+  "fv-015": {
+    "id": "fv-015",
+    "name": "Carottes",
+    "category": "Fruits et légumes"
+  },
+  "fv-016": {
+    "id": "fv-016",
+    "name": "Céleri banche",
+    "category": "Fruits et légumes"
+  },
+  "fv-017": {
+    "id": "fv-017",
+    "name": "Cerises",
+    "category": "Fruits et légumes"
+  },
+  "fv-018": {
+    "id": "fv-018",
+    "name": "Champignons",
+    "category": "Fruits et légumes"
+  },
+  "fv-019": {
+    "id": "fv-019",
+    "name": "Chou blanc",
+    "category": "Fruits et légumes"
+  },
+  "fv-020": {
+    "id": "fv-020",
+    "name": "Chou fleur",
+    "category": "Fruits et légumes"
+  },
+  "fv-021": {
+    "id": "fv-021",
+    "name": "Chou romanesco",
+    "category": "Fruits et légumes"
+  },
+  "fv-022": {
+    "id": "fv-022",
+    "name": "Choucroute cuite",
+    "category": "Fruits et légumes"
+  },
+  "fv-023": {
+    "id": "fv-023",
+    "name": "Choux de Bruxelles",
+    "category": "Fruits et légumes"
+  },
+  "fv-024": {
+    "id": "fv-024",
+    "name": "Citron non traité",
+    "category": "Fruits et légumes"
+  },
+  "fv-025": {
+    "id": "fv-025",
+    "name": "Citron vert",
+    "category": "Fruits et légumes"
+  },
+  "fv-026": {
+    "id": "fv-026",
+    "name": "Clémentine",
+    "category": "Fruits et légumes"
+  },
+  "fv-027": {
+    "id": "fv-027",
+    "name": "Compote de pomme maison",
+    "category": "Fruits et légumes"
+  },
+  "fv-028": {
+    "id": "fv-028",
+    "name": "Concombre",
+    "category": "Fruits et légumes"
+  },
+  "fv-029": {
+    "id": "fv-029",
+    "name": "Courge",
+    "category": "Fruits et légumes"
+  },
+  "fv-030": {
+    "id": "fv-030",
+    "name": "Courge bleue de Hongrie",
+    "category": "Fruits et légumes"
+  },
+  "fv-031": {
+    "id": "fv-031",
+    "name": "Courge butternut",
+    "category": "Fruits et légumes"
+  },
+  "fv-032": {
+    "id": "fv-032",
+    "name": "Courge butternut ou potiron",
+    "category": "Fruits et légumes"
+  },
+  "fv-033": {
+    "id": "fv-033",
+    "name": "Courge Jack Be Little",
+    "category": "Fruits et légumes"
+  },
+  "fv-034": {
+    "id": "fv-034",
+    "name": "Courge spaghetti",
+    "category": "Fruits et légumes"
+  },
+  "fv-035": {
+    "id": "fv-035",
+    "name": "Courgette",
+    "category": "Fruits et légumes"
+  },
+  "fv-036": {
+    "id": "fv-036",
+    "name": "Échalote",
+    "category": "Fruits et légumes"
+  },
+  "fv-037": {
+    "id": "fv-037",
+    "name": "Endive",
+    "category": "Fruits et légumes"
+  },
+  "fv-038": {
+    "id": "fv-038",
+    "name": "Épinards frais",
+    "category": "Fruits et légumes"
+  },
+  "fv-039": {
+    "id": "fv-039",
+    "name": "Figue",
+    "category": "Fruits et légumes"
+  },
+  "fv-040": {
+    "id": "fv-040",
+    "name": "Fraises",
+    "category": "Fruits et légumes"
+  },
+  "fv-041": {
+    "id": "fv-041",
+    "name": "Framboises",
+    "category": "Fruits et légumes"
+  },
+  "fv-042": {
+    "id": "fv-042",
+    "name": "Gingembre frais",
+    "category": "Fruits et légumes"
+  },
+  "fv-043": {
+    "id": "fv-043",
+    "name": "Grenailles",
+    "category": "Fruits et légumes"
+  },
+  "fv-044": {
+    "id": "fv-044",
+    "name": "Jeunes pousses",
+    "category": "Fruits et légumes"
+  },
+  "fv-045": {
+    "id": "fv-045",
+    "name": "Jus d’orange",
+    "category": "Fruits et légumes"
+  },
+  "fv-046": {
+    "id": "fv-046",
+    "name": "Jus de citron vert",
+    "category": "Fruits et légumes"
+  },
+  "fv-047": {
+    "id": "fv-047",
+    "name": "Kaki",
+    "category": "Fruits et légumes"
+  },
+  "fv-048": {
+    "id": "fv-048",
+    "name": "Kiwi",
+    "category": "Fruits et légumes"
+  },
+  "fv-049": {
+    "id": "fv-049",
+    "name": "Mâche",
+    "category": "Fruits et légumes"
+  },
+  "fv-050": {
+    "id": "fv-050",
+    "name": "Mangue",
+    "category": "Fruits et légumes"
+  },
+  "fv-051": {
+    "id": "fv-051",
+    "name": "Melon",
+    "category": "Fruits et légumes"
+  },
+  "fv-052": {
+    "id": "fv-052",
+    "name": "Mirabelle",
+    "category": "Fruits et légumes"
+  },
+  "fv-053": {
+    "id": "fv-053",
+    "name": "Mûres",
+    "category": "Fruits et légumes"
+  },
+  "fv-054": {
+    "id": "fv-054",
+    "name": "Myrtilles",
+    "category": "Fruits et légumes"
+  },
+  "fv-055": {
+    "id": "fv-055",
+    "name": "Navet",
+    "category": "Fruits et légumes"
+  },
+  "fv-056": {
+    "id": "fv-056",
+    "name": "Nectarine",
+    "category": "Fruits et légumes"
+  },
+  "fv-057": {
+    "id": "fv-057",
+    "name": "Oignon jaune",
+    "category": "Fruits et légumes"
+  },
+  "fv-058": {
+    "id": "fv-058",
+    "name": "Oignon rouge",
+    "category": "Fruits et légumes"
+  },
+  "fv-059": {
+    "id": "fv-059",
+    "name": "Orange non traitée",
+    "category": "Fruits et légumes"
+  },
+  "fv-060": {
+    "id": "fv-060",
+    "name": "Panais",
+    "category": "Fruits et légumes"
+  },
+  "fv-061": {
+    "id": "fv-061",
+    "name": "Pastèque",
+    "category": "Fruits et légumes"
+  },
+  "fv-062": {
+    "id": "fv-062",
+    "name": "Patate douce",
+    "category": "Fruits et légumes"
+  },
+  "fv-063": {
+    "id": "fv-063",
+    "name": "Pêche",
+    "category": "Fruits et légumes"
+  },
+  "fv-064": {
+    "id": "fv-064",
+    "name": "Poire",
+    "category": "Fruits et légumes"
+  },
+  "fv-065": {
+    "id": "fv-065",
+    "name": "Poivron jaune",
+    "category": "Fruits et légumes"
+  },
+  "fv-066": {
+    "id": "fv-066",
+    "name": "Poivron rouge",
+    "category": "Fruits et légumes"
+  },
+  "fv-067": {
+    "id": "fv-067",
+    "name": "Poivrons",
+    "category": "Fruits et légumes"
+  },
+  "fv-068": {
+    "id": "fv-068",
+    "name": "Poivrons lanières",
+    "category": "Fruits et légumes"
+  },
+  "fv-069": {
+    "id": "fv-069",
+    "name": "Pommes",
+    "category": "Fruits et légumes"
+  },
+  "fv-070": {
+    "id": "fv-070",
+    "name": "Pommes de terre",
+    "category": "Fruits et légumes"
+  },
+  "fv-071": {
+    "id": "fv-071",
+    "name": "Potimarron",
+    "category": "Fruits et légumes"
+  },
+  "fv-072": {
+    "id": "fv-072",
+    "name": "Potiron",
+    "category": "Fruits et légumes"
+  },
+  "fv-073": {
+    "id": "fv-073",
+    "name": "Potiron ou butternut",
+    "category": "Fruits et légumes"
+  },
+  "fv-074": {
+    "id": "fv-074",
+    "name": "Prune reine claude",
+    "category": "Fruits et légumes"
+  },
+  "fv-075": {
+    "id": "fv-075",
+    "name": "Prune rouge",
+    "category": "Fruits et légumes"
+  },
+  "fv-076": {
+    "id": "fv-076",
+    "name": "Radis",
+    "category": "Fruits et légumes"
+  },
+  "fv-077": {
+    "id": "fv-077",
+    "name": "Raisins blancs",
+    "category": "Fruits et légumes"
+  },
+  "fv-078": {
+    "id": "fv-078",
+    "name": "Raisins noirs",
+    "category": "Fruits et légumes"
+  },
+  "fv-079": {
+    "id": "fv-079",
+    "name": "Roquette",
+    "category": "Fruits et légumes"
+  },
+  "fv-080": {
+    "id": "fv-080",
+    "name": "Salade",
+    "category": "Fruits et légumes"
+  },
+  "fv-081": {
+    "id": "fv-081",
+    "name": "Tomates",
+    "category": "Fruits et légumes"
+  },
+  "fv-082": {
+    "id": "fv-082",
+    "name": "Tomates cerises",
+    "category": "Fruits et légumes"
+  },
+  "fv-083": {
+    "id": "fv-083",
+    "name": "Tomates cœur de bœuf",
+    "category": "Fruits et légumes"
+  },
+  "fv-084": {
+    "id": "fv-084",
+    "name": "Tomates séchées sans huile",
+    "category": "Fruits et légumes"
+  },
+  "fv-085": {
+    "id": "fv-085",
+    "name": "Topinambour",
+    "category": "Fruits et légumes"
+  },
+  "fs-001": {
+    "id": "fs-001",
+    "name": "Abricots secs",
+    "category": "Fruits secs"
+  },
+  "fs-002": {
+    "id": "fs-002",
+    "name": "Amandes",
+    "category": "Fruits secs"
+  },
+  "fs-003": {
+    "id": "fs-003",
+    "name": "Baies de goji",
+    "category": "Fruits secs"
+  },
+  "fs-004": {
+    "id": "fs-004",
+    "name": "Cacahuètes",
+    "category": "Fruits secs"
+  },
+  "fs-005": {
+    "id": "fs-005",
+    "name": "Cranberries séchées",
+    "category": "Fruits secs"
+  },
+  "fs-006": {
+    "id": "fs-006",
+    "name": "Datte (optionnel)",
+    "category": "Fruits secs"
+  },
+  "fs-007": {
+    "id": "fs-007",
+    "name": "Figue séche",
+    "category": "Fruits secs"
+  },
+  "fs-008": {
+    "id": "fs-008",
+    "name": "Graines de chia",
+    "category": "Fruits secs"
+  },
+  "fs-009": {
+    "id": "fs-009",
+    "name": "Graines de courge",
+    "category": "Fruits secs"
+  },
+  "fs-010": {
+    "id": "fs-010",
+    "name": "Graines de lin",
+    "category": "Fruits secs"
+  },
+  "fs-011": {
+    "id": "fs-011",
+    "name": "Graines de pavot",
+    "category": "Fruits secs"
+  },
+  "fs-012": {
+    "id": "fs-012",
+    "name": "Graines de sésame",
+    "category": "Fruits secs"
+  },
+  "fs-013": {
+    "id": "fs-013",
+    "name": "Graines de tournesol",
+    "category": "Fruits secs"
+  },
+  "fs-014": {
+    "id": "fs-014",
+    "name": "Mélange de graines",
+    "category": "Fruits secs"
+  },
+  "fs-015": {
+    "id": "fs-015",
+    "name": "Noisettes",
+    "category": "Fruits secs"
+  },
+  "fs-016": {
+    "id": "fs-016",
+    "name": "Noix",
+    "category": "Fruits secs"
+  },
+  "fs-017": {
+    "id": "fs-017",
+    "name": "Noix de cajou",
+    "category": "Fruits secs"
+  },
+  "fs-018": {
+    "id": "fs-018",
+    "name": "Noix de pécan",
+    "category": "Fruits secs"
+  },
+  "fs-019": {
+    "id": "fs-019",
+    "name": "Pignons de pin",
+    "category": "Fruits secs"
+  },
+  "fs-020": {
+    "id": "fs-020",
+    "name": "Pistaches",
+    "category": "Fruits secs"
+  },
+  "fs-021": {
+    "id": "fs-021",
+    "name": "Purée de noisettes",
+    "category": "Fruits secs"
+  },
+  "ha-001": {
+    "id": "ha-001",
+    "name": "Feuille de Laurier",
+    "category": "Hors achats"
+  },
+  "ha-002": {
+    "id": "ha-002",
+    "name": "Okara d'amandes",
+    "category": "Hors achats"
+  },
+  "ha-003": {
+    "id": "ha-003",
+    "name": "Pâté",
+    "category": "Hors achats"
+  },
+  "ha-004": {
+    "id": "ha-004",
+    "name": "Tahini",
+    "category": "Hors achats"
+  },
+  "it-001": {
+    "id": "it-001",
+    "name": "Protéines de soja texturées",
+    "category": "Internet"
+  },
+  "it-002": {
+    "id": "it-002",
+    "name": "Purée de cacahuètes",
+    "category": "Internet"
+  },
+  "po-001": {
+    "id": "po-001",
+    "name": "Crevettes",
+    "category": "Poisson"
+  },
+  "po-002": {
+    "id": "po-002",
+    "name": "Noix de Saint Jacques",
+    "category": "Poisson"
+  },
+  "po-003": {
+    "id": "po-003",
+    "name": "Pavé de saumon",
+    "category": "Poisson"
+  },
+  "po-004": {
+    "id": "po-004",
+    "name": "Poisson blanc",
+    "category": "Poisson"
+  },
+  "po-005": {
+    "id": "po-005",
+    "name": "Poisson fumé au choix",
+    "category": "Poisson"
+  },
+  "po-006": {
+    "id": "po-006",
+    "name": "Saumon fumé",
+    "category": "Poisson"
+  },
+  "po-007": {
+    "id": "po-007",
+    "name": "Truite fumée",
+    "category": "Poisson"
+  },
+  "pl-001": {
+    "id": "pl-001",
+    "name": "Beurre",
+    "category": "Produits laitiers"
+  },
+  "pl-002": {
+    "id": "pl-002",
+    "name": "Beurre demi sel",
+    "category": "Produits laitiers"
+  },
+  "pl-003": {
+    "id": "pl-003",
+    "name": "Boisson soja nature",
+    "category": "Produits laitiers"
+  },
+  "pl-004": {
+    "id": "pl-004",
+    "name": "Bûche de chèvre",
+    "category": "Produits laitiers"
+  },
+  "pl-005": {
+    "id": "pl-005",
+    "name": "Bûche de chèvre ou feta",
+    "category": "Produits laitiers"
+  },
+  "pl-006": {
+    "id": "pl-006",
+    "name": "Buche de chèvre ou fromage frais",
+    "category": "Produits laitiers"
+  },
+  "pl-007": {
+    "id": "pl-007",
+    "name": "Cheddar en tranches",
+    "category": "Produits laitiers"
+  },
+  "pl-008": {
+    "id": "pl-008",
+    "name": "Cheddar râpé",
+    "category": "Produits laitiers"
+  },
+  "pl-009": {
+    "id": "pl-009",
+    "name": "Comté",
+    "category": "Produits laitiers"
+  },
+  "pl-010": {
+    "id": "pl-010",
+    "name": "Comté ou cheddar",
+    "category": "Produits laitiers"
+  },
+  "pl-011": {
+    "id": "pl-011",
+    "name": "Feta",
+    "category": "Produits laitiers"
+  },
+  "pl-012": {
+    "id": "pl-012",
+    "name": "Feta ou Fromage frais",
+    "category": "Produits laitiers"
+  },
+  "pl-013": {
+    "id": "pl-013",
+    "name": "Fromage",
+    "category": "Produits laitiers"
+  },
+  "pl-014": {
+    "id": "pl-014",
+    "name": "Fromage à raclette",
+    "category": "Produits laitiers"
+  },
+  "pl-015": {
+    "id": "pl-015",
+    "name": "Fromage à tartiner",
+    "category": "Produits laitiers"
+  },
+  "pl-016": {
+    "id": "pl-016",
+    "name": "Fromage blanc 3%",
+    "category": "Produits laitiers"
+  },
+  "pl-017": {
+    "id": "pl-017",
+    "name": "Fromage frais",
+    "category": "Produits laitiers"
+  },
+  "pl-018": {
+    "id": "pl-018",
+    "name": "Fromage frais ou feta",
+    "category": "Produits laitiers"
+  },
+  "pl-019": {
+    "id": "pl-019",
+    "name": "Fromage râpé",
+    "category": "Produits laitiers"
+  },
+  "pl-020": {
+    "id": "pl-020",
+    "name": "Lait (animal ou végétal)",
+    "category": "Produits laitiers"
+  },
+  "pl-021": {
+    "id": "pl-021",
+    "name": "Lait demi écrémé",
+    "category": "Produits laitiers"
+  },
+  "pl-022": {
+    "id": "pl-022",
+    "name": "Lait écrémé",
+    "category": "Produits laitiers"
+  },
+  "pl-023": {
+    "id": "pl-023",
+    "name": "Lait écrémé en poudre",
+    "category": "Produits laitiers"
+  },
+  "pl-024": {
+    "id": "pl-024",
+    "name": "Lait entier",
+    "category": "Produits laitiers"
+  },
+  "pl-025": {
+    "id": "pl-025",
+    "name": "Margarine (60%MG)",
+    "category": "Produits laitiers"
+  },
+  "pl-026": {
+    "id": "pl-026",
+    "name": "Mozzarella",
+    "category": "Produits laitiers"
+  },
+  "pl-027": {
+    "id": "pl-027",
+    "name": "Parmesan",
+    "category": "Produits laitiers"
+  },
+  "pl-028": {
+    "id": "pl-028",
+    "name": "Pâte feuilletée",
+    "category": "Produits laitiers"
+  },
+  "pl-029": {
+    "id": "pl-029",
+    "name": "Ricotta",
+    "category": "Produits laitiers"
+  },
+  "pl-030": {
+    "id": "pl-030",
+    "name": "Skyr",
+    "category": "Produits laitiers"
+  },
+  "pl-031": {
+    "id": "pl-031",
+    "name": "St Môret",
+    "category": "Produits laitiers"
+  },
+  "pl-032": {
+    "id": "pl-032",
+    "name": "St Môret ou Petit Billy",
+    "category": "Produits laitiers"
+  },
+  "pl-033": {
+    "id": "pl-033",
+    "name": "Yaourt grec Authentique",
+    "category": "Produits laitiers"
+  },
+  "pl-034": {
+    "id": "pl-034",
+    "name": "Yaourt grec authentique ou Yaourt au lait entier",
+    "category": "Produits laitiers"
+  },
+  "pl-035": {
+    "id": "pl-035",
+    "name": "Yaourt soja nature",
+    "category": "Produits laitiers"
+  },
+  "rc-001": {
+    "id": "rc-001",
+    "name": "Béchamel",
+    "category": "Recette"
+  },
+  "rc-002": {
+    "id": "rc-002",
+    "name": "Boulettes",
+    "category": "Recette"
+  },
+  "rc-003": {
+    "id": "rc-003",
+    "name": "Boulettes de ricotta",
+    "category": "Recette"
+  },
+  "rc-004": {
+    "id": "rc-004",
+    "name": "Boulettes haricots blancs",
+    "category": "Recette"
+  },
+  "rc-005": {
+    "id": "rc-005",
+    "name": "Cordon Bleu",
+    "category": "Recette"
+  },
+  "rc-006": {
+    "id": "rc-006",
+    "name": "Crème de cajou",
+    "category": "Recette"
+  },
+  "rc-007": {
+    "id": "rc-007",
+    "name": "Crêpes",
+    "category": "Recette"
+  },
+  "rc-008": {
+    "id": "rc-008",
+    "name": "Dosas",
+    "category": "Recette"
+  },
+  "rc-009": {
+    "id": "rc-009",
+    "name": "Falafels",
+    "category": "Recette"
+  },
+  "rc-010": {
+    "id": "rc-010",
+    "name": "Faluche",
+    "category": "Recette"
+  },
+  "rc-011": {
+    "id": "rc-011",
+    "name": "Feuilles de lasagne",
+    "category": "Recette"
+  },
+  "rc-012": {
+    "id": "rc-012",
+    "name": "Galettes de blé noir",
+    "category": "Recette"
+  },
+  "rc-013": {
+    "id": "rc-013",
+    "name": "Gaufre salée à la courge",
+    "category": "Recette"
+  },
+  "rc-014": {
+    "id": "rc-014",
+    "name": "Gnocchis",
+    "category": "Recette"
+  },
+  "rc-015": {
+    "id": "rc-015",
+    "name": "Granola salé",
+    "category": "Recette"
+  },
+  "rc-016": {
+    "id": "rc-016",
+    "name": "Houmous",
+    "category": "Recette"
+  },
+  "rc-017": {
+    "id": "rc-017",
+    "name": "Lait de coco maison",
+    "category": "Recette"
+  },
+  "rc-018": {
+    "id": "rc-018",
+    "name": "Lait végétal au vegan milker",
+    "category": "Recette"
+  },
+  "rc-019": {
+    "id": "rc-019",
+    "name": "Naan",
+    "category": "Recette"
+  },
+  "rc-020": {
+    "id": "rc-020",
+    "name": "Pain à burger",
+    "category": "Recette"
+  },
+  "rc-021": {
+    "id": "rc-021",
+    "name": "Pain hot dog",
+    "category": "Recette"
+  },
+  "rc-022": {
+    "id": "rc-022",
+    "name": "Pain pita",
+    "category": "Recette"
+  },
+  "rc-023": {
+    "id": "rc-023",
+    "name": "Pain semi complet",
+    "category": "Recette"
+  },
+  "rc-024": {
+    "id": "rc-024",
+    "name": "Pâte à pizza maison",
+    "category": "Recette"
+  },
+  "rc-025": {
+    "id": "rc-025",
+    "name": "Pâte brisée",
+    "category": "Recette"
+  },
+  "rc-026": {
+    "id": "rc-026",
+    "name": "Pâte brisée au skyr",
+    "category": "Recette"
+  },
+  "rc-027": {
+    "id": "rc-027",
+    "name": "Pesto rosso",
+    "category": "Recette"
+  },
+  "rc-028": {
+    "id": "rc-028",
+    "name": "Pesto verde",
+    "category": "Recette"
+  },
+  "rc-029": {
+    "id": "rc-029",
+    "name": "Poisson pané",
+    "category": "Recette"
+  },
+  "rc-030": {
+    "id": "rc-030",
+    "name": "Ratatouille",
+    "category": "Recette"
+  },
+  "rc-031": {
+    "id": "rc-031",
+    "name": "Rösti",
+    "category": "Recette"
+  },
+  "rc-032": {
+    "id": "rc-032",
+    "name": "Sauce au poivre",
+    "category": "Recette"
+  },
+  "rc-033": {
+    "id": "rc-033",
+    "name": "Sauce bolognaise au bœuf",
+    "category": "Recette"
+  },
+  "rc-034": {
+    "id": "rc-034",
+    "name": "Steak végétarien",
+    "category": "Recette"
+  },
+  "rc-035": {
+    "id": "rc-035",
+    "name": "Taboulé oriental",
+    "category": "Recette"
+  },
+  "rc-036": {
+    "id": "rc-036",
+    "name": "Tenders de poulet",
+    "category": "Recette"
+  },
+  "rc-037": {
+    "id": "rc-037",
+    "name": "Tortillas",
+    "category": "Recette"
+  },
+  "rc-038": {
+    "id": "rc-038",
+    "name": "Yaourt maison",
+    "category": "Recette"
+  },
+  "sl-001": {
+    "id": "sl-001",
+    "name": "Epinards",
+    "category": "Surgelés"
+  },
+  "sl-002": {
+    "id": "sl-002",
+    "name": "Fèves",
+    "category": "Surgelés"
+  },
+  "sl-003": {
+    "id": "sl-003",
+    "name": "Fraises surgelées",
+    "category": "Surgelés"
+  },
+  "sl-004": {
+    "id": "sl-004",
+    "name": "Framboises fraîches ou surgelées",
+    "category": "Surgelés"
+  },
+  "sl-005": {
+    "id": "sl-005",
+    "name": "Framboises surgelés",
+    "category": "Surgelés"
+  },
+  "sl-006": {
+    "id": "sl-006",
+    "name": "Haricots beurre",
+    "category": "Surgelés"
+  },
+  "sl-007": {
+    "id": "sl-007",
+    "name": "Haricots verts",
+    "category": "Surgelés"
+  },
+  "sl-008": {
+    "id": "sl-008",
+    "name": "Macédoine surgelée",
+    "category": "Surgelés"
+  },
+  "sl-009": {
+    "id": "sl-009",
+    "name": "Myrtilles surgelées",
+    "category": "Surgelés"
+  },
+  "sl-010": {
+    "id": "sl-010",
+    "name": "Petits pois",
+    "category": "Surgelés"
+  },
+  "sl-011": {
+    "id": "sl-011",
+    "name": "Poêlée de légumes",
+    "category": "Surgelés"
+  },
+  "vi-001": {
+    "id": "vi-001",
+    "name": "Aiguillettes de poulet",
+    "category": "Viande"
+  },
+  "vi-002": {
+    "id": "vi-002",
+    "name": "Bœuf à mijoter (paleron, joue, macreuse,...)",
+    "category": "Viande"
+  },
+  "vi-003": {
+    "id": "vi-003",
+    "name": "Bœuf haché 5% Mg",
+    "category": "Viande"
+  },
+  "vi-004": {
+    "id": "vi-004",
+    "name": "Cuisse de poulet",
+    "category": "Viande"
+  },
+  "vi-005": {
+    "id": "vi-005",
+    "name": "Filet de bœuf",
+    "category": "Viande"
+  },
+  "vi-006": {
+    "id": "vi-006",
+    "name": "Filet de poulet",
+    "category": "Viande"
+  },
+  "vi-007": {
+    "id": "vi-007",
+    "name": "Filet mignon",
+    "category": "Viande"
+  },
+  "vi-008": {
+    "id": "vi-008",
+    "name": "Filet ou cuisse de poulet",
+    "category": "Viande"
+  },
+  "vi-009": {
+    "id": "vi-009",
+    "name": "Paupiette",
+    "category": "Viande"
+  },
+  "vi-010": {
+    "id": "vi-010",
+    "name": "Pita",
+    "category": "Viande"
+  },
+  "vi-011": {
+    "id": "vi-011",
+    "name": "Poulet entier",
+    "category": "Viande"
+  },
+  "vi-012": {
+    "id": "vi-012",
+    "name": "Steak",
+    "category": "Viande"
+  },
+  "vi-013": {
+    "id": "vi-013",
+    "name": "Steak ou bœuf haché 5% Mg",
+    "category": "Viande"
+  },
+  "vi-014": {
+    "id": "vi-014",
+    "name": "Veau haché",
+    "category": "Viande"
+  }
+}

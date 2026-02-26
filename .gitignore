@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Backup files
+src/core/data/recipes-ingredients_backup.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

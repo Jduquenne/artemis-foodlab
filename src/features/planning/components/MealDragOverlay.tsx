@@ -1,5 +1,5 @@
 import { RecipeDetails } from '../../../core/domain/types';
-import recipesDb from '../../../core/domain/recipes-db.json';
+import recipesDb from '../../../core/data/recipes-db.json';
 
 export interface MealDragOverlayProps {
     recipeId: string;

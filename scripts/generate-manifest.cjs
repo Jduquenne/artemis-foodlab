@@ -1,8 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const publicDir = path.join(__dirname, 'public');
-const outputDir = path.join(__dirname, 'src/core/domain');
+const rootDir = path.join(__dirname, '..');
+const publicDir = path.join(rootDir, 'public');
+const outputDir = path.join(rootDir, 'src/core/data');
 const categories = ["bases", "cereal-products", "dairy-products", "dry-food", "charcuterie", "fish", "fruits", "pastries", "plant-proteins", "red-meat", "veggies", "white-meat","outdoor"];
 const types = ["photo", "ingredients", "recipes"];
 

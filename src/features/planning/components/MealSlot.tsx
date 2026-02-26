@@ -1,7 +1,7 @@
 import { Plus, RefreshCw, Trash2, GripVertical } from 'lucide-react';
 import { useDraggable, useDroppable } from '@dnd-kit/core';
 import { RecipeDetails } from '../../../core/domain/types';
-import recipesDb from '../../../core/domain/recipes-db.json';
+import recipesDb from '../../../core/data/recipes-db.json';
 
 interface MealSlotProps {
     label: string;

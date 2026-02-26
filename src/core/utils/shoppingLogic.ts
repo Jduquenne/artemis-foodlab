@@ -3,7 +3,7 @@ import { getISOWeek, getISOWeekYear } from "date-fns";
 import { db } from "../services/db";
 import { MealSlot } from "../services/db";
 import { RecipeDetails, IngredientCategory, ShoppingDay } from "../domain/types";
-import recipesDb from "../domain/recipes-db.json";
+import recipesDb from "../data/recipes-db.json";
 
 export interface IngredientSource {
   recipeId: string;
@@ -20,6 +20,7 @@ export interface ConsolidatedIngredient {
   totalQuantity: number;
   unit: string;
   category: IngredientCategory | undefined;
+  preparation?: string;
   sources: IngredientSource[];
 }
 
@@ -32,6 +33,7 @@ function cleanRecipeName(name: string): string {
 async function aggregateSlots(slots: MealSlot[]): Promise<ConsolidatedIngredient[]> {
   const data = recipesDb as unknown as Record<string, RecipeDetails>;
   const map = new Map<string, ConsolidatedIngredient>();
+  const prepMap = new Map<string, Set<string>>();
 
   for (const slot of slots) {
     for (const recipeId of slot.recipeIds) {
@@ -71,13 +73,23 @@ async function aggregateSlots(slots: MealSlot[]): Promise<ConsolidatedIngredient
             sources: [source],
           });
         }
+
+        if (ing.preparation) {
+          if (!prepMap.has(key)) prepMap.set(key, new Set());
+          prepMap.get(key)!.add(ing.preparation);
+        }
       }
     }
   }
 
-  return Array.from(map.values()).sort((a, b) =>
-    a.name.localeCompare(b.name, "fr"),
-  );
+  return Array.from(map.values())
+    .map((item) => {
+      const preps = prepMap.get(item.key);
+      return preps && preps.size > 0
+        ? { ...item, preparation: [...preps].join(", ") }
+        : item;
+    })
+    .sort((a, b) => a.name.localeCompare(b.name, "fr"));
 }
 
 export const getNextWeekShoppingList = async (): Promise<ConsolidatedIngredient[]> => {

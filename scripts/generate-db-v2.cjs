@@ -1,18 +1,16 @@
 const fs = require('fs');
 const path = require('path');
 
-const publicDir = path.join(__dirname, 'public');
-const outputDir = path.join(__dirname, 'src/core/domain');
-const manifestPath = path.join(outputDir, 'assets-manifest.json');
-const recipesDataPath = path.join(outputDir, 'recipes-ingredients.json');
-const outputPath = path.join(outputDir, 'recipes-db.json');
+const dataDir = path.join(__dirname, '..', 'src/core/data');
+const manifestPath = path.join(dataDir, 'assets-manifest.json');
+const recipesDataPath = path.join(dataDir, 'recipes-ingredients.json');
+const foodDbPath = path.join(dataDir, 'food-db.json');
+const outputPath = path.join(dataDir, 'recipes-db.json');
 
-const categories = ["bases", "cereal-products", "dairy-products", "dry-food", "charcuterie", "fish", "fruits", "pastries", "plant-proteins", "red-meat", "veggies", "white-meat", "outdoor"];
-const types = ["photo", "ingredients", "recipes"];
+const PREP_PATTERN = /^(.*?)\s*\(([^)]+)\)$/;
 
 function normalizeRecipeId(prefix, idNum) {
-  const paddedId = idNum.toString().padStart(3, '0');
-  return `${prefix.toLowerCase()}-${paddedId}`;
+  return `${prefix.toLowerCase()}-${idNum.toString().padStart(3, '0')}`;
 }
 
 function oldKeyToNormalizedId(key) {
@@ -38,12 +36,16 @@ if (!fs.existsSync(manifestPath)) {
   console.error('❌ assets-manifest.json introuvable. Lance d\'abord : node generate-manifest.cjs');
   process.exit(1);
 }
+if (!fs.existsSync(foodDbPath)) {
+  console.error('❌ food-db.json introuvable. Lance d\'abord : node generate-food-db.cjs');
+  process.exit(1);
+}
 
 const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
 const recipesData = JSON.parse(fs.readFileSync(recipesDataPath, 'utf-8'));
+const foodDb = JSON.parse(fs.readFileSync(foodDbPath, 'utf-8'));
 
 const base = '/artemis-foodlab';
-
 const result = {};
 
 console.log('📦 Traitement des assets...');
@@ -92,9 +94,7 @@ Object.entries(recipesData).forEach(([oldKey, data]) => {
     result[recipeId].macronutriment = data.macronutriment;
     result[recipeId].portion = data.portion ?? 1;
     result[recipeId].ingredients = data.ingredients ?? [];
-    if (data.name) {
-      result[recipeId].name = data.name.replace(/_/g, ' ').trim();
-    }
+    if (data.name) result[recipeId].name = data.name.replace(/_/g, ' ').trim();
     if (data.kind) result[recipeId].kind = data.kind;
     if (data.mealType) result[recipeId].mealType = data.mealType;
     mergedCount++;
@@ -115,12 +115,60 @@ Object.entries(recipesData).forEach(([oldKey, data]) => {
 
 console.log(`   ✅ ${mergedCount} fusions réussies, ${orphanCount} entrées nutrition sans assets`);
 
+console.log('🥦 Résolution des foodId...');
+
+const foodIndex = new Map();
+for (const food of Object.values(foodDb)) {
+  foodIndex.set(`${food.category}|${food.name.toLowerCase()}`, food.id);
+}
+
+let resolvedCount = 0;
+let unresolved = [];
+
+for (const [recipeId, recipe] of Object.entries(result)) {
+  if (!recipe.ingredients) continue;
+
+  recipe.ingredients = recipe.ingredients.map(ing => {
+    if (!ing.name || !ing.category) return ing;
+
+    const directKey = `${ing.category}|${ing.name.trim().toLowerCase()}`;
+    if (foodIndex.has(directKey)) {
+      resolvedCount++;
+      return { ...ing, foodId: foodIndex.get(directKey) };
+    }
+
+    const match = ing.name.trim().match(PREP_PATTERN);
+    if (match) {
+      const baseName = match[1].trim();
+      const preparation = match[2].trim();
+      const prepKey = `${ing.category}|${baseName.toLowerCase()}`;
+      if (foodIndex.has(prepKey)) {
+        resolvedCount++;
+        return {
+          ...ing,
+          name: baseName,
+          foodId: foodIndex.get(prepKey),
+          preparation,
+        };
+      }
+    }
+
+    unresolved.push({ recipeId, name: ing.name, category: ing.category });
+    return ing;
+  });
+}
+
+console.log(`   ✅ ${resolvedCount} ingrédients résolus`);
+if (unresolved.length > 0) {
+  console.warn(`   ⚠️  ${unresolved.length} ingrédients sans correspondance food-db :`);
+  unresolved.forEach(u => console.warn(`      - [${u.recipeId}] "${u.name}" (${u.category})`));
+}
+
 const sorted = Object.fromEntries(
   Object.entries(result).sort(([a], [b]) => a.localeCompare(b))
 );
 
 fs.writeFileSync(outputPath, JSON.stringify(sorted, null, 2));
 
-console.log(`\n✅ recipes-db.json généré : ${Object.keys(sorted).length} recettes totales`);
+console.log(`\n✅ recipes-db.json généré (v2) : ${Object.keys(sorted).length} recettes`);
 console.log(`   📁 ${outputPath}`);
-console.log('\n💡 Rappel : complète manuellement les champs mealType[] et kind pour chaque recette.');

@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { CheckCircle2, Circle } from 'lucide-react';
 import { ConsolidatedIngredient } from '../../../core/utils/shoppingLogic';
 import { IngredientTooltip } from './IngredientTooltip';
+import { pluralizeUnit } from '../../../core/utils/unitUtils';
 
-export interface CategoryCardProps {
+export interface ShoppingCategoryCardProps {
     label: string;
     items: ConsolidatedIngredient[];
     checked: Set<string>;
@@ -12,7 +13,7 @@ export interface CategoryCardProps {
     onSetStock: (key: string, value: number) => void;
 }
 
-export const CategoryCard = ({ label, items, checked, stocks, onToggle, onSetStock }: CategoryCardProps) => {
+export const ShoppingCategoryCard = ({ label, items, checked, stocks, onToggle, onSetStock }: ShoppingCategoryCardProps) => {
     const checkedCount = items.filter(i => checked.has(i.key)).length;
     const [editingKey, setEditingKey] = useState<string | null>(null);
     const [editValue, setEditValue] = useState('');
@@ -68,6 +69,9 @@ export const CategoryCard = ({ label, items, checked, stocks, onToggle, onSetSto
                                 }
                                 <span className={`font-medium text-slate-800 truncate ${isChecked ? 'line-through' : ''}`}>
                                     {item.name}
+                                    {item.preparation && (
+                                        <span className="font-normal text-slate-400 ml-1">· {item.preparation}</span>
+                                    )}
                                 </span>
                             </div>
 
@@ -89,7 +93,7 @@ export const CategoryCard = ({ label, items, checked, stocks, onToggle, onSetSto
                                             className="w-16 text-sm text-center bg-slate-100 dark:bg-slate-200 border border-orange-300 focus:outline-none focus:border-orange-500 rounded-lg px-1 py-0.5"
                                             autoFocus
                                         />
-                                        <span className="text-xs text-slate-400">{item.unit}</span>
+                                        <span className="text-xs text-slate-400">{pluralizeUnit(item.unit, parseFloat(editValue) || 0)}</span>
                                     </div>
                                 ) : (
                                     <>
@@ -112,7 +116,7 @@ export const CategoryCard = ({ label, items, checked, stocks, onToggle, onSetSto
                                                 ? '—'
                                                 : needed === 0
                                                     ? '✓'
-                                                    : `${formatQty(needed)} ${item.unit}`}
+                                                    : `${formatQty(needed)} ${pluralizeUnit(item.unit, needed)}`}
                                         </button>
                                     </>
                                 )}

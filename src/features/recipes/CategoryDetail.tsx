@@ -8,7 +8,7 @@ import { MacroFilterButton } from './components/MacroFilterButton';
 import { PREDEFINED_FILTERS } from '../../core/domain/predefinedFilters';
 import { RecipeDetails } from '../../core/domain/types';
 import { useMenuStore } from '../../shared/store/useMenuStore';
-import recipesDb from '../../core/domain/recipes-db.json';
+import recipesDb from '../../core/data/recipes-db.json';
 
 export const CategoryDetail = () => {
     const { categoryId } = useParams();

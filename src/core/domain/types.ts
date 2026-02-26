@@ -50,12 +50,20 @@ export interface Recipe {
   instructionsImage?: string;
 }
 
-export interface Ingredient {
+export interface Food {
   id: string;
   name: string;
-  quantity: string;
-  unit: string;
   category: IngredientCategory;
+}
+
+export interface Ingredient {
+  id: string;
+  foodId?: string;
+  name: string;
+  quantity: string;
+  unit: Unit;
+  category: IngredientCategory;
+  preparation?: string;
 }
 
 export interface Macronutrients {
@@ -67,14 +75,12 @@ export interface Macronutrients {
 }
 
 export enum MealType {
-  BREAKFAST = "breakfast",
-  LUNCH = "lunch",
-  DINNER = "dinner",
-  SNACK = "snack",
+  MEAL = "meal",
+  SIDE = "side",
 }
 
 export enum RecipeKind {
-  DISH = "dish",
+  dish = "dish",
   INGREDIENT = "ingredient",
   BASE = "base",
 }

@@ -6,7 +6,7 @@ import { IngredientCategory, ShoppingDay } from '../../core/domain/types';
 import { getShoppingListForDays, ConsolidatedIngredient } from '../../core/utils/shoppingLogic';
 import { markScrolling } from '../../shared/utils/scrollGuard';
 import { useMenuStore } from '../../shared/store/useMenuStore';
-import { CategoryCard } from './components/CategoryCard';
+import { ShoppingCategoryCard } from './components/ShoppingCategoryCard';
 
 const CATEGORY_ORDER: IngredientCategory[] = [
     IngredientCategory.FRUIT_VEGETABLE,
@@ -170,7 +170,7 @@ export const ShoppingModule = () => {
                     <div className="columns-1 tablet:columns-2 lg:columns-3 gap-4 pb-4">
                         {groupedItems.map(group => (
                             <div key={group.label} className="break-inside-avoid mb-4">
-                                <CategoryCard
+                                <ShoppingCategoryCard
                                     label={group.label}
                                     items={group.list}
                                     checked={checked}

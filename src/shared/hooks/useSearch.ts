@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import recipesDb from "../../core/domain/recipes-db.json";
+import recipesDb from "../../core/data/recipes-db.json";
 import { RecipeDetails } from "../../core/domain/types";
 
 export interface SearchRecipeResult {

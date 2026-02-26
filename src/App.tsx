@@ -1,5 +1,7 @@
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './shared/components/Layout';
+import { NotificationBanner } from './shared/components/NotificationBanner';
+import { useBackupReminder } from './shared/hooks/useBackupReminder';
 
 // Imports des Modules Fonctionnels
 import { RecipeModule } from './features/recipes/RecipeModule';
@@ -9,9 +11,13 @@ import { PlanningModule } from './features/planning/PlanningModule';
 import { ShoppingModule } from './features/shopping/ShoppingModule';
 
 function App() {
+  useBackupReminder();
+
   return (
-    <Router>
-      <Layout>
+    <>
+      <NotificationBanner />
+      <Router>
+        <Layout>
         <Routes>
           {/* Redirection par défaut vers les recettes */}
           <Route path="/" element={<Navigate to="/recipes" replace />} />
@@ -29,6 +35,7 @@ function App() {
         </Routes>
       </Layout>
     </Router>
+    </>
   );
 }
 

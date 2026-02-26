@@ -87,6 +87,11 @@ main { animation: fadeIn 0.3s ease-out; }
     to   { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes slideDown {
+    from { opacity: 0; transform: translate(-50%, -120%); }
+    to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
 /* =========================================================
    UTILITIES 3D (FlipCard)
    ========================================================= */

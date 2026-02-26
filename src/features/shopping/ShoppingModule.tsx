@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Printer, ShoppingCart, CalendarDays } from 'lucide-react';
+import { ShoppingCart, CalendarDays } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useNavigate } from 'react-router-dom';
 import { IngredientCategory, ShoppingDay } from '../../core/domain/types';
@@ -36,6 +36,8 @@ export const ShoppingModule = () => {
     const navigate = useNavigate();
     const shoppingDays = useMenuStore((s) => s.shoppingDays);
     const periodKey = useMemo(() => getPeriodKey(shoppingDays), [shoppingDays]);
+
+    const [viewMode, setViewMode] = useState<'all' | 'missing'>('all');
 
     const [checked, setChecked] = useState<Set<string>>(() => {
         try {
@@ -89,13 +91,19 @@ export const ShoppingModule = () => {
 
     const groupedItems = useMemo(() => {
         if (!ingredients) return [];
+        const isNeeded = (i: ConsolidatedIngredient) => {
+            if (checked.has(i.key)) return false;
+            if (i.totalQuantity === 0) return true;
+            return Math.max(0, i.totalQuantity - (stocks[i.key] ?? 0)) > 0;
+        };
+        const filterItem = (i: ConsolidatedIngredient) => viewMode === 'all' || isNeeded(i);
         const groups: { label: string; list: ConsolidatedIngredient[] }[] = CATEGORY_ORDER
-            .map(cat => ({ label: cat as string, list: ingredients.filter(i => i.category === cat) }))
+            .map(cat => ({ label: cat as string, list: ingredients.filter(i => i.category === cat && filterItem(i)) }))
             .filter(g => g.list.length > 0);
-        const uncategorized = ingredients.filter(i => !i.category || !CATEGORY_ORDER.includes(i.category));
+        const uncategorized = ingredients.filter(i => (!i.category || !CATEGORY_ORDER.includes(i.category)) && filterItem(i));
         if (uncategorized.length > 0) groups.push({ label: 'Autres', list: uncategorized });
         return groups;
-    }, [ingredients]);
+    }, [ingredients, viewMode, checked, stocks]);
 
     const uncheckedCount = useMemo(() => {
         if (!ingredients) return 0;
@@ -128,13 +136,28 @@ export const ShoppingModule = () => {
                         </p>
                     )}
                 </div>
-                <button
-                    onClick={() => window.print()}
-                    className="flex items-center gap-2 bg-white dark:bg-slate-100 border border-slate-200 px-4 py-2 rounded-xl font-bold text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors shrink-0"
-                >
-                    <Printer className="w-4 h-4" />
-                    <span className="hidden sm:inline">Imprimer</span>
-                </button>
+                <div className="flex rounded-xl overflow-hidden border border-slate-200 shrink-0">
+                    <button
+                        onClick={() => setViewMode('all')}
+                        className={`px-3 py-2 text-sm font-bold transition-colors ${
+                            viewMode === 'all'
+                                ? 'bg-orange-500 text-white'
+                                : 'bg-white dark:bg-slate-100 text-slate-600 hover:bg-slate-50 dark:hover:bg-slate-200'
+                        }`}
+                    >
+                        Complète
+                    </button>
+                    <button
+                        onClick={() => setViewMode('missing')}
+                        className={`px-3 py-2 text-sm font-bold transition-colors border-l border-slate-200 ${
+                            viewMode === 'missing'
+                                ? 'bg-orange-500 text-white'
+                                : 'bg-white dark:bg-slate-100 text-slate-600 hover:bg-slate-50 dark:hover:bg-slate-200'
+                        }`}
+                    >
+                        Manquants
+                    </button>
+                </div>
             </div>
 
             <div
@@ -165,6 +188,12 @@ export const ShoppingModule = () => {
                         <ShoppingCart className="w-12 h-12 opacity-30" />
                         <p className="font-medium">Aucun repas planifié sur cette période</p>
                         <p className="text-sm">Planifie des repas pour générer la liste</p>
+                    </div>
+                ) : groupedItems.length === 0 ? (
+                    <div className="h-full flex flex-col items-center justify-center gap-3 text-slate-400">
+                        <ShoppingCart className="w-12 h-12 opacity-30" />
+                        <p className="font-medium text-slate-500">Tout est couvert !</p>
+                        <p className="text-sm">Rien à acheter — tout est en stock ou coché</p>
                     </div>
                 ) : (
                     <div className="columns-1 tablet:columns-2 lg:columns-3 gap-4 pb-4">

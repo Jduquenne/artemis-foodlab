@@ -1571,8 +1571,8 @@
         "id": "001",
         "name": "Farine semi complète",
         "category": "Epicerie sucrée",
-        "quantity": 15,
-        "unit": "g"
+        "quantity": null,
+        "unit": null
       },
       {
         "id": "002",

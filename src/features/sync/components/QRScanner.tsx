@@ -1,4 +1,5 @@
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
+import { CameraOff } from "lucide-react";
 import jsQR from "jsqr";
 
 interface QRScannerProps {
@@ -12,6 +13,7 @@ export const QRScanner = ({ onScan, active }: QRScannerProps) => {
   const streamRef = useRef<MediaStream | null>(null);
   const rafRef = useRef<number>(0);
   const scannedRef = useRef(false);
+  const [cameraError, setCameraError] = useState<string | null>(null);
 
   const stopStream = useCallback(() => {
     cancelAnimationFrame(rafRef.current);
@@ -22,6 +24,7 @@ export const QRScanner = ({ onScan, active }: QRScannerProps) => {
   useEffect(() => {
     if (!active) { stopStream(); return; }
     scannedRef.current = false;
+    setCameraError(null);
 
     navigator.mediaDevices
       .getUserMedia({ video: { facingMode: "environment" } })
@@ -53,10 +56,28 @@ export const QRScanner = ({ onScan, active }: QRScannerProps) => {
         };
         rafRef.current = requestAnimationFrame(scan);
       })
-      .catch(() => {});
+      .catch((err: unknown) => {
+        const name = err instanceof DOMException ? err.name : "";
+        if (name === "NotAllowedError") {
+          setCameraError("Accès à la caméra refusé. Ferme toutes les superpositions d'applications (bulles de chat, filtres d'écran) puis réessaie.");
+        } else if (name === "NotFoundError") {
+          setCameraError("Aucune caméra détectée sur cet appareil.");
+        } else {
+          setCameraError("Impossible d'accéder à la caméra. Vérifie les permissions dans les réglages du navigateur.");
+        }
+      });
 
     return stopStream;
   }, [active, onScan, stopStream]);
+
+  if (cameraError) {
+    return (
+      <div className="w-full aspect-square max-w-xs mx-auto rounded-2xl bg-slate-100 dark:bg-slate-200 flex flex-col items-center justify-center gap-3 p-5 text-center">
+        <CameraOff className="w-10 h-10 text-slate-400" />
+        <p className="text-sm text-slate-600 font-medium">{cameraError}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="relative w-full aspect-square max-w-xs mx-auto rounded-2xl overflow-hidden bg-slate-900">

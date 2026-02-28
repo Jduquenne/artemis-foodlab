@@ -10,7 +10,6 @@ const CATEGORY_ORDER: HouseholdCategory[] = [
     HouseholdCategory.PANTRY,
     HouseholdCategory.HYGIENE,
     HouseholdCategory.MAINTENANCE,
-    HouseholdCategory.HOUSE,
     HouseholdCategory.PHARMACY,
     HouseholdCategory.PETS,
 ];

@@ -30,8 +30,8 @@ export const ShoppingCategoryCard = ({ label, items, checked, stocks, onToggle, 
     };
 
     return (
-        <div className="bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl p-5 shadow-sm">
-            <div className="flex items-center justify-between mb-4">
+        <div className="bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl p-3 shadow-sm">
+            <div className="flex items-center justify-between mb-2">
                 <h2 className="text-orange-600 font-black uppercase tracking-widest text-xs">
                     {label}
                 </h2>
@@ -41,7 +41,7 @@ export const ShoppingCategoryCard = ({ label, items, checked, stocks, onToggle, 
                     </span>
                 )}
             </div>
-            <div className="space-y-1">
+            <div className="space-y-0.5">
                 {items.map(item => {
                     const isChecked = checked.has(item.key);
                     const stock = stocks[item.key] ?? 0;
@@ -57,17 +57,17 @@ export const ShoppingCategoryCard = ({ label, items, checked, stocks, onToggle, 
                         <div
                             key={item.key}
                             onClick={() => { if (!isEditing) onToggle(item.key); }}
-                            className={`flex items-center justify-between gap-2 px-3 py-3 rounded-xl transition-all cursor-pointer select-none
+                            className={`flex items-center justify-between gap-2 px-2 py-2.5 rounded-xl transition-all cursor-pointer select-none
                                 ${isChecked
                                     ? 'opacity-40 bg-slate-50 dark:bg-slate-200/40'
                                     : 'hover:bg-slate-50 dark:hover:bg-slate-200/40'}`}
                         >
-                            <div className="flex items-center gap-3 min-w-0 flex-1">
+                            <div className="flex items-center gap-2 min-w-0 flex-1">
                                 {isChecked
-                                    ? <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
-                                    : <Circle className="w-5 h-5 text-slate-300 shrink-0" />
+                                    ? <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
+                                    : <Circle className="w-4 h-4 text-slate-300 shrink-0" />
                                 }
-                                <span className={`font-medium text-slate-800 truncate ${isChecked ? 'line-through' : ''}`}>
+                                <span className={`text-sm font-medium text-slate-800 truncate ${isChecked ? 'line-through' : ''}`}>
                                     {item.name}
                                     {item.preparation && (
                                         <span className="font-normal text-slate-400 ml-1">· {item.preparation}</span>

@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { Layers } from 'lucide-react';
 import { isScrollingActive } from '../../../shared/utils/scrollGuard';
+import { IS_TOUCH } from '../../../shared/utils/deviceUtils';
 
 interface FlipCardProps {
     name: string;
@@ -9,8 +10,6 @@ interface FlipCardProps {
     recipeUrl?: string;
     onClick: () => void;
 }
-
-const IS_TOUCH = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
 
 export const FlipCard = ({ frontImage, backImage, recipeUrl, onClick }: FlipCardProps) => {
     const [isFlipped, setIsFlipped] = useState(false);
@@ -36,7 +35,7 @@ export const FlipCard = ({ frontImage, backImage, recipeUrl, onClick }: FlipCard
                 {showBack && (
                     <div className="absolute inset-0 bg-orange-50 dark:bg-orange-950/40 border-2 border-orange-200 dark:border-orange-800 rounded-2xl">
                         {backImage ? (
-                            <img src={backImage} alt="Ingrédients" className="w-full h-full object-contain p-2" />
+                            <img src={backImage} alt="Ingrédients" className="w-full h-full object-cover" />
                         ) : (
                             <div className="w-full h-full flex flex-col items-center justify-center text-[10px] text-orange-400 font-bold p-4 text-center gap-2">
                                 <span className="text-2xl">🤷‍♂️</span>
@@ -82,7 +81,7 @@ export const FlipCard = ({ frontImage, backImage, recipeUrl, onClick }: FlipCard
                 </div>
                 <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 z-10 bg-orange-50 dark:bg-orange-950/40 rounded-xl overflow-hidden border-2 border-orange-200 dark:border-orange-800">
                     {backImage ? (
-                        <img src={backImage} alt="Ingrédients" className="w-full h-full object-contain p-2" />
+                        <img src={backImage} alt="Ingrédients" className="w-full h-full object-cover" />
                     ) : (
                         <div className="w-full h-full flex flex-col items-center justify-center text-[10px] text-orange-400 font-bold p-4 text-center gap-2">
                             <span className="text-2xl">🤷‍♂️</span>

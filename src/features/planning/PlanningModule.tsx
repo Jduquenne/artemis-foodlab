@@ -24,10 +24,10 @@ import {
 } from '@dnd-kit/core';
 
 const MEAL_SLOTS = [
-    { id: 'breakfast', label: 'Petit déj.', icon: '☕', multi: true,  flex: 2 },
-    { id: 'lunch',     label: 'Déjeuner',   icon: '🍴', multi: false, flex: 3 },
-    { id: 'snack',     label: 'Goûter',     icon: '🍎', multi: true,  flex: 2 },
-    { id: 'dinner',    label: 'Dîner',      icon: '🌙', multi: false, flex: 3 },
+    { id: 'breakfast', label: 'Petit déj.', icon: '☕', multi: true, flex: 2 },
+    { id: 'lunch', label: 'Déjeuner', icon: '🍴', multi: false, flex: 3 },
+    { id: 'snack', label: 'Goûter', icon: '🍎', multi: true, flex: 2 },
+    { id: 'dinner', label: 'Dîner', icon: '🌙', multi: false, flex: 3 },
 ] as const;
 
 type SlotId = typeof MEAL_SLOTS[number]['id'];
@@ -166,8 +166,8 @@ export const PlanningModule = () => {
                 {mealType.multi ? (
                     <MultiMealSlot
                         label={mealType.label} icon={mealType.icon} slotId={slotId} recipeIds={recipeIds}
-                        onAdd={isSelectionMode ? () => {} : () => setPickerSlot({ day, slot: mealType.id })}
-                        onRemoveRecipe={isSelectionMode ? () => {} : (rid) => handleRemoveRecipe(day, mealType.id, rid)}
+                        onAdd={isSelectionMode ? () => { } : () => setPickerSlot({ day, slot: mealType.id })}
+                        onRemoveRecipe={isSelectionMode ? () => { } : (rid) => handleRemoveRecipe(day, mealType.id, rid)}
                         onNavigateToRecipe={(rid) => navigate(`/recipes/detail/${rid}`)}
                     />
                 ) : (
@@ -175,9 +175,9 @@ export const PlanningModule = () => {
                         label={mealType.label} icon={mealType.icon} slotId={slotId} recipeIds={recipeIds}
                         persons={savedMeal?.persons} isEditingPersons={isEditingThis} isAnyEditing={isAnyEditing}
                         onNavigate={() => navigate(`/recipes/detail/${savedMeal!.recipeIds[0]}`)}
-                        onOpenPicker={isSelectionMode ? () => {} : () => setPickerSlot({ day, slot: mealType.id })}
-                        onModify={isSelectionMode ? () => {} : () => setPickerSlot({ day, slot: mealType.id })}
-                        onDelete={isSelectionMode ? () => {} : () => handleDeleteMeal(day, mealType.id)}
+                        onOpenPicker={isSelectionMode ? () => { } : () => setPickerSlot({ day, slot: mealType.id })}
+                        onModify={isSelectionMode ? () => { } : () => setPickerSlot({ day, slot: mealType.id })}
+                        onDelete={isSelectionMode ? () => { } : () => handleDeleteMeal(day, mealType.id)}
                         onOpenPersonsEditor={() => setEditingPersonsSlotId(slotId)}
                         onConfirmPersons={(n) => handleConfirmPersons(slotId, n)}
                         onCancelPersons={() => setEditingPersonsSlotId(null)}
@@ -194,7 +194,7 @@ export const PlanningModule = () => {
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
         >
-            <div className="w-full h-[calc(100vh-2rem)] tablet:h-[calc(100vh-4rem)] flex flex-col p-2 gap-2 overflow-hidden">
+            <div className="w-full h-[calc(100vh-2rem)] tablet:h-[calc(100vh-4rem)] flex flex-col gap-2 overflow-hidden">
 
                 {/* ── HEADER ── */}
                 <div className="flex items-center justify-between gap-3 shrink-0">
@@ -232,7 +232,7 @@ export const PlanningModule = () => {
                                     'flex items-center gap-1.5 px-3 py-2 rounded-2xl shadow-sm border font-bold text-sm transition-colors',
                                     isAnyEditing ? 'opacity-40 pointer-events-none bg-white dark:bg-slate-100 border-slate-200 text-slate-600'
                                         : shoppingDays.length > 0 ? 'bg-orange-500 border-orange-400 text-white hover:bg-orange-600'
-                                        : 'bg-white dark:bg-slate-100 border-slate-200 text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200',
+                                            : 'bg-white dark:bg-slate-100 border-slate-200 text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200',
                                 ].join(' ')}
                             >
                                 <ShoppingCart size={15} />
@@ -310,7 +310,7 @@ export const PlanningModule = () => {
                                                 ? <Check className="w-3 h-3" />
                                                 : <span className={`text-[9px] font-bold ${mealCount > 0 ? 'text-orange-400' : 'text-slate-300'}`}>
                                                     {mealCount > 0 ? mealCount : '—'}
-                                                  </span>
+                                                </span>
                                             }
                                         </button>
                                     );

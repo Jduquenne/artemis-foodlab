@@ -30,14 +30,14 @@ export const ShoppingSelectionBar = ({ count, onConfirm, onCancel }: ShoppingSel
                     className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-semibold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-200/20 transition-colors"
                 >
                     <X className="w-3.5 h-3.5" />
-                    Annuler
+                    <span className="hidden sm:inline">Annuler</span>
                 </button>
                 <button
                     onClick={onConfirm}
                     className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-sm font-bold bg-orange-500 hover:bg-orange-600 text-white transition-colors"
                 >
                     <Check className="w-3.5 h-3.5" />
-                    Confirmer
+                    <span className="hidden sm:inline">Confirmer</span>
                 </button>
             </div>
         </div>

@@ -16,7 +16,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
     ];
 
     return (
-        <div className="flex h-screen w-full overflow-hidden bg-slate-50">
+        <div className="flex h-[100dvh] w-full overflow-hidden bg-slate-50">
             <aside className="w-14 sm:w-16 tablet:w-20 bg-white dark:bg-slate-100 border-r border-slate-200 flex flex-col items-center justify-between py-5 tablet:py-8">
                 <div className="text-orange-500 font-bold text-lg tablet:text-xl select-none">AFL</div>
 

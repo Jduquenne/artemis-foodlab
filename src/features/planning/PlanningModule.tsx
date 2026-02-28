@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import { ChevronLeft, ChevronRight, ShoppingCart, Check } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../../core/services/db';
@@ -47,6 +47,7 @@ export const PlanningModule = () => {
     const [editingPersonsSlotId, setEditingPersonsSlotId] = useState<string | null>(null);
 
     const isAnyEditing = editingPersonsSlotId !== null;
+    const dateInputRef = useRef<HTMLInputElement>(null);
 
     const monday = useMemo(() => getMonday(selectedDate), [selectedDate]);
     const weekNumber = useMemo(() => getWeekNumber(monday), [monday]);
@@ -194,23 +195,36 @@ export const PlanningModule = () => {
         >
             <div className="w-full h-[calc(100vh-100px)] flex flex-col p-2 gap-2 overflow-hidden">
 
-                <div className="flex items-baseline justify-between gap-6 shrink-0 mb-2">
-                    <div className="flex items-baseline gap-3">
-                        <h1 className="text-3xl font-black text-slate-900">Ma Semaine</h1>
-                        <span className="text-sm font-bold text-slate-400">
+                <div className="flex items-center justify-between gap-3 shrink-0 mb-2">
+                    <div className="flex flex-col leading-tight">
+                        <h1 className="text-xl sm:text-2xl tablet:text-3xl font-black text-slate-900">Ma Semaine</h1>
+                        <span className="text-xs sm:text-sm font-bold text-slate-400">
                             Sem. {weekNumber} · {weekRange}
                         </span>
                     </div>
 
-                    <div className="flex items-center gap-2 self-center shrink-0">
-                        <div className={`flex items-center gap-1 bg-white dark:bg-slate-100 px-2 py-1 rounded-2xl shadow-sm border border-slate-200 ${isAnyEditing ? 'opacity-40 pointer-events-none' : ''}`}>
+                    <div className={`flex items-center gap-2 self-center shrink-0 ${isAnyEditing ? 'opacity-40 pointer-events-none' : ''}`}>
+                        <input
+                            ref={dateInputRef}
+                            type="date"
+                            tabIndex={-1}
+                            className="absolute opacity-0 w-px h-px pointer-events-none"
+                            onChange={(e) => e.target.value && setSelectedDate(new Date(e.target.value))}
+                        />
+                        <div className="flex items-center gap-1 bg-white dark:bg-slate-100 px-2 py-1 rounded-2xl shadow-sm border border-slate-200">
                             <button onClick={() => changeWeek(-1)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-200 rounded-xl transition-colors">
                                 <ChevronLeft size={18} className="text-slate-600" />
                             </button>
+                            <button
+                                onClick={() => dateInputRef.current?.showPicker?.()}
+                                className="sm:hidden px-2 py-1 text-xs font-bold text-slate-500 hover:bg-orange-50 hover:text-orange-500 rounded-xl transition-colors"
+                            >
+                                Sem. {weekNumber}
+                            </button>
                             <input
                                 type="date"
-                                className="h-8 px-2 bg-slate-100 dark:bg-slate-200 rounded-xl text-xs font-semibold text-slate-500 border-0 outline-none cursor-pointer hover:bg-orange-50 focus:ring-2 focus:ring-orange-400 scheme-light dark:scheme-dark transition-colors"
-                                onChange={(e) => e.target.value && !isAnyEditing && setSelectedDate(new Date(e.target.value))}
+                                className="hidden sm:block h-8 px-2 bg-slate-100 dark:bg-slate-200 rounded-xl text-xs font-semibold text-slate-500 border-0 outline-none cursor-pointer hover:bg-orange-50 focus:ring-2 focus:ring-orange-400 scheme-light dark:scheme-dark transition-colors"
+                                onChange={(e) => e.target.value && setSelectedDate(new Date(e.target.value))}
                             />
                             <button onClick={() => changeWeek(1)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-200 rounded-xl transition-colors">
                                 <ChevronRight size={18} className="text-slate-600" />

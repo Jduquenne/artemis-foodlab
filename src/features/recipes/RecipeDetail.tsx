@@ -24,7 +24,7 @@ export const RecipeDetail = () => {
                 >
                     <ArrowLeft className="w-5 h-5" />
                 </button>
-                <h1 className="text-3xl font-black text-slate-900 truncate">
+                <h1 className="text-base sm:text-xl tablet:text-2xl font-black text-slate-900 leading-snug">
                     {recipe.name}
                 </h1>
             </div>

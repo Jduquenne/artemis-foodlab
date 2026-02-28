@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { X } from 'lucide-react';
+import { X, Search } from 'lucide-react';
 import { SearchBar } from '../../shared/components/SearchBar';
 import { CategoryCard } from '../../shared/components/CategoryCard';
 import { FlipCard } from './components/FlipCard';
@@ -16,11 +16,11 @@ import recipesDb from '../../core/data/recipes-db.json';
 export const RecipeModule = () => {
     const navigate = useNavigate();
     const { activeFilterIds, setActiveFilterIds } = useMenuStore();
-    const [searchQuery, setSearchQuery] = useState(() => {
-        return sessionStorage.getItem('last_recipe_search') || '';
-    });
+    const [searchQuery, setSearchQuery] = useState(() => sessionStorage.getItem('last_recipe_search') || '');
+    const [isSearchOpen, setIsSearchOpen] = useState(() => (sessionStorage.getItem('last_recipe_search') || '').length > 0);
     const excluded = ["Extérieur"];
 
+    const isSearchActive = isSearchOpen || searchQuery.length > 0;
     const showResults = searchQuery.length >= 1 || activeFilterIds.length > 0;
     const baseResults = useSearch(showResults ? searchQuery : null);
 
@@ -42,36 +42,67 @@ export const RecipeModule = () => {
         sessionStorage.setItem('last_recipe_search', val);
     };
 
+    const openSearch = () => setIsSearchOpen(true);
+
+    const closeSearch = () => {
+        setIsSearchOpen(false);
+        setSearchQuery('');
+        sessionStorage.removeItem('last_recipe_search');
+    };
+
     return (
         <div className="h-full flex flex-col gap-4 overflow-hidden">
 
-            <div className="flex items-center justify-between gap-4 shrink-0">
-                <div className="shrink-0">
-                    <h1 className="text-3xl font-black text-slate-900 leading-tight">Mes Recettes</h1>
-                    <p className="text-sm text-slate-500">Que mangeons-nous aujourd'hui ?</p>
-                </div>
-                <div className="flex items-center gap-2 flex-1 min-w-0 justify-end">
-                    {activeFilterIds.map(id => {
-                        const filter = PREDEFINED_FILTERS.find(f => f.id === id);
-                        return filter ? (
-                            <span key={id} className="flex items-center gap-1 pl-2.5 pr-1.5 py-1 bg-orange-100 text-orange-700 text-xs font-semibold rounded-full whitespace-nowrap shrink-0">
-                                {filter.label}
-                                <button onClick={() => removeFilter(id)} className="hover:text-orange-900 transition-colors">
-                                    <X className="w-3 h-3" />
-                                </button>
-                            </span>
-                        ) : null;
-                    })}
-                    <MacroFilterButton
-                        activeFilterIds={activeFilterIds}
-                        onApply={setActiveFilterIds}
-                    />
-                    <div className="min-w-0 max-w-xs flex-1">
-                        <SearchBar
-                            value={searchQuery}
-                            onChange={handleSearchChange}
-                            onClear={() => { setSearchQuery(''); sessionStorage.removeItem('last_recipe_search'); }}
-                        />
+            <div className="flex items-center gap-3 shrink-0">
+                {isSearchActive && (
+                    <>
+                        <div className="flex-1 min-w-0 sm:hidden">
+                            <SearchBar
+                                value={searchQuery}
+                                onChange={handleSearchChange}
+                                onClear={() => handleSearchChange('')}
+                            />
+                        </div>
+                        <button
+                            onClick={closeSearch}
+                            className="sm:hidden p-2 rounded-xl text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 hover:text-slate-600 transition-colors shrink-0"
+                        >
+                            <X className="w-5 h-5" />
+                        </button>
+                    </>
+                )}
+
+                <div className={`${isSearchActive ? 'hidden sm:flex' : 'flex'} flex-1 items-center justify-between gap-3 min-w-0`}>
+                    <div className="shrink-0">
+                        <h1 className="text-xl sm:text-2xl tablet:text-3xl font-black text-slate-900 leading-tight">Mes Recettes</h1>
+                        <p className="text-xs sm:text-sm text-slate-500">Que mangeons-nous aujourd'hui ?</p>
+                    </div>
+                    <div className="flex items-center gap-2 min-w-0">
+                        {activeFilterIds.map(id => {
+                            const filter = PREDEFINED_FILTERS.find(f => f.id === id);
+                            return filter ? (
+                                <span key={id} className="hidden sm:flex items-center gap-1 pl-2.5 pr-1.5 py-1 bg-orange-100 text-orange-700 text-xs font-semibold rounded-full whitespace-nowrap shrink-0">
+                                    {filter.label}
+                                    <button onClick={() => removeFilter(id)} className="hover:text-orange-900 transition-colors">
+                                        <X className="w-3 h-3" />
+                                    </button>
+                                </span>
+                            ) : null;
+                        })}
+                        <MacroFilterButton activeFilterIds={activeFilterIds} onApply={setActiveFilterIds} />
+                        <button
+                            onClick={openSearch}
+                            className="sm:hidden p-2 rounded-xl text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 hover:text-orange-500 transition-colors"
+                        >
+                            <Search className="w-5 h-5" />
+                        </button>
+                        <div className="hidden sm:block min-w-0 w-48 tablet:w-64">
+                            <SearchBar
+                                value={searchQuery}
+                                onChange={handleSearchChange}
+                                onClear={() => handleSearchChange('')}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -79,7 +110,7 @@ export const RecipeModule = () => {
             <div className="flex-1 min-h-0 overflow-hidden">
                 {showResults ? (
                     <div className="h-full overflow-y-auto space-y-4 pr-1" onScroll={markScrolling}>
-                        <h2 className="text-xl font-bold text-slate-700">
+                        <h2 className="text-base sm:text-xl font-bold text-slate-700">
                             Résultats ({filteredResults.length})
                         </h2>
                         {filteredResults.length === 0 ? (

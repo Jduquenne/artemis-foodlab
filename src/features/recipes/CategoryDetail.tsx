@@ -53,7 +53,7 @@ export const CategoryDetail = () => {
                     >
                         <ArrowLeft className="w-5 h-5" />
                     </button>
-                    <h1 className="text-3xl font-black text-slate-900 truncate">
+                    <h1 className="text-xl sm:text-2xl tablet:text-3xl font-black text-slate-900 truncate">
                         {categoryInfo ? categoryInfo.name : categoryId}
                     </h1>
                     <span className="shrink-0 text-sm font-bold text-slate-400">

@@ -15,8 +15,8 @@ export const CategoryCard = ({ name, onClick }: CategoryCardProps) => {
             style={{ backgroundImage: `url('/artemis-foodlab/categories/${name}.webp')` }}
         >
             <div className="absolute inset-0 bg-white/40 dark:bg-black/50 rounded-2xl group-hover:bg-white/80 dark:group-hover:bg-black/70 transition-colors" />
-            <div className="relative z-10 flex flex-col items-center bg-white/90 dark:bg-black/75 px-4 py-2 rounded-xl shadow-sm">
-                <span className="text-slate-900 font-bold text-base lg:text-lg">{name}</span>
+            <div className="relative z-10 flex flex-col items-center bg-white/90 dark:bg-black/75 px-2.5 py-1 rounded-lg shadow-sm">
+                <span className="text-slate-900 font-bold text-xs sm:text-sm">{name}</span>
             </div>
         </button>
     );

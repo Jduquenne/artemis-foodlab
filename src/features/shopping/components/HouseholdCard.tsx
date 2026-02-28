@@ -1,29 +1,23 @@
 import { useState, useEffect } from 'react';
 import { CheckCircle2, Circle } from 'lucide-react';
 import { HouseholdItem } from '../../../core/domain/types';
-import { db, HouseholdRecord } from '../../../core/services/db';
+import { db } from '../../../core/services/db';
 import householdDb from '../../../core/data/household-db.json';
 
 const allItems = householdDb as HouseholdItem[];
-
-function isDue(record: HouseholdRecord | undefined, checkIntervalDays: number): boolean {
-    if (!record) return true;
-    const dueMs = new Date(record.lastCheckedAt).getTime() + checkIntervalDays * 86_400_000;
-    return dueMs <= Date.now();
-}
 
 export interface HouseholdCardProps {
     viewMode: 'all' | 'missing';
 }
 
 export const HouseholdCard = ({ viewMode }: HouseholdCardProps) => {
-    const [dueItems, setDueItems] = useState<HouseholdItem[]>([]);
+    const [uncheckedItems, setUncheckedItems] = useState<HouseholdItem[]>([]);
     const [checked, setChecked] = useState<Set<string>>(new Set());
 
     useEffect(() => {
         db.household.toArray().then(records => {
-            const map = new Map(records.map(r => [r.id, r]));
-            setDueItems(allItems.filter(item => isDue(map.get(item.id), item.checkIntervalDays)));
+            const checkedIds = new Set(records.map(r => r.id));
+            setUncheckedItems(allItems.filter(item => !checkedIds.has(item.id)));
         });
     }, []);
 
@@ -33,8 +27,8 @@ export const HouseholdCard = ({ viewMode }: HouseholdCardProps) => {
     };
 
     const displayItems = viewMode === 'missing'
-        ? dueItems.filter(i => !checked.has(i.id))
-        : dueItems;
+        ? uncheckedItems.filter(i => !checked.has(i.id))
+        : uncheckedItems;
 
     if (displayItems.length === 0) return null;
 
@@ -48,7 +42,7 @@ export const HouseholdCard = ({ viewMode }: HouseholdCardProps) => {
                 </h2>
                 {checkedCount > 0 && (
                     <span className="text-xs text-slate-400 font-medium">
-                        {checkedCount}/{dueItems.length}
+                        {checkedCount}/{uncheckedItems.length}
                     </span>
                 )}
             </div>

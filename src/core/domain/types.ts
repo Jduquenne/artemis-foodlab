@@ -3,19 +3,19 @@ export enum Unit {
   C = "c",
   CC = "cc",
   CL = "cl",
-  FEUILLE = "feuille",
+  LEAF = "feuille",
   G = "g",
   KG = "kg",
   L = "l",
-  LOUCHE = "louche",
+  LADLE = "louche",
   ML = "ml",
-  MOYENNE = "moyenne",
+  MEDIUM = "moyenne",
   PART = "part",
-  PETITE = "petite",
+  SMALL = "petite",
   PORTION = "portion",
-  SACHET = "sachet",
-  TIERS = "tiers",
-  TRANCHE = "tranche",
+  PACKET = "sachet",
+  THIRD = "tiers",
+  SLICE = "tranche",
 }
 
 export enum IngredientCategory {
@@ -80,7 +80,7 @@ export enum MealType {
 }
 
 export enum RecipeKind {
-  dish = "dish",
+  DISH = "dish",
   INGREDIENT = "ingredient",
   BASE = "base",
 }
@@ -108,17 +108,16 @@ export interface ShoppingDay {
 
 export enum HouseholdCategory {
   HYGIENE = "Hygiène",
-  CUISINE = "Cuisine",
-  ENTRETIEN = "Entretien",
-  MAISON = "Maison",
-  PHARMACIE = "Pharmacie",
+  MAINTENANCE = "Entretien",
+  PHARMACY = "Pharmacie",
+  PANTRY = "Garde-manger",
+  PETS = "Animaux",
 }
 
 export interface HouseholdItem {
   id: string;
   name: string;
   category: HouseholdCategory;
-  checkIntervalDays: number;
 }
 
 export interface PredefinedFilter {

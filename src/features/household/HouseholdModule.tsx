@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { CheckCircle2, Circle, Clock, RotateCcw } from 'lucide-react';
+import { CheckCircle2, Circle, RotateCcw } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { HouseholdItem, HouseholdCategory } from '../../core/domain/types';
 import { db } from '../../core/services/db';
@@ -7,29 +7,23 @@ import { markScrolling } from '../../shared/utils/scrollGuard';
 import householdDb from '../../core/data/household-db.json';
 
 const CATEGORY_ORDER: HouseholdCategory[] = [
+    HouseholdCategory.PANTRY,
     HouseholdCategory.HYGIENE,
-    HouseholdCategory.CUISINE,
-    HouseholdCategory.ENTRETIEN,
-    HouseholdCategory.MAISON,
-    HouseholdCategory.PHARMACIE,
+    HouseholdCategory.MAINTENANCE,
+    HouseholdCategory.HOUSE,
+    HouseholdCategory.PHARMACY,
+    HouseholdCategory.PETS,
 ];
 
 const allItems = householdDb as HouseholdItem[];
 
-function getDueInfo(lastCheckedAt: string | undefined, checkIntervalDays: number) {
-    if (!lastCheckedAt) return { daysUntilDue: -Infinity, isOverdue: true, neverChecked: true };
-    const dueMs = new Date(lastCheckedAt).getTime() + checkIntervalDays * 86_400_000;
-    const daysUntilDue = Math.ceil((dueMs - Date.now()) / 86_400_000);
-    return { daysUntilDue, isOverdue: daysUntilDue <= 0, neverChecked: false };
-}
-
 export const HouseholdModule = () => {
     const records = useLiveQuery(() => db.household.toArray(), []);
 
-    const checkMap = useMemo(() => {
-        const map = new Map<string, string>();
-        for (const r of records ?? []) map.set(r.id, r.lastCheckedAt);
-        return map;
+    const checkedIds = useMemo(() => {
+        const set = new Set<string>();
+        for (const r of records ?? []) set.add(r.id);
+        return set;
     }, [records]);
 
     const handleVerify = async (id: string) => {
@@ -40,12 +34,7 @@ export const HouseholdModule = () => {
         await db.household.clear();
     };
 
-    const overdueCount = useMemo(() => {
-        return allItems.filter(item => {
-            const { isOverdue } = getDueInfo(checkMap.get(item.id), item.checkIntervalDays);
-            return isOverdue;
-        }).length;
-    }, [checkMap]);
+    const uncheckedCount = allItems.length - checkedIds.size;
 
     const grouped = useMemo(() => {
         return CATEGORY_ORDER
@@ -59,15 +48,15 @@ export const HouseholdModule = () => {
                 <div>
                     <h1 className="text-3xl font-black text-slate-900">Articles du quotidien</h1>
                     <p className="text-slate-500 text-sm mt-0.5">
-                        {overdueCount > 0
-                            ? <span className="text-orange-600 font-medium">{overdueCount} article{overdueCount > 1 ? 's' : ''} à vérifier</span>
-                            : <span>Tout est à jour</span>
+                        {uncheckedCount > 0
+                            ? <span className="text-orange-600 font-medium">{uncheckedCount} article{uncheckedCount > 1 ? 's' : ''} à vérifier</span>
+                            : <span>Tout est vérifié</span>
                         }
                     </p>
                 </div>
                 <button
                     onClick={handleReset}
-                    title="Réinitialiser toutes les dates de vérification"
+                    title="Réinitialiser toutes les vérifications"
                     className="flex items-center gap-2 bg-white dark:bg-slate-100 border border-slate-200 px-3 py-2 rounded-xl text-sm font-bold text-slate-500 hover:text-orange-600 hover:border-orange-300 transition-colors shrink-0"
                 >
                     <RotateCcw className="w-4 h-4" />
@@ -85,41 +74,25 @@ export const HouseholdModule = () => {
                                 </h2>
                                 <div className="space-y-1">
                                     {group.items.map(item => {
-                                        const lastChecked = checkMap.get(item.id);
-                                        const { daysUntilDue, isOverdue, neverChecked } = getDueInfo(lastChecked, item.checkIntervalDays);
+                                        const isChecked = checkedIds.has(item.id);
 
                                         return (
                                             <div
                                                 key={item.id}
-                                                onClick={() => handleVerify(item.id)}
-                                                className="flex items-center justify-between gap-3 px-3 py-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-200/40 cursor-pointer transition-colors select-none"
+                                                onClick={() => { if (!isChecked) handleVerify(item.id); }}
+                                                className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-colors select-none
+                                                    ${isChecked
+                                                        ? 'opacity-40'
+                                                        : 'hover:bg-slate-50 dark:hover:bg-slate-200/40 cursor-pointer'
+                                                    }`}
                                             >
-                                                <div className="flex items-center gap-3 min-w-0">
-                                                    {isOverdue
-                                                        ? <Circle className="w-5 h-5 text-orange-400 shrink-0" />
-                                                        : <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
-                                                    }
-                                                    <span className="font-medium text-slate-800 truncate">{item.name}</span>
-                                                </div>
-                                                <div className="flex items-center gap-2 shrink-0">
-                                                    <span className="text-xs text-slate-400 flex items-center gap-1">
-                                                        <Clock className="w-3 h-3" />
-                                                        {item.checkIntervalDays}j
-                                                    </span>
-                                                    {neverChecked ? (
-                                                        <span className="text-xs font-semibold px-2 py-0.5 rounded-lg bg-orange-100 text-orange-600">
-                                                            Jamais vérifié
-                                                        </span>
-                                                    ) : isOverdue ? (
-                                                        <span className="text-xs font-semibold px-2 py-0.5 rounded-lg bg-orange-100 text-orange-600">
-                                                            {Math.abs(daysUntilDue)}j de retard
-                                                        </span>
-                                                    ) : (
-                                                        <span className="text-xs font-semibold px-2 py-0.5 rounded-lg bg-green-50 dark:bg-green-900/20 text-green-600">
-                                                            dans {daysUntilDue}j
-                                                        </span>
-                                                    )}
-                                                </div>
+                                                {isChecked
+                                                    ? <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
+                                                    : <Circle className="w-5 h-5 text-orange-400 shrink-0" />
+                                                }
+                                                <span className={`font-medium text-slate-800 truncate ${isChecked ? 'line-through' : ''}`}>
+                                                    {item.name}
+                                                </span>
                                             </div>
                                         );
                                     })}

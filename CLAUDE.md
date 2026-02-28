@@ -96,6 +96,10 @@ The app uses a **CSS variable-based theme** defined in `src/index.css`. Tailwind
 - When adding new palette colors (only when explicitly requested), define them as CSS variables in both `:root` and `.dark` in `index.css`, then register them via `@theme inline`.
 - On every scrolling page, use markscrolling on scroll event for overpass the scrolling + click problem
 
+## TypeScript conventions
+
+- **Enum variable names must be in English** — the string value can be in French, but the identifier must be English. Example: `MAINTENANCE = "Entretien"`, not `ENTRETIEN = "Entretien"`.
+
 ## Component & interface conventions
 
 - **One component per file**: every component that uses hooks, has meaningful logic, or exceeds ~15 lines must live in its own file. Inline sub-components inside a module file are only acceptable for trivial, purely presentational wrappers with no hooks and no props interface.

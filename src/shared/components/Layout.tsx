@@ -10,8 +10,8 @@ export const Layout = ({ children }: { children: ReactNode }) => {
 
     const navItems = [
         { icon: <UtensilsCrossed />, path: '/recipes', label: 'Recettes' },
-        { icon: <Package />, path: '/household', label: 'Quotidien' },
         { icon: <CalendarDays />, path: '/planning', label: 'Menu' },
+        { icon: <Package />, path: '/household', label: 'Quotidien' },
         { icon: <ShoppingCart />, path: '/shopping', label: 'Courses' },
     ];
 

@@ -45,7 +45,7 @@ export const HouseholdModule = () => {
         <div className="h-full flex flex-col gap-4 overflow-hidden">
             <div className="flex justify-between items-start shrink-0">
                 <div>
-                    <h1 className="text-3xl font-black text-slate-900">Articles du quotidien</h1>
+                    <h1 className="text-xl sm:text-2xl tablet:text-3xl font-black text-slate-900">Articles du quotidien</h1>
                     <p className="text-slate-500 text-sm mt-0.5">
                         {uncheckedCount > 0
                             ? <span className="text-orange-600 font-medium">{uncheckedCount} article{uncheckedCount > 1 ? 's' : ''} à vérifier</span>

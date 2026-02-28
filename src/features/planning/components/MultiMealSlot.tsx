@@ -3,6 +3,9 @@ import { useDraggable, useDroppable } from '@dnd-kit/core';
 import { RecipeDetails } from '../../../core/domain/types';
 import recipesDb from '../../../core/data/recipes-db.json';
 
+const IS_TOUCH = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+const data = recipesDb as unknown as Record<string, RecipeDetails>;
+
 interface MultiMealSlotProps {
     label: string;
     icon: string;
@@ -12,8 +15,6 @@ interface MultiMealSlotProps {
     onRemoveRecipe: (recipeId: string) => void;
     onNavigateToRecipe: (recipeId: string) => void;
 }
-
-const data = recipesDb as unknown as Record<string, RecipeDetails>;
 
 const RecipeCell = ({
     recipeId,
@@ -29,12 +30,12 @@ const RecipeCell = ({
     const hasRecipesPage = Boolean(recipe?.assets?.recipes?.url);
 
     return (
-        <div className="relative group/cell w-full h-full min-h-0">
+        <div className="relative group/cell w-full h-full min-h-0 flex-1 min-w-0">
             <button
                 onClick={hasRecipesPage ? onNavigate : undefined}
                 className={`w-full h-full rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-200 ${!hasRecipesPage ? 'cursor-default' : ''}`}
             >
-                {photoUrl && <img src={photoUrl} className="w-full h-full object-contain" alt={recipe.name} />}
+                {photoUrl && <img src={photoUrl} className="w-full h-full object-cover sm:object-contain" alt={recipe.name} />}
             </button>
             <button
                 onPointerDown={(e) => e.stopPropagation()}
@@ -63,7 +64,7 @@ export const MultiMealSlot = ({
     const { setNodeRef: setDropRef, isOver } = useDroppable({ id: slotId });
     const { setNodeRef: setDragRef, listeners, attributes, isDragging } = useDraggable({
         id: slotId,
-        disabled: recipeIds.length === 0,
+        disabled: recipeIds.length === 0 || IS_TOUCH,
     });
 
     const setRef = (el: HTMLDivElement | null) => {
@@ -109,7 +110,7 @@ export const MultiMealSlot = ({
                 )}
 
                 {recipeIds.length >= 2 && (
-                    <div className="w-full h-full grid grid-cols-2 grid-rows-2 gap-0.5 p-0.5">
+                    <div className="w-full h-full flex flex-row sm:grid sm:grid-cols-2 sm:grid-rows-2 gap-0.5 p-0.5">
                         {Array.from({ length: 4 }).map((_, idx) => {
                             const rid = recipeIds[idx];
                             if (rid) {
@@ -128,13 +129,13 @@ export const MultiMealSlot = ({
                                         key={`add-${idx}`}
                                         onPointerDown={(e) => e.stopPropagation()}
                                         onClick={(e) => { e.stopPropagation(); onAdd(); }}
-                                        className="w-full h-full rounded-lg bg-slate-100 dark:bg-slate-200 border border-dashed border-slate-300 flex items-center justify-center hover:bg-orange-50 hover:border-orange-300 transition-colors"
+                                        className="flex-1 min-w-0 rounded-lg bg-slate-100 dark:bg-slate-200 border border-dashed border-slate-300 flex items-center justify-center hover:bg-orange-50 hover:border-orange-300 transition-colors"
                                     >
                                         <Plus size={10} className="text-slate-400" />
                                     </button>
                                 );
                             }
-                            return <div key={`ph-${idx}`} className="rounded-lg bg-slate-100/40 dark:bg-slate-200/20" />;
+                            return <div key={`ph-${idx}`} className="flex-1 min-w-0 rounded-lg bg-slate-100/40 dark:bg-slate-200/20" />;
                         })}
                     </div>
                 )}
@@ -142,13 +143,15 @@ export const MultiMealSlot = ({
 
             {hasRecipes && !isDragging && (
                 <>
-                    <div
-                        {...listeners}
-                        {...attributes}
-                        className="absolute top-1 left-4 -translate-x-1/2 p-0.5 bg-white/90 dark:bg-slate-200/90 rounded-md cursor-grab active:cursor-grabbing z-20 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm border border-slate-200"
-                    >
-                        <GripVertical size={14} className="text-slate-400" />
-                    </div>
+                    {!IS_TOUCH && (
+                        <div
+                            {...listeners}
+                            {...attributes}
+                            className="absolute top-1 left-4 -translate-x-1/2 p-0.5 bg-white/90 dark:bg-slate-200/90 rounded-md cursor-grab active:cursor-grabbing z-20 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm border border-slate-200"
+                        >
+                            <GripVertical size={14} className="text-slate-400" />
+                        </div>
+                    )}
 
                     {recipeIds.length === 1 && canAddMore && (
                         <button

@@ -124,7 +124,7 @@ export const ShoppingModule = () => {
         <div className="h-full flex flex-col gap-4 overflow-hidden">
             <div className="flex justify-between items-start shrink-0">
                 <div>
-                    <h1 className="text-3xl font-black text-slate-900">Liste de courses</h1>
+                    <h1 className="text-xl sm:text-2xl tablet:text-3xl font-black text-slate-900">Liste de courses</h1>
                     {daysLabel ? (
                         <p className="text-slate-500 text-sm">{daysLabel}</p>
                     ) : (

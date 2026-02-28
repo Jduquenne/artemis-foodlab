@@ -4,6 +4,8 @@ import { useDraggable, useDroppable } from '@dnd-kit/core';
 import { RecipeDetails } from '../../../core/domain/types';
 import recipesDb from '../../../core/data/recipes-db.json';
 
+const IS_TOUCH = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+
 interface MealSlotProps {
     label: string;
     icon: string;
@@ -48,7 +50,7 @@ export const MealSlot = ({
     const { setNodeRef: setDropRef, isOver } = useDroppable({ id: slotId });
     const { setNodeRef: setDragRef, listeners, attributes, isDragging } = useDraggable({
         id: slotId,
-        disabled: recipeIds.length === 0 || isAnyEditing,
+        disabled: recipeIds.length === 0 || isAnyEditing || IS_TOUCH,
     });
 
     const setRef = (el: HTMLDivElement | null) => {
@@ -104,13 +106,15 @@ export const MealSlot = ({
 
             {photoUrl && !isDragging && !isEditingPersons && (
                 <>
-                    <div
-                        {...listeners}
-                        {...attributes}
-                        className="absolute top-1 left-4 -translate-x-1/2 p-0.5 bg-white/90 dark:bg-slate-200/90 rounded-md cursor-grab active:cursor-grabbing z-20 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm border border-slate-200"
-                    >
-                        <GripVertical size={14} className="text-slate-400" />
-                    </div>
+                    {!IS_TOUCH && (
+                        <div
+                            {...listeners}
+                            {...attributes}
+                            className="absolute top-1 left-4 -translate-x-1/2 p-0.5 bg-white/90 dark:bg-slate-200/90 rounded-md cursor-grab active:cursor-grabbing z-20 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm border border-slate-200"
+                        >
+                            <GripVertical size={14} className="text-slate-400" />
+                        </div>
+                    )}
 
                     <button
                         onPointerDown={(e) => e.stopPropagation()}

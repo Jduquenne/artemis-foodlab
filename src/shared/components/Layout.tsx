@@ -1,12 +1,14 @@
-import { ReactNode, useRef } from 'react';
-import { UtensilsCrossed, CalendarDays, ShoppingCart, Download, Upload, Package } from 'lucide-react';
+import { ReactNode, useRef, useState } from 'react';
+import { UtensilsCrossed, CalendarDays, ShoppingCart, Download, Upload, Package, RefreshCw } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { exportData, importData } from '../../core/services/dataService';
 import { ThemeToggle } from './ThemeToggle';
+import { SyncModal } from '../../features/sync/SyncModal';
 
 export const Layout = ({ children }: { children: ReactNode }) => {
     const location = useLocation();
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const [syncOpen, setSyncOpen] = useState(false);
 
     const navItems = [
         { icon: <UtensilsCrossed />, path: '/recipes', label: 'Recettes' },
@@ -59,9 +61,17 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                     >
                         <Upload className="w-5 h-5" />
                     </button>
+                    <button
+                        onClick={() => setSyncOpen(true)}
+                        title="Synchroniser avec un autre appareil"
+                        className="p-2.5 tablet:p-3 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 hover:text-slate-600 rounded-xl transition-colors"
+                    >
+                        <RefreshCw className="w-5 h-5" />
+                    </button>
                     <ThemeToggle />
                 </div>
             </aside>
+            {syncOpen && <SyncModal onClose={() => setSyncOpen(false)} />}
 
             <main className="flex-1 min-w-0 overflow-y-auto p-4 tablet:p-8">
                 {children}

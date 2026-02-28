@@ -1,9 +1,13 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { X, Send, Download, Loader2, CheckCircle2 } from "lucide-react";
+import LZString from "lz-string";
 import { QRDisplay } from "./components/QRDisplay";
 import { QRScanner } from "./components/QRScanner";
 import { createSenderSession, createReceiverSession, SenderSession, ReceiverSession } from "../../core/services/syncService";
 import { useNotificationStore } from "../../shared/store/useNotificationStore";
+
+const compress = (sdp: string) => LZString.compressToEncodedURIComponent(sdp);
+const decompress = (data: string) => LZString.decompressFromEncodedURIComponent(data);
 
 type SyncStep =
   | "ROLE_SELECT"
@@ -65,15 +69,17 @@ export const SyncModal = ({ onClose }: SyncModalProps) => {
         onError: handleError,
       });
       senderRef.current = session;
-      setOfferQr(session.offerSdp);
+      setOfferQr(compress(session.offerSdp));
       setStep("SENDER_SCAN");
     } catch {
       handleError("Impossible de créer la connexion WebRTC.");
     }
   }, [handleDone, handleError]);
 
-  const handleAnswerScanned = useCallback(async (answerSdp: string) => {
+  const handleAnswerScanned = useCallback(async (data: string) => {
     if (!senderRef.current) return;
+    const answerSdp = decompress(data);
+    if (!answerSdp) { handleError("QR invalide — impossible de décompresser."); return; }
     setStep("SENDER_TRANSFER");
     try {
       await senderRef.current.applyAnswer(answerSdp);
@@ -82,7 +88,9 @@ export const SyncModal = ({ onClose }: SyncModalProps) => {
     }
   }, [handleError]);
 
-  const handleOfferScanned = useCallback(async (offerSdp: string) => {
+  const handleOfferScanned = useCallback(async (data: string) => {
+    const offerSdp = decompress(data);
+    if (!offerSdp) { handleError("QR invalide — impossible de décompresser."); return; }
     setStep("RECEIVER_ANSWER");
     setError(null);
     try {
@@ -92,7 +100,7 @@ export const SyncModal = ({ onClose }: SyncModalProps) => {
         onError: handleError,
       });
       receiverRef.current = session;
-      setAnswerQr(session.answerSdp);
+      setAnswerQr(compress(session.answerSdp));
       setStep("RECEIVER_WAIT");
     } catch {
       handleError("QR invalide ou offre expirée.");

@@ -44,6 +44,9 @@ export const PlanningModule = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [isSelectionMode, setIsSelectionMode] = useState(false);
     const [draftDays, setDraftDays] = useState<ShoppingDay[]>([]);
+    const [editingPersonsSlotId, setEditingPersonsSlotId] = useState<string | null>(null);
+
+    const isAnyEditing = editingPersonsSlotId !== null;
 
     const monday = useMemo(() => getMonday(selectedDate), [selectedDate]);
     const weekNumber = useMemo(() => getWeekNumber(monday), [monday]);
@@ -68,6 +71,7 @@ export const PlanningModule = () => {
     );
 
     const changeWeek = (offset: number) => {
+        if (isAnyEditing) return;
         const newDate = new Date(selectedDate);
         newDate.setDate(selectedDate.getDate() + (offset * 7));
         setSelectedDate(newDate);
@@ -125,8 +129,8 @@ export const PlanningModule = () => {
 
         if (toMeal) {
             await db.planning.bulkPut([
-                { ...fromMeal, recipeIds: toMeal.recipeIds },
-                { ...toMeal, recipeIds: fromMeal.recipeIds },
+                { ...fromMeal, recipeIds: toMeal.recipeIds, persons: undefined },
+                { ...toMeal, recipeIds: fromMeal.recipeIds, persons: undefined },
             ]);
         } else {
             await db.planning.delete(fromMeal.id);
@@ -139,6 +143,14 @@ export const PlanningModule = () => {
                 week: weekNumber,
             });
         }
+    };
+
+    const handleConfirmPersons = async (slotId: string, persons: number) => {
+        const existing = planningData.find(p => `${year}-W${weekNumber}-${p.day}-${p.slot}` === slotId);
+        if (existing) {
+            await db.planning.put({ ...existing, persons });
+        }
+        setEditingPersonsSlotId(null);
     };
 
     const enterSelectionMode = () => {
@@ -175,7 +187,7 @@ export const PlanningModule = () => {
 
     return (
         <DndContext
-            sensors={isSelectionMode ? [] : sensors}
+            sensors={isSelectionMode || isAnyEditing ? [] : sensors}
             collisionDetection={closestCenter}
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
@@ -191,14 +203,14 @@ export const PlanningModule = () => {
                     </div>
 
                     <div className="flex items-center gap-2 self-center shrink-0">
-                        <div className="flex items-center gap-1 bg-white dark:bg-slate-100 px-2 py-1 rounded-2xl shadow-sm border border-slate-200">
+                        <div className={`flex items-center gap-1 bg-white dark:bg-slate-100 px-2 py-1 rounded-2xl shadow-sm border border-slate-200 ${isAnyEditing ? 'opacity-40 pointer-events-none' : ''}`}>
                             <button onClick={() => changeWeek(-1)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-200 rounded-xl transition-colors">
                                 <ChevronLeft size={18} className="text-slate-600" />
                             </button>
                             <input
                                 type="date"
                                 className="h-8 px-2 bg-slate-100 dark:bg-slate-200 rounded-xl text-xs font-semibold text-slate-500 border-0 outline-none cursor-pointer hover:bg-orange-50 focus:ring-2 focus:ring-orange-400 scheme-light dark:scheme-dark transition-colors"
-                                onChange={(e) => e.target.value && setSelectedDate(new Date(e.target.value))}
+                                onChange={(e) => e.target.value && !isAnyEditing && setSelectedDate(new Date(e.target.value))}
                             />
                             <button onClick={() => changeWeek(1)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-200 rounded-xl transition-colors">
                                 <ChevronRight size={18} className="text-slate-600" />
@@ -207,12 +219,14 @@ export const PlanningModule = () => {
 
                         {!isSelectionMode && (
                             <button
-                                onClick={enterSelectionMode}
+                                onClick={isAnyEditing ? undefined : enterSelectionMode}
                                 className={[
                                     'flex items-center gap-1.5 px-3 py-2 rounded-2xl shadow-sm border font-bold text-sm transition-colors',
-                                    shoppingDays.length > 0
-                                        ? 'bg-orange-500 border-orange-400 text-white hover:bg-orange-600'
-                                        : 'bg-white dark:bg-slate-100 border-slate-200 text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200',
+                                    isAnyEditing
+                                        ? 'opacity-40 pointer-events-none bg-white dark:bg-slate-100 border-slate-200 text-slate-600'
+                                        : shoppingDays.length > 0
+                                            ? 'bg-orange-500 border-orange-400 text-white hover:bg-orange-600'
+                                            : 'bg-white dark:bg-slate-100 border-slate-200 text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200',
                                 ].join(' ')}
                             >
                                 <ShoppingCart size={15} />
@@ -253,9 +267,14 @@ export const PlanningModule = () => {
                                 const slotId = `${year}-W${weekNumber}-${day}-${mealType.id}`;
                                 const savedMeal = planningData.find(p => p.day === day && p.slot === mealType.id);
                                 const recipeIds = savedMeal?.recipeIds ?? [];
+                                const isEditingThis = editingPersonsSlotId === slotId;
+                                const isDimmed = isAnyEditing && !isEditingThis;
 
                                 return (
-                                    <div key={`${day}-${mealType.id}`} className="relative h-full w-full min-h-0 min-w-0">
+                                    <div
+                                        key={`${day}-${mealType.id}`}
+                                        className={`relative h-full w-full min-h-0 min-w-0 transition-opacity ${isDimmed ? 'pointer-events-none opacity-30' : ''}`}
+                                    >
                                         {mealType.multi ? (
                                             <MultiMealSlot
                                                 label={mealType.label}
@@ -272,10 +291,16 @@ export const PlanningModule = () => {
                                                 icon={mealType.icon}
                                                 slotId={slotId}
                                                 recipeIds={recipeIds}
+                                                persons={savedMeal?.persons}
+                                                isEditingPersons={isEditingThis}
+                                                isAnyEditing={isAnyEditing}
                                                 onNavigate={() => navigate(`/recipes/detail/${savedMeal!.recipeIds[0]}`)}
                                                 onOpenPicker={isSelectionMode ? () => {} : () => setPickerSlot({ day, slot: mealType.id })}
                                                 onModify={isSelectionMode ? () => {} : () => setPickerSlot({ day, slot: mealType.id })}
                                                 onDelete={isSelectionMode ? () => {} : () => handleDeleteMeal(day, mealType.id)}
+                                                onOpenPersonsEditor={() => setEditingPersonsSlotId(slotId)}
+                                                onConfirmPersons={(n) => handleConfirmPersons(slotId, n)}
+                                                onCancelPersons={() => setEditingPersonsSlotId(null)}
                                             />
                                         )}
                                     </div>

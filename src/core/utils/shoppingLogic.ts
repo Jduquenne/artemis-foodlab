@@ -12,6 +12,8 @@ export interface IngredientSource {
   slot: string;
   quantity: number;
   unit: string;
+  persons?: number;
+  baseQuantity?: number;
 }
 
 export interface ConsolidatedIngredient {
@@ -41,10 +43,14 @@ async function aggregateSlots(slots: MealSlot[]): Promise<ConsolidatedIngredient
       if (!details) continue;
 
       const recipeName = cleanRecipeName(details.name);
+      const scaleFactor = slot.persons !== undefined && details.portion > 0
+        ? slot.persons / details.portion
+        : 1;
 
       for (const ing of details.ingredients) {
         const parsed = parseFloat(ing.quantity);
-        const qty = isNaN(parsed) ? 0 : parsed;
+        const baseQty = isNaN(parsed) ? 0 : parsed;
+        const qty = baseQty * scaleFactor;
         const key = `${ing.name.toLowerCase()}-${ing.unit}`;
 
         const source: IngredientSource = {
@@ -54,6 +60,10 @@ async function aggregateSlots(slots: MealSlot[]): Promise<ConsolidatedIngredient
           slot: slot.slot,
           quantity: qty,
           unit: ing.unit,
+          ...(slot.persons !== undefined && {
+            persons: slot.persons,
+            baseQuantity: baseQty,
+          }),
         };
 
         const existing = map.get(key);

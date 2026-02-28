@@ -8864,7 +8864,7 @@
       },
       {
         "id": "002",
-        "name": "Butternut",
+        "name": "Courge butternut",
         "category": "Fruits et légumes",
         "quantity": 175,
         "unit": "g"
@@ -8949,7 +8949,7 @@
       },
       {
         "id": "003",
-        "name": "Butternut",
+        "name": "Courge butternut",
         "category": "Fruits et légumes",
         "quantity": 240,
         "unit": "g"
@@ -22657,7 +22657,7 @@
       },
       {
         "id": "004",
-        "name": "Butternut",
+        "name": "Courge butternut",
         "category": "Fruits et légumes",
         "quantity": 400,
         "unit": "g"
@@ -22905,7 +22905,7 @@
       },
       {
         "id": "002",
-        "name": "Butternut",
+        "name": "Courge butternut",
         "category": "Fruits et légumes",
         "quantity": 500,
         "unit": "g"
@@ -23564,7 +23564,7 @@
       {
         "id": "002",
         "name": "Semoule",
-        "category": "Epices et condiments",
+        "category": "Féculents",
         "quantity": 80,
         "unit": "g"
       },
@@ -31000,7 +31000,7 @@
       },
       {
         "id": "002",
-        "name": "Butternut",
+        "name": "Courge butternut",
         "category": "Fruits et légumes",
         "quantity": 500,
         "unit": "g"
@@ -38028,7 +38028,7 @@
     "ingredients": [
       {
         "id": "001",
-        "name": "Butternut",
+        "name": "Courge butternut",
         "category": "Fruits et légumes",
         "quantity": 400,
         "unit": "g"
@@ -38525,7 +38525,7 @@
       },
       {
         "id": "002",
-        "name": "Butternut",
+        "name": "Courge butternut",
         "category": "Fruits et légumes",
         "quantity": 400,
         "unit": "g"

@@ -8,6 +8,7 @@ export interface MealSlot {
   recipeIds: string[];
   year: number;
   week: number;
+  persons?: number;
 }
 
 export interface HouseholdRecord {

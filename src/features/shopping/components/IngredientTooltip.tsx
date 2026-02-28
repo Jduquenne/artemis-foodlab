@@ -88,6 +88,16 @@ export const IngredientTooltip = ({ sources }: IngredientTooltipProps) => {
                                         <span className="text-orange-500 font-medium">
                                             {src.quantity === 0 ? '—' : `${parseFloat(src.quantity.toFixed(2))}\u00a0${pluralizeUnit(src.unit, src.quantity)}`}
                                         </span>
+                                        {src.persons !== undefined && src.baseQuantity !== undefined && (
+                                            <>
+                                                <span className="mx-1 text-slate-300">·</span>
+                                                <span className="text-slate-500 font-semibold">×{src.persons}</span>
+                                                <span className="mx-1 text-slate-300">·</span>
+                                                <span className="text-slate-400">
+                                                    base&nbsp;{src.baseQuantity === 0 ? '—' : `${parseFloat(src.baseQuantity.toFixed(2))}\u00a0${pluralizeUnit(src.unit, src.baseQuantity)}`}
+                                                </span>
+                                            </>
+                                        )}
                                     </p>
                                 </div>
                             </div>

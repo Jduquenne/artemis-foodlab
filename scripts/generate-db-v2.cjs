@@ -71,7 +71,7 @@ manifest.forEach(entry => {
       mealType: [],
       kind: 'dish',
       macronutriment: null,
-      portion: 1,
+      portion: null,
       ingredients: [],
       assets: {},
     };
@@ -92,7 +92,7 @@ Object.entries(recipesData).forEach(([oldKey, data]) => {
 
   if (result[recipeId]) {
     result[recipeId].macronutriment = data.macronutriment;
-    result[recipeId].portion = data.portion ?? 1;
+    result[recipeId].portion = data.number_of_part ?? 1;
     result[recipeId].ingredients = data.ingredients ?? [];
     if (data.name) result[recipeId].name = data.name.replace(/_/g, ' ').trim();
     if (data.kind) result[recipeId].kind = data.kind;
@@ -105,7 +105,7 @@ Object.entries(recipesData).forEach(([oldKey, data]) => {
       mealType: data.mealType ?? [],
       kind: data.kind ?? 'ingredient',
       macronutriment: data.macronutriment,
-      portion: data.portion ?? 1,
+      portion: data.number_of_part ?? 1,
       ingredients: data.ingredients ?? [],
       assets: {},
     };

@@ -14,6 +14,7 @@ dist-ssr
 
 # Backup files
 src/core/data/recipes-ingredients_backup.json
+src/core/data/recipes-db_backup.json
 
 # Editor directories and files
 .vscode/*

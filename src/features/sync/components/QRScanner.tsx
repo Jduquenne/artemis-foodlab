@@ -79,19 +79,32 @@ export const QRScanner = ({ onScan, active }: QRScannerProps) => {
     const img = new Image();
     const url = URL.createObjectURL(file);
     img.onload = () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = img.width;
-      canvas.height = img.height;
-      const ctx = canvas.getContext("2d")!;
-      ctx.drawImage(img, 0, 0);
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const code = jsQR(imageData.data, imageData.width, imageData.height);
       URL.revokeObjectURL(url);
-      if (code?.data) {
-        onScan(code.data);
-      } else {
-        setPhotoError("Aucun QR code détecté dans la photo. Réessaie en t'assurant que le QR code est bien visible et cadré.");
+
+      const tryDecode = (w: number, h: number): string | null => {
+        const canvas = document.createElement("canvas");
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext("2d")!;
+        ctx.drawImage(img, 0, 0, w, h);
+        const imageData = ctx.getImageData(0, 0, w, h);
+        return jsQR(imageData.data, imageData.width, imageData.height)?.data ?? null;
+      };
+
+      const scales = [1, 0.5, 0.25];
+      for (const s of scales) {
+        const w = Math.round(img.width * s);
+        const h = Math.round(img.height * s);
+        if (Math.max(w, h) < 200) continue;
+        const result = tryDecode(w, h);
+        if (result) {
+          if (fileInputRef.current) fileInputRef.current.value = "";
+          onScan(result);
+          return;
+        }
       }
+
+      setPhotoError("Aucun QR code détecté. Rapproche-toi du QR code et assure-toi qu'il est bien net et entièrement visible.");
       if (fileInputRef.current) fileInputRef.current.value = "";
     };
     img.onerror = () => {

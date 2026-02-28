@@ -1,5 +1,6 @@
 import { db } from "./db";
-import { MealSlot, HouseholdRecord, ShoppingDay } from "../domain/types";
+import { MealSlot, HouseholdRecord } from "./db";
+import { ShoppingDay } from "../domain/types";
 
 export interface SyncPayload {
   timestamp: string;

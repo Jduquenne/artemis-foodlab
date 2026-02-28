@@ -11,12 +11,20 @@ interface SyncChunk {
 }
 
 function waitForIceComplete(pc: RTCPeerConnection): Promise<void> {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     if (pc.iceGatheringState === "complete") { resolve(); return; }
-    const timer = setTimeout(() => reject(new Error("ICE gathering timeout")), ICE_TIMEOUT_MS);
-    pc.addEventListener("icegatheringstatechange", () => {
-      if (pc.iceGatheringState === "complete") { clearTimeout(timer); resolve(); }
+
+    const done = () => { clearTimeout(timer); resolve(); };
+
+    pc.addEventListener("icecandidate", (e) => {
+      if (e.candidate === null) done();
     });
+
+    pc.addEventListener("icegatheringstatechange", () => {
+      if (pc.iceGatheringState === "complete") done();
+    });
+
+    const timer = setTimeout(resolve, ICE_TIMEOUT_MS);
   });
 }
 
@@ -60,10 +68,8 @@ export async function createSenderSession(callbacks: SenderCallbacks): Promise<S
   await pc.setLocalDescription(offer);
   await waitForIceComplete(pc);
 
-  const offerSdp = pc.localDescription!.sdp;
-
   return {
-    offerSdp,
+    offerSdp: pc.localDescription!.sdp,
     applyAnswer: async (answerSdp: string) => {
       await pc.setRemoteDescription({ type: "answer", sdp: answerSdp });
     },
@@ -115,10 +121,8 @@ export async function createReceiverSession(offerSdp: string, callbacks: Receive
   await pc.setLocalDescription(answer);
   await waitForIceComplete(pc);
 
-  const answerSdp = pc.localDescription!.sdp;
-
   return {
-    answerSdp,
+    answerSdp: pc.localDescription!.sdp,
     cleanup: () => {
       try { pc.close(); } catch { /* empty */ }
     },

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useCallback, useState } from "react";
-import { CameraOff } from "lucide-react";
+import { CameraOff, Camera } from "lucide-react";
 import jsQR from "jsqr";
 
 interface QRScannerProps {
@@ -10,10 +10,12 @@ interface QRScannerProps {
 export const QRScanner = ({ onScan, active }: QRScannerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const rafRef = useRef<number>(0);
   const scannedRef = useRef(false);
   const [cameraError, setCameraError] = useState<string | null>(null);
+  const [photoError, setPhotoError] = useState<string | null>(null);
 
   const stopStream = useCallback(() => {
     cancelAnimationFrame(rafRef.current);
@@ -25,6 +27,7 @@ export const QRScanner = ({ onScan, active }: QRScannerProps) => {
     if (!active) { stopStream(); return; }
     scannedRef.current = false;
     setCameraError(null);
+    setPhotoError(null);
 
     navigator.mediaDevices
       .getUserMedia({ video: { facingMode: "environment" } })
@@ -58,37 +61,105 @@ export const QRScanner = ({ onScan, active }: QRScannerProps) => {
       })
       .catch((err: unknown) => {
         const name = err instanceof DOMException ? err.name : "";
-        if (name === "NotAllowedError") {
-          setCameraError("Accès à la caméra refusé. Ferme toutes les superpositions d'applications (bulles de chat, filtres d'écran) puis réessaie.");
-        } else if (name === "NotFoundError") {
+        if (name === "NotFoundError") {
           setCameraError("Aucune caméra détectée sur cet appareil.");
         } else {
-          setCameraError("Impossible d'accéder à la caméra. Vérifie les permissions dans les réglages du navigateur.");
+          setCameraError("Accès direct à la caméra non disponible.");
         }
       });
 
     return stopStream;
   }, [active, onScan, stopStream]);
 
+  const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setPhotoError(null);
+
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext("2d")!;
+      ctx.drawImage(img, 0, 0);
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const code = jsQR(imageData.data, imageData.width, imageData.height);
+      URL.revokeObjectURL(url);
+      if (code?.data) {
+        onScan(code.data);
+      } else {
+        setPhotoError("Aucun QR code détecté dans la photo. Réessaie en t'assurant que le QR code est bien visible et cadré.");
+      }
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      setPhotoError("Impossible de lire l'image.");
+    };
+    img.src = url;
+  }, [onScan]);
+
   if (cameraError) {
     return (
-      <div className="w-full aspect-square max-w-xs mx-auto rounded-2xl bg-slate-100 dark:bg-slate-200 flex flex-col items-center justify-center gap-3 p-5 text-center">
-        <CameraOff className="w-10 h-10 text-slate-400" />
-        <p className="text-sm text-slate-600 font-medium">{cameraError}</p>
+      <div className="w-full max-w-xs mx-auto flex flex-col gap-3">
+        <div className="aspect-square rounded-2xl bg-slate-100 dark:bg-slate-200 flex flex-col items-center justify-center gap-3 p-5 text-center">
+          <CameraOff className="w-10 h-10 text-slate-400" />
+          <p className="text-sm text-slate-600 font-medium">{cameraError}</p>
+        </div>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          capture="environment"
+          className="hidden"
+          onChange={handleFileChange}
+        />
+        <button
+          onClick={() => fileInputRef.current?.click()}
+          className="flex items-center justify-center gap-2 w-full py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-2xl transition-colors"
+        >
+          <Camera size={18} />
+          Prendre une photo du QR code
+        </button>
+        {photoError && (
+          <p className="text-sm text-red-600 font-medium text-center">{photoError}</p>
+        )}
       </div>
     );
   }
 
   return (
-    <div className="relative w-full aspect-square max-w-xs mx-auto rounded-2xl overflow-hidden bg-slate-900">
-      <video ref={videoRef} className="w-full h-full object-cover" muted playsInline />
-      <canvas ref={canvasRef} className="hidden" />
-      <div className="absolute inset-6 border-2 border-orange-400 rounded-xl pointer-events-none opacity-70" />
-      <div className="absolute inset-0 flex items-end justify-center pb-3">
-        <p className="text-white text-xs font-medium bg-black/50 px-3 py-1.5 rounded-full">
-          Pointer la caméra vers le QR code
-        </p>
+    <div className="w-full max-w-xs mx-auto flex flex-col gap-3">
+      <div className="relative aspect-square rounded-2xl overflow-hidden bg-slate-900">
+        <video ref={videoRef} className="w-full h-full object-cover" muted playsInline />
+        <canvas ref={canvasRef} className="hidden" />
+        <div className="absolute inset-6 border-2 border-orange-400 rounded-xl pointer-events-none opacity-70" />
+        <div className="absolute inset-0 flex items-end justify-center pb-3">
+          <p className="text-white text-xs font-medium bg-black/50 px-3 py-1.5 rounded-full">
+            Pointer la caméra vers le QR code
+          </p>
+        </div>
       </div>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        capture="environment"
+        className="hidden"
+        onChange={handleFileChange}
+      />
+      <button
+        onClick={() => fileInputRef.current?.click()}
+        className="flex items-center justify-center gap-2 w-full py-2.5 bg-slate-100 dark:bg-slate-200 hover:bg-slate-200 dark:hover:bg-slate-300 text-slate-600 font-bold rounded-2xl transition-colors text-sm"
+      >
+        <Camera size={16} />
+        Utiliser l'appareil photo
+      </button>
+      {photoError && (
+        <p className="text-sm text-red-600 font-medium text-center">{photoError}</p>
+      )}
     </div>
   );
 };

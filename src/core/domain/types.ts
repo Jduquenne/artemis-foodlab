@@ -98,6 +98,7 @@ export interface RecipeDetails {
   portion: number;
   ingredients: Ingredient[];
   assets: Partial<Record<"photo" | "ingredients" | "recipes", RecipeAsset>>;
+  batchCooking?: boolean;
 }
 
 export interface ShoppingDay {
@@ -118,6 +119,40 @@ export interface HouseholdItem {
   id: string;
   name: string;
   category: HouseholdCategory;
+}
+
+export interface FreezerBag {
+  id: string;
+  quantity: string;
+  unit: Unit;
+  preparation?: string;
+  addedDate: string;
+}
+
+export interface FoodFreezerItem {
+  id: string;
+  type: "food";
+  name: string;
+  foodId?: string;
+  bags: FreezerBag[];
+}
+
+export interface BatchFreezerItem {
+  id: string;
+  type: "batch";
+  recipeId: string;
+  recipeName: string;
+  portions: number;
+  addedDate: string;
+}
+
+export type FreezerItem = FoodFreezerItem | BatchFreezerItem;
+
+export interface FreezerCategory {
+  id: string;
+  name: string;
+  position: number;
+  items: FreezerItem[];
 }
 
 export interface PredefinedFilter {

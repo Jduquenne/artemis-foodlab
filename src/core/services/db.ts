@@ -1,5 +1,6 @@
 import Dexie, { Table } from "dexie";
 import { getWeekNumber } from "../../shared/utils/weekUtils";
+import { FreezerCategory } from "../domain/types";
 
 export interface MealSlot {
   id: string;
@@ -19,6 +20,7 @@ export interface HouseholdRecord {
 export class MyDatabase extends Dexie {
   planning!: Table<MealSlot>;
   household!: Table<HouseholdRecord>;
+  freezerCategories!: Table<FreezerCategory>;
 
   constructor() {
     super("CipeDatabase");
@@ -70,6 +72,52 @@ export class MyDatabase extends Dexie {
       planning: "id, [year+week], year, week",
       household: "id",
     });
+    this.version(8).stores({
+      planning: "id, [year+week], year, week",
+      household: "id",
+      freezerDrawers: "id, position",
+    });
+    this.version(9)
+      .stores({
+        planning: "id, [year+week], year, week",
+        household: "id",
+        freezerDrawers: null,
+        freezerCategories: "id, position",
+      })
+      .upgrade(async (tx) => {
+        const old = await tx.table("freezerDrawers").toArray();
+        if (old.length > 0) {
+          await tx.table("freezerCategories").bulkAdd(old);
+        }
+      });
+    this.version(10)
+      .stores({
+        planning: "id, [year+week], year, week",
+        household: "id",
+        freezerCategories: "id, position",
+      })
+      .upgrade(async (tx) => {
+        const categories = await tx.table("freezerCategories").toArray();
+        const fallbackDate = new Date().toISOString().slice(0, 10);
+        for (const cat of categories) {
+          const updatedItems = (cat.items ?? []).map((item: Record<string, unknown>) => {
+            if (item.type === "food" && !item.bags) {
+              const { quantity, unit, addedDate, ...rest } = item;
+              return {
+                ...rest,
+                bags: [{
+                  id: crypto.randomUUID(),
+                  quantity: quantity ?? "",
+                  unit: unit ?? "",
+                  addedDate: addedDate ?? fallbackDate,
+                }],
+              };
+            }
+            return item;
+          });
+          await tx.table("freezerCategories").update(cat.id, { items: updatedItems });
+        }
+      });
   }
 }
 

@@ -1,5 +1,5 @@
 import { ReactNode, useRef, useState } from 'react';
-import { UtensilsCrossed, CalendarDays, ShoppingCart, Download, Upload, Package, RefreshCw } from 'lucide-react';
+import { UtensilsCrossed, CalendarDays, ShoppingCart, Download, Upload, Package, RefreshCw, Snowflake } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { exportData, importData } from '../../core/services/dataService';
 import { ThemeToggle } from './ThemeToggle';
@@ -15,6 +15,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
         { icon: <CalendarDays />, path: '/planning', label: 'Menu' },
         { icon: <Package />, path: '/household', label: 'Quotidien' },
         { icon: <ShoppingCart />, path: '/shopping', label: 'Courses' },
+        { icon: <Snowflake />, path: '/freezer', label: 'Congélateur' },
     ];
 
     return (

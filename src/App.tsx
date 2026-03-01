@@ -1,6 +1,6 @@
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { Layout } from './shared/components/Layout';
-import { NotificationBanner } from './shared/components/NotificationBanner';
+import { Layout } from './shared/components/layout/Layout';
+import { NotificationBanner } from './shared/components/ui/NotificationBanner';
 import { useBackupReminder } from './shared/hooks/useBackupReminder';
 
 // Imports des Modules Fonctionnels

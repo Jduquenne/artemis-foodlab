@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SearchBar } from '../../../shared/components/SearchBar';
+import { SearchBar } from '../../../shared/components/ui/SearchBar';
 import { SearchRecipeResult, useSearch } from '../../../shared/hooks/useSearch';
 import { Check, X } from 'lucide-react';
 

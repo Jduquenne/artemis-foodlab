@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { X, Bell } from "lucide-react";
-import { useNotificationStore, AppNotification } from "../store/useNotificationStore";
+import { useNotificationStore, AppNotification } from "../../store/useNotificationStore";
 
 export const NotificationBanner = () => {
   const current = useNotificationStore((s) => s.current);

@@ -1,8 +1,8 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { X, Search } from 'lucide-react';
-import { SearchBar } from '../../shared/components/SearchBar';
-import { CategoryCard } from '../../shared/components/CategoryCard';
+import { SearchBar } from '../../shared/components/ui/SearchBar';
+import { CategoryCard } from '../../shared/components/ui/CategoryCard';
 import { FlipCard } from './components/FlipCard';
 import { useSearch } from '../../shared/hooks/useSearch';
 import { CATEGORIES } from '../../core/domain/categories';

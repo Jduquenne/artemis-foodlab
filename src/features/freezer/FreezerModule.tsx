@@ -42,10 +42,6 @@ export const FreezerModule = () => {
   return (
     <div className="h-full flex flex-col gap-4 overflow-hidden">
       <div className="flex items-center gap-3 shrink-0">
-        <div className="p-2 bg-slate-100 dark:bg-slate-200 rounded-xl">
-          <Snowflake className="w-5 h-5 text-slate-500" />
-        </div>
-
         {editingName ? (
           <div className="flex-1 flex items-center gap-2 min-w-0">
             <input

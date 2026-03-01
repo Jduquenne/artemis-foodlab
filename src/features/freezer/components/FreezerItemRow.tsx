@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Snowflake, ChefHat, Plus, MoreVertical, Copy, Trash2 } from "lucide-react";
 import { FreezerItem } from "../../../core/domain/types";
 import { addBagToFoodItem, removeBagFromFoodItem, removeItemFromCategory } from "../../../core/services/freezerService";
+import { pluralizeUnit } from "../../../core/utils/unitUtils";
 import { AddBagForm } from "./AddBagForm";
 
 interface FreezerItemRowProps {
@@ -102,7 +103,7 @@ export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowPro
         {item.bags.map(bag => (
           <div key={bag.id} className="relative flex items-center gap-2">
             <span className="flex-1 min-w-0 text-xs text-slate-600">
-              <span className="font-medium">{bag.quantity}{bag.unit ? " " + bag.unit : ""}</span>
+              <span className="font-medium">{bag.quantity}{bag.unit ? " " + pluralizeUnit(bag.unit, parseFloat(bag.quantity)) : ""}</span>
               {bag.preparation && <span className="text-slate-400"> · {bag.preparation}</span>}
               <span className="text-slate-300"> · {formatDate(bag.addedDate)}</span>
             </span>

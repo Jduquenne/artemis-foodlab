@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
-import { CheckCircle2, Circle, RotateCcw } from 'lucide-react';
+import { RotateCcw } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { HouseholdItem, HouseholdCategory } from '../../core/domain/types';
 import { db } from '../../core/services/db';
 import { markScrolling } from '../../shared/utils/scrollGuard';
 import householdDb from '../../core/data/household-db.json';
+import { HouseholdCategoryCard } from './components/HouseholdCategoryCard';
 
 const CATEGORY_ORDER: HouseholdCategory[] = [
     HouseholdCategory.PANTRY,
@@ -66,38 +67,13 @@ export const HouseholdModule = () => {
             <div className="flex-1 min-h-0 overflow-y-auto pr-1" onScroll={markScrolling}>
                 <div className="columns-1 tablet:columns-2 lg:columns-3 gap-4 pb-4">
                     {grouped.map(group => (
-                        <div key={group.label} className="break-inside-avoid mb-4">
-                            <div className="bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl p-3 shadow-sm">
-                                <h2 className="text-orange-600 font-black uppercase tracking-widest text-xs mb-2">
-                                    {group.label}
-                                </h2>
-                                <div className="space-y-0.5">
-                                    {group.items.map(item => {
-                                        const isChecked = checkedIds.has(item.id);
-
-                                        return (
-                                            <div
-                                                key={item.id}
-                                                onClick={() => { if (!isChecked) handleVerify(item.id); }}
-                                                className={`flex items-center gap-2 px-2 py-2.5 rounded-xl transition-colors select-none
-                                                    ${isChecked
-                                                        ? 'opacity-40'
-                                                        : 'hover:bg-slate-50 dark:hover:bg-slate-200/40 cursor-pointer'
-                                                    }`}
-                                            >
-                                                {isChecked
-                                                    ? <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
-                                                    : <Circle className="w-4 h-4 text-orange-400 shrink-0" />
-                                                }
-                                                <span className={`text-sm font-medium text-slate-800 truncate ${isChecked ? 'line-through' : ''}`}>
-                                                    {item.name}
-                                                </span>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                            </div>
-                        </div>
+                        <HouseholdCategoryCard
+                            key={group.label}
+                            label={group.label}
+                            items={group.items}
+                            checkedIds={checkedIds}
+                            onVerify={handleVerify}
+                        />
                     ))}
                 </div>
             </div>

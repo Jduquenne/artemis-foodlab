@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import { RecipeDetails } from '../../core/domain/types';
-import recipesDb from '../../core/data/recipes-db.json';
+import { RecipeDetails } from '../../../core/domain/types';
+import recipesDb from '../../../core/data/recipes-db.json';
 
 export const RecipeDetail = () => {
     const { recipeId } = useParams();

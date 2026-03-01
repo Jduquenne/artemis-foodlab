@@ -107,7 +107,8 @@ When the user asks for a **commit**, respond with only the commit message text â
 ## Component & interface conventions
 
 - **One component per file**: every component that uses hooks, has meaningful logic, or exceeds ~15 lines must live in its own file. Inline sub-components inside a module file are only acceptable for trivial, purely presentational wrappers with no hooks and no props interface.
-- **File location**: feature-specific components go in `src/features/<feature>/components/`. Shared components go in `src/shared/components/`.
+- **Feature folder structure (strict)**: each feature folder contains **only** `XModule.tsx` at its root â€” the primary entry point routed from `App.tsx`. Every other file (sub-views, modals, cards, rows, detail pages) goes in `components/`. No exceptions: if it's not the Module, it belongs in `components/`.
+- **File location**: feature-specific components go in `src/features/<feature>/components/`. Shared components go in `src/shared/components/` (split into `layout/` for app-shell components and `ui/` for generic reusable components).
 - **Props interfaces**: always named `<ComponentName>Props` (e.g. `CategoryCardProps`), co-located in the same file as the component. Never use generic names like `interface Props`.
 - **Domain/service interfaces**: shared data-model types belong in `core/domain/types.ts`. Service-layer types (e.g. `ConsolidatedIngredient`) stay in their service file. Never define domain types inside component files.
 - **Static data**: JSON databases (`recipes-db.json`, `food-db.json`, `assets-manifest.json`, `recipes-ingredients.json`) live in `core/data/`. Scripts to regenerate them are in `scripts/`.

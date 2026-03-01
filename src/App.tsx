@@ -5,8 +5,8 @@ import { useBackupReminder } from './shared/hooks/useBackupReminder';
 
 // Imports des Modules Fonctionnels
 import { RecipeModule } from './features/recipes/RecipeModule';
-import { CategoryDetail } from './features/recipes/CategoryDetail';
-import { RecipeDetail } from './features/recipes/RecipeDetail';
+import { CategoryDetail } from './features/recipes/components/CategoryDetail';
+import { RecipeDetail } from './features/recipes/components/RecipeDetail';
 import { PlanningModule } from './features/planning/PlanningModule';
 import { ShoppingModule } from './features/shopping/ShoppingModule';
 import { HouseholdModule } from './features/household/HouseholdModule';

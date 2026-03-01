@@ -1,14 +1,14 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { FlipCard } from './components/FlipCard';
+import { FlipCard } from './FlipCard';
 import { ArrowLeft, X } from 'lucide-react';
 import { useMemo } from 'react';
-import { CATEGORIES } from '../../core/domain/categories';
-import { markScrolling } from '../../shared/utils/scrollGuard';
-import { MacroFilterButton } from './components/MacroFilterButton';
-import { PREDEFINED_FILTERS } from '../../core/domain/predefinedFilters';
-import { RecipeDetails } from '../../core/domain/types';
-import { useMenuStore } from '../../shared/store/useMenuStore';
-import recipesDb from '../../core/data/recipes-db.json';
+import { CATEGORIES } from '../../../core/domain/categories';
+import { markScrolling } from '../../../shared/utils/scrollGuard';
+import { MacroFilterButton } from './MacroFilterButton';
+import { PREDEFINED_FILTERS } from '../../../core/domain/predefinedFilters';
+import { RecipeDetails } from '../../../core/domain/types';
+import { useMenuStore } from '../../../shared/store/useMenuStore';
+import recipesDb from '../../../core/data/recipes-db.json';
 
 export const CategoryDetail = () => {
     const { categoryId } = useParams();

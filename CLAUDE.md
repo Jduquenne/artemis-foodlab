@@ -96,6 +96,10 @@ The app uses a **CSS variable-based theme** defined in `src/index.css`. Tailwind
 - When adding new palette colors (only when explicitly requested), define them as CSS variables in both `:root` and `.dark` in `index.css`, then register them via `@theme inline`.
 - On every scrolling page, use markscrolling on scroll event for overpass the scrolling + click problem
 
+## Git workflow
+
+When the user asks for a **commit**, respond with only the commit message text — do not run any git commands. Format: `feature: <description>` or `fix: <description>`. In English. Short, no bullet points, no technical details.
+
 ## TypeScript conventions
 
 - **Enum variable names must be in English** — the string value can be in French, but the identifier must be English. Example: `MAINTENANCE = "Entretien"`, not `ENTRETIEN = "Entretien"`.

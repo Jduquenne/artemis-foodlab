@@ -1,6 +1,6 @@
 import { useEffect, useRef, useCallback, useState } from "react";
 import { CameraOff, RefreshCw } from "lucide-react";
-import jsQR from "jsqr";
+import QrScanner from "qr-scanner";
 
 interface QRScannerProps {
   onScan: (data: string) => void;
@@ -13,8 +13,16 @@ export const QRScanner = ({ onScan, active }: QRScannerProps) => {
   const streamRef = useRef<MediaStream | null>(null);
   const rafRef = useRef<number>(0);
   const scannedRef = useRef(false);
+  const engineRef = useRef(QrScanner.createQrEngine());
   const [cameraError, setCameraError] = useState<string | null>(null);
   const [retry, setRetry] = useState(0);
+
+  useEffect(() => {
+    const engine = engineRef.current;
+    return () => {
+      engine.then(e => { if (e instanceof Worker) e.terminate(); });
+    };
+  }, []);
 
   const stopStream = useCallback(() => {
     cancelAnimationFrame(rafRef.current);
@@ -59,22 +67,31 @@ export const QRScanner = ({ onScan, active }: QRScannerProps) => {
         if (scannedRef.current) return;
         const video = videoRef.current;
         const canvas = canvasRef.current;
-        if (video && canvas && video.readyState === video.HAVE_ENOUGH_DATA) {
-          canvas.width = video.videoWidth;
-          canvas.height = video.videoHeight;
-          const ctx = canvas.getContext("2d")!;
-          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-          const code = jsQR(imageData.data, imageData.width, imageData.height);
-          if (code?.data) {
+        if (!video || !canvas || video.readyState !== video.HAVE_ENOUGH_DATA) {
+          rafRef.current = requestAnimationFrame(scan);
+          return;
+        }
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const ctx = canvas.getContext("2d")!;
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        QrScanner.scanImage(canvas, {
+          returnDetailedScanResult: true,
+          qrEngine: engineRef.current,
+        })
+          .then(result => {
+            if (scannedRef.current) return;
             scannedRef.current = true;
             stopStream();
-            onScan(code.data);
-            return;
-          }
-        }
-        rafRef.current = requestAnimationFrame(scan);
+            onScan(result.data);
+          })
+          .catch(() => {
+            if (!scannedRef.current) {
+              rafRef.current = requestAnimationFrame(scan);
+            }
+          });
       };
+
       rafRef.current = requestAnimationFrame(scan);
     };
 

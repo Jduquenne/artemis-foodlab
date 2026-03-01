@@ -1,12 +1,14 @@
 import { db } from "./db";
 import { MealSlot, HouseholdRecord } from "./db";
-import { ShoppingDay } from "../domain/types";
+import { FreezerCategory, ShoppingDay } from "../domain/types";
 
 export interface SyncPayload {
   timestamp: string;
-  version: 2;
+  version: 3;
   planning: MealSlot[];
   household: HouseholdRecord[];
+  freezerCategories: FreezerCategory[];
+  freezerName: string | null;
   shoppingChecked: Record<string, boolean> | null;
   shoppingStocks: Record<string, number> | null;
   shoppingDays: ShoppingDay[] | null;
@@ -15,14 +17,18 @@ export interface SyncPayload {
 export const serializeData = async (): Promise<SyncPayload> => {
   const planning = await db.planning.toArray();
   const household = await db.household.toArray();
+  const freezerCategories = await db.freezerCategories.toArray();
   const rawChecked = localStorage.getItem("cipe_shopping_checked");
   const rawStocks = localStorage.getItem("cipe_shopping_stocks");
   const rawDays = localStorage.getItem("cipe_shopping_days");
+  const rawFreezer = localStorage.getItem("cipe_freezer");
   return {
     timestamp: new Date().toISOString(),
-    version: 2,
+    version: 3,
     planning,
     household,
+    freezerCategories,
+    freezerName: rawFreezer ? JSON.parse(rawFreezer)?.state?.freezerName ?? null : null,
     shoppingChecked: rawChecked ? JSON.parse(rawChecked) : null,
     shoppingStocks: rawStocks ? JSON.parse(rawStocks) : null,
     shoppingDays: rawDays ? JSON.parse(rawDays) : null,
@@ -31,12 +37,21 @@ export const serializeData = async (): Promise<SyncPayload> => {
 
 export const applyImport = async (data: SyncPayload): Promise<void> => {
   if (!data.planning) throw new Error("Format de fichier invalide");
-  await db.transaction("rw", db.planning, db.household, async () => {
+  await db.transaction("rw", db.planning, db.household, db.freezerCategories, async () => {
     await db.planning.bulkPut(data.planning);
     if (data.household?.length) {
       await db.household.bulkPut(data.household);
     }
+    if (data.freezerCategories?.length) {
+      await db.freezerCategories.bulkPut(data.freezerCategories);
+    }
   });
+  if (data.freezerName) {
+    const current = localStorage.getItem("cipe_freezer");
+    const parsed = current ? JSON.parse(current) : { state: {} };
+    parsed.state.freezerName = data.freezerName;
+    localStorage.setItem("cipe_freezer", JSON.stringify(parsed));
+  }
   if (data.shoppingChecked) {
     localStorage.setItem("cipe_shopping_checked", JSON.stringify(data.shoppingChecked));
   }

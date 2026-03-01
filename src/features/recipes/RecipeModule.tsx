@@ -96,7 +96,7 @@ export const RecipeModule = () => {
                         >
                             <Search className="w-5 h-5" />
                         </button>
-                        <div className="hidden sm:block min-w-0 w-48 tablet:w-64">
+                        <div className="hidden sm:block min-w-0 w-60 tablet:w-[70ch]">
                             <SearchBar
                                 value={searchQuery}
                                 onChange={handleSearchChange}

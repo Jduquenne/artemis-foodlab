@@ -6,15 +6,16 @@ interface QRDisplayProps {
   size?: number;
 }
 
-export const QRDisplay = ({ value, size = 240 }: QRDisplayProps) => {
+export const QRDisplay = ({ value, size = 280 }: QRDisplayProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     if (!canvasRef.current || !value) return;
     QRCode.toCanvas(canvasRef.current, value, {
       width: size,
-      margin: 2,
-      color: { dark: "#1c1917", light: "#faf6ef" },
+      margin: 4,
+      errorCorrectionLevel: "L",
+      color: { dark: "#000000", light: "#ffffff" },
     });
   }, [value, size]);
 

@@ -93,6 +93,6 @@ export const updateItemInCategory = async (
   const category = await db.freezerCategories.get(categoryId);
   if (!category) return;
   await db.freezerCategories.update(categoryId, {
-    items: category.items.map(i => (i.id === itemId ? { ...i, ...updates } : i)),
+    items: category.items.map(i => (i.id === itemId ? { ...i, ...updates } as FreezerItem : i)),
   });
 };

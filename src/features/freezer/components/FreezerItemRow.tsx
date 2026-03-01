@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Snowflake, ChefHat, Plus, MoreVertical, Copy, Trash2 } from "lucide-react";
 import { FreezerItem } from "../../../core/domain/types";
-import { addBagToFoodItem, removeBagFromFoodItem, removeItemFromCategory } from "../../../core/services/freezerService";
+import { addBagToFoodItem, removeBagFromFoodItem } from "../../../core/services/freezerService";
 import { pluralizeUnit } from "../../../core/utils/unitUtils";
 import { AddBagForm } from "./AddBagForm";
 

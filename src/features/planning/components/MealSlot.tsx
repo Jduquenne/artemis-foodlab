@@ -95,12 +95,23 @@ export const MealSlot = ({
             </button>
 
             {photoUrl && !isEditingPersons && !isDragging && displayPersons !== undefined && (
-                <div className="absolute top-1 right-1 z-10 pointer-events-none">
-                    <span className={`flex items-center gap-0.5 text-[10px] font-black px-1.5 py-0.5 rounded-lg shadow ${isCustom ? 'bg-orange-500 text-white' : 'bg-black/30 text-white'}`}>
+                IS_TOUCH ? (
+                    <button
+                        onPointerDown={(e) => e.stopPropagation()}
+                        onClick={(e) => { e.stopPropagation(); if (!isAnyEditing) onOpenPersonsEditor(); }}
+                        className={`absolute top-1 right-1 z-20 flex items-center gap-0.5 text-[10px] font-black px-1.5 py-0.5 rounded-lg shadow ${isCustom ? 'bg-orange-500 text-white' : 'bg-black/30 text-white'}`}
+                    >
                         <Users size={9} />
                         {displayPersons}
-                    </span>
-                </div>
+                    </button>
+                ) : (
+                    <div className="absolute top-1 right-1 z-10 pointer-events-none">
+                        <span className={`flex items-center gap-0.5 text-[10px] font-black px-1.5 py-0.5 rounded-lg shadow ${isCustom ? 'bg-orange-500 text-white' : 'bg-black/30 text-white'}`}>
+                            <Users size={9} />
+                            {displayPersons}
+                        </span>
+                    </div>
+                )
             )}
 
             {photoUrl && !isDragging && !isEditingPersons && (
@@ -115,13 +126,15 @@ export const MealSlot = ({
                         </div>
                     )}
 
-                    <button
-                        onPointerDown={(e) => e.stopPropagation()}
-                        onClick={(e) => { e.stopPropagation(); if (!isAnyEditing) onOpenPersonsEditor(); }}
-                        className={`absolute top-1 right-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-slate-500 rounded-lg shadow-md border border-slate-200 hover:bg-orange-50 hover:text-orange-600 dark:hover:bg-orange-950/40 z-20 transition-opacity ${IS_TOUCH ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
-                    >
-                        <Users size={14} />
-                    </button>
+                    {!IS_TOUCH && (
+                        <button
+                            onPointerDown={(e) => e.stopPropagation()}
+                            onClick={(e) => { e.stopPropagation(); if (!isAnyEditing) onOpenPersonsEditor(); }}
+                            className="absolute top-1 right-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-slate-500 rounded-lg shadow-md border border-slate-200 hover:bg-orange-50 hover:text-orange-600 dark:hover:bg-orange-950/40 z-20 opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                            <Users size={14} />
+                        </button>
+                    )}
 
                     <button
                         onPointerDown={(e) => e.stopPropagation()}

@@ -3,8 +3,7 @@ import { Plus, RefreshCw, Trash2, GripVertical, Users, Check, X, RotateCcw } fro
 import { useDraggable, useDroppable } from '@dnd-kit/core';
 import { RecipeDetails } from '../../../core/domain/types';
 import recipesDb from '../../../core/data/recipes-db.json';
-
-const IS_TOUCH = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+import { IS_TOUCH } from '../../../shared/utils/deviceUtils';
 
 interface MealSlotProps {
     label: string;
@@ -119,7 +118,7 @@ export const MealSlot = ({
                     <button
                         onPointerDown={(e) => e.stopPropagation()}
                         onClick={(e) => { e.stopPropagation(); if (!isAnyEditing) onOpenPersonsEditor(); }}
-                        className="absolute top-1 right-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-slate-500 rounded-lg shadow-md border border-slate-200 hover:bg-orange-50 hover:text-orange-600 dark:hover:bg-orange-950/40 z-20 opacity-0 group-hover:opacity-100 transition-opacity"
+                        className={`absolute top-1 right-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-slate-500 rounded-lg shadow-md border border-slate-200 hover:bg-orange-50 hover:text-orange-600 dark:hover:bg-orange-950/40 z-20 transition-opacity ${IS_TOUCH ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
                     >
                         <Users size={14} />
                     </button>
@@ -127,7 +126,7 @@ export const MealSlot = ({
                     <button
                         onPointerDown={(e) => e.stopPropagation()}
                         onClick={(e) => { e.stopPropagation(); onModify?.(); }}
-                        className="absolute bottom-1 left-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-blue-600 rounded-lg shadow-md border border-slate-200 hover:bg-blue-50 dark:hover:bg-blue-950/40 z-20 opacity-0 group-hover:opacity-100 transition-opacity"
+                        className={`absolute bottom-1 left-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-blue-600 rounded-lg shadow-md border border-slate-200 hover:bg-blue-50 dark:hover:bg-blue-950/40 z-20 transition-opacity ${IS_TOUCH ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
                     >
                         <RefreshCw size={14} />
                     </button>
@@ -135,7 +134,7 @@ export const MealSlot = ({
                     <button
                         onPointerDown={(e) => e.stopPropagation()}
                         onClick={(e) => { e.stopPropagation(); onDelete?.(); }}
-                        className="absolute bottom-1 right-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-red-500 rounded-lg shadow-md border border-slate-200 hover:bg-red-50 dark:hover:bg-red-950/40 z-20 opacity-0 group-hover:opacity-100 transition-opacity"
+                        className={`absolute bottom-1 right-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-red-500 rounded-lg shadow-md border border-slate-200 hover:bg-red-50 dark:hover:bg-red-950/40 z-20 transition-opacity ${IS_TOUCH ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
                     >
                         <Trash2 size={14} />
                     </button>

@@ -1,13 +1,29 @@
 import { useRef, useState } from "react";
 import { Settings, Download, Upload, RefreshCw } from "lucide-react";
-import { exportData, importData } from "../../../core/services/dataService";
+import { exportData, applyImport, detectScopes, SyncPayload } from "../../../core/services/dataService";
 import { ThemeToggle } from "./ThemeToggle";
 import { SyncModal } from "../../../features/sync/SyncModal";
+import { ScopeSelectorModal } from "../../../features/sync/components/ScopeSelectorModal";
 
 export const SettingsPopover = () => {
   const [open, setOpen] = useState(false);
   const [syncOpen, setSyncOpen] = useState(false);
+  const [exportModalOpen, setExportModalOpen] = useState(false);
+  const [importModalData, setImportModalData] = useState<SyncPayload | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      const text = await file.text();
+      const data = JSON.parse(text) as SyncPayload;
+      setImportModalData(data);
+    } catch {
+      alert("Impossible de lire ce fichier de sauvegarde.");
+    }
+    e.target.value = "";
+  };
 
   return (
     <>
@@ -17,7 +33,7 @@ export const SettingsPopover = () => {
           accept=".json"
           ref={fileInputRef}
           className="hidden"
-          onChange={(e) => e.target.files && importData(e.target.files[0])}
+          onChange={handleFileChange}
         />
         <button
           onClick={() => setOpen((o) => !o)}
@@ -36,7 +52,7 @@ export const SettingsPopover = () => {
             <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} />
             <div className="absolute bottom-0 left-full ml-3 z-20 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl shadow-xl overflow-hidden w-52">
               <button
-                onClick={() => { exportData(); setOpen(false); }}
+                onClick={() => { setExportModalOpen(true); setOpen(false); }}
                 className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors"
               >
                 <Download className="w-4 h-4 text-slate-400 shrink-0" />
@@ -66,6 +82,26 @@ export const SettingsPopover = () => {
       </div>
 
       {syncOpen && <SyncModal onClose={() => setSyncOpen(false)} />}
+
+      {exportModalOpen && (
+        <ScopeSelectorModal
+          mode="export"
+          onConfirm={async (scope) => { await exportData(scope); setExportModalOpen(false); }}
+          onClose={() => setExportModalOpen(false)}
+        />
+      )}
+
+      {importModalData && (
+        <ScopeSelectorModal
+          mode="import"
+          availableScopes={detectScopes(importModalData)}
+          onConfirm={async (scope) => {
+            await applyImport(importModalData, scope);
+            window.location.reload();
+          }}
+          onClose={() => setImportModalData(null)}
+        />
+      )}
     </>
   );
 };

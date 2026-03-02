@@ -1,4 +1,4 @@
-import { serializeData, applyImport, SyncPayload } from "./dataService";
+import { serializeData, applyImport, SyncPayload, SyncScope, ALL_SCOPES } from "./dataService";
 
 const CHUNK_SIZE = 16_000;
 const ICE_TIMEOUT_MS = 10_000;
@@ -40,13 +40,13 @@ export interface SenderSession {
   cleanup: () => void;
 }
 
-export async function createSenderSession(callbacks: SenderCallbacks): Promise<SenderSession> {
+export async function createSenderSession(scope: SyncScope[] = ALL_SCOPES, callbacks: SenderCallbacks): Promise<SenderSession> {
   const pc = new RTCPeerConnection({ iceServers: ICE_SERVERS });
   const channel = pc.createDataChannel("sync", { ordered: true });
 
   channel.onopen = async () => {
     try {
-      const payload = await serializeData();
+      const payload = await serializeData(scope);
       const json = JSON.stringify(payload);
       const total = Math.ceil(json.length / CHUNK_SIZE);
       for (let i = 0; i < total; i++) {

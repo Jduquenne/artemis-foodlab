@@ -3,14 +3,17 @@ import { X, Send, Download, Loader2, CheckCircle2 } from "lucide-react";
 import LZString from "lz-string";
 import { QRDisplay } from "./components/QRDisplay";
 import { QRScanner } from "./components/QRScanner";
+import { ScopeSelector } from "./components/ScopeSelector";
 import { createSenderSession, createReceiverSession, SenderSession, ReceiverSession } from "../../core/services/syncService";
 import { useNotificationStore } from "../../shared/store/useNotificationStore";
+import { SyncScope, ALL_SCOPES } from "../../core/services/dataService";
 
 const compress = (sdp: string) => LZString.compressToEncodedURIComponent(sdp);
 const decompress = (data: string) => LZString.decompressFromEncodedURIComponent(data);
 
 type SyncStep =
   | "ROLE_SELECT"
+  | "SENDER_SCOPE"
   | "SENDER_OFFER"
   | "SENDER_SCAN"
   | "SENDER_TRANSFER"
@@ -21,6 +24,7 @@ type SyncStep =
 
 const STEP_LABELS: Record<SyncStep, string> = {
   ROLE_SELECT: "Choisir le rôle",
+  SENDER_SCOPE: "Choisir les données",
   SENDER_OFFER: "Préparation",
   SENDER_SCAN: "Échange des codes",
   SENDER_TRANSFER: "Transfert en cours",
@@ -36,6 +40,7 @@ export interface SyncModalProps {
 
 export const SyncModal = ({ onClose }: SyncModalProps) => {
   const [step, setStep] = useState<SyncStep>("ROLE_SELECT");
+  const [selectedScope, setSelectedScope] = useState<SyncScope[]>(ALL_SCOPES);
   const [offerQr, setOfferQr] = useState("");
   const [answerQr, setAnswerQr] = useState("");
   const [progress, setProgress] = useState({ sent: 0, total: 0 });
@@ -59,11 +64,11 @@ export const SyncModal = ({ onClose }: SyncModalProps) => {
     });
   }, [push]);
 
-  const startSender = useCallback(async () => {
+  const startSender = useCallback(async (scope: SyncScope[]) => {
     setStep("SENDER_OFFER");
     setError(null);
     try {
-      const session = await createSenderSession({
+      const session = await createSenderSession(scope, {
         onProgress: (sent, total) => setProgress({ sent, total }),
         onDone: handleDone,
         onError: handleError,
@@ -138,7 +143,25 @@ export const SyncModal = ({ onClose }: SyncModalProps) => {
             </div>
           )}
 
-          {step === "ROLE_SELECT" && <RoleSelect onSend={startSender} onReceive={() => setStep("RECEIVER_SCAN")} />}
+          {step === "ROLE_SELECT" && (
+            <RoleSelect onSend={() => setStep("SENDER_SCOPE")} onReceive={() => setStep("RECEIVER_SCAN")} />
+          )}
+
+          {step === "SENDER_SCOPE" && (
+            <div className="flex flex-col gap-4">
+              <p className="text-sm text-slate-500">
+                Sélectionne les données à envoyer. L'autre appareil ne recevra que les sections cochées.
+              </p>
+              <ScopeSelector selected={selectedScope} onChange={setSelectedScope} />
+              <button
+                onClick={() => startSender(selectedScope)}
+                disabled={selectedScope.length === 0}
+                className="w-full py-3 bg-orange-500 hover:bg-orange-600 disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold rounded-2xl transition-colors"
+              >
+                Continuer
+              </button>
+            </div>
+          )}
 
           {step === "SENDER_OFFER" && <Spinner label="Préparation de la connexion..." />}
 

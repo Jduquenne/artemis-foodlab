@@ -50,9 +50,9 @@ const NotificationCard = ({ notification }: NotificationCardProps) => {
   };
 
   return (
+    <div className="fixed top-0 inset-x-0 z-50 flex justify-center items-start pt-3 px-4 pointer-events-none">
     <div
-      className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[min(460px,calc(100vw-2rem))] bg-white dark:bg-slate-100 rounded-2xl shadow-2xl border border-slate-200 overflow-hidden ${isLeaving ? 'notif-exit' : ''}`}
-      style={{ animation: isLeaving ? undefined : "slideDown 0.35s cubic-bezier(0.22,1,0.36,1) forwards" }}
+      className={`w-full max-w-[460px] bg-white dark:bg-slate-100 rounded-2xl shadow-2xl border border-slate-200 overflow-hidden pointer-events-auto ${isLeaving ? 'notif-exit' : 'notif-enter'}`}
     >
       <div className="flex items-start gap-3 px-4 pt-4 pb-3">
         <Bell className="w-5 h-5 text-orange-500 shrink-0 mt-0.5" />
@@ -85,6 +85,7 @@ const NotificationCard = ({ notification }: NotificationCardProps) => {
       <div className="h-1 bg-slate-100 dark:bg-slate-200">
         <div ref={barRef} className="h-full bg-orange-400" style={{ width: "100%" }} />
       </div>
+    </div>
     </div>
   );
 };

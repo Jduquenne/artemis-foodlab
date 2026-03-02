@@ -49,8 +49,8 @@ export const SettingsPopover = () => {
 
         {open && (
           <>
-            <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} />
-            <div className="absolute bottom-0 left-full ml-3 z-20 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl shadow-xl overflow-hidden w-52">
+            <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
+            <div className="absolute bottom-0 left-full ml-3 z-50 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl shadow-xl overflow-hidden w-52">
               <button
                 onClick={() => { setExportModalOpen(true); setOpen(false); }}
                 className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors"

@@ -8,7 +8,7 @@ import { RecipePicker } from './components/RecipePicker';
 import { MealDragOverlay } from './components/MealDragOverlay';
 import { ShoppingSelectionBar } from './components/ShoppingSelectionBar';
 import { getWeekNumber, getMonday, getWeekRange } from '../../shared/utils/weekUtils';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { ShoppingDay } from '../../core/domain/types';
 import {
@@ -41,13 +41,24 @@ const todayDayName = (() => {
 
 export const PlanningModule = () => {
     const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
     const { shoppingDays, setShoppingDays } = useMenuStore();
     const dateInputRef = useRef<HTMLInputElement>(null);
 
     const [pickerSlot, setPickerSlot] = useState<{ day: string; slot: SlotId } | null>(null);
     const [activeDragId, setActiveDragId] = useState<string | null>(null);
-    const [selectedDate, setSelectedDate] = useState(new Date());
-    const [selectedDay, setSelectedDay] = useState(todayDayName);
+
+    const selectedDay = searchParams.get('day') ?? todayDayName;
+    const selectedDate = useMemo(() => {
+        const d = searchParams.get('d');
+        return d ? new Date(d + 'T12:00:00') : new Date();
+    }, [searchParams]);
+
+    const setSelectedDay = (day: string) =>
+        setSearchParams(p => { p.set('day', day); return p; }, { replace: true });
+    const setSelectedDate = (date: Date) =>
+        setSearchParams(p => { p.set('d', date.toISOString().slice(0, 10)); return p; }, { replace: true });
+
     const [isSelectionMode, setIsSelectionMode] = useState(false);
     const [draftDays, setDraftDays] = useState<ShoppingDay[]>([]);
     const [editingPersonsSlotId, setEditingPersonsSlotId] = useState<string | null>(null);

@@ -1,0 +1,362 @@
+{
+  "wm-001": {
+    "id": "wm-001",
+    "name": "Poulet rôti aux herbes de Provence",
+    "categoryId": "white-meat",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "macronutrients": {
+      "kcal": 480,
+      "proteins": 58,
+      "lipids": 26,
+      "carbohydrates": 2,
+      "fibers": 0.4
+    },
+    "defaultPortions": 4,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "vm-001",
+        "name": "Poulet entier",
+        "quantity": 1.5,
+        "unit": "kg",
+        "category": "Viande",
+        "preparation": "vidé et nettoyé"
+      },
+      {
+        "id": "002",
+        "foodId": "ep-003",
+        "name": "Herbes de Provence",
+        "quantity": 2,
+        "unit": "cc",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "003",
+        "foodId": "ep-004",
+        "name": "Ail",
+        "quantity": 4,
+        "unit": "pièce",
+        "category": "Epices et condiments",
+        "preparation": "gousses non épluchées"
+      },
+      {
+        "id": "004",
+        "foodId": "ep-005",
+        "name": "Huile d'olive",
+        "quantity": 2,
+        "unit": "c",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "fv-001",
+        "name": "Citron",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes",
+        "preparation": "coupé en quartiers"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-001",
+        "name": "Sel",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "ep-002",
+        "name": "Poivre",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo":             { "url": "/artemis-foodlab/white-meat/photo/WM_01_Poulet_roti_herbes_Photo.webp" },
+      "ingredientsPhoto":  { "url": "/artemis-foodlab/white-meat/ingredients/WM_01_Poulet_roti_herbes_Ingredients.webp" },
+      "instructionsPhoto": { "url": "/artemis-foodlab/white-meat/recipes/WM_01_Poulet_roti_herbes_Recette.webp" }
+    },
+    "batchCooking": true
+  },
+
+  "cp-001": {
+    "id": "cp-001",
+    "name": "Porridge aux fruits rouges et graines de chia",
+    "categoryId": "cereal-products",
+    "mealTypes": ["breakfast"],
+    "kind": "dish",
+    "macronutrients": {
+      "kcal": 342,
+      "proteins": 10,
+      "lipids": 9,
+      "carbohydrates": 58,
+      "fibers": 8
+    },
+    "defaultPortions": 2,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fc-001",
+        "name": "Flocons d'avoine",
+        "quantity": 160,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "002",
+        "foodId": "pl-001",
+        "name": "Lait d'amande",
+        "quantity": 400,
+        "unit": "ml",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "003",
+        "foodId": "su-001",
+        "name": "Fruits rouges surgelés",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Surgelés"
+      },
+      {
+        "id": "004",
+        "foodId": "fm-003",
+        "name": "Miel",
+        "quantity": 2,
+        "unit": "c",
+        "category": "Ferme"
+      },
+      {
+        "id": "005",
+        "foodId": "fs-001",
+        "name": "Graines de chia",
+        "quantity": 2,
+        "unit": "c",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "006",
+        "foodId": "fs-002",
+        "name": "Amandes effilées",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "007",
+        "foodId": "ep-013",
+        "name": "Cannelle",
+        "quantity": 1,
+        "unit": "cc",
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": { "url": "/artemis-foodlab/cereal-products/photo/CP_01_Porridge_fruits_rouges_Photo.webp" }
+    },
+    "batchCooking": false
+  },
+
+  "bs-001": {
+    "id": "bs-001",
+    "name": "Sauce béchamel maison",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "macronutrients": {
+      "kcal": 148,
+      "proteins": 4,
+      "lipids": 9,
+      "carbohydrates": 12,
+      "fibers": 0.2
+    },
+    "defaultPortions": 4,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "pl-002",
+        "name": "Beurre",
+        "quantity": 40,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "002",
+        "foodId": "fc-002",
+        "name": "Farine T55",
+        "quantity": 40,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "003",
+        "foodId": "pl-003",
+        "name": "Lait entier",
+        "quantity": 500,
+        "unit": "ml",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "004",
+        "foodId": "ep-006",
+        "name": "Noix de muscade",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments",
+        "preparation": "râpée"
+      },
+      {
+        "id": "005",
+        "foodId": "ep-001",
+        "name": "Sel",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo":             { "url": "/artemis-foodlab/bases/photo/BS_01_Bechamel_Photo.webp" },
+      "instructionsPhoto": { "url": "/artemis-foodlab/bases/recipes/BS_01_Bechamel_Recette.webp" }
+    },
+    "batchCooking": true
+  },
+
+  "fr-001": {
+    "id": "fr-001",
+    "name": "Avocat Hass",
+    "categoryId": "fruits",
+    "mealTypes": ["breakfast", "lunch", "snack"],
+    "kind": "ingredient",
+    "macronutrients": {
+      "kcal": 160,
+      "proteins": 2,
+      "lipids": 15,
+      "carbohydrates": 9,
+      "fibers": 6.7
+    },
+    "defaultPortions": 1,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-002",
+        "name": "Avocat Hass",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "photo": { "url": "/artemis-foodlab/fruits/photo/FR_01_Avocat_Hass_Photo.webp" }
+    },
+    "batchCooking": false
+  },
+
+  "pp-001": {
+    "id": "pp-001",
+    "name": "Curry de pois chiches aux épinards",
+    "categoryId": "plant-proteins",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "macronutrients": {
+      "kcal": 338,
+      "proteins": 14,
+      "lipids": 13,
+      "carbohydrates": 42,
+      "fibers": 11
+    },
+    "defaultPortions": 4,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "cn-001",
+        "name": "Pois chiches cuits",
+        "quantity": 800,
+        "unit": "g",
+        "category": "Conserves"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-004",
+        "name": "Épinards frais",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "cn-002",
+        "name": "Lait de coco",
+        "quantity": 400,
+        "unit": "ml",
+        "category": "Conserves"
+      },
+      {
+        "id": "004",
+        "foodId": "cn-003",
+        "name": "Tomates concassées",
+        "quantity": 400,
+        "unit": "g",
+        "category": "Conserves"
+      },
+      {
+        "id": "005",
+        "foodId": "fv-003",
+        "name": "Oignon",
+        "quantity": 2,
+        "unit": "pièce",
+        "category": "Fruits et légumes",
+        "preparation": "émincé"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-004",
+        "name": "Ail",
+        "quantity": 3,
+        "unit": "pièce",
+        "category": "Epices et condiments",
+        "preparation": "pressé"
+      },
+      {
+        "id": "007",
+        "foodId": "ep-007",
+        "name": "Curry en poudre",
+        "quantity": 2,
+        "unit": "c",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-008",
+        "name": "Curcuma",
+        "quantity": 1,
+        "unit": "cc",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "009",
+        "foodId": "ep-009",
+        "name": "Huile de coco",
+        "quantity": 1,
+        "unit": "c",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "010",
+        "foodId": "ep-001",
+        "name": "Sel",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo":             { "url": "/artemis-foodlab/plant-proteins/photo/PP_01_Curry_pois_chiches_epinards_Photo.webp" },
+      "ingredientsPhoto":  { "url": "/artemis-foodlab/plant-proteins/ingredients/PP_01_Curry_pois_chiches_epinards_Ingredients.webp" },
+      "instructionsPhoto": { "url": "/artemis-foodlab/plant-proteins/recipes/PP_01_Curry_pois_chiches_epinards_Recette.webp" }
+    },
+    "batchCooking": true
+  }
+}

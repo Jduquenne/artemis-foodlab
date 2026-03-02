@@ -25,8 +25,6 @@ export const RecipeModule = () => {
     const baseResults = useSearch(showResults ? searchQuery : null);
 
     const filteredResults = useMemo(() => {
-        console.log('Filtered results:', baseResults);
-
         if (activeFilterIds.length === 0) return baseResults;
         const data = recipesDb as unknown as Record<string, RecipeDetails>;
         const activeFilters = PREDEFINED_FILTERS.filter(f => activeFilterIds.includes(f.id));

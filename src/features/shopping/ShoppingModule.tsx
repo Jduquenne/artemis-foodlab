@@ -197,8 +197,8 @@ export const ShoppingModule = () => {
                     </div>
                 ) : (
                     <div className="columns-1 tablet:columns-2 lg:columns-3 gap-4 pb-4">
-                        {groupedItems.map(group => (
-                            <div key={group.label} className="break-inside-avoid mb-4">
+                        {groupedItems.map((group, i) => (
+                            <div key={group.label} className="animate-fade-in-up break-inside-avoid mb-4" style={{ animationDelay: `${i * 60}ms` }}>
                                 <ShoppingCategoryCard
                                     label={group.label}
                                     items={group.list}

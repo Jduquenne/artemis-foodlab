@@ -51,6 +51,20 @@ src/
 5. `core/services/db.ts` — Dexie schema with one store: `planning` (MealSlot).
 6. `shared/store/useMenuStore.ts` — Zustand store tracking `currentWeek`/`currentYear`/`currentWeekId` (persisted in localStorage), plus `initWeek()` which detects week transitions
 
+### DB structure reference (read this first)
+
+**Never parse `recipes-db.json` or `food-db.json` directly to understand the data model** — these files are large (593+ entries) and slow to analyse.
+
+Instead, use the dedicated reference files in `scripts/examples/`:
+
+- `scripts/examples/data-model.puml` — PlantUML class diagram: all entities, value objects, enums, and their relationships across every domain (Recettes, Planning, Congélateur, Ménager). Start here for any structural question.
+- `scripts/examples/food-db.example.json` — ~60 food items covering all `ShoppingCategory` values, with the correct FoodId prefix conventions (`fv-`, `vm-`, `ep-`, `fc-`, `cn-`, etc.).
+- `scripts/examples/recipes-db.example.json` — 5 representative recipes covering all `RecipeKind` values (`dish`, `base`, `ingredient`), all asset key names, and the correct field names (`mealTypes`, `macronutrients`, `defaultPortions`, `ingredientsPhoto`, `instructionsPhoto`).
+
+These examples reflect the **target (ideal) type system**, not the current production JSON which still uses legacy field names. If analysis of the full production database is needed, the user will say so explicitly.
+
+**Maintenance rule**: whenever a type system change is confirmed and approved by the user, update `data-model.puml`, `food-db.example.json`, and `recipes-db.example.json` accordingly so they always stay in sync with the agreed target model.
+
 ### Routing (App.tsx)
 
 ```

@@ -1,0 +1,318 @@
+@startuml ArtemisFoodlab_DataModel
+title Artemis Foodlab — Modèle de données (type system cible)
+
+hide empty members
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+skinparam class {
+  BackgroundColor          #FFFEF8
+  BorderColor              #9E9088
+  HeaderBackgroundColor    #F0EBE1
+  HeaderFontColor          #3F332B
+  AttributeFontColor       #5C4D45
+  FontSize                 11
+}
+
+skinparam package {
+  BackgroundColor          #FAFAF5
+  BorderColor              #C9BBAA
+  FontStyle                Bold
+  FontSize                 12
+}
+
+skinparam enum {
+  BackgroundColor          #E8E0D2
+  BorderColor              #786860
+  HeaderBackgroundColor    #DDD3C0
+  FontSize                 10
+}
+
+skinparam arrow {
+  Color                    #786860
+  FontColor                #786860
+  FontSize                 10
+}
+
+skinparam note {
+  BackgroundColor          #FEFDF5
+  BorderColor              #C9BBAA
+  FontSize                 10
+}
+
+' ═══════════════════════════════════════════════════════════════
+' ÉNUMÉRATIONS
+' ═══════════════════════════════════════════════════════════════
+
+package "Énumérations" as ENUMS #E8E0D2 {
+
+  enum Unit {
+    PIECE    = "pièce"
+    G        = "g"
+    KG       = "kg"
+    ML       = "ml"
+    L        = "l"
+    C        = "c"
+    CC       = "cc"
+    LEAF     = "feuille"
+    PORTION  = "portion"
+    PACKET   = "sachet"
+    SLICE    = "tranche"
+  }
+
+  enum ShoppingCategory {
+    FRUIT_VEGETABLE   = "Fruits et légumes"
+    DRIED_FRUIT       = "Fruits secs"
+    MEAT              = "Viande"
+    FISH              = "Poisson"
+    DELI              = "Charcuterie"
+    DAIRY             = "Produits laitiers"
+    FARM              = "Ferme"
+    STARCH            = "Féculents"
+    CANNED            = "Conserves"
+    SWEET_GROCERY     = "Epicerie sucrée"
+    SPICE_CONDIMENT   = "Epices et condiments"
+    FROZEN            = "Surgelés"
+    RECIPE            = "Recette"
+    NON_PURCHASE      = "Hors achats"
+    INTERNET          = "Internet"
+    UNKNOWN           = "Inconnu"
+  }
+
+  enum MealType {
+    BREAKFAST  = "breakfast"
+    LUNCH      = "lunch"
+    DINNER     = "dinner"
+    SNACK      = "snack"
+  }
+
+  enum RecipeKind {
+    DISH       = "dish"
+    BASE       = "base"
+    FOOD_CARD  = "ingredient"
+  }
+
+  enum DayOfWeek {
+    MONDAY     = "lundi"
+    TUESDAY    = "mardi"
+    WEDNESDAY  = "mercredi"
+    THURSDAY   = "jeudi"
+    FRIDAY     = "vendredi"
+    SATURDAY   = "samedi"
+    SUNDAY     = "dimanche"
+  }
+
+  enum HouseholdCategory {
+    HYGIENE      = "Hygiène"
+    MAINTENANCE  = "Entretien"
+    PHARMACY     = "Pharmacie"
+    PANTRY       = "Garde-manger"
+    PETS         = "Animaux"
+  }
+}
+
+' ═══════════════════════════════════════════════════════════════
+' DOMAINE RECETTES — Données statiques (JSON)
+' ═══════════════════════════════════════════════════════════════
+
+package "Recettes — JSON statique" as RECIPES #FFF4ED {
+
+  class Food <<référentiel>> {
+    + id        : FoodId
+    ..
+    + name      : string
+    + category  : ShoppingCategory
+  }
+
+  class RecipeCategory <<référentiel>> {
+    + id    : string
+    ..
+    + name  : string
+    + color : string
+  }
+
+  class Macronutrients <<value object>> {
+    + kcal          : number
+    + proteins      : number
+    + lipids        : number
+    + carbohydrates : number
+    + fibers        : number
+  }
+
+  class RecipeAssets <<value object>> {
+    + photo?             : url : string
+    + ingredientsPhoto?  : url : string
+    + instructionsPhoto? : url : string
+  }
+
+  class RecipeIngredient {
+    + id           : IngredientId
+    ..
+    + foodId?      : FoodId
+    + name         : string
+    + quantity     : number | null
+    + unit         : Unit | null
+    + category     : ShoppingCategory
+    + preparation? : string
+  }
+
+  class Recipe <<aggregate root>> {
+    + id               : RecipeId
+    ..
+    + name             : string
+    + categoryId       : string
+    + mealTypes        : MealType[]
+    + kind             : RecipeKind
+    + defaultPortions  : number
+    + batchCooking     : boolean
+  }
+
+  Recipe          "1" *-right- "1"    Macronutrients   : macronutrients
+  Recipe          "1" *-right- "1"    RecipeAssets     : assets
+  Recipe          "1" *-down-  "1..*" RecipeIngredient : ingredients
+  Recipe          "N" -up->    "1"    RecipeCategory   : categoryId
+  RecipeIngredient "N" -right-> "0..1" Food            : foodId
+}
+
+' ═══════════════════════════════════════════════════════════════
+' DOMAINE PLANNING — IndexedDB (table : planning)
+' ═══════════════════════════════════════════════════════════════
+
+package "Planning — IndexedDB" as PLANNING #EDFAF2 {
+
+  class MealSlot <<entity>> {
+    + id        : string
+    ..
+    + weekId    : string
+    + day       : DayOfWeek
+    + mealType  : MealType
+    + recipeIds : RecipeId[]
+    + persons?  : number
+  }
+
+  class ShoppingDay <<value object>> {
+    + year : number
+    + week : number
+    + day  : DayOfWeek
+  }
+
+  note bottom of ShoppingDay
+    Persisté en localStorage.
+    Sert à filtrer les MealSlots
+    pour générer la liste de courses.
+  end note
+
+  note bottom of MealSlot
+    id = "{weekId}-{day}-{mealType}"
+    weekId = "2025-W42"
+  end note
+}
+
+MealSlot  "N" ----> "N" Recipe       : recipeIds
+ShoppingDay  ..>        MealSlot     : interroge
+
+' ═══════════════════════════════════════════════════════════════
+' DOMAINE CONGÉLATEUR — IndexedDB (table : freezerCategories)
+' ═══════════════════════════════════════════════════════════════
+
+package "Congélateur — IndexedDB" as FREEZER #EAF2FF {
+
+  class FreezerCategory <<aggregate root>> {
+    + id       : string
+    ..
+    + name     : string
+    + position : number
+  }
+
+  abstract class FreezerItem {
+    + id   : string
+    + type : "food" | "batch"
+  }
+
+  class FoodFreezerItem <<entity>> {
+    + type   : "food"
+    ..
+    + foodId? : FoodId
+    + name    : string
+  }
+
+  class BatchFreezerItem <<entity>> {
+    + type      : "batch"
+    ..
+    + recipeId  : RecipeId
+    + portions  : number
+    + addedDate : string
+  }
+
+  class FreezerBag <<value object>> {
+    + id           : string
+    ..
+    + quantity     : number
+    + unit         : Unit | null
+    + preparation? : string
+    + addedDate    : string
+  }
+
+  FreezerItem     <|--        FoodFreezerItem
+  FreezerItem     <|--        BatchFreezerItem
+  FreezerCategory "1" *-down- "0..*" FreezerItem    : items
+  FoodFreezerItem "1" *-right- "0..*" FreezerBag    : bags
+}
+
+FoodFreezerItem  "N" -----> "0..1" Food    : foodId
+BatchFreezerItem "N" -----> "1"    Recipe  : recipeId
+
+' ═══════════════════════════════════════════════════════════════
+' DOMAINE MÉNAGER — JSON statique + IndexedDB (table : household)
+' ═══════════════════════════════════════════════════════════════
+
+package "Ménager — JSON + IndexedDB" as HOUSEHOLD #F5EAFF {
+
+  class HouseholdItem <<référentiel>> {
+    + id       : string
+    ..
+    + name     : string
+    + category : HouseholdCategory
+  }
+
+  class HouseholdRecord <<entity>> {
+    + id             : string
+    ..
+    + lastCheckedAt  : string
+  }
+
+  HouseholdRecord "0..1" -right-> "1" HouseholdItem : id (ref)
+
+  note right of HouseholdItem
+    Catalogue statique (JSON).
+    Ne change pas en cours d'usage.
+  end note
+
+  note right of HouseholdRecord
+    Enregistré en IndexedDB.
+    Trace qu'un article a été
+    vérifié (et quand).
+    Absent = non vérifié.
+  end note
+}
+
+' ═══════════════════════════════════════════════════════════════
+' LÉGENDE
+' ═══════════════════════════════════════════════════════════════
+
+legend bottom left
+  |= Notation         |= Signification                          |
+  | A **1** *-- **1** B  | A contient B (composition)           |
+  | A **1** *-- **N** B  | A contient une liste de B            |
+  | A **N** --> **1** B  | A référence B par id                 |
+  | A **N** ---> **N** B | Relation many-to-many (tableau d'id) |
+  | A <\|-- B          | B hérite / implémente A               |
+  | A ..> B            | A dépend fonctionnellement de B       |
+  |                    |                                        |
+  | <<aggregate root>> | Point d'entrée du domaine (racine DDD)|
+  | <<entity>>         | Objet avec identité propre            |
+  | <<value object>>   | Objet sans identité, immutable        |
+  | <<référentiel>>    | Données statiques (JSON, read-only)   |
+endlegend
+
+@enduml

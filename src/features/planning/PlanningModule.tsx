@@ -263,7 +263,7 @@ export const PlanningModule = () => {
                             onChange={(e) => e.target.value && setSelectedDate(new Date(e.target.value))}
                         />
                         <div className="flex items-center gap-1 bg-white dark:bg-slate-100 px-2 py-1 rounded-2xl shadow-sm border border-slate-200">
-                            <button onClick={() => changeWeek(-1)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-200 rounded-xl transition-colors">
+                            <button aria-label="Semaine précédente" onClick={() => changeWeek(-1)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-200 rounded-xl transition-colors">
                                 <ChevronLeft size={18} className="text-slate-600" />
                             </button>
                             <button onClick={() => dateInputRef.current?.showPicker?.()}
@@ -274,7 +274,7 @@ export const PlanningModule = () => {
                                 className="hidden sm:block h-8 px-2 bg-slate-100 dark:bg-slate-200 rounded-xl text-xs font-semibold text-slate-500 border-0 outline-none cursor-pointer hover:bg-orange-50 focus:ring-2 focus:ring-orange-400 scheme-light dark:scheme-dark transition-colors"
                                 onChange={(e) => e.target.value && setSelectedDate(new Date(e.target.value))}
                             />
-                            <button onClick={() => changeWeek(1)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-200 rounded-xl transition-colors">
+                            <button aria-label="Semaine suivante" onClick={() => changeWeek(1)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-200 rounded-xl transition-colors">
                                 <ChevronRight size={18} className="text-slate-600" />
                             </button>
                         </div>

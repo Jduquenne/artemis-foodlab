@@ -97,7 +97,7 @@ export const AddFreezerItemModal = ({ categoryId, onClose }: AddFreezerItemModal
       <div className={`w-full sm:max-w-md bg-slate-50 rounded-t-3xl sm:rounded-3xl overflow-hidden flex flex-col max-h-[90dvh] ${isClosing ? 'modal-exit sm:modal-center-exit' : 'modal-enter sm:modal-center-enter'}`}>
         <div className="flex items-center justify-between px-5 pt-5 pb-4 shrink-0">
           <h2 className="text-base font-black text-slate-900">Ajouter à la catégorie</h2>
-          <button onClick={handleClose} className="p-2 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors">
+          <button aria-label="Fermer" onClick={handleClose} className="p-2 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -205,6 +205,7 @@ export const AddFreezerItemModal = ({ categoryId, onClose }: AddFreezerItemModal
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-wide">Nombre de repas</label>
                   <div className="flex items-center gap-4">
                     <button
+                      aria-label="Diminuer"
                       onClick={() => setPortions(p => Math.max(1, p - 1))}
                       className="w-11 h-11 rounded-xl bg-slate-100 dark:bg-slate-200 text-slate-700 font-bold text-lg flex items-center justify-center hover:bg-slate-200 transition-colors"
                     >
@@ -212,6 +213,7 @@ export const AddFreezerItemModal = ({ categoryId, onClose }: AddFreezerItemModal
                     </button>
                     <span className="text-2xl font-black text-slate-900 w-8 text-center">{portions}</span>
                     <button
+                      aria-label="Augmenter"
                       onClick={() => setPortions(p => p + 1)}
                       className="w-11 h-11 rounded-xl bg-slate-100 dark:bg-slate-200 text-slate-700 font-bold text-lg flex items-center justify-center hover:bg-slate-200 transition-colors"
                     >

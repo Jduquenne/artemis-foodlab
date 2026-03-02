@@ -30,6 +30,7 @@ export const MacroFilterModal = ({ activeFilterIds, onSubmit, onClose }: MacroFi
                         Filtres nutritionnels
                     </p>
                     <button
+                        aria-label="Fermer"
                         onClick={handleClose}
                         className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
                     >

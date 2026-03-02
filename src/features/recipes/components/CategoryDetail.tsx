@@ -48,6 +48,7 @@ export const CategoryDetail = () => {
             <div className="flex items-center justify-between gap-3 shrink-0">
                 <div className="flex items-baseline gap-3 min-w-0 shrink">
                     <button
+                        aria-label="Retour aux recettes"
                         onClick={() => navigate('/recipes')}
                         className="p-2 rounded-xl text-slate-400 hover:text-orange-600 hover:bg-orange-50 transition-colors shrink-0 self-center"
                     >
@@ -69,7 +70,7 @@ export const CategoryDetail = () => {
                         return filter ? (
                             <span key={id} className="flex items-center gap-1 pl-2.5 pr-1.5 py-1 bg-orange-100 text-orange-700 text-xs font-semibold rounded-full whitespace-nowrap">
                                 {filter.label}
-                                <button onClick={() => removeFilter(id)} className="hover:text-orange-900 transition-colors">
+                                <button aria-label={`Retirer le filtre ${filter.label}`} onClick={() => removeFilter(id)} className="hover:text-orange-900 transition-colors">
                                     <X className="w-3 h-3" />
                                 </button>
                             </span>

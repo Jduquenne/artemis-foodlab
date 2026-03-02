@@ -66,6 +66,7 @@ export const AddBagForm = ({ onSave, onCancel, initialUnit = Unit.G }: AddBagFor
         className="flex-1 min-w-0 px-2 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400"
       />
       <button
+        aria-label="Confirmer"
         onClick={handleSave}
         disabled={!canSave}
         className="p-1.5 rounded-lg text-orange-500 hover:bg-orange-50 disabled:opacity-40 transition-colors shrink-0"
@@ -73,6 +74,7 @@ export const AddBagForm = ({ onSave, onCancel, initialUnit = Unit.G }: AddBagFor
         <Check className="w-3.5 h-3.5" />
       </button>
       <button
+        aria-label="Annuler"
         onClick={onCancel}
         className="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors shrink-0"
       >

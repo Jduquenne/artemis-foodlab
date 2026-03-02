@@ -25,6 +25,8 @@ export const RecipeModule = () => {
     const baseResults = useSearch(showResults ? searchQuery : null);
 
     const filteredResults = useMemo(() => {
+        console.log('Filtered results:', baseResults);
+
         if (activeFilterIds.length === 0) return baseResults;
         const data = recipesDb as unknown as Record<string, RecipeDetails>;
         const activeFilters = PREDEFINED_FILTERS.filter(f => activeFilterIds.includes(f.id));
@@ -33,6 +35,7 @@ export const RecipeModule = () => {
             if (!macros) return false;
             return activeFilters.every(f => f.check(macros));
         });
+
     }, [baseResults, activeFilterIds]);
 
     const removeFilter = (id: string) => setActiveFilterIds(activeFilterIds.filter(f => f !== id));
@@ -64,6 +67,7 @@ export const RecipeModule = () => {
                             />
                         </div>
                         <button
+                            aria-label="Rechercher"
                             onClick={closeSearch}
                             className="sm:hidden p-2 rounded-xl text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 hover:text-slate-600 transition-colors shrink-0"
                         >

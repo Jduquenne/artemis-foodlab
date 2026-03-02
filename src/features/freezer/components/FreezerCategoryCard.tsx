@@ -60,10 +60,10 @@ export const FreezerCategoryCard = ({ category, isFirst, isLast, onClick }: Free
               onClick={e => e.stopPropagation()}
               className="flex-1 min-w-0 text-sm font-bold bg-transparent border-b-2 border-orange-400 text-slate-900 focus:outline-none"
             />
-            <button onClick={e => { e.stopPropagation(); handleRename(); }} className="p-1 rounded-lg text-orange-500 hover:bg-orange-50 transition-colors">
+            <button aria-label="Confirmer" onClick={e => { e.stopPropagation(); handleRename(); }} className="p-1 rounded-lg text-orange-500 hover:bg-orange-50 transition-colors">
               <Check className="w-3.5 h-3.5" />
             </button>
-            <button onClick={e => { e.stopPropagation(); setNameInput(category.name); setRenaming(false); }} className="p-1 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors">
+            <button aria-label="Annuler" onClick={e => { e.stopPropagation(); setNameInput(category.name); setRenaming(false); }} className="p-1 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors">
               <X className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -79,6 +79,7 @@ export const FreezerCategoryCard = ({ category, isFirst, isLast, onClick }: Free
           </span>
           <div className="relative" ref={menuRef}>
             <button
+              aria-label="Options"
               onClick={e => { e.stopPropagation(); setMenuOpen(o => !o); }}
               className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
             >

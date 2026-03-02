@@ -53,7 +53,7 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
                         <h2 className="text-xl font-black text-slate-900">Ajouter un repas</h2>
                         <p className="text-orange-600 dark:text-orange-400 font-bold uppercase text-xs tracking-widest">{slotName}</p>
                     </div>
-                    <button onClick={handleClose} className="p-2 hover:bg-white/60 dark:hover:bg-slate-200/40 rounded-full transition-all">
+                    <button aria-label="Fermer" onClick={handleClose} className="p-2 hover:bg-white/60 dark:hover:bg-slate-200/40 rounded-full transition-all">
                         <X size={24} className="text-slate-400" />
                     </button>
                 </div>
@@ -77,7 +77,7 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
                                             : 'border-slate-200 hover:border-orange-200 hover:bg-orange-50 dark:hover:bg-orange-950/20'
                                     }`}
                                 >
-                                    <img src={recipe.photoUrl} className="w-16 h-16 rounded-xl object-cover shadow-sm" alt="" />
+                                    <img src={recipe.photoUrl} loading="lazy" decoding="async" className="w-16 h-16 rounded-xl object-cover shadow-sm" alt={recipe.name} />
                                     <div className="flex-1">
                                         <p className="font-black text-slate-800">{recipe.name}</p>
                                         <p className="text-xs text-slate-400 uppercase font-bold">{recipe.recipeId}</p>

@@ -25,6 +25,7 @@ export const RecipeDetail = () => {
 
             <div className="flex items-center gap-3 shrink-0 mb-4">
                 <button
+                    aria-label="Retour"
                     onClick={handleBack}
                     className="p-2 rounded-xl text-slate-400 hover:text-orange-600 hover:bg-orange-50 transition-colors shrink-0"
                 >

@@ -11,7 +11,7 @@ interface FlipCardProps {
     onClick: () => void;
 }
 
-export const FlipCard = ({ frontImage, backImage, recipeUrl, onClick }: FlipCardProps) => {
+export const FlipCard = ({ name, frontImage, backImage, recipeUrl, onClick }: FlipCardProps) => {
     const [isFlipped, setIsFlipped] = useState(false);
     const [showBack, setShowBack] = useState(false);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -30,12 +30,12 @@ export const FlipCard = ({ frontImage, backImage, recipeUrl, onClick }: FlipCard
                 onClick={handleCardClick}
                 onContextMenu={(e) => e.preventDefault()}
             >
-                <img src={frontImage} className={`w-full h-full object-contain transition-opacity duration-200 ${showBack ? 'opacity-0' : 'opacity-100'}`} />
+                <img src={frontImage} alt={name} loading="lazy" decoding="async" className={`w-full h-full object-contain transition-opacity duration-200 ${showBack ? 'opacity-0' : 'opacity-100'}`} />
 
                 {showBack && (
                     <div className="absolute inset-0 bg-orange-50 dark:bg-orange-950/40 border-2 border-orange-200 dark:border-orange-800 rounded-2xl">
                         {backImage ? (
-                            <img src={backImage} alt="Ingrédients" className="w-full h-full object-cover" />
+                            <img src={backImage} alt="Ingrédients" loading="lazy" decoding="async" className="w-full h-full object-cover" />
                         ) : (
                             <div className="w-full h-full flex flex-col items-center justify-center text-[10px] text-orange-400 font-bold p-4 text-center gap-2">
                                 <span className="text-2xl">🤷‍♂️</span>
@@ -77,11 +77,11 @@ export const FlipCard = ({ frontImage, backImage, recipeUrl, onClick }: FlipCard
         >
             <div className={`relative w-full h-full transition-all duration-700 preserve-3d shadow-xl rounded-2xl ${isFlipped ? 'rotate-y-180' : ''}`}>
                 <div className="absolute inset-0 w-full h-full backface-hidden z-20 bg-white dark:bg-slate-100 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
-                    <img src={frontImage} className="w-full h-full object-contain" />
+                    <img src={frontImage} alt={name} loading="lazy" decoding="async" className="w-full h-full object-contain" />
                 </div>
                 <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 z-10 bg-orange-50 dark:bg-orange-950/40 rounded-xl overflow-hidden border-2 border-orange-200 dark:border-orange-800">
                     {backImage ? (
-                        <img src={backImage} alt="Ingrédients" className="w-full h-full object-cover" />
+                        <img src={backImage} alt="Ingrédients" loading="lazy" decoding="async" className="w-full h-full object-cover" />
                     ) : (
                         <div className="w-full h-full flex flex-col items-center justify-center text-[10px] text-orange-400 font-bold p-4 text-center gap-2">
                             <span className="text-2xl">🤷‍♂️</span>

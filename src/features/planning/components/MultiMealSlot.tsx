@@ -34,9 +34,10 @@ const RecipeCell = ({
                 onClick={hasRecipesPage ? onNavigate : undefined}
                 className={`w-full h-full rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-200 ${!hasRecipesPage ? 'cursor-default' : ''}`}
             >
-                {photoUrl && <img src={photoUrl} className="w-full h-full object-cover sm:object-contain" alt={recipe.name} />}
+                {photoUrl && <img src={photoUrl} loading="lazy" decoding="async" className="w-full h-full object-cover sm:object-contain" alt={recipe.name} />}
             </button>
             <button
+                aria-label="Retirer ce repas"
                 onPointerDown={(e) => e.stopPropagation()}
                 onClick={(e) => { e.stopPropagation(); onRemove(); }}
                 className={`absolute top-0.5 right-0.5 p-0.5 bg-white/90 dark:bg-slate-100/90 text-red-400 rounded transition-opacity z-10 shadow-sm ${IS_TOUCH ? 'opacity-100' : 'opacity-0 group-hover/cell:opacity-100'}`}
@@ -108,7 +109,7 @@ export const MultiMealSlot = ({
                         className={`w-full h-full ${!singleHasRecipesPage ? 'cursor-default' : ''}`}
                     >
                         {singlePhotoUrl && (
-                            <img src={singlePhotoUrl} className="w-full h-full object-contain" alt={firstRecipe!.name} />
+                            <img src={singlePhotoUrl} loading="lazy" decoding="async" className="w-full h-full object-contain" alt={firstRecipe!.name} />
                         )}
                     </button>
                 )}
@@ -159,6 +160,7 @@ export const MultiMealSlot = ({
 
                     {recipeIds.length === 1 && canAddMore && (
                         <button
+                            aria-label="Supprimer le repas"
                             onPointerDown={(e) => e.stopPropagation()}
                             onClick={(e) => { e.stopPropagation(); onRemoveRecipe(recipeIds[0]); }}
                             className={`absolute bottom-1 left-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-red-500 rounded-lg shadow-md border border-slate-200 hover:bg-red-50 dark:hover:bg-red-950/40 z-20 transition-opacity ${IS_TOUCH ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
@@ -169,6 +171,7 @@ export const MultiMealSlot = ({
 
                     {recipeIds.length === 1 && canAddMore && (
                         <button
+                            aria-label="Ajouter un repas"
                             onPointerDown={(e) => e.stopPropagation()}
                             onClick={(e) => { e.stopPropagation(); onAdd(); }}
                             className={`absolute bottom-1 right-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-orange-500 rounded-lg shadow-md border border-slate-200 hover:bg-orange-50 dark:hover:bg-orange-950/40 z-20 transition-opacity ${IS_TOUCH ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}

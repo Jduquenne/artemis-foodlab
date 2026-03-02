@@ -33,6 +33,7 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
     <div className="h-full flex flex-col gap-4 overflow-hidden">
       <div className="flex items-center gap-3 shrink-0">
         <button
+          aria-label="Retour"
           onClick={onBack}
           className="p-2 rounded-xl text-slate-400 hover:text-orange-600 hover:bg-orange-50 transition-colors shrink-0"
         >
@@ -48,10 +49,10 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
               onKeyDown={e => { if (e.key === "Enter") handleRename(); if (e.key === "Escape") handleCancelRename(); }}
               className="flex-1 min-w-0 text-xl font-black bg-transparent border-b-2 border-orange-400 text-slate-900 focus:outline-none"
             />
-            <button onClick={handleRename} className="p-1.5 rounded-lg text-orange-500 hover:bg-orange-50 transition-colors">
+            <button aria-label="Confirmer" onClick={handleRename} className="p-1.5 rounded-lg text-orange-500 hover:bg-orange-50 transition-colors">
               <Check className="w-4 h-4" />
             </button>
-            <button onClick={handleCancelRename} className="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors">
+            <button aria-label="Annuler" onClick={handleCancelRename} className="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors">
               <X className="w-4 h-4" />
             </button>
           </div>
@@ -59,6 +60,7 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
           <div className="flex-1 flex items-center gap-2 min-w-0">
             <h1 className="text-xl font-black text-slate-900 truncate">{category.name}</h1>
             <button
+              aria-label="Renommer"
               onClick={() => { setNameInput(category.name); setEditing(true); }}
               className="shrink-0 p-1.5 rounded-lg text-slate-300 hover:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
             >

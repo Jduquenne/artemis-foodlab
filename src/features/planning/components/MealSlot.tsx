@@ -84,7 +84,7 @@ export const MealSlot = ({
                 className={`relative w-full h-full rounded-xl border-2 transition-all overflow-hidden bg-white dark:bg-slate-100 ${borderClass} ${photoUrl && !hasRecipesPage ? 'cursor-default' : ''}`}
             >
                 {photoUrl ? (
-                    <img src={photoUrl} className="w-full h-full object-contain" alt={recipe!.name} />
+                    <img src={photoUrl} loading="lazy" decoding="async" className="w-full h-full object-contain" alt={recipe!.name} />
                 ) : (
                     <>
                         <div className="flex flex-col items-center justify-center gap-1 h-full w-full opacity-40">
@@ -101,6 +101,7 @@ export const MealSlot = ({
             {photoUrl && !isEditingPersons && !isDragging && displayPersons !== undefined && (
                 IS_TOUCH ? (
                     <button
+                        aria-label="Modifier le nombre de personnes"
                         onPointerDown={(e) => e.stopPropagation()}
                         onClick={(e) => { e.stopPropagation(); if (!isAnyEditing) onOpenPersonsEditor(); }}
                         className={`absolute top-1 right-1 z-20 flex items-center gap-0.5 text-[10px] font-black px-1.5 py-0.5 rounded-lg shadow ${isCustom ? 'bg-orange-500 text-white' : 'bg-black/30 text-white'}`}
@@ -132,6 +133,7 @@ export const MealSlot = ({
 
                     {!IS_TOUCH && (
                         <button
+                            aria-label="Modifier le nombre de personnes"
                             onPointerDown={(e) => e.stopPropagation()}
                             onClick={(e) => { e.stopPropagation(); if (!isAnyEditing) onOpenPersonsEditor(); }}
                             className="absolute top-1 right-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-slate-500 rounded-lg shadow-md border border-slate-200 hover:bg-orange-50 hover:text-orange-600 dark:hover:bg-orange-950/40 z-20 opacity-0 group-hover:opacity-100 transition-opacity"
@@ -141,6 +143,7 @@ export const MealSlot = ({
                     )}
 
                     <button
+                        aria-label="Changer le repas"
                         onPointerDown={(e) => e.stopPropagation()}
                         onClick={(e) => { e.stopPropagation(); onModify?.(); }}
                         className={`absolute bottom-1 left-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-blue-600 rounded-lg shadow-md border border-slate-200 hover:bg-blue-50 dark:hover:bg-blue-950/40 z-20 transition-opacity ${IS_TOUCH ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
@@ -149,6 +152,7 @@ export const MealSlot = ({
                     </button>
 
                     <button
+                        aria-label="Supprimer le repas"
                         onPointerDown={(e) => e.stopPropagation()}
                         onClick={(e) => { e.stopPropagation(); onDelete?.(); }}
                         className={`absolute bottom-1 right-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-red-500 rounded-lg shadow-md border border-slate-200 hover:bg-red-50 dark:hover:bg-red-950/40 z-20 transition-opacity ${IS_TOUCH ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
@@ -175,6 +179,7 @@ export const MealSlot = ({
                     />
                     <div className="flex gap-2">
                         <button
+                            aria-label="Confirmer"
                             onPointerDown={(e) => e.stopPropagation()}
                             onClick={() => onConfirmPersons(draft)}
                             className="p-2 bg-orange-500 text-white rounded-xl hover:bg-orange-600 transition-colors"
@@ -190,6 +195,7 @@ export const MealSlot = ({
                             <RotateCcw size={15} />
                         </button>
                         <button
+                            aria-label="Annuler"
                             onPointerDown={(e) => e.stopPropagation()}
                             onClick={onCancelPersons}
                             className="p-2 bg-slate-200 dark:bg-slate-300 text-slate-600 rounded-xl hover:bg-slate-300 transition-colors"

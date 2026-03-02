@@ -14,6 +14,7 @@ export const MacroFilterButton = ({ activeFilterIds, onApply }: MacroFilterButto
     return (
         <>
             <button
+                aria-label="Filtres nutritionnels"
                 onClick={() => setOpen(true)}
                 className={[
                     'flex items-center gap-1.5 px-3 py-2.5 rounded-2xl shadow-sm border font-bold text-sm transition-colors shrink-0',

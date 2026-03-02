@@ -1,9 +1,10 @@
-import { useRef, useState } from "react";
+import { lazy, Suspense, useRef, useState } from "react";
 import { Settings, Download, Upload, RefreshCw } from "lucide-react";
 import { exportData, applyImport, detectScopes, SyncPayload } from "../../../core/services/dataService";
 import { ThemeToggle } from "./ThemeToggle";
-import { SyncModal } from "../../../features/sync/SyncModal";
-import { ScopeSelectorModal } from "../../../features/sync/components/ScopeSelectorModal";
+
+const SyncModal = lazy(() => import("../../../features/sync/SyncModal").then(m => ({ default: m.SyncModal })));
+const ScopeSelectorModal = lazy(() => import("../../../features/sync/components/ScopeSelectorModal").then(m => ({ default: m.ScopeSelectorModal })));
 
 export const SettingsPopover = () => {
   const [open, setOpen] = useState(false);
@@ -81,27 +82,29 @@ export const SettingsPopover = () => {
         )}
       </div>
 
-      {syncOpen && <SyncModal onClose={() => setSyncOpen(false)} />}
+      <Suspense>
+        {syncOpen && <SyncModal onClose={() => setSyncOpen(false)} />}
 
-      {exportModalOpen && (
-        <ScopeSelectorModal
-          mode="export"
-          onConfirm={async (scope) => { await exportData(scope); setExportModalOpen(false); }}
-          onClose={() => setExportModalOpen(false)}
-        />
-      )}
+        {exportModalOpen && (
+          <ScopeSelectorModal
+            mode="export"
+            onConfirm={async (scope) => { await exportData(scope); setExportModalOpen(false); }}
+            onClose={() => setExportModalOpen(false)}
+          />
+        )}
 
-      {importModalData && (
-        <ScopeSelectorModal
-          mode="import"
-          availableScopes={detectScopes(importModalData)}
-          onConfirm={async (scope) => {
-            await applyImport(importModalData, scope);
-            window.location.reload();
-          }}
-          onClose={() => setImportModalData(null)}
-        />
-      )}
+        {importModalData && (
+          <ScopeSelectorModal
+            mode="import"
+            availableScopes={detectScopes(importModalData)}
+            onConfirm={async (scope) => {
+              await applyImport(importModalData, scope);
+              window.location.reload();
+            }}
+            onClose={() => setImportModalData(null)}
+          />
+        )}
+      </Suspense>
     </>
   );
 };

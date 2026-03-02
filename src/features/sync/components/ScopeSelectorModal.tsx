@@ -28,7 +28,7 @@ export const ScopeSelectorModal = ({ mode, availableScopes = ALL_SCOPES, onConfi
               Choisir les données
             </p>
           </div>
-          <button onClick={handleClose} className="p-2 hover:bg-black/5 rounded-full transition-colors">
+          <button aria-label="Fermer" onClick={handleClose} className="p-2 hover:bg-black/5 rounded-full transition-colors">
             <X size={20} className="text-slate-400" />
           </button>
         </div>

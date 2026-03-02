@@ -51,10 +51,10 @@ export const FreezerModule = () => {
               onKeyDown={e => { if (e.key === "Enter") handleSaveName(); if (e.key === "Escape") { setNameInput(freezerName); setEditingName(false); } }}
               className="flex-1 min-w-0 text-xl font-black bg-transparent border-b-2 border-orange-400 text-slate-900 focus:outline-none"
             />
-            <button onClick={handleSaveName} className="p-1.5 rounded-lg text-orange-500 hover:bg-orange-50 transition-colors">
+            <button aria-label="Confirmer" onClick={handleSaveName} className="p-1.5 rounded-lg text-orange-500 hover:bg-orange-50 transition-colors">
               <Check className="w-4 h-4" />
             </button>
-            <button onClick={() => { setNameInput(freezerName); setEditingName(false); }} className="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors">
+            <button aria-label="Annuler" onClick={() => { setNameInput(freezerName); setEditingName(false); }} className="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors">
               <X className="w-4 h-4" />
             </button>
           </div>
@@ -62,6 +62,7 @@ export const FreezerModule = () => {
           <div className="flex-1 flex items-center gap-2 min-w-0">
             <h1 className="text-xl sm:text-2xl font-black text-slate-900 truncate">{freezerName}</h1>
             <button
+              aria-label="Renommer"
               onClick={() => { setNameInput(freezerName); setEditingName(true); }}
               className="shrink-0 p-1.5 rounded-lg text-slate-300 hover:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
             >
@@ -116,6 +117,7 @@ export const FreezerModule = () => {
               Créer
             </button>
             <button
+              aria-label="Annuler"
               onClick={() => { setAddingCategory(false); setNewCategoryName(""); }}
               className="p-3 text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 rounded-2xl transition-colors"
             >

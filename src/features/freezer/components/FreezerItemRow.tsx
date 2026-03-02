@@ -49,6 +49,7 @@ export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowPro
           BATCH
         </span>
         <button
+          aria-label="Supprimer"
           onClick={onDelete}
           className="shrink-0 p-2.5 text-slate-300 hover:text-red-400 hover:bg-red-50 rounded-xl transition-colors"
         >
@@ -79,6 +80,7 @@ export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowPro
           </button>
           <div className="relative" ref={itemMenuRef}>
             <button
+              aria-label="Options"
               onClick={() => setItemMenuOpen(o => !o)}
               className="p-2.5 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
             >
@@ -109,6 +111,7 @@ export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowPro
             </span>
 
             <button
+              aria-label="Options du sac"
               onClick={() => setOpenBagMenuId(id => id === bag.id ? null : bag.id)}
               className="shrink-0 p-2.5 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
             >

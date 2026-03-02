@@ -21,6 +21,7 @@ export const SearchBar = ({ value, onChange, onClear }: SearchBarProps) => {
             />
             {value && (
                 <button
+                    aria-label="Effacer la recherche"
                     onClick={onClear}
                     className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-slate-400 hover:text-orange-600"
                 >

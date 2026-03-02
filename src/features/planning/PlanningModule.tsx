@@ -47,6 +47,8 @@ export const PlanningModule = () => {
 
     const [pickerSlot, setPickerSlot] = useState<{ day: string; slot: SlotId } | null>(null);
     const [activeDragId, setActiveDragId] = useState<string | null>(null);
+    const swipeStartX = useRef<number | null>(null);
+    const swipeStartY = useRef<number | null>(null);
 
     const selectedDay = searchParams.get('day') ?? todayDayName;
     const selectedDate = useMemo(() => {
@@ -90,6 +92,43 @@ export const PlanningModule = () => {
         const d = new Date(selectedDate);
         d.setDate(d.getDate() + offset * 7);
         setSelectedDate(d);
+    };
+
+    const handleSwipe = (direction: 'left' | 'right') => {
+        if (isAnyEditing || isSelectionMode) return;
+        const currentIndex = DAYS.indexOf(selectedDay);
+        if (direction === 'left') {
+            if (currentIndex < 6) {
+                setSelectedDay(DAYS[currentIndex + 1]);
+            } else {
+                const next = new Date(selectedDate);
+                next.setDate(next.getDate() + 7);
+                setSearchParams(p => { p.set('day', DAYS[0]); p.set('d', next.toISOString().slice(0, 10)); return p; }, { replace: true });
+            }
+        } else {
+            if (currentIndex > 0) {
+                setSelectedDay(DAYS[currentIndex - 1]);
+            } else {
+                const prev = new Date(selectedDate);
+                prev.setDate(prev.getDate() - 7);
+                setSearchParams(p => { p.set('day', DAYS[6]); p.set('d', prev.toISOString().slice(0, 10)); return p; }, { replace: true });
+            }
+        }
+    };
+
+    const onSwipeTouchStart = (e: React.TouchEvent) => {
+        swipeStartX.current = e.touches[0].clientX;
+        swipeStartY.current = e.touches[0].clientY;
+    };
+
+    const onSwipeTouchEnd = (e: React.TouchEvent) => {
+        if (swipeStartX.current === null || swipeStartY.current === null) return;
+        const dx = e.changedTouches[0].clientX - swipeStartX.current;
+        const dy = e.changedTouches[0].clientY - swipeStartY.current;
+        swipeStartX.current = null;
+        swipeStartY.current = null;
+        if (Math.abs(dx) < 50 || Math.abs(dy) > Math.abs(dx)) return;
+        handleSwipe(dx < 0 ? 'left' : 'right');
     };
 
     const handleDeleteMeal = async (day: string, slot: SlotId) => {
@@ -332,7 +371,7 @@ export const PlanningModule = () => {
 
                     {/* MOBILE — vue par jour */}
                     {!isSelectionMode && (
-                        <div className="sm:hidden flex flex-col gap-1.5 h-full">
+                        <div className="sm:hidden flex flex-col gap-1.5 h-full" onTouchStart={onSwipeTouchStart} onTouchEnd={onSwipeTouchEnd}>
                             {MEAL_SLOTS.map(mealType => (
                                 <div key={mealType.id} className="flex flex-col gap-0.5 min-h-0" style={{ flex: mealType.flex }}>
                                     <span className="text-[9px] font-black uppercase tracking-widest text-slate-400 px-1 shrink-0">

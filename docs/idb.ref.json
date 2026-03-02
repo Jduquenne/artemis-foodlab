@@ -1,0 +1,254 @@
+{
+  "_schema": {
+    "database": "CipeDatabase",
+    "version": 10,
+    "note": "Les créneaux de planning VIDES n'ont pas de record — leur absence dans la table = créneau libre. Les articles ménagers NON vérifiés n'ont pas de record non plus.",
+    "tables": {
+      "planning": {
+        "primaryKey": "id",
+        "indexes": ["[year+week]", "year", "week"],
+        "idFormat": "{year}-W{week}-{day}-{slot}",
+        "fields": {
+          "id":        "string  — '{year}-W{week}-{day}-{slot}'",
+          "day":       "string  — 'lundi' | 'mardi' | 'mercredi' | 'jeudi' | 'vendredi' | 'samedi' | 'dimanche'",
+          "slot":      "string  — 'breakfast' | 'lunch' | 'snack' | 'dinner'",
+          "recipeIds": "string[] — tableau d'ids recette (ex: ['wm-001']). Plusieurs = multi-repas.",
+          "year":      "number  — ex: 2026",
+          "week":      "number  — numéro de semaine ISO (1-53)",
+          "persons":   "number? — absent = utilise defaultPortions de la recette"
+        }
+      },
+      "household": {
+        "primaryKey": "id",
+        "indexes": [],
+        "fields": {
+          "id":            "string — même id que dans household-db.json (ex: 'hh-014')",
+          "lastCheckedAt": "string — timestamp ISO 8601 (ex: '2026-03-01T10:32:00.000Z')"
+        }
+      },
+      "freezerCategories": {
+        "primaryKey": "id",
+        "indexes": ["position"],
+        "fields": {
+          "id":       "string — uuid généré",
+          "name":     "string — nom affiché de la catégorie",
+          "position": "number — ordre d'affichage (0-based)",
+          "items":    "FreezerItem[] — tableau mixte de FoodFreezerItem et BatchFreezerItem",
+          "_FoodFreezerItem": {
+            "id":          "string — uuid",
+            "type":        "'food'",
+            "name":        "string — nom de l'aliment",
+            "foodId":      "string? — référence vers food-db.ref.json",
+            "bags":        "FreezerBag[]",
+            "_FreezerBag": {
+              "id":          "string — uuid",
+              "quantity":    "string — ATTENTION: actuellement string, cible = number",
+              "unit":        "string — valeur de l'enum Unit ('g', 'kg', 'portion', etc.)",
+              "preparation": "string? — ex: 'émincé', 'cuit à la vapeur'",
+              "addedDate":   "string — date ISO YYYY-MM-DD"
+            }
+          },
+          "_BatchFreezerItem": {
+            "id":         "string — uuid",
+            "type":       "'batch'",
+            "recipeId":   "string — référence vers recipes-db.ref.json",
+            "recipeName": "string — dupliqué depuis la recette (à supprimer dans type system cible)",
+            "portions":   "number",
+            "addedDate":  "string — date ISO YYYY-MM-DD"
+          }
+        }
+      }
+    }
+  },
+
+  "planning": [
+    {
+      "id":        "2026-W10-lundi-lunch",
+      "day":       "lundi",
+      "slot":      "lunch",
+      "recipeIds": ["pp-001"],
+      "year":      2026,
+      "week":      10,
+      "persons":   4
+    },
+    {
+      "id":        "2026-W10-lundi-dinner",
+      "day":       "lundi",
+      "slot":      "dinner",
+      "recipeIds": ["wm-001"],
+      "year":      2026,
+      "week":      10
+    },
+    {
+      "id":        "2026-W10-mardi-breakfast",
+      "day":       "mardi",
+      "slot":      "breakfast",
+      "recipeIds": ["cp-001"],
+      "year":      2026,
+      "week":      10,
+      "persons":   2
+    },
+    {
+      "id":        "2026-W10-mardi-lunch",
+      "day":       "mardi",
+      "slot":      "lunch",
+      "recipeIds": ["pp-001"],
+      "year":      2026,
+      "week":      10,
+      "persons":   4
+    },
+    {
+      "id":        "2026-W10-mercredi-lunch",
+      "day":       "mercredi",
+      "slot":      "lunch",
+      "recipeIds": ["wm-001", "fr-001"],
+      "year":      2026,
+      "week":      10
+    },
+    {
+      "id":        "2026-W10-mercredi-dinner",
+      "day":       "mercredi",
+      "slot":      "dinner",
+      "recipeIds": ["bs-001"],
+      "year":      2026,
+      "week":      10,
+      "persons":   3
+    },
+    {
+      "id":        "2026-W10-jeudi-breakfast",
+      "day":       "jeudi",
+      "slot":      "breakfast",
+      "recipeIds": ["cp-001"],
+      "year":      2026,
+      "week":      10,
+      "persons":   2
+    },
+    {
+      "id":        "2026-W10-vendredi-dinner",
+      "day":       "vendredi",
+      "slot":      "dinner",
+      "recipeIds": ["wm-001"],
+      "year":      2026,
+      "week":      10
+    },
+    {
+      "id":        "2026-W10-samedi-lunch",
+      "day":       "samedi",
+      "slot":      "lunch",
+      "recipeIds": ["fr-001"],
+      "year":      2026,
+      "week":      10,
+      "persons":   1
+    },
+    {
+      "id":        "2026-W10-samedi-dinner",
+      "day":       "samedi",
+      "slot":      "dinner",
+      "recipeIds": ["pp-001"],
+      "year":      2026,
+      "week":      10,
+      "persons":   4
+    }
+  ],
+
+  "household": [
+    { "id": "hh-001", "lastCheckedAt": "2026-03-02T09:15:00.000Z" },
+    { "id": "hh-003", "lastCheckedAt": "2026-03-02T09:16:00.000Z" },
+    { "id": "hh-011", "lastCheckedAt": "2026-02-26T18:40:00.000Z" },
+    { "id": "hh-014", "lastCheckedAt": "2026-03-01T11:00:00.000Z" },
+    { "id": "hh-020", "lastCheckedAt": "2026-03-03T08:30:00.000Z" },
+    { "id": "hh-024", "lastCheckedAt": "2026-02-28T10:05:00.000Z" },
+    { "id": "hh-034", "lastCheckedAt": "2026-02-23T20:00:00.000Z" },
+    { "id": "hh-036", "lastCheckedAt": "2026-02-26T20:05:00.000Z" },
+    { "id": "hh-040", "lastCheckedAt": "2026-03-03T08:31:00.000Z" }
+  ],
+
+  "freezerCategories": [
+    {
+      "id":       "cat-uuid-1234-viandes",
+      "name":     "Viandes & Poissons",
+      "position": 0,
+      "items": [
+        {
+          "id":     "item-uuid-5678-poulet",
+          "type":   "food",
+          "name":   "Escalope de poulet",
+          "foodId": "vm-002",
+          "bags": [
+            {
+              "id":        "bag-uuid-aaaa-1",
+              "quantity":  "800",
+              "unit":      "g",
+              "addedDate": "2026-02-15"
+            }
+          ]
+        },
+        {
+          "id":     "item-uuid-5679-saumon",
+          "type":   "food",
+          "name":   "Pavé de saumon",
+          "foodId": "po-001",
+          "bags": [
+            {
+              "id":          "bag-uuid-bbbb-1",
+              "quantity":    "2",
+              "unit":        "portion",
+              "preparation": "sous vide",
+              "addedDate":   "2026-02-20"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id":       "cat-uuid-2345-batch",
+      "name":     "Batch cooking",
+      "position": 1,
+      "items": [
+        {
+          "id":         "item-uuid-6789-curry",
+          "type":       "batch",
+          "recipeId":   "pp-001",
+          "recipeName": "Curry de pois chiches aux épinards",
+          "portions":   4,
+          "addedDate":  "2026-03-01"
+        },
+        {
+          "id":         "item-uuid-6790-bechamel",
+          "type":       "batch",
+          "recipeId":   "bs-001",
+          "recipeName": "Sauce béchamel maison",
+          "portions":   6,
+          "addedDate":  "2026-02-22"
+        }
+      ]
+    },
+    {
+      "id":       "cat-uuid-3456-fruits",
+      "name":     "Fruits & Légumes",
+      "position": 2,
+      "items": [
+        {
+          "id":     "item-uuid-7890-rouges",
+          "type":   "food",
+          "name":   "Fruits rouges",
+          "foodId": "su-001",
+          "bags": [
+            {
+              "id":        "bag-uuid-cccc-1",
+              "quantity":  "500",
+              "unit":      "g",
+              "addedDate": "2026-01-10"
+            },
+            {
+              "id":        "bag-uuid-cccc-2",
+              "quantity":  "300",
+              "unit":      "g",
+              "addedDate": "2026-02-28"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

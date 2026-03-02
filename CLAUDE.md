@@ -60,10 +60,11 @@ Instead, use the dedicated reference files in `docs/`:
 - `docs/data-model.puml` — PlantUML class diagram: all entities, value objects, enums, and their relationships across every domain (Recettes, Planning, Congélateur, Ménager). Start here for any structural question.
 - `docs/food-db.ref.json` — ~60 food items covering all `ShoppingCategory` values, with the correct FoodId prefix conventions (`fv-`, `vm-`, `ep-`, `fc-`, `cn-`, etc.).
 - `docs/recipes-db.ref.json` — 5 representative recipes covering all `RecipeKind` values (`dish`, `base`, `ingredient`), all asset key names, and the correct field names (`mealTypes`, `macronutrients`, `defaultPortions`, `ingredientsPhoto`, `instructionsPhoto`).
+- `docs/idb.ref.json` — snapshot of all 3 IndexedDB tables (`planning`, `household`, `freezerCategories`) with realistic data. Includes a `_schema` section documenting field names, types, id formats, and known issues (e.g. `FreezerBag.quantity` currently stored as string). Use this instead of opening Chrome DevTools.
 
-These files reflect the **target (ideal) type system**, not the current production JSON which still uses legacy field names. If analysis of the full production database is needed, the user will say so explicitly.
+`food-db.ref.json` and `recipes-db.ref.json` reflect the **target (ideal) type system**. `idb.ref.json` reflects the **current** IndexedDB schema (version 10). If analysis of the full production database is needed, the user will say so explicitly.
 
-**Maintenance rule**: whenever a type system change is confirmed and approved by the user, update `docs/data-model.puml`, `docs/food-db.ref.json`, and `docs/recipes-db.ref.json` accordingly so they always stay in sync with the agreed target model.
+**Maintenance rule**: whenever a type system change is confirmed and approved by the user, update `docs/data-model.puml`, `docs/food-db.ref.json`, `docs/recipes-db.ref.json`, and `docs/idb.ref.json` accordingly so they always stay in sync with the agreed target model.
 
 ### Routing (App.tsx)
 

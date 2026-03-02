@@ -92,6 +92,48 @@ main { animation: fadeIn 0.3s ease-out; }
     to   { opacity: 1; transform: translate(-50%, 0); }
 }
 
+@keyframes slideUpModal {
+    from { opacity: 0.5; transform: translateY(100%); }
+    to   { opacity: 1;   transform: translateY(0); }
+}
+@keyframes slideDownModal {
+    from { opacity: 1;   transform: translateY(0); }
+    to   { opacity: 0;   transform: translateY(100%); }
+}
+@keyframes scaleFadeIn {
+    from { opacity: 0; transform: scale(0.96); }
+    to   { opacity: 1; transform: scale(1); }
+}
+@keyframes scaleFadeOut {
+    from { opacity: 1; transform: scale(1); }
+    to   { opacity: 0; transform: scale(0.96); }
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideFromRight {
+    from { opacity: 0; transform: translateX(32px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideFromLeft {
+    from { opacity: 0; transform: translateX(-32px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes scalePopIn {
+    0%   { opacity: 0; transform: scale(0.82); }
+    60%  { transform: scale(1.04); }
+    100% { opacity: 1; transform: scale(1); }
+}
+@keyframes notifExit {
+    from { opacity: 1; transform: translate(-50%, 0); }
+    to   { opacity: 0; transform: translate(-50%, -130%); }
+}
+@keyframes spinOnce {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
 /* =========================================================
    UTILITIES 3D (FlipCard)
    ========================================================= */
@@ -103,4 +145,26 @@ main { animation: fadeIn 0.3s ease-out; }
         -webkit-backface-visibility: hidden;
     }
     .rotate-y-180      { transform: rotateY(180deg); }
+
+    /* ── Modal animations ─────────────────────────────── */
+    .modal-enter        { animation: slideUpModal  0.38s cubic-bezier(0.22,1,0.36,1) both; }
+    .modal-exit         { animation: slideDownModal 0.28s cubic-bezier(0.4,0,1,1)    both; }
+    .modal-center-enter { animation: scaleFadeIn   0.25s cubic-bezier(0.22,1,0.36,1) both; }
+    .modal-center-exit  { animation: scaleFadeOut  0.2s  ease-in                     both; }
+
+    /* ── List stagger ─────────────────────────────────── */
+    .animate-fade-in-up { animation: fadeInUp 0.35s ease-out both; }
+
+    /* ── Planning day slide ───────────────────────────── */
+    .animate-slide-from-right { animation: slideFromRight 0.28s cubic-bezier(0.22,1,0.36,1) both; }
+    .animate-slide-from-left  { animation: slideFromLeft  0.28s cubic-bezier(0.22,1,0.36,1) both; }
+
+    /* ── Confirm pop ──────────────────────────────────── */
+    .animate-scale-pop  { animation: scalePopIn 0.3s cubic-bezier(0.22,1,0.36,1) both; }
+
+    /* ── Notification exit ────────────────────────────── */
+    .notif-exit         { animation: notifExit  0.3s cubic-bezier(0.4,0,1,1) both; }
+
+    /* ── Reset icon ───────────────────────────────────── */
+    .animate-spin-once  { animation: spinOnce 0.5s cubic-bezier(0.4,0,0.6,1) both; }
 }

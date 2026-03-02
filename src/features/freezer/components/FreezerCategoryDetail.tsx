@@ -40,7 +40,7 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
         </button>
 
         {editing ? (
-          <div className="flex-1 flex items-center gap-2 min-w-0">
+          <div className="flex-1 flex items-center gap-2 min-w-0 animate-fade-in-up">
             <input
               autoFocus
               value={nameInput}

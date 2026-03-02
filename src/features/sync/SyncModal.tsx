@@ -45,6 +45,9 @@ export const SyncModal = ({ onClose }: SyncModalProps) => {
   const [answerQr, setAnswerQr] = useState("");
   const [progress, setProgress] = useState({ sent: 0, total: 0 });
   const [error, setError] = useState<string | null>(null);
+  const [isClosing, setIsClosing] = useState(false);
+
+  const handleClose = useCallback(() => { setIsClosing(true); setTimeout(onClose, 300); }, [onClose]);
 
   const senderRef = useRef<SenderSession | null>(null);
   const receiverRef = useRef<ReceiverSession | null>(null);
@@ -123,7 +126,7 @@ export const SyncModal = ({ onClose }: SyncModalProps) => {
 
   return (
     <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4">
-      <div className="bg-white dark:bg-slate-100 w-full max-w-sm rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden max-h-[90dvh]">
+      <div className={`bg-white dark:bg-slate-100 w-full max-w-sm rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden max-h-[90dvh] ${isClosing ? 'modal-exit sm:modal-center-exit' : 'modal-enter sm:modal-center-enter'}`}>
         <div className="p-5 border-b border-slate-200 flex justify-between items-center bg-orange-50 dark:bg-orange-950/30 shrink-0">
           <div>
             <h2 className="text-lg font-black text-slate-900">Synchronisation</h2>
@@ -131,7 +134,7 @@ export const SyncModal = ({ onClose }: SyncModalProps) => {
               {STEP_LABELS[step]}
             </p>
           </div>
-          <button onClick={onClose} className="p-2 hover:bg-black/5 rounded-full transition-colors">
+          <button onClick={handleClose} className="p-2 hover:bg-black/5 rounded-full transition-colors">
             <X size={20} className="text-slate-400" />
           </button>
         </div>

@@ -10,26 +10,27 @@ export interface MacroFilterModalProps {
 
 export const MacroFilterModal = ({ activeFilterIds, onSubmit, onClose }: MacroFilterModalProps) => {
     const [draft, setDraft] = useState<string[]>(activeFilterIds);
+    const [isClosing, setIsClosing] = useState(false);
+
+    const handleClose = () => { setIsClosing(true); setTimeout(onClose, 220); };
 
     const toggle = (id: string) => {
-        setDraft(prev =>
-            prev.includes(id) ? prev.filter(f => f !== id) : [...prev, id]
-        );
+        setDraft(prev => prev.includes(id) ? prev.filter(f => f !== id) : [...prev, id]);
     };
 
     return (
         <div
             className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-            onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+            onClick={(e) => { if (e.target === e.currentTarget) handleClose(); }}
         >
-            <div className="w-full max-w-sm bg-white dark:bg-slate-100 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+            <div className={`w-full max-w-sm bg-white dark:bg-slate-100 rounded-2xl shadow-2xl flex flex-col overflow-hidden ${isClosing ? 'modal-center-exit' : 'modal-center-enter'}`}>
 
                 <div className="flex items-center justify-between px-5 pt-5 pb-4 border-b border-slate-100">
                     <p className="text-xs font-black text-orange-600 uppercase tracking-widest">
                         Filtres nutritionnels
                     </p>
                     <button
-                        onClick={onClose}
+                        onClick={handleClose}
                         className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
                     >
                         <X className="w-4 h-4" />
@@ -59,7 +60,7 @@ export const MacroFilterModal = ({ activeFilterIds, onSubmit, onClose }: MacroFi
 
                 <div className="flex items-center justify-end px-5 pb-5 pt-2 border-t border-slate-100 gap-3">
                     <button
-                        onClick={onClose}
+                        onClick={handleClose}
                         className="px-4 py-2 rounded-xl text-sm font-semibold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
                     >
                         Annuler

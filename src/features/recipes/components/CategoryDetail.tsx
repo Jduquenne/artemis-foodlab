@@ -87,15 +87,16 @@ export const CategoryDetail = () => {
                     className="grid gap-3 pb-2"
                     style={{ gridTemplateColumns: 'repeat(auto-fill, 5cm)', gridAutoRows: '5.5cm', justifyContent: 'center' }}
                 >
-                    {filteredRecipes.map(recipe => (
-                        <FlipCard
-                            key={recipe.id}
-                            name={recipe.name}
-                            frontImage={recipe.photoUrl}
-                            backImage={recipe.ingredientsUrl}
-                            recipeUrl={recipe.recipeUrl}
-                            onClick={() => navigate(`/recipes/detail/${recipe.id}`)}
-                        />
+                    {filteredRecipes.map((recipe, i) => (
+                        <div key={recipe.id} className="h-full animate-fade-in-up" style={{ animationDelay: `${i * 25}ms` }}>
+                            <FlipCard
+                                name={recipe.name}
+                                frontImage={recipe.photoUrl}
+                                backImage={recipe.ingredientsUrl}
+                                recipeUrl={recipe.recipeUrl}
+                                onClick={() => navigate(`/recipes/detail/${recipe.id}`)}
+                            />
+                        </div>
                     ))}
                 </div>
             </div>

@@ -47,6 +47,8 @@ export const PlanningModule = () => {
 
     const [pickerSlot, setPickerSlot] = useState<{ day: string; slot: SlotId } | null>(null);
     const [activeDragId, setActiveDragId] = useState<string | null>(null);
+    const [slideKey, setSlideKey] = useState(0);
+    const [slideDir, setSlideDir] = useState<'left' | 'right'>('left');
     const swipeStartX = useRef<number | null>(null);
     const swipeStartY = useRef<number | null>(null);
 
@@ -96,6 +98,8 @@ export const PlanningModule = () => {
 
     const handleSwipe = (direction: 'left' | 'right') => {
         if (isAnyEditing || isSelectionMode) return;
+        setSlideDir(direction);
+        setSlideKey(k => k + 1);
         const currentIndex = DAYS.indexOf(selectedDay);
         if (direction === 'left') {
             if (currentIndex < 6) {
@@ -371,7 +375,7 @@ export const PlanningModule = () => {
 
                     {/* MOBILE — vue par jour */}
                     {!isSelectionMode && (
-                        <div className="sm:hidden flex flex-col gap-1.5 h-full" onTouchStart={onSwipeTouchStart} onTouchEnd={onSwipeTouchEnd}>
+                        <div key={slideKey} className={`sm:hidden flex flex-col gap-1.5 h-full ${slideKey > 0 ? (slideDir === 'left' ? 'animate-slide-from-right' : 'animate-slide-from-left') : ''}`} onTouchStart={onSwipeTouchStart} onTouchEnd={onSwipeTouchEnd}>
                             {MEAL_SLOTS.map(mealType => (
                                 <div key={mealType.id} className="flex flex-col gap-0.5 min-h-0" style={{ flex: mealType.flex }}>
                                     <span className="text-[9px] font-black uppercase tracking-widest text-slate-400 px-1 shrink-0">

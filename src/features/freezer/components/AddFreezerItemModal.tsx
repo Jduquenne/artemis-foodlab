@@ -25,6 +25,7 @@ interface AddFreezerItemModalProps {
 export const AddFreezerItemModal = ({ categoryId, onClose }: AddFreezerItemModalProps) => {
   const [tab, setTab] = useState<"food" | "batch">("food");
   const [saving, setSaving] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
 
   const [foodName, setFoodName] = useState("");
   const [foodId, setFoodId] = useState<string | undefined>(undefined);
@@ -35,6 +36,8 @@ export const AddFreezerItemModal = ({ categoryId, onClose }: AddFreezerItemModal
   const [recipeSearch, setRecipeSearch] = useState("");
   const [selectedRecipeId, setSelectedRecipeId] = useState<string | null>(null);
   const [portions, setPortions] = useState(1);
+
+  const handleClose = () => { setIsClosing(true); setTimeout(onClose, 300); };
 
   const recipes = useMemo(() => {
     const data = recipesDb as unknown as Record<string, RecipeDetails>;
@@ -86,15 +89,15 @@ export const AddFreezerItemModal = ({ categoryId, onClose }: AddFreezerItemModal
       await addItemToCategory(categoryId, item);
     }
     setSaving(false);
-    onClose();
+    handleClose();
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 px-0 sm:px-4">
-      <div className="w-full sm:max-w-md bg-slate-50 rounded-t-3xl sm:rounded-3xl overflow-hidden flex flex-col max-h-[90dvh]">
+      <div className={`w-full sm:max-w-md bg-slate-50 rounded-t-3xl sm:rounded-3xl overflow-hidden flex flex-col max-h-[90dvh] ${isClosing ? 'modal-exit sm:modal-center-exit' : 'modal-enter sm:modal-center-enter'}`}>
         <div className="flex items-center justify-between px-5 pt-5 pb-4 shrink-0">
           <h2 className="text-base font-black text-slate-900">Ajouter à la catégorie</h2>
-          <button onClick={onClose} className="p-2 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors">
+          <button onClick={handleClose} className="p-2 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>

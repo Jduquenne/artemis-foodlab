@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { X, Bell } from "lucide-react";
 import { useNotificationStore, AppNotification } from "../../store/useNotificationStore";
 
@@ -16,6 +16,15 @@ const NotificationCard = ({ notification }: NotificationCardProps) => {
   const dismiss = useNotificationStore((s) => s.dismiss);
   const barRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
+  const [isLeaving, setIsLeaving] = useState(false);
+  const leavingRef = useRef(false);
+
+  const handleDismiss = () => {
+    if (leavingRef.current) return;
+    leavingRef.current = true;
+    setIsLeaving(true);
+    setTimeout(dismiss, 280);
+  };
 
   useEffect(() => {
     const start = Date.now();
@@ -27,7 +36,7 @@ const NotificationCard = ({ notification }: NotificationCardProps) => {
       if (pct > 0) {
         rafRef.current = requestAnimationFrame(tick);
       } else {
-        dismiss();
+        handleDismiss();
       }
     };
 
@@ -37,13 +46,13 @@ const NotificationCard = ({ notification }: NotificationCardProps) => {
 
   const handleAction = (onClick: () => void) => {
     onClick();
-    dismiss();
+    handleDismiss();
   };
 
   return (
     <div
-      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[min(460px,calc(100vw-2rem))] bg-white dark:bg-slate-100 rounded-2xl shadow-2xl border border-slate-200 overflow-hidden"
-      style={{ animation: "slideDown 0.35s cubic-bezier(0.22,1,0.36,1) forwards" }}
+      className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[min(460px,calc(100vw-2rem))] bg-white dark:bg-slate-100 rounded-2xl shadow-2xl border border-slate-200 overflow-hidden ${isLeaving ? 'notif-exit' : ''}`}
+      style={{ animation: isLeaving ? undefined : "slideDown 0.35s cubic-bezier(0.22,1,0.36,1) forwards" }}
     >
       <div className="flex items-start gap-3 px-4 pt-4 pb-3">
         <Bell className="w-5 h-5 text-orange-500 shrink-0 mt-0.5" />
@@ -51,7 +60,7 @@ const NotificationCard = ({ notification }: NotificationCardProps) => {
           {notification.message}
         </p>
         <button
-          onClick={dismiss}
+          onClick={handleDismiss}
           className="shrink-0 p-0.5 text-slate-400 hover:text-slate-600 transition-colors rounded-lg"
         >
           <X className="w-4 h-4" />

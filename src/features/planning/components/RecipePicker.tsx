@@ -13,21 +13,23 @@ interface RecipePickerProps {
 export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = [] }: RecipePickerProps) => {
     const [query, setQuery] = useState('');
     const [pendingSelection, setPendingSelection] = useState<SearchRecipeResult | null>(null);
+    const [isClosing, setIsClosing] = useState(false);
     const results = useSearch(query) as SearchRecipeResult[];
+
+    const handleClose = () => { setIsClosing(true); setTimeout(onClose, 300); };
 
     return (
         <div className="fixed inset-0 z-100 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4">
-            <div className="bg-white dark:bg-slate-100 w-full max-w-2xl h-[80vh] rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden">
+            <div className={`bg-white dark:bg-slate-100 w-full max-w-2xl h-[80vh] rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden ${isClosing ? 'modal-exit sm:modal-center-exit' : 'modal-enter sm:modal-center-enter'}`}>
                 {pendingSelection && (
                     <div className="absolute inset-0 z-110 bg-black/50 backdrop-blur-md flex items-center justify-center p-6">
-                        <div className="bg-white dark:bg-slate-200 rounded-3xl p-6 shadow-2xl w-full max-w-sm text-center space-y-6 scale-up-center">
+                        <div className="bg-white dark:bg-slate-200 rounded-3xl p-6 shadow-2xl w-full max-w-sm text-center space-y-6 animate-scale-pop">
                             <div className="space-y-2">
                                 <p className="text-slate-500 font-bold uppercase text-xs tracking-widest">Confirmer l'ajout</p>
                                 <h3 className="text-xl font-black text-slate-900">
                                     Ajouter "{pendingSelection.name}" au {slotName} ?
                                 </h3>
                             </div>
-
                             <div className="flex gap-3">
                                 <button
                                     onClick={() => setPendingSelection(null)}
@@ -46,23 +48,20 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
                     </div>
                 )}
 
-                {/* Header */}
                 <div className="p-6 border-b border-slate-200 flex justify-between items-center bg-orange-50 dark:bg-orange-950/30">
                     <div>
                         <h2 className="text-xl font-black text-slate-900">Ajouter un repas</h2>
                         <p className="text-orange-600 dark:text-orange-400 font-bold uppercase text-xs tracking-widest">{slotName}</p>
                     </div>
-                    <button onClick={onClose} className="p-2 hover:bg-white/60 dark:hover:bg-slate-200/40 rounded-full transition-all">
+                    <button onClick={handleClose} className="p-2 hover:bg-white/60 dark:hover:bg-slate-200/40 rounded-full transition-all">
                         <X size={24} className="text-slate-400" />
                     </button>
                 </div>
 
-                {/* Search */}
                 <div className="p-4 bg-white dark:bg-slate-100">
                     <SearchBar value={query} onChange={setQuery} onClear={() => setQuery('')} />
                 </div>
 
-                {/* Results List */}
                 <div className="flex-1 overflow-y-auto p-4 space-y-3">
                     {results.length > 0 ? (
                         results.map((recipe) => {

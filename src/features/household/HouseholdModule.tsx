@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { RotateCcw } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { HouseholdItem, HouseholdCategory } from '../../core/domain/types';
@@ -19,6 +19,7 @@ const allItems = householdDb as HouseholdItem[];
 
 export const HouseholdModule = () => {
     const records = useLiveQuery(() => db.household.toArray(), []);
+    const [spinning, setSpinning] = useState(false);
 
     const checkedIds = useMemo(() => {
         const set = new Set<string>();
@@ -31,7 +32,9 @@ export const HouseholdModule = () => {
     };
 
     const handleReset = async () => {
+        setSpinning(true);
         await db.household.clear();
+        setTimeout(() => setSpinning(false), 600);
     };
 
     const uncheckedCount = allItems.length - checkedIds.size;
@@ -59,21 +62,22 @@ export const HouseholdModule = () => {
                     title="Réinitialiser toutes les vérifications"
                     className="flex items-center gap-2 bg-white dark:bg-slate-100 border border-slate-200 px-3 py-2 rounded-xl text-sm font-bold text-slate-500 hover:text-orange-600 hover:border-orange-300 transition-colors shrink-0"
                 >
-                    <RotateCcw className="w-4 h-4" />
+                    <RotateCcw className={`w-4 h-4 ${spinning ? 'animate-spin-once' : ''}`} />
                     <span className="hidden sm:inline">Tout réinitialiser</span>
                 </button>
             </div>
 
             <div className="flex-1 min-h-0 overflow-y-auto pr-1" onScroll={markScrolling}>
                 <div className="columns-1 tablet:columns-2 lg:columns-3 gap-4 pb-4">
-                    {grouped.map(group => (
-                        <HouseholdCategoryCard
-                            key={group.label}
-                            label={group.label}
-                            items={group.items}
-                            checkedIds={checkedIds}
-                            onVerify={handleVerify}
-                        />
+                    {grouped.map((group, i) => (
+                        <div key={group.label} className="animate-fade-in-up break-inside-avoid" style={{ animationDelay: `${i * 60}ms` }}>
+                            <HouseholdCategoryCard
+                                label={group.label}
+                                items={group.items}
+                                checkedIds={checkedIds}
+                                onVerify={handleVerify}
+                            />
+                        </div>
                     ))}
                 </div>
             </div>

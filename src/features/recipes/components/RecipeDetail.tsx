@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { RecipeDetails } from '../../../core/domain/types';
@@ -6,20 +7,25 @@ import recipesDb from '../../../core/data/recipes-db.json';
 export const RecipeDetail = () => {
     const { recipeId } = useParams();
     const navigate = useNavigate();
+    const [isLeaving, setIsLeaving] = useState(false);
+
     const data = recipesDb as unknown as Record<string, RecipeDetails>;
     const recipe = recipeId ? data[recipeId] : undefined;
     const recipeUrl = recipe?.assets?.recipes?.url;
 
-    if (!recipe || !recipeUrl) {
-        return null;
-    }
+    if (!recipe || !recipeUrl) return null;
+
+    const handleBack = () => {
+        setIsLeaving(true);
+        setTimeout(() => navigate(-1), 280);
+    };
 
     return (
-        <div className="fixed inset-0 z-50 bg-slate-50 flex flex-col p-4 md:p-6">
+        <div className={`fixed inset-0 z-50 bg-slate-50 flex flex-col p-4 md:p-6 ${isLeaving ? 'modal-center-exit' : 'modal-center-enter'}`}>
 
             <div className="flex items-center gap-3 shrink-0 mb-4">
                 <button
-                    onClick={() => navigate(-1)}
+                    onClick={handleBack}
                     className="p-2 rounded-xl text-slate-400 hover:text-orange-600 hover:bg-orange-50 transition-colors shrink-0"
                 >
                     <ArrowLeft className="w-5 h-5" />

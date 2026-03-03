@@ -5,13 +5,6 @@
     "categoryId": "white-meat",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
-    "macronutrients": {
-      "kcal": 480,
-      "proteins": 58,
-      "lipids": 26,
-      "carbohydrates": 2,
-      "fibers": 0.4
-    },
     "defaultPortions": 4,
     "ingredients": [
       {
@@ -88,13 +81,6 @@
     "categoryId": "cereal-products",
     "mealTypes": ["breakfast"],
     "kind": "dish",
-    "macronutrients": {
-      "kcal": 342,
-      "proteins": 10,
-      "lipids": 9,
-      "carbohydrates": 58,
-      "fibers": 8
-    },
     "defaultPortions": 2,
     "ingredients": [
       {
@@ -166,13 +152,6 @@
     "categoryId": "bases",
     "mealTypes": [],
     "kind": "base",
-    "macronutrients": {
-      "kcal": 148,
-      "proteins": 4,
-      "lipids": 9,
-      "carbohydrates": 12,
-      "fibers": 0.2
-    },
     "defaultPortions": 4,
     "ingredients": [
       {
@@ -230,13 +209,6 @@
     "categoryId": "fruits",
     "mealTypes": ["breakfast", "lunch", "snack"],
     "kind": "ingredient",
-    "macronutrients": {
-      "kcal": 160,
-      "proteins": 2,
-      "lipids": 15,
-      "carbohydrates": 9,
-      "fibers": 6.7
-    },
     "defaultPortions": 1,
     "ingredients": [
       {
@@ -260,13 +232,6 @@
     "categoryId": "plant-proteins",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
-    "macronutrients": {
-      "kcal": 338,
-      "proteins": 14,
-      "lipids": 13,
-      "carbohydrates": 42,
-      "fibers": 11
-    },
     "defaultPortions": 4,
     "ingredients": [
       {

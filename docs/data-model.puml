@@ -118,10 +118,12 @@ package "Énumérations" as ENUMS #E8E0D2 {
 package "Recettes — JSON statique" as RECIPES #FFF4ED {
 
   class Food <<référentiel>> {
-    + id        : FoodId
+    + id           : FoodId
     ..
-    + name      : string
-    + category  : ShoppingCategory
+    + name         : string
+    + category     : ShoppingCategory
+    + unitWeight?  : number
+    + isFreezable? : boolean
   }
 
   class RecipeCategory <<référentiel>> {
@@ -167,11 +169,17 @@ package "Recettes — JSON statique" as RECIPES #FFF4ED {
     + batchCooking     : boolean
   }
 
-  Recipe          "1" *-right- "1"    Macronutrients   : macronutrients
+  Food            "1" *-right- "1"    Macronutrients   : macros
   Recipe          "1" *-right- "1"    RecipeAssets     : assets
   Recipe          "1" *-down-  "1..*" RecipeIngredient : ingredients
   Recipe          "N" -up->    "1"    RecipeCategory   : categoryId
   RecipeIngredient "N" -right-> "0..1" Food            : foodId
+
+  note bottom of Recipe
+    macronutrients calculés au runtime
+    à partir des Food.macros (par 100g).
+    Non persistés dans recipes-db.json.
+  end note
 }
 
 ' ═══════════════════════════════════════════════════════════════

@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { SearchBar } from '../../../shared/components/ui/SearchBar';
-import { SearchRecipeResult, useSearch } from '../../../shared/hooks/useSearch';
-import { Check, X } from 'lucide-react';
+import { SearchRecipeResult, useSearchMeals } from '../../../shared/hooks/useSearch';
+import { Check, X, TreePine } from 'lucide-react';
+import outdoorDb from '../../../core/data/outdoor-db.json';
 
 interface RecipePickerProps {
     onSelect: (recipe: SearchRecipeResult) => void;
@@ -10,11 +11,19 @@ interface RecipePickerProps {
     existingRecipeIds?: string[];
 }
 
+type OutdoorEntry = { id: string; name: string; assets?: { photo?: { url: string } } };
+const outdoorData = outdoorDb as unknown as Record<string, OutdoorEntry>;
+
 export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = [] }: RecipePickerProps) => {
     const [query, setQuery] = useState('');
     const [pendingSelection, setPendingSelection] = useState<SearchRecipeResult | null>(null);
     const [isClosing, setIsClosing] = useState(false);
-    const results = useSearch(query) as SearchRecipeResult[];
+    const results = useSearchMeals(query);
+
+    const outdoorResults = useMemo(() => {
+        const q = query.toLowerCase();
+        return Object.values(outdoorData).filter(e => !q || e.name.toLowerCase().includes(q));
+    }, [query]);
 
     const handleClose = () => { setIsClosing(true); setTimeout(onClose, 300); };
 
@@ -98,6 +107,61 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
                         <p className="text-center text-slate-400 mt-10 italic">
                             {query.length < 1 ? "Tapez le nom ou le numéro d'un plat..." : "Aucun plat trouvé."}
                         </p>
+                    )}
+
+                    {outdoorResults.length > 0 && (
+                        <div className="pt-2">
+                            <p className="text-xs font-bold uppercase tracking-widest text-slate-400 px-1 pb-2 flex items-center gap-1.5">
+                                <TreePine size={12} />
+                                Extérieur
+                            </p>
+                            <div className="space-y-2">
+                                {outdoorResults.map((entry) => {
+                                    const alreadyAdded = existingRecipeIds.includes(entry.id);
+                                    const result: SearchRecipeResult = {
+                                        id: entry.id,
+                                        recipeId: entry.id,
+                                        name: entry.name,
+                                        photoUrl: entry.assets?.photo?.url ?? '',
+                                        ingredientsUrl: '',
+                                        matchedIngredients: [],
+                                    };
+                                    return (
+                                        <button
+                                            key={entry.id}
+                                            disabled={alreadyAdded}
+                                            onClick={() => onSelect(result)}
+                                            className={`w-full flex items-center gap-4 p-3 rounded-2xl border transition-all group text-left ${
+                                                alreadyAdded
+                                                    ? 'opacity-40 cursor-not-allowed border-slate-200'
+                                                    : 'border-slate-200 hover:border-rose-200 hover:bg-rose-50 dark:hover:bg-rose-950/20'
+                                            }`}
+                                        >
+                                            {entry.assets?.photo?.url ? (
+                                                <img src={entry.assets.photo.url} loading="lazy" decoding="async" className="w-16 h-16 rounded-xl object-cover shadow-sm" alt={entry.name} />
+                                            ) : (
+                                                <div className="w-16 h-16 rounded-xl bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center">
+                                                    <TreePine size={24} className="text-rose-400" />
+                                                </div>
+                                            )}
+                                            <div className="flex-1">
+                                                <p className="font-black text-slate-800">{entry.name}</p>
+                                                <p className="text-xs text-rose-400 uppercase font-bold">Extérieur</p>
+                                            </div>
+                                            {alreadyAdded ? (
+                                                <div className="bg-slate-200 dark:bg-slate-300 text-slate-500 p-2 rounded-full">
+                                                    <Check size={20} />
+                                                </div>
+                                            ) : (
+                                                <div className="opacity-0 group-hover:opacity-100 bg-rose-500 text-white p-2 rounded-full transition-opacity">
+                                                    <Check size={20} />
+                                                </div>
+                                            )}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </div>
                     )}
                 </div>
             </div>

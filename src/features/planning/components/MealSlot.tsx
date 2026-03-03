@@ -1,8 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import { Plus, RefreshCw, Trash2, GripVertical, Users, Check, X, RotateCcw } from 'lucide-react';
 import { useDraggable, useDroppable } from '@dnd-kit/core';
-import { RecipeDetails } from '../../../core/domain/types';
-import recipesDb from '../../../core/data/recipes-db.json';
+import { plannableDb } from '../../../core/utils/plannableDb';
 import { IS_TOUCH } from '../../../shared/utils/deviceUtils';
 
 interface MealSlotProps {
@@ -28,12 +27,12 @@ export const MealSlot = ({
     onNavigate, onOpenPicker, onModify, onDelete,
     onOpenPersonsEditor, onConfirmPersons, onCancelPersons,
 }: MealSlotProps) => {
-    const data = recipesDb as unknown as Record<string, RecipeDetails>;
+    const data = plannableDb;
     const firstId = recipeIds[0];
     const recipe = firstId ? data[firstId] : undefined;
     const photoUrl = recipe?.assets?.photo?.url;
-    const hasRecipesPage = Boolean(recipe?.assets?.recipes?.url);
-    const defaultPortion = recipe?.portion;
+    const hasRecipesPage = Boolean(recipe?.assets?.instructionsPhoto?.url);
+    const defaultPortion = recipe?.defaultPortions;
 
     const [draft, setDraft] = useState<number>(persons ?? defaultPortion ?? 2);
     const inputRef = useRef<HTMLInputElement>(null);

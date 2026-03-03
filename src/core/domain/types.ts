@@ -1,21 +1,14 @@
 export enum Unit {
   NONE = "",
   C = "c",
-  CC = "cc",
-  CL = "cl",
-  LEAF = "feuille",
+  FEUILLE = "feuille",
   G = "g",
   KG = "kg",
-  L = "l",
-  LADLE = "louche",
   ML = "ml",
-  MEDIUM = "moyenne",
-  PART = "part",
-  SMALL = "petite",
+  PIECE = "pièce",
   PORTION = "portion",
-  PACKET = "sachet",
-  THIRD = "tiers",
-  SLICE = "tranche",
+  SACHET = "sachet",
+  TRANCHE = "tranche",
 }
 
 export enum IngredientCategory {
@@ -32,7 +25,7 @@ export enum IngredientCategory {
   DELI = "Charcuterie",
   CANNED = "Conserves",
   FISH = "Poisson",
-  NON_PURCHASE = "Hors achats",
+  NON_PURCHASE = "Hors achat",
   FROZEN = "Surgelés",
   INTERNET = "Internet",
   UNKNOWN = "Inconnu", // Pratique pour votre script de debug !
@@ -59,7 +52,7 @@ export interface Food {
 export interface Ingredient {
   id: string;
   name: string;
-  quantity: string;
+  quantity: number | null;
   unit: Unit;
   category: IngredientCategory;
   foodId?: string;
@@ -75,8 +68,10 @@ export interface Macronutrients {
 }
 
 export enum MealType {
-  MEAL = "meal",
-  SIDE = "side",
+  BREAKFAST = "breakfast",
+  LUNCH = "lunch",
+  DINNER = "dinner",
+  SNACK = "snack",
 }
 
 export enum RecipeKind {
@@ -92,12 +87,14 @@ export interface RecipeAsset {
 export interface RecipeDetails {
   name: string;
   categoryId: string;
-  mealType: MealType[];
+  mealTypes: MealType[];
   kind: RecipeKind;
   macronutriment: Macronutrients;
-  portion: number;
+  defaultPortions: number;
   ingredients: Ingredient[];
-  assets: Partial<Record<"photo" | "ingredients" | "recipes", RecipeAsset>>;
+  assets: Partial<
+    Record<"photo" | "ingredientsPhoto" | "instructionsPhoto", RecipeAsset>
+  >;
   batchCooking?: boolean;
 }
 
@@ -111,7 +108,7 @@ export enum HouseholdCategory {
   HYGIENE = "Hygiène",
   MAINTENANCE = "Entretien",
   PHARMACY = "Pharmacie",
-  PANTRY = "Garde-manger",
+  PANTRY = "Garde manger",
   PETS = "Animaux",
 }
 

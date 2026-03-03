@@ -25,8 +25,8 @@ export const CategoryDetail = () => {
                 id: recipeId,
                 name: recipe.name,
                 photoUrl: recipe.assets.photo!.url,
-                ingredientsUrl: recipe.assets.ingredients?.url ?? '',
-                recipeUrl: recipe.assets.recipes?.url ?? '',
+                ingredientsUrl: recipe.assets.ingredientsPhoto?.url ?? '',
+                recipeUrl: recipe.assets.instructionsPhoto?.url ?? '',
             }));
     }, [categoryId]);
 

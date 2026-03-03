@@ -4,7 +4,7 @@ import { X, Search } from 'lucide-react';
 import { SearchBar } from '../../shared/components/ui/SearchBar';
 import { CategoryCard } from '../../shared/components/ui/CategoryCard';
 import { FlipCard } from './components/FlipCard';
-import { useSearch } from '../../shared/hooks/useSearch';
+import { useSearchRecipes } from '../../shared/hooks/useSearch';
 import { CATEGORIES } from '../../core/domain/categories';
 import { markScrolling } from '../../shared/utils/scrollGuard';
 import { MacroFilterButton } from './components/MacroFilterButton';
@@ -22,7 +22,7 @@ export const RecipeModule = () => {
 
     const isSearchActive = isSearchOpen || searchQuery.length > 0;
     const showResults = searchQuery.length >= 1 || activeFilterIds.length > 0;
-    const baseResults = useSearch(showResults ? searchQuery : null);
+    const baseResults = useSearchRecipes(showResults ? searchQuery : null);
 
     const filteredResults = useMemo(() => {
         if (activeFilterIds.length === 0) return baseResults;

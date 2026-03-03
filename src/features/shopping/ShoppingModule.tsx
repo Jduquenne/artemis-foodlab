@@ -3,10 +3,11 @@ import { ShoppingCart, CalendarDays } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useNavigate } from 'react-router-dom';
 import { IngredientCategory, ShoppingDay } from '../../core/domain/types';
-import { getShoppingListForDays, ConsolidatedIngredient } from '../../core/utils/shoppingLogic';
+import { getShoppingListForDays, ConsolidatedIngredient, IngredientSource } from '../../core/utils/shoppingLogic';
 import { markScrolling } from '../../shared/utils/scrollGuard';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { ShoppingCategoryCard } from './components/ShoppingCategoryCard';
+import { SourcesModal } from './components/SourcesModal';
 
 const CATEGORY_ORDER: IngredientCategory[] = [
     IngredientCategory.FRUIT_VEGETABLE,
@@ -38,6 +39,7 @@ export const ShoppingModule = () => {
     const periodKey = useMemo(() => getPeriodKey(shoppingDays), [shoppingDays]);
 
     const [viewMode, setViewMode] = useState<'all' | 'missing'>('all');
+    const [activeSources, setActiveSources] = useState<IngredientSource[] | null>(null);
 
     const [checked, setChecked] = useState<Set<string>>(() => {
         try {
@@ -121,6 +123,7 @@ export const ShoppingModule = () => {
     }, [shoppingDays]);
 
     return (
+        <>
         <div className="h-full flex flex-col gap-4 overflow-hidden">
             <div className="flex justify-between items-start shrink-0">
                 <div>
@@ -206,6 +209,7 @@ export const ShoppingModule = () => {
                                     stocks={stocks}
                                     onToggle={toggleItem}
                                     onSetStock={setStock}
+                                    onShowSources={setActiveSources}
                                 />
                             </div>
                         ))}
@@ -213,5 +217,10 @@ export const ShoppingModule = () => {
                 )}
             </div>
         </div>
+
+        {activeSources && (
+            <SourcesModal sources={activeSources} onClose={() => setActiveSources(null)} />
+        )}
+        </>
     );
 };

@@ -1,12 +1,11 @@
-import { RecipeDetails } from '../../../core/domain/types';
-import recipesDb from '../../../core/data/recipes-db.json';
+import { plannableDb } from '../../../core/utils/plannableDb';
 
 export interface MealDragOverlayProps {
     recipeId: string;
 }
 
 export const MealDragOverlay = ({ recipeId }: MealDragOverlayProps) => {
-    const data = recipesDb as unknown as Record<string, RecipeDetails>;
+    const data = plannableDb;
     const recipe = data[recipeId];
     const photoUrl = recipe?.assets?.photo?.url;
 

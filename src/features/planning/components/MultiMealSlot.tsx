@@ -1,9 +1,8 @@
 import { Plus, X, GripVertical } from 'lucide-react';
 import { useDraggable, useDroppable } from '@dnd-kit/core';
-import { RecipeDetails } from '../../../core/domain/types';
-import recipesDb from '../../../core/data/recipes-db.json';
+import { plannableDb } from '../../../core/utils/plannableDb';
 import { IS_TOUCH } from '../../../shared/utils/deviceUtils';
-const data = recipesDb as unknown as Record<string, RecipeDetails>;
+const data = plannableDb;
 
 interface MultiMealSlotProps {
     label: string;
@@ -26,7 +25,7 @@ const RecipeCell = ({
 }) => {
     const recipe = data[recipeId];
     const photoUrl = recipe?.assets?.photo?.url;
-    const hasRecipesPage = Boolean(recipe?.assets?.recipes?.url);
+    const hasRecipesPage = Boolean(recipe?.assets?.instructionsPhoto?.url);
 
     return (
         <div className="relative group/cell w-full h-full min-h-0 flex-1 min-w-0">
@@ -59,7 +58,7 @@ export const MultiMealSlot = ({
 }: MultiMealSlotProps) => {
     const firstRecipe = recipeIds.length === 1 ? data[recipeIds[0]] : undefined;
     const singlePhotoUrl = firstRecipe?.assets?.photo?.url;
-    const singleHasRecipesPage = Boolean(firstRecipe?.assets?.recipes?.url);
+    const singleHasRecipesPage = Boolean(firstRecipe?.assets?.instructionsPhoto?.url);
 
     const { setNodeRef: setDropRef, isOver } = useDroppable({ id: slotId });
     const { setNodeRef: setDragRef, listeners, attributes, isDragging } = useDraggable({

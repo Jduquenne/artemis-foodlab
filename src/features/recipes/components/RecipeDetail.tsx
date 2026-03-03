@@ -11,7 +11,7 @@ export const RecipeDetail = () => {
 
     const data = recipesDb as unknown as Record<string, RecipeDetails>;
     const recipe = recipeId ? data[recipeId] : undefined;
-    const recipeUrl = recipe?.assets?.recipes?.url;
+    const recipeUrl = recipe?.assets?.instructionsPhoto?.url;
 
     if (!recipe || !recipeUrl) return null;
 

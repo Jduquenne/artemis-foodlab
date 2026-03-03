@@ -42,13 +42,12 @@ async function aggregateSlots(slots: MealSlot[]): Promise<ConsolidatedIngredient
       if (!details) continue;
 
       const recipeName = cleanRecipeName(details.name);
-      const scaleFactor = slot.persons !== undefined && details.portion > 0
-        ? slot.persons / details.portion
+      const scaleFactor = slot.persons !== undefined && details.defaultPortions > 0
+        ? slot.persons / details.defaultPortions
         : 1;
 
       for (const ing of details.ingredients) {
-        const parsed = parseFloat(ing.quantity);
-        const baseQty = isNaN(parsed) ? 0 : parsed;
+        const baseQty = ing.quantity ?? 0;
         const qty = baseQty * scaleFactor;
         const key = `${ing.name.toLowerCase()}-${ing.unit}`;
 

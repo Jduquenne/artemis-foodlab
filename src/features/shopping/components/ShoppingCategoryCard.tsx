@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { CheckCircle2, Circle } from 'lucide-react';
 import { ConsolidatedIngredient } from '../../../core/utils/shoppingLogic';
 import { IngredientTooltip } from './IngredientTooltip';
+import { IngredientSource } from '../../../core/utils/shoppingLogic';
 import { pluralizeUnit } from '../../../core/utils/unitUtils';
 
 export interface ShoppingCategoryCardProps {
@@ -11,9 +12,10 @@ export interface ShoppingCategoryCardProps {
     stocks: Record<string, number>;
     onToggle: (key: string) => void;
     onSetStock: (key: string, value: number) => void;
+    onShowSources: (sources: IngredientSource[]) => void;
 }
 
-export const ShoppingCategoryCard = ({ label, items, checked, stocks, onToggle, onSetStock }: ShoppingCategoryCardProps) => {
+export const ShoppingCategoryCard = ({ label, items, checked, stocks, onToggle, onSetStock, onShowSources }: ShoppingCategoryCardProps) => {
     const checkedCount = items.filter(i => checked.has(i.key)).length;
     const [editingKey, setEditingKey] = useState<string | null>(null);
     const [editValue, setEditValue] = useState('');
@@ -120,7 +122,7 @@ export const ShoppingCategoryCard = ({ label, items, checked, stocks, onToggle, 
                                         </button>
                                     </>
                                 )}
-                                <IngredientTooltip sources={item.sources} />
+                                <IngredientTooltip sources={item.sources} onOpen={onShowSources} />
                             </div>
                         </div>
                     );

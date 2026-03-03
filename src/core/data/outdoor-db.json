@@ -1,0 +1,92 @@
+{
+  "outdoor-001": {
+    "id": "outdoor-001",
+    "name": "Fête",
+    "categoryId": "outdoor",
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/outdoor/photo/OUTDOOR_01_féte_Photo.webp"
+      }
+    }
+  },
+  "outdoor-002": {
+    "id": "outdoor-002",
+    "name": "Friterie",
+    "categoryId": "outdoor",
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/outdoor/photo/OUTDOOR_02_friterie_Photo.webp"
+      }
+    }
+  },
+  "outdoor-003": {
+    "id": "outdoor-003",
+    "name": "Guesnain",
+    "categoryId": "outdoor",
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/outdoor/photo/OUTDOOR_03_guesnain_Photo.webp"
+      }
+    }
+  },
+  "outdoor-004": {
+    "id": "outdoor-004",
+    "name": "Hazebrouck",
+    "categoryId": "outdoor",
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/outdoor/photo/OUTDOOR_04_hazebrouck_Photo.webp"
+      }
+    }
+  },
+  "outdoor-005": {
+    "id": "outdoor-005",
+    "name": "Merris",
+    "categoryId": "outdoor",
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/outdoor/photo/OUTDOOR_05_merris_Photo.webp"
+      }
+    }
+  },
+  "outdoor-006": {
+    "id": "outdoor-006",
+    "name": "Merville",
+    "categoryId": "outdoor",
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/outdoor/photo/OUTDOOR_06_merville_Photo.webp"
+      }
+    }
+  },
+  "outdoor-007": {
+    "id": "outdoor-007",
+    "name": "Nouveau monde",
+    "categoryId": "outdoor",
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/outdoor/photo/OUTDOOR_07_nouveau_monde_Photo.webp"
+      }
+    }
+  },
+  "outdoor-008": {
+    "id": "outdoor-008",
+    "name": "Restes divers",
+    "categoryId": "outdoor",
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/outdoor/photo/OUTDOOR_08_restes_divers_Photo.webp"
+      }
+    }
+  },
+  "outdoor-009": {
+    "id": "outdoor-009",
+    "name": "Restaurant",
+    "categoryId": "outdoor",
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/outdoor/photo/OUTDOOR_09_restaurant_Photo.webp"
+      }
+    }
+  }
+}

@@ -47,6 +47,11 @@
   {
     "categoryFolder": "bases",
     "typeFolder": "photo",
+    "fileName": "BASE_09_Pâte_brisée_au_skyr_Photo.webp"
+  },
+  {
+    "categoryFolder": "bases",
+    "typeFolder": "photo",
     "fileName": "BASE_10_Pâte_brisée_sans_beurre_Photo.webp"
   },
   {
@@ -191,6 +196,11 @@
   },
   {
     "categoryFolder": "bases",
+    "typeFolder": "photo",
+    "fileName": "BASE_39_Taboulé_oriental_Photo.webp"
+  },
+  {
+    "categoryFolder": "bases",
     "typeFolder": "ingredients",
     "fileName": "BASE_01_Pain_à_burger_à_la_farine_semi-complète_Ingrédients.webp"
   },
@@ -233,6 +243,11 @@
     "categoryFolder": "bases",
     "typeFolder": "ingredients",
     "fileName": "BASE_09_Pâte_brisée_au_beurre_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "bases",
+    "typeFolder": "ingredients",
+    "fileName": "BASE_09_Pâte_brisée_au_skyr_Ingrédients.webp"
   },
   {
     "categoryFolder": "bases",
@@ -381,6 +396,11 @@
   },
   {
     "categoryFolder": "bases",
+    "typeFolder": "ingredients",
+    "fileName": "BASE_53_Taboulé_oriental_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "bases",
     "typeFolder": "recipes",
     "fileName": "BASE_01_Pain_à_burger_à_la_farine_semi-complète_Recette.webp"
   },
@@ -423,6 +443,11 @@
     "categoryFolder": "bases",
     "typeFolder": "recipes",
     "fileName": "BASE_09_Pâte_brisée_au_beurre_Recette.webp"
+  },
+  {
+    "categoryFolder": "bases",
+    "typeFolder": "recipes",
+    "fileName": "BASE_09_Pâte_brisée_au_skyr_Recette.webp"
   },
   {
     "categoryFolder": "bases",
@@ -568,6 +593,11 @@
     "categoryFolder": "bases",
     "typeFolder": "recipes",
     "fileName": "BASE_38_Boulettes_de_haricots_blancs_Recette.webp"
+  },
+  {
+    "categoryFolder": "bases",
+    "typeFolder": "recipes",
+    "fileName": "BASE_39_Taboulé_oriental_Recette.webp"
   },
   {
     "categoryFolder": "cereal-products",
@@ -1176,6 +1206,11 @@
   },
   {
     "categoryFolder": "dairy-products",
+    "typeFolder": "photo",
+    "fileName": "PL_17_Lait_de_coco_maison_Photo.webp"
+  },
+  {
+    "categoryFolder": "dairy-products",
     "typeFolder": "ingredients",
     "fileName": "PL_01_Lait_végétal_au_vegan_milker_Ingrédients.webp"
   },
@@ -1221,6 +1256,11 @@
   },
   {
     "categoryFolder": "dairy-products",
+    "typeFolder": "ingredients",
+    "fileName": "PL_17_Lait_de_coco_maison_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "dairy-products",
     "typeFolder": "recipes",
     "fileName": "PL_01_Lait_végétal_au_vegan_milker_Recette.webp"
   },
@@ -1263,6 +1303,11 @@
     "categoryFolder": "dairy-products",
     "typeFolder": "recipes",
     "fileName": "PL_09_Flan_léger_cacao_Recette.webp"
+  },
+  {
+    "categoryFolder": "dairy-products",
+    "typeFolder": "recipes",
+    "fileName": "PL_17_Lait_de_coco_maison_Recette.webp"
   },
   {
     "categoryFolder": "dry-food",
@@ -4593,6 +4638,11 @@
     "categoryFolder": "plant-proteins",
     "typeFolder": "recipes",
     "fileName": "PV_37_Salade_de_quinoa_et_haricots_blancs_Recette.webp"
+  },
+  {
+    "categoryFolder": "plant-proteins",
+    "typeFolder": "recipes",
+    "fileName": "PV_37__Salade_de_quinoa_et_haricots_blancs_Recette.webp"
   },
   {
     "categoryFolder": "plant-proteins",

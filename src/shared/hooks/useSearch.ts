@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import recipesDb from "../../core/data/recipes-db.json";
-import { RecipeDetails } from "../../core/domain/types";
+import { RecipeDetails, RecipeKind } from "../../core/domain/types";
 
 export interface SearchRecipeResult {
   id: string;
@@ -49,20 +49,27 @@ function toResult(recipeId: string, recipe: RecipeDetails, query: string): Searc
     recipeId,
     name: recipe.name,
     photoUrl: recipe.assets.photo!.url,
-    ingredientsUrl: recipe.assets.ingredients?.url ?? "",
-    recipeUrl: recipe.assets.recipes?.url,
+    ingredientsUrl: recipe.assets.ingredientsPhoto?.url ?? "",
+    recipeUrl: recipe.assets.instructionsPhoto?.url,
     matchedIngredients: isNumeric ? [] : getMatchedIngredients(recipe, query),
   };
 }
 
-export const useSearch = (query: string | null): SearchRecipeResult[] => {
-  return useMemo(() => {
-    if (query === null) return [];
-    const normalizedQuery = query.toLowerCase().trim();
+function search(query: string | null, kinds?: RecipeKind[]): SearchRecipeResult[] {
+  if (query === null) return [];
+  const normalizedQuery = query.toLowerCase().trim();
 
-    return Object.entries(db)
-      .filter(([, recipe]) => Boolean(recipe.assets?.photo))
-      .filter(([recipeId, recipe]) => !normalizedQuery || matchesQuery(recipeId, recipe, normalizedQuery))
-      .map(([recipeId, recipe]) => toResult(recipeId, recipe, normalizedQuery));
-  }, [query]);
+  return Object.entries(db)
+    .filter(([, recipe]) => Boolean(recipe.assets?.photo))
+    .filter(([, recipe]) => !kinds || kinds.includes(recipe.kind))
+    .filter(([recipeId, recipe]) => !normalizedQuery || matchesQuery(recipeId, recipe, normalizedQuery))
+    .map(([recipeId, recipe]) => toResult(recipeId, recipe, normalizedQuery));
+}
+
+export const useSearchRecipes = (query: string | null): SearchRecipeResult[] => {
+  return useMemo(() => search(query), [query]);
+};
+
+export const useSearchMeals = (query: string | null): SearchRecipeResult[] => {
+  return useMemo(() => search(query, [RecipeKind.DISH, RecipeKind.INGREDIENT]), [query]);
 };

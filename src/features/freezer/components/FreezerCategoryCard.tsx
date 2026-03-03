@@ -74,7 +74,7 @@ export const FreezerCategoryCard = ({ category, isFirst, isLast, onClick }: Free
         )}
 
         <div className="flex items-center gap-1 shrink-0">
-          <span className="text-xs font-bold text-slate-400 min-w-[1.25rem] text-center">
+          <span className="text-xs font-bold text-slate-400 min-w-5 text-center">
             {category.items.length}
           </span>
           <div className="relative" ref={menuRef}>
@@ -127,7 +127,7 @@ export const FreezerCategoryCard = ({ category, isFirst, isLast, onClick }: Free
         ) : (
           <div className="flex flex-wrap gap-1">
             {preview.map((name, i) => (
-              <span key={i} className="text-xs px-2 py-0.5 bg-slate-100 dark:bg-slate-200 text-slate-600 rounded-full truncate max-w-[140px]">
+              <span key={i} className="text-xs px-2 py-0.5 bg-slate-100 dark:bg-slate-200 text-slate-600 rounded-full truncate max-w-35">
                 {name}
               </span>
             ))}

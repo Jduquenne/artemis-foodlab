@@ -2,17 +2,6 @@ import { useState } from "react";
 import { Check, X } from "lucide-react";
 import { Unit, FreezerBag } from "../../../core/domain/types";
 
-const FOOD_UNITS: { value: Unit; label: string }[] = [
-  { value: Unit.G, label: "g" },
-  { value: Unit.KG, label: "kg" },
-  { value: Unit.ML, label: "ml" },
-  { value: Unit.CL, label: "cl" },
-  { value: Unit.L, label: "l" },
-  { value: Unit.PORTION, label: "portion(s)" },
-  { value: Unit.PACKET, label: "sachet(s)" },
-  { value: Unit.SLICE, label: "tranche(s)" },
-  { value: Unit.NONE, label: "unité(s)" },
-];
 
 interface AddBagFormProps {
   onSave: (bag: Omit<FreezerBag, "id" | "addedDate">) => void;
@@ -53,8 +42,8 @@ export const AddBagForm = ({ onSave, onCancel, initialUnit = Unit.G }: AddBagFor
         onChange={e => setUnit(e.target.value as Unit)}
         className="w-20 px-1.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 focus:outline-none focus:border-orange-400"
       >
-        {FOOD_UNITS.map(u => (
-          <option key={u.value} value={u.value}>{u.label}</option>
+        {Object.values(Unit).map(u => (
+          <option key={u} value={u}>{u || "unité"}</option>
         ))}
       </select>
       <input

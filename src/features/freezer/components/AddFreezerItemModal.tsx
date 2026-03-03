@@ -5,17 +5,6 @@ import { addItemToCategory } from "../../../core/services/freezerService";
 import { FoodSearchInput } from "./FoodSearchInput";
 import recipesDb from "../../../core/data/recipes-db.json";
 
-const FOOD_UNITS: { value: Unit; label: string }[] = [
-  { value: Unit.G, label: "g" },
-  { value: Unit.KG, label: "kg" },
-  { value: Unit.ML, label: "ml" },
-  { value: Unit.CL, label: "cl" },
-  { value: Unit.L, label: "l" },
-  { value: Unit.PORTION, label: "portion(s)" },
-  { value: Unit.PACKET, label: "sachet(s)" },
-  { value: Unit.SLICE, label: "tranche(s)" },
-  { value: Unit.NONE, label: "unité(s)" },
-];
 
 interface AddFreezerItemModalProps {
   categoryId: string;
@@ -60,7 +49,7 @@ export const AddFreezerItemModal = ({ categoryId, onClose }: AddFreezerItemModal
 
   const canSave =
     tab === "food" ? foodName.trim().length > 0 && foodQty.trim().length > 0
-                   : selectedRecipeId !== null && portions > 0;
+      : selectedRecipeId !== null && portions > 0;
 
   const handleSave = async () => {
     if (!canSave) return;
@@ -105,7 +94,7 @@ export const AddFreezerItemModal = ({ categoryId, onClose }: AddFreezerItemModal
         <div className="flex gap-2 px-5 pb-4 shrink-0">
           <button
             onClick={() => setTab("food")}
-            className={`flex-1 py-2 rounded-xl text-sm font-bold transition-colors ${tab === "food" ? "bg-slate-800 text-white" : "bg-slate-100 dark:bg-slate-200 text-slate-500"}`}
+            className={`flex-1 py-2 rounded-xl text-sm font-bold transition-colors ${tab === "food" ? "bg-slate-800 dark:bg-slate-100 text-white" : "bg-slate-100 dark:bg-slate-200 text-slate-500"}`}
           >
             Aliment
           </button>
@@ -159,8 +148,8 @@ export const AddFreezerItemModal = ({ categoryId, onClose }: AddFreezerItemModal
                     onChange={e => setFoodUnit(e.target.value as Unit)}
                     className="w-full px-3 py-3 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
                   >
-                    {FOOD_UNITS.map(u => (
-                      <option key={u.value} value={u.value}>{u.label}</option>
+                    {Object.values(Unit).map(u => (
+                      <option key={u} value={u}>{u || "unité"}</option>
                     ))}
                   </select>
                 </div>
@@ -184,11 +173,10 @@ export const AddFreezerItemModal = ({ categoryId, onClose }: AddFreezerItemModal
                   <button
                     key={r.id}
                     onClick={() => setSelectedRecipeId(r.id)}
-                    className={`flex items-center justify-between px-4 py-3 rounded-2xl text-left transition-colors ${
-                      selectedRecipeId === r.id
+                    className={`flex items-center justify-between px-4 py-3 rounded-2xl text-left transition-colors ${selectedRecipeId === r.id
                         ? "bg-orange-500 text-white"
                         : "bg-white dark:bg-slate-100 text-slate-800 hover:bg-slate-100 dark:hover:bg-slate-200"
-                    }`}
+                      }`}
                   >
                     <span className="text-sm font-semibold truncate">{r.name}</span>
                     {r.isBatch && (

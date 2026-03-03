@@ -1,7 +1,11 @@
 import { addDays } from "date-fns";
 import { getISOWeek, getISOWeekYear } from "date-fns";
-import { getWeekSlots, getAllSlots, MealSlot } from "../services/planningService";
-import { RecipeDetails, IngredientCategory, ShoppingDay } from "../domain/types";
+import { getWeekSlots, MealSlot } from "../services/planningService";
+import {
+  RecipeDetails,
+  IngredientCategory,
+  ShoppingDay,
+} from "../domain/types";
 import recipesDb from "../data/recipes-db.json";
 
 export interface IngredientSource {
@@ -31,7 +35,9 @@ function cleanRecipeName(name: string): string {
     .trim();
 }
 
-async function aggregateSlots(slots: MealSlot[]): Promise<ConsolidatedIngredient[]> {
+async function aggregateSlots(
+  slots: MealSlot[],
+): Promise<ConsolidatedIngredient[]> {
   const data = recipesDb as unknown as Record<string, RecipeDetails>;
   const map = new Map<string, ConsolidatedIngredient>();
   const prepMap = new Map<string, Set<string>>();
@@ -42,9 +48,10 @@ async function aggregateSlots(slots: MealSlot[]): Promise<ConsolidatedIngredient
       if (!details) continue;
 
       const recipeName = cleanRecipeName(details.name);
-      const scaleFactor = slot.persons !== undefined && details.defaultPortions > 0
-        ? slot.persons / details.defaultPortions
-        : 1;
+      const scaleFactor =
+        slot.persons !== undefined && details.defaultPortions > 0
+          ? slot.persons / details.defaultPortions
+          : 1;
 
       for (const ing of details.ingredients) {
         const baseQty = ing.quantity ?? 0;
@@ -68,7 +75,10 @@ async function aggregateSlots(slots: MealSlot[]): Promise<ConsolidatedIngredient
         if (existing) {
           existing.totalQuantity += qty;
           const alreadyListed = existing.sources.some(
-            (s) => s.recipeId === source.recipeId && s.day === source.day && s.slot === source.slot,
+            (s) =>
+              s.recipeId === source.recipeId &&
+              s.day === source.day &&
+              s.slot === source.slot,
           );
           if (!alreadyListed) existing.sources.push(source);
         } else {
@@ -100,7 +110,9 @@ async function aggregateSlots(slots: MealSlot[]): Promise<ConsolidatedIngredient
     .sort((a, b) => a.name.localeCompare(b.name, "fr"));
 }
 
-export const getNextWeekShoppingList = async (): Promise<ConsolidatedIngredient[]> => {
+export const getNextWeekShoppingList = async (): Promise<
+  ConsolidatedIngredient[]
+> => {
   const nextWeekDate = addDays(new Date(), 7);
   const nextWeek = getISOWeek(nextWeekDate);
   const nextYear = getISOWeekYear(nextWeekDate);
@@ -110,13 +122,19 @@ export const getNextWeekShoppingList = async (): Promise<ConsolidatedIngredient[
   return aggregateSlots(slots);
 };
 
-export const getShoppingListForDays = async (days: ShoppingDay[]): Promise<ConsolidatedIngredient[]> => {
+export const getShoppingListForDays = async (
+  days: ShoppingDay[],
+): Promise<ConsolidatedIngredient[]> => {
   if (days.length === 0) return [];
 
-  const weekMap = new Map<string, { year: number; week: number; daySet: Set<string> }>();
+  const weekMap = new Map<
+    string,
+    { year: number; week: number; daySet: Set<string> }
+  >();
   for (const d of days) {
     const key = `${d.year}-${d.week}`;
-    if (!weekMap.has(key)) weekMap.set(key, { year: d.year, week: d.week, daySet: new Set() });
+    if (!weekMap.has(key))
+      weekMap.set(key, { year: d.year, week: d.week, daySet: new Set() });
     weekMap.get(key)!.daySet.add(d.day);
   }
 

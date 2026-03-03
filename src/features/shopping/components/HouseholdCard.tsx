@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { CheckCircle2, Circle } from 'lucide-react';
 import { HouseholdItem } from '../../../core/domain/types';
-import { db } from '../../../core/services/db';
+import { getRecords, checkItem } from '../../../core/services/householdService';
 import householdDb from '../../../core/data/household-db.json';
 
 const allItems = householdDb as HouseholdItem[];
@@ -15,14 +15,14 @@ export const HouseholdCard = ({ viewMode }: HouseholdCardProps) => {
     const [checked, setChecked] = useState<Set<string>>(new Set());
 
     useEffect(() => {
-        db.household.toArray().then(records => {
+        getRecords().then(records => {
             const checkedIds = new Set(records.map(r => r.id));
             setUncheckedItems(allItems.filter(item => !checkedIds.has(item.id)));
         });
     }, []);
 
     const handleCheck = async (item: HouseholdItem) => {
-        await db.household.put({ id: item.id, lastCheckedAt: new Date().toISOString() });
+        await checkItem(item.id);
         setChecked(prev => new Set([...prev, item.id]));
     };
 

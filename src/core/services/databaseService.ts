@@ -1,23 +1,8 @@
 import Dexie, { Table } from "dexie";
 import { getWeekNumber } from "../../shared/utils/weekUtils";
-import { FreezerCategory } from "../domain/types";
+import { FreezerCategory, MealSlot, HouseholdRecord } from "../domain/types";
 
-export interface MealSlot {
-  id: string;
-  day: string;
-  slot: "breakfast" | "lunch" | "snack" | "dinner";
-  recipeIds: string[];
-  year: number;
-  week: number;
-  persons?: number;
-}
-
-export interface HouseholdRecord {
-  id: string;
-  lastCheckedAt: string;
-}
-
-export class MyDatabase extends Dexie {
+class AppDatabase extends Dexie {
   planning!: Table<MealSlot>;
   household!: Table<HouseholdRecord>;
   freezerCategories!: Table<FreezerCategory>;
@@ -121,4 +106,4 @@ export class MyDatabase extends Dexie {
   }
 }
 
-export const db = new MyDatabase();
+export const db = new AppDatabase();

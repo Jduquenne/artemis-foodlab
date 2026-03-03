@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { X, Download, Upload } from "lucide-react";
-import { SyncScope, ALL_SCOPES } from "../../../core/services/dataService";
+import { SyncScope, ALL_SCOPES } from "../../../core/utils/syncSerializer";
 import { ScopeSelector } from "./ScopeSelector";
 
 export interface ScopeSelectorModalProps {

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { exportData } from "../../core/services/dataService";
+import { exportData } from "../../core/services/backupService";
 import { useNotificationStore } from "../store/useNotificationStore";
 
 const INTERVAL_MS = 30 * 60 * 1000;

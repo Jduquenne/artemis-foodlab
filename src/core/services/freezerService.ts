@@ -1,10 +1,20 @@
-import { db } from "./db";
+import { db } from "./databaseService";
 import { FreezerBag, FreezerCategory, FreezerItem } from "../domain/types";
 
 const uid = () => crypto.randomUUID();
 const today = () => new Date().toISOString().slice(0, 10);
 
-export const getCategories = () => db.freezerCategories.orderBy("position").toArray();
+async function withCategory(
+  categoryId: string,
+  fn: (cat: FreezerCategory) => Partial<FreezerCategory>
+): Promise<void> {
+  const category = await db.freezerCategories.get(categoryId);
+  if (!category) return;
+  await db.freezerCategories.update(categoryId, fn(category));
+}
+
+export const getCategories = () =>
+  db.freezerCategories.orderBy("position").toArray();
 
 export const createCategory = async (name: string): Promise<void> => {
   const count = await db.freezerCategories.count();
@@ -31,68 +41,49 @@ export const addItemToCategory = async (
   categoryId: string,
   item: Omit<FreezerItem, "id" | "addedDate">
 ): Promise<void> => {
-  const category = await db.freezerCategories.get(categoryId);
-  if (!category) return;
   const newItem = { ...item, id: uid(), addedDate: today() } as FreezerItem;
-  await db.freezerCategories.update(categoryId, { items: [...category.items, newItem] });
+  return withCategory(categoryId, cat => ({ items: [...cat.items, newItem] }));
 };
 
-export const removeItemFromCategory = async (categoryId: string, itemId: string): Promise<void> => {
-  const category = await db.freezerCategories.get(categoryId);
-  if (!category) return;
-  await db.freezerCategories.update(categoryId, {
-    items: category.items.filter(i => i.id !== itemId),
-  });
-};
+export const removeItemFromCategory = (categoryId: string, itemId: string) =>
+  withCategory(categoryId, cat => ({
+    items: cat.items.filter(i => i.id !== itemId),
+  }));
 
 export const addBagToFoodItem = async (
   categoryId: string,
   itemId: string,
   bag: Omit<FreezerBag, "id" | "addedDate">
 ): Promise<void> => {
-  const category = await db.freezerCategories.get(categoryId);
-  if (!category) return;
   const newBag: FreezerBag = { ...bag, id: uid(), addedDate: today() };
-  await db.freezerCategories.update(categoryId, {
-    items: category.items.map(item =>
+  return withCategory(categoryId, cat => ({
+    items: cat.items.map(item =>
       item.id === itemId && item.type === "food"
         ? { ...item, bags: [...item.bags, newBag] }
         : item
     ),
-  });
+  }));
 };
 
-export const removeBagFromFoodItem = async (
-  categoryId: string,
-  itemId: string,
-  bagId: string
-): Promise<void> => {
-  const category = await db.freezerCategories.get(categoryId);
-  if (!category) return;
-  const item = category.items.find(i => i.id === itemId);
-  if (!item || item.type !== "food") return;
-  const remainingBags = item.bags.filter(b => b.id !== bagId);
-  if (remainingBags.length === 0) {
-    await db.freezerCategories.update(categoryId, {
-      items: category.items.filter(i => i.id !== itemId),
-    });
-  } else {
-    await db.freezerCategories.update(categoryId, {
-      items: category.items.map(i =>
-        i.id === itemId && i.type === "food" ? { ...i, bags: remainingBags } : i
-      ),
-    });
-  }
-};
-
-export const updateItemInCategory = async (
-  categoryId: string,
-  itemId: string,
-  updates: Partial<FreezerCategory["items"][number]>
-): Promise<void> => {
-  const category = await db.freezerCategories.get(categoryId);
-  if (!category) return;
-  await db.freezerCategories.update(categoryId, {
-    items: category.items.map(i => (i.id === itemId ? { ...i, ...updates } as FreezerItem : i)),
+export const removeBagFromFoodItem = (categoryId: string, itemId: string, bagId: string) =>
+  withCategory(categoryId, cat => {
+    const item = cat.items.find(i => i.id === itemId);
+    if (!item || item.type !== "food") return {};
+    const remainingBags = item.bags.filter(b => b.id !== bagId);
+    return {
+      items: remainingBags.length === 0
+        ? cat.items.filter(i => i.id !== itemId)
+        : cat.items.map(i =>
+            i.id === itemId && i.type === "food" ? { ...i, bags: remainingBags } : i
+          ),
+    };
   });
-};
+
+export const updateItemInCategory = (
+  categoryId: string,
+  itemId: string,
+  updates: Partial<FreezerItem>
+) =>
+  withCategory(categoryId, cat => ({
+    items: cat.items.map(i => (i.id === itemId ? { ...i, ...updates } as FreezerItem : i)),
+  }));

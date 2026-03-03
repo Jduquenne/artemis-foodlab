@@ -1,6 +1,7 @@
 import { lazy, Suspense, useRef, useState } from "react";
 import { Settings, Download, Upload, RefreshCw } from "lucide-react";
-import { exportData, applyImport, detectScopes, SyncPayload } from "../../../core/services/dataService";
+import { applyImport, detectScopes, SyncPayload } from "../../../core/utils/syncSerializer";
+import { exportData } from "../../../core/services/backupService";
 import { ThemeToggle } from "./ThemeToggle";
 
 const SyncModal = lazy(() => import("../../../features/sync/SyncModal").then(m => ({ default: m.SyncModal })));

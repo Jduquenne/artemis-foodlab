@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useRef } from 'react';
 import { ChevronLeft, ChevronRight, ShoppingCart, Check } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { db } from '../../core/services/db';
+import { getWeekSlots, saveSlot, deleteSlot, bulkSaveSlots } from '../../core/services/planningService';
 import { MealSlot } from './components/MealSlot';
 import { MultiMealSlot } from './components/MultiMealSlot';
 import { RecipePicker } from './components/RecipePicker';
@@ -80,7 +80,7 @@ export const PlanningModule = () => {
     );
 
     const planningData = useLiveQuery(
-        () => db.planning.where('[year+week]').equals([year, weekNumber]).toArray(),
+        () => getWeekSlots(year, weekNumber),
         [year, weekNumber]
     ) || [];
 
@@ -136,15 +136,15 @@ export const PlanningModule = () => {
     };
 
     const handleDeleteMeal = async (day: string, slot: SlotId) => {
-        await db.planning.delete(`${year}-W${weekNumber}-${day}-${slot}`);
+        await deleteSlot(`${year}-W${weekNumber}-${day}-${slot}`);
     };
 
     const handleRemoveRecipe = async (day: string, slot: SlotId, recipeIdToRemove: string) => {
         const existing = planningData.find(p => p.day === day && p.slot === slot);
         if (!existing) return;
         const ids = existing.recipeIds.filter(id => id !== recipeIdToRemove);
-        if (ids.length === 0) await db.planning.delete(existing.id);
-        else await db.planning.put({ ...existing, recipeIds: ids });
+        if (ids.length === 0) await deleteSlot(existing.id);
+        else await saveSlot({ ...existing, recipeIds: ids });
     };
 
     const handleDragStart = ({ active }: DragStartEvent) => setActiveDragId(active.id as string);
@@ -175,19 +175,19 @@ export const PlanningModule = () => {
         if (!fromMeal) return;
 
         if (toMeal) {
-            await db.planning.bulkPut([
+            await bulkSaveSlots([
                 { ...fromMeal, recipeIds: toMeal.recipeIds, persons: undefined },
                 { ...toMeal, recipeIds: fromMeal.recipeIds, persons: undefined },
             ]);
         } else {
-            await db.planning.delete(fromMeal.id);
-            await db.planning.put({ id: over.id as string, day: to.day, slot: to.slot, recipeIds: fromMeal.recipeIds, year, week: weekNumber });
+            await deleteSlot(fromMeal.id);
+            await saveSlot({ id: over.id as string, day: to.day, slot: to.slot, recipeIds: fromMeal.recipeIds, year, week: weekNumber });
         }
     };
 
     const handleConfirmPersons = async (slotId: string, persons: number) => {
         const existing = planningData.find(p => `${year}-W${weekNumber}-${p.day}-${p.slot}` === slotId);
-        if (existing) await db.planning.put({ ...existing, persons });
+        if (existing) await saveSlot({ ...existing, persons });
         setEditingPersonsSlotId(null);
     };
 
@@ -437,9 +437,9 @@ export const PlanningModule = () => {
                             const isMulti = MEAL_SLOTS.find(m => m.id === pickerSlot.slot)?.multi ?? false;
                             const existing = planningData.find(p => p.day === pickerSlot.day && p.slot === pickerSlot.slot);
                             if (isMulti && existing && existing.recipeIds.length < 4 && !existing.recipeIds.includes(recipe.recipeId)) {
-                                await db.planning.put({ ...existing, recipeIds: [...existing.recipeIds, recipe.recipeId] });
+                                await saveSlot({ ...existing, recipeIds: [...existing.recipeIds, recipe.recipeId] });
                             } else {
-                                await db.planning.put({ id: slotId, day: pickerSlot.day, slot: pickerSlot.slot, recipeIds: [recipe.recipeId], year, week: weekNumber });
+                                await saveSlot({ id: slotId, day: pickerSlot.day, slot: pickerSlot.slot, recipeIds: [recipe.recipeId], year, week: weekNumber });
                             }
                             setPickerSlot(null);
                         }}

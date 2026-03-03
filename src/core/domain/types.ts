@@ -160,3 +160,18 @@ export interface PredefinedFilter {
   label: string;
   check: (macros: Macronutrients) => boolean;
 }
+
+export interface MealSlot {
+  id: string;
+  day: string;
+  slot: "breakfast" | "lunch" | "snack" | "dinner";
+  recipeIds: string[];
+  year: number;
+  week: number;
+  persons?: number;
+}
+
+export interface HouseholdRecord {
+  id: string;
+  lastCheckedAt: string;
+}

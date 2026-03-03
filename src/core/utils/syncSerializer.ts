@@ -1,6 +1,5 @@
-import { db } from "./db";
-import { MealSlot, HouseholdRecord } from "./db";
-import { FreezerCategory, ShoppingDay } from "../domain/types";
+import { db } from "../services/databaseService";
+import { FreezerCategory, MealSlot, HouseholdRecord, ShoppingDay } from "../domain/types";
 
 export type SyncScope = "planning" | "household" | "freezer" | "shopping";
 export const ALL_SCOPES: SyncScope[] = ["planning", "household", "freezer", "shopping"];
@@ -90,35 +89,3 @@ export const applyImport = async (data: SyncPayload, scope?: SyncScope[]): Promi
   }
 };
 
-export const exportData = async (scope: SyncScope[] = ALL_SCOPES) => {
-  try {
-    const data = await serializeData(scope);
-    const blob = new Blob([JSON.stringify(data, null, 2)], {
-      type: "application/json",
-    });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `cipe-backup-${new Date().toISOString().slice(0, 10)}.json`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  } catch (error) {
-    console.error("Erreur lors de l'export:", error);
-    alert("Erreur lors de l'export des données.");
-  }
-};
-
-export const importData = async (file: File) => {
-  try {
-    const text = await file.text();
-    const data = JSON.parse(text);
-    await applyImport(data);
-    alert("Import réussi ! Rechargez la page.");
-    window.location.reload();
-  } catch (error) {
-    console.error("Erreur lors de l'import:", error);
-    alert("Impossible de lire ce fichier de sauvegarde.");
-  }
-};

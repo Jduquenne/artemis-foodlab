@@ -1,7 +1,6 @@
 import { addDays } from "date-fns";
 import { getISOWeek, getISOWeekYear } from "date-fns";
-import { db } from "../services/db";
-import { MealSlot } from "../services/db";
+import { getWeekSlots, getAllSlots, MealSlot } from "../services/planningService";
 import { RecipeDetails, IngredientCategory, ShoppingDay } from "../domain/types";
 import recipesDb from "../data/recipes-db.json";
 
@@ -107,10 +106,7 @@ export const getNextWeekShoppingList = async (): Promise<ConsolidatedIngredient[
   const nextWeek = getISOWeek(nextWeekDate);
   const nextYear = getISOWeekYear(nextWeekDate);
 
-  const slots = await db.planning
-    .where("[year+week]")
-    .equals([nextYear, nextWeek])
-    .toArray();
+  const slots = await getWeekSlots(nextYear, nextWeek);
 
   return aggregateSlots(slots);
 };
@@ -127,7 +123,7 @@ export const getShoppingListForDays = async (days: ShoppingDay[]): Promise<Conso
 
   const slots: MealSlot[] = [];
   for (const { year, week, daySet } of weekMap.values()) {
-    const weekSlots = await db.planning.where("[year+week]").equals([year, week]).toArray();
+    const weekSlots = await getWeekSlots(year, week);
     slots.push(...weekSlots.filter((s) => daySet.has(s.day)));
   }
 

@@ -1,4 +1,4 @@
-import { serializeData, applyImport, SyncPayload, SyncScope, ALL_SCOPES } from "./dataService";
+import { serializeData, applyImport, SyncPayload, SyncScope, ALL_SCOPES } from "../utils/syncSerializer";
 
 const CHUNK_SIZE = 16_000;
 const ICE_TIMEOUT_MS = 10_000;

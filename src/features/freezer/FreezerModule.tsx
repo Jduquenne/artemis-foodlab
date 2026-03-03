@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Plus, Snowflake, Pencil, Check, X } from "lucide-react";
 import { useLiveQuery } from "dexie-react-hooks";
-import { db } from "../../core/services/db";
-import { createCategory } from "../../core/services/freezerService";
+import { getCategories, createCategory } from "../../core/services/freezerService";
 import { useFreezerStore } from "../../shared/store/useFreezerStore";
 import { FreezerCategoryCard } from "./components/FreezerCategoryCard";
 import { FreezerCategoryDetail } from "./components/FreezerCategoryDetail";
@@ -16,7 +15,7 @@ export const FreezerModule = () => {
   const [addingCategory, setAddingCategory] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState("");
 
-  const categories = useLiveQuery(() => db.freezerCategories.orderBy("position").toArray(), []) ?? [];
+  const categories = useLiveQuery(() => getCategories(), []) ?? [];
 
   const activeCategory = categories.find(c => c.id === activeCategoryId) ?? null;
 

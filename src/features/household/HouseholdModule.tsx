@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { RotateCcw } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { HouseholdItem, HouseholdCategory } from '../../core/domain/types';
-import { db } from '../../core/services/db';
+import { getRecords, checkItem, clearAll } from '../../core/services/householdService';
 import { markScrolling } from '../../shared/utils/scrollGuard';
 import householdDb from '../../core/data/household-db.json';
 import { HouseholdCategoryCard } from './components/HouseholdCategoryCard';
@@ -18,7 +18,7 @@ const CATEGORY_ORDER: HouseholdCategory[] = [
 const allItems = householdDb as HouseholdItem[];
 
 export const HouseholdModule = () => {
-    const records = useLiveQuery(() => db.household.toArray(), []);
+    const records = useLiveQuery(() => getRecords(), []);
     const [spinning, setSpinning] = useState(false);
 
     const checkedIds = useMemo(() => {
@@ -28,12 +28,12 @@ export const HouseholdModule = () => {
     }, [records]);
 
     const handleVerify = async (id: string) => {
-        await db.household.put({ id, lastCheckedAt: new Date().toISOString() });
+        await checkItem(id);
     };
 
     const handleReset = async () => {
         setSpinning(true);
-        await db.household.clear();
+        await clearAll();
         setTimeout(() => setSpinning(false), 600);
     };
 

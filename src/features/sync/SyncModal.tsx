@@ -6,7 +6,7 @@ import { QRScanner } from "./components/QRScanner";
 import { ScopeSelector } from "./components/ScopeSelector";
 import { createSenderSession, createReceiverSession, SenderSession, ReceiverSession } from "../../core/services/syncService";
 import { useNotificationStore } from "../../shared/store/useNotificationStore";
-import { SyncScope, ALL_SCOPES } from "../../core/services/dataService";
+import { SyncScope, ALL_SCOPES } from "../../core/utils/syncSerializer";
 
 const compress = (sdp: string) => LZString.compressToEncodedURIComponent(sdp);
 const decompress = (data: string) => LZString.decompressFromEncodedURIComponent(data);

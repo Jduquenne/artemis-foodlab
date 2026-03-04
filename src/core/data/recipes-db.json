@@ -15035,7 +15035,7 @@
         "id": "002",
         "foodId": "bo-002",
         "name": "Pain",
-        "quantity": 2,
+        "quantity": 1,
         "unit": "portion",
         "category": "Boulangerie"
       },
@@ -15075,7 +15075,7 @@
         "id": "007",
         "foodId": "fm-003",
         "name": "Œuf",
-        "quantity": 3,
+        "quantity": 2,
         "unit": "pièce",
         "category": "Ferme"
       },

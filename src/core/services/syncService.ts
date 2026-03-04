@@ -8,7 +8,8 @@ function trimSdp(sdp: string): string {
   const lines = sdp.split('\r\n').filter(line => {
     if (line.startsWith('a=candidate:')) {
       if (line.includes('typ srflx') || line.includes('typ relay')) return false;
-      if (line.includes(' IP6 ') || line.includes(':')) return false;
+      const ip = line.split(' ')[4];
+      if (ip?.includes(':')) return false;
     }
     if (line === 'a=extmap-allow-mixed') return false;
     if (line.startsWith('a=msid-semantic:')) return false;

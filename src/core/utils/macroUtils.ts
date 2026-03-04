@@ -38,8 +38,6 @@ function toGrams(
       return quantity * 1000;
     case Unit.ML:
       return quantity;
-    case Unit.C:
-      return quantity * 15;
     case Unit.PIECE:
     case Unit.PORTION:
     case Unit.TRANCHE:

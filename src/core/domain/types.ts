@@ -1,6 +1,5 @@
 export enum Unit {
   NONE = "",
-  C = "c",
   FEUILLE = "feuille",
   G = "g",
   KG = "kg",

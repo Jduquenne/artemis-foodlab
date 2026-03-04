@@ -4,6 +4,20 @@ const CHUNK_SIZE = 16_000;
 const ICE_TIMEOUT_MS = 10_000;
 const ICE_SERVERS: RTCIceServer[] = [{ urls: "stun:stun.l.google.com:19302" }];
 
+function trimSdp(sdp: string): string {
+  const lines = sdp.split('\r\n').filter(line => {
+    if (line.startsWith('a=candidate:')) {
+      if (line.includes('typ srflx') || line.includes('typ relay')) return false;
+      if (line.includes(' IP6 ') || line.includes(':')) return false;
+    }
+    if (line === 'a=extmap-allow-mixed') return false;
+    if (line.startsWith('a=msid-semantic:')) return false;
+    if (line === 'a=ice-options:trickle') return false;
+    return true;
+  });
+  return lines.join('\r\n');
+}
+
 interface SyncChunk {
   i: number;
   total: number;
@@ -69,7 +83,7 @@ export async function createSenderSession(scope: SyncScope[] = ALL_SCOPES, callb
   await waitForIceComplete(pc);
 
   return {
-    offerSdp: pc.localDescription!.sdp,
+    offerSdp: trimSdp(pc.localDescription!.sdp),
     applyAnswer: async (answerSdp: string) => {
       await pc.setRemoteDescription({ type: "answer", sdp: answerSdp });
     },
@@ -122,7 +136,7 @@ export async function createReceiverSession(offerSdp: string, callbacks: Receive
   await waitForIceComplete(pc);
 
   return {
-    answerSdp: pc.localDescription!.sdp,
+    answerSdp: trimSdp(pc.localDescription!.sdp),
     cleanup: () => {
       try { pc.close(); } catch { /* empty */ }
     },

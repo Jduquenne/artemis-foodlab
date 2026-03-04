@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Calculator } from 'lucide-react';
 import { Food, RecipeDetails } from '../../../core/domain/types';
 import recipesDb from '../../../core/data/recipes-db.json';
 import foodDb from '../../../core/data/food-db.json';
@@ -54,6 +54,13 @@ export const RecipeDetail = () => {
                 <h1 className="text-base sm:text-xl tablet:text-2xl font-black text-slate-900 leading-snug">
                     {recipe.name}
                 </h1>
+                <button
+                    aria-label="Calculateur nutritionnel"
+                    onClick={() => navigate(`/recipes/detail/${recipeId}/macros`)}
+                    className="ml-auto p-2 rounded-xl text-slate-400 hover:text-orange-600 hover:bg-orange-50 transition-colors shrink-0"
+                >
+                    <Calculator className="w-5 h-5" />
+                </button>
             </div>
 
             {macros && (

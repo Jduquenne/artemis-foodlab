@@ -7,6 +7,7 @@ import { useBackupReminder } from './shared/hooks/useBackupReminder';
 import { RecipeModule } from './features/recipes/RecipeModule';
 import { CategoryDetail } from './features/recipes/components/CategoryDetail';
 import { RecipeDetail } from './features/recipes/components/RecipeDetail';
+import { RecipeMacroPage } from './features/recipes/components/RecipeMacroPage';
 import { PlanningModule } from './features/planning/PlanningModule';
 import { ShoppingModule } from './features/shopping/ShoppingModule';
 import { HouseholdModule } from './features/household/HouseholdModule';
@@ -28,6 +29,7 @@ function App() {
           <Route path="/recipes" element={<RecipeModule />} />
           <Route path="/recipes/category/:categoryId" element={<CategoryDetail />} />
           <Route path="/recipes/detail/:recipeId" element={<RecipeDetail />} />
+          <Route path="/recipes/detail/:recipeId/macros" element={<RecipeMacroPage />} />
 
           {/* --- MODULE QUOTIDIEN --- */}
           <Route path="/household" element={<HouseholdModule />} />

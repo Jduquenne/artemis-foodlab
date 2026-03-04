@@ -82,7 +82,9 @@ Root `/` redirects to `/recipes`. Uses `HashRouter` for GitHub Pages compatibili
 
 - **Week utilities**: `core/utils/dateUtils.ts` — ISO week ID generation (`getWeekId`, `getDaysOfWeek`) used by the store. `shared/utils/weekUtils.ts` — week navigation helpers for the planning UI (`getWeekNumber`, `getMonday`, `getWeekRange`).
 - **Drag & Drop**: `@dnd-kit/core` used in `PlanningModule`. Each `MealSlot` is both a droppable target and a draggable source via a grip handle. Swap/move logic lives in `PlanningModule.handleDragEnd`.
-- **Shopping logic**: `core/utils/shoppingLogic.ts` aggregates ingredients across planned meals, respecting units.
+- **Shopping logic**: `core/utils/shoppingLogic.ts` aggregates ingredients across planned meals, respecting units. **Critical**: `aggregateSlots` must iterate over **all recipe ID collections** on `MealSlot` — currently `recipeIds` and `dessertIds`. Any future sub-collection added to `MealSlot` must also be added to the loop, or those ingredients will be silently omitted from the shopping list.
+- **Dessert column (planning)**: `lunch` and `dinner` slots have `hasDessert: true` in `MEAL_SLOTS`. `MealSlot` renders a 35%-wide dessert column when `hasDessert && !isOutdoor && !!photoUrl`. Desserts are `RecipeKind.INGREDIENT` recipes, max 3 per slot, stored in `MealSlot.dessertIds`. The column is not shown for outdoor recipes (`recipe?.categoryId === 'outdoor'`). Add-mode: dropping an INGREDIENT recipe onto a lunch/dinner slot that already has a main meal adds it as dessert instead of replacing.
+- **Non-indexed Dexie fields**: adding optional fields to a stored object (e.g. `dessertIds?`) does **not** require a schema version bump as long as the field is not used as a Dexie index. Only structural changes (new stores, new indexes, fields used in `.where()`) require a new `.version(n+1)` block.
 - **Asset manifest**: `scripts/generate-manifest.cjs` generates `core/data/assets-manifest.json` listing recipe images under `public/`. Run if adding new images.
 
 ### IndexedDB migrations (critical)

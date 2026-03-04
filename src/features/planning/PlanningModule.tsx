@@ -84,6 +84,11 @@ export const PlanningModule = () => {
     const weekNumber = useMemo(() => getWeekNumber(monday), [monday]);
     const year = monday.getFullYear();
     const weekRange = useMemo(() => getWeekRange(monday), [monday]);
+    const selectedDayDate = useMemo(() => {
+        const d = new Date(monday);
+        d.setDate(d.getDate() + DAYS.indexOf(selectedDay));
+        return d.toISOString().slice(0, 10);
+    }, [monday, selectedDay]);
 
     const sensors = useSensors(
         useSensor(MouseSensor, { activationConstraint: { distance: 8 } }),
@@ -308,25 +313,38 @@ export const PlanningModule = () => {
                 <div className="flex items-center justify-between gap-3 shrink-0">
                     <div className="flex flex-col leading-tight">
                         <h1 className="text-xl sm:text-2xl tablet:text-3xl font-black text-slate-900">Ma Semaine</h1>
-                        <span className="text-xs sm:text-sm font-bold text-slate-400">Sem. {weekNumber} · {weekRange}</span>
+                        <button
+                            onClick={() => !isAnyEditing && dateInputRef.current?.showPicker?.()}
+                            className="sm:pointer-events-none text-left text-xs sm:text-sm font-bold text-slate-400 hover:text-orange-500 sm:hover:text-slate-400 transition-colors"
+                        >
+                            Sem. {weekNumber} · {weekRange}
+                        </button>
                     </div>
 
                     <div className="flex items-center gap-2 shrink-0">
                         <input ref={dateInputRef} type="date" tabIndex={-1}
                             className="absolute opacity-0 w-px h-px pointer-events-none"
-                            onChange={(e) => e.target.value && setSelectedDate(new Date(e.target.value))}
+                            value={selectedDayDate}
+                            onChange={(e) => {
+                                if (!e.target.value) return;
+                                const d = new Date(e.target.value + 'T12:00:00');
+                                const dayIndex = (d.getDay() + 6) % 7;
+                                setSearchParams(p => { p.set('d', e.target.value); p.set('day', DAYS[dayIndex]); return p; }, { replace: true });
+                            }}
                         />
                         <div className={`flex items-center gap-1 bg-white dark:bg-slate-100 px-2 py-1 rounded-2xl shadow-sm border border-slate-200 ${isAnyEditing ? 'opacity-40 pointer-events-none' : ''}`}>
                             <button aria-label="Semaine précédente" onClick={() => changeWeek(-1)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-200 rounded-xl transition-colors">
                                 <ChevronLeft size={18} className="text-slate-600" />
                             </button>
-                            <button onClick={() => dateInputRef.current?.showPicker?.()}
-                                className="sm:hidden px-2 py-1 text-xs font-bold text-slate-500 hover:bg-orange-50 hover:text-orange-500 rounded-xl transition-colors">
-                                Sem. {weekNumber}
-                            </button>
                             <input type="date"
-                                className="hidden sm:block h-8 px-2 bg-slate-100 dark:bg-slate-200 rounded-xl text-xs font-semibold text-slate-500 border-0 outline-none cursor-pointer hover:bg-orange-50 focus:ring-2 focus:ring-orange-400 scheme-light dark:scheme-dark transition-colors"
-                                onChange={(e) => e.target.value && setSelectedDate(new Date(e.target.value))}
+                                className="h-8 px-2 bg-slate-100 dark:bg-slate-200 rounded-xl text-xs font-semibold text-slate-500 border-0 outline-none cursor-pointer hover:bg-orange-50 focus:ring-2 focus:ring-orange-400 scheme-light dark:scheme-dark transition-colors [&::-webkit-calendar-picker-indicator]:hidden sm:[&::-webkit-calendar-picker-indicator]:block"
+                                value={selectedDayDate}
+                                onChange={(e) => {
+                                    if (!e.target.value) return;
+                                    const d = new Date(e.target.value + 'T12:00:00');
+                                    const dayIndex = (d.getDay() + 6) % 7;
+                                    setSearchParams(p => { p.set('d', e.target.value); p.set('day', DAYS[dayIndex]); return p; }, { replace: true });
+                                }}
                             />
                             <button aria-label="Semaine suivante" onClick={() => changeWeek(1)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-200 rounded-xl transition-colors">
                                 <ChevronRight size={18} className="text-slate-600" />

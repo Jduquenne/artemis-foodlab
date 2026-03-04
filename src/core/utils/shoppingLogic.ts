@@ -43,7 +43,8 @@ async function aggregateSlots(
   const prepMap = new Map<string, Set<string>>();
 
   for (const slot of slots) {
-    for (const recipeId of slot.recipeIds) {
+    const allIds = [...slot.recipeIds, ...(slot.dessertIds ?? [])];
+    for (const recipeId of allIds) {
       const details = data[recipeId];
       if (!details) continue;
 

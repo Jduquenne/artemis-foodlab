@@ -19,6 +19,8 @@ interface MealSlotProps {
     onOpenPersonsEditor: () => void;
     onConfirmPersons: (n: number) => void;
     onCancelPersons: () => void;
+    isAddMode?: boolean;
+    onAddToSlot?: () => void;
 }
 
 export const MealSlot = ({
@@ -26,6 +28,7 @@ export const MealSlot = ({
     isEditingPersons, isAnyEditing,
     onNavigate, onOpenPicker, onModify, onDelete,
     onOpenPersonsEditor, onConfirmPersons, onCancelPersons,
+    isAddMode, onAddToSlot,
 }: MealSlotProps) => {
     const data = plannableDb;
     const firstId = recipeIds[0];
@@ -48,7 +51,7 @@ export const MealSlot = ({
     const { setNodeRef: setDropRef, isOver } = useDroppable({ id: slotId });
     const { setNodeRef: setDragRef, listeners, attributes, isDragging } = useDraggable({
         id: slotId,
-        disabled: recipeIds.length === 0 || isAnyEditing || IS_TOUCH,
+        disabled: recipeIds.length === 0 || isAnyEditing || IS_TOUCH || !!isAddMode,
     });
 
     const setRef = (el: HTMLDivElement | null) => {
@@ -57,6 +60,7 @@ export const MealSlot = ({
     };
 
     const handleMainClick = () => {
+        if (isAddMode) { onAddToSlot?.(); return; }
         if (isAnyEditing) return;
         if (photoUrl) {
             if (hasRecipesPage) onNavigate();
@@ -65,13 +69,15 @@ export const MealSlot = ({
         }
     };
 
-    const borderClass = isDragging
-        ? 'opacity-30 border-slate-200'
-        : isOver
-            ? 'border-orange-400 bg-orange-50/40'
-            : photoUrl
-                ? 'border-slate-200 shadow-sm hover:border-orange-200'
-                : 'border-dashed border-slate-200 hover:bg-orange-50/30';
+    const borderClass = isAddMode
+        ? 'ring-2 ring-orange-400 border-orange-300 cursor-pointer'
+        : isDragging
+            ? 'opacity-30 border-slate-200'
+            : isOver
+                ? 'border-orange-400 bg-orange-50/40'
+                : photoUrl
+                    ? 'border-slate-200 shadow-sm hover:border-orange-200'
+                    : 'border-dashed border-slate-200 hover:bg-orange-50/30';
 
     const displayPersons = persons ?? defaultPortion;
     const isCustom = persons !== undefined;
@@ -97,7 +103,7 @@ export const MealSlot = ({
                 )}
             </button>
 
-            {photoUrl && !isEditingPersons && !isDragging && displayPersons !== undefined && (
+            {photoUrl && !isEditingPersons && !isDragging && !isAddMode && displayPersons !== undefined && (
                 IS_TOUCH ? (
                     <button
                         aria-label="Modifier le nombre de personnes"
@@ -118,7 +124,7 @@ export const MealSlot = ({
                 )
             )}
 
-            {photoUrl && !isDragging && !isEditingPersons && (
+            {photoUrl && !isDragging && !isEditingPersons && !isAddMode && (
                 <>
                     {!IS_TOUCH && (
                         <div

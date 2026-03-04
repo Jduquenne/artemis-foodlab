@@ -12,16 +12,20 @@ interface MultiMealSlotProps {
     onAdd: () => void;
     onRemoveRecipe: (recipeId: string) => void;
     onNavigateToRecipe: (recipeId: string) => void;
+    isAddMode?: boolean;
+    onAddToSlot?: () => void;
 }
 
 const RecipeCell = ({
     recipeId,
     onNavigate,
     onRemove,
+    hideRemove,
 }: {
     recipeId: string;
     onNavigate: () => void;
     onRemove: () => void;
+    hideRemove?: boolean;
 }) => {
     const recipe = data[recipeId];
     const photoUrl = recipe?.assets?.photo?.url;
@@ -30,19 +34,21 @@ const RecipeCell = ({
     return (
         <div className="relative group/cell w-full h-full min-h-0 flex-1 min-w-0">
             <button
-                onClick={hasRecipesPage ? onNavigate : undefined}
-                className={`w-full h-full rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-200 ${!hasRecipesPage ? 'cursor-default' : ''}`}
+                onClick={hasRecipesPage && !hideRemove ? onNavigate : undefined}
+                className={`w-full h-full rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-200 ${!hasRecipesPage || hideRemove ? 'cursor-default' : ''}`}
             >
                 {photoUrl && <img src={photoUrl} loading="lazy" decoding="async" className="w-full h-full object-cover sm:object-contain" alt={recipe.name} />}
             </button>
-            <button
-                aria-label="Retirer ce repas"
-                onPointerDown={(e) => e.stopPropagation()}
-                onClick={(e) => { e.stopPropagation(); onRemove(); }}
-                className={`absolute top-0.5 right-0.5 p-0.5 bg-white/90 dark:bg-slate-100/90 text-red-400 rounded transition-opacity z-10 shadow-sm ${IS_TOUCH ? 'opacity-100' : 'opacity-0 group-hover/cell:opacity-100'}`}
-            >
-                <X size={9} />
-            </button>
+            {!hideRemove && (
+                <button
+                    aria-label="Retirer ce repas"
+                    onPointerDown={(e) => e.stopPropagation()}
+                    onClick={(e) => { e.stopPropagation(); onRemove(); }}
+                    className={`absolute top-0.5 right-0.5 p-0.5 bg-white/90 dark:bg-slate-100/90 text-red-400 rounded transition-opacity z-10 shadow-sm ${IS_TOUCH ? 'opacity-100' : 'opacity-0 group-hover/cell:opacity-100'}`}
+                >
+                    <X size={9} />
+                </button>
+            )}
         </div>
     );
 };
@@ -55,6 +61,8 @@ export const MultiMealSlot = ({
     onAdd,
     onRemoveRecipe,
     onNavigateToRecipe,
+    isAddMode,
+    onAddToSlot,
 }: MultiMealSlotProps) => {
     const firstRecipe = recipeIds.length === 1 ? data[recipeIds[0]] : undefined;
     const singlePhotoUrl = firstRecipe?.assets?.photo?.url;
@@ -63,7 +71,7 @@ export const MultiMealSlot = ({
     const { setNodeRef: setDropRef, isOver } = useDroppable({ id: slotId });
     const { setNodeRef: setDragRef, listeners, attributes, isDragging } = useDraggable({
         id: slotId,
-        disabled: recipeIds.length === 0 || IS_TOUCH,
+        disabled: recipeIds.length === 0 || IS_TOUCH || !!isAddMode,
     });
 
     const setRef = (el: HTMLDivElement | null) => {
@@ -74,16 +82,23 @@ export const MultiMealSlot = ({
     const hasRecipes = recipeIds.length > 0;
     const canAddMore = recipeIds.length < 4;
 
-    const borderClass = isDragging
-        ? 'opacity-30 border-slate-200'
-        : isOver
-            ? 'border-orange-400 bg-orange-50/40'
-            : hasRecipes
-                ? 'border-slate-200 shadow-sm hover:border-orange-200'
-                : 'border-dashed border-slate-200 hover:bg-orange-50/30';
+    const isFull = recipeIds.length >= 4;
+    const borderClass = isAddMode
+        ? isFull ? 'border-slate-200 opacity-50' : 'ring-2 ring-orange-400 border-orange-300 cursor-pointer'
+        : isDragging
+            ? 'opacity-30 border-slate-200'
+            : isOver
+                ? 'border-orange-400 bg-orange-50/40'
+                : hasRecipes
+                    ? 'border-slate-200 shadow-sm hover:border-orange-200'
+                    : 'border-dashed border-slate-200 hover:bg-orange-50/30';
 
     return (
-        <div ref={setRef} className="relative w-full h-full group">
+        <div
+            ref={setRef}
+            className={`relative w-full h-full group ${isAddMode && isFull ? 'pointer-events-none' : ''}`}
+            onClick={isAddMode && !isFull ? onAddToSlot : undefined}
+        >
             <div className={`relative w-full h-full rounded-xl border-2 transition-all overflow-hidden bg-white dark:bg-slate-100 ${borderClass}`}>
 
                 {!hasRecipes && (
@@ -124,6 +139,7 @@ export const MultiMealSlot = ({
                                         recipeId={rid}
                                         onNavigate={() => onNavigateToRecipe(rid)}
                                         onRemove={() => onRemoveRecipe(rid)}
+                                        hideRemove={isAddMode}
                                     />
                                 );
                             }
@@ -145,7 +161,7 @@ export const MultiMealSlot = ({
                 )}
             </div>
 
-            {hasRecipes && !isDragging && (
+            {hasRecipes && !isDragging && !isAddMode && (
                 <>
                     {!IS_TOUCH && (
                         <div

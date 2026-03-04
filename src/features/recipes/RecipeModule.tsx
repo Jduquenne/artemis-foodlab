@@ -131,6 +131,7 @@ export const RecipeModule = () => {
                                         backImage={recipe.ingredientsUrl}
                                         recipeUrl={recipe.recipeUrl}
                                         onClick={() => navigate(`/recipes/detail/${recipe.recipeId || recipe.id}`)}
+                                        onAddToPlanning={(recipesDb as unknown as Record<string, { kind: string }>)[recipe.recipeId || recipe.id]?.kind !== 'base' ? () => navigate(`/planning?addRecipe=${recipe.recipeId || recipe.id}`) : undefined}
                                     />
                                 ))}
                             </div>

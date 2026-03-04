@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Layers } from 'lucide-react';
+import { Layers, Plus } from 'lucide-react';
 import { isScrollingActive } from '../../../shared/utils/scrollGuard';
 import { IS_TOUCH } from '../../../shared/utils/deviceUtils';
 
@@ -9,9 +9,10 @@ interface FlipCardProps {
     backImage?: string;
     recipeUrl?: string;
     onClick: () => void;
+    onAddToPlanning?: () => void;
 }
 
-export const FlipCard = ({ name, frontImage, backImage, recipeUrl, onClick }: FlipCardProps) => {
+export const FlipCard = ({ name, frontImage, backImage, recipeUrl, onClick, onAddToPlanning }: FlipCardProps) => {
     const [isFlipped, setIsFlipped] = useState(false);
     const [showBack, setShowBack] = useState(false);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -53,6 +54,14 @@ export const FlipCard = ({ name, frontImage, backImage, recipeUrl, onClick }: Fl
                         <Layers size={13} />
                     </button>
                 )}
+                {onAddToPlanning && (
+                    <button
+                        onClick={(e) => { e.stopPropagation(); onAddToPlanning(); }}
+                        className="absolute bottom-1.5 right-1.5 p-1.5 rounded-lg shadow border bg-orange-500 border-orange-400 text-white"
+                    >
+                        <Plus size={13} />
+                    </button>
+                )}
             </div>
         );
     }
@@ -90,6 +99,14 @@ export const FlipCard = ({ name, frontImage, backImage, recipeUrl, onClick }: Fl
                     )}
                 </div>
             </div>
+            {onAddToPlanning && (
+                <button
+                    onClick={(e) => { e.stopPropagation(); onAddToPlanning(); }}
+                    className="absolute top-1.5 right-1.5 z-30 p-1.5 rounded-lg shadow border bg-orange-500 border-orange-400 text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                    <Plus size={13} />
+                </button>
+            )}
         </div>
     );
 };

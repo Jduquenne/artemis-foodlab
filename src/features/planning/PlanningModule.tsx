@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useRef } from 'react';
-import { ChevronLeft, ChevronRight, ShoppingCart, Check } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ShoppingCart, Check, X } from 'lucide-react';
+import recipesDb from '../../core/data/recipes-db.json';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { getWeekSlots, saveSlot, deleteSlot, bulkSaveSlots } from '../../core/services/planningService';
 import { MealSlot } from './components/MealSlot';
@@ -62,6 +63,14 @@ export const PlanningModule = () => {
         setSearchParams(p => { p.set('day', day); return p; }, { replace: true });
     const setSelectedDate = (date: Date) =>
         setSearchParams(p => { p.set('d', date.toISOString().slice(0, 10)); return p; }, { replace: true });
+
+    const addRecipeId = searchParams.get('addRecipe');
+    const isAddMode = !!addRecipeId;
+    const addRecipeName = addRecipeId
+        ? (recipesDb as Record<string, { name: string }>)[addRecipeId]?.name ?? ''
+        : null;
+    const clearAddMode = () =>
+        setSearchParams(p => { p.delete('addRecipe'); return p; }, { replace: true });
 
     const [isSelectionMode, setIsSelectionMode] = useState(false);
     const [draftDays, setDraftDays] = useState<ShoppingDay[]>([]);
@@ -191,6 +200,21 @@ export const PlanningModule = () => {
         setEditingPersonsSlotId(null);
     };
 
+    const handleAddToSlot = async (day: string, slot: SlotId) => {
+        if (!addRecipeId) return;
+        const slotId = `${year}-W${weekNumber}-${day}-${slot}`;
+        const mealDef = MEAL_SLOTS.find(m => m.id === slot)!;
+        const existing = planningData.find(p => p.day === day && p.slot === slot);
+        if (mealDef.multi) {
+            const ids = existing?.recipeIds ?? [];
+            if (ids.length >= 4) return;
+            await saveSlot({ id: slotId, day, slot, recipeIds: [...ids, addRecipeId], year, week: weekNumber });
+        } else {
+            await saveSlot({ id: slotId, day, slot, recipeIds: [addRecipeId], year, week: weekNumber });
+        }
+        clearAddMode();
+    };
+
     const enterSelectionMode = () => { setDraftDays([...shoppingDays]); setIsSelectionMode(true); setPickerSlot(null); };
     const cancelSelection = () => setIsSelectionMode(false);
     const confirmSelection = () => { setShoppingDays(draftDays); setIsSelectionMode(false); };
@@ -220,21 +244,25 @@ export const PlanningModule = () => {
                 {mealType.multi ? (
                     <MultiMealSlot
                         label={mealType.label} icon={mealType.icon} slotId={slotId} recipeIds={recipeIds}
-                        onAdd={isSelectionMode ? () => { } : () => setPickerSlot({ day, slot: mealType.id })}
-                        onRemoveRecipe={isSelectionMode ? () => { } : (rid) => handleRemoveRecipe(day, mealType.id, rid)}
-                        onNavigateToRecipe={(rid) => navigate(`/recipes/detail/${rid}`)}
+                        onAdd={isSelectionMode || isAddMode ? () => { } : () => setPickerSlot({ day, slot: mealType.id })}
+                        onRemoveRecipe={isSelectionMode || isAddMode ? () => { } : (rid) => handleRemoveRecipe(day, mealType.id, rid)}
+                        onNavigateToRecipe={isAddMode ? () => { } : (rid) => navigate(`/recipes/detail/${rid}`)}
+                        isAddMode={isAddMode}
+                        onAddToSlot={isAddMode ? () => handleAddToSlot(day, mealType.id) : undefined}
                     />
                 ) : (
                     <MealSlot
                         label={mealType.label} icon={mealType.icon} slotId={slotId} recipeIds={recipeIds}
                         persons={savedMeal?.persons} isEditingPersons={isEditingThis} isAnyEditing={isAnyEditing}
                         onNavigate={() => navigate(`/recipes/detail/${savedMeal!.recipeIds[0]}`)}
-                        onOpenPicker={isSelectionMode ? () => { } : () => setPickerSlot({ day, slot: mealType.id })}
-                        onModify={isSelectionMode ? () => { } : () => setPickerSlot({ day, slot: mealType.id })}
-                        onDelete={isSelectionMode ? () => { } : () => handleDeleteMeal(day, mealType.id)}
-                        onOpenPersonsEditor={() => setEditingPersonsSlotId(slotId)}
+                        onOpenPicker={isSelectionMode || isAddMode ? () => { } : () => setPickerSlot({ day, slot: mealType.id })}
+                        onModify={isSelectionMode || isAddMode ? () => { } : () => setPickerSlot({ day, slot: mealType.id })}
+                        onDelete={isSelectionMode || isAddMode ? () => { } : () => handleDeleteMeal(day, mealType.id)}
+                        onOpenPersonsEditor={isAddMode ? () => { } : () => setEditingPersonsSlotId(slotId)}
                         onConfirmPersons={(n) => handleConfirmPersons(slotId, n)}
                         onCancelPersons={() => setEditingPersonsSlotId(null)}
+                        isAddMode={isAddMode}
+                        onAddToSlot={isAddMode ? () => handleAddToSlot(day, mealType.id) : undefined}
                     />
                 )}
             </div>
@@ -243,7 +271,7 @@ export const PlanningModule = () => {
 
     return (
         <DndContext
-            sensors={isSelectionMode || isAnyEditing ? [] : sensors}
+            sensors={isSelectionMode || isAnyEditing || isAddMode ? [] : sensors}
             collisionDetection={closestCenter}
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
@@ -257,12 +285,12 @@ export const PlanningModule = () => {
                         <span className="text-xs sm:text-sm font-bold text-slate-400">Sem. {weekNumber} · {weekRange}</span>
                     </div>
 
-                    <div className={`flex items-center gap-2 shrink-0 ${isAnyEditing ? 'opacity-40 pointer-events-none' : ''}`}>
+                    <div className="flex items-center gap-2 shrink-0">
                         <input ref={dateInputRef} type="date" tabIndex={-1}
                             className="absolute opacity-0 w-px h-px pointer-events-none"
                             onChange={(e) => e.target.value && setSelectedDate(new Date(e.target.value))}
                         />
-                        <div className="flex items-center gap-1 bg-white dark:bg-slate-100 px-2 py-1 rounded-2xl shadow-sm border border-slate-200">
+                        <div className={`flex items-center gap-1 bg-white dark:bg-slate-100 px-2 py-1 rounded-2xl shadow-sm border border-slate-200 ${isAnyEditing ? 'opacity-40 pointer-events-none' : ''}`}>
                             <button aria-label="Semaine précédente" onClick={() => changeWeek(-1)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-200 rounded-xl transition-colors">
                                 <ChevronLeft size={18} className="text-slate-600" />
                             </button>
@@ -279,7 +307,7 @@ export const PlanningModule = () => {
                             </button>
                         </div>
 
-                        {!isSelectionMode && (
+                        {!isSelectionMode && !isAddMode && (
                             <button
                                 onClick={isAnyEditing ? undefined : enterSelectionMode}
                                 className={[
@@ -295,6 +323,16 @@ export const PlanningModule = () => {
                         )}
                     </div>
                 </div>
+
+                {/* ── ADD MODE BANNER ── */}
+                {isAddMode && addRecipeName && (
+                    <div className="shrink-0 flex items-center justify-between gap-3 px-3 py-2 bg-orange-500 text-white rounded-xl">
+                        <span className="text-sm font-bold truncate">📌 {addRecipeName}</span>
+                        <button onClick={clearAddMode} className="shrink-0 p-1 hover:bg-orange-600 rounded-lg transition-colors">
+                            <X size={16} />
+                        </button>
+                    </div>
+                )}
 
                 {/* ── MOBILE: BARRE DE JOURS ── */}
                 <div className="sm:hidden grid grid-cols-7 gap-0.5 shrink-0 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl p-1 shadow-sm">

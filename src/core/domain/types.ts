@@ -47,6 +47,9 @@ export interface Food {
   id: string;
   name: string;
   category: IngredientCategory;
+  macros: Macronutrients;
+  unitWeight?: number;
+  isFreezable?: boolean;
 }
 
 export interface Ingredient {
@@ -56,14 +59,15 @@ export interface Ingredient {
   unit: Unit;
   category: IngredientCategory;
   foodId?: string;
+  baseId?: string;
   preparation?: string;
 }
 
 export interface Macronutrients {
-  KCAL: number;
+  kcal: number;
   proteins: number;
   lipids: number;
-  carbohydrate: number;
+  carbohydrates: number;
   fibers: number;
 }
 

@@ -4,12 +4,12 @@ export const PREDEFINED_FILTERS: PredefinedFilter[] = [
   {
     id: "low-kcal",
     label: "Moins de 500 kcal",
-    check: (m) => m.KCAL < 500,
+    check: (m) => m.kcal < 500,
   },
   {
     id: "extra-low-kcal",
     label: "Moins de 400 kcal",
-    check: (m) => m.KCAL < 400,
+    check: (m) => m.kcal < 400,
   },
   {
     id: "high-protein",
@@ -19,7 +19,7 @@ export const PREDEFINED_FILTERS: PredefinedFilter[] = [
   {
     id: "low-carb",
     label: "Pauvre en glucides (< 40g)",
-    check: (m) => m.carbohydrate < 40,
+    check: (m) => m.carbohydrates < 40,
   },
   {
     id: "low-lipid",

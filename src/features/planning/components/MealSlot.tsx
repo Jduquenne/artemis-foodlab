@@ -3,6 +3,7 @@ import { Plus, RefreshCw, Trash2, GripVertical, Users, Check, X, RotateCcw } fro
 import { useDraggable, useDroppable } from '@dnd-kit/core';
 import { plannableDb } from '../../../core/utils/plannableDb';
 import { IS_TOUCH } from '../../../shared/utils/deviceUtils';
+import { DessertCell } from './DessertCell';
 
 interface MealSlotProps {
     label: string;
@@ -21,6 +22,10 @@ interface MealSlotProps {
     onCancelPersons: () => void;
     isAddMode?: boolean;
     onAddToSlot?: () => void;
+    hasDessert?: boolean;
+    dessertIds?: string[];
+    onAddDessert?: () => void;
+    onRemoveDessert?: (recipeId: string) => void;
 }
 
 export const MealSlot = ({
@@ -29,6 +34,7 @@ export const MealSlot = ({
     onNavigate, onOpenPicker, onModify, onDelete,
     onOpenPersonsEditor, onConfirmPersons, onCancelPersons,
     isAddMode, onAddToSlot,
+    hasDessert, dessertIds, onAddDessert, onRemoveDessert,
 }: MealSlotProps) => {
     const data = plannableDb;
     const firstId = recipeIds[0];
@@ -81,9 +87,14 @@ export const MealSlot = ({
 
     const displayPersons = persons ?? defaultPortion;
     const isCustom = persons !== undefined;
+    const isOutdoor = recipe?.categoryId === 'outdoor';
+    const showDessertColumn = hasDessert && !isOutdoor && !!photoUrl;
+    const dessertCount = dessertIds?.length ?? 0;
+    const addButtonShown = dessertCount < 3 && !isAddMode && !!onAddDessert;
+    const placeholderCount = Math.max(0, 3 - dessertCount - (addButtonShown ? 1 : 0));
 
-    return (
-        <div ref={setRef} className="relative w-full h-full group">
+    const mainSlotContent = (
+        <>
             <button
                 onClick={handleMainClick}
                 className={`relative w-full h-full rounded-xl border-2 transition-all overflow-hidden bg-white dark:bg-slate-100 ${borderClass} ${photoUrl && !hasRecipesPage ? 'cursor-default' : ''}`}
@@ -210,6 +221,38 @@ export const MealSlot = ({
                     </div>
                 </div>
             )}
+        </>
+    );
+
+    if (showDessertColumn) {
+        return (
+            <div ref={setRef} className="relative w-full h-full group flex gap-1">
+                <div className="relative flex-[2] h-full min-w-0">
+                    {mainSlotContent}
+                </div>
+                <div className="flex flex-col gap-1 w-[35%] shrink-0 h-full">
+                    {(dessertIds ?? []).map(rid => (
+                        <DessertCell key={rid} recipeId={rid} onRemove={() => onRemoveDessert?.(rid)} isAddMode={isAddMode} />
+                    ))}
+                    {addButtonShown && (
+                        <button
+                            onClick={(e) => { e.stopPropagation(); onAddDessert?.(); }}
+                            className="flex-1 min-h-0 rounded-lg border border-dashed border-slate-200 flex items-center justify-center hover:bg-orange-50 hover:border-orange-300 transition-colors"
+                        >
+                            <Plus size={12} className="text-slate-400" />
+                        </button>
+                    )}
+                    {Array.from({ length: placeholderCount }).map((_, i) => (
+                        <div key={`ph-${i}`} className="flex-1 min-h-0 rounded-lg bg-slate-100/50 dark:bg-slate-200/20" />
+                    ))}
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <div ref={setRef} className="relative w-full h-full group">
+            {mainSlotContent}
         </div>
     );
 };

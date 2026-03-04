@@ -189,13 +189,14 @@ package "Recettes — JSON statique" as RECIPES #FFF4ED {
 package "Planning — IndexedDB" as PLANNING #EDFAF2 {
 
   class MealSlot <<entity>> {
-    + id        : string
+    + id          : string
     ..
-    + weekId    : string
-    + day       : DayOfWeek
-    + mealType  : MealType
-    + recipeIds : RecipeId[]
-    + persons?  : number
+    + weekId      : string
+    + day         : DayOfWeek
+    + mealType    : MealType
+    + recipeIds   : RecipeId[]
+    + dessertIds? : RecipeId[]
+    + persons?    : number
   }
 
   class ShoppingDay <<value object>> {

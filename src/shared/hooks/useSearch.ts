@@ -124,3 +124,7 @@ export const useSearchMeals = (query: string | null): SearchRecipeResult[] => {
     [query],
   );
 };
+
+export const useSearchIngredients = (query: string | null): SearchRecipeResult[] => {
+  return useMemo(() => search(query, [RecipeKind.INGREDIENT]), [query]);
+};

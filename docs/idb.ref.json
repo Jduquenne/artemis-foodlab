@@ -12,7 +12,8 @@
           "id":        "string  — '{year}-W{week}-{day}-{slot}'",
           "day":       "string  — 'lundi' | 'mardi' | 'mercredi' | 'jeudi' | 'vendredi' | 'samedi' | 'dimanche'",
           "slot":      "string  — 'breakfast' | 'lunch' | 'snack' | 'dinner'",
-          "recipeIds": "string[] — tableau d'ids recette (ex: ['wm-001']). Plusieurs = multi-repas.",
+          "recipeIds":  "string[] — tableau d'ids recette (ex: ['wm-001']). Plusieurs = multi-repas.",
+          "dessertIds": "string[]? — ids recettes ingredient (max 3), uniquement pour lunch et dinner",
           "year":      "number  — ex: 2026",
           "week":      "number  — numéro de semaine ISO (1-53)",
           "persons":   "number? — absent = utilise defaultPortions de la recette"

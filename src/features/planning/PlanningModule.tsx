@@ -2,10 +2,11 @@ import React, { useState, useMemo, useRef } from 'react';
 import { ChevronLeft, ChevronRight, ShoppingCart, Check, X } from 'lucide-react';
 import recipesDb from '../../core/data/recipes-db.json';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { getWeekSlots, saveSlot, deleteSlot, bulkSaveSlots } from '../../core/services/planningService';
+import { getWeekSlots, saveSlot, deleteSlot, bulkSaveSlots, addDessertToSlot, removeDessertFromSlot } from '../../core/services/planningService';
 import { MealSlot } from './components/MealSlot';
 import { MultiMealSlot } from './components/MultiMealSlot';
 import { RecipePicker } from './components/RecipePicker';
+import { DessertPicker } from './components/DessertPicker';
 import { MealDragOverlay } from './components/MealDragOverlay';
 import { ShoppingSelectionBar } from './components/ShoppingSelectionBar';
 import { getWeekNumber, getMonday, getWeekRange } from '../../shared/utils/weekUtils';
@@ -25,10 +26,10 @@ import {
 } from '@dnd-kit/core';
 
 const MEAL_SLOTS = [
-    { id: 'breakfast', label: 'Petit déj.', icon: '☕', multi: true, flex: 2 },
-    { id: 'lunch', label: 'Déjeuner', icon: '🍴', multi: false, flex: 3 },
-    { id: 'snack', label: 'Goûter', icon: '🍎', multi: true, flex: 2 },
-    { id: 'dinner', label: 'Dîner', icon: '🌙', multi: false, flex: 3 },
+    { id: 'breakfast', label: 'Petit déj.', icon: '☕', multi: true, flex: 2, hasDessert: false },
+    { id: 'lunch', label: 'Déjeuner', icon: '🍴', multi: false, flex: 3, hasDessert: true },
+    { id: 'snack', label: 'Goûter', icon: '🍎', multi: true, flex: 2, hasDessert: false },
+    { id: 'dinner', label: 'Dîner', icon: '🌙', multi: false, flex: 3, hasDessert: true },
 ] as const;
 
 type SlotId = typeof MEAL_SLOTS[number]['id'];
@@ -47,6 +48,7 @@ export const PlanningModule = () => {
     const dateInputRef = useRef<HTMLInputElement>(null);
 
     const [pickerSlot, setPickerSlot] = useState<{ day: string; slot: SlotId } | null>(null);
+    const [dessertPickerSlot, setDessertPickerSlot] = useState<{ day: string; slot: SlotId } | null>(null);
     const [activeDragId, setActiveDragId] = useState<string | null>(null);
     const [slideKey, setSlideKey] = useState(0);
     const [slideDir, setSlideDir] = useState<'left' | 'right'>('left');
@@ -148,6 +150,18 @@ export const PlanningModule = () => {
         await deleteSlot(`${year}-W${weekNumber}-${day}-${slot}`);
     };
 
+    const handleAddDessert = async (day: string, slot: SlotId, recipeId: string) => {
+        const savedSlot = planningData.find(p => p.day === day && p.slot === slot);
+        if (!savedSlot) return;
+        await addDessertToSlot(savedSlot, recipeId);
+    };
+
+    const handleRemoveDessert = async (day: string, slot: SlotId, recipeId: string) => {
+        const savedSlot = planningData.find(p => p.day === day && p.slot === slot);
+        if (!savedSlot) return;
+        await removeDessertFromSlot(savedSlot, recipeId);
+    };
+
     const handleRemoveRecipe = async (day: string, slot: SlotId, recipeIdToRemove: string) => {
         const existing = planningData.find(p => p.day === day && p.slot === slot);
         if (!existing) return;
@@ -205,6 +219,14 @@ export const PlanningModule = () => {
         const slotId = `${year}-W${weekNumber}-${day}-${slot}`;
         const mealDef = MEAL_SLOTS.find(m => m.id === slot)!;
         const existing = planningData.find(p => p.day === day && p.slot === slot);
+        const recipeKind = (recipesDb as Record<string, { kind: string }>)[addRecipeId]?.kind;
+        if (mealDef.hasDessert && existing?.recipeIds.length && recipeKind === 'ingredient') {
+            if ((existing.dessertIds ?? []).length < 3) {
+                await addDessertToSlot(existing, addRecipeId);
+                clearAddMode();
+            }
+            return;
+        }
         if (mealDef.multi) {
             const ids = existing?.recipeIds ?? [];
             if (ids.length >= 4) return;
@@ -263,6 +285,10 @@ export const PlanningModule = () => {
                         onCancelPersons={() => setEditingPersonsSlotId(null)}
                         isAddMode={isAddMode}
                         onAddToSlot={isAddMode ? () => handleAddToSlot(day, mealType.id) : undefined}
+                        hasDessert={mealType.hasDessert}
+                        dessertIds={savedMeal?.dessertIds ?? []}
+                        onAddDessert={isSelectionMode || isAddMode ? undefined : () => setDessertPickerSlot({ day, slot: mealType.id })}
+                        onRemoveDessert={(rid) => handleRemoveDessert(day, mealType.id, rid)}
                     />
                 )}
             </div>
@@ -482,6 +508,17 @@ export const PlanningModule = () => {
                             setPickerSlot(null);
                         }}
                         onClose={() => setPickerSlot(null)}
+                    />
+                )}
+
+                {dessertPickerSlot && !isSelectionMode && (
+                    <DessertPicker
+                        existingIds={planningData.find(p => p.day === dessertPickerSlot.day && p.slot === dessertPickerSlot.slot)?.dessertIds ?? []}
+                        onSelect={async (recipeId) => {
+                            await handleAddDessert(dessertPickerSlot.day, dessertPickerSlot.slot, recipeId);
+                            setDessertPickerSlot(null);
+                        }}
+                        onClose={() => setDessertPickerSlot(null)}
                     />
                 )}
             </div>

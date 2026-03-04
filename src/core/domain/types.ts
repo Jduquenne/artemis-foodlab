@@ -167,6 +167,7 @@ export interface MealSlot {
   day: string;
   slot: "breakfast" | "lunch" | "snack" | "dinner";
   recipeIds: string[];
+  dessertIds?: string[];
   year: number;
   week: number;
   persons?: number;

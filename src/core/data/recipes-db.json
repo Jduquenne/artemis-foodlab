@@ -2764,8 +2764,8 @@
         "id": "005",
         "foodId": "es-006",
         "name": "Cassonade Graeffe",
-        "quantity": 1,
-        "unit": "c",
+        "quantity": 10,
+        "unit": "g",
         "category": "Epicerie sucrée"
       },
       {
@@ -11445,8 +11445,8 @@
         "id": "002",
         "foodId": "es-025",
         "name": "Fécule de maïs",
-        "quantity": 2,
-        "unit": "c",
+        "quantity": 15,
+        "unit": "g",
         "category": "Epicerie sucrée"
       },
       {
@@ -16432,8 +16432,8 @@
         "id": "007",
         "foodId": "ep-062",
         "name": "Vinaigre balsamique",
-        "quantity": 1,
-        "unit": "c",
+        "quantity": 8,
+        "unit": "g",
         "category": "Epices et condiments"
       },
       {
@@ -27055,8 +27055,8 @@
         "id": "006",
         "foodId": "web-002",
         "name": "Purée de cacahuètes",
-        "quantity": 1,
-        "unit": "c",
+        "quantity": 10,
+        "unit": "g",
         "category": "Internet"
       },
       {
@@ -29554,8 +29554,8 @@
         "id": "007",
         "foodId": "cn-001",
         "name": "Concentré de tomates",
-        "quantity": 1,
-        "unit": "c",
+        "quantity": 10,
+        "unit": "g",
         "category": "Conserves"
       },
       {
@@ -34450,8 +34450,8 @@
         "id": "006",
         "foodId": "ep-038",
         "name": "Huile de sésame",
-        "quantity": 1,
-        "unit": "c",
+        "quantity": 8,
+        "unit": "g",
         "category": "Epices et condiments"
       },
       {

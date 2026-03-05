@@ -137,7 +137,7 @@ export const RecipeMacroPage = () => {
                 {macros && (
                     <div className="flex gap-2 overflow-x-auto pb-0.5">
                         {MACRO_LABELS.map(({ key, label, unit }) => (
-                            <div key={key} className="flex flex-col items-center bg-slate-100 rounded-xl px-3 py-1.5 min-w-[60px]">
+                            <div key={key} className="flex flex-col items-center bg-slate-100 rounded-xl px-3 py-1.5 min-w-15">
                                 <span className="text-[10px] font-medium text-slate-400 uppercase tracking-wide leading-none mb-0.5">{label}</span>
                                 <span className="text-sm font-bold text-slate-800 leading-none">
                                     {Math.round(macros[key])}{unit}
@@ -221,7 +221,7 @@ export const RecipeMacroPage = () => {
                                         </div>
 
                                         {isQtyModified && (
-                                            <span className="text-[10px] text-slate-400 tabular-nums pr-[52px]">
+                                            <span className="text-[10px] text-slate-400 tabular-nums pr-13">
                                                 défaut : {originalQty}{unitLabel ? ` ${unitLabel}` : ''}
                                             </span>
                                         )}

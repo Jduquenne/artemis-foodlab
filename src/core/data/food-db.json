@@ -4,7 +4,7 @@
     "name": "Baguette",
     "category": "Boulangerie",
     "macros": {
-      "kcal": 283,
+      "kcal": 281,
       "proteins": 8,
       "lipids": 1,
       "carbohydrates": 59,
@@ -17,7 +17,7 @@
     "name": "Pain",
     "category": "Boulangerie",
     "macros": {
-      "kcal": 266,
+      "kcal": 270,
       "proteins": 9,
       "lipids": 2,
       "carbohydrates": 51,
@@ -31,7 +31,7 @@
     "name": "Pain complet",
     "category": "Boulangerie",
     "macros": {
-      "kcal": 266,
+      "kcal": 270,
       "proteins": 9,
       "lipids": 2,
       "carbohydrates": 51,
@@ -45,13 +45,13 @@
     "name": "Pain de mie",
     "category": "Boulangerie",
     "macros": {
-      "kcal": 255,
+      "kcal": 261,
       "proteins": 9,
       "lipids": 3,
       "carbohydrates": 48,
       "fibers": 3
     },
-    "unitWeight": 20,
+    "unitWeight": 80,
     "isFreezable": true
   },
   "bo-005": {
@@ -59,7 +59,7 @@
     "name": "Pain nordique",
     "category": "Boulangerie",
     "macros": {
-      "kcal": 265,
+      "kcal": 266,
       "proteins": 8,
       "lipids": 4,
       "carbohydrates": 45,
@@ -86,7 +86,7 @@
     "name": "Jambon",
     "category": "Charcuterie",
     "macros": {
-      "kcal": 140,
+      "kcal": 146,
       "proteins": 21,
       "lipids": 6,
       "carbohydrates": 2,
@@ -99,7 +99,7 @@
     "name": "Lardons",
     "category": "Charcuterie",
     "macros": {
-      "kcal": 310,
+      "kcal": 311,
       "proteins": 17,
       "lipids": 27,
       "carbohydrates": 0,
@@ -112,7 +112,7 @@
     "name": "Merguez",
     "category": "Charcuterie",
     "macros": {
-      "kcal": 219,
+      "kcal": 221,
       "proteins": 17,
       "lipids": 17,
       "carbohydrates": 0,
@@ -125,7 +125,7 @@
     "name": "Saucisse",
     "category": "Charcuterie",
     "macros": {
-      "kcal": 238,
+      "kcal": 258,
       "proteins": 15,
       "lipids": 22,
       "carbohydrates": 0,
@@ -138,7 +138,7 @@
     "name": "Saucisse de Toulouse",
     "category": "Charcuterie",
     "macros": {
-      "kcal": 238,
+      "kcal": 258,
       "proteins": 15,
       "lipids": 22,
       "carbohydrates": 0,
@@ -152,9 +152,9 @@
     "category": "Conserves",
     "macros": {
       "kcal": 71,
-      "proteins": 5,
-      "lipids": 1,
-      "carbohydrates": 11,
+      "proteins": 4,
+      "lipids": 0,
+      "carbohydrates": 10,
       "fibers": 3
     }
   },
@@ -175,7 +175,7 @@
     "name": "Maïs",
     "category": "Conserves",
     "macros": {
-      "kcal": 89,
+      "kcal": 86,
       "proteins": 3,
       "lipids": 2,
       "carbohydrates": 12,
@@ -188,7 +188,7 @@
     "name": "Olives verte",
     "category": "Conserves",
     "macros": {
-      "kcal": 145,
+      "kcal": 144,
       "proteins": 1,
       "lipids": 14,
       "carbohydrates": 1,
@@ -200,7 +200,7 @@
     "name": "Pousses de haricots mungo",
     "category": "Conserves",
     "macros": {
-      "kcal": 33,
+      "kcal": 36,
       "proteins": 3,
       "lipids": 0,
       "carbohydrates": 5,
@@ -213,11 +213,11 @@
     "name": "Pulpe de tomates",
     "category": "Conserves",
     "macros": {
-      "kcal": 24,
+      "kcal": 28,
       "proteins": 1,
-      "lipids": 1,
-      "carbohydrates": 4,
-      "fibers": 2
+      "lipids": 0,
+      "carbohydrates": 5,
+      "fibers": 1
     },
     "isFreezable": true
   },
@@ -226,9 +226,9 @@
     "name": "Purée de tomates",
     "category": "Conserves",
     "macros": {
-      "kcal": 25,
+      "kcal": 26,
       "proteins": 1,
-      "lipids": 2,
+      "lipids": 0,
       "carbohydrates": 4,
       "fibers": 1
     },
@@ -252,7 +252,7 @@
     "name": "Sauce tomate",
     "category": "Conserves",
     "macros": {
-      "kcal": 64,
+      "kcal": 71,
       "proteins": 2,
       "lipids": 3,
       "carbohydrates": 8,
@@ -265,7 +265,7 @@
     "name": "Thon au naturel",
     "category": "Conserves",
     "macros": {
-      "kcal": 93,
+      "kcal": 97,
       "proteins": 22,
       "lipids": 1,
       "carbohydrates": 0,
@@ -422,7 +422,7 @@
     "name": "Confit d’oignon",
     "category": "Epices et condiments",
     "macros": {
-      "kcal": 151,
+      "kcal": 154,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 36,
@@ -458,7 +458,7 @@
     "name": "Cornichons",
     "category": "Epices et condiments",
     "macros": {
-      "kcal": 18,
+      "kcal": 29,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 5,
@@ -782,7 +782,7 @@
     "name": "Levure de bière",
     "category": "Epices et condiments",
     "macros": {
-      "kcal": 325,
+      "kcal": 323,
       "proteins": 45,
       "lipids": 5,
       "carbohydrates": 12,
@@ -794,7 +794,7 @@
     "name": "Mayonnaise",
     "category": "Epices et condiments",
     "macros": {
-      "kcal": 697,
+      "kcal": 694,
       "proteins": 1,
       "lipids": 76,
       "carbohydrates": 0,
@@ -818,7 +818,7 @@
     "name": "Moutarde",
     "category": "Epices et condiments",
     "macros": {
-      "kcal": 157,
+      "kcal": 160,
       "proteins": 8,
       "lipids": 12,
       "carbohydrates": 3,
@@ -950,7 +950,7 @@
     "name": "Sauce soja",
     "category": "Epices et condiments",
     "macros": {
-      "kcal": 77,
+      "kcal": 56,
       "proteins": 10,
       "lipids": 0,
       "carbohydrates": 3,
@@ -962,7 +962,7 @@
     "name": "Sauce tamari",
     "category": "Epices et condiments",
     "macros": {
-      "kcal": 80,
+      "kcal": 63,
       "proteins": 11,
       "lipids": 0,
       "carbohydrates": 4,
@@ -1010,7 +1010,7 @@
     "name": "Vinaigre balsamique",
     "category": "Epices et condiments",
     "macros": {
-      "kcal": 102,
+      "kcal": 80,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 20,
@@ -1034,7 +1034,7 @@
     "name": "Amandes effilées",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 616,
+      "kcal": 732,
       "proteins": 26,
       "lipids": 50,
       "carbohydrates": 40,
@@ -1070,7 +1070,7 @@
     "name": "Cacao non sucré",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 34,
+      "kcal": 35,
       "proteins": 3,
       "lipids": 1,
       "carbohydrates": 2,
@@ -1094,7 +1094,7 @@
     "name": "Cassonade Graeffe",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 398,
+      "kcal": 378,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 94,
@@ -1106,7 +1106,7 @@
     "name": "Chapelure de maïs",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 373,
+      "kcal": 374,
       "proteins": 6,
       "lipids": 1,
       "carbohydrates": 83,
@@ -1154,7 +1154,7 @@
     "name": "Chocolat noir pâtissier",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 554,
+      "kcal": 553,
       "proteins": 8,
       "lipids": 37,
       "carbohydrates": 40,
@@ -1202,7 +1202,7 @@
     "name": "Farine blanche",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 342,
+      "kcal": 346,
       "proteins": 11,
       "lipids": 2,
       "carbohydrates": 69,
@@ -1226,7 +1226,7 @@
     "name": "Farine complète 5 céréales",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 356,
+      "kcal": 361,
       "proteins": 10,
       "lipids": 3,
       "carbohydrates": 70,
@@ -1238,7 +1238,7 @@
     "name": "Farine d’épeautre",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 342,
+      "kcal": 346,
       "proteins": 15,
       "lipids": 3,
       "carbohydrates": 59,
@@ -1250,7 +1250,7 @@
     "name": "Farine de coco",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 423,
+      "kcal": 313,
       "proteins": 20,
       "lipids": 12,
       "carbohydrates": 13,
@@ -1262,7 +1262,7 @@
     "name": "Farine de maïs",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 343,
+      "kcal": 342,
       "proteins": 6,
       "lipids": 1,
       "carbohydrates": 75,
@@ -1274,7 +1274,7 @@
     "name": "Farine de pois chiches",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 387,
+      "kcal": 403,
       "proteins": 22,
       "lipids": 6,
       "carbohydrates": 57,
@@ -1286,7 +1286,7 @@
     "name": "Farine de sarrasin",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 348,
+      "kcal": 350,
       "proteins": 11,
       "lipids": 2,
       "carbohydrates": 68,
@@ -1322,7 +1322,7 @@
     "name": "Fécule de maïs",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 367,
+      "kcal": 361,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 90,
@@ -1346,7 +1346,7 @@
     "name": "Flocons d'avoine",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 372,
+      "kcal": 375,
       "proteins": 14,
       "lipids": 7,
       "carbohydrates": 59,
@@ -1358,7 +1358,7 @@
     "name": "Flocons d'épeautre",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 347,
+      "kcal": 351,
       "proteins": 14,
       "lipids": 3,
       "carbohydrates": 63,
@@ -1370,7 +1370,7 @@
     "name": "Flocons de quinoa",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 380,
+      "kcal": 340,
       "proteins": 14,
       "lipids": 6,
       "carbohydrates": 55,
@@ -1382,7 +1382,7 @@
     "name": "Flocons de sarrasin",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 340,
+      "kcal": 341,
       "proteins": 10,
       "lipids": 3,
       "carbohydrates": 65,
@@ -1418,7 +1418,7 @@
     "name": "Miel",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 334,
+      "kcal": 332,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 83,
@@ -1430,7 +1430,7 @@
     "name": "Miel ou Sirop d’érable",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 334,
+      "kcal": 332,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 83,
@@ -1442,7 +1442,7 @@
     "name": "Noix de coco râpée",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 689,
+      "kcal": 687,
       "proteins": 7,
       "lipids": 66,
       "carbohydrates": 8,
@@ -1454,7 +1454,7 @@
     "name": "Pépites de chocolat 70%",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 543,
+      "kcal": 537,
       "proteins": 8,
       "lipids": 40,
       "carbohydrates": 30,
@@ -1466,7 +1466,7 @@
     "name": "Pépites de chocolat ou raisin secs",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 543,
+      "kcal": 537,
       "proteins": 8,
       "lipids": 40,
       "carbohydrates": 30,
@@ -1502,7 +1502,7 @@
     "name": "Poudre de noisettes",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 671,
+      "kcal": 677,
       "proteins": 18,
       "lipids": 63,
       "carbohydrates": 5,
@@ -1514,7 +1514,7 @@
     "name": "Sirop d'agave",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 324,
+      "kcal": 308,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 77,
@@ -1526,7 +1526,7 @@
     "name": "Sirop d'érable",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 324,
+      "kcal": 308,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 77,
@@ -1538,7 +1538,7 @@
     "name": "Son d’avoine",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 373,
+      "kcal": 374,
       "proteins": 13,
       "lipids": 6,
       "carbohydrates": 60,
@@ -1622,7 +1622,7 @@
     "name": "Blé",
     "category": "Féculents",
     "macros": {
-      "kcal": 135,
+      "kcal": 136,
       "proteins": 4,
       "lipids": 0,
       "carbohydrates": 27,
@@ -1658,7 +1658,7 @@
     "name": "Crozets au sarrasin",
     "category": "Féculents",
     "macros": {
-      "kcal": 366,
+      "kcal": 385,
       "proteins": 13,
       "lipids": 3,
       "carbohydrates": 70,
@@ -1670,7 +1670,7 @@
     "name": "Flageolets secs",
     "category": "Féculents",
     "macros": {
-      "kcal": 294,
+      "kcal": 292,
       "proteins": 21,
       "lipids": 2,
       "carbohydrates": 38,
@@ -1695,7 +1695,7 @@
     "name": "Haricots blancs secs",
     "category": "Féculents",
     "macros": {
-      "kcal": 298,
+      "kcal": 295,
       "proteins": 21,
       "lipids": 1,
       "carbohydrates": 38,
@@ -1708,7 +1708,7 @@
     "name": "Haricots rouges sec",
     "category": "Féculents",
     "macros": {
-      "kcal": 287,
+      "kcal": 283,
       "proteins": 21,
       "lipids": 1,
       "carbohydrates": 37,
@@ -1771,7 +1771,7 @@
     "name": "Orzo",
     "category": "Féculents",
     "macros": {
-      "kcal": 359,
+      "kcal": 360,
       "proteins": 12,
       "lipids": 2,
       "carbohydrates": 72,
@@ -1783,7 +1783,7 @@
     "name": "Orzo ou autres pâtes",
     "category": "Féculents",
     "macros": {
-      "kcal": 359,
+      "kcal": 360,
       "proteins": 12,
       "lipids": 2,
       "carbohydrates": 72,
@@ -1843,7 +1843,7 @@
     "name": "Perles de couscous",
     "category": "Féculents",
     "macros": {
-      "kcal": 356,
+      "kcal": 358,
       "proteins": 12,
       "lipids": 1,
       "carbohydrates": 72,
@@ -1904,7 +1904,7 @@
     "name": "Riz rond",
     "category": "Féculents",
     "macros": {
-      "kcal": 349,
+      "kcal": 344,
       "proteins": 7,
       "lipids": 0,
       "carbohydrates": 78,
@@ -1940,7 +1940,7 @@
     "name": "Sarrasin",
     "category": "Féculents",
     "macros": {
-      "kcal": 332,
+      "kcal": 345,
       "proteins": 13,
       "lipids": 3,
       "carbohydrates": 63,
@@ -1952,7 +1952,7 @@
     "name": "Semoule fine",
     "category": "Féculents",
     "macros": {
-      "kcal": 341,
+      "kcal": 337,
       "proteins": 11,
       "lipids": 1,
       "carbohydrates": 69,
@@ -2000,7 +2000,7 @@
     "name": "Vermicelles ou pâtes alphabet",
     "category": "Féculents",
     "macros": {
-      "kcal": 360,
+      "kcal": 356,
       "proteins": 13,
       "lipids": 2,
       "carbohydrates": 70,
@@ -2012,7 +2012,7 @@
     "name": "Blanc d’œuf",
     "category": "Ferme",
     "macros": {
-      "kcal": 46,
+      "kcal": 44,
       "proteins": 10,
       "lipids": 0,
       "carbohydrates": 1,
@@ -2025,7 +2025,7 @@
     "name": "Jaune d’œuf",
     "category": "Ferme",
     "macros": {
-      "kcal": 345,
+      "kcal": 347,
       "proteins": 16,
       "lipids": 31,
       "carbohydrates": 1,
@@ -2038,7 +2038,7 @@
     "name": "Œuf",
     "category": "Ferme",
     "macros": {
-      "kcal": 140,
+      "kcal": 142,
       "proteins": 13,
       "lipids": 10,
       "carbohydrates": 0,
@@ -2051,7 +2051,7 @@
     "name": "Abricot",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 44,
+      "kcal": 43,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 9,
@@ -2063,7 +2063,7 @@
     "name": "Ail",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 131,
+      "kcal": 114,
       "proteins": 6,
       "lipids": 0,
       "carbohydrates": 21,
@@ -2076,7 +2076,7 @@
     "name": "Ananas",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 52,
+      "kcal": 50,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 11,
@@ -2088,7 +2088,7 @@
     "name": "Asperges blanches",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 30,
+      "kcal": 28,
       "proteins": 3,
       "lipids": 0,
       "carbohydrates": 3,
@@ -2101,7 +2101,7 @@
     "name": "Asperges vertes fines",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 24,
+      "kcal": 22,
       "proteins": 2,
       "lipids": 0,
       "carbohydrates": 2,
@@ -2114,7 +2114,7 @@
     "name": "Aubergine",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 21,
+      "kcal": 22,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 3,
@@ -2140,7 +2140,7 @@
     "name": "Banane",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 93,
+      "kcal": 89,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 19,
@@ -2152,7 +2152,7 @@
     "name": "Betterave rouge",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 47,
+      "kcal": 45,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 8,
@@ -2165,7 +2165,7 @@
     "name": "Blanc de Poireau",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 32,
+      "kcal": 30,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 4,
@@ -2178,7 +2178,7 @@
     "name": "Brocoli",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 37,
+      "kcal": 32,
       "proteins": 3,
       "lipids": 0,
       "carbohydrates": 2,
@@ -2191,7 +2191,7 @@
     "name": "Brocoli frais",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 37,
+      "kcal": 32,
       "proteins": 3,
       "lipids": 0,
       "carbohydrates": 2,
@@ -2295,7 +2295,7 @@
     "name": "Cerises",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 54,
+      "kcal": 58,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 13,
@@ -2308,7 +2308,7 @@
     "name": "Champignons",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 21,
+      "kcal": 18,
       "proteins": 2,
       "lipids": 0,
       "carbohydrates": 0,
@@ -2334,7 +2334,7 @@
     "name": "Chou fleur",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 29,
+      "kcal": 28,
       "proteins": 2,
       "lipids": 0,
       "carbohydrates": 3,
@@ -2360,7 +2360,7 @@
     "name": "Choucroute cuite",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 20,
+      "kcal": 17,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 1,
@@ -2373,7 +2373,7 @@
     "name": "Choux de Bruxelles",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 45,
+      "kcal": 43,
       "proteins": 3,
       "lipids": 0,
       "carbohydrates": 4,
@@ -2410,7 +2410,7 @@
     "name": "Clémentine",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 49,
+      "kcal": 43,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 9,
@@ -2422,7 +2422,7 @@
     "name": "Compote de pomme maison",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 60,
+      "kcal": 64,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 15,
@@ -2435,7 +2435,7 @@
     "name": "Concombre",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 14,
+      "kcal": 13,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 2,
@@ -2447,7 +2447,7 @@
     "name": "Courge",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 40,
+      "kcal": 39,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 7,
@@ -2460,7 +2460,7 @@
     "name": "Courge bleue de Hongrie",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 40,
+      "kcal": 39,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 7,
@@ -2473,7 +2473,7 @@
     "name": "Courge butternut",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 40,
+      "kcal": 39,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 7,
@@ -2486,7 +2486,7 @@
     "name": "Courge butternut ou potimarron",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 40,
+      "kcal": 39,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 7,
@@ -2499,7 +2499,7 @@
     "name": "Courge butternut ou potiron",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 40,
+      "kcal": 39,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 7,
@@ -2512,7 +2512,7 @@
     "name": "Courge Jack Be Little",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 40,
+      "kcal": 39,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 7,
@@ -2525,7 +2525,7 @@
     "name": "Courge spaghetti",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 28,
+      "kcal": 27,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 5,
@@ -2538,7 +2538,7 @@
     "name": "Courgette",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 19,
+      "kcal": 18,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 2,
@@ -2551,7 +2551,7 @@
     "name": "Courgette (à râper)",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 19,
+      "kcal": 18,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 2,
@@ -2563,7 +2563,7 @@
     "name": "Échalote",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 75,
+      "kcal": 72,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 15,
@@ -2589,7 +2589,7 @@
     "name": "Épinards frais",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 27,
+      "kcal": 26,
       "proteins": 2,
       "lipids": 0,
       "carbohydrates": 1,
@@ -2602,7 +2602,7 @@
     "name": "Figue",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 68,
+      "kcal": 67,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 13,
@@ -2614,7 +2614,7 @@
     "name": "Fraises",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 35,
+      "kcal": 34,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 6,
@@ -2627,7 +2627,7 @@
     "name": "Framboises",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 48,
+      "kcal": 44,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 5,
@@ -2639,7 +2639,7 @@
     "name": "Gingembre frais",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 80,
+      "kcal": 78,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 15,
@@ -2651,7 +2651,7 @@
     "name": "Grenailles",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 77,
+      "kcal": 80,
       "proteins": 2,
       "lipids": 0,
       "carbohydrates": 17,
@@ -2675,7 +2675,7 @@
     "name": "Jus d’orange",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 45,
+      "kcal": 43,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 9,
@@ -2687,7 +2687,7 @@
     "name": "Kaki",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 66,
+      "kcal": 68,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 14,
@@ -2699,7 +2699,7 @@
     "name": "Kiwi",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 58,
+      "kcal": 49,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 9,
@@ -2711,7 +2711,7 @@
     "name": "Mâche",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 21,
+      "kcal": 16,
       "proteins": 2,
       "lipids": 0,
       "carbohydrates": 1,
@@ -2723,7 +2723,7 @@
     "name": "Mangue",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 64,
+      "kcal": 63,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 14,
@@ -2735,7 +2735,7 @@
     "name": "Melon",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 63,
+      "kcal": 43,
       "proteins": 1,
       "lipids": 1,
       "carbohydrates": 7,
@@ -2747,7 +2747,7 @@
     "name": "Mirabelle",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 75,
+      "kcal": 79,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 18,
@@ -2759,7 +2759,7 @@
     "name": "Mûres",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 46,
+      "kcal": 47,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 6,
@@ -2772,7 +2772,7 @@
     "name": "Myrtilles",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 58,
+      "kcal": 54,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 10,
@@ -2810,7 +2810,7 @@
     "name": "Oignon jaune",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 39,
+      "kcal": 38,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 7,
@@ -2838,7 +2838,7 @@
     "name": "Orange non traitée",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 47,
+      "kcal": 39,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 8,
@@ -2850,7 +2850,7 @@
     "name": "Panais",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 73,
+      "kcal": 72,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 13,
@@ -2863,7 +2863,7 @@
     "name": "Pastèque",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 35,
+      "kcal": 32,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 7,
@@ -2875,7 +2875,7 @@
     "name": "Patate douce",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 79,
+      "kcal": 77,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 16,
@@ -2888,7 +2888,7 @@
     "name": "Pêche",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 44,
+      "kcal": 45,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 9,
@@ -2900,7 +2900,7 @@
     "name": "Poire",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 60,
+      "kcal": 70,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 14,
@@ -2912,7 +2912,7 @@
     "name": "Poivron jaune",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 27,
+      "kcal": 28,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 5,
@@ -2925,7 +2925,7 @@
     "name": "Poivron rouge",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 34,
+      "kcal": 36,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 6,
@@ -2938,7 +2938,7 @@
     "name": "Poivrons",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 22,
+      "kcal": 23,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 3,
@@ -2951,7 +2951,7 @@
     "name": "Poivrons lanières",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 22,
+      "kcal": 23,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 3,
@@ -2976,7 +2976,7 @@
     "name": "Pommes de terre",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 81,
+      "kcal": 79,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 16,
@@ -2988,7 +2988,7 @@
     "name": "Potimarron",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 42,
+      "kcal": 41,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 7,
@@ -3014,7 +3014,7 @@
     "name": "Potiron ou butternut",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 40,
+      "kcal": 39,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 7,
@@ -3027,7 +3027,7 @@
     "name": "Prune reine claude",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 69,
+      "kcal": 73,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 16,
@@ -3039,7 +3039,7 @@
     "name": "Prune rouge",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 46,
+      "kcal": 44,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 9,
@@ -3051,7 +3051,7 @@
     "name": "Radis",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 15,
+      "kcal": 14,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 1,
@@ -3087,7 +3087,7 @@
     "name": "Roquette",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 30,
+      "kcal": 28,
       "proteins": 2,
       "lipids": 0,
       "carbohydrates": 2,
@@ -3099,7 +3099,7 @@
     "name": "Salade",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 15,
+      "kcal": 14,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 1,
@@ -3150,8 +3150,8 @@
     "name": "Tomates séchées sans huile",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 258,
-      "proteins": 14,
+      "kcal": 264,
+      "proteins": 9,
       "lipids": 3,
       "carbohydrates": 43,
       "fibers": 12
@@ -3163,7 +3163,7 @@
     "name": "Topinambour",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 73,
+      "kcal": 75,
       "proteins": 2,
       "lipids": 0,
       "carbohydrates": 15,
@@ -3176,7 +3176,7 @@
     "name": "Abricots secs",
     "category": "Fruits secs",
     "macros": {
-      "kcal": 241,
+      "kcal": 295,
       "proteins": 5,
       "lipids": 1,
       "carbohydrates": 63,
@@ -3188,7 +3188,7 @@
     "name": "Amandes",
     "category": "Fruits secs",
     "macros": {
-      "kcal": 615,
+      "kcal": 612,
       "proteins": 26,
       "lipids": 52,
       "carbohydrates": 4,
@@ -3200,7 +3200,7 @@
     "name": "Baies de goji",
     "category": "Fruits secs",
     "macros": {
-      "kcal": 349,
+      "kcal": 338,
       "proteins": 14,
       "lipids": 0,
       "carbohydrates": 64,
@@ -3212,7 +3212,7 @@
     "name": "Cacahuètes",
     "category": "Fruits secs",
     "macros": {
-      "kcal": 609,
+      "kcal": 611,
       "proteins": 26,
       "lipids": 49,
       "carbohydrates": 12,
@@ -3224,7 +3224,7 @@
     "name": "Cranberries séchées",
     "category": "Fruits secs",
     "macros": {
-      "kcal": 338,
+      "kcal": 337,
       "proteins": 1,
       "lipids": 1,
       "carbohydrates": 78,
@@ -3236,7 +3236,7 @@
     "name": "Datte (optionnel)",
     "category": "Fruits secs",
     "macros": {
-      "kcal": 282,
+      "kcal": 284,
       "proteins": 2,
       "lipids": 0,
       "carbohydrates": 65,
@@ -3248,7 +3248,7 @@
     "name": "Figue séche",
     "category": "Fruits secs",
     "macros": {
-      "kcal": 255,
+      "kcal": 259,
       "proteins": 3,
       "lipids": 1,
       "carbohydrates": 54,
@@ -3260,7 +3260,7 @@
     "name": "Graines de chia",
     "category": "Fruits secs",
     "macros": {
-      "kcal": 455,
+      "kcal": 446,
       "proteins": 19,
       "lipids": 32,
       "carbohydrates": 3,
@@ -3272,7 +3272,7 @@
     "name": "Graines de courge",
     "category": "Fruits secs",
     "macros": {
-      "kcal": 585,
+      "kcal": 595,
       "proteins": 30,
       "lipids": 49,
       "carbohydrates": 5,
@@ -3284,7 +3284,7 @@
     "name": "Graines de lin",
     "category": "Fruits secs",
     "macros": {
-      "kcal": 506,
+      "kcal": 478,
       "proteins": 22,
       "lipids": 36,
       "carbohydrates": 3,
@@ -3296,7 +3296,7 @@
     "name": "Graines de pavot",
     "category": "Fruits secs",
     "macros": {
-      "kcal": 534,
+      "kcal": 538,
       "proteins": 21,
       "lipids": 42,
       "carbohydrates": 14,
@@ -3308,7 +3308,7 @@
     "name": "Graines de sésame",
     "category": "Fruits secs",
     "macros": {
-      "kcal": 606,
+      "kcal": 598,
       "proteins": 18,
       "lipids": 50,
       "carbohydrates": 13,
@@ -3320,7 +3320,7 @@
     "name": "Graines de tournesol",
     "category": "Fruits secs",
     "macros": {
-      "kcal": 653,
+      "kcal": 640,
       "proteins": 21,
       "lipids": 56,
       "carbohydrates": 10,
@@ -3332,7 +3332,7 @@
     "name": "Mélange de graines",
     "category": "Fruits secs",
     "macros": {
-      "kcal": 575,
+      "kcal": 595,
       "proteins": 19,
       "lipids": 48,
       "carbohydrates": 12,
@@ -3344,7 +3344,7 @@
     "name": "Noisettes",
     "category": "Fruits secs",
     "macros": {
-      "kcal": 672,
+      "kcal": 678,
       "proteins": 15,
       "lipids": 64,
       "carbohydrates": 6,
@@ -3356,7 +3356,7 @@
     "name": "Noix",
     "category": "Fruits secs",
     "macros": {
-      "kcal": 698,
+      "kcal": 706,
       "proteins": 16,
       "lipids": 68,
       "carbohydrates": 4,
@@ -3368,7 +3368,7 @@
     "name": "Noix (noix, du brésil, de pécan,...)",
     "category": "Fruits secs",
     "macros": {
-      "kcal": 698,
+      "kcal": 706,
       "proteins": 16,
       "lipids": 68,
       "carbohydrates": 4,
@@ -3380,7 +3380,7 @@
     "name": "Noix de cajou",
     "category": "Fruits secs",
     "macros": {
-      "kcal": 598,
+      "kcal": 599,
       "proteins": 18,
       "lipids": 47,
       "carbohydrates": 24,
@@ -3392,11 +3392,11 @@
     "name": "Noix de pécan",
     "category": "Fruits secs",
     "macros": {
-      "kcal": 691,
+      "kcal": 721,
       "proteins": 9,
       "lipids": 72,
       "carbohydrates": 4,
-      "fibers": 8
+      "fibers": 9
     }
   },
   "fs-020": {
@@ -3404,7 +3404,7 @@
     "name": "Pignons de pin",
     "category": "Fruits secs",
     "macros": {
-      "kcal": 705,
+      "kcal": 696,
       "proteins": 14,
       "lipids": 68,
       "carbohydrates": 4,
@@ -3416,7 +3416,7 @@
     "name": "Pistaches",
     "category": "Fruits secs",
     "macros": {
-      "kcal": 602,
+      "kcal": 604,
       "proteins": 21,
       "lipids": 48,
       "carbohydrates": 16,
@@ -3428,7 +3428,7 @@
     "name": "Purée de noisettes",
     "category": "Fruits secs",
     "macros": {
-      "kcal": 684,
+      "kcal": 673,
       "proteins": 14,
       "lipids": 62,
       "carbohydrates": 8,
@@ -3440,7 +3440,7 @@
     "name": "Raisins secs",
     "category": "Fruits secs",
     "macros": {
-      "kcal": 305,
+      "kcal": 302,
       "proteins": 2,
       "lipids": 0,
       "carbohydrates": 69,
@@ -3488,7 +3488,7 @@
     "name": "Okara d'amandes",
     "category": "Hors achat",
     "macros": {
-      "kcal": 120,
+      "kcal": 137,
       "proteins": 6,
       "lipids": 8,
       "carbohydrates": 4,
@@ -3501,7 +3501,7 @@
     "name": "Pâté",
     "category": "Hors achat",
     "macros": {
-      "kcal": 216,
+      "kcal": 225,
       "proteins": 18,
       "lipids": 17,
       "carbohydrates": 0,
@@ -3514,7 +3514,7 @@
     "name": "Tahini",
     "category": "Hors achat",
     "macros": {
-      "kcal": 635,
+      "kcal": 632,
       "proteins": 17,
       "lipids": 58,
       "carbohydrates": 4,
@@ -3539,7 +3539,7 @@
     "name": "Purée de cacahuètes",
     "category": "Internet",
     "macros": {
-      "kcal": 606,
+      "kcal": 614,
       "proteins": 28,
       "lipids": 50,
       "carbohydrates": 9,
@@ -3551,9 +3551,9 @@
     "name": "Crevettes",
     "category": "Poisson",
     "macros": {
-      "kcal": 62,
-      "proteins": 13,
-      "lipids": 0,
+      "kcal": 77,
+      "proteins": 17,
+      "lipids": 1,
       "carbohydrates": 0,
       "fibers": 0
     },
@@ -3590,7 +3590,7 @@
     "name": "Poisson blanc",
     "category": "Poisson",
     "macros": {
-      "kcal": 75,
+      "kcal": 74,
       "proteins": 17,
       "lipids": 0,
       "carbohydrates": 0,
@@ -3603,7 +3603,7 @@
     "name": "Poisson fumé au choix",
     "category": "Poisson",
     "macros": {
-      "kcal": 184,
+      "kcal": 182,
       "proteins": 21,
       "lipids": 10,
       "carbohydrates": 0,
@@ -3616,7 +3616,7 @@
     "name": "Saumon fumé",
     "category": "Poisson",
     "macros": {
-      "kcal": 184,
+      "kcal": 182,
       "proteins": 21,
       "lipids": 10,
       "carbohydrates": 0,
@@ -3629,7 +3629,7 @@
     "name": "Truite fumée",
     "category": "Poisson",
     "macros": {
-      "kcal": 165,
+      "kcal": 166,
       "proteins": 22,
       "lipids": 8,
       "carbohydrates": 0,
@@ -3642,7 +3642,7 @@
     "name": "Beurre",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 745,
+      "kcal": 743,
       "proteins": 0,
       "lipids": 82,
       "carbohydrates": 0,
@@ -3654,7 +3654,7 @@
     "name": "Beurre demi sel",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 738,
+      "kcal": 734,
       "proteins": 0,
       "lipids": 81,
       "carbohydrates": 0,
@@ -3666,7 +3666,7 @@
     "name": "Boisson soja nature",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 37,
+      "kcal": 40,
       "proteins": 4,
       "lipids": 2,
       "carbohydrates": 1,
@@ -3679,9 +3679,9 @@
     "name": "Bûche de chèvre",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 290,
+      "kcal": 291,
       "proteins": 20,
-      "lipids": 13,
+      "lipids": 23,
       "carbohydrates": 1,
       "fibers": 0
     },
@@ -3692,9 +3692,9 @@
     "name": "Buche de chèvre ou fromage frais",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 290,
+      "kcal": 291,
       "proteins": 20,
-      "lipids": 13,
+      "lipids": 23,
       "carbohydrates": 1,
       "fibers": 0
     },
@@ -3705,7 +3705,7 @@
     "name": "Cheddar",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 411,
+      "kcal": 413,
       "proteins": 24,
       "lipids": 35,
       "carbohydrates": 0,
@@ -3718,7 +3718,7 @@
     "name": "Cheddar en tranches",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 411,
+      "kcal": 413,
       "proteins": 24,
       "lipids": 35,
       "carbohydrates": 0,
@@ -3731,7 +3731,7 @@
     "name": "Cheddar râpé",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 411,
+      "kcal": 413,
       "proteins": 24,
       "lipids": 35,
       "carbohydrates": 0,
@@ -3744,7 +3744,7 @@
     "name": "Comté",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 410,
+      "kcal": 412,
       "proteins": 26,
       "lipids": 34,
       "carbohydrates": 0,
@@ -3808,7 +3808,7 @@
     "name": "Fromage blanc 3%",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 69,
+      "kcal": 67,
       "proteins": 6,
       "lipids": 3,
       "carbohydrates": 4,
@@ -3820,7 +3820,7 @@
     "name": "Fromage frais",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 192,
+      "kcal": 195,
       "proteins": 12,
       "lipids": 15,
       "carbohydrates": 3,
@@ -3833,7 +3833,7 @@
     "name": "Fromage râpé",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 410,
+      "kcal": 412,
       "proteins": 26,
       "lipids": 34,
       "carbohydrates": 0,
@@ -3870,7 +3870,7 @@
     "name": "Lait écrémé",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 32,
+      "kcal": 37,
       "proteins": 3,
       "lipids": 0,
       "carbohydrates": 4,
@@ -3896,7 +3896,7 @@
     "macros": {
       "kcal": 65,
       "proteins": 3,
-      "lipids": 1,
+      "lipids": 3,
       "carbohydrates": 4,
       "fibers": 0
     }
@@ -3906,7 +3906,7 @@
     "name": "Lait végétal maison",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 55,
+      "kcal": 59,
       "proteins": 1,
       "lipids": 5,
       "carbohydrates": 2,
@@ -3918,7 +3918,7 @@
     "name": "Margarine (60%MG)",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 530,
+      "kcal": 535,
       "proteins": 0,
       "lipids": 59,
       "carbohydrates": 0,
@@ -3942,7 +3942,7 @@
     "name": "Parmesan",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 402,
+      "kcal": 398,
       "proteins": 32,
       "lipids": 30,
       "carbohydrates": 0,
@@ -3967,7 +3967,7 @@
     "name": "Ricotta",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 95,
+      "kcal": 97,
       "proteins": 9,
       "lipids": 5,
       "carbohydrates": 4,
@@ -3980,7 +3980,7 @@
     "name": "Skyr",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 57,
+      "kcal": 56,
       "proteins": 10,
       "lipids": 0,
       "carbohydrates": 3,
@@ -4005,7 +4005,7 @@
     "name": "St Môret ou Petit Billy",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 192,
+      "kcal": 195,
       "proteins": 12,
       "lipids": 15,
       "carbohydrates": 3,
@@ -4018,7 +4018,7 @@
     "name": "Yaourt au lait entier",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 66,
+      "kcal": 62,
       "proteins": 3,
       "lipids": 3,
       "carbohydrates": 3,
@@ -4030,7 +4030,7 @@
     "name": "Lait de coco maison",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 67,
+      "kcal": 68,
       "proteins": 0,
       "lipids": 6,
       "carbohydrates": 2,
@@ -4043,7 +4043,7 @@
     "name": "Yaourt grec authentique",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 134,
+      "kcal": 131,
       "proteins": 6,
       "lipids": 10,
       "carbohydrates": 3,
@@ -4055,7 +4055,7 @@
     "name": "Yaourt soja nature",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 52,
+      "kcal": 55,
       "proteins": 5,
       "lipids": 3,
       "carbohydrates": 2,
@@ -4094,7 +4094,7 @@
     "name": "Fèves",
     "category": "Surgelés",
     "macros": {
-      "kcal": 70,
+      "kcal": 71,
       "proteins": 5,
       "lipids": 0,
       "carbohydrates": 8,
@@ -4107,7 +4107,7 @@
     "name": "Fraises surgelées",
     "category": "Surgelés",
     "macros": {
-      "kcal": 35,
+      "kcal": 34,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 6,
@@ -4120,7 +4120,7 @@
     "name": "Framboises fraîches ou surgelées",
     "category": "Surgelés",
     "macros": {
-      "kcal": 48,
+      "kcal": 44,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 5,
@@ -4133,7 +4133,7 @@
     "name": "Framboises surgelés",
     "category": "Surgelés",
     "macros": {
-      "kcal": 48,
+      "kcal": 44,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 5,
@@ -4185,7 +4185,7 @@
     "name": "Myrtilles surgelées",
     "category": "Surgelés",
     "macros": {
-      "kcal": 58,
+      "kcal": 54,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 10,
@@ -4211,7 +4211,7 @@
     "name": "Poêlée de légumes",
     "category": "Surgelés",
     "macros": {
-      "kcal": 27,
+      "kcal": 24,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 4,
@@ -4224,7 +4224,7 @@
     "name": "Aiguillettes de poulet",
     "category": "Viande",
     "macros": {
-      "kcal": 110,
+      "kcal": 107,
       "proteins": 23,
       "lipids": 1,
       "carbohydrates": 0,
@@ -4237,7 +4237,7 @@
     "name": "Bœuf à mijoter (paleron, joue, macreuse,...)",
     "category": "Viande",
     "macros": {
-      "kcal": 144,
+      "kcal": 138,
       "proteins": 21,
       "lipids": 6,
       "carbohydrates": 0,
@@ -4250,7 +4250,7 @@
     "name": "Bœuf haché 5% Mg",
     "category": "Viande",
     "macros": {
-      "kcal": 132,
+      "kcal": 128,
       "proteins": 21,
       "lipids": 4,
       "carbohydrates": 0,
@@ -4263,7 +4263,7 @@
     "name": "Cuisse de poulet",
     "category": "Viande",
     "macros": {
-      "kcal": 114,
+      "kcal": 113,
       "proteins": 19,
       "lipids": 4,
       "carbohydrates": 0,
@@ -4290,7 +4290,7 @@
     "name": "Filet de poulet",
     "category": "Viande",
     "macros": {
-      "kcal": 110,
+      "kcal": 107,
       "proteins": 23,
       "lipids": 1,
       "carbohydrates": 0,
@@ -4316,7 +4316,7 @@
     "name": "Filet ou cuisse de poulet",
     "category": "Viande",
     "macros": {
-      "kcal": 114,
+      "kcal": 113,
       "proteins": 19,
       "lipids": 4,
       "carbohydrates": 0,
@@ -4329,7 +4329,7 @@
     "name": "Paupiette",
     "category": "Viande",
     "macros": {
-      "kcal": 211,
+      "kcal": 210,
       "proteins": 18,
       "lipids": 15,
       "carbohydrates": 0,
@@ -4356,7 +4356,7 @@
     "name": "Poulet entier",
     "category": "Viande",
     "macros": {
-      "kcal": 170,
+      "kcal": 120,
       "proteins": 21,
       "lipids": 4,
       "carbohydrates": 0,

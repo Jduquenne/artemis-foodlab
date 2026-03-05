@@ -2764,8 +2764,8 @@
         "id": "005",
         "foodId": "es-006",
         "name": "Cassonade Graeffe",
-        "quantity": 10,
-        "unit": "g",
+        "quantity": 1,
+        "unit": "c",
         "category": "Epicerie sucrée"
       },
       {
@@ -11445,8 +11445,8 @@
         "id": "002",
         "foodId": "es-025",
         "name": "Fécule de maïs",
-        "quantity": 15,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "c",
         "category": "Epicerie sucrée"
       },
       {
@@ -15035,7 +15035,7 @@
         "id": "002",
         "foodId": "bo-002",
         "name": "Pain",
-        "quantity": 1,
+        "quantity": 2,
         "unit": "portion",
         "category": "Boulangerie"
       },
@@ -15075,7 +15075,7 @@
         "id": "007",
         "foodId": "fm-003",
         "name": "Œuf",
-        "quantity": 2,
+        "quantity": 3,
         "unit": "pièce",
         "category": "Ferme"
       },
@@ -16432,8 +16432,8 @@
         "id": "007",
         "foodId": "ep-062",
         "name": "Vinaigre balsamique",
-        "quantity": 8,
-        "unit": "g",
+        "quantity": 1,
+        "unit": "c",
         "category": "Epices et condiments"
       },
       {
@@ -27055,8 +27055,8 @@
         "id": "006",
         "foodId": "web-002",
         "name": "Purée de cacahuètes",
-        "quantity": 10,
-        "unit": "g",
+        "quantity": 1,
+        "unit": "c",
         "category": "Internet"
       },
       {
@@ -29554,8 +29554,8 @@
         "id": "007",
         "foodId": "cn-001",
         "name": "Concentré de tomates",
-        "quantity": 10,
-        "unit": "g",
+        "quantity": 1,
+        "unit": "c",
         "category": "Conserves"
       },
       {
@@ -34450,8 +34450,8 @@
         "id": "006",
         "foodId": "ep-038",
         "name": "Huile de sésame",
-        "quantity": 8,
-        "unit": "g",
+        "quantity": 1,
+        "unit": "c",
         "category": "Epices et condiments"
       },
       {
@@ -50860,108 +50860,6 @@
       }
     }
   },
-  "base-020": {
-    "id": "base-020",
-    "name": "Sauce tomate provençale",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 4,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "fv-085",
-        "name": "Tomates",
-        "quantity": 800,
-        "unit": "g",
-        "category": "Fruits et légumes"
-      },
-      {
-        "id": "002",
-        "foodId": "fv-002",
-        "name": "Ail",
-        "quantity": 1,
-        "unit": "pièce",
-        "category": "Fruits et légumes"
-      },
-      {
-        "id": "003",
-        "foodId": "fv-061",
-        "name": "Oignon jaune",
-        "quantity": 1,
-        "unit": "pièce",
-        "category": "Fruits et légumes"
-      },
-      {
-        "id": "004",
-        "foodId": "cn-001",
-        "name": "Concentré de tomates",
-        "quantity": 20,
-        "unit": "g",
-        "category": "Conserves"
-      },
-      {
-        "id": "005",
-        "foodId": "ep-035",
-        "name": "Huile d'olive",
-        "quantity": 20,
-        "unit": "g",
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "006",
-        "foodId": "ha-003",
-        "name": "Feuille de Laurier",
-        "quantity": null,
-        "unit": null,
-        "category": "Hors achat"
-      },
-      {
-        "id": "007",
-        "foodId": "ep-003",
-        "name": "Basilic",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "008",
-        "foodId": "ep-061",
-        "name": "Thym",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "009",
-        "foodId": "ep-048",
-        "name": "Origan",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "010",
-        "foodId": "ep-056",
-        "name": "Romarin",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_20_Sauce_tomate_provençale_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_20_Sauce_tomate_provençale.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_20_Sauce_tomate_provençale_Recette.webp"
-      }
-    }
-  },
   "base-001": {
     "id": "base-001",
     "name": "Pain à burger",
@@ -51031,8 +50929,8 @@
         "id": "008",
         "foodId": "es-044",
         "name": "Sucre",
-        "quantity": null,
-        "unit": null,
+        "quantity": 10,
+        "unit": "g",
         "category": "Epicerie sucrée"
       },
       {
@@ -51061,6 +50959,232 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/bases/recipes/BASE_01_Pain_à_burger_à_la_farine_semi-complète_Recette.webp"
+      }
+    }
+  },
+  "base-002": {
+    "id": "base-002",
+    "name": "Cordons bleus de Poulet",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 8,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "vm-006",
+        "name": "Filet de poulet",
+        "quantity": 640,
+        "unit": "g",
+        "category": "Viande"
+      },
+      {
+        "id": "002",
+        "foodId": "ch-002",
+        "name": "Jambon",
+        "quantity": 130,
+        "unit": "g",
+        "category": "Charcuterie"
+      },
+      {
+        "id": "003",
+        "foodId": "es-015",
+        "name": "Farine blanche",
+        "quantity": 80,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "004",
+        "foodId": "es-007",
+        "name": "Chapelure de maïs",
+        "quantity": 120,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "005",
+        "foodId": "pl-009",
+        "name": "Comté",
+        "quantity": 80,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "006",
+        "foodId": "fm-003",
+        "name": "Œuf",
+        "quantity": 3,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "007",
+        "foodId": "ep-035",
+        "name": "Huile d'olive",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-049",
+        "name": "Paprika",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "009",
+        "foodId": "ep-001",
+        "name": "Ail semoule",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_02_Cordons_bleus_de_poulet_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_02_Cordons_bleus_de_Poulet_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_02_Cordons_bleus_de_poulet_Recette.webp"
+      }
+    }
+  },
+  "base-003": {
+    "id": "base-003",
+    "name": "Gnocchis maison",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 4,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-074",
+        "name": "Pommes de terre",
+        "quantity": 500,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "es-024",
+        "name": "Farine semi complète",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "003",
+        "foodId": "fm-002",
+        "name": "Jaune d’œuf",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "004",
+        "foodId": "ep-035",
+        "name": "Huile d'olive",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "ep-047",
+        "name": "Muscade",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_03_Gnocchis_maison_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_03_Gnocchis_maison_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_03_Gnocchis_maison_Recette.webp"
+      }
+    }
+  },
+  "base-004": {
+    "id": "base-004",
+    "name": "Tortillas maison",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 8,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-024",
+        "name": "Farine semi complète",
+        "quantity": 125,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "es-020",
+        "name": "Farine de maïs",
+        "quantity": 75,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "003",
+        "foodId": "ep-037",
+        "name": "Huile de colza",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "004",
+        "foodId": "ep-060",
+        "name": "Sel",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "ep-004",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-040",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_04_Tortillas_maison_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_04_Tortillas_maison_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_04_Tortillas_maison_Recette.webp"
       }
     }
   },
@@ -51163,360 +51287,6 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/bases/recipes/BASE_05_Boulette_de_lentilles_corail_Recette.webp"
-      }
-    }
-  },
-  "base-030": {
-    "id": "base-030",
-    "name": "Sauce bolognaise au bœuf",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 4,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "vm-003",
-        "name": "Bœuf haché 5% Mg",
-        "quantity": 400,
-        "unit": "g",
-        "category": "Viande"
-      },
-      {
-        "id": "002",
-        "foodId": "su-011",
-        "name": "Petits pois",
-        "quantity": 100,
-        "unit": "g",
-        "category": "Surgelés"
-      },
-      {
-        "id": "003",
-        "foodId": "fv-014",
-        "name": "Carottes",
-        "quantity": 250,
-        "unit": "g",
-        "category": "Fruits et légumes"
-      },
-      {
-        "id": "004",
-        "foodId": "fv-019",
-        "name": "Céleri banche",
-        "quantity": 50,
-        "unit": "g",
-        "category": "Fruits et légumes"
-      },
-      {
-        "id": "005",
-        "foodId": "cn-007",
-        "name": "Purée de tomates",
-        "quantity": 700,
-        "unit": "g",
-        "category": "Conserves"
-      },
-      {
-        "id": "006",
-        "foodId": "fv-061",
-        "name": "Oignon jaune",
-        "quantity": 1,
-        "unit": "pièce",
-        "category": "Fruits et légumes"
-      },
-      {
-        "id": "007",
-        "foodId": "fv-002",
-        "name": "Ail",
-        "quantity": 1,
-        "unit": "pièce",
-        "category": "Fruits et légumes"
-      },
-      {
-        "id": "008",
-        "foodId": "cn-001",
-        "name": "Concentré de tomates",
-        "quantity": null,
-        "unit": null,
-        "category": "Conserves"
-      },
-      {
-        "id": "009",
-        "foodId": "ep-006",
-        "name": "Bouillon de légumes",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "010",
-        "foodId": "ep-035",
-        "name": "Huile d'olive",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "011",
-        "foodId": "ep-061",
-        "name": "Thym",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "012",
-        "foodId": "ep-048",
-        "name": "Origan",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "013",
-        "foodId": "ha-003",
-        "name": "Feuille de Laurier",
-        "quantity": null,
-        "unit": null,
-        "category": "Hors achat"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_30_Sauce_bolognaise_au_boeuf_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_30_Sauce_bolognaise_au_boeuf_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_30_Sauce_bolognaise_au_boeuf_Recette.webp"
-      }
-    }
-  },
-  "base-012": {
-    "id": "base-012",
-    "name": "Granola salé",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 10,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "es-027",
-        "name": "Flocons d'avoine",
-        "quantity": 100,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "002",
-        "foodId": "fs-021",
-        "name": "Pistaches",
-        "quantity": 60,
-        "unit": "g",
-        "category": "Fruits secs"
-      },
-      {
-        "id": "003",
-        "foodId": "fs-015",
-        "name": "Noisettes",
-        "quantity": 60,
-        "unit": "g",
-        "category": "Fruits secs"
-      },
-      {
-        "id": "004",
-        "foodId": "fs-013",
-        "name": "Graines de tournesol",
-        "quantity": 60,
-        "unit": "g",
-        "category": "Fruits secs"
-      },
-      {
-        "id": "005",
-        "foodId": "fs-012",
-        "name": "Graines de sésame",
-        "quantity": 30,
-        "unit": "g",
-        "category": "Fruits secs"
-      },
-      {
-        "id": "006",
-        "foodId": "fm-001",
-        "name": "Blanc d’œuf",
-        "quantity": 1,
-        "unit": "pièce",
-        "category": "Ferme"
-      },
-      {
-        "id": "007",
-        "foodId": "ep-035",
-        "name": "Huile d'olive",
-        "quantity": 60,
-        "unit": "g",
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "008",
-        "foodId": "es-042",
-        "name": "Sirop d'érable",
-        "quantity": 10,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "009",
-        "foodId": "ep-050",
-        "name": "Paprika fumé",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "010",
-        "foodId": "ep-018",
-        "name": "Curcuma",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "011",
-        "foodId": "ep-017",
-        "name": "Cumin",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "012",
-        "foodId": "ep-027",
-        "name": "Fleur de sel",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_12_Granola_salé_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_12_Granola_salé_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_12_Granola_salé_Recette.webp"
-      }
-    }
-  },
-  "base-016": {
-    "id": "base-016",
-    "name": "Steak végétarien pois chiche haricots rouges",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 6,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "fc-008",
-        "name": "Haricots rouges sec",
-        "quantity": 70,
-        "unit": "g",
-        "category": "Féculents"
-      },
-      {
-        "id": "002",
-        "foodId": "fc-020",
-        "name": "Pois chiches secs",
-        "quantity": 70,
-        "unit": "g",
-        "category": "Féculents"
-      },
-      {
-        "id": "003",
-        "foodId": "fc-022",
-        "name": "Quinoa",
-        "quantity": 20,
-        "unit": "g",
-        "category": "Féculents"
-      },
-      {
-        "id": "004",
-        "foodId": "es-021",
-        "name": "Farine de pois chiches",
-        "quantity": 70,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "005",
-        "foodId": "fv-014",
-        "name": "Carottes",
-        "quantity": 100,
-        "unit": "g",
-        "category": "Fruits et légumes"
-      },
-      {
-        "id": "006",
-        "foodId": "fv-002",
-        "name": "Ail",
-        "quantity": 1,
-        "unit": "pièce",
-        "category": "Fruits et légumes"
-      },
-      {
-        "id": "007",
-        "foodId": "es-007",
-        "name": "Chapelure de maïs",
-        "quantity": 15,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "008",
-        "foodId": "ep-051",
-        "name": "Persil",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "009",
-        "foodId": "ep-018",
-        "name": "Curcuma",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "010",
-        "foodId": "ep-017",
-        "name": "Cumin",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "011",
-        "foodId": "ep-049",
-        "name": "Paprika",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_16_Steak_végétarien_pois_chiche,_haricots_rouges__Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_16_Steak_végétarien_pois_chiche,_haricots_rouges__Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_16_Steak_végétarien_pois_chiche,_haricots_rouges_Recette.webp"
       }
     }
   },
@@ -51646,6 +51416,1164 @@
       }
     }
   },
+  "base-007": {
+    "id": "base-007",
+    "name": "Naan",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 4,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-024",
+        "name": "Farine semi complète",
+        "quantity": 40,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "es-015",
+        "name": "Farine blanche",
+        "quantity": 40,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "003",
+        "foodId": "pl-031",
+        "name": "Yaourt au lait entier",
+        "quantity": 80,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "004",
+        "foodId": "ep-004",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "ep-040",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-035",
+        "name": "Huile d'olive",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_07_Naan_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_07_Naan_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_07_Naan_Recette.webp"
+      }
+    }
+  },
+  "base-008": {
+    "id": "base-008",
+    "name": "Pâte à Lasagnes",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 6,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-024",
+        "name": "Farine semi complète",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "fc-028",
+        "name": "Semoule fine",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "003",
+        "foodId": "fm-003",
+        "name": "Œuf",
+        "quantity": 3,
+        "unit": "pièce",
+        "category": "Ferme"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_08_Pâte_à_Lasagnes_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_08_Pâte_à_Lasagnes_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_08_Pâte_à_Lasagnes_Recette.webp"
+      }
+    }
+  },
+  "base-009": {
+    "id": "base-009",
+    "name": "Pâte brisée au skyr",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 4,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-015",
+        "name": "Farine blanche",
+        "quantity": 220,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "fm-003",
+        "name": "Œuf",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "003",
+        "foodId": "pl-028",
+        "name": "Skyr",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Produits laitiers"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_09_Pâte_brisée_au_skyr_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_09_Pâte_brisée_au_skyr_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_09_Pâte_brisée_au_skyr_Recette.webp"
+      }
+    }
+  },
+  "base-010": {
+    "id": "base-010",
+    "name": "Pâte brisée sans beurre",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 4,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-015",
+        "name": "Farine blanche",
+        "quantity": 250,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "pl-018",
+        "name": "Lait demi écrémé",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "003",
+        "foodId": "pl-025",
+        "name": "Parmesan",
+        "quantity": null,
+        "unit": null,
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "004",
+        "foodId": "ep-035",
+        "name": "Huile d'olive",
+        "quantity": 63,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "ep-048",
+        "name": "Origan",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_10_Pâte_brisée_sans_beurre_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_10_Pâte_brisée_sans_beurre_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_10_Pâte_brisée_sans_beurre_Recette.webp"
+      }
+    }
+  },
+  "base-011": {
+    "id": "base-011",
+    "name": "Pâte à pizza",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 4,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-015",
+        "name": "Farine blanche",
+        "quantity": 250,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "es-032",
+        "name": "Levure boulangère sèche",
+        "quantity": 1,
+        "unit": "sachet",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "003",
+        "foodId": "ep-035",
+        "name": "Huile d'olive",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_11_Pâte_à_pizza_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_11_Pâte_à_pizza_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_11_Pâte_à_pizza_Recette.webp"
+      }
+    }
+  },
+  "base-012": {
+    "id": "base-012",
+    "name": "Granola salé",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 10,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-027",
+        "name": "Flocons d'avoine",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "fs-021",
+        "name": "Pistaches",
+        "quantity": 60,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "003",
+        "foodId": "fs-015",
+        "name": "Noisettes",
+        "quantity": 60,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "004",
+        "foodId": "fs-013",
+        "name": "Graines de tournesol",
+        "quantity": 60,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "005",
+        "foodId": "fs-012",
+        "name": "Graines de sésame",
+        "quantity": 30,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "006",
+        "foodId": "fm-001",
+        "name": "Blanc d’œuf",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "007",
+        "foodId": "ep-035",
+        "name": "Huile d'olive",
+        "quantity": 60,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "es-042",
+        "name": "Sirop d'érable",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "009",
+        "foodId": "ep-050",
+        "name": "Paprika fumé",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "010",
+        "foodId": "ep-018",
+        "name": "Curcuma",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "011",
+        "foodId": "ep-017",
+        "name": "Cumin",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "012",
+        "foodId": "ep-027",
+        "name": "Fleur de sel",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_12_Granola_salé_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_12_Granola_salé_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_12_Granola_salé_Recette.webp"
+      }
+    }
+  },
+  "base-013": {
+    "id": "base-013",
+    "name": "Pois chiches grillés",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 4,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fc-020",
+        "name": "Pois chiches secs",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "002",
+        "foodId": "ep-035",
+        "name": "Huile d'olive",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "003",
+        "foodId": "ep-049",
+        "name": "Paprika",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "004",
+        "foodId": "ep-054",
+        "name": "Piment d’Espelette",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "ep-019",
+        "name": "Curry",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-017",
+        "name": "Cumin",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_13_Pois_chiches_grillés_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_13_Pois_chiches_grillés_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_13_Pois_chiches_grillés_Recette.webp"
+      }
+    }
+  },
+  "base-014": {
+    "id": "base-014",
+    "name": "Boulettes de boeuf",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 6,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "vm-003",
+        "name": "Bœuf haché 5% Mg",
+        "quantity": 500,
+        "unit": "g",
+        "category": "Viande"
+      },
+      {
+        "id": "002",
+        "foodId": "es-015",
+        "name": "Farine blanche",
+        "quantity": 30,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "003",
+        "foodId": "ep-001",
+        "name": "Ail semoule",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "004",
+        "foodId": "fm-003",
+        "name": "Œuf",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "005",
+        "foodId": "es-007",
+        "name": "Chapelure de maïs",
+        "quantity": 35,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-017",
+        "name": "Cumin",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "ep-049",
+        "name": "Paprika",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-051",
+        "name": "Persil",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_14_Boulettes_de_boeuf_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_14_Boulettes_de_boeuf_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_14_Boulettes_de_boeuf_Recette.webp"
+      }
+    }
+  },
+  "base-015": {
+    "id": "base-015",
+    "name": "Pain pita",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 4,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-015",
+        "name": "Farine blanche",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "es-032",
+        "name": "Levure boulangère sèche",
+        "quantity": 0.5,
+        "unit": "sachet",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "003",
+        "foodId": "ep-035",
+        "name": "Huile d'olive",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "004",
+        "foodId": "es-044",
+        "name": "Sucre",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_15_Pain_pita_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_15_Pain_pita_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_15_Pain_pita_Recette.webp"
+      }
+    }
+  },
+  "base-016": {
+    "id": "base-016",
+    "name": "Steak végétarien pois chiche haricots rouges",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 6,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fc-008",
+        "name": "Haricots rouges sec",
+        "quantity": 70,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "002",
+        "foodId": "fc-020",
+        "name": "Pois chiches secs",
+        "quantity": 70,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "003",
+        "foodId": "fc-022",
+        "name": "Quinoa",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "004",
+        "foodId": "es-021",
+        "name": "Farine de pois chiches",
+        "quantity": 70,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "005",
+        "foodId": "fv-014",
+        "name": "Carottes",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "006",
+        "foodId": "fv-002",
+        "name": "Ail",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "007",
+        "foodId": "es-007",
+        "name": "Chapelure de maïs",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-051",
+        "name": "Persil",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "009",
+        "foodId": "ep-018",
+        "name": "Curcuma",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "010",
+        "foodId": "ep-017",
+        "name": "Cumin",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "011",
+        "foodId": "ep-049",
+        "name": "Paprika",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_16_Steak_végétarien_pois_chiche,_haricots_rouges__Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_16_Steak_végétarien_pois_chiche,_haricots_rouges__Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_16_Steak_végétarien_pois_chiche,_haricots_rouges_Recette.webp"
+      }
+    }
+  },
+  "base-017": {
+    "id": "base-017",
+    "name": "Pesto verde",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 12,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fs-020",
+        "name": "Pignons de pin",
+        "quantity": 60,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "002",
+        "foodId": "pl-025",
+        "name": "Parmesan",
+        "quantity": 60,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "003",
+        "foodId": "ep-003",
+        "name": "Basilic",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-002",
+        "name": "Ail",
+        "quantity": 2,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "foodId": "ep-035",
+        "name": "Huile d'olive",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-060",
+        "name": "Sel",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_17_Pesto_verde_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_17_Pesto_verde_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_17_Pesto_verde_Recette.webp"
+      }
+    }
+  },
+  "base-018": {
+    "id": "base-018",
+    "name": "Pesto rosso",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 6,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fs-020",
+        "name": "Pignons de pin",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "002",
+        "foodId": "pl-025",
+        "name": "Parmesan",
+        "quantity": 30,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-088",
+        "name": "Tomates séchées sans huile",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-002",
+        "name": "Ail",
+        "quantity": 2,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "foodId": "ep-003",
+        "name": "Basilic",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-035",
+        "name": "Huile d'olive",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_18_Pesto_rosso_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_18_Pesto_rosso_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_18_Pesto_rosso_Recette.webp"
+      }
+    }
+  },
+  "base-019": {
+    "id": "base-019",
+    "name": "Béchamel",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 1,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-024",
+        "name": "Farine semi complète",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "pl-018",
+        "name": "Lait demi écrémé",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "003",
+        "foodId": "ep-037",
+        "name": "Huile de colza",
+        "quantity": 4,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "004",
+        "foodId": "ep-047",
+        "name": "Muscade",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_19_Béchamel_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_19_Béchamel_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_19_Béchamel_Recette.webp"
+      }
+    }
+  },
+  "base-020": {
+    "id": "base-020",
+    "name": "Sauce tomate provençale",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 4,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-085",
+        "name": "Tomates",
+        "quantity": 800,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-002",
+        "name": "Ail",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-061",
+        "name": "Oignon jaune",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "cn-001",
+        "name": "Concentré de tomates",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Conserves"
+      },
+      {
+        "id": "005",
+        "foodId": "ep-035",
+        "name": "Huile d'olive",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "ha-003",
+        "name": "Feuille de Laurier",
+        "quantity": null,
+        "unit": null,
+        "category": "Hors achat"
+      },
+      {
+        "id": "007",
+        "foodId": "ep-003",
+        "name": "Basilic",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-061",
+        "name": "Thym",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "009",
+        "foodId": "ep-048",
+        "name": "Origan",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "010",
+        "foodId": "ep-056",
+        "name": "Romarin",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_20_Sauce_tomate_provençale_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_20_Sauce_tomate_provençale.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_20_Sauce_tomate_provençale_Recette.webp"
+      }
+    }
+  },
+  "base-021": {
+    "id": "base-021",
+    "name": "Crêpes",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 11,
+    "batchCooking": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-015",
+        "name": "Farine blanche",
+        "quantity": 250,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "pl-018",
+        "name": "Lait demi écrémé",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "003",
+        "foodId": "fm-003",
+        "name": "Œuf",
+        "quantity": 3,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "004",
+        "foodId": "ep-037",
+        "name": "Huile de colza",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_21_Crêpese_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_21_Crêpes_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_21_Crêpes_Recette.webp"
+      }
+    }
+  },
+  "base-022": {
+    "id": "base-022",
+    "name": "Pain à hot dog",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 4,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-015",
+        "name": "Farine blanche",
+        "quantity": 250,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "fm-003",
+        "name": "Œuf",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "003",
+        "foodId": "es-031",
+        "name": "Levure boulangère fraîche",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "004",
+        "foodId": "ep-060",
+        "name": "Sel",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "ep-035",
+        "name": "Huile d'olive",
+        "quantity": 25,
+        "unit": "g",
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_22_Pain_à_hot_dog_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_22_Pain_à_hot_dog_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_22_Pain_à_hot_dog_Recette.webp"
+      }
+    }
+  },
+  "base-023": {
+    "id": "base-023",
+    "name": "Crème de cajou",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 2,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fs-018",
+        "name": "Noix de cajou",
+        "quantity": 40,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "002",
+        "foodId": "ep-043",
+        "name": "Levure de bière",
+        "quantity": 5,
+        "unit": "g",
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_23_Crème_de_cajou_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_23_Crème_de_cajou_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_23_Crème_de_cajou_Recette.webp"
+      }
+    }
+  },
   "base-024": {
     "id": "base-024",
     "name": "Houmous de pois chiches",
@@ -51659,7 +52587,7 @@
         "id": "001",
         "foodId": "fs-012",
         "name": "Graines de sésame",
-        "quantity": 70,
+        "quantity": 40,
         "unit": "g",
         "category": "Fruits secs"
       },
@@ -51737,6 +52665,84 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/bases/recipes/BASE_24_Houmous_de_pois_chiches_Recette.webp"
+      }
+    }
+  },
+  "base-025": {
+    "id": "base-025",
+    "name": "Boulettes de ricotta",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 4,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-015",
+        "name": "Farine blanche",
+        "quantity": 75,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "es-021",
+        "name": "Farine de pois chiches",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "003",
+        "foodId": "fs-020",
+        "name": "Pignons de pin",
+        "quantity": 25,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "004",
+        "foodId": "pl-027",
+        "name": "Ricotta",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "005",
+        "foodId": "fm-003",
+        "name": "Œuf",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "006",
+        "foodId": "pl-025",
+        "name": "Parmesan",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "007",
+        "foodId": "ep-003",
+        "name": "Basilic",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_25_Boulettes_de_ricotta_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_25_Boulettes_de_ricotta_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_25_Boulettes_de_ricotta_Recette.webp"
       }
     }
   },
@@ -51834,9 +52840,313 @@
       }
     }
   },
-  "base-002": {
-    "id": "base-002",
-    "name": "Cordons bleus de Poulet",
+  "base-027": {
+    "id": "base-027",
+    "name": "Galettes de blé noir",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 10,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-022",
+        "name": "Farine de sarrasin",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "fm-003",
+        "name": "Œuf",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "003",
+        "foodId": "ep-030",
+        "name": "Gros sel",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_27_Galettes_de_blé_noir_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_27_Galettes_de_blé_noir_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_27_Galettes_de_blé_noir_Recette.webp"
+      }
+    }
+  },
+  "base-028": {
+    "id": "base-028",
+    "name": "Dosas",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 2,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-021",
+        "name": "Farine de pois chiches",
+        "quantity": 120,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "ep-060",
+        "name": "Sel",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "003",
+        "foodId": "ep-017",
+        "name": "Cumin",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "004",
+        "foodId": "ep-015",
+        "name": "Coriandre moulue",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "ep-049",
+        "name": "Paprika",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-001",
+        "name": "Ail semoule",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_28_Dosas_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_28_Dosas_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_28_Dosas_Recette.webp"
+      }
+    }
+  },
+  "base-029": {
+    "id": "base-029",
+    "name": "Sauce au poivre",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 4,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-015",
+        "name": "Farine blanche",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "ep-006",
+        "name": "Bouillon de légumes",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "003",
+        "foodId": "ep-035",
+        "name": "Huile d'olive",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "004",
+        "foodId": "ep-062",
+        "name": "Vinaigre balsamique",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "ep-055",
+        "name": "Poivre",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_29_Sauce_au_poivre_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_29_Sauce_au_poivre_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_29_Sauce_au_poivre_Recette.webp"
+      }
+    }
+  },
+  "base-030": {
+    "id": "base-030",
+    "name": "Sauce bolognaise au bœuf",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 4,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "vm-003",
+        "name": "Bœuf haché 5% Mg",
+        "quantity": 400,
+        "unit": "g",
+        "category": "Viande"
+      },
+      {
+        "id": "002",
+        "foodId": "su-011",
+        "name": "Petits pois",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Surgelés"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-014",
+        "name": "Carottes",
+        "quantity": 250,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-019",
+        "name": "Céleri banche",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "foodId": "cn-007",
+        "name": "Purée de tomates",
+        "quantity": 700,
+        "unit": "g",
+        "category": "Conserves"
+      },
+      {
+        "id": "006",
+        "foodId": "fv-061",
+        "name": "Oignon jaune",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "007",
+        "foodId": "fv-002",
+        "name": "Ail",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "008",
+        "foodId": "cn-001",
+        "name": "Concentré de tomates",
+        "quantity": null,
+        "unit": null,
+        "category": "Conserves"
+      },
+      {
+        "id": "009",
+        "foodId": "ep-006",
+        "name": "Bouillon de légumes",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "010",
+        "foodId": "ep-035",
+        "name": "Huile d'olive",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "011",
+        "foodId": "ep-061",
+        "name": "Thym",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "012",
+        "foodId": "ep-048",
+        "name": "Origan",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "013",
+        "foodId": "ha-003",
+        "name": "Feuille de Laurier",
+        "quantity": null,
+        "unit": null,
+        "category": "Hors achat"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_30_Sauce_bolognaise_au_boeuf_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_30_Sauce_bolognaise_au_boeuf_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_30_Sauce_bolognaise_au_boeuf_Recette.webp"
+      }
+    }
+  },
+  "base-031": {
+    "id": "base-031",
+    "name": "Faluche",
     "categoryId": "bases",
     "mealTypes": [],
     "kind": "base",
@@ -51845,172 +53155,62 @@
     "ingredients": [
       {
         "id": "001",
-        "foodId": "vm-006",
-        "name": "Filet de poulet",
-        "quantity": 640,
+        "foodId": "es-015",
+        "name": "Farine blanche",
+        "quantity": 500,
         "unit": "g",
-        "category": "Viande"
+        "category": "Epicerie sucrée"
       },
       {
         "id": "002",
-        "foodId": "ch-002",
-        "name": "Jambon",
-        "quantity": 130,
-        "unit": "g",
-        "category": "Charcuterie"
-      },
-      {
-        "id": "003",
-        "foodId": "es-015",
-        "name": "Farine blanche",
-        "quantity": 80,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "004",
-        "foodId": "es-007",
-        "name": "Chapelure de maïs",
-        "quantity": 120,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "005",
-        "foodId": "pl-009",
-        "name": "Comté",
-        "quantity": 80,
+        "foodId": "pl-018",
+        "name": "Lait demi écrémé",
+        "quantity": 150,
         "unit": "g",
         "category": "Produits laitiers"
       },
       {
-        "id": "006",
-        "foodId": "fm-003",
-        "name": "Œuf",
-        "quantity": 3,
-        "unit": "pièce",
-        "category": "Ferme"
-      },
-      {
-        "id": "007",
-        "foodId": "ep-035",
-        "name": "Huile d'olive",
-        "quantity": 15,
-        "unit": "g",
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "008",
-        "foodId": "ep-049",
-        "name": "Paprika",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "009",
-        "foodId": "ep-001",
-        "name": "Ail semoule",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_02_Cordons_bleus_de_poulet_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_02_Cordons_bleus_de_Poulet_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_02_Cordons_bleus_de_poulet_Recette.webp"
-      }
-    }
-  },
-  "base-014": {
-    "id": "base-014",
-    "name": "Boulettes de boeuf",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 6,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "vm-003",
-        "name": "Bœuf haché 5% Mg",
-        "quantity": 500,
-        "unit": "g",
-        "category": "Viande"
-      },
-      {
-        "id": "002",
-        "foodId": "es-015",
-        "name": "Farine blanche",
-        "quantity": 30,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
         "id": "003",
-        "foodId": "ep-001",
-        "name": "Ail semoule",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
+        "foodId": "es-032",
+        "name": "Levure boulangère sèche",
+        "quantity": 1,
+        "unit": "sachet",
+        "category": "Epicerie sucrée"
       },
       {
         "id": "004",
-        "foodId": "fm-003",
-        "name": "Œuf",
-        "quantity": 1,
-        "unit": "pièce",
-        "category": "Ferme"
-      },
-      {
-        "id": "005",
-        "foodId": "es-007",
-        "name": "Chapelure de maïs",
-        "quantity": 35,
+        "foodId": "es-042",
+        "name": "Sirop d'érable",
+        "quantity": 5,
         "unit": "g",
         "category": "Epicerie sucrée"
       },
       {
+        "id": "005",
+        "foodId": "ep-060",
+        "name": "Sel",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
         "id": "006",
-        "foodId": "ep-017",
-        "name": "Cumin",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "007",
-        "foodId": "ep-049",
-        "name": "Paprika",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "008",
-        "foodId": "ep-051",
-        "name": "Persil",
-        "quantity": null,
-        "unit": null,
+        "foodId": "ep-035",
+        "name": "Huile d'olive",
+        "quantity": 10,
+        "unit": "g",
         "category": "Epices et condiments"
       }
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_14_Boulettes_de_boeuf_Photo.webp"
+        "url": "/artemis-foodlab/bases/photo/BASE_31_Faluches_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_14_Boulettes_de_boeuf_Ingrédients.webp"
+        "url": "/artemis-foodlab/bases/ingredients/BASE_31_Faluches_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_14_Boulettes_de_boeuf_Recette.webp"
+        "url": "/artemis-foodlab/bases/recipes/BASE_31_Faluches_Recette.webp"
       }
     }
   },
@@ -52178,9 +53378,79 @@
       }
     }
   },
-  "base-038": {
-    "id": "base-038",
-    "name": "Boulettes de haricots blancs",
+  "base-034": {
+    "id": "base-034",
+    "name": "Rösti",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 6,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-074",
+        "name": "Pommes de terre",
+        "quantity": 600,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-061",
+        "name": "Oignon jaune",
+        "quantity": 1.5,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fm-003",
+        "name": "Œuf",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "004",
+        "foodId": "es-025",
+        "name": "Fécule de maïs",
+        "quantity": 35,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "005",
+        "foodId": "ep-051",
+        "name": "Persil",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "fm-002",
+        "name": "Jaune d’œuf",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Ferme"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_34_Röstis_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_34_Röstis_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_34_Röstis_Recette.webp"
+      }
+    }
+  },
+  "base-035": {
+    "id": "base-035",
+    "name": "Sauce bloom",
     "categoryId": "bases",
     "mealTypes": [],
     "kind": "base",
@@ -52189,30 +53459,76 @@
     "ingredients": [
       {
         "id": "001",
-        "foodId": "fc-007",
-        "name": "Haricots blancs secs",
-        "quantity": 200,
+        "foodId": "es-025",
+        "name": "Fécule de maïs",
+        "quantity": 25,
         "unit": "g",
-        "category": "Féculents"
+        "category": "Epicerie sucrée"
       },
       {
         "id": "002",
-        "foodId": "es-007",
-        "name": "Chapelure de maïs",
+        "foodId": "pl-001",
+        "name": "Beurre",
         "quantity": 20,
         "unit": "g",
-        "category": "Epicerie sucrée"
+        "category": "Produits laitiers"
       },
       {
         "id": "003",
-        "foodId": "es-021",
-        "name": "Farine de pois chiches",
-        "quantity": 30,
-        "unit": "g",
-        "category": "Epicerie sucrée"
+        "foodId": "fm-002",
+        "name": "Jaune d’œuf",
+        "quantity": 2,
+        "unit": "pièce",
+        "category": "Ferme"
       },
       {
         "id": "004",
+        "foodId": "ep-006",
+        "name": "Bouillon de légumes",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "ep-062",
+        "name": "Vinaigre balsamique",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_35_Sauce_bloom_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_35_Sauce_bloom_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_35_Sauce_bloom_Recette.webp"
+      }
+    }
+  },
+  "base-036": {
+    "id": "base-036",
+    "name": "Poisson pané",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 4,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "po-004",
+        "name": "Poisson blanc",
+        "quantity": 400,
+        "unit": "g",
+        "category": "Poisson"
+      },
+      {
+        "id": "002",
         "foodId": "fm-003",
         "name": "Œuf",
         "quantity": 1,
@@ -52220,15 +53536,23 @@
         "category": "Ferme"
       },
       {
-        "id": "005",
-        "foodId": "ep-018",
-        "name": "Curcuma",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
+        "id": "003",
+        "foodId": "es-007",
+        "name": "Chapelure de maïs",
+        "quantity": 40,
+        "unit": "g",
+        "category": "Epicerie sucrée"
       },
       {
-        "id": "006",
+        "id": "004",
+        "foodId": "es-043",
+        "name": "Son d’avoine",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "005",
         "foodId": "ep-049",
         "name": "Paprika",
         "quantity": null,
@@ -52236,23 +53560,23 @@
         "category": "Epices et condiments"
       },
       {
-        "id": "007",
-        "foodId": "ep-051",
-        "name": "Persil",
-        "quantity": null,
-        "unit": null,
+        "id": "006",
+        "foodId": "ep-035",
+        "name": "Huile d'olive",
+        "quantity": 8,
+        "unit": "g",
         "category": "Epices et condiments"
       }
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_38_Boulettes_de_haricots_blancs_Photo.webp"
+        "url": "/artemis-foodlab/bases/photo/BASE_36_Poisson_pané_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_38_Boulettes_de_haricots_blancs_Ingrédients.webp"
+        "url": "/artemis-foodlab/bases/ingredients/BASE_36_Poisson_pané_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_38_Boulettes_de_haricots_blancs_Recette.webp"
+        "url": "/artemis-foodlab/bases/recipes/BASE_36_Poisson_pané_Recette.webp"
       }
     }
   },
@@ -52334,9 +53658,9 @@
       }
     }
   },
-  "base-025": {
-    "id": "base-025",
-    "name": "Boulettes de ricotta",
+  "base-038": {
+    "id": "base-038",
+    "name": "Boulettes de haricots blancs",
     "categoryId": "bases",
     "mealTypes": [],
     "kind": "base",
@@ -52345,38 +53669,30 @@
     "ingredients": [
       {
         "id": "001",
-        "foodId": "es-015",
-        "name": "Farine blanche",
-        "quantity": 75,
+        "foodId": "fc-007",
+        "name": "Haricots blancs secs",
+        "quantity": 200,
         "unit": "g",
-        "category": "Epicerie sucrée"
+        "category": "Féculents"
       },
       {
         "id": "002",
-        "foodId": "es-021",
-        "name": "Farine de pois chiches",
-        "quantity": 50,
+        "foodId": "es-007",
+        "name": "Chapelure de maïs",
+        "quantity": 20,
         "unit": "g",
         "category": "Epicerie sucrée"
       },
       {
         "id": "003",
-        "foodId": "fs-020",
-        "name": "Pignons de pin",
-        "quantity": 25,
+        "foodId": "es-021",
+        "name": "Farine de pois chiches",
+        "quantity": 30,
         "unit": "g",
-        "category": "Fruits secs"
+        "category": "Epicerie sucrée"
       },
       {
         "id": "004",
-        "foodId": "pl-027",
-        "name": "Ricotta",
-        "quantity": 150,
-        "unit": "g",
-        "category": "Produits laitiers"
-      },
-      {
-        "id": "005",
         "foodId": "fm-003",
         "name": "Œuf",
         "quantity": 1,
@@ -52384,1355 +53700,39 @@
         "category": "Ferme"
       },
       {
+        "id": "005",
+        "foodId": "ep-018",
+        "name": "Curcuma",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
         "id": "006",
-        "foodId": "pl-025",
-        "name": "Parmesan",
-        "quantity": 50,
-        "unit": "g",
-        "category": "Produits laitiers"
+        "foodId": "ep-049",
+        "name": "Paprika",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
       },
       {
         "id": "007",
-        "foodId": "ep-003",
-        "name": "Basilic",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_25_Boulettes_de_ricotta_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_25_Boulettes_de_ricotta_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_25_Boulettes_de_ricotta_Recette.webp"
-      }
-    }
-  },
-  "base-017": {
-    "id": "base-017",
-    "name": "Pesto verde",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 6,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "fs-020",
-        "name": "Pignons de pin",
-        "quantity": 60,
-        "unit": "g",
-        "category": "Fruits secs"
-      },
-      {
-        "id": "002",
-        "foodId": "pl-025",
-        "name": "Parmesan",
-        "quantity": 60,
-        "unit": "g",
-        "category": "Produits laitiers"
-      },
-      {
-        "id": "003",
-        "foodId": "ep-003",
-        "name": "Basilic",
-        "quantity": 100,
-        "unit": "g",
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "004",
-        "foodId": "fv-002",
-        "name": "Ail",
-        "quantity": 2,
-        "unit": "pièce",
-        "category": "Fruits et légumes"
-      },
-      {
-        "id": "005",
-        "foodId": "ep-035",
-        "name": "Huile d'olive",
-        "quantity": 100,
-        "unit": "g",
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "006",
-        "foodId": "ep-060",
-        "name": "Sel",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_17_Pesto_verde_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_17_Pesto_verde_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_17_Pesto_verde_Recette.webp"
-      }
-    }
-  },
-  "base-004": {
-    "id": "base-004",
-    "name": "Tortillas maison",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 8,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "es-024",
-        "name": "Farine semi complète",
-        "quantity": 125,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "002",
-        "foodId": "es-020",
-        "name": "Farine de maïs",
-        "quantity": 75,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "003",
-        "foodId": "ep-037",
-        "name": "Huile de colza",
-        "quantity": 15,
-        "unit": "g",
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "004",
-        "foodId": "ep-060",
-        "name": "Sel",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "005",
-        "foodId": "ep-004",
-        "name": "Bicarbonate alimentaire",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "006",
-        "foodId": "ep-040",
-        "name": "Jus de citron",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_04_Tortillas_maison_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_04_Tortillas_maison_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_04_Tortillas_maison_Recette.webp"
-      }
-    }
-  },
-  "base-034": {
-    "id": "base-034",
-    "name": "Röstis",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 6,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "fv-074",
-        "name": "Pommes de terre",
-        "quantity": 600,
-        "unit": "g",
-        "category": "Fruits et légumes"
-      },
-      {
-        "id": "002",
-        "foodId": "fv-061",
-        "name": "Oignon jaune",
-        "quantity": 1.5,
-        "unit": "pièce",
-        "category": "Fruits et légumes"
-      },
-      {
-        "id": "003",
-        "foodId": "fm-003",
-        "name": "Œuf",
-        "quantity": 1,
-        "unit": "pièce",
-        "category": "Ferme"
-      },
-      {
-        "id": "004",
-        "foodId": "es-025",
-        "name": "Fécule de maïs",
-        "quantity": 35,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "005",
         "foodId": "ep-051",
         "name": "Persil",
         "quantity": null,
         "unit": null,
         "category": "Epices et condiments"
-      },
-      {
-        "id": "006",
-        "foodId": "fm-002",
-        "name": "Jaune d’œuf",
-        "quantity": 1,
-        "unit": "pièce",
-        "category": "Ferme"
       }
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_34_Röstis_Photo.webp"
+        "url": "/artemis-foodlab/bases/photo/BASE_38_Boulettes_de_haricots_blancs_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_34_Röstis_Ingrédients.webp"
+        "url": "/artemis-foodlab/bases/ingredients/BASE_38_Boulettes_de_haricots_blancs_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_34_Röstis_Recette.webp"
-      }
-    }
-  },
-  "base-031": {
-    "id": "base-031",
-    "name": "Faluches",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 8,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "es-015",
-        "name": "Farine blanche",
-        "quantity": 500,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "002",
-        "foodId": "pl-018",
-        "name": "Lait demi écrémé",
-        "quantity": 150,
-        "unit": "g",
-        "category": "Produits laitiers"
-      },
-      {
-        "id": "003",
-        "foodId": "es-032",
-        "name": "Levure boulangère sèche",
-        "quantity": 1,
-        "unit": "sachet",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "004",
-        "foodId": "es-042",
-        "name": "Sirop d'érable",
-        "quantity": 5,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "005",
-        "foodId": "ep-060",
-        "name": "Sel",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "006",
-        "foodId": "ep-035",
-        "name": "Huile d'olive",
-        "quantity": 10,
-        "unit": "g",
-        "category": "Epices et condiments"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_31_Faluches_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_31_Faluches_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_31_Faluches_Recette.webp"
-      }
-    }
-  },
-  "base-036": {
-    "id": "base-036",
-    "name": "Poisson pané",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 4,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "po-004",
-        "name": "Poisson blanc",
-        "quantity": 400,
-        "unit": "g",
-        "category": "Poisson"
-      },
-      {
-        "id": "002",
-        "foodId": "fm-003",
-        "name": "Œuf",
-        "quantity": 1,
-        "unit": "pièce",
-        "category": "Ferme"
-      },
-      {
-        "id": "003",
-        "foodId": "es-007",
-        "name": "Chapelure de maïs",
-        "quantity": 40,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "004",
-        "foodId": "es-043",
-        "name": "Son d’avoine",
-        "quantity": 10,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "005",
-        "foodId": "ep-049",
-        "name": "Paprika",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "006",
-        "foodId": "ep-035",
-        "name": "Huile d'olive",
-        "quantity": 8,
-        "unit": "g",
-        "category": "Epices et condiments"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_36_Poisson_pané_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_36_Poisson_pané_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_36_Poisson_pané_Recette.webp"
-      }
-    }
-  },
-  "base-007": {
-    "id": "base-007",
-    "name": "Naan",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 4,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "es-024",
-        "name": "Farine semi complète",
-        "quantity": 40,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "002",
-        "foodId": "es-015",
-        "name": "Farine blanche",
-        "quantity": 40,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "003",
-        "foodId": "pl-031",
-        "name": "Yaourt au lait entier",
-        "quantity": 80,
-        "unit": "g",
-        "category": "Produits laitiers"
-      },
-      {
-        "id": "004",
-        "foodId": "ep-004",
-        "name": "Bicarbonate alimentaire",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "005",
-        "foodId": "ep-040",
-        "name": "Jus de citron",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "006",
-        "foodId": "ep-035",
-        "name": "Huile d'olive",
-        "quantity": 10,
-        "unit": "g",
-        "category": "Epices et condiments"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_07_Naan_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_07_Naan_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_07_Naan_Recette.webp"
-      }
-    }
-  },
-  "base-018": {
-    "id": "base-018",
-    "name": "Pesto rosso",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 6,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "fs-020",
-        "name": "Pignons de pin",
-        "quantity": 50,
-        "unit": "g",
-        "category": "Fruits secs"
-      },
-      {
-        "id": "002",
-        "foodId": "pl-025",
-        "name": "Parmesan",
-        "quantity": 30,
-        "unit": "g",
-        "category": "Produits laitiers"
-      },
-      {
-        "id": "003",
-        "foodId": "fv-088",
-        "name": "Tomates séchées sans huile",
-        "quantity": 200,
-        "unit": "g",
-        "category": "Fruits et légumes"
-      },
-      {
-        "id": "004",
-        "foodId": "fv-002",
-        "name": "Ail",
-        "quantity": 2,
-        "unit": "pièce",
-        "category": "Fruits et légumes"
-      },
-      {
-        "id": "005",
-        "foodId": "ep-003",
-        "name": "Basilic",
-        "quantity": 50,
-        "unit": "g",
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "006",
-        "foodId": "ep-035",
-        "name": "Huile d'olive",
-        "quantity": 50,
-        "unit": "g",
-        "category": "Epices et condiments"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_18_Pesto_rosso_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_18_Pesto_rosso_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_18_Pesto_rosso_Recette.webp"
-      }
-    }
-  },
-  "base-013": {
-    "id": "base-013",
-    "name": "Pois chiches grillés",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 4,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "fc-020",
-        "name": "Pois chiches secs",
-        "quantity": 100,
-        "unit": "g",
-        "category": "Féculents"
-      },
-      {
-        "id": "002",
-        "foodId": "ep-035",
-        "name": "Huile d'olive",
-        "quantity": 8,
-        "unit": "g",
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "003",
-        "foodId": "ep-049",
-        "name": "Paprika",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "004",
-        "foodId": "ep-054",
-        "name": "Piment d’Espelette",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "005",
-        "foodId": "ep-019",
-        "name": "Curry",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "006",
-        "foodId": "ep-017",
-        "name": "Cumin",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_13_Pois_chiches_grillés_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_13_Pois_chiches_grillés_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_13_Pois_chiches_grillés_Recette.webp"
-      }
-    }
-  },
-  "base-028": {
-    "id": "base-028",
-    "name": "Dosas",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 2,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "es-021",
-        "name": "Farine de pois chiches",
-        "quantity": 120,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "002",
-        "foodId": "ep-060",
-        "name": "Sel",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "003",
-        "foodId": "ep-017",
-        "name": "Cumin",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "004",
-        "foodId": "ep-015",
-        "name": "Coriandre moulue",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "005",
-        "foodId": "ep-049",
-        "name": "Paprika",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "006",
-        "foodId": "ep-001",
-        "name": "Ail semoule",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_28_Dosas_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_28_Dosas_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_28_Dosas_Recette.webp"
-      }
-    }
-  },
-  "base-035": {
-    "id": "base-035",
-    "name": "Sauce bloom",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 4,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "es-025",
-        "name": "Fécule de maïs",
-        "quantity": 25,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "002",
-        "foodId": "pl-001",
-        "name": "Beurre",
-        "quantity": 20,
-        "unit": "g",
-        "category": "Produits laitiers"
-      },
-      {
-        "id": "003",
-        "foodId": "fm-002",
-        "name": "Jaune d’œuf",
-        "quantity": 2,
-        "unit": "pièce",
-        "category": "Ferme"
-      },
-      {
-        "id": "004",
-        "foodId": "ep-006",
-        "name": "Bouillon de légumes",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "005",
-        "foodId": "ep-062",
-        "name": "Vinaigre balsamique",
-        "quantity": 15,
-        "unit": "g",
-        "category": "Epices et condiments"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_35_Sauce_bloom_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_35_Sauce_bloom_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_35_Sauce_bloom_Recette.webp"
-      }
-    }
-  },
-  "base-029": {
-    "id": "base-029",
-    "name": "Sauce au poivre",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 4,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "es-015",
-        "name": "Farine blanche",
-        "quantity": 20,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "002",
-        "foodId": "ep-006",
-        "name": "Bouillon de légumes",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "003",
-        "foodId": "ep-035",
-        "name": "Huile d'olive",
-        "quantity": 15,
-        "unit": "g",
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "004",
-        "foodId": "ep-062",
-        "name": "Vinaigre balsamique",
-        "quantity": 8,
-        "unit": "g",
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "005",
-        "foodId": "ep-055",
-        "name": "Poivre",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_29_Sauce_au_poivre_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_29_Sauce_au_poivre_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_29_Sauce_au_poivre_Recette.webp"
-      }
-    }
-  },
-  "base-010": {
-    "id": "base-010",
-    "name": "Pâte brisée sans beurre",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 4,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "es-015",
-        "name": "Farine blanche",
-        "quantity": 250,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "002",
-        "foodId": "pl-018",
-        "name": "Lait demi écrémé",
-        "quantity": 50,
-        "unit": "g",
-        "category": "Produits laitiers"
-      },
-      {
-        "id": "003",
-        "foodId": "pl-025",
-        "name": "Parmesan",
-        "quantity": null,
-        "unit": null,
-        "category": "Produits laitiers"
-      },
-      {
-        "id": "004",
-        "foodId": "ep-035",
-        "name": "Huile d'olive",
-        "quantity": 63,
-        "unit": "g",
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "005",
-        "foodId": "ep-048",
-        "name": "Origan",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_10_Pâte_brisée_sans_beurre_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_10_Pâte_brisée_sans_beurre_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_10_Pâte_brisée_sans_beurre_Recette.webp"
-      }
-    }
-  },
-  "base-003": {
-    "id": "base-003",
-    "name": "Gnocchis maison",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 4,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "fv-074",
-        "name": "Pommes de terre",
-        "quantity": 500,
-        "unit": "g",
-        "category": "Fruits et légumes"
-      },
-      {
-        "id": "002",
-        "foodId": "es-024",
-        "name": "Farine semi complète",
-        "quantity": 150,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "003",
-        "foodId": "fm-002",
-        "name": "Jaune d’œuf",
-        "quantity": 1,
-        "unit": "pièce",
-        "category": "Ferme"
-      },
-      {
-        "id": "004",
-        "foodId": "ep-035",
-        "name": "Huile d'olive",
-        "quantity": 8,
-        "unit": "g",
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "005",
-        "foodId": "ep-047",
-        "name": "Muscade",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_03_Gnocchis_maison_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_03_Gnocchis_maison_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_03_Gnocchis_maison_Recette.webp"
-      }
-    }
-  },
-  "base-022": {
-    "id": "base-022",
-    "name": "Pain à hot dog",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 4,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "es-015",
-        "name": "Farine blanche",
-        "quantity": 250,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "002",
-        "foodId": "fm-003",
-        "name": "Œuf",
-        "quantity": 1,
-        "unit": "pièce",
-        "category": "Ferme"
-      },
-      {
-        "id": "003",
-        "foodId": "es-031",
-        "name": "Levure boulangère fraîche",
-        "quantity": 8,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "004",
-        "foodId": "ep-060",
-        "name": "Sel",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "005",
-        "foodId": "ep-035",
-        "name": "Huile d'olive",
-        "quantity": 25,
-        "unit": "g",
-        "category": "Epices et condiments"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_22_Pain_à_hot_dog_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_22_Pain_à_hot_dog_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_22_Pain_à_hot_dog_Recette.webp"
-      }
-    }
-  },
-  "base-015": {
-    "id": "base-015",
-    "name": "Pain pita",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 4,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "es-015",
-        "name": "Farine blanche",
-        "quantity": 200,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "002",
-        "foodId": "es-032",
-        "name": "Levure boulangère sèche",
-        "quantity": 0.5,
-        "unit": "sachet",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "003",
-        "foodId": "ep-035",
-        "name": "Huile d'olive",
-        "quantity": 15,
-        "unit": "g",
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "004",
-        "foodId": "es-044",
-        "name": "Sucre",
-        "quantity": 10,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_15_Pain_pita_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_15_Pain_pita_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_15_Pain_pita_Recette.webp"
-      }
-    }
-  },
-  "base-019": {
-    "id": "base-019",
-    "name": "Béchamel",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 1,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "es-024",
-        "name": "Farine semi complète",
-        "quantity": 8,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "002",
-        "foodId": "pl-018",
-        "name": "Lait demi écrémé",
-        "quantity": 100,
-        "unit": "g",
-        "category": "Produits laitiers"
-      },
-      {
-        "id": "003",
-        "foodId": "ep-037",
-        "name": "Huile de colza",
-        "quantity": 4,
-        "unit": "g",
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "004",
-        "foodId": "ep-047",
-        "name": "Muscade",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_19_Béchamel_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_19_Béchamel_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_19_Béchamel_Recette.webp"
-      }
-    }
-  },
-  "base-021": {
-    "id": "base-021",
-    "name": "Crêpes",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 11,
-    "batchCooking": false,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "es-015",
-        "name": "Farine blanche",
-        "quantity": 250,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "002",
-        "foodId": "pl-018",
-        "name": "Lait demi écrémé",
-        "quantity": 50,
-        "unit": "g",
-        "category": "Produits laitiers"
-      },
-      {
-        "id": "003",
-        "foodId": "fm-003",
-        "name": "Œuf",
-        "quantity": 3,
-        "unit": "pièce",
-        "category": "Ferme"
-      },
-      {
-        "id": "004",
-        "foodId": "ep-037",
-        "name": "Huile de colza",
-        "quantity": 8,
-        "unit": "g",
-        "category": "Epices et condiments"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_21_Crêpese_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_21_Crêpes_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_21_Crêpes_Recette.webp"
-      }
-    }
-  },
-  "base-009": {
-    "id": "base-009",
-    "name": "Pâte brisée au skyr",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 4,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "es-015",
-        "name": "Farine blanche",
-        "quantity": 220,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "002",
-        "foodId": "fm-003",
-        "name": "Œuf",
-        "quantity": 1,
-        "unit": "pièce",
-        "category": "Ferme"
-      },
-      {
-        "id": "003",
-        "foodId": "pl-028",
-        "name": "Skyr",
-        "quantity": 100,
-        "unit": "g",
-        "category": "Produits laitiers"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_09_Pâte_brisée_au_skyr_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_09_Pâte_brisée_au_skyr_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_09_Pâte_brisée_au_skyr_Recette.webp"
-      }
-    }
-  },
-  "base-008": {
-    "id": "base-008",
-    "name": "Pâte à Lasagnes",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 6,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "es-024",
-        "name": "Farine semi complète",
-        "quantity": 150,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "002",
-        "foodId": "fc-028",
-        "name": "Semoule fine",
-        "quantity": 150,
-        "unit": "g",
-        "category": "Féculents"
-      },
-      {
-        "id": "003",
-        "foodId": "fm-003",
-        "name": "Œuf",
-        "quantity": 3,
-        "unit": "pièce",
-        "category": "Ferme"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_08_Pâte_à_Lasagnes_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_08_Pâte_à_Lasagnes_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_08_Pâte_à_Lasagnes_Recette.webp"
-      }
-    }
-  },
-  "base-011": {
-    "id": "base-011",
-    "name": "Pâte à pizza",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 4,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "es-015",
-        "name": "Farine blanche",
-        "quantity": 250,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "002",
-        "foodId": "es-032",
-        "name": "Levure boulangère sèche",
-        "quantity": 1,
-        "unit": "sachet",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "003",
-        "foodId": "ep-035",
-        "name": "Huile d'olive",
-        "quantity": 10,
-        "unit": "g",
-        "category": "Epices et condiments"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_11_Pâte_à_pizza_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_11_Pâte_à_pizza_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_11_Pâte_à_pizza_Recette.webp"
-      }
-    }
-  },
-  "base-027": {
-    "id": "base-027",
-    "name": "Galettes de blé noir",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 10,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "es-022",
-        "name": "Farine de sarrasin",
-        "quantity": 300,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "002",
-        "foodId": "fm-003",
-        "name": "Œuf",
-        "quantity": 1,
-        "unit": "pièce",
-        "category": "Ferme"
-      },
-      {
-        "id": "003",
-        "foodId": "ep-030",
-        "name": "Gros sel",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_27_Galettes_de_blé_noir_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_27_Galettes_de_blé_noir_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_27_Galettes_de_blé_noir_Recette.webp"
-      }
-    }
-  },
-  "base-023": {
-    "id": "base-023",
-    "name": "Crème de cajou",
-    "categoryId": "bases",
-    "mealTypes": [],
-    "kind": "base",
-    "defaultPortions": 2,
-    "batchCooking": true,
-    "ingredients": [
-      {
-        "id": "001",
-        "foodId": "fs-018",
-        "name": "Noix de cajou",
-        "quantity": 40,
-        "unit": "g",
-        "category": "Fruits secs"
-      },
-      {
-        "id": "002",
-        "foodId": "ep-043",
-        "name": "Levure de bière",
-        "quantity": 5,
-        "unit": "g",
-        "category": "Epices et condiments"
-      }
-    ],
-    "assets": {
-      "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_23_Crème_de_cajou_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_23_Crème_de_cajou_Ingrédients.webp"
-      },
-      "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_23_Crème_de_cajou_Recette.webp"
+        "url": "/artemis-foodlab/bases/recipes/BASE_38_Boulettes_de_haricots_blancs_Recette.webp"
       }
     }
   },
@@ -53743,7 +53743,7 @@
     "mealTypes": [],
     "kind": "base",
     "defaultPortions": 2,
-    "batchCooking": true,
+    "batchCooking": false,
     "ingredients": [
       {
         "id": "001",

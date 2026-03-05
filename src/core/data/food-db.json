@@ -51,7 +51,7 @@
       "carbohydrates": 48,
       "fibers": 3
     },
-    "unitWeight": 80,
+    "unitWeight": 20,
     "isFreezable": true
   },
   "bo-005": {
@@ -92,6 +92,7 @@
       "carbohydrates": 2,
       "fibers": 0
     },
+    "unitWeight": 65,
     "isFreezable": true
   },
   "ch-003": {
@@ -118,6 +119,7 @@
       "carbohydrates": 0,
       "fibers": 0
     },
+    "unitWeight": 95,
     "isFreezable": true
   },
   "ch-005": {
@@ -131,6 +133,7 @@
       "carbohydrates": 0,
       "fibers": 0
     },
+    "unitWeight": 95,
     "isFreezable": true
   },
   "ch-006": {

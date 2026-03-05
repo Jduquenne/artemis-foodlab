@@ -96,8 +96,8 @@
         "id": "001",
         "foodId": "ch-002",
         "name": "Jambon",
-        "quantity": 135,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "tranche",
         "category": "Charcuterie"
       },
       {
@@ -217,8 +217,8 @@
         "id": "001",
         "foodId": "ch-002",
         "name": "Jambon",
-        "quantity": 135,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "tranche",
         "category": "Charcuterie"
       },
       {
@@ -314,8 +314,8 @@
         "id": "001",
         "foodId": "ch-005",
         "name": "Saucisse",
-        "quantity": 200,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "pièce",
         "category": "Charcuterie"
       },
       {
@@ -403,8 +403,8 @@
         "id": "001",
         "foodId": "ch-005",
         "name": "Saucisse",
-        "quantity": 200,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "pièce",
         "category": "Charcuterie"
       },
       {
@@ -500,8 +500,8 @@
         "id": "001",
         "foodId": "ch-002",
         "name": "Jambon",
-        "quantity": 135,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "tranche",
         "category": "Charcuterie"
       },
       {
@@ -581,8 +581,8 @@
         "id": "001",
         "foodId": "ch-002",
         "name": "Jambon",
-        "quantity": 135,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "tranche",
         "category": "Charcuterie"
       },
       {
@@ -1049,8 +1049,8 @@
         "id": "001",
         "foodId": "ch-005",
         "name": "Saucisse",
-        "quantity": 200,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "pièce",
         "category": "Charcuterie"
       },
       {
@@ -1195,8 +1195,8 @@
         "id": "001",
         "foodId": "ch-002",
         "name": "Jambon",
-        "quantity": 135,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "tranche",
         "category": "Charcuterie"
       },
       {
@@ -1300,8 +1300,8 @@
         "id": "001",
         "foodId": "ch-005",
         "name": "Saucisse",
-        "quantity": 200,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "pièce",
         "category": "Charcuterie"
       },
       {
@@ -1397,8 +1397,8 @@
         "id": "001",
         "foodId": "ch-002",
         "name": "Jambon",
-        "quantity": 135,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "tranche",
         "category": "Charcuterie"
       },
       {
@@ -1486,8 +1486,8 @@
         "id": "001",
         "foodId": "ch-002",
         "name": "Jambon",
-        "quantity": 135,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "tranche",
         "category": "Charcuterie"
       },
       {
@@ -1551,8 +1551,8 @@
         "id": "001",
         "foodId": "ch-005",
         "name": "Saucisse",
-        "quantity": 200,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "pièce",
         "category": "Charcuterie"
       },
       {
@@ -1754,8 +1754,8 @@
         "id": "001",
         "foodId": "ch-002",
         "name": "Jambon",
-        "quantity": 65,
-        "unit": "g",
+        "quantity": 1,
+        "unit": "tranche",
         "category": "Charcuterie"
       },
       {
@@ -1980,8 +1980,8 @@
         "id": "001",
         "foodId": "ch-005",
         "name": "Saucisse",
-        "quantity": 200,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "pièce",
         "category": "Charcuterie"
       },
       {
@@ -2125,8 +2125,8 @@
         "id": "001",
         "foodId": "ch-005",
         "name": "Saucisse",
-        "quantity": 200,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "pièce",
         "category": "Charcuterie"
       },
       {
@@ -2287,8 +2287,8 @@
         "id": "001",
         "foodId": "ch-002",
         "name": "Jambon",
-        "quantity": 135,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "tranche",
         "category": "Charcuterie"
       },
       {
@@ -2384,8 +2384,8 @@
         "id": "001",
         "foodId": "ch-002",
         "name": "Jambon",
-        "quantity": 135,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "tranche",
         "category": "Charcuterie"
       },
       {
@@ -2481,8 +2481,8 @@
         "id": "001",
         "foodId": "ch-004",
         "name": "Merguez",
-        "quantity": 200,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "pièce",
         "category": "Charcuterie"
       },
       {
@@ -2554,8 +2554,8 @@
         "id": "001",
         "foodId": "ch-005",
         "name": "Saucisse",
-        "quantity": 200,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "pièce",
         "category": "Charcuterie"
       },
       {
@@ -2659,8 +2659,8 @@
         "id": "001",
         "foodId": "ch-005",
         "name": "Saucisse",
-        "quantity": 200,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "pièce",
         "category": "Charcuterie"
       },
       {
@@ -2732,8 +2732,8 @@
         "id": "001",
         "foodId": "ch-002",
         "name": "Jambon",
-        "quantity": 135,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "tranche",
         "category": "Charcuterie"
       },
       {
@@ -2910,8 +2910,8 @@
         "id": "001",
         "foodId": "ch-002",
         "name": "Jambon",
-        "quantity": 135,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "tranche",
         "category": "Charcuterie"
       },
       {
@@ -3064,8 +3064,8 @@
         "id": "001",
         "foodId": "ch-002",
         "name": "Jambon",
-        "quantity": 135,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "tranche",
         "category": "Charcuterie"
       },
       {
@@ -3153,8 +3153,8 @@
         "id": "001",
         "foodId": "ch-005",
         "name": "Saucisse",
-        "quantity": 200,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "pièce",
         "category": "Charcuterie"
       },
       {
@@ -3202,8 +3202,8 @@
         "id": "001",
         "foodId": "ch-004",
         "name": "Merguez",
-        "quantity": 200,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "pièce",
         "category": "Charcuterie"
       },
       {
@@ -3379,8 +3379,8 @@
         "id": "001",
         "foodId": "ch-004",
         "name": "Merguez",
-        "quantity": 100,
-        "unit": "g",
+        "quantity": 1,
+        "unit": "pièce",
         "category": "Charcuterie"
       },
       {
@@ -3492,8 +3492,8 @@
         "id": "002",
         "foodId": "ch-002",
         "name": "Jambon",
-        "quantity": 135,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "tranche",
         "category": "Charcuterie"
       },
       {
@@ -3597,8 +3597,8 @@
         "id": "001",
         "foodId": "ch-004",
         "name": "Merguez",
-        "quantity": 600,
-        "unit": "g",
+        "quantity": 6,
+        "unit": "pièce",
         "category": "Charcuterie"
       },
       {
@@ -3742,8 +3742,8 @@
         "id": "001",
         "foodId": "ch-002",
         "name": "Jambon",
-        "quantity": 135,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "tranche",
         "category": "Charcuterie"
       },
       {
@@ -3831,8 +3831,8 @@
         "id": "001",
         "foodId": "ch-005",
         "name": "Saucisse",
-        "quantity": 400,
-        "unit": "g",
+        "quantity": 4,
+        "unit": "pièce",
         "category": "Charcuterie"
       },
       {
@@ -4049,8 +4049,8 @@
         "id": "001",
         "foodId": "ch-002",
         "name": "Jambon",
-        "quantity": 135,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "tranche",
         "category": "Charcuterie"
       },
       {
@@ -4235,8 +4235,8 @@
         "id": "001",
         "foodId": "ch-002",
         "name": "Jambon",
-        "quantity": 135,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "tranche",
         "category": "Charcuterie"
       },
       {
@@ -4308,8 +4308,8 @@
         "id": "001",
         "foodId": "ch-002",
         "name": "Jambon",
-        "quantity": 135,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "tranche",
         "category": "Charcuterie"
       },
       {
@@ -50983,8 +50983,8 @@
         "id": "002",
         "foodId": "ch-002",
         "name": "Jambon",
-        "quantity": 130,
-        "unit": "g",
+        "quantity": 2,
+        "unit": "tranche",
         "category": "Charcuterie"
       },
       {

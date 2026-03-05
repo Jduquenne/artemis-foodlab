@@ -458,7 +458,7 @@
     "name": "Cornichons",
     "category": "Epices et condiments",
     "macros": {
-      "kcal": 29,
+      "kcal": 18,
       "proteins": 1,
       "lipids": 0,
       "carbohydrates": 5,
@@ -950,7 +950,7 @@
     "name": "Sauce soja",
     "category": "Epices et condiments",
     "macros": {
-      "kcal": 56,
+      "kcal": 77,
       "proteins": 10,
       "lipids": 0,
       "carbohydrates": 3,
@@ -962,7 +962,7 @@
     "name": "Sauce tamari",
     "category": "Epices et condiments",
     "macros": {
-      "kcal": 63,
+      "kcal": 80,
       "proteins": 11,
       "lipids": 0,
       "carbohydrates": 4,

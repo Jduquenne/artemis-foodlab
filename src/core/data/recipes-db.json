@@ -52752,14 +52752,14 @@
     "categoryId": "bases",
     "mealTypes": [],
     "kind": "base",
-    "defaultPortions": 4,
+    "defaultPortions": 6,
     "batchCooking": true,
     "ingredients": [
       {
         "id": "001",
         "foodId": "fv-071",
         "name": "Poivrons",
-        "quantity": 400,
+        "quantity": 500,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -52767,7 +52767,7 @@
         "id": "002",
         "foodId": "fv-085",
         "name": "Tomates",
-        "quantity": 600,
+        "quantity": 800,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -52783,7 +52783,7 @@
         "id": "004",
         "foodId": "fv-061",
         "name": "Oignon jaune",
-        "quantity": 1.5,
+        "quantity": 2,
         "unit": "pièce",
         "category": "Fruits et légumes"
       },
@@ -52791,7 +52791,7 @@
         "id": "005",
         "foodId": "fv-002",
         "name": "Ail",
-        "quantity": 1,
+        "quantity": 2,
         "unit": "pièce",
         "category": "Fruits et légumes"
       },
@@ -52807,7 +52807,7 @@
         "id": "007",
         "foodId": "cn-001",
         "name": "Concentré de tomates",
-        "quantity": 40,
+        "quantity": 60,
         "unit": "g",
         "category": "Conserves"
       },

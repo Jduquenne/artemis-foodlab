@@ -128,7 +128,7 @@
         "id": "005",
         "foodId": "fv-014",
         "name": "Carottes",
-        "quantity": 150,
+        "quantity": 100,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -152,7 +152,7 @@
         "id": "008",
         "foodId": "pl-009",
         "name": "Comté",
-        "quantity": 50,
+        "quantity": 40,
         "unit": "g",
         "category": "Produits laitiers"
       },
@@ -168,7 +168,7 @@
         "id": "010",
         "foodId": "ep-035",
         "name": "Huile d'olive",
-        "quantity": 8,
+        "quantity": 6,
         "unit": "g",
         "category": "Epices et condiments"
       },
@@ -322,7 +322,7 @@
         "id": "002",
         "foodId": "su-002",
         "name": "Epinards",
-        "quantity": 600,
+        "quantity": 500,
         "unit": "g",
         "category": "Surgelés"
       },
@@ -637,7 +637,7 @@
         "id": "008",
         "foodId": "fm-002",
         "name": "Jaune d’œuf",
-        "quantity": 1,
+        "quantity": 0.5,
         "unit": "pièce",
         "category": "Ferme"
       },
@@ -1047,10 +1047,10 @@
     "ingredients": [
       {
         "id": "001",
-        "foodId": "ch-005",
-        "name": "Saucisse",
-        "quantity": 2,
-        "unit": "pièce",
+        "foodId": "ch-006",
+        "name": "Saucisse de Toulouse",
+        "quantity": 150,
+        "unit": "g",
         "category": "Charcuterie"
       },
       {
@@ -1146,7 +1146,7 @@
         "id": "002",
         "foodId": "fv-025",
         "name": "Choucroute cuite",
-        "quantity": 600,
+        "quantity": 500,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -1673,7 +1673,7 @@
         "id": "003",
         "foodId": "fv-021",
         "name": "Champignons",
-        "quantity": 250,
+        "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -1697,7 +1697,7 @@
         "id": "006",
         "foodId": "fm-003",
         "name": "Œuf",
-        "quantity": 5,
+        "quantity": 4,
         "unit": "pièce",
         "category": "Ferme"
       },
@@ -2303,7 +2303,7 @@
         "id": "003",
         "foodId": "fv-061",
         "name": "Oignon jaune",
-        "quantity": 11,
+        "quantity": 1,
         "unit": "pièce",
         "category": "Fruits et légumes"
       },
@@ -2335,7 +2335,7 @@
         "id": "007",
         "foodId": "fm-002",
         "name": "Jaune d’œuf",
-        "quantity": 2,
+        "quantity": 1,
         "unit": "pièce",
         "category": "Ferme"
       },
@@ -2764,8 +2764,8 @@
         "id": "005",
         "foodId": "es-006",
         "name": "Cassonade Graeffe",
-        "quantity": 1,
-        "unit": "c",
+        "quantity": 10,
+        "unit": "g",
         "category": "Epicerie sucrée"
       },
       {
@@ -2813,7 +2813,7 @@
         "id": "002",
         "foodId": "fc-001",
         "name": "Blé",
-        "quantity": 80,
+        "quantity": 60,
         "unit": "g",
         "category": "Féculents"
       },
@@ -3161,7 +3161,7 @@
         "id": "002",
         "foodId": "fc-023",
         "name": "Riz Basmati",
-        "quantity": 100,
+        "quantity": 80,
         "unit": "g",
         "category": "Féculents"
       },
@@ -3492,8 +3492,8 @@
         "id": "002",
         "foodId": "ch-002",
         "name": "Jambon",
-        "quantity": 2,
-        "unit": "tranche",
+        "quantity": 135,
+        "unit": "g",
         "category": "Charcuterie"
       },
       {
@@ -3837,11 +3837,10 @@
       },
       {
         "id": "002",
-        "baseId": "base-039",
         "name": "Taboulé oriental (Accompagnement)",
         "quantity": 4,
         "unit": "portion",
-        "category": "Recette"
+        "category": "Inconnu"
       },
       {
         "id": "003",
@@ -3855,7 +3854,7 @@
         "id": "004",
         "foodId": "fv-009",
         "name": "Betterave rouge",
-        "quantity": 160,
+        "quantity": 150,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -3863,7 +3862,7 @@
         "id": "005",
         "foodId": "su-009",
         "name": "Macédoine surgelée",
-        "quantity": 200,
+        "quantity": 150,
         "unit": "g",
         "category": "Surgelés"
       },
@@ -3903,7 +3902,7 @@
         "id": "010",
         "foodId": "ep-037",
         "name": "Huile de colza",
-        "quantity": 5,
+        "quantity": 10,
         "unit": "g",
         "category": "Epices et condiments"
       },
@@ -3911,7 +3910,7 @@
         "id": "011",
         "foodId": "ep-062",
         "name": "Vinaigre balsamique",
-        "quantity": 5,
+        "quantity": 10,
         "unit": "g",
         "category": "Epices et condiments"
       },
@@ -4089,7 +4088,7 @@
         "id": "006",
         "foodId": "fm-003",
         "name": "Œuf",
-        "quantity": 2,
+        "quantity": 3,
         "unit": "pièce",
         "category": "Ferme"
       },
@@ -4097,7 +4096,7 @@
         "id": "007",
         "foodId": "ep-037",
         "name": "Huile de colza",
-        "quantity": 5,
+        "quantity": 8,
         "unit": "g",
         "category": "Epices et condiments"
       },
@@ -4105,7 +4104,7 @@
         "id": "008",
         "foodId": "ep-062",
         "name": "Vinaigre balsamique",
-        "quantity": 5,
+        "quantity": 8,
         "unit": "g",
         "category": "Epices et condiments"
       },
@@ -4251,7 +4250,7 @@
         "id": "003",
         "foodId": "su-011",
         "name": "Petits pois",
-        "quantity": 150,
+        "quantity": 100,
         "unit": "g",
         "category": "Surgelés"
       },
@@ -9722,9 +9721,9 @@
       }
     }
   },
-  "pc-012": {
-    "id": "pc-012",
-    "name": "Pain semi complet",
+  "pc-011": {
+    "id": "pc-011",
+    "name": "Pain nordique",
     "categoryId": "cereal-products",
     "mealTypes": [
       "breakfast",
@@ -9803,6 +9802,89 @@
     ],
     "assets": {
       "photo": {
+        "url": "/artemis-foodlab/cereal-products/photo/PC_11_Pain_nordique_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/cereal-products/ingredients/PC_11_Pain_nordique_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/cereal-products/recipes/PC_11_Pain_nordique_Recette.webp"
+      }
+    }
+  },
+  "pc-012": {
+    "id": "pc-012",
+    "name": "Pain semi complet",
+    "categoryId": "cereal-products",
+    "mealTypes": [
+      "breakfast",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "kind": "dish",
+    "defaultPortions": 8,
+    "batchCooking": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-024",
+        "name": "Farine semi complète",
+        "quantity": 500,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "fs-014",
+        "name": "Mélange de graines",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "003",
+        "foodId": "es-032",
+        "name": "Levure boulangère sèche",
+        "quantity": 1,
+        "unit": "sachet",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "004",
+        "foodId": "es-031",
+        "name": "Levure boulangère fraîche",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "005",
+        "foodId": "es-042",
+        "name": "Sirop d'érable",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-060",
+        "name": "Sel",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "ep-035",
+        "name": "Huile d'olive",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
         "url": "/artemis-foodlab/cereal-products/photo/PC_12_Pain_semi_complet_Photo.webp"
       },
       "ingredientsPhoto": {
@@ -9815,7 +9897,7 @@
   },
   "pc-013": {
     "id": "pc-013",
-    "name": "Pain nordique",
+    "name": "Muffin anglais aux graines de chia",
     "categoryId": "cereal-products",
     "mealTypes": [
       "breakfast",
@@ -11445,8 +11527,8 @@
         "id": "002",
         "foodId": "es-025",
         "name": "Fécule de maïs",
-        "quantity": 2,
-        "unit": "c",
+        "quantity": 20,
+        "unit": "g",
         "category": "Epicerie sucrée"
       },
       {
@@ -12288,8 +12370,8 @@
       },
       {
         "id": "004",
-        "foodId": "fv-014",
-        "name": "Carottes",
+        "foodId": "fv-021",
+        "name": "Champignons",
         "quantity": 250,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -12346,7 +12428,7 @@
         "id": "011",
         "foodId": "fs-012",
         "name": "Graines de sésame",
-        "quantity": 20,
+        "quantity": 10,
         "unit": "g",
         "category": "Fruits secs"
       },
@@ -16432,8 +16514,8 @@
         "id": "007",
         "foodId": "ep-062",
         "name": "Vinaigre balsamique",
-        "quantity": 1,
-        "unit": "c",
+        "quantity": 5,
+        "unit": "g",
         "category": "Epices et condiments"
       },
       {
@@ -27055,8 +27137,8 @@
         "id": "006",
         "foodId": "web-002",
         "name": "Purée de cacahuètes",
-        "quantity": 1,
-        "unit": "c",
+        "quantity": 15,
+        "unit": "g",
         "category": "Internet"
       },
       {
@@ -29554,8 +29636,8 @@
         "id": "007",
         "foodId": "cn-001",
         "name": "Concentré de tomates",
-        "quantity": 1,
-        "unit": "c",
+        "quantity": 15,
+        "unit": "g",
         "category": "Conserves"
       },
       {
@@ -34450,8 +34532,8 @@
         "id": "006",
         "foodId": "ep-038",
         "name": "Huile de sésame",
-        "quantity": 1,
-        "unit": "c",
+        "quantity": 8,
+        "unit": "g",
         "category": "Epices et condiments"
       },
       {
@@ -39932,7 +40014,7 @@
   },
   "veg-049": {
     "id": "veg-049",
-    "name": "Salade gnocchis mozza",
+    "name": "Salade Gnocchis maison mozza",
     "categoryId": "veggies",
     "mealTypes": [
       "lunch",
@@ -50983,8 +51065,8 @@
         "id": "002",
         "foodId": "ch-002",
         "name": "Jambon",
-        "quantity": 2,
-        "unit": "tranche",
+        "quantity": 130,
+        "unit": "g",
         "category": "Charcuterie"
       },
       {
@@ -53738,7 +53820,7 @@
   },
   "base-039": {
     "id": "base-039",
-    "name": "Taboulé oriental (Accompagnement)",
+    "name": "Taboulé oriental accompagnement",
     "categoryId": "bases",
     "mealTypes": [],
     "kind": "base",
@@ -53778,7 +53860,7 @@
         "category": "Fruits secs"
       },
       {
-        "id": "006",
+        "id": "005",
         "foodId": "ep-035",
         "name": "Huile d'olive",
         "quantity": 10,
@@ -53786,7 +53868,7 @@
         "category": "Epices et condiments"
       },
       {
-        "id": "007",
+        "id": "006",
         "foodId": "ep-040",
         "name": "Jus de citron",
         "quantity": 10,
@@ -53794,7 +53876,7 @@
         "category": "Epices et condiments"
       },
       {
-        "id": "008",
+        "id": "007",
         "foodId": "ep-017",
         "name": "Cumin",
         "quantity": null,
@@ -53802,7 +53884,7 @@
         "category": "Epices et condiments"
       },
       {
-        "id": "009",
+        "id": "008",
         "foodId": "ep-049",
         "name": "Paprika",
         "quantity": null,
@@ -53810,7 +53892,7 @@
         "category": "Epices et condiments"
       },
       {
-        "id": "010",
+        "id": "009",
         "foodId": "ep-018",
         "name": "Curcuma",
         "quantity": null,
@@ -53818,7 +53900,7 @@
         "category": "Epices et condiments"
       },
       {
-        "id": "011",
+        "id": "010",
         "foodId": "ep-015",
         "name": "Coriandre moulue",
         "quantity": null,
@@ -53826,7 +53908,7 @@
         "category": "Epices et condiments"
       },
       {
-        "id": "012",
+        "id": "011",
         "foodId": "ep-014",
         "name": "Coriandre feuilles",
         "quantity": null,
@@ -53834,7 +53916,7 @@
         "category": "Epices et condiments"
       },
       {
-        "id": "013",
+        "id": "012",
         "foodId": "ep-045",
         "name": "Menthe",
         "quantity": null,
@@ -53844,10 +53926,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_39_Taboulé_oriental_Photo.webp"
+        "url": "/artemis-foodlab/bases/photo/BASE_39_Taboulé_oriental_(accompagnement)_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_39_Taboulé_oriental_(accompagnement)_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/bases/recipes/BASE_39_Taboulé_oriental_Recette.webp"
+        "url": "/artemis-foodlab/bases/recipes/BASE_39_Taboulé_oriental_(accompagnement)_Recette.webp"
       }
     }
   },

@@ -42,11 +42,6 @@
   {
     "categoryFolder": "bases",
     "typeFolder": "photo",
-    "fileName": "BASE_09_Pâte_brisée_au_beurre_Photo.webp"
-  },
-  {
-    "categoryFolder": "bases",
-    "typeFolder": "photo",
     "fileName": "BASE_09_Pâte_brisée_au_skyr_Photo.webp"
   },
   {
@@ -197,7 +192,7 @@
   {
     "categoryFolder": "bases",
     "typeFolder": "photo",
-    "fileName": "BASE_39_Taboulé_oriental_Photo.webp"
+    "fileName": "BASE_39_Taboulé_oriental_(accompagnement)_Photo.webp"
   },
   {
     "categoryFolder": "bases",
@@ -238,11 +233,6 @@
     "categoryFolder": "bases",
     "typeFolder": "ingredients",
     "fileName": "BASE_08_Pâte_à_Lasagnes_Ingrédients.webp"
-  },
-  {
-    "categoryFolder": "bases",
-    "typeFolder": "ingredients",
-    "fileName": "BASE_09_Pâte_brisée_au_beurre_Ingrédients.webp"
   },
   {
     "categoryFolder": "bases",
@@ -397,7 +387,7 @@
   {
     "categoryFolder": "bases",
     "typeFolder": "ingredients",
-    "fileName": "BASE_53_Taboulé_oriental_Ingrédients.webp"
+    "fileName": "BASE_39_Taboulé_oriental_(accompagnement)_Ingrédients.webp"
   },
   {
     "categoryFolder": "bases",
@@ -438,11 +428,6 @@
     "categoryFolder": "bases",
     "typeFolder": "recipes",
     "fileName": "BASE_08_Pâte_à_Lasagnes_Recette.webp"
-  },
-  {
-    "categoryFolder": "bases",
-    "typeFolder": "recipes",
-    "fileName": "BASE_09_Pâte_brisée_au_beurre_Recette.webp"
   },
   {
     "categoryFolder": "bases",
@@ -597,7 +582,7 @@
   {
     "categoryFolder": "bases",
     "typeFolder": "recipes",
-    "fileName": "BASE_39_Taboulé_oriental_Recette.webp"
+    "fileName": "BASE_39_Taboulé_oriental_(accompagnement)_Recette.webp"
   },
   {
     "categoryFolder": "cereal-products",

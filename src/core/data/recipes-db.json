@@ -3838,8 +3838,8 @@
       {
         "id": "002",
         "baseId": "base-039",
-        "name": "Taboulé oriental",
-        "quantity": 2,
+        "name": "Taboulé oriental (Accompagnement)",
+        "quantity": 4,
         "unit": "portion",
         "category": "Recette"
       },
@@ -40470,7 +40470,7 @@
         "id": "005",
         "foodId": "fm-003",
         "name": "Œuf",
-        "quantity": 2,
+        "quantity": 4,
         "unit": "pièce",
         "category": "Ferme"
       },
@@ -53742,7 +53742,7 @@
     "categoryId": "bases",
     "mealTypes": [],
     "kind": "base",
-    "defaultPortions": 4,
+    "defaultPortions": 8,
     "batchCooking": false,
     "ingredients": [
       {

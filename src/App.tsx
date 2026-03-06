@@ -12,6 +12,7 @@ import { PlanningModule } from './features/planning/PlanningModule';
 import { ShoppingModule } from './features/shopping/ShoppingModule';
 import { HouseholdModule } from './features/household/HouseholdModule';
 import { FreezerModule } from './features/freezer/FreezerModule';
+import { RecipeBuilderModule } from './features/recipeBuilder/RecipeBuilderModule';
 
 function App() {
   useBackupReminder();
@@ -42,6 +43,9 @@ function App() {
 
           {/* --- MODULE CONGELATEUR --- */}
           <Route path="/freezer" element={<FreezerModule />} />
+
+          {/* --- MODULE CRÉATEUR DE RECETTE --- */}
+          <Route path="/recipe-builder" element={<RecipeBuilderModule />} />
         </Routes>
       </Layout>
     </Router>

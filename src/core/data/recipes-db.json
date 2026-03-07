@@ -3837,10 +3837,11 @@
       },
       {
         "id": "002",
-        "name": "Taboulé oriental (Accompagnement)",
+        "baseId": "base-039",
+        "name": "Taboulé oriental (accompagnement)",
         "quantity": 4,
         "unit": "portion",
-        "category": "Inconnu"
+        "category": "Recette"
       },
       {
         "id": "003",
@@ -4453,7 +4454,7 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/pastries/photo/PAT_01_Cookies_protéinés_à_la_banane_Photo.webp"
+        "url": "/artemis-foodlab/pastries/photo/PAT_01_Cookies_protéinés_banane_chocolat_Photo.webp"
       },
       "ingredientsPhoto": {
         "url": "/artemis-foodlab/pastries/ingredients/PAT_01_Cookies_protéinés_banane_chocolat_Ingrédients.webp"
@@ -4576,13 +4577,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/pastries/photo/PAT_02_Cookies_protéinés_banane_chocolat_Photo.webp"
+        "url": "/artemis-foodlab/pastries/photo/PAT_02_Cookies_protéinés_banane_fruits_secs_et_noix_de_cajou_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/pastries/ingredients/PAT_02_Cookies_protéinés_à_la_banane_Ingrédients.webp"
+        "url": "/artemis-foodlab/pastries/ingredients/PAT_02_Cookies_protéinés_banane_fruits_secs_et_noix_de_cajou_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/pastries/recipes/PAT_02_Cookies_protéinés_à_la_banane_Recette.webp"
+        "url": "/artemis-foodlab/pastries/recipes/PAT_02_Cookies_protéinés_banane_fruits_secs_et_noix_de_cajou_Recette.webp"
       }
     }
   },
@@ -4878,7 +4879,7 @@
       "dinner"
     ],
     "kind": "dish",
-    "defaultPortions": 12,
+    "defaultPortions": 8,
     "batchCooking": true,
     "ingredients": [
       {
@@ -4977,7 +4978,7 @@
       "dinner"
     ],
     "kind": "dish",
-    "defaultPortions": 8,
+    "defaultPortions": 12,
     "batchCooking": true,
     "ingredients": [
       {
@@ -5115,7 +5116,7 @@
         "id": "007",
         "foodId": "es-041",
         "name": "Sirop d'agave",
-        "quantity": 60,
+        "quantity": 135,
         "unit": "g",
         "category": "Epicerie sucrée"
       },
@@ -5145,14 +5146,6 @@
       },
       {
         "id": "011",
-        "foodId": "es-041",
-        "name": "Sirop d'agave",
-        "quantity": 10,
-        "unit": "g",
-        "category": "Epicerie sucrée"
-      },
-      {
-        "id": "012",
         "foodId": "su-010",
         "name": "Myrtilles surgelées",
         "quantity": 50,
@@ -5183,7 +5176,7 @@
       "dinner"
     ],
     "kind": "dish",
-    "defaultPortions": 4,
+    "defaultPortions": 8,
     "batchCooking": true,
     "ingredients": [
       {
@@ -5298,7 +5291,7 @@
       "dinner"
     ],
     "kind": "dish",
-    "defaultPortions": 6,
+    "defaultPortions": 4,
     "batchCooking": true,
     "ingredients": [
       {
@@ -5405,7 +5398,7 @@
       "dinner"
     ],
     "kind": "dish",
-    "defaultPortions": 6,
+    "defaultPortions": 8,
     "batchCooking": true,
     "ingredients": [
       {
@@ -5480,7 +5473,7 @@
       "dinner"
     ],
     "kind": "dish",
-    "defaultPortions": 12,
+    "defaultPortions": 6,
     "batchCooking": true,
     "ingredients": [
       {
@@ -5793,7 +5786,7 @@
       "dinner"
     ],
     "kind": "dish",
-    "defaultPortions": 6,
+    "defaultPortions": 8,
     "batchCooking": true,
     "ingredients": [
       {
@@ -5868,7 +5861,7 @@
       "dinner"
     ],
     "kind": "dish",
-    "defaultPortions": 12,
+    "defaultPortions": 6,
     "batchCooking": true,
     "ingredients": [
       {
@@ -5943,7 +5936,7 @@
       "dinner"
     ],
     "kind": "dish",
-    "defaultPortions": 6,
+    "defaultPortions": 8,
     "batchCooking": true,
     "ingredients": [
       {
@@ -6315,7 +6308,7 @@
       "dinner"
     ],
     "kind": "dish",
-    "defaultPortions": 12,
+    "defaultPortions": 8,
     "batchCooking": true,
     "ingredients": [
       {
@@ -6414,7 +6407,7 @@
       "dinner"
     ],
     "kind": "dish",
-    "defaultPortions": 8,
+    "defaultPortions": 12,
     "batchCooking": true,
     "ingredients": [
       {
@@ -7294,6 +7287,9 @@
       }
     ],
     "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/pastries/photo/PAT_31_Cookie_butternut_amande_Photo.webp"
+      },
       "ingredientsPhoto": {
         "url": "/artemis-foodlab/pastries/ingredients/PAT_31_Cookie_butternut_amande_Ingrédients.webp"
       },
@@ -7634,7 +7630,7 @@
       "dinner"
     ],
     "kind": "dish",
-    "defaultPortions": 8,
+    "defaultPortions": 10,
     "batchCooking": true,
     "ingredients": [
       {
@@ -7816,7 +7812,7 @@
       "dinner"
     ],
     "kind": "dish",
-    "defaultPortions": 12,
+    "defaultPortions": 14,
     "batchCooking": true,
     "ingredients": [
       {
@@ -7907,7 +7903,7 @@
       "dinner"
     ],
     "kind": "dish",
-    "defaultPortions": 14,
+    "defaultPortions": 10,
     "batchCooking": true,
     "ingredients": [
       {
@@ -8148,7 +8144,7 @@
       "dinner"
     ],
     "kind": "dish",
-    "defaultPortions": 10,
+    "defaultPortions": 9,
     "batchCooking": true,
     "ingredients": [
       {
@@ -8231,7 +8227,7 @@
       "dinner"
     ],
     "kind": "dish",
-    "defaultPortions": 9,
+    "defaultPortions": 10,
     "batchCooking": true,
     "ingredients": [
       {
@@ -8413,7 +8409,7 @@
       "dinner"
     ],
     "kind": "dish",
-    "defaultPortions": 8,
+    "defaultPortions": 6,
     "batchCooking": true,
     "ingredients": [
       {
@@ -8504,7 +8500,7 @@
       "dinner"
     ],
     "kind": "dish",
-    "defaultPortions": 6,
+    "defaultPortions": 10,
     "batchCooking": true,
     "ingredients": [
       {
@@ -8559,7 +8555,7 @@
         "id": "007",
         "foodId": "es-042",
         "name": "Sirop d'érable",
-        "quantity": 50,
+        "quantity": 40,
         "unit": "g",
         "category": "Epicerie sucrée"
       },
@@ -8575,7 +8571,7 @@
         "id": "009",
         "foodId": "ep-037",
         "name": "Huile de colza",
-        "quantity": 15,
+        "quantity": 10,
         "unit": "g",
         "category": "Epices et condiments"
       },
@@ -8643,7 +8639,7 @@
       "dinner"
     ],
     "kind": "dish",
-    "defaultPortions": 12,
+    "defaultPortions": 8,
     "batchCooking": true,
     "ingredients": [
       {
@@ -53820,7 +53816,7 @@
   },
   "base-039": {
     "id": "base-039",
-    "name": "Taboulé oriental accompagnement",
+    "name": "Taboulé oriental (accompagnement)",
     "categoryId": "bases",
     "mealTypes": [],
     "kind": "base",

@@ -95,7 +95,7 @@ export const CategoryDetail = () => {
                                 frontImage={recipe.photoUrl}
                                 backImage={recipe.ingredientsUrl}
                                 recipeUrl={recipe.recipeUrl}
-                                onClick={() => navigate(`/recipes/detail/${recipe.id}`)}
+                                onClick={() => navigate(`/recipes/detail/${recipe.id}?category=${categoryId}`)}
                                 onAddToPlanning={data[recipe.id]?.kind !== 'base' ? () => navigate(`/planning?addRecipe=${recipe.id}`) : undefined}
                             />
                         </div>

@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Calculator } from 'lucide-react';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { ArrowLeft, Calculator, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Food, RecipeDetails } from '../../../core/domain/types';
 import recipesDb from '../../../core/data/recipes-db.json';
 import foodDb from '../../../core/data/food-db.json';
@@ -17,12 +17,25 @@ const MACRO_LABELS = [
 export const RecipeDetail = () => {
     const { recipeId } = useParams();
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const [isLeaving, setIsLeaving] = useState(false);
 
     const data = recipesDb as unknown as Record<string, RecipeDetails>;
     const foods = foodDb as unknown as Record<string, Food>;
     const recipe = recipeId ? data[recipeId] : undefined;
     const recipeUrl = recipe?.assets?.instructionsPhoto?.url;
+    const categoryId = searchParams.get('category');
+
+    const categoryRecipeIds = useMemo(() => {
+        if (!categoryId) return [];
+        return Object.entries(data)
+            .filter(([, r]) => r.categoryId === categoryId && r.assets?.instructionsPhoto)
+            .map(([id]) => id);
+    }, [categoryId, data]);
+
+    const currentIndex = categoryRecipeIds.indexOf(recipeId ?? '');
+    const prevId = currentIndex > 0 ? categoryRecipeIds[currentIndex - 1] : null;
+    const nextId = currentIndex !== -1 && currentIndex < categoryRecipeIds.length - 1 ? categoryRecipeIds[currentIndex + 1] : null;
 
     const macros = useMemo(() => {
         if (!recipe) return null;
@@ -38,6 +51,10 @@ export const RecipeDetail = () => {
     const handleBack = () => {
         setIsLeaving(true);
         setTimeout(() => navigate(-1), 280);
+    };
+
+    const navigateTo = (id: string) => {
+        navigate(`/recipes/detail/${id}?category=${categoryId}`, { replace: true });
     };
 
     return (
@@ -76,12 +93,32 @@ export const RecipeDetail = () => {
                 </div>
             )}
 
-            <div className="flex-1 min-h-0 flex items-center justify-center">
+            <div className="flex-1 min-h-0 flex items-center justify-center gap-2">
+                {categoryId && (
+                    <button
+                        aria-label="Recette précédente"
+                        onClick={() => prevId && navigateTo(prevId)}
+                        disabled={!prevId}
+                        className="shrink-0 p-2 rounded-xl text-slate-400 hover:text-orange-600 hover:bg-orange-50 transition-colors disabled:opacity-20 disabled:pointer-events-none"
+                    >
+                        <ChevronLeft className="w-6 h-6" />
+                    </button>
+                )}
                 <img
                     src={recipeUrl}
                     alt={recipe.name}
-                    className="max-w-full max-h-full object-contain rounded-2xl shadow-sm"
+                    className="flex-1 min-w-0 max-h-full object-contain rounded-2xl shadow-sm"
                 />
+                {categoryId && (
+                    <button
+                        aria-label="Recette suivante"
+                        onClick={() => nextId && navigateTo(nextId)}
+                        disabled={!nextId}
+                        className="shrink-0 p-2 rounded-xl text-slate-400 hover:text-orange-600 hover:bg-orange-50 transition-colors disabled:opacity-20 disabled:pointer-events-none"
+                    >
+                        <ChevronRight className="w-6 h-6" />
+                    </button>
+                )}
             </div>
 
         </div>

@@ -3,6 +3,7 @@ import { useRecipeBuilderStore } from "../../shared/store/useRecipeBuilderStore"
 import { RecipeMetaForm } from "./components/RecipeMetaForm";
 import { IngredientBuilderList } from "./components/IngredientBuilderList";
 import { OutputPanel } from "./components/OutputPanel";
+import { MacroPreview } from "./components/MacroPreview";
 
 export const RecipeBuilderModule = () => {
   const { draft, patch, patchIngredients, reset } = useRecipeBuilderStore();
@@ -44,6 +45,10 @@ export const RecipeBuilderModule = () => {
               ingredients={draft.ingredients}
               onChange={patchIngredients}
             />
+          </div>
+
+          <div className="shrink-0 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl p-4">
+            <MacroPreview ingredients={draft.ingredients} defaultPortions={draft.defaultPortions} />
           </div>
 
           <div className="shrink-0 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl p-4">

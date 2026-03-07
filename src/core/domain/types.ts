@@ -47,6 +47,7 @@ export interface Food {
   name: string;
   category: IngredientCategory;
   macros: Macronutrients;
+  unit?: string;
   unitWeight?: number;
   isFreezable?: boolean;
 }

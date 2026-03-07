@@ -10,7 +10,7 @@ interface IngredientBuilderRowProps {
   onRemove: () => void;
 }
 
-const UNITS = Object.values(Unit).filter(u => u !== Unit.NONE && u !== Unit.PORTION);
+const UNITS = Object.values(Unit).filter(u => u !== Unit.NONE);
 
 export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: IngredientBuilderRowProps) => {
   const update = (patch: Partial<DraftIngredient>) => onChange({ ...ingredient, ...patch });
@@ -79,8 +79,8 @@ export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: Ingredi
         <>
           <IngredientFoodSearch
             value={ingredient.name}
-            onChange={(name, foodId, category) =>
-              update({ name, foodId, category: category ?? ingredient.category })
+            onChange={(name, foodId, category, unit) =>
+              update({ name, foodId, category: category ?? ingredient.category, unit: (unit as Unit) ?? ingredient.unit })
             }
           />
           <input

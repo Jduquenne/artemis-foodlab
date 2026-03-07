@@ -2,7 +2,7 @@
   "fv-001": {
     "id": "fv-001", "name": "Citron jaune", "category": "Fruits et légumes",
     "macros": { "kcal": 29, "proteins": 1.1, "lipids": 0.3, "carbohydrates": 5.1, "fibers": 2.8 },
-    "unitWeight": 130
+    "unit": "pièce", "unitWeight": 130
   },
   "fv-002": {
     "id": "fv-002", "name": "Avocat Hass", "category": "Fruits et légumes",

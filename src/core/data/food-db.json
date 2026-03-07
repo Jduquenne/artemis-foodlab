@@ -1,298 +1,57 @@
 {
-  "bo-001": {
-    "id": "bo-001",
-    "name": "Baguette",
-    "category": "Boulangerie",
+  "fv-001": {
+    "id": "fv-001",
+    "name": "Abricot",
+    "category": "Fruits et légumes",
     "macros": {
-      "kcal": 283,
-      "proteins": 8,
-      "lipids": 1,
-      "carbohydrates": 59,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "bo-002": {
-    "id": "bo-002",
-    "name": "Pain",
-    "category": "Boulangerie",
-    "macros": {
-      "kcal": 266,
-      "proteins": 9,
-      "lipids": 2,
-      "carbohydrates": 51,
-      "fibers": 6
-    },
-    "unit": "portion",
-    "unitWeight": 80,
-    "isFreezable": true
-  },
-  "bo-003": {
-    "id": "bo-003",
-    "name": "Pain complet",
-    "category": "Boulangerie",
-    "macros": {
-      "kcal": 266,
-      "proteins": 9,
-      "lipids": 2,
-      "carbohydrates": 51,
-      "fibers": 6
-    },
-    "unit": "portion",
-    "unitWeight": 80,
-    "isFreezable": true
-  },
-  "bo-004": {
-    "id": "bo-004",
-    "name": "Pain de mie",
-    "category": "Boulangerie",
-    "macros": {
-      "kcal": 255,
-      "proteins": 9,
-      "lipids": 3,
-      "carbohydrates": 48,
-      "fibers": 3
-    },
-    "unit": "portion",
-    "unitWeight": 20,
-    "isFreezable": true
-  },
-  "bo-005": {
-    "id": "bo-005",
-    "name": "Pain nordique",
-    "category": "Boulangerie",
-    "macros": {
-      "kcal": 265,
-      "proteins": 8,
-      "lipids": 4,
-      "carbohydrates": 45,
-      "fibers": 9
-    },
-    "unit": "portion",
-    "unitWeight": 80,
-    "isFreezable": true
-  },
-  "ch-001": {
-    "id": "ch-001",
-    "name": "Charcuterie (optionnel)",
-    "category": "Charcuterie",
-    "macros": {
-      "kcal": 0,
+      "kcal": 43,
       "proteins": 0,
       "lipids": 0,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "ch-002": {
-    "id": "ch-002",
-    "name": "Jambon",
-    "category": "Charcuterie",
-    "macros": {
-      "kcal": 140,
-      "proteins": 21,
-      "lipids": 6,
-      "carbohydrates": 2,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "ch-003": {
-    "id": "ch-003",
-    "name": "Lardons",
-    "category": "Charcuterie",
-    "macros": {
-      "kcal": 310,
-      "proteins": 17,
-      "lipids": 27,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "ch-004": {
-    "id": "ch-004",
-    "name": "Merguez",
-    "category": "Charcuterie",
-    "macros": {
-      "kcal": 219,
-      "proteins": 17,
-      "lipids": 17,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "ch-005": {
-    "id": "ch-005",
-    "name": "Saucisse",
-    "category": "Charcuterie",
-    "macros": {
-      "kcal": 238,
-      "proteins": 15,
-      "lipids": 22,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "ch-006": {
-    "id": "ch-006",
-    "name": "Saucisse de Toulouse",
-    "category": "Charcuterie",
-    "macros": {
-      "kcal": 238,
-      "proteins": 15,
-      "lipids": 22,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "cn-001": {
-    "id": "cn-001",
-    "name": "Concentré de tomates",
-    "category": "Conserves",
-    "macros": {
-      "kcal": 71,
-      "proteins": 4,
-      "lipids": 0,
-      "carbohydrates": 10,
-      "fibers": 3
-    },
-    "unit": "g"
-  },
-  "cn-002": {
-    "id": "cn-002",
-    "name": "Fèves edamame",
-    "category": "Conserves",
-    "macros": {
-      "kcal": 133,
-      "proteins": 11,
-      "lipids": 7,
-      "carbohydrates": 4,
-      "fibers": 5
-    },
-    "unit": "g"
-  },
-  "cn-003": {
-    "id": "cn-003",
-    "name": "Maïs",
-    "category": "Conserves",
-    "macros": {
-      "kcal": 89,
-      "proteins": 3,
-      "lipids": 2,
-      "carbohydrates": 12,
-      "fibers": 4
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "cn-004": {
-    "id": "cn-004",
-    "name": "Olives verte",
-    "category": "Conserves",
-    "macros": {
-      "kcal": 145,
-      "proteins": 1,
-      "lipids": 14,
-      "carbohydrates": 1,
-      "fibers": 5
-    },
-    "unit": "g"
-  },
-  "cn-005": {
-    "id": "cn-005",
-    "name": "Pousses de haricots mungo",
-    "category": "Conserves",
-    "macros": {
-      "kcal": 33,
-      "proteins": 3,
-      "lipids": 0,
-      "carbohydrates": 5,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "cn-006": {
-    "id": "cn-006",
-    "name": "Pulpe de tomates",
-    "category": "Conserves",
-    "macros": {
-      "kcal": 24,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 5,
+      "carbohydrates": 9,
       "fibers": 1
     },
-    "unit": "g",
-    "isFreezable": true
+    "unit": "g"
   },
-  "cn-007": {
-    "id": "cn-007",
-    "name": "Purée de tomates",
-    "category": "Conserves",
+  "fs-001": {
+    "id": "fs-001",
+    "name": "Abricots secs",
+    "category": "Fruits secs",
     "macros": {
-      "kcal": 25,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 4,
-      "fibers": 1
+      "kcal": 295,
+      "proteins": 5,
+      "lipids": 1,
+      "carbohydrates": 63,
+      "fibers": 7
     },
-    "unit": "g",
-    "isFreezable": true
+    "unit": "g"
   },
-  "cn-008": {
-    "id": "cn-008",
-    "name": "Sardines nature",
-    "category": "Conserves",
+  "vm-001": {
+    "id": "vm-001",
+    "name": "Aiguillettes de poulet",
+    "category": "Viande",
     "macros": {
-      "kcal": 162,
-      "proteins": 24,
-      "lipids": 7,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "cn-009": {
-    "id": "cn-009",
-    "name": "Sauce tomate",
-    "category": "Conserves",
-    "macros": {
-      "kcal": 64,
-      "proteins": 2,
-      "lipids": 3,
-      "carbohydrates": 8,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "cn-010": {
-    "id": "cn-010",
-    "name": "Thon au naturel",
-    "category": "Conserves",
-    "macros": {
-      "kcal": 93,
-      "proteins": 22,
+      "kcal": 107,
+      "proteins": 23,
       "lipids": 1,
       "carbohydrates": 0,
       "fibers": 0
     },
     "unit": "g",
     "isFreezable": true
+  },
+  "fv-002": {
+    "id": "fv-002",
+    "name": "Ail",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 114,
+      "proteins": 6,
+      "lipids": 0,
+      "carbohydrates": 21,
+      "fibers": 2
+    },
+    "unit": "pièce",
+    "unitWeight": 4
   },
   "ep-001": {
     "id": "ep-001",
@@ -304,6 +63,58 @@
       "lipids": 0,
       "carbohydrates": 0,
       "fibers": 0
+    },
+    "unit": "g"
+  },
+  "fs-002": {
+    "id": "fs-002",
+    "name": "Amandes",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 612,
+      "proteins": 26,
+      "lipids": 52,
+      "carbohydrates": 4,
+      "fibers": 12
+    },
+    "unit": "g"
+  },
+  "es-001": {
+    "id": "es-001",
+    "name": "Amandes effilées",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 732,
+      "proteins": 26,
+      "lipids": 50,
+      "carbohydrates": 40,
+      "fibers": 9
+    },
+    "unit": "g"
+  },
+  "es-002": {
+    "id": "es-002",
+    "name": "Amandes en poudre",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 639,
+      "proteins": 28,
+      "lipids": 53,
+      "carbohydrates": 7,
+      "fibers": 9
+    },
+    "unit": "g"
+  },
+  "fv-003": {
+    "id": "fv-003",
+    "name": "Ananas",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 50,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 11,
+      "fibers": 1
     },
     "unit": "g"
   },
@@ -320,6 +131,115 @@
     },
     "unit": "g"
   },
+  "es-003": {
+    "id": "es-003",
+    "name": "Arôme amande amère",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 0,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "fv-004": {
+    "id": "fv-004",
+    "name": "Asperges blanches",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 28,
+      "proteins": 3,
+      "lipids": 0,
+      "carbohydrates": 3,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-005": {
+    "id": "fv-005",
+    "name": "Asperges vertes fines",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 22,
+      "proteins": 2,
+      "lipids": 0,
+      "carbohydrates": 2,
+      "fibers": 1
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-006": {
+    "id": "fv-006",
+    "name": "Aubergine",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 22,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 3,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-007": {
+    "id": "fv-007",
+    "name": "Avocat",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 205,
+      "proteins": 1,
+      "lipids": 20,
+      "carbohydrates": 0,
+      "fibers": 5
+    },
+    "unit": "pièce",
+    "unitWeight": 140
+  },
+  "bo-001": {
+    "id": "bo-001",
+    "name": "Baguette",
+    "category": "Boulangerie",
+    "macros": {
+      "kcal": 281,
+      "proteins": 8,
+      "lipids": 1,
+      "carbohydrates": 59,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fs-003": {
+    "id": "fs-003",
+    "name": "Baies de goji",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 338,
+      "proteins": 14,
+      "lipids": 0,
+      "carbohydrates": 64,
+      "fibers": 13
+    },
+    "unit": "g"
+  },
+  "fv-008": {
+    "id": "fv-008",
+    "name": "Banane",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 89,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 19,
+      "fibers": 2
+    },
+    "unit": "g"
+  },
   "ep-003": {
     "id": "ep-003",
     "name": "Basilic",
@@ -328,6 +248,60 @@
       "kcal": 0,
       "proteins": 0,
       "lipids": 0,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "su-001": {
+    "id": "su-001",
+    "name": "Batonnet glacé nuii menthe",
+    "category": "Surgelés",
+    "macros": {
+      "kcal": 381,
+      "proteins": 4,
+      "lipids": 22,
+      "carbohydrates": 41,
+      "fibers": 1
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-009": {
+    "id": "fv-009",
+    "name": "Betterave rouge",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 45,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 8,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "pl-001": {
+    "id": "pl-001",
+    "name": "Beurre",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 743,
+      "proteins": 0,
+      "lipids": 82,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "pl-002": {
+    "id": "pl-002",
+    "name": "Beurre demi sel",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 734,
+      "proteins": 0,
+      "lipids": 81,
       "carbohydrates": 0,
       "fibers": 0
     },
@@ -345,6 +319,89 @@
       "fibers": 0
     },
     "unit": "g"
+  },
+  "fm-001": {
+    "id": "fm-001",
+    "name": "Blanc d’œuf",
+    "category": "Ferme",
+    "macros": {
+      "kcal": 44,
+      "proteins": 10,
+      "lipids": 0,
+      "carbohydrates": 1,
+      "fibers": 0
+    },
+    "unit": "pièce",
+    "unitWeight": 38
+  },
+  "fv-010": {
+    "id": "fv-010",
+    "name": "Blanc de Poireau",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 30,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 4,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fc-001": {
+    "id": "fc-001",
+    "name": "Blé",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 350,
+      "proteins": 12,
+      "lipids": 1,
+      "carbohydrates": 70,
+      "fibers": 4
+    },
+    "unit": "g"
+  },
+  "vm-002": {
+    "id": "vm-002",
+    "name": "Bœuf à mijoter (paleron, joue, macreuse,...)",
+    "category": "Viande",
+    "macros": {
+      "kcal": 138,
+      "proteins": 21,
+      "lipids": 6,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "vm-003": {
+    "id": "vm-003",
+    "name": "Bœuf haché 5% Mg",
+    "category": "Viande",
+    "macros": {
+      "kcal": 128,
+      "proteins": 21,
+      "lipids": 4,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "pl-003": {
+    "id": "pl-003",
+    "name": "Boisson soja nature",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 40,
+      "proteins": 4,
+      "lipids": 2,
+      "carbohydrates": 1,
+      "fibers": 1
+    },
+    "unit": "g",
+    "isFreezable": true
   },
   "ep-005": {
     "id": "ep-005",
@@ -376,6 +433,114 @@
     "id": "ep-007",
     "name": "Bouillon de volaille",
     "category": "Epices et condiments",
+    "macros": {
+      "kcal": 0,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "fc-002": {
+    "id": "fc-002",
+    "name": "Boulgour",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 349,
+      "proteins": 12,
+      "lipids": 3,
+      "carbohydrates": 61,
+      "fibers": 12
+    },
+    "unit": "g"
+  },
+  "fv-011": {
+    "id": "fv-011",
+    "name": "Brocoli",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 32,
+      "proteins": 3,
+      "lipids": 0,
+      "carbohydrates": 2,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-012": {
+    "id": "fv-012",
+    "name": "Brocoli frais",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 32,
+      "proteins": 3,
+      "lipids": 0,
+      "carbohydrates": 2,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "pl-004": {
+    "id": "pl-004",
+    "name": "Bûche de chèvre",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 291,
+      "proteins": 20,
+      "lipids": 23,
+      "carbohydrates": 1,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "pl-005": {
+    "id": "pl-005",
+    "name": "Buche de chèvre ou fromage frais",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 291,
+      "proteins": 20,
+      "lipids": 23,
+      "carbohydrates": 1,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fs-004": {
+    "id": "fs-004",
+    "name": "Cacahuètes",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 611,
+      "proteins": 26,
+      "lipids": 49,
+      "carbohydrates": 12,
+      "fibers": 9
+    },
+    "unit": "g"
+  },
+  "es-004": {
+    "id": "es-004",
+    "name": "Cacao non sucré",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 35,
+      "proteins": 3,
+      "lipids": 1,
+      "carbohydrates": 2,
+      "fibers": 3
+    },
+    "unit": "g"
+  },
+  "es-005": {
+    "id": "es-005",
+    "name": "Café espresso",
+    "category": "Epicerie sucrée",
     "macros": {
       "kcal": 0,
       "proteins": 0,
@@ -424,6 +589,336 @@
     },
     "unit": "g"
   },
+  "fv-013": {
+    "id": "fv-013",
+    "name": "Carotte ou potimarron",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 28,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 5,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-014": {
+    "id": "fv-014",
+    "name": "Carottes",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 28,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 5,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-015": {
+    "id": "fv-015",
+    "name": "Carottes (julienne)",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 28,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 5,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-016": {
+    "id": "fv-016",
+    "name": "Carottes (râpée)",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 28,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 5,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-017": {
+    "id": "fv-017",
+    "name": "Carottes (rondelles)",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 28,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 5,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-018": {
+    "id": "fv-018",
+    "name": "Carottes ou panais",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 28,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 5,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "es-006": {
+    "id": "es-006",
+    "name": "Cassonade Graeffe",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 378,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 94,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "fv-019": {
+    "id": "fv-019",
+    "name": "Céleri banche",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 15,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 1,
+      "fibers": 1
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-020": {
+    "id": "fv-020",
+    "name": "Cerises",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 58,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 13,
+      "fibers": 1
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-021": {
+    "id": "fv-021",
+    "name": "Champignons",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 18,
+      "proteins": 2,
+      "lipids": 0,
+      "carbohydrates": 0,
+      "fibers": 1
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "es-007": {
+    "id": "es-007",
+    "name": "Chapelure de maïs",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 374,
+      "proteins": 6,
+      "lipids": 1,
+      "carbohydrates": 83,
+      "fibers": 3
+    },
+    "unit": "g"
+  },
+  "ch-001": {
+    "id": "ch-001",
+    "name": "Charcuterie (optionnel)",
+    "category": "Charcuterie",
+    "macros": {
+      "kcal": 0,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "pl-006": {
+    "id": "pl-006",
+    "name": "Cheddar",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 413,
+      "proteins": 24,
+      "lipids": 35,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "pl-007": {
+    "id": "pl-007",
+    "name": "Cheddar en tranches",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 413,
+      "proteins": 24,
+      "lipids": 35,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "pl-008": {
+    "id": "pl-008",
+    "name": "Cheddar râpé",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 413,
+      "proteins": 24,
+      "lipids": 35,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "es-008": {
+    "id": "es-008",
+    "name": "Chocolat 74% cacao",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 560,
+      "proteins": 10,
+      "lipids": 40,
+      "carbohydrates": 34,
+      "fibers": 12
+    },
+    "unit": "g"
+  },
+  "es-009": {
+    "id": "es-009",
+    "name": "Chocolat 85% cacao",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 635,
+      "proteins": 9,
+      "lipids": 55,
+      "carbohydrates": 20,
+      "fibers": 12
+    },
+    "unit": "g"
+  },
+  "es-010": {
+    "id": "es-010",
+    "name": "Chocolat noir",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 560,
+      "proteins": 10,
+      "lipids": 40,
+      "carbohydrates": 34,
+      "fibers": 12
+    },
+    "unit": "g"
+  },
+  "es-011": {
+    "id": "es-011",
+    "name": "Chocolat noir pâtissier",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 553,
+      "proteins": 8,
+      "lipids": 37,
+      "carbohydrates": 40,
+      "fibers": 10
+    },
+    "unit": "g"
+  },
+  "fv-022": {
+    "id": "fv-022",
+    "name": "Chou blanc",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 28,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 4,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-023": {
+    "id": "fv-023",
+    "name": "Chou fleur",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 28,
+      "proteins": 2,
+      "lipids": 0,
+      "carbohydrates": 3,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-024": {
+    "id": "fv-024",
+    "name": "Chou romanesco",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 31,
+      "proteins": 3,
+      "lipids": 0,
+      "carbohydrates": 2,
+      "fibers": 3
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-025": {
+    "id": "fv-025",
+    "name": "Choucroute cuite",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 17,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 1,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-026": {
+    "id": "fv-026",
+    "name": "Choux de Bruxelles",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 43,
+      "proteins": 3,
+      "lipids": 0,
+      "carbohydrates": 4,
+      "fibers": 4
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
   "ep-011": {
     "id": "ep-011",
     "name": "Ciboulette",
@@ -434,6 +929,45 @@
       "lipids": 0,
       "carbohydrates": 0,
       "fibers": 0
+    },
+    "unit": "g"
+  },
+  "fv-027": {
+    "id": "fv-027",
+    "name": "Citron non traité",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 0,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "fv-028": {
+    "id": "fv-028",
+    "name": "Citron vert",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 0,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "fv-029": {
+    "id": "fv-029",
+    "name": "Clémentine",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 43,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 9,
+      "fibers": 1
     },
     "unit": "g"
   },
@@ -450,16 +984,83 @@
     },
     "unit": "g"
   },
+  "fv-030": {
+    "id": "fv-030",
+    "name": "Compote de pomme maison",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 64,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 15,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "pl-009": {
+    "id": "pl-009",
+    "name": "Comté",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 412,
+      "proteins": 26,
+      "lipids": 34,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "cn-001": {
+    "id": "cn-001",
+    "name": "Concentré de tomates",
+    "category": "Conserves",
+    "macros": {
+      "kcal": 71,
+      "proteins": 4,
+      "lipids": 0,
+      "carbohydrates": 10,
+      "fibers": 3
+    },
+    "unit": "g"
+  },
+  "fv-031": {
+    "id": "fv-031",
+    "name": "Concombre",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 13,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 2,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
   "ep-013": {
     "id": "ep-013",
     "name": "Confit d’oignon",
     "category": "Epices et condiments",
     "macros": {
-      "kcal": 151,
+      "kcal": 154,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 36,
       "fibers": 0
+    },
+    "unit": "g"
+  },
+  "fc-003": {
+    "id": "fc-003",
+    "name": "Coquillettes",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 337,
+      "proteins": 11,
+      "lipids": 2,
+      "carbohydrates": 65,
+      "fibers": 7
     },
     "unit": "g"
   },
@@ -489,6 +1090,19 @@
     },
     "unit": "g"
   },
+  "es-012": {
+    "id": "es-012",
+    "name": "Cornflakes",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 379,
+      "proteins": 8,
+      "lipids": 1,
+      "carbohydrates": 82,
+      "fibers": 3
+    },
+    "unit": "g"
+  },
   "ep-016": {
     "id": "ep-016",
     "name": "Cornichons",
@@ -501,6 +1115,186 @@
       "fibers": 0
     },
     "unit": "g"
+  },
+  "fv-032": {
+    "id": "fv-032",
+    "name": "Courge",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 39,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 7,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-033": {
+    "id": "fv-033",
+    "name": "Courge bleue de Hongrie",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 39,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 7,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-034": {
+    "id": "fv-034",
+    "name": "Courge butternut",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 39,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 7,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-035": {
+    "id": "fv-035",
+    "name": "Courge butternut ou potimarron",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 39,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 7,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-036": {
+    "id": "fv-036",
+    "name": "Courge butternut ou potiron",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 39,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 7,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-037": {
+    "id": "fv-037",
+    "name": "Courge Jack Be Little",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 39,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 7,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-038": {
+    "id": "fv-038",
+    "name": "Courge spaghetti",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 27,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 5,
+      "fibers": 1
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-039": {
+    "id": "fv-039",
+    "name": "Courgette",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 18,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 2,
+      "fibers": 1
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-040": {
+    "id": "fv-040",
+    "name": "Courgette (à râper)",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 18,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 2,
+      "fibers": 1
+    },
+    "unit": "g"
+  },
+  "fs-005": {
+    "id": "fs-005",
+    "name": "Cranberries séchées",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 337,
+      "proteins": 1,
+      "lipids": 1,
+      "carbohydrates": 78,
+      "fibers": 6
+    },
+    "unit": "g"
+  },
+  "po-001": {
+    "id": "po-001",
+    "name": "Crevettes",
+    "category": "Poisson",
+    "macros": {
+      "kcal": 77,
+      "proteins": 17,
+      "lipids": 1,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fc-004": {
+    "id": "fc-004",
+    "name": "Crozets au sarrasin",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 385,
+      "proteins": 13,
+      "lipids": 3,
+      "carbohydrates": 70,
+      "fibers": 13
+    },
+    "unit": "g"
+  },
+  "vm-004": {
+    "id": "vm-004",
+    "name": "Cuisse de poulet",
+    "category": "Viande",
+    "macros": {
+      "kcal": 113,
+      "proteins": 19,
+      "lipids": 4,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "pièce",
+    "unitWeight": 150,
+    "isFreezable": true
   },
   "ep-017": {
     "id": "ep-017",
@@ -540,6 +1334,86 @@
       "fibers": 0
     },
     "unit": "g"
+  },
+  "fs-006": {
+    "id": "fs-006",
+    "name": "Datte (optionnel)",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 284,
+      "proteins": 2,
+      "lipids": 0,
+      "carbohydrates": 65,
+      "fibers": 8
+    },
+    "unit": "g"
+  },
+  "ha-001": {
+    "id": "ha-001",
+    "name": "Eau",
+    "category": "Hors achat",
+    "macros": {
+      "kcal": 0,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "ha-002": {
+    "id": "ha-002",
+    "name": "Eau de cuisson des pâtes",
+    "category": "Hors achat",
+    "macros": {
+      "kcal": 0,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "es-013": {
+    "id": "es-013",
+    "name": "Eau de fleur d’oranger",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 0,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "fv-041": {
+    "id": "fv-041",
+    "name": "Échalote",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 72,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 15,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-042": {
+    "id": "fv-042",
+    "name": "Endive",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 17,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 2,
+      "fibers": 1
+    },
+    "unit": "g",
+    "isFreezable": true
   },
   "ep-020": {
     "id": "ep-020",
@@ -619,6 +1493,34 @@
     },
     "unit": "g"
   },
+  "su-002": {
+    "id": "su-002",
+    "name": "Epinards",
+    "category": "Surgelés",
+    "macros": {
+      "kcal": 24,
+      "proteins": 2,
+      "lipids": 0,
+      "carbohydrates": 1,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-043": {
+    "id": "fv-043",
+    "name": "Épinards frais",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 26,
+      "proteins": 2,
+      "lipids": 0,
+      "carbohydrates": 1,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
   "ep-026": {
     "id": "ep-026",
     "name": "Estragon",
@@ -632,6 +1534,338 @@
     },
     "unit": "g"
   },
+  "es-014": {
+    "id": "es-014",
+    "name": "Farine au choix",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 0,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "es-015": {
+    "id": "es-015",
+    "name": "Farine blanche",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 346,
+      "proteins": 11,
+      "lipids": 2,
+      "carbohydrates": 69,
+      "fibers": 4
+    },
+    "unit": "g"
+  },
+  "es-016": {
+    "id": "es-016",
+    "name": "Farine complète",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 342,
+      "proteins": 12,
+      "lipids": 1,
+      "carbohydrates": 65,
+      "fibers": 8
+    },
+    "unit": "g"
+  },
+  "es-017": {
+    "id": "es-017",
+    "name": "Farine complète 5 céréales",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 361,
+      "proteins": 10,
+      "lipids": 3,
+      "carbohydrates": 70,
+      "fibers": 7
+    },
+    "unit": "g"
+  },
+  "es-018": {
+    "id": "es-018",
+    "name": "Farine d’épeautre",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 346,
+      "proteins": 15,
+      "lipids": 3,
+      "carbohydrates": 59,
+      "fibers": 11
+    },
+    "unit": "g"
+  },
+  "es-019": {
+    "id": "es-019",
+    "name": "Farine de coco",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 313,
+      "proteins": 20,
+      "lipids": 12,
+      "carbohydrates": 13,
+      "fibers": 35
+    },
+    "unit": "g"
+  },
+  "es-020": {
+    "id": "es-020",
+    "name": "Farine de maïs",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 342,
+      "proteins": 6,
+      "lipids": 1,
+      "carbohydrates": 75,
+      "fibers": 3
+    },
+    "unit": "g"
+  },
+  "es-021": {
+    "id": "es-021",
+    "name": "Farine de pois chiches",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 403,
+      "proteins": 22,
+      "lipids": 6,
+      "carbohydrates": 57,
+      "fibers": 10
+    },
+    "unit": "g"
+  },
+  "es-022": {
+    "id": "es-022",
+    "name": "Farine de sarrasin",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 350,
+      "proteins": 11,
+      "lipids": 2,
+      "carbohydrates": 68,
+      "fibers": 5
+    },
+    "unit": "g"
+  },
+  "es-023": {
+    "id": "es-023",
+    "name": "Farine de seigle",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 332,
+      "proteins": 9,
+      "lipids": 1,
+      "carbohydrates": 64,
+      "fibers": 11
+    },
+    "unit": "g"
+  },
+  "es-024": {
+    "id": "es-024",
+    "name": "Farine semi complète",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 332,
+      "proteins": 9,
+      "lipids": 1,
+      "carbohydrates": 64,
+      "fibers": 11
+    },
+    "unit": "g"
+  },
+  "es-025": {
+    "id": "es-025",
+    "name": "Fécule de maïs",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 361,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 90,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "es-026": {
+    "id": "es-026",
+    "name": "Ferment “Alsa”",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 0,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "pl-010": {
+    "id": "pl-010",
+    "name": "Feta",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 271,
+      "proteins": 16,
+      "lipids": 23,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "pl-011": {
+    "id": "pl-011",
+    "name": "Feta ou Fromage frais",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 271,
+      "proteins": 16,
+      "lipids": 23,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "ha-003": {
+    "id": "ha-003",
+    "name": "Feuille de Laurier",
+    "category": "Hors achat",
+    "macros": {
+      "kcal": 0,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "su-003": {
+    "id": "su-003",
+    "name": "Fèves",
+    "category": "Surgelés",
+    "macros": {
+      "kcal": 71,
+      "proteins": 5,
+      "lipids": 0,
+      "carbohydrates": 8,
+      "fibers": 4
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "cn-002": {
+    "id": "cn-002",
+    "name": "Fèves edamame",
+    "category": "Conserves",
+    "macros": {
+      "kcal": 133,
+      "proteins": 11,
+      "lipids": 7,
+      "carbohydrates": 4,
+      "fibers": 5
+    },
+    "unit": "g"
+  },
+  "fv-044": {
+    "id": "fv-044",
+    "name": "Figue",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 67,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 13,
+      "fibers": 4
+    },
+    "unit": "g"
+  },
+  "fs-007": {
+    "id": "fs-007",
+    "name": "Figue séche",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 259,
+      "proteins": 3,
+      "lipids": 1,
+      "carbohydrates": 54,
+      "fibers": 11
+    },
+    "unit": "g"
+  },
+  "vm-005": {
+    "id": "vm-005",
+    "name": "Filet de bœuf",
+    "category": "Viande",
+    "macros": {
+      "kcal": 152,
+      "proteins": 22,
+      "lipids": 6,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "vm-006": {
+    "id": "vm-006",
+    "name": "Filet de poulet",
+    "category": "Viande",
+    "macros": {
+      "kcal": 107,
+      "proteins": 23,
+      "lipids": 1,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "vm-007": {
+    "id": "vm-007",
+    "name": "Filet mignon",
+    "category": "Viande",
+    "macros": {
+      "kcal": 123,
+      "proteins": 21,
+      "lipids": 4,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "vm-008": {
+    "id": "vm-008",
+    "name": "Filet ou cuisse de poulet",
+    "category": "Viande",
+    "macros": {
+      "kcal": 113,
+      "proteins": 19,
+      "lipids": 4,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fc-005": {
+    "id": "fc-005",
+    "name": "Flageolets secs",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 292,
+      "proteins": 21,
+      "lipids": 2,
+      "carbohydrates": 38,
+      "fibers": 19
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
   "ep-027": {
     "id": "ep-027",
     "name": "Fleur de sel",
@@ -642,6 +1876,209 @@
       "lipids": 0,
       "carbohydrates": 0,
       "fibers": 0
+    },
+    "unit": "g"
+  },
+  "es-027": {
+    "id": "es-027",
+    "name": "Flocons d'avoine",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 375,
+      "proteins": 14,
+      "lipids": 7,
+      "carbohydrates": 59,
+      "fibers": 10
+    },
+    "unit": "g"
+  },
+  "es-028": {
+    "id": "es-028",
+    "name": "Flocons d'épeautre",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 351,
+      "proteins": 14,
+      "lipids": 3,
+      "carbohydrates": 63,
+      "fibers": 8
+    },
+    "unit": "g"
+  },
+  "es-029": {
+    "id": "es-029",
+    "name": "Flocons de quinoa",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 340,
+      "proteins": 14,
+      "lipids": 6,
+      "carbohydrates": 55,
+      "fibers": 5
+    },
+    "unit": "g"
+  },
+  "es-030": {
+    "id": "es-030",
+    "name": "Flocons de sarrasin",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 341,
+      "proteins": 10,
+      "lipids": 3,
+      "carbohydrates": 65,
+      "fibers": 7
+    },
+    "unit": "g"
+  },
+  "fv-045": {
+    "id": "fv-045",
+    "name": "Fraises",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 34,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 6,
+      "fibers": 3
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "su-004": {
+    "id": "su-004",
+    "name": "Fraises surgelées",
+    "category": "Surgelés",
+    "macros": {
+      "kcal": 34,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 6,
+      "fibers": 3
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-046": {
+    "id": "fv-046",
+    "name": "Framboises",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 44,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 5,
+      "fibers": 4
+    },
+    "unit": "g"
+  },
+  "su-005": {
+    "id": "su-005",
+    "name": "Framboises fraîches ou surgelées",
+    "category": "Surgelés",
+    "macros": {
+      "kcal": 44,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 5,
+      "fibers": 4
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "su-006": {
+    "id": "su-006",
+    "name": "Framboises surgelés",
+    "category": "Surgelés",
+    "macros": {
+      "kcal": 44,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 5,
+      "fibers": 4
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "pl-012": {
+    "id": "pl-012",
+    "name": "Fromage",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 412,
+      "proteins": 22,
+      "lipids": 35,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "pl-013": {
+    "id": "pl-013",
+    "name": "Fromage à raclette",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 328,
+      "proteins": 23,
+      "lipids": 26,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "pl-014": {
+    "id": "pl-014",
+    "name": "Fromage blanc 3%",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 67,
+      "proteins": 6,
+      "lipids": 3,
+      "carbohydrates": 4,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "pl-015": {
+    "id": "pl-015",
+    "name": "Fromage frais",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 195,
+      "proteins": 12,
+      "lipids": 15,
+      "carbohydrates": 3,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "pl-016": {
+    "id": "pl-016",
+    "name": "Fromage râpé",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 412,
+      "proteins": 26,
+      "lipids": 34,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fc-006": {
+    "id": "fc-006",
+    "name": "Fusilli",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 337,
+      "proteins": 11,
+      "lipids": 2,
+      "carbohydrates": 65,
+      "fibers": 7
     },
     "unit": "g"
   },
@@ -671,6 +2108,110 @@
     },
     "unit": "g"
   },
+  "fv-047": {
+    "id": "fv-047",
+    "name": "Gingembre frais",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 78,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 15,
+      "fibers": 2
+    },
+    "unit": "g"
+  },
+  "fs-008": {
+    "id": "fs-008",
+    "name": "Graines de chia",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 446,
+      "proteins": 19,
+      "lipids": 32,
+      "carbohydrates": 3,
+      "fibers": 35
+    },
+    "unit": "g"
+  },
+  "fs-009": {
+    "id": "fs-009",
+    "name": "Graines de courge",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 595,
+      "proteins": 30,
+      "lipids": 49,
+      "carbohydrates": 5,
+      "fibers": 7
+    },
+    "unit": "g"
+  },
+  "fs-010": {
+    "id": "fs-010",
+    "name": "Graines de lin",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 478,
+      "proteins": 22,
+      "lipids": 36,
+      "carbohydrates": 3,
+      "fibers": 27
+    },
+    "unit": "g"
+  },
+  "fs-011": {
+    "id": "fs-011",
+    "name": "Graines de pavot",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 538,
+      "proteins": 21,
+      "lipids": 42,
+      "carbohydrates": 14,
+      "fibers": 10
+    },
+    "unit": "g"
+  },
+  "fs-012": {
+    "id": "fs-012",
+    "name": "Graines de sésame",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 598,
+      "proteins": 18,
+      "lipids": 50,
+      "carbohydrates": 13,
+      "fibers": 12
+    },
+    "unit": "g"
+  },
+  "fs-013": {
+    "id": "fs-013",
+    "name": "Graines de tournesol",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 640,
+      "proteins": 21,
+      "lipids": 56,
+      "carbohydrates": 10,
+      "fibers": 6
+    },
+    "unit": "g"
+  },
+  "fv-048": {
+    "id": "fv-048",
+    "name": "Grenailles",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 80,
+      "proteins": 2,
+      "lipids": 0,
+      "carbohydrates": 17,
+      "fibers": 2
+    },
+    "unit": "g"
+  },
   "ep-030": {
     "id": "ep-030",
     "name": "Gros sel",
@@ -683,6 +2224,62 @@
       "fibers": 0
     },
     "unit": "g"
+  },
+  "su-007": {
+    "id": "su-007",
+    "name": "Haricots beurre",
+    "category": "Surgelés",
+    "macros": {
+      "kcal": 32,
+      "proteins": 2,
+      "lipids": 0,
+      "carbohydrates": 4,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fc-007": {
+    "id": "fc-007",
+    "name": "Haricots blancs secs",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 295,
+      "proteins": 21,
+      "lipids": 1,
+      "carbohydrates": 38,
+      "fibers": 25
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fc-008": {
+    "id": "fc-008",
+    "name": "Haricots rouges sec",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 283,
+      "proteins": 21,
+      "lipids": 1,
+      "carbohydrates": 37,
+      "fibers": 21
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "su-008": {
+    "id": "su-008",
+    "name": "Haricots verts",
+    "category": "Surgelés",
+    "macros": {
+      "kcal": 31,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 3,
+      "fibers": 3
+    },
+    "unit": "g",
+    "isFreezable": true
   },
   "ep-031": {
     "id": "ep-031",
@@ -801,6 +2398,61 @@
     },
     "unit": "g"
   },
+  "ch-002": {
+    "id": "ch-002",
+    "name": "Jambon",
+    "category": "Charcuterie",
+    "macros": {
+      "kcal": 146,
+      "proteins": 21,
+      "lipids": 6,
+      "carbohydrates": 2,
+      "fibers": 0
+    },
+    "unit": "tranche",
+    "unitWeight": 65,
+    "isFreezable": true
+  },
+  "fm-002": {
+    "id": "fm-002",
+    "name": "Jaune d’œuf",
+    "category": "Ferme",
+    "macros": {
+      "kcal": 347,
+      "proteins": 16,
+      "lipids": 31,
+      "carbohydrates": 1,
+      "fibers": 0
+    },
+    "unit": "pièce",
+    "unitWeight": 17
+  },
+  "fv-049": {
+    "id": "fv-049",
+    "name": "Jeunes pousses",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 16,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 1,
+      "fibers": 1
+    },
+    "unit": "g"
+  },
+  "fv-050": {
+    "id": "fv-050",
+    "name": "Jus d’orange",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 43,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 9,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
   "ep-040": {
     "id": "ep-040",
     "name": "Jus de citron",
@@ -840,16 +2492,295 @@
     },
     "unit": "g"
   },
+  "fv-051": {
+    "id": "fv-051",
+    "name": "Kaki",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 68,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 14,
+      "fibers": 3
+    },
+    "unit": "g"
+  },
+  "fv-052": {
+    "id": "fv-052",
+    "name": "Kiwi",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 49,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 9,
+      "fibers": 2
+    },
+    "unit": "g"
+  },
+  "pl-017": {
+    "id": "pl-017",
+    "name": "Lait (animal ou végétal)",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 47,
+      "proteins": 3,
+      "lipids": 1,
+      "carbohydrates": 4,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "pl-018": {
+    "id": "pl-018",
+    "name": "Lait de coco maison",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 68,
+      "proteins": 0,
+      "lipids": 6,
+      "carbohydrates": 2,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "pl-019": {
+    "id": "pl-019",
+    "name": "Lait demi écrémé",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 47,
+      "proteins": 3,
+      "lipids": 1,
+      "carbohydrates": 4,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "pl-020": {
+    "id": "pl-020",
+    "name": "Lait écrémé",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 37,
+      "proteins": 3,
+      "lipids": 0,
+      "carbohydrates": 4,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "pl-021": {
+    "id": "pl-021",
+    "name": "Lait écrémé en poudre",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 359,
+      "proteins": 36,
+      "lipids": 0,
+      "carbohydrates": 52,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "pl-022": {
+    "id": "pl-022",
+    "name": "Lait entier",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 65,
+      "proteins": 3,
+      "lipids": 3,
+      "carbohydrates": 4,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "pl-023": {
+    "id": "pl-023",
+    "name": "Lait végétal maison",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 59,
+      "proteins": 1,
+      "lipids": 5,
+      "carbohydrates": 2,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "ch-003": {
+    "id": "ch-003",
+    "name": "Lardons",
+    "category": "Charcuterie",
+    "macros": {
+      "kcal": 311,
+      "proteins": 17,
+      "lipids": 27,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fc-009": {
+    "id": "fc-009",
+    "name": "Lentille vertes sèches",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 328,
+      "proteins": 25,
+      "lipids": 1,
+      "carbohydrates": 45,
+      "fibers": 16
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fc-010": {
+    "id": "fc-010",
+    "name": "Lentilles corail sèches",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 175,
+      "proteins": 13,
+      "lipids": 1,
+      "carbohydrates": 27,
+      "fibers": 3
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "es-031": {
+    "id": "es-031",
+    "name": "Levure boulangère fraîche",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 0,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "es-032": {
+    "id": "es-032",
+    "name": "Levure boulangère sèche",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 0,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
   "ep-043": {
     "id": "ep-043",
     "name": "Levure de bière",
     "category": "Epices et condiments",
     "macros": {
-      "kcal": 325,
+      "kcal": 323,
       "proteins": 45,
       "lipids": 5,
       "carbohydrates": 12,
       "fibers": 25
+    },
+    "unit": "g"
+  },
+  "fc-011": {
+    "id": "fc-011",
+    "name": "Linguines",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 337,
+      "proteins": 11,
+      "lipids": 2,
+      "carbohydrates": 65,
+      "fibers": 7
+    },
+    "unit": "g"
+  },
+  "fc-012": {
+    "id": "fc-012",
+    "name": "Macaronis",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 337,
+      "proteins": 11,
+      "lipids": 2,
+      "carbohydrates": 65,
+      "fibers": 7
+    },
+    "unit": "g"
+  },
+  "su-009": {
+    "id": "su-009",
+    "name": "Macédoine surgelée",
+    "category": "Surgelés",
+    "macros": {
+      "kcal": 51,
+      "proteins": 2,
+      "lipids": 0,
+      "carbohydrates": 7,
+      "fibers": 4
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-053": {
+    "id": "fv-053",
+    "name": "Mâche",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 16,
+      "proteins": 2,
+      "lipids": 0,
+      "carbohydrates": 1,
+      "fibers": 2
+    },
+    "unit": "g"
+  },
+  "cn-003": {
+    "id": "cn-003",
+    "name": "Maïs",
+    "category": "Conserves",
+    "macros": {
+      "kcal": 86,
+      "proteins": 3,
+      "lipids": 2,
+      "carbohydrates": 12,
+      "fibers": 4
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-054": {
+    "id": "fv-054",
+    "name": "Mangue",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 63,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 14,
+      "fibers": 1
+    },
+    "unit": "g"
+  },
+  "pl-024": {
+    "id": "pl-024",
+    "name": "Margarine (60%MG)",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 535,
+      "proteins": 0,
+      "lipids": 59,
+      "carbohydrates": 0,
+      "fibers": 0
     },
     "unit": "g"
   },
@@ -858,11 +2789,37 @@
     "name": "Mayonnaise",
     "category": "Epices et condiments",
     "macros": {
-      "kcal": 697,
+      "kcal": 694,
       "proteins": 1,
       "lipids": 76,
       "carbohydrates": 0,
       "fibers": 0
+    },
+    "unit": "g"
+  },
+  "fs-014": {
+    "id": "fs-014",
+    "name": "Mélange de graines",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 595,
+      "proteins": 19,
+      "lipids": 48,
+      "carbohydrates": 12,
+      "fibers": 15
+    },
+    "unit": "g"
+  },
+  "fv-055": {
+    "id": "fv-055",
+    "name": "Melon",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 43,
+      "proteins": 1,
+      "lipids": 1,
+      "carbohydrates": 7,
+      "fibers": 1
     },
     "unit": "g"
   },
@@ -879,18 +2836,99 @@
     },
     "unit": "g"
   },
+  "ch-004": {
+    "id": "ch-004",
+    "name": "Merguez",
+    "category": "Charcuterie",
+    "macros": {
+      "kcal": 221,
+      "proteins": 17,
+      "lipids": 17,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "pièce",
+    "unitWeight": 95,
+    "isFreezable": true
+  },
+  "es-033": {
+    "id": "es-033",
+    "name": "Miel",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 332,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 83,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "es-034": {
+    "id": "es-034",
+    "name": "Miel ou Sirop d’érable",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 332,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 83,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "fv-056": {
+    "id": "fv-056",
+    "name": "Mirabelle",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 79,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 18,
+      "fibers": 2
+    },
+    "unit": "g"
+  },
   "ep-046": {
     "id": "ep-046",
     "name": "Moutarde",
     "category": "Epices et condiments",
     "macros": {
-      "kcal": 157,
+      "kcal": 160,
       "proteins": 8,
       "lipids": 12,
       "carbohydrates": 3,
       "fibers": 4
     },
     "unit": "g"
+  },
+  "pl-025": {
+    "id": "pl-025",
+    "name": "Mozzarella",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 216,
+      "proteins": 17,
+      "lipids": 16,
+      "carbohydrates": 1,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "fv-057": {
+    "id": "fv-057",
+    "name": "Mûres",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 47,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 6,
+      "fibers": 5
+    },
+    "unit": "g",
+    "isFreezable": true
   },
   "ep-047": {
     "id": "ep-047",
@@ -902,6 +2940,237 @@
       "lipids": 0,
       "carbohydrates": 0,
       "fibers": 0
+    },
+    "unit": "g"
+  },
+  "fv-058": {
+    "id": "fv-058",
+    "name": "Myrtilles",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 54,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 10,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "su-010": {
+    "id": "su-010",
+    "name": "Myrtilles surgelées",
+    "category": "Surgelés",
+    "macros": {
+      "kcal": 54,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 10,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-059": {
+    "id": "fv-059",
+    "name": "Navet",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 25,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 3,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-060": {
+    "id": "fv-060",
+    "name": "Nectarine",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 49,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 11,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "fs-015": {
+    "id": "fs-015",
+    "name": "Noisettes",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 678,
+      "proteins": 15,
+      "lipids": 64,
+      "carbohydrates": 6,
+      "fibers": 9
+    },
+    "unit": "g"
+  },
+  "fs-016": {
+    "id": "fs-016",
+    "name": "Noix",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 706,
+      "proteins": 16,
+      "lipids": 68,
+      "carbohydrates": 4,
+      "fibers": 7
+    },
+    "unit": "g"
+  },
+  "fs-017": {
+    "id": "fs-017",
+    "name": "Noix (noix, du brésil, de pécan,...)",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 706,
+      "proteins": 16,
+      "lipids": 68,
+      "carbohydrates": 4,
+      "fibers": 7
+    },
+    "unit": "g"
+  },
+  "fs-018": {
+    "id": "fs-018",
+    "name": "Noix de cajou",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 599,
+      "proteins": 18,
+      "lipids": 47,
+      "carbohydrates": 24,
+      "fibers": 4
+    },
+    "unit": "g"
+  },
+  "es-035": {
+    "id": "es-035",
+    "name": "Noix de coco râpée",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 687,
+      "proteins": 7,
+      "lipids": 66,
+      "carbohydrates": 8,
+      "fibers": 15
+    },
+    "unit": "g"
+  },
+  "fs-019": {
+    "id": "fs-019",
+    "name": "Noix de pécan",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 721,
+      "proteins": 9,
+      "lipids": 72,
+      "carbohydrates": 4,
+      "fibers": 9
+    },
+    "unit": "g"
+  },
+  "po-002": {
+    "id": "po-002",
+    "name": "Noix de Saint Jacques",
+    "category": "Poisson",
+    "macros": {
+      "kcal": 82,
+      "proteins": 15,
+      "lipids": 0,
+      "carbohydrates": 3,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fm-003": {
+    "id": "fm-003",
+    "name": "Œuf",
+    "category": "Ferme",
+    "macros": {
+      "kcal": 142,
+      "proteins": 13,
+      "lipids": 10,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "pièce",
+    "unitWeight": 55
+  },
+  "fv-061": {
+    "id": "fv-061",
+    "name": "Oignon jaune",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 38,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 7,
+      "fibers": 1
+    },
+    "unit": "pièce",
+    "unitWeight": 100,
+    "isFreezable": true
+  },
+  "fv-062": {
+    "id": "fv-062",
+    "name": "Oignon rouge",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 41,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 8,
+      "fibers": 1
+    },
+    "unit": "pièce",
+    "unitWeight": 100,
+    "isFreezable": true
+  },
+  "ha-004": {
+    "id": "ha-004",
+    "name": "Okara d'amandes",
+    "category": "Hors achat",
+    "macros": {
+      "kcal": 137,
+      "proteins": 6,
+      "lipids": 8,
+      "carbohydrates": 4,
+      "fibers": 9
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "cn-004": {
+    "id": "cn-004",
+    "name": "Olives verte",
+    "category": "Conserves",
+    "macros": {
+      "kcal": 144,
+      "proteins": 1,
+      "lipids": 14,
+      "carbohydrates": 1,
+      "fibers": 5
+    },
+    "unit": "g"
+  },
+  "fv-063": {
+    "id": "fv-063",
+    "name": "Orange non traitée",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 39,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 8,
+      "fibers": 2
     },
     "unit": "g"
   },
@@ -917,6 +3186,106 @@
       "fibers": 0
     },
     "unit": "g"
+  },
+  "fc-013": {
+    "id": "fc-013",
+    "name": "Orzo",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 360,
+      "proteins": 12,
+      "lipids": 2,
+      "carbohydrates": 72,
+      "fibers": 3
+    },
+    "unit": "g"
+  },
+  "fc-014": {
+    "id": "fc-014",
+    "name": "Orzo ou autres pâtes",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 360,
+      "proteins": 12,
+      "lipids": 2,
+      "carbohydrates": 72,
+      "fibers": 3
+    },
+    "unit": "g"
+  },
+  "bo-002": {
+    "id": "bo-002",
+    "name": "Pain",
+    "category": "Boulangerie",
+    "macros": {
+      "kcal": 270,
+      "proteins": 9,
+      "lipids": 2,
+      "carbohydrates": 51,
+      "fibers": 6
+    },
+    "unit": "portion",
+    "unitWeight": 80,
+    "isFreezable": true
+  },
+  "bo-003": {
+    "id": "bo-003",
+    "name": "Pain complet",
+    "category": "Boulangerie",
+    "macros": {
+      "kcal": 270,
+      "proteins": 9,
+      "lipids": 2,
+      "carbohydrates": 51,
+      "fibers": 6
+    },
+    "unit": "portion",
+    "unitWeight": 80,
+    "isFreezable": true
+  },
+  "bo-004": {
+    "id": "bo-004",
+    "name": "Pain de mie",
+    "category": "Boulangerie",
+    "macros": {
+      "kcal": 261,
+      "proteins": 9,
+      "lipids": 3,
+      "carbohydrates": 48,
+      "fibers": 3
+    },
+    "unit": "portion",
+    "unitWeight": 20,
+    "isFreezable": true
+  },
+  "bo-005": {
+    "id": "bo-005",
+    "name": "Pain nordique",
+    "category": "Boulangerie",
+    "macros": {
+      "kcal": 266,
+      "proteins": 8,
+      "lipids": 4,
+      "carbohydrates": 45,
+      "fibers": 9
+    },
+    "unit": "portion",
+    "unitWeight": 80,
+    "isFreezable": true
+  },
+  "fv-064": {
+    "id": "fv-064",
+    "name": "Panais",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 72,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 13,
+      "fibers": 4
+    },
+    "unit": "g",
+    "isFreezable": true
   },
   "ep-049": {
     "id": "ep-049",
@@ -940,6 +3309,220 @@
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "pl-026": {
+    "id": "pl-026",
+    "name": "Parmesan",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 398,
+      "proteins": 32,
+      "lipids": 30,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-065": {
+    "id": "fv-065",
+    "name": "Pastèque",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 32,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 7,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "fv-066": {
+    "id": "fv-066",
+    "name": "Patate douce",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 77,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 16,
+      "fibers": 3
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "ha-005": {
+    "id": "ha-005",
+    "name": "Pâté",
+    "category": "Hors achat",
+    "macros": {
+      "kcal": 225,
+      "proteins": 18,
+      "lipids": 17,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "pl-027": {
+    "id": "pl-027",
+    "name": "Pâte feuilletée",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 362,
+      "proteins": 6,
+      "lipids": 21,
+      "carbohydrates": 36,
+      "fibers": 2
+    },
+    "unit": "g"
+  },
+  "fc-015": {
+    "id": "fc-015",
+    "name": "Pâtes",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 337,
+      "proteins": 11,
+      "lipids": 2,
+      "carbohydrates": 65,
+      "fibers": 7
+    },
+    "unit": "g"
+  },
+  "fc-016": {
+    "id": "fc-016",
+    "name": "Pâtes colorées",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 358,
+      "proteins": 12,
+      "lipids": 1,
+      "carbohydrates": 72,
+      "fibers": 4
+    },
+    "unit": "g"
+  },
+  "fc-017": {
+    "id": "fc-017",
+    "name": "Pâtes complètes",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 337,
+      "proteins": 11,
+      "lipids": 2,
+      "carbohydrates": 65,
+      "fibers": 7
+    },
+    "unit": "g"
+  },
+  "fc-018": {
+    "id": "fc-018",
+    "name": "Pâtes complètes ou riz",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 337,
+      "proteins": 11,
+      "lipids": 2,
+      "carbohydrates": 65,
+      "fibers": 7
+    },
+    "unit": "g"
+  },
+  "vm-009": {
+    "id": "vm-009",
+    "name": "Paupiette",
+    "category": "Viande",
+    "macros": {
+      "kcal": 210,
+      "proteins": 18,
+      "lipids": 15,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "pièce",
+    "unitWeight": 180,
+    "isFreezable": true
+  },
+  "po-003": {
+    "id": "po-003",
+    "name": "Pavé de saumon",
+    "category": "Poisson",
+    "macros": {
+      "kcal": 179,
+      "proteins": 20,
+      "lipids": 11,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-067": {
+    "id": "fv-067",
+    "name": "Pêche",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 45,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 9,
+      "fibers": 2
+    },
+    "unit": "g"
+  },
+  "es-036": {
+    "id": "es-036",
+    "name": "Pépites de chocolat 70%",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 537,
+      "proteins": 8,
+      "lipids": 40,
+      "carbohydrates": 30,
+      "fibers": 12
+    },
+    "unit": "g"
+  },
+  "es-037": {
+    "id": "es-037",
+    "name": "Pépites de chocolat ou raisin secs",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 537,
+      "proteins": 8,
+      "lipids": 40,
+      "carbohydrates": 30,
+      "fibers": 12
+    },
+    "unit": "g"
+  },
+  "fc-019": {
+    "id": "fc-019",
+    "name": "Perles de couscous",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 358,
+      "proteins": 12,
+      "lipids": 1,
+      "carbohydrates": 72,
+      "fibers": 4
+    },
+    "unit": "g"
+  },
+  "es-038": {
+    "id": "es-038",
+    "name": "Perles de sucre",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 400,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 100,
       "fibers": 0
     },
     "unit": "g"
@@ -983,6 +3566,33 @@
     },
     "unit": "g"
   },
+  "su-011": {
+    "id": "su-011",
+    "name": "Petits pois",
+    "category": "Surgelés",
+    "macros": {
+      "kcal": 71,
+      "proteins": 5,
+      "lipids": 0,
+      "carbohydrates": 8,
+      "fibers": 4
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fs-020": {
+    "id": "fs-020",
+    "name": "Pignons de pin",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 696,
+      "proteins": 14,
+      "lipids": 68,
+      "carbohydrates": 4,
+      "fibers": 3
+    },
+    "unit": "g"
+  },
   "ep-054": {
     "id": "ep-054",
     "name": "Piment d’Espelette",
@@ -995,6 +3605,102 @@
       "fibers": 0
     },
     "unit": "g"
+  },
+  "fs-021": {
+    "id": "fs-021",
+    "name": "Pistaches",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 604,
+      "proteins": 21,
+      "lipids": 48,
+      "carbohydrates": 16,
+      "fibers": 10
+    },
+    "unit": "g"
+  },
+  "vm-010": {
+    "id": "vm-010",
+    "name": "Pita",
+    "category": "Viande",
+    "macros": {
+      "kcal": 151,
+      "proteins": 21,
+      "lipids": 7,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "su-012": {
+    "id": "su-012",
+    "name": "Poêlée de légumes",
+    "category": "Surgelés",
+    "macros": {
+      "kcal": 24,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 4,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-068": {
+    "id": "fv-068",
+    "name": "Poire",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 70,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 14,
+      "fibers": 3
+    },
+    "unit": "g"
+  },
+  "fc-020": {
+    "id": "fc-020",
+    "name": "Pois chiches secs",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 336,
+      "proteins": 19,
+      "lipids": 6,
+      "carbohydrates": 43,
+      "fibers": 17
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "po-004": {
+    "id": "po-004",
+    "name": "Poisson blanc",
+    "category": "Poisson",
+    "macros": {
+      "kcal": 74,
+      "proteins": 17,
+      "lipids": 0,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "po-005": {
+    "id": "po-005",
+    "name": "Poisson fumé au choix",
+    "category": "Poisson",
+    "macros": {
+      "kcal": 182,
+      "proteins": 21,
+      "lipids": 10,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
   },
   "ep-055": {
     "id": "ep-055",
@@ -1009,6 +3715,422 @@
     },
     "unit": "g"
   },
+  "fv-069": {
+    "id": "fv-069",
+    "name": "Poivron jaune",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 28,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 5,
+      "fibers": 1
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-070": {
+    "id": "fv-070",
+    "name": "Poivron rouge",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 36,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 6,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-071": {
+    "id": "fv-071",
+    "name": "Poivrons",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 23,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 3,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-072": {
+    "id": "fv-072",
+    "name": "Poivrons lanières",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 23,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 3,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fc-021": {
+    "id": "fc-021",
+    "name": "Polenta",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 353,
+      "proteins": 6,
+      "lipids": 1,
+      "carbohydrates": 76,
+      "fibers": 2
+    },
+    "unit": "g"
+  },
+  "fv-073": {
+    "id": "fv-073",
+    "name": "Pomme",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 53,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 11,
+      "fibers": 1
+    },
+    "unit": "g"
+  },
+  "fv-074": {
+    "id": "fv-074",
+    "name": "Pommes de terre",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 79,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 16,
+      "fibers": 2
+    },
+    "unit": "g"
+  },
+  "fv-075": {
+    "id": "fv-075",
+    "name": "Potimarron",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 41,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 7,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-076": {
+    "id": "fv-076",
+    "name": "Potiron",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 20,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 3,
+      "fibers": 1
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fv-077": {
+    "id": "fv-077",
+    "name": "Potiron ou butternut",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 39,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 7,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "es-039": {
+    "id": "es-039",
+    "name": "Poudre d'agar-agar",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 0,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "es-040": {
+    "id": "es-040",
+    "name": "Poudre de noisettes",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 677,
+      "proteins": 18,
+      "lipids": 63,
+      "carbohydrates": 5,
+      "fibers": 8
+    },
+    "unit": "g"
+  },
+  "vm-011": {
+    "id": "vm-011",
+    "name": "Poulet entier",
+    "category": "Viande",
+    "macros": {
+      "kcal": 120,
+      "proteins": 21,
+      "lipids": 4,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "pièce",
+    "unitWeight": 1000,
+    "isFreezable": true
+  },
+  "cn-005": {
+    "id": "cn-005",
+    "name": "Pousses de haricots mungo",
+    "category": "Conserves",
+    "macros": {
+      "kcal": 36,
+      "proteins": 3,
+      "lipids": 0,
+      "carbohydrates": 5,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "web-001": {
+    "id": "web-001",
+    "name": "Protéines de soja texturées",
+    "category": "Internet",
+    "macros": {
+      "kcal": 352,
+      "proteins": 50,
+      "lipids": 7,
+      "carbohydrates": 14,
+      "fibers": 14
+    },
+    "unit": "g"
+  },
+  "fv-078": {
+    "id": "fv-078",
+    "name": "Prune reine claude",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 73,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 16,
+      "fibers": 1
+    },
+    "unit": "g"
+  },
+  "fv-079": {
+    "id": "fv-079",
+    "name": "Prune rouge",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 44,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 9,
+      "fibers": 1
+    },
+    "unit": "g"
+  },
+  "cn-006": {
+    "id": "cn-006",
+    "name": "Pulpe de tomates",
+    "category": "Conserves",
+    "macros": {
+      "kcal": 28,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 5,
+      "fibers": 1
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "web-002": {
+    "id": "web-002",
+    "name": "Purée de cacahuètes",
+    "category": "Internet",
+    "macros": {
+      "kcal": 614,
+      "proteins": 28,
+      "lipids": 50,
+      "carbohydrates": 9,
+      "fibers": 8
+    },
+    "unit": "g"
+  },
+  "fs-022": {
+    "id": "fs-022",
+    "name": "Purée de noisettes",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 673,
+      "proteins": 14,
+      "lipids": 62,
+      "carbohydrates": 8,
+      "fibers": 9
+    },
+    "unit": "g"
+  },
+  "cn-007": {
+    "id": "cn-007",
+    "name": "Purée de tomates",
+    "category": "Conserves",
+    "macros": {
+      "kcal": 26,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 4,
+      "fibers": 1
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fc-022": {
+    "id": "fc-022",
+    "name": "Quinoa",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 369,
+      "proteins": 14,
+      "lipids": 5,
+      "carbohydrates": 61,
+      "fibers": 8
+    },
+    "unit": "g"
+  },
+  "fv-080": {
+    "id": "fv-080",
+    "name": "Radis",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 14,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 1,
+      "fibers": 1
+    },
+    "unit": "g"
+  },
+  "fv-081": {
+    "id": "fv-081",
+    "name": "Raisins blancs",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 72,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 16,
+      "fibers": 1
+    },
+    "unit": "g"
+  },
+  "fv-082": {
+    "id": "fv-082",
+    "name": "Raisins noirs",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 70,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 15,
+      "fibers": 1
+    },
+    "unit": "g"
+  },
+  "fs-023": {
+    "id": "fs-023",
+    "name": "Raisins secs",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 302,
+      "proteins": 2,
+      "lipids": 0,
+      "carbohydrates": 69,
+      "fibers": 4
+    },
+    "unit": "g"
+  },
+  "pl-028": {
+    "id": "pl-028",
+    "name": "Ricotta",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 97,
+      "proteins": 9,
+      "lipids": 5,
+      "carbohydrates": 4,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fc-023": {
+    "id": "fc-023",
+    "name": "Riz Basmati",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 350,
+      "proteins": 7,
+      "lipids": 0,
+      "carbohydrates": 78,
+      "fibers": 1
+    },
+    "unit": "g"
+  },
+  "fc-024": {
+    "id": "fc-024",
+    "name": "Riz rond",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 344,
+      "proteins": 7,
+      "lipids": 0,
+      "carbohydrates": 78,
+      "fibers": 1
+    },
+    "unit": "g"
+  },
+  "fc-025": {
+    "id": "fc-025",
+    "name": "Riz semi complet de Camargue",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 350,
+      "proteins": 6,
+      "lipids": 1,
+      "carbohydrates": 76,
+      "fibers": 2
+    },
+    "unit": "g"
+  },
+  "fc-026": {
+    "id": "fc-026",
+    "name": "Riz thaï",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 350,
+      "proteins": 7,
+      "lipids": 0,
+      "carbohydrates": 78,
+      "fibers": 1
+    },
+    "unit": "g"
+  },
   "ep-056": {
     "id": "ep-056",
     "name": "Romarin",
@@ -1019,6 +4141,59 @@
       "lipids": 0,
       "carbohydrates": 0,
       "fibers": 0
+    },
+    "unit": "g"
+  },
+  "fv-083": {
+    "id": "fv-083",
+    "name": "Roquette",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 28,
+      "proteins": 2,
+      "lipids": 0,
+      "carbohydrates": 2,
+      "fibers": 1
+    },
+    "unit": "g"
+  },
+  "fv-084": {
+    "id": "fv-084",
+    "name": "Salade",
+    "category": "Fruits et légumes",
+    "macros": {
+      "kcal": 14,
+      "proteins": 1,
+      "lipids": 0,
+      "carbohydrates": 1,
+      "fibers": 1
+    },
+    "unit": "g"
+  },
+  "cn-008": {
+    "id": "cn-008",
+    "name": "Sardines nature",
+    "category": "Conserves",
+    "macros": {
+      "kcal": 162,
+      "proteins": 24,
+      "lipids": 7,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fc-027": {
+    "id": "fc-027",
+    "name": "Sarrasin",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 345,
+      "proteins": 13,
+      "lipids": 3,
+      "carbohydrates": 63,
+      "fibers": 7
     },
     "unit": "g"
   },
@@ -1048,6 +4223,49 @@
     },
     "unit": "g"
   },
+  "cn-009": {
+    "id": "cn-009",
+    "name": "Sauce tomate",
+    "category": "Conserves",
+    "macros": {
+      "kcal": 71,
+      "proteins": 2,
+      "lipids": 3,
+      "carbohydrates": 8,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "ch-005": {
+    "id": "ch-005",
+    "name": "Saucisse",
+    "category": "Charcuterie",
+    "macros": {
+      "kcal": 258,
+      "proteins": 15,
+      "lipids": 22,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "pièce",
+    "unitWeight": 95,
+    "isFreezable": true
+  },
+  "ch-006": {
+    "id": "ch-006",
+    "name": "Saucisse de Toulouse",
+    "category": "Charcuterie",
+    "macros": {
+      "kcal": 258,
+      "proteins": 15,
+      "lipids": 22,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
   "ep-059": {
     "id": "ep-059",
     "name": "Sauge",
@@ -1060,6 +4278,20 @@
       "fibers": 0
     },
     "unit": "g"
+  },
+  "po-006": {
+    "id": "po-006",
+    "name": "Saumon fumé",
+    "category": "Poisson",
+    "macros": {
+      "kcal": 182,
+      "proteins": 21,
+      "lipids": 10,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
   },
   "ep-060": {
     "id": "ep-060",
@@ -1074,561 +4306,28 @@
     },
     "unit": "g"
   },
-  "ep-061": {
-    "id": "ep-061",
-    "name": "Thym",
-    "category": "Epices et condiments",
+  "fc-028": {
+    "id": "fc-028",
+    "name": "Semoule fine",
+    "category": "Féculents",
     "macros": {
-      "kcal": 0,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "ep-062": {
-    "id": "ep-062",
-    "name": "Vinaigre balsamique",
-    "category": "Epices et condiments",
-    "macros": {
-      "kcal": 102,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 20,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "ep-063": {
-    "id": "ep-063",
-    "name": "Vinaigre de cidre",
-    "category": "Epices et condiments",
-    "macros": {
-      "kcal": 0,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "es-001": {
-    "id": "es-001",
-    "name": "Amandes effilées",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 616,
-      "proteins": 26,
-      "lipids": 50,
-      "carbohydrates": 40,
-      "fibers": 9
-    },
-    "unit": "g"
-  },
-  "es-002": {
-    "id": "es-002",
-    "name": "Amandes en poudre",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 639,
-      "proteins": 28,
-      "lipids": 53,
-      "carbohydrates": 7,
-      "fibers": 9
-    },
-    "unit": "g"
-  },
-  "es-003": {
-    "id": "es-003",
-    "name": "Arôme amande amère",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 0,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "es-004": {
-    "id": "es-004",
-    "name": "Cacao non sucré",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 34,
-      "proteins": 3,
-      "lipids": 1,
-      "carbohydrates": 2,
-      "fibers": 3
-    },
-    "unit": "g"
-  },
-  "es-005": {
-    "id": "es-005",
-    "name": "Café espresso",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 0,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "es-006": {
-    "id": "es-006",
-    "name": "Cassonade Graeffe",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 398,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 94,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "es-007": {
-    "id": "es-007",
-    "name": "Chapelure de maïs",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 373,
-      "proteins": 6,
-      "lipids": 1,
-      "carbohydrates": 83,
-      "fibers": 3
-    },
-    "unit": "g"
-  },
-  "es-008": {
-    "id": "es-008",
-    "name": "Chocolat 74% cacao",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 560,
-      "proteins": 10,
-      "lipids": 40,
-      "carbohydrates": 34,
-      "fibers": 12
-    },
-    "unit": "g"
-  },
-  "es-009": {
-    "id": "es-009",
-    "name": "Chocolat 85% cacao",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 635,
-      "proteins": 9,
-      "lipids": 55,
-      "carbohydrates": 20,
-      "fibers": 12
-    },
-    "unit": "g"
-  },
-  "es-010": {
-    "id": "es-010",
-    "name": "Chocolat noir",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 560,
-      "proteins": 10,
-      "lipids": 40,
-      "carbohydrates": 34,
-      "fibers": 12
-    },
-    "unit": "g"
-  },
-  "es-011": {
-    "id": "es-011",
-    "name": "Chocolat noir pâtissier",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 554,
-      "proteins": 8,
-      "lipids": 37,
-      "carbohydrates": 40,
-      "fibers": 10
-    },
-    "unit": "g"
-  },
-  "es-012": {
-    "id": "es-012",
-    "name": "Cornflakes",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 379,
-      "proteins": 8,
-      "lipids": 1,
-      "carbohydrates": 82,
-      "fibers": 3
-    },
-    "unit": "g"
-  },
-  "es-013": {
-    "id": "es-013",
-    "name": "Eau de fleur d’oranger",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 0,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "es-014": {
-    "id": "es-014",
-    "name": "Farine au choix",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 0,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "es-015": {
-    "id": "es-015",
-    "name": "Farine blanche",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 342,
+      "kcal": 337,
       "proteins": 11,
-      "lipids": 2,
+      "lipids": 1,
       "carbohydrates": 69,
-      "fibers": 4
+      "fibers": 1
     },
     "unit": "g"
   },
-  "es-016": {
-    "id": "es-016",
-    "name": "Farine complète",
-    "category": "Epicerie sucrée",
+  "fc-029": {
+    "id": "fc-029",
+    "name": "Semoule semi complète",
+    "category": "Féculents",
     "macros": {
-      "kcal": 342,
+      "kcal": 341,
       "proteins": 12,
-      "lipids": 1,
-      "carbohydrates": 65,
-      "fibers": 8
-    },
-    "unit": "g"
-  },
-  "es-017": {
-    "id": "es-017",
-    "name": "Farine complète 5 céréales",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 356,
-      "proteins": 10,
-      "lipids": 3,
-      "carbohydrates": 70,
-      "fibers": 7
-    },
-    "unit": "g"
-  },
-  "es-018": {
-    "id": "es-018",
-    "name": "Farine d’épeautre",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 342,
-      "proteins": 15,
-      "lipids": 3,
-      "carbohydrates": 59,
-      "fibers": 11
-    },
-    "unit": "g"
-  },
-  "es-019": {
-    "id": "es-019",
-    "name": "Farine de coco",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 423,
-      "proteins": 20,
-      "lipids": 12,
-      "carbohydrates": 13,
-      "fibers": 35
-    },
-    "unit": "g"
-  },
-  "es-020": {
-    "id": "es-020",
-    "name": "Farine de maïs",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 343,
-      "proteins": 6,
-      "lipids": 1,
-      "carbohydrates": 75,
-      "fibers": 3
-    },
-    "unit": "g"
-  },
-  "es-021": {
-    "id": "es-021",
-    "name": "Farine de pois chiches",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 387,
-      "proteins": 22,
-      "lipids": 6,
-      "carbohydrates": 57,
-      "fibers": 10
-    },
-    "unit": "g"
-  },
-  "es-022": {
-    "id": "es-022",
-    "name": "Farine de sarrasin",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 348,
-      "proteins": 11,
       "lipids": 2,
-      "carbohydrates": 68,
-      "fibers": 5
-    },
-    "unit": "g"
-  },
-  "es-023": {
-    "id": "es-023",
-    "name": "Farine de seigle",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 332,
-      "proteins": 9,
-      "lipids": 1,
       "carbohydrates": 64,
-      "fibers": 11
-    },
-    "unit": "g"
-  },
-  "es-024": {
-    "id": "es-024",
-    "name": "Farine semi complète",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 332,
-      "proteins": 9,
-      "lipids": 1,
-      "carbohydrates": 64,
-      "fibers": 11
-    },
-    "unit": "g"
-  },
-  "es-025": {
-    "id": "es-025",
-    "name": "Fécule de maïs",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 367,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 90,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "es-026": {
-    "id": "es-026",
-    "name": "Ferment “Alsa”",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 0,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "es-027": {
-    "id": "es-027",
-    "name": "Flocons d'avoine",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 372,
-      "proteins": 14,
-      "lipids": 7,
-      "carbohydrates": 59,
-      "fibers": 10
-    },
-    "unit": "g"
-  },
-  "es-028": {
-    "id": "es-028",
-    "name": "Flocons d'épeautre",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 347,
-      "proteins": 14,
-      "lipids": 3,
-      "carbohydrates": 63,
-      "fibers": 8
-    },
-    "unit": "g"
-  },
-  "es-029": {
-    "id": "es-029",
-    "name": "Flocons de quinoa",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 377,
-      "proteins": 14,
-      "lipids": 6,
-      "carbohydrates": 55,
-      "fibers": 5
-    },
-    "unit": "g"
-  },
-  "es-030": {
-    "id": "es-030",
-    "name": "Flocons de sarrasin",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 340,
-      "proteins": 10,
-      "lipids": 3,
-      "carbohydrates": 65,
-      "fibers": 7
-    },
-    "unit": "g"
-  },
-  "es-031": {
-    "id": "es-031",
-    "name": "Levure boulangère fraîche",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 0,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "es-032": {
-    "id": "es-032",
-    "name": "Levure boulangère sèche",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 0,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "es-033": {
-    "id": "es-033",
-    "name": "Miel",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 334,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 83,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "es-034": {
-    "id": "es-034",
-    "name": "Miel ou Sirop d’érable",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 334,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 83,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "es-035": {
-    "id": "es-035",
-    "name": "Noix de coco râpée",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 689,
-      "proteins": 7,
-      "lipids": 66,
-      "carbohydrates": 8,
-      "fibers": 15
-    },
-    "unit": "g"
-  },
-  "es-036": {
-    "id": "es-036",
-    "name": "Pépites de chocolat 70%",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 543,
-      "proteins": 8,
-      "lipids": 40,
-      "carbohydrates": 30,
-      "fibers": 12
-    },
-    "unit": "g"
-  },
-  "es-037": {
-    "id": "es-037",
-    "name": "Pépites de chocolat ou raisin secs",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 543,
-      "proteins": 8,
-      "lipids": 40,
-      "carbohydrates": 30,
-      "fibers": 12
-    },
-    "unit": "g"
-  },
-  "es-038": {
-    "id": "es-038",
-    "name": "Perles de sucre",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 400,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 100,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "es-039": {
-    "id": "es-039",
-    "name": "Poudre d'agar-agar",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 0,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "es-040": {
-    "id": "es-040",
-    "name": "Poudre de noisettes",
-    "category": "Epicerie sucrée",
-    "macros": {
-      "kcal": 671,
-      "proteins": 18,
-      "lipids": 63,
-      "carbohydrates": 5,
       "fibers": 8
     },
     "unit": "g"
@@ -1638,7 +4337,7 @@
     "name": "Sirop d'agave",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 324,
+      "kcal": 308,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 77,
@@ -1651,10 +4350,23 @@
     "name": "Sirop d'érable",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 324,
+      "kcal": 308,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 77,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "pl-029": {
+    "id": "pl-029",
+    "name": "Skyr",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 56,
+      "proteins": 10,
+      "lipids": 0,
+      "carbohydrates": 3,
       "fibers": 0
     },
     "unit": "g"
@@ -1664,13 +4376,95 @@
     "name": "Son d’avoine",
     "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 373,
+      "kcal": 374,
       "proteins": 13,
       "lipids": 6,
       "carbohydrates": 60,
       "fibers": 11
     },
     "unit": "g"
+  },
+  "fc-030": {
+    "id": "fc-030",
+    "name": "Spaghetti",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 337,
+      "proteins": 11,
+      "lipids": 2,
+      "carbohydrates": 65,
+      "fibers": 7
+    },
+    "unit": "g"
+  },
+  "fc-031": {
+    "id": "fc-031",
+    "name": "Spaghetti ou nouilles soba",
+    "category": "Féculents",
+    "macros": {
+      "kcal": 337,
+      "proteins": 11,
+      "lipids": 2,
+      "carbohydrates": 65,
+      "fibers": 7
+    },
+    "unit": "g"
+  },
+  "pl-030": {
+    "id": "pl-030",
+    "name": "St Môret",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 205,
+      "proteins": 8,
+      "lipids": 17,
+      "carbohydrates": 3,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "pl-031": {
+    "id": "pl-031",
+    "name": "St Môret ou Petit Billy",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 195,
+      "proteins": 12,
+      "lipids": 15,
+      "carbohydrates": 3,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "vm-012": {
+    "id": "vm-012",
+    "name": "Steak",
+    "category": "Viande",
+    "macros": {
+      "kcal": 152,
+      "proteins": 22,
+      "lipids": 6,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "vm-013": {
+    "id": "vm-013",
+    "name": "Steak ou bœuf haché 5% Mg",
+    "category": "Viande",
+    "macros": {
+      "kcal": 152,
+      "proteins": 22,
+      "lipids": 6,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
   },
   "es-044": {
     "id": "es-044",
@@ -1737,1624 +4531,44 @@
     },
     "unit": "g"
   },
-  "es-049": {
-    "id": "es-049",
-    "name": "Vanille",
-    "category": "Epicerie sucrée",
+  "ha-006": {
+    "id": "ha-006",
+    "name": "Tahini",
+    "category": "Hors achat",
+    "macros": {
+      "kcal": 632,
+      "proteins": 17,
+      "lipids": 58,
+      "carbohydrates": 4,
+      "fibers": 9
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "cn-010": {
+    "id": "cn-010",
+    "name": "Thon au naturel",
+    "category": "Conserves",
+    "macros": {
+      "kcal": 97,
+      "proteins": 22,
+      "lipids": 1,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "ep-061": {
+    "id": "ep-061",
+    "name": "Thym",
+    "category": "Epices et condiments",
     "macros": {
       "kcal": 0,
       "proteins": 0,
       "lipids": 0,
       "carbohydrates": 0,
       "fibers": 0
-    },
-    "unit": "g"
-  },
-  "fc-001": {
-    "id": "fc-001",
-    "name": "Blé",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 350,
-      "proteins": 12,
-      "lipids": 1.5,
-      "carbohydrates": 70,
-      "fibers": 4
-    },
-    "unit": "g"
-  },
-  "fc-002": {
-    "id": "fc-002",
-    "name": "Boulgour",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 349,
-      "proteins": 12,
-      "lipids": 3,
-      "carbohydrates": 61,
-      "fibers": 12
-    },
-    "unit": "g"
-  },
-  "fc-003": {
-    "id": "fc-003",
-    "name": "Coquillettes",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 337,
-      "proteins": 11,
-      "lipids": 2,
-      "carbohydrates": 65,
-      "fibers": 7
-    },
-    "unit": "g"
-  },
-  "fc-004": {
-    "id": "fc-004",
-    "name": "Crozets au sarrasin",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 366,
-      "proteins": 13,
-      "lipids": 3,
-      "carbohydrates": 70,
-      "fibers": 13
-    },
-    "unit": "g"
-  },
-  "fc-005": {
-    "id": "fc-005",
-    "name": "Flageolets secs",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 294,
-      "proteins": 21,
-      "lipids": 2,
-      "carbohydrates": 38,
-      "fibers": 19
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fc-006": {
-    "id": "fc-006",
-    "name": "Fusilli",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 337,
-      "proteins": 11,
-      "lipids": 2,
-      "carbohydrates": 65,
-      "fibers": 7
-    },
-    "unit": "g"
-  },
-  "fc-007": {
-    "id": "fc-007",
-    "name": "Haricots blancs secs",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 298,
-      "proteins": 21,
-      "lipids": 1,
-      "carbohydrates": 38,
-      "fibers": 25
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fc-008": {
-    "id": "fc-008",
-    "name": "Haricots rouges sec",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 287,
-      "proteins": 21,
-      "lipids": 1,
-      "carbohydrates": 37,
-      "fibers": 21
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fc-009": {
-    "id": "fc-009",
-    "name": "Lentille vertes sèches",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 328,
-      "proteins": 25,
-      "lipids": 1,
-      "carbohydrates": 45,
-      "fibers": 16
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fc-010": {
-    "id": "fc-010",
-    "name": "Lentilles corail sèches",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 349,
-      "proteins": 13,
-      "lipids": 1,
-      "carbohydrates": 27,
-      "fibers": 3
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fc-011": {
-    "id": "fc-011",
-    "name": "Linguines",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 337,
-      "proteins": 11,
-      "lipids": 2,
-      "carbohydrates": 65,
-      "fibers": 7
-    },
-    "unit": "g"
-  },
-  "fc-012": {
-    "id": "fc-012",
-    "name": "Macaronis",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 337,
-      "proteins": 11,
-      "lipids": 2,
-      "carbohydrates": 65,
-      "fibers": 7
-    },
-    "unit": "g"
-  },
-  "fc-013": {
-    "id": "fc-013",
-    "name": "Orzo",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 359,
-      "proteins": 12,
-      "lipids": 2,
-      "carbohydrates": 72,
-      "fibers": 3
-    },
-    "unit": "g"
-  },
-  "fc-014": {
-    "id": "fc-014",
-    "name": "Orzo ou autres pâtes",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 359,
-      "proteins": 12,
-      "lipids": 2,
-      "carbohydrates": 72,
-      "fibers": 3
-    },
-    "unit": "g"
-  },
-  "fc-015": {
-    "id": "fc-015",
-    "name": "Pâtes",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 337,
-      "proteins": 11,
-      "lipids": 2,
-      "carbohydrates": 65,
-      "fibers": 7
-    },
-    "unit": "g"
-  },
-  "fc-016": {
-    "id": "fc-016",
-    "name": "Pâtes colorées",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 358,
-      "proteins": 12,
-      "lipids": 1,
-      "carbohydrates": 72,
-      "fibers": 4
-    },
-    "unit": "g"
-  },
-  "fc-017": {
-    "id": "fc-017",
-    "name": "Pâtes complètes",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 337,
-      "proteins": 11,
-      "lipids": 2,
-      "carbohydrates": 65,
-      "fibers": 7
-    },
-    "unit": "g"
-  },
-  "fc-018": {
-    "id": "fc-018",
-    "name": "Pâtes complètes ou riz",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 337,
-      "proteins": 11,
-      "lipids": 2,
-      "carbohydrates": 65,
-      "fibers": 7
-    },
-    "unit": "g"
-  },
-  "fc-019": {
-    "id": "fc-019",
-    "name": "Perles de couscous",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 356,
-      "proteins": 12,
-      "lipids": 1,
-      "carbohydrates": 72,
-      "fibers": 4
-    },
-    "unit": "g"
-  },
-  "fc-020": {
-    "id": "fc-020",
-    "name": "Pois chiches secs",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 336,
-      "proteins": 19,
-      "lipids": 6,
-      "carbohydrates": 43,
-      "fibers": 17
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fc-021": {
-    "id": "fc-021",
-    "name": "Polenta",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 353,
-      "proteins": 6,
-      "lipids": 1,
-      "carbohydrates": 76,
-      "fibers": 2
-    },
-    "unit": "g"
-  },
-  "fc-022": {
-    "id": "fc-022",
-    "name": "Quinoa",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 369,
-      "proteins": 14,
-      "lipids": 5,
-      "carbohydrates": 61,
-      "fibers": 8
-    },
-    "unit": "g"
-  },
-  "fc-023": {
-    "id": "fc-023",
-    "name": "Riz Basmati",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 350,
-      "proteins": 7,
-      "lipids": 0,
-      "carbohydrates": 78,
-      "fibers": 1
-    },
-    "unit": "g"
-  },
-  "fc-024": {
-    "id": "fc-024",
-    "name": "Riz rond",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 349,
-      "proteins": 7,
-      "lipids": 0,
-      "carbohydrates": 78,
-      "fibers": 1
-    },
-    "unit": "g"
-  },
-  "fc-025": {
-    "id": "fc-025",
-    "name": "Riz semi complet de Camargue",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 350,
-      "proteins": 6,
-      "lipids": 1,
-      "carbohydrates": 76,
-      "fibers": 2
-    },
-    "unit": "g"
-  },
-  "fc-026": {
-    "id": "fc-026",
-    "name": "Riz thaï",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 350,
-      "proteins": 7,
-      "lipids": 0,
-      "carbohydrates": 78,
-      "fibers": 1
-    },
-    "unit": "g"
-  },
-  "fc-027": {
-    "id": "fc-027",
-    "name": "Sarrasin",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 332,
-      "proteins": 13,
-      "lipids": 3,
-      "carbohydrates": 63,
-      "fibers": 7
-    },
-    "unit": "g"
-  },
-  "fc-028": {
-    "id": "fc-028",
-    "name": "Semoule fine",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 341,
-      "proteins": 11,
-      "lipids": 1,
-      "carbohydrates": 69,
-      "fibers": 1
-    },
-    "unit": "g"
-  },
-  "fc-029": {
-    "id": "fc-029",
-    "name": "Semoule semi complète",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 341,
-      "proteins": 12,
-      "lipids": 2,
-      "carbohydrates": 64,
-      "fibers": 8
-    },
-    "unit": "g"
-  },
-  "fc-030": {
-    "id": "fc-030",
-    "name": "Spaghetti",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 337,
-      "proteins": 11,
-      "lipids": 2,
-      "carbohydrates": 65,
-      "fibers": 7
-    },
-    "unit": "g"
-  },
-  "fc-031": {
-    "id": "fc-031",
-    "name": "Spaghetti ou nouilles soba",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 337,
-      "proteins": 11,
-      "lipids": 2,
-      "carbohydrates": 65,
-      "fibers": 7
-    },
-    "unit": "g"
-  },
-  "fc-032": {
-    "id": "fc-032",
-    "name": "Vermicelles ou pâtes alphabet",
-    "category": "Féculents",
-    "macros": {
-      "kcal": 360,
-      "proteins": 13,
-      "lipids": 2,
-      "carbohydrates": 70,
-      "fibers": 3
-    },
-    "unit": "g"
-  },
-  "fm-001": {
-    "id": "fm-001",
-    "name": "Blanc d’œuf",
-    "category": "Ferme",
-    "macros": {
-      "kcal": 46,
-      "proteins": 10,
-      "lipids": 0,
-      "carbohydrates": 1,
-      "fibers": 0
-    },
-    "unit": "pièce",
-    "unitWeight": 38
-  },
-  "fm-002": {
-    "id": "fm-002",
-    "name": "Jaune d’œuf",
-    "category": "Ferme",
-    "macros": {
-      "kcal": 345,
-      "proteins": 16,
-      "lipids": 31,
-      "carbohydrates": 1,
-      "fibers": 0
-    },
-    "unit": "pièce",
-    "unitWeight": 17
-  },
-  "fm-003": {
-    "id": "fm-003",
-    "name": "Œuf",
-    "category": "Ferme",
-    "macros": {
-      "kcal": 140,
-      "proteins": 13,
-      "lipids": 10,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "pièce",
-    "unitWeight": 55
-  },
-  "fv-001": {
-    "id": "fv-001",
-    "name": "Abricot",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 44,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 9,
-      "fibers": 1
-    },
-    "unit": "g"
-  },
-  "fv-002": {
-    "id": "fv-002",
-    "name": "Ail",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 131,
-      "proteins": 6,
-      "lipids": 0,
-      "carbohydrates": 21,
-      "fibers": 2
-    },
-    "unit": "pièce",
-    "unitWeight": 4
-  },
-  "fv-003": {
-    "id": "fv-003",
-    "name": "Ananas",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 52,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 11,
-      "fibers": 1
-    },
-    "unit": "g"
-  },
-  "fv-004": {
-    "id": "fv-004",
-    "name": "Asperges blanches",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 30,
-      "proteins": 3,
-      "lipids": 0,
-      "carbohydrates": 3,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-005": {
-    "id": "fv-005",
-    "name": "Asperges vertes fines",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 24,
-      "proteins": 2,
-      "lipids": 0,
-      "carbohydrates": 2,
-      "fibers": 1
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-006": {
-    "id": "fv-006",
-    "name": "Aubergine",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 21,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 3,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-007": {
-    "id": "fv-007",
-    "name": "Avocat",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 205,
-      "proteins": 1,
-      "lipids": 20,
-      "carbohydrates": 0,
-      "fibers": 5
-    },
-    "unit": "pièce",
-    "unitWeight": 140
-  },
-  "fv-008": {
-    "id": "fv-008",
-    "name": "Banane",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 93,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 19,
-      "fibers": 2
-    },
-    "unit": "g"
-  },
-  "fv-009": {
-    "id": "fv-009",
-    "name": "Betterave rouge",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 47,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 8,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-010": {
-    "id": "fv-010",
-    "name": "Blanc de Poireau",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 32,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 4,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-011": {
-    "id": "fv-011",
-    "name": "Brocoli",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 37,
-      "proteins": 3,
-      "lipids": 0,
-      "carbohydrates": 2,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-012": {
-    "id": "fv-012",
-    "name": "Brocoli frais",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 37,
-      "proteins": 3,
-      "lipids": 0,
-      "carbohydrates": 2,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-013": {
-    "id": "fv-013",
-    "name": "Carotte ou potimarron",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 28,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 5,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-014": {
-    "id": "fv-014",
-    "name": "Carottes",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 28,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 5,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-015": {
-    "id": "fv-015",
-    "name": "Carottes (julienne)",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 28,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 5,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-016": {
-    "id": "fv-016",
-    "name": "Carottes (râpée)",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 28,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 5,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-017": {
-    "id": "fv-017",
-    "name": "Carottes (rondelles)",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 28,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 5,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-018": {
-    "id": "fv-018",
-    "name": "Carottes ou panais",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 28,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 5,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-019": {
-    "id": "fv-019",
-    "name": "Céleri banche",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 15,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 1,
-      "fibers": 1
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-020": {
-    "id": "fv-020",
-    "name": "Cerises",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 54,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 13,
-      "fibers": 1
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-021": {
-    "id": "fv-021",
-    "name": "Champignons",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 21,
-      "proteins": 2,
-      "lipids": 0,
-      "carbohydrates": 0,
-      "fibers": 1
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-022": {
-    "id": "fv-022",
-    "name": "Chou blanc",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 28,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 4,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-023": {
-    "id": "fv-023",
-    "name": "Chou fleur",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 29,
-      "proteins": 2,
-      "lipids": 0,
-      "carbohydrates": 3,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-024": {
-    "id": "fv-024",
-    "name": "Chou romanesco",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 31,
-      "proteins": 3,
-      "lipids": 0,
-      "carbohydrates": 2,
-      "fibers": 3
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-025": {
-    "id": "fv-025",
-    "name": "Choucroute cuite",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 20,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 1,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-026": {
-    "id": "fv-026",
-    "name": "Choux de Bruxelles",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 45,
-      "proteins": 3,
-      "lipids": 0,
-      "carbohydrates": 4,
-      "fibers": 4
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-027": {
-    "id": "fv-027",
-    "name": "Citron non traité",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 0,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "fv-028": {
-    "id": "fv-028",
-    "name": "Citron vert",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 0,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "fv-029": {
-    "id": "fv-029",
-    "name": "Clémentine",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 49,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 9,
-      "fibers": 1
-    },
-    "unit": "g"
-  },
-  "fv-030": {
-    "id": "fv-030",
-    "name": "Compote de pomme maison",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 60,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 15,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-031": {
-    "id": "fv-031",
-    "name": "Concombre",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 14,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 2,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "fv-032": {
-    "id": "fv-032",
-    "name": "Courge",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 40,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 7,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-033": {
-    "id": "fv-033",
-    "name": "Courge bleue de Hongrie",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 40,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 7,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-034": {
-    "id": "fv-034",
-    "name": "Courge butternut",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 40,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 7,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-035": {
-    "id": "fv-035",
-    "name": "Courge butternut ou potimarron",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 40,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 7,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-036": {
-    "id": "fv-036",
-    "name": "Courge butternut ou potiron",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 40,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 7,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-037": {
-    "id": "fv-037",
-    "name": "Courge Jack Be Little",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 40,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 7,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-038": {
-    "id": "fv-038",
-    "name": "Courge spaghetti",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 28,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 5,
-      "fibers": 1
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-039": {
-    "id": "fv-039",
-    "name": "Courgette",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 19,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 2,
-      "fibers": 1
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-040": {
-    "id": "fv-040",
-    "name": "Courgette (à râper)",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 19,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 2,
-      "fibers": 1
-    },
-    "unit": "g"
-  },
-  "fv-041": {
-    "id": "fv-041",
-    "name": "Échalote",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 75,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 15,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-042": {
-    "id": "fv-042",
-    "name": "Endive",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 17,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 2,
-      "fibers": 1
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-043": {
-    "id": "fv-043",
-    "name": "Épinards frais",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 27,
-      "proteins": 2,
-      "lipids": 0,
-      "carbohydrates": 1,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-044": {
-    "id": "fv-044",
-    "name": "Figue",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 68,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 13,
-      "fibers": 4
-    },
-    "unit": "g"
-  },
-  "fv-045": {
-    "id": "fv-045",
-    "name": "Fraises",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 35,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 6,
-      "fibers": 3
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-046": {
-    "id": "fv-046",
-    "name": "Framboises",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 48,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 5,
-      "fibers": 4
-    },
-    "unit": "g"
-  },
-  "fv-047": {
-    "id": "fv-047",
-    "name": "Gingembre frais",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 80,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 15,
-      "fibers": 2
-    },
-    "unit": "g"
-  },
-  "fv-048": {
-    "id": "fv-048",
-    "name": "Grenailles",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 77,
-      "proteins": 2,
-      "lipids": 0,
-      "carbohydrates": 17,
-      "fibers": 2
-    },
-    "unit": "g"
-  },
-  "fv-049": {
-    "id": "fv-049",
-    "name": "Jeunes pousses",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 16,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 1,
-      "fibers": 1
-    },
-    "unit": "g"
-  },
-  "fv-050": {
-    "id": "fv-050",
-    "name": "Jus d’orange",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 45,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 9,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "fv-051": {
-    "id": "fv-051",
-    "name": "Kaki",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 66,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 14,
-      "fibers": 3
-    },
-    "unit": "g"
-  },
-  "fv-052": {
-    "id": "fv-052",
-    "name": "Kiwi",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 58,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 9,
-      "fibers": 2
-    },
-    "unit": "g"
-  },
-  "fv-053": {
-    "id": "fv-053",
-    "name": "Mâche",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 21,
-      "proteins": 2,
-      "lipids": 0,
-      "carbohydrates": 1,
-      "fibers": 2
-    },
-    "unit": "g"
-  },
-  "fv-054": {
-    "id": "fv-054",
-    "name": "Mangue",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 64,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 14,
-      "fibers": 1
-    },
-    "unit": "g"
-  },
-  "fv-055": {
-    "id": "fv-055",
-    "name": "Melon",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 63,
-      "proteins": 1,
-      "lipids": 1,
-      "carbohydrates": 7,
-      "fibers": 1
-    },
-    "unit": "g"
-  },
-  "fv-056": {
-    "id": "fv-056",
-    "name": "Mirabelle",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 75,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 18,
-      "fibers": 2
-    },
-    "unit": "g"
-  },
-  "fv-057": {
-    "id": "fv-057",
-    "name": "Mûres",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 46,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 6,
-      "fibers": 5
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-058": {
-    "id": "fv-058",
-    "name": "Myrtilles",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 58,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 10,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-059": {
-    "id": "fv-059",
-    "name": "Navet",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 25,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 3,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-060": {
-    "id": "fv-060",
-    "name": "Nectarine",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 49,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 11,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "fv-061": {
-    "id": "fv-061",
-    "name": "Oignon jaune",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 39,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 7,
-      "fibers": 1
-    },
-    "unit": "pièce",
-    "unitWeight": 100,
-    "isFreezable": true
-  },
-  "fv-062": {
-    "id": "fv-062",
-    "name": "Oignon rouge",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 41,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 8,
-      "fibers": 1
-    },
-    "unit": "pièce",
-    "unitWeight": 100,
-    "isFreezable": true
-  },
-  "fv-063": {
-    "id": "fv-063",
-    "name": "Orange non traitée",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 47,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 8,
-      "fibers": 2
-    },
-    "unit": "g"
-  },
-  "fv-064": {
-    "id": "fv-064",
-    "name": "Panais",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 73,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 13,
-      "fibers": 4
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-065": {
-    "id": "fv-065",
-    "name": "Pastèque",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 35,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 7,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "fv-066": {
-    "id": "fv-066",
-    "name": "Patate douce",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 79,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 16,
-      "fibers": 3
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-067": {
-    "id": "fv-067",
-    "name": "Pêche",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 44,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 9,
-      "fibers": 2
-    },
-    "unit": "g"
-  },
-  "fv-068": {
-    "id": "fv-068",
-    "name": "Poire",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 60,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 14,
-      "fibers": 3
-    },
-    "unit": "g"
-  },
-  "fv-069": {
-    "id": "fv-069",
-    "name": "Poivron jaune",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 27,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 5,
-      "fibers": 1
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-070": {
-    "id": "fv-070",
-    "name": "Poivron rouge",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 34,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 6,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-071": {
-    "id": "fv-071",
-    "name": "Poivrons",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 22,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 3,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-072": {
-    "id": "fv-072",
-    "name": "Poivrons lanières",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 22,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 3,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-073": {
-    "id": "fv-073",
-    "name": "Pomme",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 53,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 11,
-      "fibers": 1
-    },
-    "unit": "g"
-  },
-  "fv-074": {
-    "id": "fv-074",
-    "name": "Pommes de terre",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 81,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 16,
-      "fibers": 2
-    },
-    "unit": "g"
-  },
-  "fv-075": {
-    "id": "fv-075",
-    "name": "Potimarron",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 42,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 7,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-076": {
-    "id": "fv-076",
-    "name": "Potiron",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 20,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 3,
-      "fibers": 1
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-077": {
-    "id": "fv-077",
-    "name": "Potiron ou butternut",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 40,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 7,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fv-078": {
-    "id": "fv-078",
-    "name": "Prune reine claude",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 69,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 16,
-      "fibers": 1
-    },
-    "unit": "g"
-  },
-  "fv-079": {
-    "id": "fv-079",
-    "name": "Prune rouge",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 46,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 9,
-      "fibers": 1
-    },
-    "unit": "g"
-  },
-  "fv-080": {
-    "id": "fv-080",
-    "name": "Radis",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 15,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 1,
-      "fibers": 1
-    },
-    "unit": "g"
-  },
-  "fv-081": {
-    "id": "fv-081",
-    "name": "Raisins blancs",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 72,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 16,
-      "fibers": 1
-    },
-    "unit": "g"
-  },
-  "fv-082": {
-    "id": "fv-082",
-    "name": "Raisins noirs",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 70,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 15,
-      "fibers": 1
-    },
-    "unit": "g"
-  },
-  "fv-083": {
-    "id": "fv-083",
-    "name": "Roquette",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 30,
-      "proteins": 2,
-      "lipids": 0,
-      "carbohydrates": 2,
-      "fibers": 1
-    },
-    "unit": "g"
-  },
-  "fv-084": {
-    "id": "fv-084",
-    "name": "Salade",
-    "category": "Fruits et légumes",
-    "macros": {
-      "kcal": 15,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 1,
-      "fibers": 1
     },
     "unit": "g"
   },
@@ -3405,7 +4619,7 @@
     "name": "Tomates séchées sans huile",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 174,
+      "kcal": 264,
       "proteins": 9,
       "lipids": 3,
       "carbohydrates": 43,
@@ -3419,501 +4633,11 @@
     "name": "Topinambour",
     "category": "Fruits et légumes",
     "macros": {
-      "kcal": 73,
+      "kcal": 75,
       "proteins": 2,
       "lipids": 0,
       "carbohydrates": 15,
       "fibers": 1
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "fs-001": {
-    "id": "fs-001",
-    "name": "Abricots secs",
-    "category": "Fruits secs",
-    "macros": {
-      "kcal": 241,
-      "proteins": 5,
-      "lipids": 1,
-      "carbohydrates": 63,
-      "fibers": 7
-    },
-    "unit": "g"
-  },
-  "fs-002": {
-    "id": "fs-002",
-    "name": "Amandes",
-    "category": "Fruits secs",
-    "macros": {
-      "kcal": 615,
-      "proteins": 26,
-      "lipids": 52,
-      "carbohydrates": 4,
-      "fibers": 12
-    },
-    "unit": "g"
-  },
-  "fs-003": {
-    "id": "fs-003",
-    "name": "Baies de goji",
-    "category": "Fruits secs",
-    "macros": {
-      "kcal": 349,
-      "proteins": 14,
-      "lipids": 0,
-      "carbohydrates": 64,
-      "fibers": 13
-    },
-    "unit": "g"
-  },
-  "fs-004": {
-    "id": "fs-004",
-    "name": "Cacahuètes",
-    "category": "Fruits secs",
-    "macros": {
-      "kcal": 609,
-      "proteins": 26,
-      "lipids": 49,
-      "carbohydrates": 12,
-      "fibers": 9
-    },
-    "unit": "g"
-  },
-  "fs-005": {
-    "id": "fs-005",
-    "name": "Cranberries séchées",
-    "category": "Fruits secs",
-    "macros": {
-      "kcal": 338,
-      "proteins": 1,
-      "lipids": 1,
-      "carbohydrates": 78,
-      "fibers": 6
-    },
-    "unit": "g"
-  },
-  "fs-006": {
-    "id": "fs-006",
-    "name": "Datte (optionnel)",
-    "category": "Fruits secs",
-    "macros": {
-      "kcal": 282,
-      "proteins": 2,
-      "lipids": 0,
-      "carbohydrates": 65,
-      "fibers": 8
-    },
-    "unit": "g"
-  },
-  "fs-007": {
-    "id": "fs-007",
-    "name": "Figue séche",
-    "category": "Fruits secs",
-    "macros": {
-      "kcal": 255,
-      "proteins": 3,
-      "lipids": 1,
-      "carbohydrates": 54,
-      "fibers": 11
-    },
-    "unit": "g"
-  },
-  "fs-008": {
-    "id": "fs-008",
-    "name": "Graines de chia",
-    "category": "Fruits secs",
-    "macros": {
-      "kcal": 455,
-      "proteins": 19,
-      "lipids": 32,
-      "carbohydrates": 3,
-      "fibers": 35
-    },
-    "unit": "g"
-  },
-  "fs-009": {
-    "id": "fs-009",
-    "name": "Graines de courge",
-    "category": "Fruits secs",
-    "macros": {
-      "kcal": 585,
-      "proteins": 30,
-      "lipids": 49,
-      "carbohydrates": 5,
-      "fibers": 7
-    },
-    "unit": "g"
-  },
-  "fs-010": {
-    "id": "fs-010",
-    "name": "Graines de lin",
-    "category": "Fruits secs",
-    "macros": {
-      "kcal": 506,
-      "proteins": 22,
-      "lipids": 36,
-      "carbohydrates": 3,
-      "fibers": 27
-    },
-    "unit": "g"
-  },
-  "fs-011": {
-    "id": "fs-011",
-    "name": "Graines de pavot",
-    "category": "Fruits secs",
-    "macros": {
-      "kcal": 534,
-      "proteins": 21,
-      "lipids": 42,
-      "carbohydrates": 14,
-      "fibers": 10
-    },
-    "unit": "g"
-  },
-  "fs-012": {
-    "id": "fs-012",
-    "name": "Graines de sésame",
-    "category": "Fruits secs",
-    "macros": {
-      "kcal": 606,
-      "proteins": 18,
-      "lipids": 50,
-      "carbohydrates": 13,
-      "fibers": 12
-    },
-    "unit": "g"
-  },
-  "fs-013": {
-    "id": "fs-013",
-    "name": "Graines de tournesol",
-    "category": "Fruits secs",
-    "macros": {
-      "kcal": 653,
-      "proteins": 21,
-      "lipids": 56,
-      "carbohydrates": 10,
-      "fibers": 6
-    },
-    "unit": "g"
-  },
-  "fs-014": {
-    "id": "fs-014",
-    "name": "Mélange de graines",
-    "category": "Fruits secs",
-    "macros": {
-      "kcal": 575,
-      "proteins": 19,
-      "lipids": 48,
-      "carbohydrates": 12,
-      "fibers": 15
-    },
-    "unit": "g"
-  },
-  "fs-015": {
-    "id": "fs-015",
-    "name": "Noisettes",
-    "category": "Fruits secs",
-    "macros": {
-      "kcal": 672,
-      "proteins": 15,
-      "lipids": 64,
-      "carbohydrates": 6,
-      "fibers": 9
-    },
-    "unit": "g"
-  },
-  "fs-016": {
-    "id": "fs-016",
-    "name": "Noix",
-    "category": "Fruits secs",
-    "macros": {
-      "kcal": 698,
-      "proteins": 16,
-      "lipids": 68,
-      "carbohydrates": 4,
-      "fibers": 7
-    },
-    "unit": "g"
-  },
-  "fs-017": {
-    "id": "fs-017",
-    "name": "Noix (noix, du brésil, de pécan,...)",
-    "category": "Fruits secs",
-    "macros": {
-      "kcal": 698,
-      "proteins": 16,
-      "lipids": 68,
-      "carbohydrates": 4,
-      "fibers": 7
-    },
-    "unit": "g"
-  },
-  "fs-018": {
-    "id": "fs-018",
-    "name": "Noix de cajou",
-    "category": "Fruits secs",
-    "macros": {
-      "kcal": 598,
-      "proteins": 18,
-      "lipids": 47,
-      "carbohydrates": 24,
-      "fibers": 4
-    },
-    "unit": "g"
-  },
-  "fs-019": {
-    "id": "fs-019",
-    "name": "Noix de pécan",
-    "category": "Fruits secs",
-    "macros": {
-      "kcal": 691,
-      "proteins": 9,
-      "lipids": 72,
-      "carbohydrates": 4,
-      "fibers": 9
-    },
-    "unit": "g"
-  },
-  "fs-020": {
-    "id": "fs-020",
-    "name": "Pignons de pin",
-    "category": "Fruits secs",
-    "macros": {
-      "kcal": 705,
-      "proteins": 14,
-      "lipids": 68,
-      "carbohydrates": 4,
-      "fibers": 3
-    },
-    "unit": "g"
-  },
-  "fs-021": {
-    "id": "fs-021",
-    "name": "Pistaches",
-    "category": "Fruits secs",
-    "macros": {
-      "kcal": 602,
-      "proteins": 21,
-      "lipids": 48,
-      "carbohydrates": 16,
-      "fibers": 10
-    },
-    "unit": "g"
-  },
-  "fs-022": {
-    "id": "fs-022",
-    "name": "Purée de noisettes",
-    "category": "Fruits secs",
-    "macros": {
-      "kcal": 684,
-      "proteins": 14,
-      "lipids": 62,
-      "carbohydrates": 8,
-      "fibers": 9
-    },
-    "unit": "g"
-  },
-  "fs-023": {
-    "id": "fs-023",
-    "name": "Raisins secs",
-    "category": "Fruits secs",
-    "macros": {
-      "kcal": 305,
-      "proteins": 2,
-      "lipids": 0,
-      "carbohydrates": 69,
-      "fibers": 4
-    },
-    "unit": "g"
-  },
-  "ha-001": {
-    "id": "ha-001",
-    "name": "Eau",
-    "category": "Hors achat",
-    "macros": {
-      "kcal": 0,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "ha-002": {
-    "id": "ha-002",
-    "name": "Eau de cuisson des pâtes",
-    "category": "Hors achat",
-    "macros": {
-      "kcal": 0,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "ha-003": {
-    "id": "ha-003",
-    "name": "Feuille de Laurier",
-    "category": "Hors achat",
-    "macros": {
-      "kcal": 0,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "ha-004": {
-    "id": "ha-004",
-    "name": "Okara d'amandes",
-    "category": "Hors achat",
-    "macros": {
-      "kcal": 120,
-      "proteins": 6,
-      "lipids": 8,
-      "carbohydrates": 4,
-      "fibers": 9
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "ha-005": {
-    "id": "ha-005",
-    "name": "Pâté",
-    "category": "Hors achat",
-    "macros": {
-      "kcal": 216,
-      "proteins": 18,
-      "lipids": 17,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "ha-006": {
-    "id": "ha-006",
-    "name": "Tahini",
-    "category": "Hors achat",
-    "macros": {
-      "kcal": 635,
-      "proteins": 17,
-      "lipids": 58,
-      "carbohydrates": 4,
-      "fibers": 9
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "web-001": {
-    "id": "web-001",
-    "name": "Protéines de soja texturées",
-    "category": "Internet",
-    "macros": {
-      "kcal": 352,
-      "proteins": 50,
-      "lipids": 7,
-      "carbohydrates": 14,
-      "fibers": 14
-    },
-    "unit": "g"
-  },
-  "web-002": {
-    "id": "web-002",
-    "name": "Purée de cacahuètes",
-    "category": "Internet",
-    "macros": {
-      "kcal": 606,
-      "proteins": 28,
-      "lipids": 50,
-      "carbohydrates": 9,
-      "fibers": 8
-    },
-    "unit": "g"
-  },
-  "po-001": {
-    "id": "po-001",
-    "name": "Crevettes",
-    "category": "Poisson",
-    "macros": {
-      "kcal": 77,
-      "proteins": 17,
-      "lipids": 1,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "po-002": {
-    "id": "po-002",
-    "name": "Noix de Saint Jacques",
-    "category": "Poisson",
-    "macros": {
-      "kcal": 82,
-      "proteins": 15,
-      "lipids": 0,
-      "carbohydrates": 3,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "po-003": {
-    "id": "po-003",
-    "name": "Pavé de saumon",
-    "category": "Poisson",
-    "macros": {
-      "kcal": 179,
-      "proteins": 20,
-      "lipids": 11,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "po-004": {
-    "id": "po-004",
-    "name": "Poisson blanc",
-    "category": "Poisson",
-    "macros": {
-      "kcal": 75,
-      "proteins": 17,
-      "lipids": 0,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "po-005": {
-    "id": "po-005",
-    "name": "Poisson fumé au choix",
-    "category": "Poisson",
-    "macros": {
-      "kcal": 184,
-      "proteins": 21,
-      "lipids": 10,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "po-006": {
-    "id": "po-006",
-    "name": "Saumon fumé",
-    "category": "Poisson",
-    "macros": {
-      "kcal": 184,
-      "proteins": 21,
-      "lipids": 10,
-      "carbohydrates": 0,
-      "fibers": 0
     },
     "unit": "g",
     "isFreezable": true
@@ -3923,7 +4647,7 @@
     "name": "Truite fumée",
     "category": "Poisson",
     "macros": {
-      "kcal": 165,
+      "kcal": 166,
       "proteins": 22,
       "lipids": 8,
       "carbohydrates": 0,
@@ -3932,445 +4656,91 @@
     "unit": "g",
     "isFreezable": true
   },
-  "pl-001": {
-    "id": "pl-001",
-    "name": "Beurre",
-    "category": "Produits laitiers",
+  "es-049": {
+    "id": "es-049",
+    "name": "Vanille",
+    "category": "Epicerie sucrée",
     "macros": {
-      "kcal": 745,
+      "kcal": 0,
       "proteins": 0,
-      "lipids": 82,
+      "lipids": 0,
       "carbohydrates": 0,
       "fibers": 0
     },
     "unit": "g"
   },
-  "pl-002": {
-    "id": "pl-002",
-    "name": "Beurre demi sel",
-    "category": "Produits laitiers",
+  "vm-014": {
+    "id": "vm-014",
+    "name": "Veau haché",
+    "category": "Viande",
     "macros": {
-      "kcal": 738,
-      "proteins": 0,
-      "lipids": 81,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "pl-003": {
-    "id": "pl-003",
-    "name": "Boisson soja nature",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 37,
-      "proteins": 4,
+      "kcal": 108,
+      "proteins": 20,
       "lipids": 2,
-      "carbohydrates": 1,
-      "fibers": 1
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "pl-004": {
-    "id": "pl-004",
-    "name": "Bûche de chèvre",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 290,
-      "proteins": 20,
-      "lipids": 23,
-      "carbohydrates": 1,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "pl-005": {
-    "id": "pl-005",
-    "name": "Buche de chèvre ou fromage frais",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 290,
-      "proteins": 20,
-      "lipids": 23,
-      "carbohydrates": 1,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "pl-006": {
-    "id": "pl-006",
-    "name": "Cheddar",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 411,
-      "proteins": 24,
-      "lipids": 35,
       "carbohydrates": 0,
       "fibers": 0
     },
     "unit": "g",
     "isFreezable": true
   },
-  "pl-007": {
-    "id": "pl-007",
-    "name": "Cheddar en tranches",
-    "category": "Produits laitiers",
+  "fc-032": {
+    "id": "fc-032",
+    "name": "Vermicelles ou pâtes alphabet",
+    "category": "Féculents",
     "macros": {
-      "kcal": 411,
-      "proteins": 24,
-      "lipids": 35,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "pl-008": {
-    "id": "pl-008",
-    "name": "Cheddar râpé",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 411,
-      "proteins": 24,
-      "lipids": 35,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "pl-009": {
-    "id": "pl-009",
-    "name": "Comté",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 410,
-      "proteins": 26,
-      "lipids": 34,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "pl-010": {
-    "id": "pl-010",
-    "name": "Feta",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 271,
-      "proteins": 16,
-      "lipids": 23,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "pl-011": {
-    "id": "pl-011",
-    "name": "Feta ou Fromage frais",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 271,
-      "proteins": 16,
-      "lipids": 23,
-      "carbohydrates": 0,
-      "fibers": 0
+      "kcal": 356,
+      "proteins": 13,
+      "lipids": 2,
+      "carbohydrates": 70,
+      "fibers": 3
     },
     "unit": "g"
   },
-  "pl-012": {
-    "id": "pl-012",
-    "name": "Fromage",
-    "category": "Produits laitiers",
+  "ep-062": {
+    "id": "ep-062",
+    "name": "Vinaigre balsamique",
+    "category": "Epices et condiments",
     "macros": {
-      "kcal": 412,
-      "proteins": 22,
-      "lipids": 35,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "pl-013": {
-    "id": "pl-013",
-    "name": "Fromage à raclette",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 328,
-      "proteins": 23,
-      "lipids": 26,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "pl-014": {
-    "id": "pl-014",
-    "name": "Fromage blanc 3%",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 69,
-      "proteins": 6,
-      "lipids": 3,
-      "carbohydrates": 4,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "pl-015": {
-    "id": "pl-015",
-    "name": "Fromage frais",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 192,
-      "proteins": 12,
-      "lipids": 15,
-      "carbohydrates": 3,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "pl-016": {
-    "id": "pl-016",
-    "name": "Fromage râpé",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 410,
-      "proteins": 26,
-      "lipids": 34,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "pl-017": {
-    "id": "pl-017",
-    "name": "Lait (animal ou végétal)",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 47,
-      "proteins": 3,
-      "lipids": 1,
-      "carbohydrates": 4,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "pl-018": {
-    "id": "pl-018",
-    "name": "Lait demi écrémé",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 47,
-      "proteins": 3,
-      "lipids": 1,
-      "carbohydrates": 4,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "pl-019": {
-    "id": "pl-019",
-    "name": "Lait écrémé",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 32,
-      "proteins": 3,
-      "lipids": 0,
-      "carbohydrates": 4,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "pl-020": {
-    "id": "pl-020",
-    "name": "Lait écrémé en poudre",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 359,
-      "proteins": 36,
-      "lipids": 0,
-      "carbohydrates": 52,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "pl-021": {
-    "id": "pl-021",
-    "name": "Lait entier",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 65,
-      "proteins": 3,
-      "lipids": 3,
-      "carbohydrates": 4,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "pl-022": {
-    "id": "pl-022",
-    "name": "Lait végétal maison",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 55,
-      "proteins": 1,
-      "lipids": 5,
-      "carbohydrates": 2,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "pl-023": {
-    "id": "pl-023",
-    "name": "Margarine (60%MG)",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 530,
+      "kcal": 80,
       "proteins": 0,
-      "lipids": 59,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "pl-024": {
-    "id": "pl-024",
-    "name": "Mozzarella",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 216,
-      "proteins": 17,
-      "lipids": 16,
-      "carbohydrates": 1,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
-  "pl-025": {
-    "id": "pl-025",
-    "name": "Parmesan",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 402,
-      "proteins": 32,
-      "lipids": 30,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "pl-026": {
-    "id": "pl-026",
-    "name": "Pâte feuilletée",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 362,
-      "proteins": 6,
-      "lipids": 21,
-      "carbohydrates": 36,
-      "fibers": 2
-    },
-    "unit": "g"
-  },
-  "pl-027": {
-    "id": "pl-027",
-    "name": "Ricotta",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 95,
-      "proteins": 9,
-      "lipids": 5,
-      "carbohydrates": 4,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "pl-028": {
-    "id": "pl-028",
-    "name": "Skyr",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 57,
-      "proteins": 10,
       "lipids": 0,
-      "carbohydrates": 3,
+      "carbohydrates": 20,
       "fibers": 0
     },
     "unit": "g"
   },
-  "pl-029": {
-    "id": "pl-029",
-    "name": "St Môret",
-    "category": "Produits laitiers",
+  "ep-063": {
+    "id": "ep-063",
+    "name": "Vinaigre de cidre",
+    "category": "Epices et condiments",
     "macros": {
-      "kcal": 205,
-      "proteins": 8,
-      "lipids": 17,
-      "carbohydrates": 3,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "pl-030": {
-    "id": "pl-030",
-    "name": "St Môret ou Petit Billy",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 192,
-      "proteins": 12,
-      "lipids": 15,
-      "carbohydrates": 3,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "pl-031": {
-    "id": "pl-031",
-    "name": "Yaourt au lait entier",
-    "category": "Produits laitiers",
-    "macros": {
-      "kcal": 66,
-      "proteins": 3,
-      "lipids": 3,
-      "carbohydrates": 3,
+      "kcal": 0,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 0,
       "fibers": 0
     },
     "unit": "g"
   },
   "pl-032": {
     "id": "pl-032",
-    "name": "Lait de coco maison",
+    "name": "Yaourt au lait entier",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 67,
-      "proteins": 0,
-      "lipids": 6,
-      "carbohydrates": 2,
+      "kcal": 62,
+      "proteins": 3,
+      "lipids": 3,
+      "carbohydrates": 3,
       "fibers": 0
     },
-    "unit": "g",
-    "isFreezable": true
+    "unit": "g"
   },
   "pl-033": {
     "id": "pl-033",
     "name": "Yaourt grec authentique",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 134,
+      "kcal": 131,
       "proteins": 6,
       "lipids": 10,
       "carbohydrates": 3,
@@ -4383,377 +4753,10 @@
     "name": "Yaourt soja nature",
     "category": "Produits laitiers",
     "macros": {
-      "kcal": 52,
+      "kcal": 55,
       "proteins": 5,
       "lipids": 3,
       "carbohydrates": 2,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "su-001": {
-    "id": "su-001",
-    "name": "Batonnet glacé nuii menthe",
-    "category": "Surgelés",
-    "macros": {
-      "kcal": 381,
-      "proteins": 4,
-      "lipids": 22,
-      "carbohydrates": 41,
-      "fibers": 1
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "su-002": {
-    "id": "su-002",
-    "name": "Epinards",
-    "category": "Surgelés",
-    "macros": {
-      "kcal": 24,
-      "proteins": 2,
-      "lipids": 0,
-      "carbohydrates": 1,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "su-003": {
-    "id": "su-003",
-    "name": "Fèves",
-    "category": "Surgelés",
-    "macros": {
-      "kcal": 70,
-      "proteins": 5,
-      "lipids": 0,
-      "carbohydrates": 8,
-      "fibers": 4
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "su-004": {
-    "id": "su-004",
-    "name": "Fraises surgelées",
-    "category": "Surgelés",
-    "macros": {
-      "kcal": 35,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 6,
-      "fibers": 3
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "su-005": {
-    "id": "su-005",
-    "name": "Framboises fraîches ou surgelées",
-    "category": "Surgelés",
-    "macros": {
-      "kcal": 48,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 5,
-      "fibers": 4
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "su-006": {
-    "id": "su-006",
-    "name": "Framboises surgelés",
-    "category": "Surgelés",
-    "macros": {
-      "kcal": 48,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 5,
-      "fibers": 4
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "su-007": {
-    "id": "su-007",
-    "name": "Haricots beurre",
-    "category": "Surgelés",
-    "macros": {
-      "kcal": 32,
-      "proteins": 2,
-      "lipids": 0,
-      "carbohydrates": 4,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "su-008": {
-    "id": "su-008",
-    "name": "Haricots verts",
-    "category": "Surgelés",
-    "macros": {
-      "kcal": 31,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 3,
-      "fibers": 3
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "su-009": {
-    "id": "su-009",
-    "name": "Macédoine surgelée",
-    "category": "Surgelés",
-    "macros": {
-      "kcal": 51,
-      "proteins": 2,
-      "lipids": 0,
-      "carbohydrates": 7,
-      "fibers": 4
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "su-010": {
-    "id": "su-010",
-    "name": "Myrtilles surgelées",
-    "category": "Surgelés",
-    "macros": {
-      "kcal": 58,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 10,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "su-011": {
-    "id": "su-011",
-    "name": "Petits pois",
-    "category": "Surgelés",
-    "macros": {
-      "kcal": 71,
-      "proteins": 5,
-      "lipids": 0,
-      "carbohydrates": 8,
-      "fibers": 4
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "su-012": {
-    "id": "su-012",
-    "name": "Poêlée de légumes",
-    "category": "Surgelés",
-    "macros": {
-      "kcal": 27,
-      "proteins": 1,
-      "lipids": 0,
-      "carbohydrates": 4,
-      "fibers": 2
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "vm-001": {
-    "id": "vm-001",
-    "name": "Aiguillettes de poulet",
-    "category": "Viande",
-    "macros": {
-      "kcal": 110,
-      "proteins": 23,
-      "lipids": 1,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "vm-002": {
-    "id": "vm-002",
-    "name": "Bœuf à mijoter (paleron, joue, macreuse,...)",
-    "category": "Viande",
-    "macros": {
-      "kcal": 144,
-      "proteins": 21,
-      "lipids": 6,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "vm-003": {
-    "id": "vm-003",
-    "name": "Bœuf haché 5% Mg",
-    "category": "Viande",
-    "macros": {
-      "kcal": 132,
-      "proteins": 21,
-      "lipids": 4,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "vm-004": {
-    "id": "vm-004",
-    "name": "Cuisse de poulet",
-    "category": "Viande",
-    "macros": {
-      "kcal": 114,
-      "proteins": 19,
-      "lipids": 4,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "pièce",
-    "unitWeight": 150,
-    "isFreezable": true
-  },
-  "vm-005": {
-    "id": "vm-005",
-    "name": "Filet de bœuf",
-    "category": "Viande",
-    "macros": {
-      "kcal": 152,
-      "proteins": 22,
-      "lipids": 6,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "vm-006": {
-    "id": "vm-006",
-    "name": "Filet de poulet",
-    "category": "Viande",
-    "macros": {
-      "kcal": 110,
-      "proteins": 23,
-      "lipids": 1,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "vm-007": {
-    "id": "vm-007",
-    "name": "Filet mignon",
-    "category": "Viande",
-    "macros": {
-      "kcal": 123,
-      "proteins": 21,
-      "lipids": 4,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "vm-008": {
-    "id": "vm-008",
-    "name": "Filet ou cuisse de poulet",
-    "category": "Viande",
-    "macros": {
-      "kcal": 114,
-      "proteins": 19,
-      "lipids": 4,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "vm-009": {
-    "id": "vm-009",
-    "name": "Paupiette",
-    "category": "Viande",
-    "macros": {
-      "kcal": 211,
-      "proteins": 18,
-      "lipids": 15,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "pièce",
-    "unitWeight": 180,
-    "isFreezable": true
-  },
-  "vm-010": {
-    "id": "vm-010",
-    "name": "Pita",
-    "category": "Viande",
-    "macros": {
-      "kcal": 151,
-      "proteins": 21,
-      "lipids": 7,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "vm-011": {
-    "id": "vm-011",
-    "name": "Poulet entier",
-    "category": "Viande",
-    "macros": {
-      "kcal": 170,
-      "proteins": 21,
-      "lipids": 4,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "pièce",
-    "unitWeight": 1000,
-    "isFreezable": true
-  },
-  "vm-012": {
-    "id": "vm-012",
-    "name": "Steak",
-    "category": "Viande",
-    "macros": {
-      "kcal": 152,
-      "proteins": 22,
-      "lipids": 6,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "vm-013": {
-    "id": "vm-013",
-    "name": "Steak ou bœuf haché 5% Mg",
-    "category": "Viande",
-    "macros": {
-      "kcal": 152,
-      "proteins": 22,
-      "lipids": 6,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g",
-    "isFreezable": true
-  },
-  "vm-014": {
-    "id": "vm-014",
-    "name": "Veau haché",
-    "category": "Viande",
-    "macros": {
-      "kcal": 108,
-      "proteins": 20,
-      "lipids": 2,
-      "carbohydrates": 0,
       "fibers": 0
     },
     "unit": "g",

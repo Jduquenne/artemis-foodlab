@@ -1755,11 +1755,11 @@
     "name": "Blé",
     "category": "Féculents",
     "macros": {
-      "kcal": 135,
-      "proteins": 4,
-      "lipids": 0,
-      "carbohydrates": 27,
-      "fibers": 2
+      "kcal": 350,
+      "proteins": 12,
+      "lipids": 1.5,
+      "carbohydrates": 70,
+      "fibers": 4
     },
     "unit": "g"
   },

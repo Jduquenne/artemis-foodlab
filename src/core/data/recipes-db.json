@@ -51500,14 +51500,14 @@
     "categoryId": "bases",
     "mealTypes": [],
     "kind": "base",
-    "defaultPortions": 4,
+    "defaultPortions": 6,
     "batchCooking": true,
     "ingredients": [
       {
         "id": "001",
         "foodId": "es-024",
         "name": "Farine semi complète",
-        "quantity": 40,
+        "quantity": 60,
         "unit": "g",
         "category": "Epicerie sucrée"
       },
@@ -51515,7 +51515,7 @@
         "id": "002",
         "foodId": "es-015",
         "name": "Farine blanche",
-        "quantity": 40,
+        "quantity": 60,
         "unit": "g",
         "category": "Epicerie sucrée"
       },
@@ -51523,7 +51523,7 @@
         "id": "003",
         "foodId": "pl-032",
         "name": "Yaourt au lait entier",
-        "quantity": 80,
+        "quantity": 120,
         "unit": "g",
         "category": "Produits laitiers"
       },
@@ -51547,7 +51547,7 @@
         "id": "006",
         "foodId": "ep-035",
         "name": "Huile d'olive",
-        "quantity": 10,
+        "quantity": 15,
         "unit": "g",
         "category": "Epices et condiments"
       }
@@ -51570,7 +51570,7 @@
     "categoryId": "bases",
     "mealTypes": [],
     "kind": "base",
-    "defaultPortions": 6,
+    "defaultPortions": 8,
     "batchCooking": true,
     "ingredients": [
       {

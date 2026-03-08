@@ -2643,11 +2643,11 @@
     "name": "Lentilles corail sèches",
     "category": "Féculents",
     "macros": {
-      "kcal": 175,
-      "proteins": 13,
-      "lipids": 1,
-      "carbohydrates": 27,
-      "fibers": 3
+      "kcal": 349,
+      "proteins": 25,
+      "lipids": 2,
+      "carbohydrates": 54,
+      "fibers": 5
     },
     "unit": "g",
     "isFreezable": true

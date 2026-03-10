@@ -69,12 +69,7 @@ export const JournalModule = () => {
 
   const goToPrev = useCallback(() => setSelectedDate((d) => subDays(d, 1)), []);
 
-  const goToNext = useCallback(() => {
-    setSelectedDate((d) => {
-      const next = addDays(d, 1);
-      return isSameDay(d, new Date()) ? d : next;
-    });
-  }, []);
+  const goToNext = useCallback(() => setSelectedDate((d) => addDays(d, 1)), []);
 
   return (
     <div className="h-full flex flex-col gap-3 overflow-hidden">

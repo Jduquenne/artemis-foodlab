@@ -1,5 +1,6 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { format, isSameDay } from "date-fns";
+
 import { fr } from "date-fns/locale";
 
 export interface DayNavProps {
@@ -41,8 +42,7 @@ export const DayNav = ({ date, onPrev, onNext }: DayNavProps) => {
 
         <button
           onClick={onNext}
-          disabled={isToday}
-          className="p-1.5 rounded-xl text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 hover:text-slate-600 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+          className="p-1.5 rounded-xl text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 hover:text-slate-600 transition-colors"
         >
           <ChevronRight className="w-5 h-5" />
         </button>

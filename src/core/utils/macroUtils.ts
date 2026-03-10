@@ -1,4 +1,6 @@
 import { Food, Macronutrients, RecipeDetails, Unit } from "../domain/types";
+import recipesDbRaw from "../data/recipes-db.json";
+import foodDbRaw from "../data/food-db.json";
 const ZERO: Macronutrients = {
   kcal: 0,
   proteins: 0,
@@ -83,3 +85,16 @@ export function calculateRecipeMacros(
 
   return scale(total, 1 / recipe.defaultPortions);
 }
+
+const _allRecipes = recipesDbRaw as unknown as Record<string, RecipeDetails>;
+const _allFoods = foodDbRaw as unknown as Record<string, Food>;
+
+export const RECIPE_MACROS: Record<string, Macronutrients> = Object.fromEntries(
+  Object.entries(_allRecipes).flatMap(([id, recipe]) => {
+    try {
+      return [[id, calculateRecipeMacros(recipe, _allRecipes, _allFoods)]];
+    } catch {
+      return [];
+    }
+  })
+);

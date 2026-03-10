@@ -1,7 +1,8 @@
-import { UtensilsCrossed, CalendarDays, ShoppingCart, Package, Snowflake, ChefHat } from "lucide-react";
+import { LayoutDashboard, UtensilsCrossed, CalendarDays, ShoppingCart, Package, Snowflake, ChefHat } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const navItems = [
+  { icon: <LayoutDashboard />, path: "/journal", label: "Journal" },
   { icon: <UtensilsCrossed />, path: "/recipes", label: "Recettes" },
   { icon: <CalendarDays />, path: "/planning", label: "Menu" },
   { icon: <ShoppingCart />, path: "/shopping", label: "Courses" },

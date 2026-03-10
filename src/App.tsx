@@ -1,9 +1,12 @@
+import { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './shared/components/layout/Layout';
 import { NotificationBanner } from './shared/components/ui/NotificationBanner';
+import { SplashScreen } from './shared/components/ui/SplashScreen';
 import { useBackupReminder } from './shared/hooks/useBackupReminder';
+import { useAppInit } from './shared/hooks/useAppInit';
 
-// Imports des Modules Fonctionnels
+import { JournalModule } from './features/journal/JournalModule';
 import { RecipeModule } from './features/recipes/RecipeModule';
 import { CategoryDetail } from './features/recipes/components/CategoryDetail';
 import { RecipeDetail } from './features/recipes/components/RecipeDetail';
@@ -15,40 +18,43 @@ import { FreezerModule } from './features/freezer/FreezerModule';
 import { RecipeBuilderModule } from './features/recipeBuilder/RecipeBuilderModule';
 
 function App() {
+  const isReady = useAppInit();
+  const [splashDone, setSplashDone] = useState(false);
+  const [splashExiting, setSplashExiting] = useState(false);
+
   useBackupReminder();
+
+  useEffect(() => {
+    if (isReady) {
+      setSplashExiting(true);
+      setTimeout(() => setSplashDone(true), 450);
+    }
+  }, [isReady]);
 
   return (
     <>
+      {!splashDone && <SplashScreen isExiting={splashExiting} />}
       <NotificationBanner />
       <Router>
         <Layout>
-        <Routes>
-          {/* Redirection par défaut vers les recettes */}
-          <Route path="/" element={<Navigate to="/recipes" replace />} />
+          <Routes>
+            <Route path="/" element={<Navigate to="/journal" replace />} />
 
-          {/* --- MODULE RECETTES --- */}
-          <Route path="/recipes" element={<RecipeModule />} />
-          <Route path="/recipes/category/:categoryId" element={<CategoryDetail />} />
-          <Route path="/recipes/detail/:recipeId" element={<RecipeDetail />} />
-          <Route path="/recipes/detail/:recipeId/macros" element={<RecipeMacroPage />} />
+            <Route path="/journal" element={<JournalModule />} />
 
-          {/* --- MODULE QUOTIDIEN --- */}
-          <Route path="/household" element={<HouseholdModule />} />
+            <Route path="/recipes" element={<RecipeModule />} />
+            <Route path="/recipes/category/:categoryId" element={<CategoryDetail />} />
+            <Route path="/recipes/detail/:recipeId" element={<RecipeDetail />} />
+            <Route path="/recipes/detail/:recipeId/macros" element={<RecipeMacroPage />} />
 
-          {/* --- MODULE PLANNING --- */}
-          <Route path="/planning" element={<PlanningModule />} />
-
-          {/* --- MODULE COURSES --- */}
-          <Route path="/shopping" element={<ShoppingModule />} />
-
-          {/* --- MODULE CONGELATEUR --- */}
-          <Route path="/freezer" element={<FreezerModule />} />
-
-          {/* --- MODULE CRÉATEUR DE RECETTE --- */}
-          <Route path="/recipe-builder" element={<RecipeBuilderModule />} />
-        </Routes>
-      </Layout>
-    </Router>
+            <Route path="/planning" element={<PlanningModule />} />
+            <Route path="/shopping" element={<ShoppingModule />} />
+            <Route path="/household" element={<HouseholdModule />} />
+            <Route path="/freezer" element={<FreezerModule />} />
+            <Route path="/recipe-builder" element={<RecipeBuilderModule />} />
+          </Routes>
+        </Layout>
+      </Router>
     </>
   );
 }

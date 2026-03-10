@@ -6,11 +6,8 @@ import { MealSlot, Macronutrients } from "../../core/domain/types";
 import { RECIPE_MACROS } from "../../core/utils/macroUtils";
 import { useJournalStore } from "../../shared/store/useJournalStore";
 import { DayNav } from "./components/DayNav";
-import { CalorieProgress } from "./components/CalorieProgress";
 import { MacroSummary } from "./components/MacroSummary";
 import { MealSlotCard } from "./components/MealSlotCard";
-import { NutrientHighlights } from "./components/NutrientHighlights";
-import { KcalTargetModal } from "./components/KcalTargetModal";
 
 const SLOT_ORDER = ["breakfast", "lunch", "dinner", "snack"] as const;
 const DAYS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
@@ -23,12 +20,10 @@ function getDayKey(date: Date): string {
 const ZERO: Macronutrients = { kcal: 0, proteins: 0, lipids: 0, carbohydrates: 0, fibers: 0 };
 
 export const JournalModule = () => {
-  const { kcalTarget, setKcalTarget, portionOverrides } = useJournalStore();
+  const { portionOverrides } = useJournalStore();
   const [selectedDate, setSelectedDate] = useState(() => new Date());
   const [weekSlots, setWeekSlots] = useState<MealSlot[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [showTargetModal, setShowTargetModal] = useState(false);
-
   const monday = getMonday(selectedDate);
   const week = getWeekNumber(monday);
   const year = monday.getFullYear();
@@ -91,12 +86,6 @@ export const JournalModule = () => {
         </div>
       ) : (
         <>
-          <CalorieProgress
-            consumed={totalMacros.kcal}
-            target={kcalTarget}
-            onEditTarget={() => setShowTargetModal(true)}
-          />
-
           <MacroSummary macros={totalMacros} />
 
           <div className="flex-1 min-h-0 grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -104,18 +93,9 @@ export const JournalModule = () => {
               <MealSlotCard key={slotType} slotType={slotType} slot={slotMap[slotType]} />
             ))}
           </div>
-
-          <NutrientHighlights slots={daySlots} />
         </>
       )}
 
-      {showTargetModal && (
-        <KcalTargetModal
-          current={kcalTarget}
-          onSubmit={setKcalTarget}
-          onClose={() => setShowTargetModal(false)}
-        />
-      )}
     </div>
   );
 };

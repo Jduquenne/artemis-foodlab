@@ -22,30 +22,32 @@ export const RecipePortionRow = ({ recipeId, slotId }: RecipePortionRowProps) =>
   const increment = () => setPortionOverride(key, Math.min(10, portions + 1));
 
   return (
-    <div className="flex items-center gap-1 py-0.5">
-      <span className="flex-1 min-w-0 text-xs text-slate-700 font-medium truncate leading-tight">
+    <div className="flex flex-col py-0.5 gap-0.5">
+      <span className="text-xs text-slate-700 font-medium leading-tight w-full">
         {name}
       </span>
-      <div className="flex items-center shrink-0">
-        <button
-          onClick={decrement}
-          className="w-4 h-4 flex items-center justify-center text-slate-300 hover:text-orange-500 transition-colors"
-        >
-          <Minus className="w-2.5 h-2.5" />
-        </button>
-        <span className={`text-[10px] font-bold w-5 text-center leading-none ${portions > 1 ? "text-orange-500" : "text-slate-300"}`}>
-          {portions}×
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-0.5">
+          <button
+            onClick={decrement}
+            className="w-5 h-5 flex items-center justify-center rounded text-slate-300 hover:text-orange-500 transition-colors"
+          >
+            <Minus className="w-3 h-3" />
+          </button>
+          <span className={`text-[11px] font-bold w-5 text-center leading-none ${portions > 1 ? "text-orange-500" : "text-slate-300"}`}>
+            {portions}×
+          </span>
+          <button
+            onClick={increment}
+            className="w-5 h-5 flex items-center justify-center rounded text-slate-300 hover:text-orange-500 transition-colors"
+          >
+            <Plus className="w-3 h-3" />
+          </button>
+        </div>
+        <span className="text-[11px] text-slate-400 tabular-nums font-medium">
+          {Math.round(kcal)} kcal
         </span>
-        <button
-          onClick={increment}
-          className="w-4 h-4 flex items-center justify-center text-slate-300 hover:text-orange-500 transition-colors"
-        >
-          <Plus className="w-2.5 h-2.5" />
-        </button>
       </div>
-      <span className="text-[10px] text-slate-400 shrink-0 tabular-nums min-w-[40px] text-right">
-        {Math.round(kcal)} kcal
-      </span>
     </div>
   );
 };

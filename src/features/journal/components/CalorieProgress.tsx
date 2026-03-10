@@ -1,12 +1,9 @@
-import { Pencil } from "lucide-react";
-
 export interface CalorieProgressProps {
   consumed: number;
   target: number;
-  onEditTarget: () => void;
 }
 
-export const CalorieProgress = ({ consumed, target, onEditTarget }: CalorieProgressProps) => {
+export const CalorieProgress = ({ consumed, target }: CalorieProgressProps) => {
   const pct = Math.min(100, Math.round((consumed / target) * 100));
   const remaining = Math.max(0, target - consumed);
   const isOver = consumed > target;
@@ -20,21 +17,11 @@ export const CalorieProgress = ({ consumed, target, onEditTarget }: CalorieProgr
           </span>
           <span className="text-sm text-slate-400 leading-none">kcal</span>
         </div>
-
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-400">
-            {isOver
-              ? `+${Math.round(consumed - target)} au-dessus`
-              : `${Math.round(remaining)} restantes`}
-          </span>
-          <button
-            onClick={onEditTarget}
-            className="p-1.5 rounded-lg text-slate-300 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors"
-          >
-            <Pencil className="w-3 h-3" />
-          </button>
-          <span className="text-xs text-slate-400">/ {target} kcal</span>
-        </div>
+        <span className="text-xs text-slate-400">
+          {isOver
+            ? `+${Math.round(consumed - target)} au-dessus`
+            : `${Math.round(remaining)} restantes · obj. ${target}`}
+        </span>
       </div>
 
       <div className="h-2 bg-slate-100 dark:bg-slate-200 rounded-full overflow-hidden">

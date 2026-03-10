@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
-import { addDays, subDays, isSameDay } from "date-fns";
+import { addDays, subDays } from "date-fns";
 import { getWeekNumber, getMonday } from "../../shared/utils/weekUtils";
 import { getWeekSlots } from "../../core/services/planningService";
 import { MealSlot, Macronutrients } from "../../core/domain/types";

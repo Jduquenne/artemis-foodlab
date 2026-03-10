@@ -9,9 +9,11 @@ import { CATEGORIES } from '../../core/domain/categories';
 import { markScrolling } from '../../shared/utils/scrollGuard';
 import { MacroFilterButton } from './components/MacroFilterButton';
 import { PREDEFINED_FILTERS } from '../../core/domain/predefinedFilters';
-import { RecipeDetails } from '../../core/domain/types';
+import { Food, RecipeDetails } from '../../core/domain/types';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import recipesDb from '../../core/data/recipes-db.json';
+import foodDb from '../../core/data/food-db.json';
+import { calculateRecipeMacros } from '../../core/utils/macroUtils';
 
 export const RecipeModule = () => {
     const navigate = useNavigate();
@@ -26,14 +28,16 @@ export const RecipeModule = () => {
 
     const filteredResults = useMemo(() => {
         if (activeFilterIds.length === 0) return baseResults;
-        const data = recipesDb as unknown as Record<string, RecipeDetails>;
+        const allRecipes = recipesDb as unknown as Record<string, RecipeDetails>;
+        const foods = foodDb as unknown as Record<string, Food>;
         const activeFilters = PREDEFINED_FILTERS.filter(f => activeFilterIds.includes(f.id));
         return baseResults.filter((recipe) => {
-            const macros = data[recipe.recipeId]?.macronutriment;
-            if (!macros) return false;
+            const id = recipe.recipeId || recipe.id;
+            const details = allRecipes[id];
+            if (!details) return false;
+            const macros = calculateRecipeMacros(details, allRecipes, foods);
             return activeFilters.every(f => f.check(macros));
         });
-
     }, [baseResults, activeFilterIds]);
 
     const removeFilter = (id: string) => setActiveFilterIds(activeFilterIds.filter(f => f !== id));

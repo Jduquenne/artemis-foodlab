@@ -9,7 +9,7 @@ import { DayNav } from "./components/DayNav";
 import { MacroSummary } from "./components/MacroSummary";
 import { MealSlotCard } from "./components/MealSlotCard";
 
-const SLOT_ORDER = ["breakfast", "lunch", "dinner", "snack"] as const;
+const SLOT_ORDER = ["breakfast", "lunch", "snack", "dinner"] as const;
 const DAYS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
 
 function getDayKey(date: Date): string {

@@ -127,11 +127,11 @@ export const MacroPreview = ({ ingredients, defaultPortions }: MacroPreviewProps
       {!hasIngredients ? (
         <p className="text-xs text-slate-400 text-center py-1">Aucun ingrédient ajouté</p>
       ) : (
-        <div className="flex gap-2">
+        <div className="flex gap-1.5 sm:gap-2">
           {MACRO_LABELS.map(({ key, label, unit }) => (
-            <div key={key} className="flex-1 flex flex-col items-center bg-slate-100 dark:bg-slate-200 rounded-xl px-2 py-1.5">
-              <span className="text-[10px] font-medium text-slate-400 uppercase tracking-wide leading-none mb-0.5">{label}</span>
-              <span className="text-sm font-bold text-slate-800 leading-none tabular-nums">
+            <div key={key} className="flex-1 flex flex-col items-center bg-slate-100 dark:bg-slate-200 rounded-xl px-1 sm:px-2 py-1 sm:py-1.5">
+              <span className="text-[8px] sm:text-[10px] font-medium text-slate-400 uppercase tracking-wide leading-none mb-0.5">{label}</span>
+              <span className="text-xs sm:text-sm font-bold text-slate-800 leading-none tabular-nums">
                 {Math.round(displayed[key])}{unit}
               </span>
             </div>

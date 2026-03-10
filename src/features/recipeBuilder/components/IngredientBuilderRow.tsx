@@ -32,7 +32,7 @@ export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: Ingredi
   const isBase = ingredient.ingredientType === "base";
 
   return (
-    <div className="flex items-center gap-2 py-1.5">
+    <div className="flex items-center gap-2 py-1.5 w-full">
       <div className="flex rounded-xl overflow-hidden border border-slate-200 shrink-0">
         <button
           type="button"

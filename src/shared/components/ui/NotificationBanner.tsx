@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { X, Bell } from "lucide-react";
 import { useNotificationStore, AppNotification } from "../../store/useNotificationStore";
 
@@ -19,12 +19,12 @@ const NotificationCard = ({ notification }: NotificationCardProps) => {
   const [isLeaving, setIsLeaving] = useState(false);
   const leavingRef = useRef(false);
 
-  const handleDismiss = () => {
+  const handleDismiss = useCallback(() => {
     if (leavingRef.current) return;
     leavingRef.current = true;
     setIsLeaving(true);
     setTimeout(dismiss, 280);
-  };
+  }, [dismiss]);
 
   useEffect(() => {
     const start = Date.now();
@@ -42,7 +42,7 @@ const NotificationCard = ({ notification }: NotificationCardProps) => {
 
     rafRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafRef.current);
-  }, []);
+  }, [notification, handleDismiss]);
 
   const handleAction = (onClick: () => void) => {
     onClick();

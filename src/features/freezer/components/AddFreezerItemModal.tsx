@@ -1,9 +1,9 @@
 import { useState, useMemo } from "react";
 import { X, Search } from "lucide-react";
-import { Unit, RecipeDetails, FoodFreezerItem, BatchFreezerItem } from "../../../core/domain/types";
+import { Unit, FoodFreezerItem, BatchFreezerItem } from "../../../core/domain/types";
 import { addItemToCategory } from "../../../core/services/freezerService";
 import { FoodSearchInput } from "./FoodSearchInput";
-import recipesDb from "../../../core/data/recipes-db.json";
+import { typedRecipesDb } from "../../../core/utils/typedRecipesDb";
 
 
 interface AddFreezerItemModalProps {
@@ -29,7 +29,7 @@ export const AddFreezerItemModal = ({ categoryId, onClose }: AddFreezerItemModal
   const handleClose = () => { setIsClosing(true); setTimeout(onClose, 300); };
 
   const recipes = useMemo(() => {
-    const data = recipesDb as unknown as Record<string, RecipeDetails>;
+    const data = typedRecipesDb;
     const q = recipeSearch.toLowerCase().trim();
     return Object.entries(data)
       .filter(([, r]) => r.assets?.photo && (!q || r.name.toLowerCase().includes(q)))

@@ -1,10 +1,9 @@
 import { Minus, Plus } from "lucide-react";
-import { RecipeDetails } from "../../../core/domain/types";
 import { RECIPE_MACROS } from "../../../core/utils/macroUtils";
 import { useJournalStore } from "../../../shared/store/useJournalStore";
-import recipesDb from "../../../core/data/recipes-db.json";
+import { typedRecipesDb } from "../../../core/utils/typedRecipesDb";
 
-const data = recipesDb as unknown as Record<string, RecipeDetails>;
+const data = typedRecipesDb;
 
 export interface RecipePortionRowProps {
   recipeId: string;

@@ -23,23 +23,27 @@ const ZERO: Macronutrients = { kcal: 0, proteins: 0, lipids: 0, carbohydrates: 0
 export const JournalModule = () => {
   const { portionOverrides } = useJournalStore();
   const [selectedDate, setSelectedDate] = useState(() => new Date());
-  const [weekSlots, setWeekSlots] = useState<MealSlot[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [weekSlots, setWeekSlots] = useState<MealSlot[] | null>(null);
   const monday = getMonday(selectedDate);
   const week = getWeekNumber(monday);
   const year = monday.getFullYear();
   const dayKey = getDayKey(selectedDate);
 
   useEffect(() => {
-    setIsLoading(true);
+    let active = true;
     getWeekSlots(year, week).then((slots) => {
-      setWeekSlots(slots);
-      setIsLoading(false);
+      if (active) setWeekSlots(slots);
     });
+    return () => {
+      active = false;
+      setWeekSlots(null);
+    };
   }, [year, week]);
 
+  const isLoading = weekSlots === null;
+
   const daySlots = useMemo(
-    () => weekSlots.filter((s) => s.day === dayKey),
+    () => (weekSlots ?? []).filter((s) => s.day === dayKey),
     [weekSlots, dayKey]
   );
 

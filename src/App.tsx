@@ -20,15 +20,14 @@ import { RecipeBuilderModule } from './features/recipeBuilder/RecipeBuilderModul
 function App() {
   const isReady = useAppInit();
   const [splashDone, setSplashDone] = useState(false);
-  const [splashExiting, setSplashExiting] = useState(false);
+  const splashExiting = isReady && !splashDone;
 
   useBackupReminder();
 
   useEffect(() => {
-    if (isReady) {
-      setSplashExiting(true);
-      setTimeout(() => setSplashDone(true), 450);
-    }
+    if (!isReady) return;
+    const t = setTimeout(() => setSplashDone(true), 450);
+    return () => clearTimeout(t);
   }, [isReady]);
 
   return (

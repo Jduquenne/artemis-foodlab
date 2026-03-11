@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Search } from "lucide-react";
-import recipesDbRaw from "../../../core/data/recipes-db.json";
-import { RecipeKind } from "../../../core/domain/types";
+import { typedRecipesDb } from "../../../core/utils/typedRecipesDb";
 import { isBase } from "../../../core/domain/recipePredicates";
 
 interface BaseRecipeSearchProps {
@@ -9,13 +8,9 @@ interface BaseRecipeSearchProps {
   onChange: (name: string, baseId: string) => void;
 }
 
-interface BaseEntry {
-  id: string;
-  name: string;
-  kind: RecipeKind;
-}
-
-const bases = (Object.values(recipesDbRaw) as BaseEntry[]).filter(isBase);
+const bases = Object.entries(typedRecipesDb)
+  .filter(([, r]) => isBase(r))
+  .map(([id, r]) => ({ id, name: r.name }));
 
 export const BaseRecipeSearch = ({ value, onChange }: BaseRecipeSearchProps) => {
   const [open, setOpen] = useState(false);

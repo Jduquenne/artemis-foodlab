@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 import { Plus, RefreshCw, Trash2, GripVertical, Users, Check, X, RotateCcw } from 'lucide-react';
 import { useDraggable, useDroppable } from '@dnd-kit/core';
 import { plannableDb } from '../../../core/utils/plannableDb';
@@ -44,12 +44,10 @@ export const MealSlot = ({
     const hasRecipesPage = Boolean(recipe?.assets?.instructionsPhoto?.url);
     const defaultPortion = recipe?.defaultPortions;
 
-    const [draft, setDraft] = useState<number>(persons ?? defaultPortion ?? 2);
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         if (isEditingPersons) {
-            setDraft(persons ?? defaultPortion ?? 2);
             inputRef.current?.focus();
             inputRef.current?.select();
         }
@@ -182,13 +180,13 @@ export const MealSlot = ({
                 <div className="absolute inset-0 z-30 bg-white/97 dark:bg-slate-100/97 rounded-xl flex flex-col items-center justify-center gap-3 px-3">
                     <span className="text-[11px] font-black uppercase tracking-widest text-slate-500">Personnes ?</span>
                     <input
+                        key={isEditingPersons ? 'editing' : 'idle'}
                         ref={inputRef}
                         type="number"
                         min="1"
-                        value={draft}
-                        onChange={(e) => setDraft(Math.max(1, parseInt(e.target.value) || 1))}
+                        defaultValue={persons ?? defaultPortion ?? 2}
                         onKeyDown={(e) => {
-                            if (e.key === 'Enter') onConfirmPersons(draft);
+                            if (e.key === 'Enter') onConfirmPersons(Math.max(1, Number(inputRef.current?.value) || 1));
                             if (e.key === 'Escape') onCancelPersons();
                         }}
                         className="w-16 text-center text-2xl font-black text-slate-900 bg-slate-100 dark:bg-slate-200 rounded-xl py-1.5 border-0 outline-none focus:ring-2 focus:ring-orange-400"
@@ -197,7 +195,7 @@ export const MealSlot = ({
                         <button
                             aria-label="Confirmer"
                             onPointerDown={(e) => e.stopPropagation()}
-                            onClick={() => onConfirmPersons(draft)}
+                            onClick={() => onConfirmPersons(Math.max(1, Number(inputRef.current?.value) || 1))}
                             className="p-2 bg-orange-500 text-white rounded-xl hover:bg-orange-600 transition-colors"
                         >
                             <Check size={15} />

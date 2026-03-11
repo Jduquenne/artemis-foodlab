@@ -6,10 +6,11 @@ import { CATEGORIES } from '../../../core/domain/categories';
 import { markScrolling } from '../../../shared/utils/scrollGuard';
 import { MacroFilterButton } from './MacroFilterButton';
 import { PREDEFINED_FILTERS } from '../../../core/domain/predefinedFilters';
-import { RecipeDetails } from '../../../core/domain/types';
 import { isPlannable } from '../../../core/domain/recipePredicates';
 import { useMenuStore } from '../../../shared/store/useMenuStore';
-import recipesDb from '../../../core/data/recipes-db.json';
+import { typedRecipesDb } from '../../../core/utils/typedRecipesDb';
+
+const data = typedRecipesDb;
 
 export const CategoryDetail = () => {
     const { categoryId } = useParams();
@@ -17,8 +18,6 @@ export const CategoryDetail = () => {
     const { activeFilterIds, setActiveFilterIds } = useMenuStore();
 
     const categoryInfo = CATEGORIES.find(cat => cat.id === categoryId);
-    const data = recipesDb as unknown as Record<string, RecipeDetails>;
-
     const recipes = useMemo(() => {
         return Object.entries(data)
             .filter(([, recipe]) => recipe.categoryId === categoryId && recipe.assets?.photo)

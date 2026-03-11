@@ -1,7 +1,7 @@
 import { useMemo } from "react";
-import recipesDb from "../../core/data/recipes-db.json";
 import { RecipeDetails, RecipeKind } from "../../core/domain/types";
 import { isDessert } from "../../core/domain/recipePredicates";
+import { typedRecipesDb } from "../../core/utils/typedRecipesDb";
 
 export interface SearchRecipeResult {
   id: string;
@@ -13,7 +13,7 @@ export interface SearchRecipeResult {
   matchedIngredients: string[];
 }
 
-const db = recipesDb as unknown as Record<string, RecipeDetails>;
+const db = typedRecipesDb;
 
 function matchesRecipeId(recipeId: string, query: string): boolean {
   const numPart = recipeId.split("-")[1];

@@ -1,13 +1,9 @@
 import { addDays } from "date-fns";
 import { getISOWeek, getISOWeekYear } from "date-fns";
 import { getWeekSlots, MealSlot } from "../services/planningService";
-import {
-  RecipeDetails,
-  IngredientCategory,
-  ShoppingDay,
-} from "../domain/types";
+import { IngredientCategory, ShoppingDay } from "../domain/types";
 import { getAllRecipeIds } from "../domain/recipePredicates";
-import recipesDb from "../data/recipes-db.json";
+import { typedRecipesDb } from "./typedRecipesDb";
 
 export interface IngredientSource {
   recipeId: string;
@@ -39,7 +35,7 @@ function cleanRecipeName(name: string): string {
 async function aggregateSlots(
   slots: MealSlot[],
 ): Promise<ConsolidatedIngredient[]> {
-  const data = recipesDb as unknown as Record<string, RecipeDetails>;
+  const data = typedRecipesDb;
   const map = new Map<string, ConsolidatedIngredient>();
   const prepMap = new Map<string, Set<string>>();
 

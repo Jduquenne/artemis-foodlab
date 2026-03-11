@@ -47,7 +47,7 @@ export const ShoppingModule = () => {
             if (s?.periodKey === getPeriodKey(useMenuStore.getState().shoppingDays)) {
                 return new Set<string>(s.keys);
             }
-        } catch {}
+        } catch { /* localStorage indisponible */ }
         return new Set<string>();
     });
 
@@ -57,7 +57,7 @@ export const ShoppingModule = () => {
             if (s?.periodKey === getPeriodKey(useMenuStore.getState().shoppingDays)) {
                 return s.data ?? {};
             }
-        } catch {}
+        } catch { /* localStorage indisponible */ }
         return {};
     });
 
@@ -77,7 +77,7 @@ export const ShoppingModule = () => {
     const toggleItem = (key: string) => {
         setChecked(prev => {
             const next = new Set(prev);
-            next.has(key) ? next.delete(key) : next.add(key);
+            if (next.has(key)) { next.delete(key); } else { next.add(key); }
             return next;
         });
     };

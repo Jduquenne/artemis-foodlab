@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
-import { Food, Macronutrients, RecipeDetails, Unit } from "../../../core/domain/types";
+import { Food, Macronutrients, Unit } from "../../../core/domain/types";
 import { calculateRecipeMacros } from "../../../core/utils/macroUtils";
-import foodDbRaw from "../../../core/data/food-db.json";
-import recipesDbRaw from "../../../core/data/recipes-db.json";
+import { typedFoodDb } from "../../../core/utils/typedFoodDb";
+import { typedRecipesDb } from "../../../core/utils/typedRecipesDb";
 import { DraftIngredient } from "../types";
 
 interface MacroPreviewProps {
@@ -10,8 +10,8 @@ interface MacroPreviewProps {
   defaultPortions: number;
 }
 
-const foodDb = foodDbRaw as unknown as Record<string, Food>;
-const recipesDb = recipesDbRaw as unknown as Record<string, RecipeDetails>;
+const foodDb: Record<string, Food> = typedFoodDb;
+const recipesDb = typedRecipesDb;
 
 const ZERO: Macronutrients = { kcal: 0, proteins: 0, lipids: 0, carbohydrates: 0, fibers: 0 };
 

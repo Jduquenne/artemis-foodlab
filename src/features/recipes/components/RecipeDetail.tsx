@@ -1,9 +1,9 @@
 import { useState, useMemo } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Calculator, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Food, RecipeDetails } from '../../../core/domain/types';
-import recipesDb from '../../../core/data/recipes-db.json';
-import foodDb from '../../../core/data/food-db.json';
+import { Food } from '../../../core/domain/types';
+import { typedRecipesDb } from '../../../core/utils/typedRecipesDb';
+import { typedFoodDb } from '../../../core/utils/typedFoodDb';
 import { calculateRecipeMacros } from '../../../core/utils/macroUtils';
 
 const MACRO_LABELS = [
@@ -20,8 +20,8 @@ export const RecipeDetail = () => {
     const [searchParams] = useSearchParams();
     const [isLeaving, setIsLeaving] = useState(false);
 
-    const data = recipesDb as unknown as Record<string, RecipeDetails>;
-    const foods = foodDb as unknown as Record<string, Food>;
+    const data = typedRecipesDb;
+    const foods: Record<string, Food> = typedFoodDb;
     const recipe = recipeId ? data[recipeId] : undefined;
     const recipeUrl = recipe?.assets?.instructionsPhoto?.url;
     const categoryId = searchParams.get('category');

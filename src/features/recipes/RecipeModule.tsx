@@ -9,11 +9,11 @@ import { CATEGORIES } from '../../core/domain/categories';
 import { markScrolling } from '../../shared/utils/scrollGuard';
 import { MacroFilterButton } from './components/MacroFilterButton';
 import { PREDEFINED_FILTERS } from '../../core/domain/predefinedFilters';
-import { Food, RecipeDetails } from '../../core/domain/types';
+import { Food } from '../../core/domain/types';
 import { isPlannable } from '../../core/domain/recipePredicates';
 import { useMenuStore } from '../../shared/store/useMenuStore';
-import recipesDb from '../../core/data/recipes-db.json';
-import foodDb from '../../core/data/food-db.json';
+import { typedRecipesDb } from '../../core/utils/typedRecipesDb';
+import { typedFoodDb } from '../../core/utils/typedFoodDb';
 import { calculateRecipeMacros } from '../../core/utils/macroUtils';
 
 export const RecipeModule = () => {
@@ -29,8 +29,8 @@ export const RecipeModule = () => {
 
     const filteredResults = useMemo(() => {
         if (activeFilterIds.length === 0) return baseResults;
-        const allRecipes = recipesDb as unknown as Record<string, RecipeDetails>;
-        const foods = foodDb as unknown as Record<string, Food>;
+        const allRecipes = typedRecipesDb;
+        const foods: Record<string, Food> = typedFoodDb;
         const activeFilters = PREDEFINED_FILTERS.filter(f => activeFilterIds.includes(f.id));
         return baseResults.filter((recipe) => {
             const id = recipe.recipeId || recipe.id;
@@ -136,7 +136,7 @@ export const RecipeModule = () => {
                                         backImage={recipe.ingredientsUrl}
                                         recipeUrl={recipe.recipeUrl}
                                         onClick={() => navigate(`/recipes/detail/${recipe.recipeId || recipe.id}`)}
-                                        onAddToPlanning={isPlannable((recipesDb as unknown as Record<string, RecipeDetails>)[recipe.recipeId || recipe.id]) ? () => navigate(`/planning?addRecipe=${recipe.recipeId || recipe.id}`) : undefined}
+                                        onAddToPlanning={isPlannable(typedRecipesDb[recipe.recipeId || recipe.id]) ? () => navigate(`/planning?addRecipe=${recipe.recipeId || recipe.id}`) : undefined}
                                     />
                                 ))}
                             </div>
@@ -146,7 +146,7 @@ export const RecipeModule = () => {
                     <div className="h-full grid grid-cols-2 tablet:grid-cols-3 lg:grid-cols-6 auto-rows-fr gap-3">
                         {CATEGORIES
                             .filter(cat => !excluded.includes(cat.name))
-                            .map((cat: any) => (
+                            .map((cat) => (
                                 <CategoryCard
                                     key={cat.id}
                                     name={cat.name}

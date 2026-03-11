@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useRef } from 'react';
 import { ChevronLeft, ChevronRight, ShoppingCart, Check, X } from 'lucide-react';
-import recipesDb from '../../core/data/recipes-db.json';
+import { typedRecipesDb as recipesDb } from '../../core/utils/typedRecipesDb';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { getWeekSlots, saveSlot, deleteSlot, bulkSaveSlots, addDessertToSlot, removeDessertFromSlot } from '../../core/services/planningService';
 import { MealSlot } from './components/MealSlot';
@@ -12,7 +12,7 @@ import { ShoppingSelectionBar } from './components/ShoppingSelectionBar';
 import { getWeekNumber, getMonday, getWeekRange } from '../../shared/utils/weekUtils';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useMenuStore } from '../../shared/store/useMenuStore';
-import { ShoppingDay, RecipeDetails } from '../../core/domain/types';
+import { ShoppingDay } from '../../core/domain/types';
 import { isDessert, canAddDessert, isSlotFull } from '../../core/domain/recipePredicates';
 import {
     DndContext,
@@ -96,10 +96,11 @@ export const PlanningModule = () => {
         useSensor(TouchSensor, { activationConstraint: { delay: 250, tolerance: 5 } })
     );
 
-    const planningData = useLiveQuery(
+    const liveData = useLiveQuery(
         () => getWeekSlots(year, weekNumber),
         [year, weekNumber]
-    ) || [];
+    );
+    const planningData = useMemo(() => liveData ?? [], [liveData]);
 
     const activeMeal = useMemo(
         () => activeDragId ? planningData.find(p => `${year}-W${weekNumber}-${p.day}-${p.slot}` === activeDragId) : null,
@@ -225,7 +226,7 @@ export const PlanningModule = () => {
         const slotId = `${year}-W${weekNumber}-${day}-${slot}`;
         const mealDef = MEAL_SLOTS.find(m => m.id === slot)!;
         const existing = planningData.find(p => p.day === day && p.slot === slot);
-        const recipe = (recipesDb as Record<string, RecipeDetails>)[addRecipeId];
+        const recipe = recipesDb[addRecipeId];
         if (mealDef.hasDessert && existing?.recipeIds.length && isDessert(recipe)) {
             if (existing && canAddDessert(existing)) {
                 await addDessertToSlot(existing, addRecipeId);

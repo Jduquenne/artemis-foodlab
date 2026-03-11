@@ -33,7 +33,6 @@ export const QRScanner = ({ onScan, active }: QRScannerProps) => {
   useEffect(() => {
     if (!active) { stopStream(); return; }
     scannedRef.current = false;
-    setCameraError(null);
 
     const startCamera = async () => {
       const constraints: MediaStreamConstraints[] = [
@@ -56,6 +55,7 @@ export const QRScanner = ({ onScan, active }: QRScannerProps) => {
         setCameraError("Impossible d'accéder à la caméra. Vérifie que Chrome est bien autorisé à utiliser la caméra dans les paramètres de l'application.");
         return;
       }
+      setCameraError(null);
 
       streamRef.current = stream;
       if (videoRef.current) {

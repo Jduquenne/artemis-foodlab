@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ChevronDown, RotateCcw } from 'lucide-react';
-import { Food, Unit } from '../../../core/domain/types';
+import { Food, RecipeDetails, Unit } from '../../../core/domain/types';
 import { typedRecipesDb } from '../../../core/utils/typedRecipesDb';
 import { typedFoodDb } from '../../../core/utils/typedFoodDb';
 import { calculateRecipeMacros } from '../../../core/utils/macroUtils';

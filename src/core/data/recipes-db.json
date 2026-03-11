@@ -74,7 +74,7 @@
         "url": "/artemis-foodlab/charcuterie/photo/CHAR_01_Purée_Brocoli_et_pâté_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/charcuterie/ingredients/CHAR_01_Purée_Brocoli_et_pâté_Ingrédients.webp"
+        "url": "/artemis-foodlab/charcuterie/ingredients/CHAR_01_Purée_Brocoli,_carottes_et_pâté_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/charcuterie/recipes/CHAR_01_Purée_Brocoli_et_pâté_Recette.webp"
@@ -1036,7 +1036,7 @@
         "url": "/artemis-foodlab/charcuterie/photo/CHAR_10_Ebly,_poivron_et_pâté_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/charcuterie/ingredients/CHAR_10_Ebly,_poivron_et_pâté_Ingrédients.webp"
+        "url": "/artemis-foodlab/charcuterie/ingredients/CHAR_10_Ebly,_poivron,_pâté_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/charcuterie/recipes/CHAR_10_Ebly,_poivron,_pâté_Recette.webp"
@@ -2605,7 +2605,7 @@
       {
         "id": "004",
         "foodId": "fv-019",
-        "name": "Céleri banche",
+        "name": "Céleri branche",
         "quantity": 50,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -2992,7 +2992,7 @@
         "url": "/artemis-foodlab/charcuterie/photo/CHAR_32_Gratin_de_chou_fleur_au_jambon_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/charcuterie/ingredients/CHAR_32_Gratin_de_chou_fleur_au_jambon__Ingrédients.webp"
+        "url": "/artemis-foodlab/charcuterie/ingredients/CHAR_32_Gratin_de_chou_fleur_au_jambon_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/charcuterie/recipes/CHAR_32_Gratin_de_chou_fleur_au_jambon_Recette.webp"
@@ -3612,7 +3612,7 @@
         "url": "/artemis-foodlab/charcuterie/photo/CHAR_38_Galette_de_blé_noir_jambon_champignons_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/charcuterie/ingredients/CHAR_38_Galette_de_blé_noir_jambon_champignons__Ingrédients.webp"
+        "url": "/artemis-foodlab/charcuterie/ingredients/CHAR_38_Galette_de_blé_noir_jambon_champignons_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/charcuterie/recipes/CHAR_38_Galette_de_blé_noir_jambon_champignons_Recette.webp"
@@ -5346,7 +5346,7 @@
       "dinner"
     ],
     "kind": "dish",
-    "defaultPortions": 4,
+    "defaultPortions": 8,
     "batchCooking": true,
     "isDessert": false,
     "ingredients": [
@@ -9809,10 +9809,10 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/cereal-products/photo/PC_10_Pancakes_skyr_compote__Photo.webp"
+        "url": "/artemis-foodlab/cereal-products/photo/PC_10_Pancakes_skyr_compote_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/cereal-products/ingredients/PC_10_Pancakes_skyr_compote__Ingrédients.webp"
+        "url": "/artemis-foodlab/cereal-products/ingredients/PC_10_Pancakes_skyr_compote_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/cereal-products/recipes/PC_10_Pancakes_skyr_compote_Recette.webp"
@@ -10489,10 +10489,10 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/cereal-products/photo/PC_18_Pan_de_Muerto__Photo.webp"
+        "url": "/artemis-foodlab/cereal-products/photo/PC_18_Pan_de_Muerto_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/cereal-products/ingredients/PC_18_Pan_de_Muerto__Ingrédients.webp"
+        "url": "/artemis-foodlab/cereal-products/ingredients/PC_18_Pan_de_Muerto_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/cereal-products/recipes/PC_18_Pan_de_Muerto_Recette.webp"
@@ -10621,7 +10621,7 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/cereal-products/photo/PC_19_Coquille_de_Noël_Vegan.webp"
+        "url": "/artemis-foodlab/cereal-products/photo/PC_19_Coquille_de_Noël_Vegan_Photo.webp"
       },
       "ingredientsPhoto": {
         "url": "/artemis-foodlab/cereal-products/ingredients/PC_19_Coquille_de_Noël_Vegan_Ingrédients.webp"
@@ -10729,7 +10729,7 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/cereal-products/photo/PC_20_Coquille_de_Noël.webp"
+        "url": "/artemis-foodlab/cereal-products/photo/PC_20_Coquille_de_Noël_Photo.webp"
       },
       "ingredientsPhoto": {
         "url": "/artemis-foodlab/cereal-products/ingredients/PC_20_Coquille_de_Noël_Ingrédients.webp"
@@ -11763,9 +11763,6 @@
       "photo": {
         "url": "/artemis-foodlab/cereal-products/photo/PC_32_Pancakes_Vegan_noisette_Photo.webp"
       },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/cereal-products/ingredients/PC_32_Pancakes_Vegan_noisette_Ingrédients.webp"
-      },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/cereal-products/recipes/PC_32_Pancakes_Vegan_noisette_Recette.webp"
       }
@@ -11897,13 +11894,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/dairy-products/photo/PL_01_Lait_végétal_au_vegan_milker_Photo.webp"
+        "url": "/artemis-foodlab/dairy-products/photo/PL_01_Lait_végétal_maison_Amande_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/dairy-products/ingredients/PL_01_Lait_végétal_au_vegan_milker_Ingrédients.webp"
+        "url": "/artemis-foodlab/dairy-products/ingredients/PL_01_Lait_végétal_maison_Amande_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/dairy-products/recipes/PL_01_Lait_végétal_au_vegan_milker_Recette.webp"
+        "url": "/artemis-foodlab/dairy-products/recipes/PL_01_Lait_végétal_maison_Amande_Recette.webp"
       }
     }
   },
@@ -11958,9 +11955,6 @@
     "assets": {
       "photo": {
         "url": "/artemis-foodlab/dairy-products/photo/PL_02_Crème_au_café_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/dairy-products/ingredients/PL_02_Crème_au_café_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/dairy-products/recipes/PL_02_Crème_au_café_Recette.webp"
@@ -12018,9 +12012,6 @@
     "assets": {
       "photo": {
         "url": "/artemis-foodlab/dairy-products/photo/PL_03_Crème_dessert_chocolat_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/dairy-products/ingredients/PL_03_Crème_dessert_chocolat_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/dairy-products/recipes/PL_03_Crème_dessert_chocolat_Recette.webp"
@@ -12087,9 +12078,6 @@
       "photo": {
         "url": "/artemis-foodlab/dairy-products/photo/PL_04_Crème_à_la_vanille_Photo.webp"
       },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/dairy-products/ingredients/PL_04_Crème_à_la_vanille_Ingrédients.webp"
-      },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/dairy-products/recipes/PL_04_Crème_à_la_vanille_Recette.webp"
       }
@@ -12155,9 +12143,6 @@
       "photo": {
         "url": "/artemis-foodlab/dairy-products/photo/PL_05_Crème_au_citron_Photo.webp"
       },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/dairy-products/ingredients/PL_05_Crème_au_citron_Ingrédients.webp"
-      },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/dairy-products/recipes/PL_05_Crème_au_citron_Recette.webp"
       }
@@ -12198,9 +12183,6 @@
     "assets": {
       "photo": {
         "url": "/artemis-foodlab/dairy-products/photo/PL_06_Yaourt_nature_(base_yaourt_au_lait_entier)_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/dairy-products/ingredients/PL_06_Yaourt_nature_(base_yaourt_au_lait_entier)_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/dairy-products/recipes/PL_06_Yaourt_nature_(base_yaourt_au_lait_entier)_Recette.webp"
@@ -12250,9 +12232,6 @@
     "assets": {
       "photo": {
         "url": "/artemis-foodlab/dairy-products/photo/PL_07_Yaourt_nature_(base_ferments_Alsa)_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/dairy-products/ingredients/PL_07_Yaourt_nature_(base_ferments_Alsa)_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/dairy-products/recipes/PL_07_Yaourt_nature_(base_ferments_Alsa)_Recette.webp"
@@ -12318,9 +12297,6 @@
     "assets": {
       "photo": {
         "url": "/artemis-foodlab/dairy-products/photo/PL_08_Flan_léger_vanille_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/dairy-products/ingredients/PL_08_Flan_léger_vanille_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/dairy-products/recipes/PL_08_Flan_léger_vanille_Recette.webp"
@@ -12395,9 +12371,6 @@
       "photo": {
         "url": "/artemis-foodlab/dairy-products/photo/PL_09_Flan_léger_cacao_Photo.webp"
       },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/dairy-products/ingredients/PL_09_Flan_léger_cacao_Ingrédients.webp"
-      },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/dairy-products/recipes/PL_09_Flan_léger_cacao_Recette.webp"
       }
@@ -12429,7 +12402,7 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/dairy-products/photo/PL_17_Lait_de_coco_maison_Photo.webp"
+        "url": "/artemis-foodlab/dairy-products/photo/PL_17_Lait_de_coco_maison_photo.webp"
       },
       "ingredientsPhoto": {
         "url": "/artemis-foodlab/dairy-products/ingredients/PL_17_Lait_de_coco_maison_Ingrédients.webp"
@@ -12462,7 +12435,18 @@
         "unit": "g",
         "category": "Fruits secs"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/dairy-products/photo/PL_19_Lait_végétal_maison_Noisette_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/dairy-products/ingredients/PL_19_Lait_végétal_maison_Noisette_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/dairy-products/recipes/PL_19_Lait_végétal_maison_Noisette_Recette.webp"
+      }
+    }
   },
   "pl-020": {
     "id": "pl-020",
@@ -12487,7 +12471,18 @@
         "unit": "g",
         "category": "Fruits secs"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/dairy-products/photo/PL_20_Lait_végétal_maison_Cajou_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/dairy-products/ingredients/PL_20_Lait_végétal_maison_Cajou_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/dairy-products/recipes/PL_20_Lait_végétal_maison_Cajou_Recette.webp"
+      }
+    }
   },
   "poi-001": {
     "id": "poi-001",
@@ -13548,7 +13543,7 @@
         "url": "/artemis-foodlab/fish/photo/POI_09_Purée,_saumon,_haricots_vert_et_carottes_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/fish/ingredients/POI_09_Purée,_saumon,_haricots_vert_et_carottes__Ingrédients.webp"
+        "url": "/artemis-foodlab/fish/ingredients/POI_09_Purée,_saumon,_haricots_vert_et_carottes_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/fish/recipes/POI_09_Purée,_saumon,_haricots_vert_et_carottes_Recette.webp"
@@ -13921,7 +13916,7 @@
       {
         "id": "007",
         "foodId": "fv-019",
-        "name": "Céleri banche",
+        "name": "Céleri branche",
         "quantity": 50,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -14860,7 +14855,7 @@
         "id": "001",
         "foodId": "cn-010",
         "name": "Thon au naturel",
-        "quantity": 110,
+        "quantity": 90,
         "unit": "g",
         "category": "Conserves"
       },
@@ -14868,7 +14863,7 @@
         "id": "002",
         "foodId": "fc-023",
         "name": "Riz Basmati",
-        "quantity": 70,
+        "quantity": 60,
         "unit": "g",
         "category": "Féculents"
       },
@@ -16588,7 +16583,7 @@
         "id": "002",
         "foodId": "fc-017",
         "name": "Pâtes complètes",
-        "quantity": 80,
+        "quantity": 100,
         "unit": "g",
         "category": "Féculents"
       },
@@ -16670,7 +16665,7 @@
         "id": "003",
         "foodId": "fc-017",
         "name": "Pâtes complètes",
-        "quantity": 100,
+        "quantity": 80,
         "unit": "g",
         "category": "Féculents"
       },
@@ -18905,10 +18900,10 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/fish/photo/POI_61_Chili_aux_noix_de__saint-jacques_Photo.webp"
+        "url": "/artemis-foodlab/fish/photo/POI_61_Chili_aux_noix_de_saint-jacques_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/fish/ingredients/POI_61_Chili_aux_noix_de__saint-jacques_Ingrédients.webp"
+        "url": "/artemis-foodlab/fish/ingredients/POI_61_Chili_aux_noix_de_saint-jacques_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/fish/recipes/POI_61_Chili_aux_noix_de_saint-jacques_Recette.webp"
@@ -19993,7 +19988,7 @@
       {
         "id": "005",
         "foodId": "fv-019",
-        "name": "Céleri banche",
+        "name": "Céleri branche",
         "quantity": 50,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -20320,7 +20315,7 @@
         "id": "001",
         "foodId": "fc-005",
         "name": "Flageolets secs",
-        "quantity": 40,
+        "quantity": 70,
         "unit": "g",
         "category": "Féculents"
       },
@@ -20383,7 +20378,7 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/plant-proteins/photo/PV_06_Omelette_frites_de_patate_douce_flageolets_Photo.webp"
+        "url": "/artemis-foodlab/plant-proteins/photo/PV_06_Omelette_frites_flageolets_Photo.webp"
       },
       "ingredientsPhoto": {
         "url": "/artemis-foodlab/plant-proteins/ingredients/PV_06_Omelette_frites_de_patate_douce_flageolets_Ingrédients.webp"
@@ -22463,7 +22458,7 @@
       {
         "id": "004",
         "foodId": "fv-019",
-        "name": "Céleri banche",
+        "name": "Céleri branche",
         "quantity": 50,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -22692,7 +22687,7 @@
         "id": "002",
         "foodId": "fc-007",
         "name": "Haricots blancs secs",
-        "quantity": 80,
+        "quantity": 100,
         "unit": "g",
         "category": "Féculents"
       },
@@ -22845,7 +22840,7 @@
       {
         "id": "004",
         "foodId": "fv-019",
-        "name": "Céleri banche",
+        "name": "Céleri branche",
         "quantity": 50,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -23413,10 +23408,10 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/plant-proteins/photo/PV_29_Purée_de_patate_douce_et_chou_fleur_aux_lentilles__Photo.webp"
+        "url": "/artemis-foodlab/plant-proteins/photo/PV_29_Purée_de_patate_douce_et_chou_fleur_aux_lentilles_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/plant-proteins/ingredients/PV_29_Purée_de_patate_douce_et_chou_fleur_aux_lentilles__Ingrédients.webp"
+        "url": "/artemis-foodlab/plant-proteins/ingredients/PV_29_Purée_de_patate_douce_et_chou_fleur_aux_lentilles_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/plant-proteins/recipes/PV_29_Purée_de_patate_douce_et_chou_fleur_aux_lentilles_Recette.webp"
@@ -23936,7 +23931,7 @@
         "id": "005",
         "foodId": "pl-010",
         "name": "Feta",
-        "quantity": 100,
+        "quantity": 80,
         "unit": "g",
         "category": "Produits laitiers"
       },
@@ -24074,7 +24069,7 @@
         "id": "007",
         "foodId": "pl-010",
         "name": "Feta",
-        "quantity": 80,
+        "quantity": 100,
         "unit": "g",
         "category": "Produits laitiers"
       },
@@ -24355,7 +24350,7 @@
         "url": "/artemis-foodlab/plant-proteins/ingredients/PV_37_Salade_de_quinoa_et_haricots_blancs_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/plant-proteins/recipes/PV_37__Salade_de_quinoa_et_haricots_blancs_Recette.webp"
+        "url": "/artemis-foodlab/plant-proteins/recipes/PV_37_Salade_de_quinoa_et_haricots_blancs_Recette.webp"
       }
     }
   },
@@ -24930,7 +24925,7 @@
         "id": "002",
         "foodId": "fc-010",
         "name": "Lentilles corail sèches",
-        "quantity": 100,
+        "quantity": 80,
         "unit": "g",
         "category": "Féculents"
       },
@@ -24938,7 +24933,7 @@
         "id": "003",
         "foodId": "fv-014",
         "name": "Carottes",
-        "quantity": 250,
+        "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -25474,10 +25469,10 @@
         "url": "/artemis-foodlab/plant-proteins/photo/PV_46_one_pot_lentilles_corail_quinoa_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/plant-proteins/ingredients/PV_46_One_pot_lentilles_corail_quinoa__Ingrédients.webp"
+        "url": "/artemis-foodlab/plant-proteins/ingredients/PV_46_One_pot_lentilles_corail_quinoa_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/plant-proteins/recipes/PV_46_One_pot_lentilles_corail_quinoa__Recette.webp"
+        "url": "/artemis-foodlab/plant-proteins/recipes/PV_46_One_pot_lentilles_corail_quinoa_Recette.webp"
       }
     }
   },
@@ -26279,10 +26274,10 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/white-meat/photo/VB_04_Riz_Cordon_bleu_et_petits_pois_carottes_Photo.webp"
+        "url": "/artemis-foodlab/white-meat/photo/VB_04_Cordon_bleu_et_petits_pois_carottes_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/white-meat/ingredients/VB_04_Riz,_cordon_bleu_et_petits_pois_carottes_Ingrédients.webp"
+        "url": "/artemis-foodlab/white-meat/ingredients/VB_04_Cordon_bleu_et_petits_pois_carottes_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/white-meat/recipes/VB_04_Cordon_bleu_et_petits_pois_carottes_Recette.webp"
@@ -26987,7 +26982,7 @@
       {
         "id": "004",
         "foodId": "fv-019",
-        "name": "Céleri banche",
+        "name": "Céleri branche",
         "quantity": 50,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -28516,7 +28511,7 @@
         "url": "/artemis-foodlab/white-meat/photo/VB_21_Poulet_basquaise_et_semoule_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/white-meat/ingredients/VB_21_Poulet_basquaise_et_semoule_Ingrédients.webp"
+        "url": "/artemis-foodlab/white-meat/ingredients/VB_21_Poulet_basquaise_semoule_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/white-meat/recipes/VB_21_Poulet_basquaise_semoule_Recette.webp"
@@ -28782,9 +28777,6 @@
     "assets": {
       "photo": {
         "url": "/artemis-foodlab/white-meat/photo/VB_23_Salade_poulet_avocat_Photo.webp"
-      },
-      "ingredientsPhoto": {
-        "url": "/artemis-foodlab/white-meat/ingredients/VB_23_Salade_poulet_avocat_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/white-meat/recipes/VB_23_Salade_poulet_avocat_Recette.webp"
@@ -29187,13 +29179,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/white-meat/photo/VB_26_Vol_au_vent,_riz_et_brocoli_Photo.webp"
+        "url": "/artemis-foodlab/white-meat/photo/VB_26_Vol_au_vent_brocoli_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/white-meat/ingredients/VB_26_Vol_au_vent,_riz_et_brocoli_Ingrédients.webp"
+        "url": "/artemis-foodlab/white-meat/ingredients/VB_26_Vol_au_vent_brocoli_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/white-meat/recipes/VB_26_Vol_au_vent,_riz_et_brocoli_Recette.webp"
+        "url": "/artemis-foodlab/white-meat/recipes/VB_26_Vol_au_vent_brocoli_Recette.webp"
       }
     }
   },
@@ -29293,10 +29285,10 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/white-meat/photo/VB_27_Poulet_pommes_de_terre_petits_pois_carottes_Photo.webp"
+        "url": "/artemis-foodlab/white-meat/photo/VB_27_Poulet_pommes_de_terres_petits_pois_carottes_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/white-meat/ingredients/VB_27_Poulet_pommes_de_terre_petits_pois_carottes_Ingrédients.webp"
+        "url": "/artemis-foodlab/white-meat/ingredients/VB_27_Poulet_pommes_de_terres_petits_pois_carottes_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/white-meat/recipes/VB_27_Poulet_pommes_de_terre_petits_pois_carottes_Recette.webp"
@@ -30460,7 +30452,7 @@
         "id": "002",
         "foodId": "fc-017",
         "name": "Pâtes complètes",
-        "quantity": 80,
+        "quantity": 100,
         "unit": "g",
         "category": "Féculents"
       },
@@ -31211,7 +31203,7 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/white-meat/photo/VB_46_Gratin_de_pâtes_à_la_courge_et_au_poulet__Photo.webp"
+        "url": "/artemis-foodlab/white-meat/photo/VB_46_Gratin_de_pâtes_à_la_courge_et_au_poulet_Photo.webp"
       },
       "ingredientsPhoto": {
         "url": "/artemis-foodlab/white-meat/ingredients/VB_46_Gratin_de_pâtes_à_la_courge_et_au_poulet_Ingrédients.webp"
@@ -31914,7 +31906,7 @@
         "id": "002",
         "foodId": "fv-021",
         "name": "Champignons",
-        "quantity": 250,
+        "quantity": 150,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -32059,7 +32051,7 @@
       {
         "id": "005",
         "foodId": "fv-019",
-        "name": "Céleri banche",
+        "name": "Céleri branche",
         "quantity": 50,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -32679,7 +32671,7 @@
       {
         "id": "005",
         "foodId": "fv-019",
-        "name": "Céleri banche",
+        "name": "Céleri branche",
         "quantity": 100,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -32821,6 +32813,9 @@
       },
       "ingredientsPhoto": {
         "url": "/artemis-foodlab/white-meat/ingredients/VB_61_Potimarron_farci_au_poulet_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/white-meat/recipes/VB_61_Potimarron_farci_au_poulet_et_patate_douce_Recette.webp"
       }
     }
   },
@@ -34200,7 +34195,7 @@
       {
         "id": "004",
         "foodId": "fv-019",
-        "name": "Céleri banche",
+        "name": "Céleri branche",
         "quantity": 100,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -34966,7 +34961,7 @@
       {
         "id": "004",
         "foodId": "fv-019",
-        "name": "Céleri banche",
+        "name": "Céleri branche",
         "quantity": 50,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -35237,7 +35232,7 @@
         "url": "/artemis-foodlab/veggies/photo/VEG_10_Gratin_de_crozets_aux_poireaux_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/veggies/ingredients/VEG_10_Gratin_de_crozets_aux_poireaux__Ingrédients.webp"
+        "url": "/artemis-foodlab/veggies/ingredients/VEG_10_Gratin_de_crozets_aux_poireaux_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/veggies/recipes/VEG_10_Gratin_de_crozets_aux_poireaux_Recette.webp"
@@ -35343,7 +35338,7 @@
         "url": "/artemis-foodlab/veggies/photo/VEG_11_Pâtes_Pesto_aux_haricots_verts_et_champignons_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/veggies/ingredients/VEG_11_Pâtes_Pesto_aux_haricots_verts_et_champignons__Ingrédients.webp"
+        "url": "/artemis-foodlab/veggies/ingredients/VEG_11_Pâtes_Pesto_aux_haricots_verts_et_champignons_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/veggies/recipes/VEG_11_Pâtes_Pesto_aux_haricots_verts_et_champignons_Recette.webp"
@@ -35653,7 +35648,7 @@
         "url": "/artemis-foodlab/veggies/photo/VEG_14_Sandwich_végétarien_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/veggies/ingredients/VEG_14_Sandwich_végétarien__Ingrédients.webp"
+        "url": "/artemis-foodlab/veggies/ingredients/VEG_14_Sandwich_végétarien_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/veggies/recipes/VEG_14_Sandwich_végétarien_Recette.webp"
@@ -35823,7 +35818,7 @@
         "url": "/artemis-foodlab/veggies/photo/VEG_15_Cake_salé_tomates_mozzarella_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/veggies/ingredients/VEG_15_Cake_salé_tomates_mozzarella__Ingrédients.webp"
+        "url": "/artemis-foodlab/veggies/ingredients/VEG_15_Cake_salé_tomates_mozzarella_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/veggies/recipes/VEG_15_Cake_salé_tomates_mozzarella_Recette.webp"
@@ -35878,7 +35873,7 @@
       {
         "id": "005",
         "foodId": "fv-019",
-        "name": "Céleri banche",
+        "name": "Céleri branche",
         "quantity": 100,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -36040,7 +36035,7 @@
       {
         "id": "007",
         "foodId": "fv-019",
-        "name": "Céleri banche",
+        "name": "Céleri branche",
         "quantity": 100,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -36494,7 +36489,7 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/veggies/photo/VEG_20_Sandwich_Méditéranéen_Photo.webp"
+        "url": "/artemis-foodlab/veggies/photo/VEG_20_Sandwich_Méditerranéen_Photo.webp"
       },
       "ingredientsPhoto": {
         "url": "/artemis-foodlab/veggies/ingredients/VEG_20_Sandwich_Méditéranéen_Ingrédients.webp"
@@ -36611,7 +36606,7 @@
         "url": "/artemis-foodlab/veggies/photo/VEG_21_Panuozzo_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/veggies/ingredients/VEG_21_Panuozzo__Ingrédients.webp"
+        "url": "/artemis-foodlab/veggies/ingredients/VEG_21_Panuozzo_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/veggies/recipes/VEG_21_Panuozzo_Recette.webp"
@@ -36839,10 +36834,10 @@
         "url": "/artemis-foodlab/veggies/photo/VEG_23_Foccacia_tomates_et_poivrons_au_thym_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/veggies/ingredients/VEG_23_Foccacia_tomates_et_poivrons_au_thym_Ingrédients.webp"
+        "url": "/artemis-foodlab/veggies/ingredients/VEG_23_Foccacia_tomates_au_thym_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/veggies/recipes/VEG_23_Foccacia_tomates_et_poivrons_au_thym_Recette.webp"
+        "url": "/artemis-foodlab/veggies/recipes/VEG_23_Foccacia_tomates_au_thym_Recette.webp"
       }
     }
   },
@@ -37206,7 +37201,7 @@
         "url": "/artemis-foodlab/veggies/ingredients/VEG_25_Parmentier_végétarien_aux_champignons_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/veggies/recipes/VEG_25_Parmentier_végétarien_aux_champignons_Recette.webp"
+        "url": "/artemis-foodlab/veggies/recipes/VEG_25_Parmentier_brocoli_carottes_Recette.webp"
       }
     }
   },
@@ -37583,7 +37578,7 @@
         "id": "009",
         "baseId": "base-018",
         "name": "Pesto rosso",
-        "quantity": 1,
+        "quantity": 2,
         "unit": "portion",
         "category": "Recette"
       },
@@ -37856,7 +37851,7 @@
         "url": "/artemis-foodlab/veggies/ingredients/VEG_30_Œufs_à_la_coque_été_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/veggies/recipes/VEG_30_Œufs_à_la_coque_Recette.webp"
+        "url": "/artemis-foodlab/veggies/recipes/VEG_30_Œufs_à_la_coque_d'été_Recette.webp"
       }
     }
   },
@@ -38108,7 +38103,7 @@
         "url": "/artemis-foodlab/veggies/ingredients/VEG_32_Œufs_mimosa_et_crudités_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/veggies/recipes/VEG_32_Œufs_mimosa_et_crudités__Recette.webp"
+        "url": "/artemis-foodlab/veggies/recipes/VEG_32_Œufs_mimosa_et_crudités_Recette.webp"
       }
     }
   },
@@ -38341,10 +38336,10 @@
         "url": "/artemis-foodlab/veggies/photo/VEG_34_Pâtes_champignons_aux_tomate_épicées_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/veggies/ingredients/VEG_34_Pâtes_champignon_aux__tomate_épicées_Ingrédients.webp"
+        "url": "/artemis-foodlab/veggies/ingredients/VEG_34_Pâtes_champignon_aux_tomate_épicées_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/veggies/recipes/VEG_34_Pâtes_champignon_aux__tomate_épicées_Recette.webp"
+        "url": "/artemis-foodlab/veggies/recipes/VEG_34_Pâtes_champignon_aux_tomate_épicées_Recette.webp"
       }
     }
   },
@@ -38911,7 +38906,7 @@
         "id": "002",
         "foodId": "su-008",
         "name": "Haricots verts",
-        "quantity": 200,
+        "quantity": 300,
         "unit": "g",
         "category": "Surgelés"
       },
@@ -39071,14 +39066,6 @@
       },
       {
         "id": "007",
-        "foodId": "ep-035",
-        "name": "Huile d'olive",
-        "quantity": 8,
-        "unit": "g",
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "008",
         "foodId": "ep-050",
         "name": "Paprika fumé",
         "quantity": null,
@@ -39086,7 +39073,7 @@
         "category": "Epices et condiments"
       },
       {
-        "id": "009",
+        "id": "008",
         "foodId": "ep-058",
         "name": "Sauce tamari",
         "quantity": 8,
@@ -39094,7 +39081,7 @@
         "category": "Epices et condiments"
       },
       {
-        "id": "010",
+        "id": "009",
         "foodId": "ep-047",
         "name": "Muscade",
         "quantity": null,
@@ -39324,7 +39311,7 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/veggies/photo/VEG_43_Riz_au_curry__Photo.webp"
+        "url": "/artemis-foodlab/veggies/photo/VEG_43_Riz_au_curry_Photo.webp"
       },
       "ingredientsPhoto": {
         "url": "/artemis-foodlab/veggies/ingredients/VEG_43_Riz_au_curry_Ingrédients.webp"
@@ -39931,10 +39918,10 @@
         "url": "/artemis-foodlab/veggies/photo/VEG_49_Salade_gnocchis_tomates_mozzarella_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/veggies/ingredients/VEG_49_Salade_gnocchis_mozzarella_Ingrédients.webp"
+        "url": "/artemis-foodlab/veggies/ingredients/VEG_49_Salade_gnocchis_tomates_mozzarella_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/veggies/recipes/VEG_49_Salade_gnocchis_mozza_Recette.webp"
+        "url": "/artemis-foodlab/veggies/recipes/VEG_49_Salade_gnocchis_tomates_mozzarella_Recette.webp"
       }
     }
   },
@@ -39963,8 +39950,8 @@
         "id": "002",
         "foodId": "fv-039",
         "name": "Courgette",
-        "quantity": 1.5,
-        "unit": "k",
+        "quantity": 1500,
+        "unit": "g",
         "category": "Fruits et légumes"
       },
       {
@@ -40231,8 +40218,8 @@
         "id": "003",
         "foodId": "fv-087",
         "name": "Tomates cœur de bœuf",
-        "quantity": 1,
-        "unit": "k",
+        "quantity": 1000,
+        "unit": "g",
         "category": "Fruits et légumes"
       },
       {
@@ -41240,7 +41227,7 @@
       {
         "id": "006",
         "foodId": "fv-019",
-        "name": "Céleri banche",
+        "name": "Céleri branche",
         "quantity": 100,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -41291,7 +41278,7 @@
         "url": "/artemis-foodlab/veggies/photo/VEG_61_Velouté_6_légumes_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/veggies/ingredients/VEG_61_Velouté_6_légumes_Ingrédients.webp"
+        "url": "/artemis-foodlab/veggies/ingredients/VEG_61_Velouté_8_légumes_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/veggies/recipes/VEG_61_Velouté_6_légumes_Recette.webp"
@@ -42301,7 +42288,7 @@
         "id": "003",
         "foodId": "fv-039",
         "name": "Courgette",
-        "quantity": 250,
+        "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -42309,7 +42296,7 @@
         "id": "004",
         "foodId": "fv-014",
         "name": "Carottes",
-        "quantity": 250,
+        "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -44070,7 +44057,7 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/veggies/photo/VEG_88_Courge_Jack_Be_Little_farcie_au_risotto_champignons__Photo.webp"
+        "url": "/artemis-foodlab/veggies/photo/VEG_88_Courge_Jack_Be_Little_farcie_au_risotto_champignons_Photo.webp"
       },
       "ingredientsPhoto": {
         "url": "/artemis-foodlab/veggies/ingredients/VEG_88_Courge_Jack_Be_Little_farcie_au_risotto_champignons_Ingrédients.webp"
@@ -45052,7 +45039,7 @@
       {
         "id": "006",
         "foodId": "fv-019",
-        "name": "Céleri banche",
+        "name": "Céleri branche",
         "quantity": null,
         "unit": null,
         "category": "Fruits et légumes"
@@ -45326,7 +45313,7 @@
         "url": "/artemis-foodlab/veggies/ingredients/VEG_101_Pizza_courge_champignons_carottes_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/veggies/recipes/VEG_101_Pizza_courge_champignons_carottes__Recette.webp"
+        "url": "/artemis-foodlab/veggies/recipes/VEG_101_Pizza_courge_champignons_carottes_Recette.webp"
       }
     }
   },
@@ -45783,7 +45770,18 @@
         "unit": null,
         "category": "Produits laitiers"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/veggies/photo/VEG_106_Œufs_à_la_coque_d'hiver_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/veggies/ingredients/VEG_106_Œufs_à_la_coque_d'hiver_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/veggies/recipes/VEG_106_Œufs_à_la_coque_d'hiver_Recette.webp"
+      }
+    }
   },
   "vr-001": {
     "id": "vr-001",
@@ -46678,14 +46676,6 @@
       },
       {
         "id": "009",
-        "foodId": "ep-035",
-        "name": "Huile d'olive",
-        "quantity": 8,
-        "unit": "g",
-        "category": "Epices et condiments"
-      },
-      {
-        "id": "010",
         "foodId": "pl-029",
         "name": "Skyr",
         "quantity": 50,
@@ -46693,7 +46683,7 @@
         "category": "Produits laitiers"
       },
       {
-        "id": "011",
+        "id": "010",
         "foodId": "ep-046",
         "name": "Moutarde",
         "quantity": 6,
@@ -46701,7 +46691,7 @@
         "category": "Epices et condiments"
       },
       {
-        "id": "012",
+        "id": "011",
         "foodId": "ep-062",
         "name": "Vinaigre balsamique",
         "quantity": 5,
@@ -47440,7 +47430,7 @@
         "id": "002",
         "baseId": "base-011",
         "name": "Pâte à pizza",
-        "quantity": 2,
+        "quantity": 4,
         "unit": "portion",
         "category": "Recette"
       },
@@ -47448,7 +47438,7 @@
         "id": "003",
         "foodId": "fv-069",
         "name": "Poivron jaune",
-        "quantity": 200,
+        "quantity": 400,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -47472,16 +47462,16 @@
         "id": "006",
         "foodId": "fv-041",
         "name": "Échalote",
-        "quantity": 10,
+        "quantity": 20,
         "unit": "g",
         "category": "Fruits et légumes"
       },
       {
         "id": "007",
-        "foodId": "pl-008",
-        "name": "Cheddar râpé",
-        "quantity": 80,
-        "unit": "g",
+        "foodId": "pl-007",
+        "name": "Cheddar en tranches",
+        "quantity": 2,
+        "unit": "tranche",
         "category": "Produits laitiers"
       },
       {
@@ -47536,7 +47526,7 @@
         "id": "014",
         "foodId": "ep-037",
         "name": "Huile de colza",
-        "quantity": 5,
+        "quantity": 10,
         "unit": "g",
         "category": "Epices et condiments"
       },
@@ -47544,7 +47534,7 @@
         "id": "015",
         "foodId": "ep-062",
         "name": "Vinaigre balsamique",
-        "quantity": 5,
+        "quantity": 10,
         "unit": "g",
         "category": "Epices et condiments"
       }
@@ -48051,7 +48041,7 @@
       {
         "id": "004",
         "foodId": "fv-019",
-        "name": "Céleri banche",
+        "name": "Céleri branche",
         "quantity": 50,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -50370,7 +50360,7 @@
         "url": "/artemis-foodlab/red-meat/photo/VR_44_Porc_rôti_aux_légumes_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/red-meat/ingredients/VR_44_Porc_rôti_aux_légumes__Ingrédients.webp"
+        "url": "/artemis-foodlab/red-meat/ingredients/VR_44_Porc_rôti_aux_légumes_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/red-meat/recipes/VR_44_Porc_rôti_aux_légumes_Recette.webp"
@@ -51888,7 +51878,7 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_05_Boulette_de_lentilles_corail__Photo.webp"
+        "url": "/artemis-foodlab/bases/photo/BASE_05_Boulette_de_lentilles_corail_Photo.webp"
       },
       "ingredientsPhoto": {
         "url": "/artemis-foodlab/bases/ingredients/BASE_05_Boulette_de_lentilles_corail_Ingrédients.webp"
@@ -52733,10 +52723,10 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_16_Steak_végétarien_pois_chiche,_haricots_rouges__Photo.webp"
+        "url": "/artemis-foodlab/bases/photo/BASE_16_Steak_végétarien_pois_chiche,_haricots_rouges_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/bases/ingredients/BASE_16_Steak_végétarien_pois_chiche,_haricots_rouges__Ingrédients.webp"
+        "url": "/artemis-foodlab/bases/ingredients/BASE_16_Steak_végétarien_pois_chiche,_haricots_rouges_Ingrédients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/bases/recipes/BASE_16_Steak_végétarien_pois_chiche,_haricots_rouges_Recette.webp"
@@ -53088,7 +53078,7 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/bases/photo/BASE_21_Crêpese_Photo.webp"
+        "url": "/artemis-foodlab/bases/photo/BASE_21_Crêpes_Photo.webp"
       },
       "ingredientsPhoto": {
         "url": "/artemis-foodlab/bases/ingredients/BASE_21_Crêpes_Ingrédients.webp"
@@ -53687,7 +53677,7 @@
       {
         "id": "004",
         "foodId": "fv-019",
-        "name": "Céleri banche",
+        "name": "Céleri branche",
         "quantity": 50,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -55817,7 +55807,7 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/dairy-products/photo/PL_13_Fromage_blanc_3_Photo.webp"
+        "url": "/artemis-foodlab/dairy-products/photo/PL_13_Fromage_blanc_3%_Photo.webp"
       }
     }
   },
@@ -55889,7 +55879,12 @@
         "unit": "g",
         "category": "Surgelés"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/dairy-products/photo/PL_16_Glace_à_la_menthe_Photo.webp"
+      }
+    }
   },
   "pl-018": {
     "id": "pl-018",
@@ -55909,12 +55904,17 @@
         "unit": "g",
         "category": "Ferme"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/dairy-products/photo/PL_18_Oeuf_Photo.webp"
+      }
+    }
   },
   "es-001": {
     "id": "es-001",
     "name": "Confiture",
-    "categoryId": "es",
+    "categoryId": "sweet-grocery",
     "mealTypes": [],
     "kind": "ingredient",
     "defaultPortions": 1,
@@ -55929,12 +55929,17 @@
         "unit": "g",
         "category": "Epicerie sucrée"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/sweet-grocery/photo/ES_01_Confiture_Photo.webp"
+      }
+    }
   },
   "es-002": {
     "id": "es-002",
     "name": "Confiture intense",
-    "categoryId": "es",
+    "categoryId": "sweet-grocery",
     "mealTypes": [],
     "kind": "ingredient",
     "defaultPortions": 1,
@@ -55949,12 +55954,17 @@
         "unit": "g",
         "category": "Epicerie sucrée"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/sweet-grocery/photo/ES_02_Confiture_intense_Photo.webp"
+      }
+    }
   },
   "es-003": {
     "id": "es-003",
     "name": "Pâte à tartiner",
-    "categoryId": "es",
+    "categoryId": "sweet-grocery",
     "mealTypes": [],
     "kind": "ingredient",
     "defaultPortions": 1,
@@ -55969,12 +55979,17 @@
         "unit": "g",
         "category": "Epicerie sucrée"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/sweet-grocery/photo/ES_03_Pâte_à_tartiner_Photo.webp"
+      }
+    }
   },
   "es-004": {
     "id": "es-004",
     "name": "Purée de cacahuète",
-    "categoryId": "es",
+    "categoryId": "sweet-grocery",
     "mealTypes": [],
     "kind": "ingredient",
     "defaultPortions": 1,
@@ -55989,6 +56004,11 @@
         "unit": "g",
         "category": "Internet"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/sweet-grocery/photo/ES_04_Purée_de_cacahuète_Photo.webp"
+      }
+    }
   }
 }

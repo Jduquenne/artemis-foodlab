@@ -17,6 +17,7 @@ export const CATEGORIES: Category[] = [
   { id: "red-meat", name: "Viandes Rouges", color: "bg-red-700" },
   { id: "veggies", name: "Végétarien", color: "bg-emerald-500" },
   { id: "white-meat", name: "Viandes Blanches", color: "bg-orange-400" },
+  { id: "sweet-grocery", name: "Produits Sucrés", color: "bg-pink-400" },
   { id: "outdoor", name: "Extérieur", color: "bg-rose-500" },
 ];
 

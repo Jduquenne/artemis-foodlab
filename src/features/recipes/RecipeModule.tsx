@@ -21,7 +21,7 @@ export const RecipeModule = () => {
     const { activeFilterIds, setActiveFilterIds } = useMenuStore();
     const [searchQuery, setSearchQuery] = useState(() => sessionStorage.getItem('last_recipe_search') || '');
     const [isSearchOpen, setIsSearchOpen] = useState(() => (sessionStorage.getItem('last_recipe_search') || '').length > 0);
-    const excluded = ["Extérieur"];
+    const excluded = ["Produits Sucrés", "Extérieur"];
 
     const isSearchActive = isSearchOpen || searchQuery.length > 0;
     const showResults = searchQuery.length >= 1 || activeFilterIds.length > 0;

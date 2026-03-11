@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
+scripts
 
 # Backup files
 src/core/data/recipes-ingredients_backup.json

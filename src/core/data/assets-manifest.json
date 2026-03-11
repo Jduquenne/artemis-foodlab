@@ -22,7 +22,7 @@
   {
     "categoryFolder": "bases",
     "typeFolder": "photo",
-    "fileName": "BASE_05_Boulette_de_lentilles_corail__Photo.webp"
+    "fileName": "BASE_05_Boulette_de_lentilles_corail_Photo.webp"
   },
   {
     "categoryFolder": "bases",
@@ -77,7 +77,7 @@
   {
     "categoryFolder": "bases",
     "typeFolder": "photo",
-    "fileName": "BASE_16_Steak_végétarien_pois_chiche,_haricots_rouges__Photo.webp"
+    "fileName": "BASE_16_Steak_végétarien_pois_chiche,_haricots_rouges_Photo.webp"
   },
   {
     "categoryFolder": "bases",
@@ -102,7 +102,7 @@
   {
     "categoryFolder": "bases",
     "typeFolder": "photo",
-    "fileName": "BASE_21_Crêpese_Photo.webp"
+    "fileName": "BASE_21_Crêpes_Photo.webp"
   },
   {
     "categoryFolder": "bases",
@@ -272,7 +272,7 @@
   {
     "categoryFolder": "bases",
     "typeFolder": "ingredients",
-    "fileName": "BASE_16_Steak_végétarien_pois_chiche,_haricots_rouges__Ingrédients.webp"
+    "fileName": "BASE_16_Steak_végétarien_pois_chiche,_haricots_rouges_Ingrédients.webp"
   },
   {
     "categoryFolder": "bases",
@@ -632,7 +632,7 @@
   {
     "categoryFolder": "cereal-products",
     "typeFolder": "photo",
-    "fileName": "PC_10_Pancakes_skyr_compote__Photo.webp"
+    "fileName": "PC_10_Pancakes_skyr_compote_Photo.webp"
   },
   {
     "categoryFolder": "cereal-products",
@@ -672,17 +672,17 @@
   {
     "categoryFolder": "cereal-products",
     "typeFolder": "photo",
-    "fileName": "PC_18_Pan_de_Muerto__Photo.webp"
+    "fileName": "PC_18_Pan_de_Muerto_Photo.webp"
   },
   {
     "categoryFolder": "cereal-products",
     "typeFolder": "photo",
-    "fileName": "PC_19_Coquille_de_Noël_Vegan.webp"
+    "fileName": "PC_19_Coquille_de_Noël_Vegan_Photo.webp"
   },
   {
     "categoryFolder": "cereal-products",
     "typeFolder": "photo",
-    "fileName": "PC_20_Coquille_de_Noël.webp"
+    "fileName": "PC_20_Coquille_de_Noël_Photo.webp"
   },
   {
     "categoryFolder": "cereal-products",
@@ -782,6 +782,11 @@
   {
     "categoryFolder": "cereal-products",
     "typeFolder": "ingredients",
+    "fileName": "PC32_Pancakes_Vegan_noisette_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "cereal-products",
+    "typeFolder": "ingredients",
     "fileName": "PC_01_Pancakes_de_pommes_à_l’alsacienne_Ingrédients.webp"
   },
   {
@@ -827,7 +832,7 @@
   {
     "categoryFolder": "cereal-products",
     "typeFolder": "ingredients",
-    "fileName": "PC_10_Pancakes_skyr_compote__Ingrédients.webp"
+    "fileName": "PC_10_Pancakes_skyr_compote_Ingrédients.webp"
   },
   {
     "categoryFolder": "cereal-products",
@@ -867,7 +872,7 @@
   {
     "categoryFolder": "cereal-products",
     "typeFolder": "ingredients",
-    "fileName": "PC_18_Pan_de_Muerto__Ingrédients.webp"
+    "fileName": "PC_18_Pan_de_Muerto_Ingrédients.webp"
   },
   {
     "categoryFolder": "cereal-products",
@@ -933,11 +938,6 @@
     "categoryFolder": "cereal-products",
     "typeFolder": "ingredients",
     "fileName": "PC_31_Crêpes_vegan_Ingrédients.webp"
-  },
-  {
-    "categoryFolder": "cereal-products",
-    "typeFolder": "ingredients",
-    "fileName": "PC_32_Pancakes_Vegan_noisette_Ingrédients.webp"
   },
   {
     "categoryFolder": "cereal-products",
@@ -1112,7 +1112,7 @@
   {
     "categoryFolder": "dairy-products",
     "typeFolder": "photo",
-    "fileName": "PL_01_Lait_végétal_au_vegan_milker_Photo.webp"
+    "fileName": "PL_01_Lait_végétal_maison_Amande_Photo.webp"
   },
   {
     "categoryFolder": "dairy-products",
@@ -1177,11 +1177,6 @@
   {
     "categoryFolder": "dairy-products",
     "typeFolder": "photo",
-    "fileName": "PL_13_Fromage_blanc_3_Photo.webp"
-  },
-  {
-    "categoryFolder": "dairy-products",
-    "typeFolder": "photo",
     "fileName": "PL_14_Skyr_Photo.webp"
   },
   {
@@ -1192,52 +1187,72 @@
   {
     "categoryFolder": "dairy-products",
     "typeFolder": "photo",
-    "fileName": "PL_17_Lait_de_coco_maison_Photo.webp"
+    "fileName": "PL_16_Glace_à_la_menthe_Photo.webp"
+  },
+  {
+    "categoryFolder": "dairy-products",
+    "typeFolder": "photo",
+    "fileName": "PL_17_Lait_de_coco_maison_photo.webp"
+  },
+  {
+    "categoryFolder": "dairy-products",
+    "typeFolder": "photo",
+    "fileName": "PL_18_Oeuf_Photo.webp"
+  },
+  {
+    "categoryFolder": "dairy-products",
+    "typeFolder": "photo",
+    "fileName": "PL_19_Lait_végétal_maison_Noisette_Photo.webp"
+  },
+  {
+    "categoryFolder": "dairy-products",
+    "typeFolder": "photo",
+    "fileName": "PL_20_Lait_végétal_maison_Cajou_Photo.webp"
   },
   {
     "categoryFolder": "dairy-products",
     "typeFolder": "ingredients",
-    "fileName": "PL_01_Lait_végétal_au_vegan_milker_Ingrédients.webp"
+    "fileName": "PL02_Crème_au_café_Ingrédients.webp"
   },
   {
     "categoryFolder": "dairy-products",
     "typeFolder": "ingredients",
-    "fileName": "PL_02_Crème_au_café_Ingrédients.webp"
+    "fileName": "PL03_Crème_dessert_chocolat_Ingrédients.webp"
   },
   {
     "categoryFolder": "dairy-products",
     "typeFolder": "ingredients",
-    "fileName": "PL_03_Crème_dessert_chocolat_Ingrédients.webp"
+    "fileName": "PL04_Crème_à_la_vanille_Ingrédients.webp"
   },
   {
     "categoryFolder": "dairy-products",
     "typeFolder": "ingredients",
-    "fileName": "PL_04_Crème_à_la_vanille_Ingrédients.webp"
+    "fileName": "PL05_Crème_au_citron_Ingrédients.webp"
   },
   {
     "categoryFolder": "dairy-products",
     "typeFolder": "ingredients",
-    "fileName": "PL_05_Crème_au_citron_Ingrédients.webp"
+    "fileName": "PL06_Yaourt_nature_(base_yaourt_au_lait_entier)_Ingrédients.webp"
   },
   {
     "categoryFolder": "dairy-products",
     "typeFolder": "ingredients",
-    "fileName": "PL_06_Yaourt_nature_(base_yaourt_au_lait_entier)_Ingrédients.webp"
+    "fileName": "PL07_Yaourt_nature_(base_ferments_Alsa)_Ingrédients.webp"
   },
   {
     "categoryFolder": "dairy-products",
     "typeFolder": "ingredients",
-    "fileName": "PL_07_Yaourt_nature_(base_ferments_Alsa)_Ingrédients.webp"
+    "fileName": "PL08_Flan_léger_vanille_Ingrédients.webp"
   },
   {
     "categoryFolder": "dairy-products",
     "typeFolder": "ingredients",
-    "fileName": "PL_08_Flan_léger_vanille_Ingrédients.webp"
+    "fileName": "PL09_Flan_léger_cacao_Ingrédients.webp"
   },
   {
     "categoryFolder": "dairy-products",
     "typeFolder": "ingredients",
-    "fileName": "PL_09_Flan_léger_cacao_Ingrédients.webp"
+    "fileName": "PL_01_Lait_végétal_maison_Amande_Ingrédients.webp"
   },
   {
     "categoryFolder": "dairy-products",
@@ -1246,8 +1261,18 @@
   },
   {
     "categoryFolder": "dairy-products",
+    "typeFolder": "ingredients",
+    "fileName": "PL_19_Lait_végétal_maison_Noisette_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "dairy-products",
+    "typeFolder": "ingredients",
+    "fileName": "PL_20_Lait_végétal_maison_Cajou_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "dairy-products",
     "typeFolder": "recipes",
-    "fileName": "PL_01_Lait_végétal_au_vegan_milker_Recette.webp"
+    "fileName": "PL_01_Lait_végétal_maison_Amande_Recette.webp"
   },
   {
     "categoryFolder": "dairy-products",
@@ -1293,6 +1318,16 @@
     "categoryFolder": "dairy-products",
     "typeFolder": "recipes",
     "fileName": "PL_17_Lait_de_coco_maison_Recette.webp"
+  },
+  {
+    "categoryFolder": "dairy-products",
+    "typeFolder": "recipes",
+    "fileName": "PL_19_Lait_végétal_maison_Noisette_Recette.webp"
+  },
+  {
+    "categoryFolder": "dairy-products",
+    "typeFolder": "recipes",
+    "fileName": "PL_20_Lait_végétal_maison_Cajou_Recette.webp"
   },
   {
     "categoryFolder": "dry-food",
@@ -1617,7 +1652,7 @@
   {
     "categoryFolder": "charcuterie",
     "typeFolder": "ingredients",
-    "fileName": "CHAR_01_Purée_Brocoli_et_pâté_Ingrédients.webp"
+    "fileName": "CHAR_01_Purée_Brocoli,_carottes_et_pâté_Ingrédients.webp"
   },
   {
     "categoryFolder": "charcuterie",
@@ -1662,7 +1697,7 @@
   {
     "categoryFolder": "charcuterie",
     "typeFolder": "ingredients",
-    "fileName": "CHAR_10_Ebly,_poivron_et_pâté_Ingrédients.webp"
+    "fileName": "CHAR_10_Ebly,_poivron,_pâté_Ingrédients.webp"
   },
   {
     "categoryFolder": "charcuterie",
@@ -1772,7 +1807,7 @@
   {
     "categoryFolder": "charcuterie",
     "typeFolder": "ingredients",
-    "fileName": "CHAR_32_Gratin_de_chou_fleur_au_jambon__Ingrédients.webp"
+    "fileName": "CHAR_32_Gratin_de_chou_fleur_au_jambon_Ingrédients.webp"
   },
   {
     "categoryFolder": "charcuterie",
@@ -1802,7 +1837,7 @@
   {
     "categoryFolder": "charcuterie",
     "typeFolder": "ingredients",
-    "fileName": "CHAR_38_Galette_de_blé_noir_jambon_champignons__Ingrédients.webp"
+    "fileName": "CHAR_38_Galette_de_blé_noir_jambon_champignons_Ingrédients.webp"
   },
   {
     "categoryFolder": "charcuterie",
@@ -2377,7 +2412,7 @@
   {
     "categoryFolder": "fish",
     "typeFolder": "photo",
-    "fileName": "POI_61_Chili_aux_noix_de__saint-jacques_Photo.webp"
+    "fileName": "POI_61_Chili_aux_noix_de_saint-jacques_Photo.webp"
   },
   {
     "categoryFolder": "fish",
@@ -2467,7 +2502,7 @@
   {
     "categoryFolder": "fish",
     "typeFolder": "ingredients",
-    "fileName": "POI_09_Purée,_saumon,_haricots_vert_et_carottes__Ingrédients.webp"
+    "fileName": "POI_09_Purée,_saumon,_haricots_vert_et_carottes_Ingrédients.webp"
   },
   {
     "categoryFolder": "fish",
@@ -2727,7 +2762,7 @@
   {
     "categoryFolder": "fish",
     "typeFolder": "ingredients",
-    "fileName": "POI_61_Chili_aux_noix_de__saint-jacques_Ingrédients.webp"
+    "fileName": "POI_61_Chili_aux_noix_de_saint-jacques_Ingrédients.webp"
   },
   {
     "categoryFolder": "fish",
@@ -3967,7 +4002,7 @@
   {
     "categoryFolder": "plant-proteins",
     "typeFolder": "photo",
-    "fileName": "PV_06_Omelette_frites_de_patate_douce_flageolets_Photo.webp"
+    "fileName": "PV_06_Omelette_frites_flageolets_Photo.webp"
   },
   {
     "categoryFolder": "plant-proteins",
@@ -4082,7 +4117,7 @@
   {
     "categoryFolder": "plant-proteins",
     "typeFolder": "photo",
-    "fileName": "PV_29_Purée_de_patate_douce_et_chou_fleur_aux_lentilles__Photo.webp"
+    "fileName": "PV_29_Purée_de_patate_douce_et_chou_fleur_aux_lentilles_Photo.webp"
   },
   {
     "categoryFolder": "plant-proteins",
@@ -4332,7 +4367,7 @@
   {
     "categoryFolder": "plant-proteins",
     "typeFolder": "ingredients",
-    "fileName": "PV_29_Purée_de_patate_douce_et_chou_fleur_aux_lentilles__Ingrédients.webp"
+    "fileName": "PV_29_Purée_de_patate_douce_et_chou_fleur_aux_lentilles_Ingrédients.webp"
   },
   {
     "categoryFolder": "plant-proteins",
@@ -4417,7 +4452,7 @@
   {
     "categoryFolder": "plant-proteins",
     "typeFolder": "ingredients",
-    "fileName": "PV_46_One_pot_lentilles_corail_quinoa__Ingrédients.webp"
+    "fileName": "PV_46_One_pot_lentilles_corail_quinoa_Ingrédients.webp"
   },
   {
     "categoryFolder": "plant-proteins",
@@ -4627,11 +4662,6 @@
   {
     "categoryFolder": "plant-proteins",
     "typeFolder": "recipes",
-    "fileName": "PV_37__Salade_de_quinoa_et_haricots_blancs_Recette.webp"
-  },
-  {
-    "categoryFolder": "plant-proteins",
-    "typeFolder": "recipes",
     "fileName": "PV_38_Salade_de_pommes_de_terre_et_haricots_Recette.webp"
   },
   {
@@ -4672,7 +4702,7 @@
   {
     "categoryFolder": "plant-proteins",
     "typeFolder": "recipes",
-    "fileName": "PV_46_One_pot_lentilles_corail_quinoa__Recette.webp"
+    "fileName": "PV_46_One_pot_lentilles_corail_quinoa_Recette.webp"
   },
   {
     "categoryFolder": "plant-proteins",
@@ -5187,7 +5217,7 @@
   {
     "categoryFolder": "red-meat",
     "typeFolder": "ingredients",
-    "fileName": "VR_44_Porc_rôti_aux_légumes__Ingrédients.webp"
+    "fileName": "VR_44_Porc_rôti_aux_légumes_Ingrédients.webp"
   },
   {
     "categoryFolder": "red-meat",
@@ -5597,6 +5627,11 @@
   {
     "categoryFolder": "veggies",
     "typeFolder": "photo",
+    "fileName": "VEG_106_Œufs_à_la_coque_d'hiver_Photo.webp"
+  },
+  {
+    "categoryFolder": "veggies",
+    "typeFolder": "photo",
     "fileName": "VEG_10_Gratin_de_crozets_aux_poireaux_Photo.webp"
   },
   {
@@ -5647,7 +5682,7 @@
   {
     "categoryFolder": "veggies",
     "typeFolder": "photo",
-    "fileName": "VEG_20_Sandwich_Méditéranéen_Photo.webp"
+    "fileName": "VEG_20_Sandwich_Méditerranéen_Photo.webp"
   },
   {
     "categoryFolder": "veggies",
@@ -5693,16 +5728,6 @@
     "categoryFolder": "veggies",
     "typeFolder": "photo",
     "fileName": "VEG_29_Lasagnes_champignons,_épinards_et_ricotta_Photo.webp"
-  },
-  {
-    "categoryFolder": "veggies",
-    "typeFolder": "photo",
-    "fileName": "VEG_30BIS_Œufs_à_la_coque_hiver_Photo.webp"
-  },
-  {
-    "categoryFolder": "veggies",
-    "typeFolder": "photo",
-    "fileName": "VEG_30_Œufs_à_la_coque_hiver_Photo.webp"
   },
   {
     "categoryFolder": "veggies",
@@ -5772,7 +5797,7 @@
   {
     "categoryFolder": "veggies",
     "typeFolder": "photo",
-    "fileName": "VEG_43_Riz_au_curry__Photo.webp"
+    "fileName": "VEG_43_Riz_au_curry_Photo.webp"
   },
   {
     "categoryFolder": "veggies",
@@ -5997,7 +6022,7 @@
   {
     "categoryFolder": "veggies",
     "typeFolder": "photo",
-    "fileName": "VEG_88_Courge_Jack_Be_Little_farcie_au_risotto_champignons__Photo.webp"
+    "fileName": "VEG_88_Courge_Jack_Be_Little_farcie_au_risotto_champignons_Photo.webp"
   },
   {
     "categoryFolder": "veggies",
@@ -6132,12 +6157,17 @@
   {
     "categoryFolder": "veggies",
     "typeFolder": "ingredients",
-    "fileName": "VEG_10_Gratin_de_crozets_aux_poireaux__Ingrédients.webp"
+    "fileName": "VEG_106_Œufs_à_la_coque_d'hiver_Ingrédients.webp"
   },
   {
     "categoryFolder": "veggies",
     "typeFolder": "ingredients",
-    "fileName": "VEG_11_Pâtes_Pesto_aux_haricots_verts_et_champignons__Ingrédients.webp"
+    "fileName": "VEG_10_Gratin_de_crozets_aux_poireaux_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "veggies",
+    "typeFolder": "ingredients",
+    "fileName": "VEG_11_Pâtes_Pesto_aux_haricots_verts_et_champignons_Ingrédients.webp"
   },
   {
     "categoryFolder": "veggies",
@@ -6152,12 +6182,12 @@
   {
     "categoryFolder": "veggies",
     "typeFolder": "ingredients",
-    "fileName": "VEG_14_Sandwich_végétarien__Ingrédients.webp"
+    "fileName": "VEG_14_Sandwich_végétarien_Ingrédients.webp"
   },
   {
     "categoryFolder": "veggies",
     "typeFolder": "ingredients",
-    "fileName": "VEG_15_Cake_salé_tomates_mozzarella__Ingrédients.webp"
+    "fileName": "VEG_15_Cake_salé_tomates_mozzarella_Ingrédients.webp"
   },
   {
     "categoryFolder": "veggies",
@@ -6187,7 +6217,7 @@
   {
     "categoryFolder": "veggies",
     "typeFolder": "ingredients",
-    "fileName": "VEG_21_Panuozzo__Ingrédients.webp"
+    "fileName": "VEG_21_Panuozzo_Ingrédients.webp"
   },
   {
     "categoryFolder": "veggies",
@@ -6197,7 +6227,7 @@
   {
     "categoryFolder": "veggies",
     "typeFolder": "ingredients",
-    "fileName": "VEG_23_Foccacia_tomates_et_poivrons_au_thym_Ingrédients.webp"
+    "fileName": "VEG_23_Foccacia_tomates_au_thym_Ingrédients.webp"
   },
   {
     "categoryFolder": "veggies",
@@ -6232,16 +6262,6 @@
   {
     "categoryFolder": "veggies",
     "typeFolder": "ingredients",
-    "fileName": "VEG_30BIS_Œufs_à_la_coque_hiver_Ingrédients.webp"
-  },
-  {
-    "categoryFolder": "veggies",
-    "typeFolder": "ingredients",
-    "fileName": "VEG_30_Œufs_à_la_coque_hiver_Ingrédients.webp"
-  },
-  {
-    "categoryFolder": "veggies",
-    "typeFolder": "ingredients",
     "fileName": "VEG_30_Œufs_à_la_coque_été_Ingrédients.webp"
   },
   {
@@ -6262,7 +6282,7 @@
   {
     "categoryFolder": "veggies",
     "typeFolder": "ingredients",
-    "fileName": "VEG_34_Pâtes_champignon_aux__tomate_épicées_Ingrédients.webp"
+    "fileName": "VEG_34_Pâtes_champignon_aux_tomate_épicées_Ingrédients.webp"
   },
   {
     "categoryFolder": "veggies",
@@ -6337,7 +6357,7 @@
   {
     "categoryFolder": "veggies",
     "typeFolder": "ingredients",
-    "fileName": "VEG_49_Salade_gnocchis_mozzarella_Ingrédients.webp"
+    "fileName": "VEG_49_Salade_gnocchis_tomates_mozzarella_Ingrédients.webp"
   },
   {
     "categoryFolder": "veggies",
@@ -6397,7 +6417,7 @@
   {
     "categoryFolder": "veggies",
     "typeFolder": "ingredients",
-    "fileName": "VEG_61_Velouté_6_légumes_Ingrédients.webp"
+    "fileName": "VEG_61_Velouté_8_légumes_Ingrédients.webp"
   },
   {
     "categoryFolder": "veggies",
@@ -6642,7 +6662,7 @@
   {
     "categoryFolder": "veggies",
     "typeFolder": "recipes",
-    "fileName": "VEG_101_Pizza_courge_champignons_carottes__Recette.webp"
+    "fileName": "VEG_101_Pizza_courge_champignons_carottes_Recette.webp"
   },
   {
     "categoryFolder": "veggies",
@@ -6663,6 +6683,11 @@
     "categoryFolder": "veggies",
     "typeFolder": "recipes",
     "fileName": "VEG_105_Gratin_quinoa_chou_romanesco_carottes_feta_Recette.webp"
+  },
+  {
+    "categoryFolder": "veggies",
+    "typeFolder": "recipes",
+    "fileName": "VEG_106_Œufs_à_la_coque_d'hiver_Recette.webp"
   },
   {
     "categoryFolder": "veggies",
@@ -6732,7 +6757,7 @@
   {
     "categoryFolder": "veggies",
     "typeFolder": "recipes",
-    "fileName": "VEG_23_Foccacia_tomates_et_poivrons_au_thym_Recette.webp"
+    "fileName": "VEG_23_Foccacia_tomates_au_thym_Recette.webp"
   },
   {
     "categoryFolder": "veggies",
@@ -6742,7 +6767,7 @@
   {
     "categoryFolder": "veggies",
     "typeFolder": "recipes",
-    "fileName": "VEG_25_Parmentier_végétarien_aux_champignons_Recette.webp"
+    "fileName": "VEG_25_Parmentier_brocoli_carottes_Recette.webp"
   },
   {
     "categoryFolder": "veggies",
@@ -6767,7 +6792,7 @@
   {
     "categoryFolder": "veggies",
     "typeFolder": "recipes",
-    "fileName": "VEG_30_Œufs_à_la_coque_Recette.webp"
+    "fileName": "VEG_30_Œufs_à_la_coque_d'été_Recette.webp"
   },
   {
     "categoryFolder": "veggies",
@@ -6777,7 +6802,7 @@
   {
     "categoryFolder": "veggies",
     "typeFolder": "recipes",
-    "fileName": "VEG_32_Œufs_mimosa_et_crudités__Recette.webp"
+    "fileName": "VEG_32_Œufs_mimosa_et_crudités_Recette.webp"
   },
   {
     "categoryFolder": "veggies",
@@ -6787,7 +6812,7 @@
   {
     "categoryFolder": "veggies",
     "typeFolder": "recipes",
-    "fileName": "VEG_34_Pâtes_champignon_aux__tomate_épicées_Recette.webp"
+    "fileName": "VEG_34_Pâtes_champignon_aux_tomate_épicées_Recette.webp"
   },
   {
     "categoryFolder": "veggies",
@@ -6862,7 +6887,7 @@
   {
     "categoryFolder": "veggies",
     "typeFolder": "recipes",
-    "fileName": "VEG_49_Salade_gnocchis_mozza_Recette.webp"
+    "fileName": "VEG_49_Salade_gnocchis_tomates_mozzarella_Recette.webp"
   },
   {
     "categoryFolder": "veggies",
@@ -7132,12 +7157,7 @@
   {
     "categoryFolder": "white-meat",
     "typeFolder": "photo",
-    "fileName": "VB_04_Pâtes,_cordon_bleu_et_petits_pois_carottes_Photo.webp"
-  },
-  {
-    "categoryFolder": "white-meat",
-    "typeFolder": "photo",
-    "fileName": "VB_04_Riz_Cordon_bleu_et_petits_pois_carottes_Photo.webp"
+    "fileName": "VB_04_Cordon_bleu_et_petits_pois_carottes_Photo.webp"
   },
   {
     "categoryFolder": "white-meat",
@@ -7247,12 +7267,12 @@
   {
     "categoryFolder": "white-meat",
     "typeFolder": "photo",
-    "fileName": "VB_26_Vol_au_vent,_riz_et_brocoli_Photo.webp"
+    "fileName": "VB_26_Vol_au_vent_brocoli_Photo.webp"
   },
   {
     "categoryFolder": "white-meat",
     "typeFolder": "photo",
-    "fileName": "VB_27_Poulet_pommes_de_terre_petits_pois_carottes_Photo.webp"
+    "fileName": "VB_27_Poulet_pommes_de_terres_petits_pois_carottes_Photo.webp"
   },
   {
     "categoryFolder": "white-meat",
@@ -7347,7 +7367,7 @@
   {
     "categoryFolder": "white-meat",
     "typeFolder": "photo",
-    "fileName": "VB_46_Gratin_de_pâtes_à_la_courge_et_au_poulet__Photo.webp"
+    "fileName": "VB_46_Gratin_de_pâtes_à_la_courge_et_au_poulet_Photo.webp"
   },
   {
     "categoryFolder": "white-meat",
@@ -7522,12 +7542,7 @@
   {
     "categoryFolder": "white-meat",
     "typeFolder": "ingredients",
-    "fileName": "VB_04_Pâtes,_cordon_bleu_et_petits_pois_carottes_Ingrédients.webp"
-  },
-  {
-    "categoryFolder": "white-meat",
-    "typeFolder": "ingredients",
-    "fileName": "VB_04_Riz,_cordon_bleu_et_petits_pois_carottes_Ingrédients.webp"
+    "fileName": "VB_04_Cordon_bleu_et_petits_pois_carottes_Ingrédients.webp"
   },
   {
     "categoryFolder": "white-meat",
@@ -7612,17 +7627,12 @@
   {
     "categoryFolder": "white-meat",
     "typeFolder": "ingredients",
-    "fileName": "VB_21_Poulet_basquaise_et_semoule_Ingrédients.webp"
+    "fileName": "VB_21_Poulet_basquaise_semoule_Ingrédients.webp"
   },
   {
     "categoryFolder": "white-meat",
     "typeFolder": "ingredients",
     "fileName": "VB_22_Purée_cordon_bleu_et_haricots_verts_Ingrédients.webp"
-  },
-  {
-    "categoryFolder": "white-meat",
-    "typeFolder": "ingredients",
-    "fileName": "VB_23_Salade_poulet_avocat_Ingrédients.webp"
   },
   {
     "categoryFolder": "white-meat",
@@ -7637,12 +7647,12 @@
   {
     "categoryFolder": "white-meat",
     "typeFolder": "ingredients",
-    "fileName": "VB_26_Vol_au_vent,_riz_et_brocoli_Ingrédients.webp"
+    "fileName": "VB_26_Vol_au_vent_brocoli_Ingrédients.webp"
   },
   {
     "categoryFolder": "white-meat",
     "typeFolder": "ingredients",
-    "fileName": "VB_27_Poulet_pommes_de_terre_petits_pois_carottes_Ingrédients.webp"
+    "fileName": "VB_27_Poulet_pommes_de_terres_petits_pois_carottes_Ingrédients.webp"
   },
   {
     "categoryFolder": "white-meat",
@@ -7703,6 +7713,11 @@
     "categoryFolder": "white-meat",
     "typeFolder": "ingredients",
     "fileName": "VB_39_Salade_de_pâtes_au_poulet,_pesto_et_légumes_grillés_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "white-meat",
+    "typeFolder": "ingredients",
+    "fileName": "VB_3_Salade_poulet_avocat_Ingrédients.webp"
   },
   {
     "categoryFolder": "white-meat",
@@ -7992,17 +8007,7 @@
   {
     "categoryFolder": "white-meat",
     "typeFolder": "recipes",
-    "fileName": "VB_20_Poulet_basquaise_et_pommes_de_terre_Recette.webp"
-  },
-  {
-    "categoryFolder": "white-meat",
-    "typeFolder": "recipes",
     "fileName": "VB_20_Poulet_basquaise_pommes_de_terre_Recette.webp"
-  },
-  {
-    "categoryFolder": "white-meat",
-    "typeFolder": "recipes",
-    "fileName": "VB_21_Poulet_basquaise_et_semoule_Recette.webp"
   },
   {
     "categoryFolder": "white-meat",
@@ -8032,7 +8037,7 @@
   {
     "categoryFolder": "white-meat",
     "typeFolder": "recipes",
-    "fileName": "VB_26_Vol_au_vent,_riz_et_brocoli_Recette.webp"
+    "fileName": "VB_26_Vol_au_vent_brocoli_Recette.webp"
   },
   {
     "categoryFolder": "white-meat",
@@ -8207,6 +8212,11 @@
   {
     "categoryFolder": "white-meat",
     "typeFolder": "recipes",
+    "fileName": "VB_61_Potimarron_farci_au_poulet_et_patate_douce_Recette.webp"
+  },
+  {
+    "categoryFolder": "white-meat",
+    "typeFolder": "recipes",
     "fileName": "VB_62_Crêpes_poulet_champignon_Recette.webp"
   },
   {
@@ -8283,6 +8293,26 @@
     "categoryFolder": "white-meat",
     "typeFolder": "recipes",
     "fileName": "VB_77_Risotto_poulet_chou_romanesco_et_carottes_Recette.webp"
+  },
+  {
+    "categoryFolder": "sweet-grocery",
+    "typeFolder": "photo",
+    "fileName": "ES_01_Confiture_Photo.webp"
+  },
+  {
+    "categoryFolder": "sweet-grocery",
+    "typeFolder": "photo",
+    "fileName": "ES_02_Confiture_intense_Photo.webp"
+  },
+  {
+    "categoryFolder": "sweet-grocery",
+    "typeFolder": "photo",
+    "fileName": "ES_03_Pâte_à_tartiner_Photo.webp"
+  },
+  {
+    "categoryFolder": "sweet-grocery",
+    "typeFolder": "photo",
+    "fileName": "ES_04_Purée_de_cacahuète_Photo.webp"
   },
   {
     "categoryFolder": "outdoor",

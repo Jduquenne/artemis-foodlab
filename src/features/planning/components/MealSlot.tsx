@@ -3,6 +3,7 @@ import { Plus, RefreshCw, Trash2, GripVertical, Users, Check, X, RotateCcw } fro
 import { useDraggable, useDroppable } from '@dnd-kit/core';
 import { plannableDb } from '../../../core/utils/plannableDb';
 import { IS_TOUCH } from '../../../shared/utils/deviceUtils';
+import { isOutdoor } from '../../../core/domain/recipePredicates';
 import { DessertCell } from './DessertCell';
 
 interface MealSlotProps {
@@ -87,8 +88,7 @@ export const MealSlot = ({
 
     const displayPersons = persons ?? defaultPortion;
     const isCustom = persons !== undefined;
-    const isOutdoor = recipe?.categoryId === 'outdoor';
-    const showDessertColumn = hasDessert && !isOutdoor && !!photoUrl;
+    const showDessertColumn = hasDessert && !isOutdoor(recipe) && !!photoUrl;
     const dessertCount = dessertIds?.length ?? 0;
     const addButtonShown = dessertCount < 3 && !isAddMode && !!onAddDessert;
     const placeholderCount = Math.max(0, 3 - dessertCount - (addButtonShown ? 1 : 0));

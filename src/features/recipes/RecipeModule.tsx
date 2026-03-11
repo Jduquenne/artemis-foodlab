@@ -10,6 +10,7 @@ import { markScrolling } from '../../shared/utils/scrollGuard';
 import { MacroFilterButton } from './components/MacroFilterButton';
 import { PREDEFINED_FILTERS } from '../../core/domain/predefinedFilters';
 import { Food, RecipeDetails } from '../../core/domain/types';
+import { isPlannable } from '../../core/domain/recipePredicates';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import recipesDb from '../../core/data/recipes-db.json';
 import foodDb from '../../core/data/food-db.json';
@@ -135,7 +136,7 @@ export const RecipeModule = () => {
                                         backImage={recipe.ingredientsUrl}
                                         recipeUrl={recipe.recipeUrl}
                                         onClick={() => navigate(`/recipes/detail/${recipe.recipeId || recipe.id}`)}
-                                        onAddToPlanning={(recipesDb as unknown as Record<string, { kind: string }>)[recipe.recipeId || recipe.id]?.kind !== 'base' ? () => navigate(`/planning?addRecipe=${recipe.recipeId || recipe.id}`) : undefined}
+                                        onAddToPlanning={isPlannable((recipesDb as unknown as Record<string, RecipeDetails>)[recipe.recipeId || recipe.id]) ? () => navigate(`/planning?addRecipe=${recipe.recipeId || recipe.id}`) : undefined}
                                     />
                                 ))}
                             </div>

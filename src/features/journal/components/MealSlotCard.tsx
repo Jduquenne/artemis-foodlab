@@ -1,4 +1,5 @@
 import { MealSlot } from "../../../core/domain/types";
+import { getAllRecipeIds, hasDesserts } from "../../../core/domain/recipePredicates";
 import { RECIPE_MACROS } from "../../../core/utils/macroUtils";
 import { useJournalStore } from "../../../shared/store/useJournalStore";
 import { RecipePortionRow } from "./RecipePortionRow";
@@ -18,7 +19,7 @@ const SLOT_LABELS: Record<string, string> = {
 export const MealSlotCard = ({ slotType, slot }: MealSlotCardProps) => {
   const { portionOverrides } = useJournalStore();
 
-  const allIds = slot ? [...slot.recipeIds, ...(slot.dessertIds ?? [])] : [];
+  const allIds = slot ? getAllRecipeIds(slot) : [];
   const totalKcal = allIds.reduce((sum, id) => {
     const portions = portionOverrides[`${slot!.id}-${id}`] ?? 1;
     return sum + (RECIPE_MACROS[id]?.kcal ?? 0) * portions;
@@ -46,7 +47,7 @@ export const MealSlotCard = ({ slotType, slot }: MealSlotCardProps) => {
               <RecipePortionRow key={id} recipeId={id} slotId={slot.id} />
             ))}
 
-            {(slot?.dessertIds?.length ?? 0) > 0 && (
+            {slot && hasDesserts(slot) && (
               <>
                 <div className="my-1 border-t border-dashed border-slate-100" />
                 {slot!.dessertIds!.map((id) => (

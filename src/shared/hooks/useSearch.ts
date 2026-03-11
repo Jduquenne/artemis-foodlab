@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import recipesDb from "../../core/data/recipes-db.json";
 import { RecipeDetails, RecipeKind } from "../../core/domain/types";
+import { isDessert } from "../../core/domain/recipePredicates";
 
 export interface SearchRecipeResult {
   id: string;
@@ -135,7 +136,7 @@ export const useSearchDesserts = (query: string | null): SearchRecipeResult[] =>
     const normalizedQuery = query.toLowerCase().trim();
     const results = Object.entries(db)
       .filter(([, recipe]) => Boolean(recipe.assets?.photo))
-      .filter(([, recipe]) => recipe.isDessert === true)
+      .filter(([, recipe]) => isDessert(recipe))
       .filter(([recipeId, recipe]) => !normalizedQuery || matchesQuery(recipeId, recipe, normalizedQuery))
       .map(([recipeId, recipe]) => toResult(recipeId, recipe, normalizedQuery));
 

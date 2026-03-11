@@ -6,6 +6,7 @@ import {
   IngredientCategory,
   ShoppingDay,
 } from "../domain/types";
+import { getAllRecipeIds } from "../domain/recipePredicates";
 import recipesDb from "../data/recipes-db.json";
 
 export interface IngredientSource {
@@ -43,7 +44,7 @@ async function aggregateSlots(
   const prepMap = new Map<string, Set<string>>();
 
   for (const slot of slots) {
-    const allIds = [...slot.recipeIds, ...(slot.dessertIds ?? [])];
+    const allIds = getAllRecipeIds(slot);
     for (const recipeId of allIds) {
       const details = data[recipeId];
       if (!details) continue;

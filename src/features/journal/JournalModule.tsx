@@ -3,6 +3,7 @@ import { addDays, subDays } from "date-fns";
 import { getWeekNumber, getMonday } from "../../shared/utils/weekUtils";
 import { getWeekSlots } from "../../core/services/planningService";
 import { MealSlot, Macronutrients } from "../../core/domain/types";
+import { getAllRecipeIds } from "../../core/domain/recipePredicates";
 import { RECIPE_MACROS } from "../../core/utils/macroUtils";
 import { useJournalStore } from "../../shared/store/useJournalStore";
 import { DayNav } from "./components/DayNav";
@@ -51,7 +52,7 @@ export const JournalModule = () => {
   const totalMacros = useMemo(
     () =>
       daySlots.reduce((total, slot) => {
-        return [...slot.recipeIds, ...(slot.dessertIds ?? [])].reduce((sum, id) => {
+        return getAllRecipeIds(slot).reduce((sum, id) => {
           const m = RECIPE_MACROS[id];
           if (!m) return sum;
           const portions = portionOverrides[`${slot.id}-${id}`] ?? 1;

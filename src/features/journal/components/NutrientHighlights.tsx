@@ -1,5 +1,6 @@
 import { Flame, Dumbbell } from "lucide-react";
 import { MealSlot, Macronutrients } from "../../../core/domain/types";
+import { getAllRecipeIds, hasRecipes } from "../../../core/domain/recipePredicates";
 import { RECIPE_MACROS } from "../../../core/utils/macroUtils";
 
 export interface NutrientHighlightsProps {
@@ -16,7 +17,7 @@ const SLOT_LABELS: Record<string, string> = {
 const ZERO: Macronutrients = { kcal: 0, proteins: 0, lipids: 0, carbohydrates: 0, fibers: 0 };
 
 function getSlotMacros(slot: MealSlot): Macronutrients {
-  return [...slot.recipeIds, ...(slot.dessertIds ?? [])].reduce((sum, id) => {
+  return getAllRecipeIds(slot).reduce((sum, id) => {
     const m = RECIPE_MACROS[id];
     if (!m) return sum;
     return {
@@ -30,7 +31,7 @@ function getSlotMacros(slot: MealSlot): Macronutrients {
 }
 
 export const NutrientHighlights = ({ slots }: NutrientHighlightsProps) => {
-  const filledSlots = slots.filter((s) => s.recipeIds.length > 0);
+  const filledSlots = slots.filter(hasRecipes);
   if (filledSlots.length === 0) return null;
 
   const slotMacros = filledSlots.map((s) => ({ slot: s, macros: getSlotMacros(s) }));

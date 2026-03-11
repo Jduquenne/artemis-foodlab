@@ -12,7 +12,8 @@ import { ShoppingSelectionBar } from './components/ShoppingSelectionBar';
 import { getWeekNumber, getMonday, getWeekRange } from '../../shared/utils/weekUtils';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useMenuStore } from '../../shared/store/useMenuStore';
-import { ShoppingDay } from '../../core/domain/types';
+import { ShoppingDay, RecipeDetails } from '../../core/domain/types';
+import { isDessert, canAddDessert, isSlotFull } from '../../core/domain/recipePredicates';
 import {
     DndContext,
     DragEndEvent,
@@ -224,9 +225,9 @@ export const PlanningModule = () => {
         const slotId = `${year}-W${weekNumber}-${day}-${slot}`;
         const mealDef = MEAL_SLOTS.find(m => m.id === slot)!;
         const existing = planningData.find(p => p.day === day && p.slot === slot);
-        const recipeIsDessert = (recipesDb as Record<string, { isDessert?: boolean }>)[addRecipeId]?.isDessert === true;
-        if (mealDef.hasDessert && existing?.recipeIds.length && recipeIsDessert) {
-            if ((existing.dessertIds ?? []).length < 3) {
+        const recipe = (recipesDb as Record<string, RecipeDetails>)[addRecipeId];
+        if (mealDef.hasDessert && existing?.recipeIds.length && isDessert(recipe)) {
+            if (existing && canAddDessert(existing)) {
                 await addDessertToSlot(existing, addRecipeId);
                 clearAddMode();
             }
@@ -234,7 +235,7 @@ export const PlanningModule = () => {
         }
         if (mealDef.multi) {
             const ids = existing?.recipeIds ?? [];
-            if (ids.length >= 4) return;
+            if (isSlotFull({ recipeIds: ids })) return;
             await saveSlot({ id: slotId, day, slot, recipeIds: [...ids, addRecipeId], year, week: weekNumber });
         } else {
             await saveSlot({ id: slotId, day, slot, recipeIds: [addRecipeId], year, week: weekNumber });

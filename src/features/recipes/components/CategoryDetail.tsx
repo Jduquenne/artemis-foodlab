@@ -7,6 +7,7 @@ import { markScrolling } from '../../../shared/utils/scrollGuard';
 import { MacroFilterButton } from './MacroFilterButton';
 import { PREDEFINED_FILTERS } from '../../../core/domain/predefinedFilters';
 import { RecipeDetails } from '../../../core/domain/types';
+import { isPlannable } from '../../../core/domain/recipePredicates';
 import { useMenuStore } from '../../../shared/store/useMenuStore';
 import recipesDb from '../../../core/data/recipes-db.json';
 
@@ -96,7 +97,7 @@ export const CategoryDetail = () => {
                                 backImage={recipe.ingredientsUrl}
                                 recipeUrl={recipe.recipeUrl}
                                 onClick={() => navigate(`/recipes/detail/${recipe.id}?category=${categoryId}`)}
-                                onAddToPlanning={data[recipe.id]?.kind !== 'base' ? () => navigate(`/planning?addRecipe=${recipe.id}`) : undefined}
+                                onAddToPlanning={isPlannable(data[recipe.id]) ? () => navigate(`/planning?addRecipe=${recipe.id}`) : undefined}
                             />
                         </div>
                     ))}

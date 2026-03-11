@@ -2,6 +2,7 @@ import { Plus, X, GripVertical } from 'lucide-react';
 import { useDraggable, useDroppable } from '@dnd-kit/core';
 import { plannableDb } from '../../../core/utils/plannableDb';
 import { IS_TOUCH } from '../../../shared/utils/deviceUtils';
+import { hasRecipes as slotHasRecipes, isSlotFull } from '../../../core/domain/recipePredicates';
 const data = plannableDb;
 
 interface MultiMealSlotProps {
@@ -68,21 +69,20 @@ export const MultiMealSlot = ({
     const singlePhotoUrl = firstRecipe?.assets?.photo?.url;
     const singleHasRecipesPage = Boolean(firstRecipe?.assets?.instructionsPhoto?.url);
 
+    const hasRecipes = slotHasRecipes({ recipeIds });
+    const isFull = isSlotFull({ recipeIds });
+    const canAddMore = !isFull;
+
     const { setNodeRef: setDropRef, isOver } = useDroppable({ id: slotId });
     const { setNodeRef: setDragRef, listeners, attributes, isDragging } = useDraggable({
         id: slotId,
-        disabled: recipeIds.length === 0 || IS_TOUCH || !!isAddMode,
+        disabled: !hasRecipes || IS_TOUCH || !!isAddMode,
     });
 
     const setRef = (el: HTMLDivElement | null) => {
         setDropRef(el);
         setDragRef(el);
     };
-
-    const hasRecipes = recipeIds.length > 0;
-    const canAddMore = recipeIds.length < 4;
-
-    const isFull = recipeIds.length >= 4;
     const borderClass = isAddMode
         ? isFull ? 'border-slate-200 opacity-50' : 'ring-2 ring-orange-400 border-orange-300 cursor-pointer'
         : isDragging

@@ -223,7 +223,8 @@
     "assets": {
       "photo": { "url": "/artemis-foodlab/fruits/photo/FR_01_Avocat_Hass_Photo.webp" }
     },
-    "batchCooking": false
+    "batchCooking": false,
+    "isDessert": true
   },
 
   "pp-001": {

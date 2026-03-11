@@ -167,6 +167,7 @@ package "Recettes — JSON statique" as RECIPES #FFF4ED {
     + kind             : RecipeKind
     + defaultPortions  : number
     + batchCooking     : boolean
+    + isDessert        : boolean
   }
 
   Food            "1" *-right- "1"    Macronutrients   : macros

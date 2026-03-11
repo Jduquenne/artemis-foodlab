@@ -11,6 +11,9 @@ interface MultiRecipeGridProps {
     onRemoveRecipe: (id: string) => void;
     onCopyRecipe?: (id: string) => void;
     onAdd: () => void;
+    recipePersons?: Record<string, number>;
+    recipeQuantities?: Record<string, number>;
+    onEditMeta?: (recipeId: string) => void;
 }
 
 export const MultiRecipeGrid = ({
@@ -23,6 +26,9 @@ export const MultiRecipeGrid = ({
     onRemoveRecipe,
     onCopyRecipe,
     onAdd,
+    recipePersons,
+    recipeQuantities,
+    onEditMeta,
 }: MultiRecipeGridProps) => (
     <div className={`w-full h-full flex flex-row sm:grid sm:grid-cols-2 sm:grid-rows-2 gap-0.5 p-0.5 ${isTargetMode ? 'pointer-events-none' : ''}`}>
         {Array.from({ length: 4 }).map((_, idx) => {
@@ -36,6 +42,9 @@ export const MultiRecipeGrid = ({
                         onRemove={() => onRemoveRecipe(rid)}
                         onCopy={onCopyRecipe ? () => onCopyRecipe(rid) : undefined}
                         hideRemove={isAddMode || !!copyTargetState}
+                        persons={recipePersons?.[rid]}
+                        grams={recipeQuantities?.[rid]}
+                        onEditMeta={onEditMeta && !isAddMode && !copyTargetState ? () => onEditMeta(rid) : undefined}
                     />
                 );
             }

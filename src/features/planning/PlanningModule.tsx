@@ -217,8 +217,8 @@ export const PlanningModule = () => {
 
         if (toMeal) {
             await bulkSaveSlots([
-                { ...fromMeal, recipeIds: toMeal.recipeIds, persons: undefined },
-                { ...toMeal, recipeIds: fromMeal.recipeIds, persons: undefined },
+                { ...fromMeal, recipeIds: toMeal.recipeIds, persons: undefined, recipePersons: undefined, recipeQuantities: undefined },
+                { ...toMeal, recipeIds: fromMeal.recipeIds, persons: undefined, recipePersons: undefined, recipeQuantities: undefined },
             ]);
         } else {
             await deleteSlot(fromMeal.id);
@@ -275,6 +275,16 @@ export const PlanningModule = () => {
         const existing = planningData.find(p => `${year}-W${weekNumber}-${p.day}-${p.slot}` === slotId);
         if (existing) await saveSlot({ ...existing, persons });
         setEditingPersonsSlotId(null);
+    };
+
+    const handleSaveRecipeMeta = async (day: string, slot: SlotId, recipeId: string, persons: number, grams: number) => {
+        const existing = planningData.find(p => p.day === day && p.slot === slot);
+        if (!existing) return;
+        await saveSlot({
+            ...existing,
+            recipePersons: { ...existing.recipePersons, [recipeId]: persons },
+            recipeQuantities: { ...existing.recipeQuantities, [recipeId]: grams },
+        });
     };
 
     const handleAddToSlot = async (day: string, slot: SlotId) => {
@@ -373,6 +383,9 @@ export const PlanningModule = () => {
                         onCopyRecipe={!isSelectionMode && !isAddMode && !isCopyMode ? (rid) => handleStartCopy(rid, mealType.id, day, false) : undefined}
                         copyTargetState={multiCopyTargetState}
                         onSelectAsTarget={multiCopyTargetState === 'selectable' || multiCopyTargetState === 'selected' ? () => toggleCopyTarget(day, mealType.id) : undefined}
+                        recipePersons={savedMeal?.recipePersons}
+                        recipeQuantities={savedMeal?.recipeQuantities}
+                        onSaveRecipeMeta={!isSelectionMode && !isAddMode && !isCopyMode ? (rid, p, g) => handleSaveRecipeMeta(day, mealType.id, rid, p, g) : undefined}
                     />
                 ) : (
                     <MealSlot

@@ -1,6 +1,8 @@
-import { X, Copy } from 'lucide-react';
+import { X, Copy, Users } from 'lucide-react';
 import { plannableDb } from '../../../../core/utils/plannableDb';
+import { RECIPE_BASE_GRAMS } from '../../../../core/utils/macroUtils';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
+import { isDish, isBase } from '../../../../core/domain/recipePredicates';
 
 interface RecipeCellProps {
     recipeId: string;
@@ -8,14 +10,20 @@ interface RecipeCellProps {
     onRemove: () => void;
     onCopy?: () => void;
     hideRemove?: boolean;
+    persons?: number;
+    grams?: number;
+    onEditMeta?: () => void;
 }
 
 const data = plannableDb;
 
-export const RecipeCell = ({ recipeId, onNavigate, onRemove, onCopy, hideRemove }: RecipeCellProps) => {
+export const RecipeCell = ({ recipeId, onNavigate, onRemove, onCopy, hideRemove, persons, grams, onEditMeta }: RecipeCellProps) => {
     const recipe = data[recipeId];
     const photoUrl = recipe?.assets?.photo?.url;
     const hasRecipesPage = Boolean(recipe?.assets?.instructionsPhoto?.url);
+    const defaultGrams = RECIPE_BASE_GRAMS[recipeId] ?? 0;
+    const recipeIsDish = isDish(recipe) || isBase(recipe);
+    const isCustom = persons !== undefined || (!recipeIsDish && grams !== undefined);
 
     return (
         <div className="relative group/cell w-full h-full min-h-0 flex-1 min-w-0">
@@ -25,6 +33,25 @@ export const RecipeCell = ({ recipeId, onNavigate, onRemove, onCopy, hideRemove 
             >
                 {photoUrl && <img src={photoUrl} loading="lazy" decoding="async" className="w-full h-full object-cover sm:object-contain" alt={recipe.name} />}
             </button>
+
+            {!hideRemove && onEditMeta && (recipeIsDish || defaultGrams > 0 || persons !== undefined) && (
+                <button
+                    aria-label="Modifier la quantité"
+                    onPointerDown={(e) => e.stopPropagation()}
+                    onClick={(e) => { e.stopPropagation(); onEditMeta(); }}
+                    className={`absolute bottom-0.5 left-0.5 flex items-center gap-0.5 text-[8px] font-black px-1 py-0.5 rounded z-10 shadow-sm ${isCustom ? 'bg-orange-500 text-white' : 'bg-black/20 text-white'}`}
+                >
+                    {recipeIsDish ? (
+                        <span className="flex items-center gap-0.5"><Users size={7} />{persons !== undefined ? `${persons}p` : ''}</span>
+                    ) : (
+                        <>
+                            {persons !== undefined && <><Users size={7} />{persons} · </>}
+                            {defaultGrams > 0 && <span>{grams ?? Math.round(defaultGrams)}g</span>}
+                        </>
+                    )}
+                </button>
+            )}
+
             {!hideRemove && (
                 <button
                     aria-label="Retirer ce repas"

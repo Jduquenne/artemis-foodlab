@@ -98,3 +98,21 @@ export const RECIPE_MACROS: Record<string, Macronutrients> = Object.fromEntries(
     }
   })
 );
+
+function calculateRecipeBaseGrams(recipe: RecipeDetails, foodDb: Record<string, Food>): number {
+  let total = 0;
+  for (const ing of recipe.ingredients) {
+    if (ing.quantity == null) continue;
+    const food = ing.foodId ? foodDb[ing.foodId] : undefined;
+    const grams = toGrams(ing.quantity, ing.unit, food?.unitWeight);
+    if (grams != null) total += grams;
+  }
+  return total > 0 ? total / recipe.defaultPortions : 0;
+}
+
+export const RECIPE_BASE_GRAMS: Record<string, number> = Object.fromEntries(
+  Object.entries(_allRecipes).flatMap(([id, recipe]) => {
+    const grams = calculateRecipeBaseGrams(recipe, _allFoods);
+    return grams > 0 ? [[id, grams]] : [];
+  })
+);

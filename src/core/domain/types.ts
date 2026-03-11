@@ -172,6 +172,8 @@ export interface MealSlot {
   year: number;
   week: number;
   persons?: number;
+  recipePersons?: Record<string, number>;
+  recipeQuantities?: Record<string, number>;
 }
 
 export interface HouseholdRecord {

@@ -1,10 +1,13 @@
-import { Plus, Check } from 'lucide-react';
+import { useState } from 'react';
+import { Plus, Check, Users } from 'lucide-react';
 import { useDraggable, useDroppable } from '@dnd-kit/core';
 import { plannableDb } from '../../../../core/utils/plannableDb';
+import { RECIPE_BASE_GRAMS } from '../../../../core/utils/macroUtils';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
-import { hasRecipes as slotHasRecipes, isSlotFull } from '../../../../core/domain/recipePredicates';
+import { hasRecipes as slotHasRecipes, isSlotFull, isDish, isBase } from '../../../../core/domain/recipePredicates';
 import { MultiRecipeGrid } from './MultiRecipeGrid';
 import { MultiSlotActions } from './MultiSlotActions';
+import { RecipeMetaEditor } from './RecipeMetaEditor';
 
 const data = plannableDb;
 
@@ -21,6 +24,9 @@ interface MultiMealSlotProps {
     onCopyRecipe?: (recipeId: string) => void;
     copyTargetState?: 'source' | 'selectable' | 'selected';
     onSelectAsTarget?: () => void;
+    recipePersons?: Record<string, number>;
+    recipeQuantities?: Record<string, number>;
+    onSaveRecipeMeta?: (recipeId: string, persons: number, grams: number) => void;
 }
 
 export const MultiMealSlot = ({
@@ -36,10 +42,16 @@ export const MultiMealSlot = ({
     onCopyRecipe,
     copyTargetState,
     onSelectAsTarget,
+    recipePersons,
+    recipeQuantities,
+    onSaveRecipeMeta,
 }: MultiMealSlotProps) => {
+    const [editingMetaId, setEditingMetaId] = useState<string | null>(null);
+
     const firstRecipe = recipeIds.length === 1 ? data[recipeIds[0]] : undefined;
     const singlePhotoUrl = firstRecipe?.assets?.photo?.url;
     const singleHasRecipesPage = Boolean(firstRecipe?.assets?.instructionsPhoto?.url);
+    const singleIsDish = isDish(firstRecipe) || isBase(firstRecipe);
 
     const hasRecipes = slotHasRecipes({ recipeIds });
     const isFull = isSlotFull({ recipeIds });
@@ -78,6 +90,13 @@ export const MultiMealSlot = ({
         : isAddMode && !isFull
             ? onAddToSlot
             : undefined;
+
+    const singleRecipeId = recipeIds.length === 1 ? recipeIds[0] : null;
+    const singleBaseGrams = singleRecipeId ? (RECIPE_BASE_GRAMS[singleRecipeId] ?? 0) : 0;
+    const singleCurrentGrams = singleRecipeId ? recipeQuantities?.[singleRecipeId] : undefined;
+    const singleCurrentPersons = singleRecipeId ? recipePersons?.[singleRecipeId] : undefined;
+    const singleIsCustom = singleCurrentPersons !== undefined || (!singleIsDish && singleCurrentGrams !== undefined);
+    const showSingleBadge = !!singleRecipeId && !isAddMode && !copyTargetState && !!onSaveRecipeMeta && (singleIsDish || singleBaseGrams > 0 || singleCurrentPersons !== undefined);
 
     return (
         <div
@@ -124,6 +143,9 @@ export const MultiMealSlot = ({
                         onRemoveRecipe={onRemoveRecipe}
                         onCopyRecipe={onCopyRecipe}
                         onAdd={onAdd}
+                        recipePersons={recipePersons}
+                        recipeQuantities={recipeQuantities}
+                        onEditMeta={onSaveRecipeMeta ? (rid) => setEditingMetaId(rid) : undefined}
                     />
                 )}
 
@@ -136,7 +158,26 @@ export const MultiMealSlot = ({
                 )}
             </div>
 
-            {hasRecipes && !isDragging && !isAddMode && !copyTargetState && (
+            {showSingleBadge && !editingMetaId && (
+                <button
+                    onPointerDown={(e) => e.stopPropagation()}
+                    onClick={(e) => { e.stopPropagation(); setEditingMetaId(singleRecipeId!); }}
+                    className={`absolute top-1 right-1 z-30 flex items-center gap-1 text-[10px] font-black px-1.5 py-0.5 rounded-lg shadow ${singleIsCustom ? 'bg-orange-500 text-white' : 'bg-black/30 text-white'}`}
+                >
+                    {singleIsDish ? (
+                        <span className="flex items-center gap-0.5"><Users size={9} />{singleCurrentPersons !== undefined ? `${singleCurrentPersons}p` : ''}</span>
+                    ) : (
+                        <>
+                            {singleCurrentPersons !== undefined && (
+                                <span className="flex items-center gap-0.5"><Users size={9} />{singleCurrentPersons} ·</span>
+                            )}
+                            {singleBaseGrams > 0 && <span>{singleCurrentGrams ?? Math.round(singleBaseGrams)}g</span>}
+                        </>
+                    )}
+                </button>
+            )}
+
+            {hasRecipes && !isDragging && !isAddMode && !copyTargetState && !editingMetaId && (
                 <MultiSlotActions
                     recipeIds={recipeIds}
                     canAddMore={canAddMore}
@@ -145,6 +186,18 @@ export const MultiMealSlot = ({
                     onCopyRecipe={onCopyRecipe}
                     onRemoveRecipe={onRemoveRecipe}
                     onAdd={onAdd}
+                />
+            )}
+
+            {editingMetaId && onSaveRecipeMeta && (
+                <RecipeMetaEditor
+                    initialPersons={recipePersons?.[editingMetaId] ?? (isDish(data[editingMetaId]) || isBase(data[editingMetaId]) ? 1 : data[editingMetaId]?.defaultPortions ?? 1)}
+                    defaultPersons={isDish(data[editingMetaId]) || isBase(data[editingMetaId]) ? 1 : data[editingMetaId]?.defaultPortions ?? 1}
+                    initialGrams={recipeQuantities?.[editingMetaId] ?? Math.round(RECIPE_BASE_GRAMS[editingMetaId] ?? 0)}
+                    defaultGrams={Math.round(RECIPE_BASE_GRAMS[editingMetaId] ?? 0)}
+                    isDish={isDish(data[editingMetaId]) || isBase(data[editingMetaId])}
+                    onConfirm={(persons, grams) => { onSaveRecipeMeta(editingMetaId, persons, grams); setEditingMetaId(null); }}
+                    onCancel={() => setEditingMetaId(null)}
                 />
             )}
         </div>

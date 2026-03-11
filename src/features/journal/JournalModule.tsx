@@ -3,8 +3,9 @@ import { addDays, subDays } from "date-fns";
 import { getWeekNumber, getMonday } from "../../shared/utils/weekUtils";
 import { getWeekSlots } from "../../core/services/planningService";
 import { MealSlot, Macronutrients } from "../../core/domain/types";
-import { getAllRecipeIds } from "../../core/domain/recipePredicates";
-import { RECIPE_MACROS } from "../../core/utils/macroUtils";
+import { getAllRecipeIds, isDish, isBase } from "../../core/domain/recipePredicates";
+import { RECIPE_MACROS, RECIPE_BASE_GRAMS } from "../../core/utils/macroUtils";
+import { plannableDb } from "../../core/utils/plannableDb";
 import { useJournalStore } from "../../shared/store/useJournalStore";
 import { DayNav } from "./components/DayNav";
 import { MacroSummary } from "./components/MacroSummary";
@@ -59,13 +60,25 @@ export const JournalModule = () => {
         return getAllRecipeIds(slot).reduce((sum, id) => {
           const m = RECIPE_MACROS[id];
           if (!m) return sum;
-          const portions = portionOverrides[`${slot.id}-${id}`] ?? 1;
+          const portionMult = portionOverrides[`${slot.id}-${id}`] ?? 1;
+          const recipe = plannableDb[id];
+          const recipeIsDish = isDish(recipe) || isBase(recipe);
+          let factor: number;
+          if (recipeIsDish) {
+            const plannedPortions = slot.recipePersons?.[id];
+            factor = (plannedPortions ?? 1) * portionMult;
+          } else {
+            const recipeGrams = slot.recipeQuantities?.[id];
+            const baseGrams = RECIPE_BASE_GRAMS[id];
+            const gramsFactor = recipeGrams !== undefined && baseGrams ? recipeGrams / baseGrams : 1;
+            factor = portionMult * gramsFactor;
+          }
           return {
-            kcal: sum.kcal + m.kcal * portions,
-            proteins: sum.proteins + m.proteins * portions,
-            lipids: sum.lipids + m.lipids * portions,
-            carbohydrates: sum.carbohydrates + m.carbohydrates * portions,
-            fibers: sum.fibers + m.fibers * portions,
+            kcal: sum.kcal + m.kcal * factor,
+            proteins: sum.proteins + m.proteins * factor,
+            lipids: sum.lipids + m.lipids * factor,
+            carbohydrates: sum.carbohydrates + m.carbohydrates * factor,
+            fibers: sum.fibers + m.fibers * factor,
           };
         }, total);
       }, { ...ZERO }),

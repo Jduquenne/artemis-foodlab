@@ -4,6 +4,7 @@ import { getWeekSlots, MealSlot } from "../services/planningService";
 import { IngredientCategory, ShoppingDay } from "../domain/types";
 import { getAllRecipeIds } from "../domain/recipePredicates";
 import { typedRecipesDb } from "./typedRecipesDb";
+import { RECIPE_BASE_GRAMS } from "./macroUtils";
 
 export interface IngredientSource {
   recipeId: string;
@@ -46,16 +47,27 @@ async function aggregateSlots(
       if (!details) continue;
 
       const recipeName = cleanRecipeName(details.name);
-      const scaleFactor =
-        slot.persons !== undefined && details.defaultPortions > 0
-          ? slot.persons / details.defaultPortions
-          : 1;
+      const recipePersonsOverride = slot.recipePersons?.[recipeId];
+      const recipeGramsOverride = slot.recipeQuantities?.[recipeId];
+      const baseGrams = RECIPE_BASE_GRAMS[recipeId];
+      let scaleFactor: number;
+      if (recipeGramsOverride !== undefined && baseGrams) {
+        const persons = recipePersonsOverride ?? slot.persons ?? details.defaultPortions;
+        scaleFactor = (persons * recipeGramsOverride) / (details.defaultPortions * baseGrams);
+      } else if (recipePersonsOverride !== undefined && details.defaultPortions > 0) {
+        scaleFactor = recipePersonsOverride / details.defaultPortions;
+      } else if (slot.persons !== undefined && details.defaultPortions > 0) {
+        scaleFactor = slot.persons / details.defaultPortions;
+      } else {
+        scaleFactor = 1;
+      }
 
       for (const ing of details.ingredients) {
         const baseQty = ing.quantity ?? 0;
         const qty = baseQty * scaleFactor;
         const key = `${ing.name.toLowerCase()}-${ing.unit}`;
 
+        const effectivePersons = recipePersonsOverride ?? slot.persons;
         const source: IngredientSource = {
           recipeId,
           recipeName,
@@ -63,8 +75,8 @@ async function aggregateSlots(
           slot: slot.slot,
           quantity: qty,
           unit: ing.unit,
-          ...(slot.persons !== undefined && {
-            persons: slot.persons,
+          ...(effectivePersons !== undefined && {
+            persons: effectivePersons,
             baseQuantity: baseQty,
           }),
         };

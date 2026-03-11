@@ -1,12 +1,14 @@
 import React, { useState, useMemo, useRef } from 'react';
 import { ChevronLeft, ChevronRight, ShoppingCart, Check, X } from 'lucide-react';
 import { typedRecipesDb as recipesDb } from '../../core/utils/typedRecipesDb';
+import { plannableDb } from '../../core/utils/plannableDb';
+import { CopyModeBar } from './components/CopyModeBar';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { getWeekSlots, saveSlot, deleteSlot, bulkSaveSlots, addDessertToSlot, removeDessertFromSlot } from '../../core/services/planningService';
-import { MealSlot } from './components/MealSlot';
-import { MultiMealSlot } from './components/MultiMealSlot';
-import { RecipePicker } from './components/RecipePicker';
-import { DessertPicker } from './components/DessertPicker';
+import { MealSlot } from './components/slot/MealSlot';
+import { MultiMealSlot } from './components/slot/MultiMealSlot';
+import { RecipePicker } from './components/pickers/RecipePicker';
+import { DessertPicker } from './components/pickers/DessertPicker';
 import { MealDragOverlay } from './components/MealDragOverlay';
 import { ShoppingSelectionBar } from './components/ShoppingSelectionBar';
 import { getWeekNumber, getMonday, getWeekRange } from '../../shared/utils/weekUtils';
@@ -78,8 +80,17 @@ export const PlanningModule = () => {
     const [isSelectionMode, setIsSelectionMode] = useState(false);
     const [draftDays, setDraftDays] = useState<ShoppingDay[]>([]);
     const [editingPersonsSlotId, setEditingPersonsSlotId] = useState<string | null>(null);
+    const [copyState, setCopyState] = useState<{
+        recipeId: string;
+        slotType: SlotId;
+        sourceDay: string;
+        isDessert: boolean;
+        recipeName: string;
+    } | null>(null);
+    const [copyTargets, setCopyTargets] = useState<Set<string>>(new Set());
 
     const isAnyEditing = editingPersonsSlotId !== null;
+    const isCopyMode = !!copyState;
 
     const monday = useMemo(() => getMonday(selectedDate), [selectedDate]);
     const weekNumber = useMemo(() => getWeekNumber(monday), [monday]);
@@ -215,6 +226,51 @@ export const PlanningModule = () => {
         }
     };
 
+    const handleStartCopy = (recipeId: string, slotType: SlotId, sourceDay: string, isDessert: boolean) => {
+        const recipeName = plannableDb[recipeId]?.name ?? '';
+        setCopyState({ recipeId, slotType, sourceDay, isDessert, recipeName });
+        setCopyTargets(new Set());
+    };
+
+    const toggleCopyTarget = (day: string, slotType: SlotId) => {
+        const key = `${day}|${slotType}`;
+        setCopyTargets(prev => {
+            const next = new Set(prev);
+            if (next.has(key)) next.delete(key); else next.add(key);
+            return next;
+        });
+    };
+
+    const confirmCopy = async () => {
+        if (!copyState) return;
+        const { recipeId, isDessert: isDessertCopy } = copyState;
+        for (const target of copyTargets) {
+            const sep = target.indexOf('|');
+            const targetDay = target.slice(0, sep);
+            const targetSlot = target.slice(sep + 1) as SlotId;
+            const slotId = `${year}-W${weekNumber}-${targetDay}-${targetSlot}`;
+            const existing = planningData.find(p => p.day === targetDay && p.slot === targetSlot);
+            if (isDessertCopy) {
+                if (existing && canAddDessert(existing) && !existing.dessertIds?.includes(recipeId)) {
+                    await addDessertToSlot(existing, recipeId);
+                }
+            } else {
+                if (!existing) {
+                    await saveSlot({ id: slotId, day: targetDay, slot: targetSlot, recipeIds: [recipeId], year, week: weekNumber });
+                } else if (!isSlotFull(existing) && !existing.recipeIds.includes(recipeId)) {
+                    await saveSlot({ ...existing, recipeIds: [...existing.recipeIds, recipeId] });
+                }
+            }
+        }
+        setCopyState(null);
+        setCopyTargets(new Set());
+    };
+
+    const cancelCopy = () => {
+        setCopyState(null);
+        setCopyTargets(new Set());
+    };
+
     const handleConfirmPersons = async (slotId: string, persons: number) => {
         const existing = planningData.find(p => `${year}-W${weekNumber}-${p.day}-${p.slot}` === slotId);
         if (existing) await saveSlot({ ...existing, persons });
@@ -266,36 +322,79 @@ export const PlanningModule = () => {
         const savedMeal = planningData.find(p => p.day === day && p.slot === mealType.id);
         const recipeIds = savedMeal?.recipeIds ?? [];
         const isEditingThis = editingPersonsSlotId === slotId;
-        const isDimmed = isAnyEditing && !isEditingThis;
+
+        // Copy mode calculations
+        const isCopyRelevant = !isCopyMode || (
+            copyState!.isDessert ? mealType.hasDessert : mealType.id === copyState!.slotType
+        );
+        const isSource = isCopyMode && day === copyState!.sourceDay && mealType.id === copyState!.slotType;
+
+        let multiCopyTargetState: 'source' | 'selectable' | 'selected' | undefined;
+        if (isCopyMode && !copyState!.isDessert && mealType.id === copyState!.slotType) {
+            if (isSource) {
+                multiCopyTargetState = 'source';
+            } else {
+                const alreadyHas = savedMeal?.recipeIds.includes(copyState!.recipeId) ?? false;
+                const full = isSlotFull({ recipeIds });
+                if (!alreadyHas && !full) {
+                    multiCopyTargetState = copyTargets.has(`${day}|${mealType.id}`) ? 'selected' : 'selectable';
+                }
+            }
+        }
+
+        let dessertCopyTargetState: 'selectable' | 'selected' | undefined;
+        let copySourceDessertId: string | undefined;
+        if (isCopyMode && copyState!.isDessert && mealType.hasDessert) {
+            if (isSource) {
+                copySourceDessertId = copyState!.recipeId;
+            } else {
+                const hasMainMeal = (savedMeal?.recipeIds.length ?? 0) > 0;
+                const alreadyHas = savedMeal?.dessertIds?.includes(copyState!.recipeId) ?? false;
+                const canAdd = canAddDessert({ dessertIds: savedMeal?.dessertIds });
+                if (hasMainMeal && !alreadyHas && canAdd) {
+                    const key = `${day}|${mealType.id}`;
+                    dessertCopyTargetState = copyTargets.has(key) ? 'selected' : 'selectable';
+                }
+            }
+        }
+
+        const isDimmed = (isAnyEditing && !isEditingThis) || (isCopyMode && !isCopyRelevant);
 
         return (
             <div key={`${day}-${mealType.id}`} className={`relative h-full w-full min-h-0 min-w-0 transition-opacity ${isDimmed ? 'pointer-events-none opacity-30' : ''}`}>
                 {mealType.multi ? (
                     <MultiMealSlot
                         label={mealType.label} icon={mealType.icon} slotId={slotId} recipeIds={recipeIds}
-                        onAdd={isSelectionMode || isAddMode ? () => { } : () => setPickerSlot({ day, slot: mealType.id })}
-                        onRemoveRecipe={isSelectionMode || isAddMode ? () => { } : (rid) => handleRemoveRecipe(day, mealType.id, rid)}
-                        onNavigateToRecipe={isAddMode ? () => { } : (rid) => navigate(`/recipes/detail/${rid}`)}
+                        onAdd={isSelectionMode || isAddMode || isCopyMode ? () => { } : () => setPickerSlot({ day, slot: mealType.id })}
+                        onRemoveRecipe={isSelectionMode || isAddMode || isCopyMode ? () => { } : (rid) => handleRemoveRecipe(day, mealType.id, rid)}
+                        onNavigateToRecipe={isAddMode || isCopyMode ? () => { } : (rid) => navigate(`/recipes/detail/${rid}`)}
                         isAddMode={isAddMode}
                         onAddToSlot={isAddMode ? () => handleAddToSlot(day, mealType.id) : undefined}
+                        onCopyRecipe={!isSelectionMode && !isAddMode && !isCopyMode ? (rid) => handleStartCopy(rid, mealType.id, day, false) : undefined}
+                        copyTargetState={multiCopyTargetState}
+                        onSelectAsTarget={multiCopyTargetState === 'selectable' || multiCopyTargetState === 'selected' ? () => toggleCopyTarget(day, mealType.id) : undefined}
                     />
                 ) : (
                     <MealSlot
                         label={mealType.label} icon={mealType.icon} slotId={slotId} recipeIds={recipeIds}
-                        persons={savedMeal?.persons} isEditingPersons={isEditingThis} isAnyEditing={isAnyEditing}
+                        persons={savedMeal?.persons} isEditingPersons={isEditingThis} isAnyEditing={isAnyEditing || isCopyMode}
                         onNavigate={() => navigate(`/recipes/detail/${savedMeal!.recipeIds[0]}`)}
-                        onOpenPicker={isSelectionMode || isAddMode ? () => { } : () => setPickerSlot({ day, slot: mealType.id })}
-                        onModify={isSelectionMode || isAddMode ? () => { } : () => setPickerSlot({ day, slot: mealType.id })}
-                        onDelete={isSelectionMode || isAddMode ? () => { } : () => handleDeleteMeal(day, mealType.id)}
-                        onOpenPersonsEditor={isAddMode ? () => { } : () => setEditingPersonsSlotId(slotId)}
+                        onOpenPicker={isSelectionMode || isAddMode || isCopyMode ? () => { } : () => setPickerSlot({ day, slot: mealType.id })}
+                        onModify={isSelectionMode || isAddMode || isCopyMode ? () => { } : () => setPickerSlot({ day, slot: mealType.id })}
+                        onDelete={isSelectionMode || isAddMode || isCopyMode ? () => { } : () => handleDeleteMeal(day, mealType.id)}
+                        onOpenPersonsEditor={isAddMode || isCopyMode ? () => { } : () => setEditingPersonsSlotId(slotId)}
                         onConfirmPersons={(n) => handleConfirmPersons(slotId, n)}
                         onCancelPersons={() => setEditingPersonsSlotId(null)}
                         isAddMode={isAddMode}
                         onAddToSlot={isAddMode ? () => handleAddToSlot(day, mealType.id) : undefined}
                         hasDessert={mealType.hasDessert}
                         dessertIds={savedMeal?.dessertIds ?? []}
-                        onAddDessert={isSelectionMode || isAddMode ? undefined : () => setDessertPickerSlot({ day, slot: mealType.id })}
-                        onRemoveDessert={(rid) => handleRemoveDessert(day, mealType.id, rid)}
+                        onAddDessert={isSelectionMode || isAddMode || isCopyMode ? undefined : () => setDessertPickerSlot({ day, slot: mealType.id })}
+                        onRemoveDessert={isCopyMode ? undefined : (rid) => handleRemoveDessert(day, mealType.id, rid)}
+                        onCopyDessert={!isSelectionMode && !isAddMode && !isCopyMode ? (rid) => handleStartCopy(rid, mealType.id, day, true) : undefined}
+                        copySourceDessertId={copySourceDessertId}
+                        dessertCopyTargetState={dessertCopyTargetState}
+                        onSelectDessertAsTarget={dessertCopyTargetState ? () => toggleCopyTarget(day, mealType.id) : undefined}
                     />
                 )}
             </div>
@@ -304,7 +403,7 @@ export const PlanningModule = () => {
 
     return (
         <DndContext
-            sensors={isSelectionMode || isAnyEditing || isAddMode ? [] : sensors}
+            sensors={isSelectionMode || isAnyEditing || isAddMode || isCopyMode ? [] : sensors}
             collisionDetection={closestCenter}
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
@@ -506,6 +605,15 @@ export const PlanningModule = () => {
 
                 {isSelectionMode && (
                     <ShoppingSelectionBar count={draftDays.length} onConfirm={confirmSelection} onCancel={cancelSelection} />
+                )}
+
+                {isCopyMode && copyState && (
+                    <CopyModeBar
+                        recipeName={copyState.recipeName}
+                        selectedCount={copyTargets.size}
+                        onConfirm={confirmCopy}
+                        onCancel={cancelCopy}
+                    />
                 )}
 
                 {!isSelectionMode && pickerSlot && (

@@ -1,8 +1,8 @@
 import { useState, useMemo } from 'react';
-import { SearchBar } from '../../../shared/components/ui/SearchBar';
-import { SearchRecipeResult, useSearchMeals } from '../../../shared/hooks/useSearch';
+import { SearchBar } from '../../../../shared/components/ui/SearchBar';
+import { SearchRecipeResult, useSearchMeals } from '../../../../shared/hooks/useSearch';
 import { Check, X, TreePine } from 'lucide-react';
-import outdoorDb from '../../../core/data/outdoor-db.json';
+import outdoorDb from '../../../../core/data/outdoor-db.json';
 
 interface RecipePickerProps {
     onSelect: (recipe: SearchRecipeResult) => void;

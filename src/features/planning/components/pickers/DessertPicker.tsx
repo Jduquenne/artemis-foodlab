@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { X, Check } from 'lucide-react';
-import { SearchBar } from '../../../shared/components/ui/SearchBar';
-import { useSearchDesserts } from '../../../shared/hooks/useSearch';
+import { SearchBar } from '../../../../shared/components/ui/SearchBar';
+import { useSearchDesserts } from '../../../../shared/hooks/useSearch';
 
 interface DessertPickerProps {
     existingIds: string[];

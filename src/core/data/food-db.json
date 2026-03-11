@@ -780,7 +780,8 @@
       "carbohydrates": 0,
       "fibers": 0
     },
-    "unit": "g",
+    "unit": "tranche",
+    "unitWeight": 25,
     "isFreezable": true
   },
   "pl-008": {
@@ -2025,7 +2026,8 @@
       "carbohydrates": 0,
       "fibers": 0
     },
-    "unit": "g",
+    "unit": "tranche",
+    "unitWeight": 25,
     "isFreezable": true
   },
   "pl-014": {
@@ -3092,7 +3094,7 @@
   },
   "fm-003": {
     "id": "fm-003",
-    "name": "Œuf",
+    "name": "Oeuf",
     "category": "Ferme",
     "macros": {
       "kcal": 142,
@@ -3890,7 +3892,7 @@
       "fibers": 0
     },
     "unit": "pièce",
-    "unitWeight": 1000,
+    "unitWeight": 1200,
     "isFreezable": true
   },
   "cn-005": {
@@ -4761,5 +4763,99 @@
     },
     "unit": "g",
     "isFreezable": true
+  },
+  "es-050": {
+    "id": "es-050",
+    "name": "Confiture",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 241,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 59,
+      "fibers": 1
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "es-051": {
+    "id": "es-051",
+    "name": "Confiture intense",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 165,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 39,
+      "fibers": 2
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "es-052": {
+    "id": "es-052",
+    "name": "Pâte à tartiner",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 551,
+      "proteins": 6,
+      "lipids": 34,
+      "carbohydrates": 53,
+      "fibers": 3
+    },
+    "unit": "g",
+    "isFreezable": true
+  },
+  "fs-024": {
+    "id": "fs-024",
+    "name": "Amandes (lait)",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 492,
+      "proteins": 12,
+      "lipids": 41,
+      "carbohydrates": 16,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "fs-025": {
+    "id": "fs-025",
+    "name": "Noisettes (lait)",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 492,
+      "proteins": 12,
+      "lipids": 41,
+      "carbohydrates": 16,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "fs-026": {
+    "id": "fs-026",
+    "name": "Noix de cajou (lait)",
+    "category": "Fruits secs",
+    "macros": {
+      "kcal": 492,
+      "proteins": 12,
+      "lipids": 41,
+      "carbohydrates": 16,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "es-053": {
+    "id": "es-053",
+    "name": "Noix de coco râpée (lait)",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 558,
+      "proteins": 5,
+      "lipids": 51,
+      "carbohydrates": 20,
+      "fibers": 0
+    },
+    "unit": "g"
   }
 }

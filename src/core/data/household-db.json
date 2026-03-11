@@ -70,11 +70,6 @@
     "category": "Entretien"
   },
   {
-    "id": "hh-053",
-    "name": "Liquide vaisselle",
-    "category": "Entretien"
-  },
-  {
     "id": "hh-015",
     "name": "Mouchoirs",
     "category": "Entretien"
@@ -126,142 +121,162 @@
   },
   {
     "id": "hh-025",
+    "name": "Liquide vaisselle",
+    "category": "Entretien"
+  },
+  {
+    "id": "hh-026",
     "name": "Café",
     "category": "Garde manger"
   },
   {
-    "id": "hh-026",
+    "id": "hh-027",
     "name": "Café décaféiné",
     "category": "Garde manger"
   },
   {
-    "id": "hh-027",
+    "id": "hh-028",
     "name": "Chips",
     "category": "Garde manger"
   },
   {
-    "id": "hh-028",
+    "id": "hh-029",
     "name": "Eau pétillante",
     "category": "Garde manger"
   },
   {
-    "id": "hh-029",
+    "id": "hh-030",
     "name": "Jus de fruits",
     "category": "Garde manger"
   },
   {
-    "id": "hh-030",
+    "id": "hh-031",
     "name": "Poivre",
     "category": "Garde manger"
   },
   {
-    "id": "hh-031",
+    "id": "hh-032",
     "name": "Sel",
     "category": "Garde manger"
   },
   {
-    "id": "hh-032",
+    "id": "hh-033",
     "name": "Sirop",
     "category": "Garde manger"
   },
   {
-    "id": "hh-033",
+    "id": "hh-034",
     "name": "Soda",
     "category": "Garde manger"
   },
   {
-    "id": "hh-034",
+    "id": "hh-035",
     "name": "Thé",
     "category": "Garde manger"
   },
   {
-    "id": "hh-035",
+    "id": "hh-036",
     "name": "Sauce tomate",
     "category": "Garde manger"
   },
   {
-    "id": "hh-036",
+    "id": "hh-037",
     "name": "Brosses à dents",
     "category": "Hygiène"
   },
   {
-    "id": "hh-037",
+    "id": "hh-038",
     "name": "Coton tiges",
     "category": "Hygiène"
   },
   {
-    "id": "hh-038",
+    "id": "hh-039",
     "name": "Dentifrice",
     "category": "Hygiène"
   },
   {
-    "id": "hh-039",
+    "id": "hh-040",
     "name": "Déodorant",
     "category": "Hygiène"
   },
   {
-    "id": "hh-040",
+    "id": "hh-041",
     "name": "Gel douche",
     "category": "Hygiène"
   },
   {
-    "id": "hh-041",
+    "id": "hh-042",
     "name": "Lames de rasoir",
     "category": "Hygiène"
   },
   {
-    "id": "hh-042",
+    "id": "hh-043",
     "name": "Papier toilette",
     "category": "Hygiène"
   },
   {
-    "id": "hh-043",
+    "id": "hh-044",
     "name": "Savon mains",
     "category": "Hygiène"
   },
   {
-    "id": "hh-044",
+    "id": "hh-045",
     "name": "Shampoing",
     "category": "Hygiène"
   },
   {
-    "id": "hh-045",
+    "id": "hh-046",
     "name": "Aloe Vera",
     "category": "Pharmacie"
   },
   {
-    "id": "hh-046",
+    "id": "hh-047",
     "name": "Baume à lèvre",
     "category": "Pharmacie"
   },
   {
-    "id": "hh-047",
+    "id": "hh-048",
     "name": "Crème hydratante",
     "category": "Pharmacie"
   },
   {
-    "id": "hh-048",
+    "id": "hh-049",
     "name": "Créme solaire",
     "category": "Pharmacie"
   },
   {
-    "id": "hh-049",
+    "id": "hh-050",
     "name": "Gomme propolis",
     "category": "Pharmacie"
   },
   {
-    "id": "hh-050",
+    "id": "hh-051",
     "name": "Mouchoirs",
     "category": "Pharmacie"
   },
   {
-    "id": "hh-051",
+    "id": "hh-052",
     "name": "Pansements",
     "category": "Pharmacie"
   },
   {
-    "id": "hh-052",
+    "id": "hh-053",
     "name": "Sérum physiologique",
     "category": "Pharmacie"
+  },
+  {
+    "id": "hh-054",
+    "name": "Pâte à tartiner",
+    "category": "Garde manger"
+  },
+  {
+    "id": "hh-055",
+    "name": "Confiture",
+    "category": "Garde manger"
+  },
+  {
+    "id": "hh-056",
+    "name": "Purée de cacahuète",
+    "category": "Garde manger"
   }
 ]

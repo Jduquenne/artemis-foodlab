@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { X, Check } from 'lucide-react';
 import { SearchBar } from '../../../shared/components/ui/SearchBar';
-import { useSearchIngredients } from '../../../shared/hooks/useSearch';
+import { useSearchDesserts } from '../../../shared/hooks/useSearch';
 
 interface DessertPickerProps {
     existingIds: string[];
@@ -12,7 +12,7 @@ interface DessertPickerProps {
 export const DessertPicker = ({ existingIds, onSelect, onClose }: DessertPickerProps) => {
     const [query, setQuery] = useState('');
     const [isClosing, setIsClosing] = useState(false);
-    const results = useSearchIngredients(query);
+    const results = useSearchDesserts(query);
 
     const handleClose = () => { setIsClosing(true); setTimeout(onClose, 300); };
 

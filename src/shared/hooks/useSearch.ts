@@ -128,3 +128,31 @@ export const useSearchMeals = (query: string | null): SearchRecipeResult[] => {
 export const useSearchIngredients = (query: string | null): SearchRecipeResult[] => {
   return useMemo(() => search(query, [RecipeKind.INGREDIENT]), [query]);
 };
+
+export const useSearchDesserts = (query: string | null): SearchRecipeResult[] => {
+  return useMemo(() => {
+    if (query === null) return [];
+    const normalizedQuery = query.toLowerCase().trim();
+    const results = Object.entries(db)
+      .filter(([, recipe]) => Boolean(recipe.assets?.photo))
+      .filter(([, recipe]) => recipe.isDessert === true)
+      .filter(([recipeId, recipe]) => !normalizedQuery || matchesQuery(recipeId, recipe, normalizedQuery))
+      .map(([recipeId, recipe]) => toResult(recipeId, recipe, normalizedQuery));
+
+    if (!normalizedQuery || /^\d+$/.test(normalizedQuery)) return results;
+
+    const nameOrId = results
+      .filter((r) => r.name.toLowerCase().includes(normalizedQuery) || matchesRecipeId(r.recipeId, normalizedQuery))
+      .sort((a, b) => closestWordDistance(a.name, normalizedQuery) - closestWordDistance(b.name, normalizedQuery));
+
+    const ingredientOnly = results
+      .filter((r) => !r.name.toLowerCase().includes(normalizedQuery) && !matchesRecipeId(r.recipeId, normalizedQuery))
+      .sort((a, b) => {
+        const aScore = Math.min(...a.matchedIngredients.map((i) => closestWordDistance(i, normalizedQuery)));
+        const bScore = Math.min(...b.matchedIngredients.map((i) => closestWordDistance(i, normalizedQuery)));
+        return aScore - bScore;
+      });
+
+    return [...nameOrId, ...ingredientOnly];
+  }, [query]);
+};

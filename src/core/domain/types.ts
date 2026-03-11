@@ -100,6 +100,7 @@ export interface RecipeDetails {
     Record<"photo" | "ingredientsPhoto" | "instructionsPhoto", RecipeAsset>
   >;
   batchCooking?: boolean;
+  isDessert?: boolean;
 }
 
 export interface ShoppingDay {

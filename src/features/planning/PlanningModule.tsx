@@ -224,8 +224,8 @@ export const PlanningModule = () => {
         const slotId = `${year}-W${weekNumber}-${day}-${slot}`;
         const mealDef = MEAL_SLOTS.find(m => m.id === slot)!;
         const existing = planningData.find(p => p.day === day && p.slot === slot);
-        const recipeKind = (recipesDb as Record<string, { kind: string }>)[addRecipeId]?.kind;
-        if (mealDef.hasDessert && existing?.recipeIds.length && recipeKind === 'ingredient') {
+        const recipeIsDessert = (recipesDb as Record<string, { isDessert?: boolean }>)[addRecipeId]?.isDessert === true;
+        if (mealDef.hasDessert && existing?.recipeIds.length && recipeIsDessert) {
             if ((existing.dessertIds ?? []).length < 3) {
                 await addDessertToSlot(existing, addRecipeId);
                 clearAddMode();

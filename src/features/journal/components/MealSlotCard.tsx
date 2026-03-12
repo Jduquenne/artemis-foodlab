@@ -1,8 +1,11 @@
-import { MealSlot } from "../../../core/domain/types";
+import { MealSlot, RecipeKind } from "../../../core/domain/types";
 import { getAllRecipeIds, hasDesserts } from "../../../core/domain/recipePredicates";
-import { RECIPE_MACROS } from "../../../core/utils/macroUtils";
+import { RECIPE_BASE_GRAMS, RECIPE_MACROS } from "../../../core/utils/macroUtils";
 import { useJournalStore } from "../../../shared/store/useJournalStore";
+import { typedRecipesDb } from "../../../core/utils/typedRecipesDb";
 import { RecipePortionRow } from "./RecipePortionRow";
+
+const data = typedRecipesDb;
 
 export interface MealSlotCardProps {
   slotType: string;
@@ -17,11 +20,18 @@ const SLOT_LABELS: Record<string, string> = {
 };
 
 export const MealSlotCard = ({ slotType, slot }: MealSlotCardProps) => {
-  const { portionOverrides } = useJournalStore();
+  const { portionOverrides, gramOverrides } = useJournalStore();
 
   const allIds = slot ? getAllRecipeIds(slot) : [];
   const totalKcal = allIds.reduce((sum, id) => {
-    const portions = portionOverrides[`${slot!.id}-${id}`] ?? 1;
+    const key = `${slot!.id}-${id}`;
+    const recipe = data[id];
+    const baseGrams = RECIPE_BASE_GRAMS[id] ?? 0;
+    if (recipe?.kind === RecipeKind.INGREDIENT && baseGrams > 0) {
+      const grams = gramOverrides[key] ?? Math.round(baseGrams);
+      return sum + (RECIPE_MACROS[id]?.kcal ?? 0) * (grams / baseGrams);
+    }
+    const portions = portionOverrides[key] ?? 1;
     return sum + (RECIPE_MACROS[id]?.kcal ?? 0) * portions;
   }, 0);
 

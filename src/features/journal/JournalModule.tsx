@@ -22,7 +22,7 @@ function getDayKey(date: Date): string {
 const ZERO: Macronutrients = { kcal: 0, proteins: 0, lipids: 0, carbohydrates: 0, fibers: 0 };
 
 export const JournalModule = () => {
-  const { portionOverrides } = useJournalStore();
+  const { portionOverrides, gramOverrides } = useJournalStore();
   const [selectedDate, setSelectedDate] = useState(() => new Date());
   const [weekSlots, setWeekSlots] = useState<MealSlot[] | null>(null);
   const monday = getMonday(selectedDate);
@@ -60,7 +60,8 @@ export const JournalModule = () => {
         return getAllRecipeIds(slot).reduce((sum, id) => {
           const m = RECIPE_MACROS[id];
           if (!m) return sum;
-          const portionMult = portionOverrides[`${slot.id}-${id}`] ?? 1;
+          const key = `${slot.id}-${id}`;
+          const portionMult = portionOverrides[key] ?? 1;
           const recipe = plannableDb[id];
           const recipeIsDish = isDish(recipe) || isBase(recipe);
           let factor: number;
@@ -68,10 +69,15 @@ export const JournalModule = () => {
             const plannedPortions = slot.recipePersons?.[id];
             factor = (plannedPortions ?? 1) * portionMult;
           } else {
-            const recipeGrams = slot.recipeQuantities?.[id];
             const baseGrams = RECIPE_BASE_GRAMS[id];
-            const gramsFactor = recipeGrams !== undefined && baseGrams ? recipeGrams / baseGrams : 1;
-            factor = portionMult * gramsFactor;
+            const journalGrams = gramOverrides[key];
+            if (journalGrams !== undefined && baseGrams) {
+              factor = journalGrams / baseGrams;
+            } else {
+              const recipeGrams = slot.recipeQuantities?.[id];
+              const gramsFactor = recipeGrams !== undefined && baseGrams ? recipeGrams / baseGrams : 1;
+              factor = portionMult * gramsFactor;
+            }
           }
           return {
             kcal: sum.kcal + m.kcal * factor,
@@ -82,7 +88,7 @@ export const JournalModule = () => {
           };
         }, total);
       }, { ...ZERO }),
-    [daySlots, portionOverrides]
+    [daySlots, portionOverrides, gramOverrides]
   );
 
   const goToPrev = useCallback(() => setSelectedDate((d) => subDays(d, 1)), []);

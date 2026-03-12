@@ -14,6 +14,8 @@ interface JournalState {
   setMacroTargets: (targets: MacroTargets) => void;
   portionOverrides: Record<string, number>;
   setPortionOverride: (key: string, value: number) => void;
+  gramOverrides: Record<string, number>;
+  setGramOverride: (key: string, value: number) => void;
 }
 
 const DEFAULT_MACRO_TARGETS: MacroTargets = { proteins: 150, lipids: 65, carbohydrates: 250, fibers: 30 };
@@ -29,6 +31,14 @@ const loadMacroTargets = (): MacroTargets => {
 const loadPortionOverrides = (): Record<string, number> => {
   try {
     return JSON.parse(localStorage.getItem("cipe_portion_overrides") ?? "{}");
+  } catch {
+    return {};
+  }
+};
+
+const loadGramOverrides = (): Record<string, number> => {
+  try {
+    return JSON.parse(localStorage.getItem("cipe_gram_overrides") ?? "{}");
   } catch {
     return {};
   }
@@ -51,6 +61,14 @@ export const useJournalStore = create<JournalState>((set) => ({
       const next = { ...state.portionOverrides, [key]: value };
       localStorage.setItem("cipe_portion_overrides", JSON.stringify(next));
       return { portionOverrides: next };
+    });
+  },
+  gramOverrides: loadGramOverrides(),
+  setGramOverride: (key, value) => {
+    set((state) => {
+      const next = { ...state.gramOverrides, [key]: value };
+      localStorage.setItem("cipe_gram_overrides", JSON.stringify(next));
+      return { gramOverrides: next };
     });
   },
 }));

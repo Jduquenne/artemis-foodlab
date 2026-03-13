@@ -3,6 +3,16 @@ import { getISOWeek, getISOWeekYear } from "date-fns";
 import { getWeekId } from "../../core/utils/dateUtils";
 import { ShoppingDay } from "../../core/domain/types";
 
+function safeParseJson<T>(key: string, fallback: T): T {
+  try {
+    const raw = localStorage.getItem(key);
+    if (!raw) return fallback;
+    return JSON.parse(raw) as T;
+  } catch {
+    return fallback;
+  }
+}
+
 interface MenuState {
   currentWeek: number;
   currentYear: number;
@@ -17,8 +27,8 @@ export const useMenuStore = create<MenuState>((set) => ({
   currentWeekId: getWeekId(),
   currentWeek: getISOWeek(new Date()),
   currentYear: getISOWeekYear(new Date()),
-  shoppingDays: JSON.parse(localStorage.getItem("cipe_shopping_days") ?? "[]"),
-  activeFilterIds: JSON.parse(localStorage.getItem("cipe_active_filters") ?? "[]"),
+  shoppingDays: safeParseJson<ShoppingDay[]>("cipe_shopping_days", []),
+  activeFilterIds: safeParseJson<string[]>("cipe_active_filters", []),
 
   setShoppingDays: (days) => {
     localStorage.setItem("cipe_shopping_days", JSON.stringify(days));

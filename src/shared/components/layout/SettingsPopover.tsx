@@ -1,6 +1,6 @@
 import { lazy, Suspense, useRef, useState } from "react";
 import { Settings, Download, Upload, RefreshCw } from "lucide-react";
-import { applyImport, detectScopes, SyncPayload } from "../../../core/utils/syncSerializer";
+import { applyImport, detectScopes, SyncPayload, isValidSyncPayload } from "../../../core/utils/syncSerializer";
 import { exportData } from "../../../core/services/backupService";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -11,7 +11,7 @@ export const SettingsPopover = () => {
   const [open, setOpen] = useState(false);
   const [syncOpen, setSyncOpen] = useState(false);
   const [exportModalOpen, setExportModalOpen] = useState(false);
-  const [importModalData, setImportModalData] = useState<SyncPayload | null>(null);
+  const [importModalData, setImportModalData] = useState<unknown>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,8 +19,7 @@ export const SettingsPopover = () => {
     if (!file) return;
     try {
       const text = await file.text();
-      const data = JSON.parse(text) as SyncPayload;
-      setImportModalData(data);
+      setImportModalData(JSON.parse(text));
     } catch {
       alert("Impossible de lire ce fichier de sauvegarde.");
     }
@@ -98,7 +97,7 @@ export const SettingsPopover = () => {
           />
         )}
 
-        {importModalData && (
+        {importModalData && isValidSyncPayload(importModalData) && (
           <ScopeSelectorModal
             mode="import"
             availableScopes={detectScopes(importModalData)}

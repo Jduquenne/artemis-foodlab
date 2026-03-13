@@ -33,6 +33,26 @@ export interface SyncPayload {
   shoppingDays: ShoppingDay[] | null;
 }
 
+function safeParseJson<T>(raw: string | null): T | null {
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw) as T;
+  } catch {
+    return null;
+  }
+}
+
+export function isValidSyncPayload(data: unknown): data is SyncPayload {
+  if (!data || typeof data !== "object") return false;
+  const d = data as Record<string, unknown>;
+  if (d.version !== 3) return false;
+  if (d.planning !== null && !Array.isArray(d.planning)) return false;
+  if (d.household !== null && !Array.isArray(d.household)) return false;
+  if (d.freezerCategories !== null && !Array.isArray(d.freezerCategories)) return false;
+  if (d.freezerName !== null && typeof d.freezerName !== "string") return false;
+  return true;
+}
+
 export const serializeData = async (scope: SyncScope[] = ALL_SCOPES): Promise<SyncPayload> => {
   const hasPlanning = scope.includes("planning");
   const hasHousehold = scope.includes("household");
@@ -49,42 +69,44 @@ export const serializeData = async (scope: SyncScope[] = ALL_SCOPES): Promise<Sy
     planning: hasPlanning ? await db.planning.toArray() : null,
     household: hasHousehold ? await db.household.toArray() : null,
     freezerCategories: hasFreezer ? await db.freezerCategories.toArray() : null,
-    freezerName: rawFreezer ? JSON.parse(rawFreezer)?.state?.freezerName ?? null : null,
-    shoppingChecked: rawChecked ? JSON.parse(rawChecked) : null,
-    shoppingStocks: rawStocks ? JSON.parse(rawStocks) : null,
-    shoppingDays: rawDays ? JSON.parse(rawDays) : null,
+    freezerName: safeParseJson<{ state?: { freezerName?: string } }>(rawFreezer)?.state?.freezerName ?? null,
+    shoppingChecked: safeParseJson<Record<string, boolean>>(rawChecked),
+    shoppingStocks: safeParseJson<Record<string, number>>(rawStocks),
+    shoppingDays: safeParseJson<ShoppingDay[]>(rawDays),
   };
 };
 
-export const applyImport = async (data: SyncPayload, scope?: SyncScope[]): Promise<void> => {
-  if (!data.version) throw new Error("Format de fichier invalide");
-  const effectiveScope = scope ?? data.scope ?? ALL_SCOPES;
+export const applyImport = async (data: unknown, scope?: SyncScope[]): Promise<void> => {
+  if (!isValidSyncPayload(data)) throw new Error("Format de fichier invalide ou version incompatible");
+  const safeData = data;
+  const effectiveScope = scope ?? safeData.scope ?? ALL_SCOPES;
   await db.transaction("rw", db.planning, db.household, db.freezerCategories, async () => {
-    if (effectiveScope.includes("planning") && data.planning) {
-      await db.planning.bulkPut(data.planning);
+    if (effectiveScope.includes("planning") && safeData.planning) {
+      await db.planning.bulkPut(safeData.planning);
     }
-    if (effectiveScope.includes("household") && data.household?.length) {
-      await db.household.bulkPut(data.household);
+    if (effectiveScope.includes("household") && safeData.household?.length) {
+      await db.household.bulkPut(safeData.household);
     }
-    if (effectiveScope.includes("freezer") && data.freezerCategories?.length) {
-      await db.freezerCategories.bulkPut(data.freezerCategories);
+    if (effectiveScope.includes("freezer") && safeData.freezerCategories?.length) {
+      await db.freezerCategories.bulkPut(safeData.freezerCategories);
     }
   });
-  if (effectiveScope.includes("freezer") && data.freezerName) {
+  if (effectiveScope.includes("freezer") && safeData.freezerName) {
     const current = localStorage.getItem("cipe_freezer");
-    const parsed = current ? JSON.parse(current) : { state: {} };
-    parsed.state.freezerName = data.freezerName;
+    const parsed = safeParseJson<{ state?: Record<string, unknown> }>(current) ?? { state: {} };
+    if (!parsed.state) parsed.state = {};
+    parsed.state.freezerName = safeData.freezerName;
     localStorage.setItem("cipe_freezer", JSON.stringify(parsed));
   }
   if (effectiveScope.includes("shopping")) {
-    if (data.shoppingChecked) {
-      localStorage.setItem("cipe_shopping_checked", JSON.stringify(data.shoppingChecked));
+    if (safeData.shoppingChecked) {
+      localStorage.setItem("cipe_shopping_checked", JSON.stringify(safeData.shoppingChecked));
     }
-    if (data.shoppingStocks) {
-      localStorage.setItem("cipe_shopping_stocks", JSON.stringify(data.shoppingStocks));
+    if (safeData.shoppingStocks) {
+      localStorage.setItem("cipe_shopping_stocks", JSON.stringify(safeData.shoppingStocks));
     }
-    if (data.shoppingDays) {
-      localStorage.setItem("cipe_shopping_days", JSON.stringify(data.shoppingDays));
+    if (safeData.shoppingDays) {
+      localStorage.setItem("cipe_shopping_days", JSON.stringify(safeData.shoppingDays));
     }
   }
 };

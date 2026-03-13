@@ -33,8 +33,8 @@ export const ShoppingCategoryCard = ({ label, items, checked, stocks, sourceChec
     };
 
     return (
-        <div className="bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl p-3 shadow-sm">
-            <div className="flex items-center justify-between mb-2">
+        <div className="bg-white dark:bg-slate-100 border border-slate-200 rounded-xl p-2 shadow-sm">
+            <div className="flex items-center justify-between mb-1">
                 <h2 className="text-orange-600 font-black uppercase tracking-widest text-xs">
                     {label}
                 </h2>
@@ -64,17 +64,17 @@ export const ShoppingCategoryCard = ({ label, items, checked, stocks, sourceChec
                         <div
                             key={item.key}
                             onClick={() => { if (!isEditing) onToggle(item.key); }}
-                            className={`flex items-center justify-between gap-2 px-2 py-2.5 rounded-xl transition-all cursor-pointer select-none
+                            className={`flex items-center justify-between gap-1.5 px-1.5 py-1 rounded-lg transition-all cursor-pointer select-none
                                 ${isChecked
                                     ? 'opacity-40 bg-slate-50 dark:bg-slate-200/40'
                                     : 'hover:bg-slate-50 dark:hover:bg-slate-200/40'}`}
                         >
-                            <div className="flex items-center gap-2 min-w-0 flex-1">
+                            <div className="flex items-center gap-1.5 min-w-0 flex-1">
                                 {isChecked
-                                    ? <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
-                                    : <Circle className="w-4 h-4 text-slate-300 shrink-0" />
+                                    ? <CheckCircle2 className="w-3.5 h-3.5 text-green-500 shrink-0" />
+                                    : <Circle className="w-3.5 h-3.5 text-slate-300 shrink-0" />
                                 }
-                                <span className={`text-sm font-medium text-slate-800 truncate ${isChecked ? 'line-through' : ''}`}>
+                                <span className={`text-xs font-medium text-slate-800 truncate ${isChecked ? 'line-through' : ''}`}>
                                     {item.name}
                                     {item.preparation && (
                                         <span className="font-normal text-slate-400 ml-1">· {item.preparation}</span>
@@ -82,7 +82,7 @@ export const ShoppingCategoryCard = ({ label, items, checked, stocks, sourceChec
                                 </span>
                             </div>
 
-                            <div className="flex items-center gap-1.5 shrink-0" onClick={e => e.stopPropagation()}>
+                            <div className="flex items-center gap-1 shrink-0" onClick={e => e.stopPropagation()}>
                                 {isEditing ? (
                                     <div className="flex items-center gap-1">
                                         <span className="text-xs text-slate-400">j'en ai :</span>
@@ -97,7 +97,7 @@ export const ShoppingCategoryCard = ({ label, items, checked, stocks, sourceChec
                                                 if (e.key === 'Enter') e.currentTarget.blur();
                                                 if (e.key === 'Escape') setEditingKey(null);
                                             }}
-                                            className="w-16 text-sm text-center bg-slate-100 dark:bg-slate-200 border border-orange-300 focus:outline-none focus:border-orange-500 rounded-lg px-1 py-0.5"
+                                            className="w-14 text-xs text-center bg-slate-100 dark:bg-slate-200 border border-orange-300 focus:outline-none focus:border-orange-500 rounded-md px-1 py-0.5"
                                             autoFocus
                                         />
                                         <span className="text-xs text-slate-400">{pluralizeUnit(item.unit, parseFloat(editValue) || 0)}</span>
@@ -105,13 +105,13 @@ export const ShoppingCategoryCard = ({ label, items, checked, stocks, sourceChec
                                 ) : (
                                     <>
                                         {hasStock && (
-                                            <span className="text-xs font-semibold text-green-600 bg-green-50 dark:bg-green-900/20 px-1.5 py-0.5 rounded-md">
+                                            <span className="text-xs font-semibold text-green-600 bg-green-50 dark:bg-green-900/20 px-1.5 py-0.5 rounded">
                                                 {formatQty(stock)} dispo
                                             </span>
                                         )}
                                         <button
                                             onClick={() => canEditStock && startEditing(item.key, stock)}
-                                            className={`font-bold text-sm px-2 py-0.5 rounded-lg transition-colors ${
+                                            className={`font-bold text-xs px-1.5 py-0.5 rounded-md transition-colors ${
                                                 !canEditStock
                                                     ? 'bg-slate-100 dark:bg-slate-200 text-slate-400 cursor-default'
                                                     : needed === 0

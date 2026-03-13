@@ -9,9 +9,9 @@ export interface IngredientTooltipProps {
 export const IngredientTooltip = ({ sources, onOpen }: IngredientTooltipProps) => (
     <button
         onClick={(e) => { e.stopPropagation(); onOpen(sources); }}
-        className="flex items-center justify-center w-6 h-6 rounded-full text-slate-300 hover:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/30 transition-colors shrink-0"
+        className="flex items-center justify-center w-5 h-5 rounded-full text-slate-300 hover:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/30 transition-colors shrink-0"
         tabIndex={-1}
     >
-        <Info className="w-3.5 h-3.5" />
+        <Info className="w-3 h-3" />
     </button>
 );

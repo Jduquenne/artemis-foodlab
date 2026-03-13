@@ -4,6 +4,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { HouseholdItem, HouseholdCategory } from '../../core/domain/types';
 import { getRecords, checkItem, clearAll } from '../../core/services/householdService';
 import { markScrolling } from '../../shared/utils/scrollGuard';
+import { useColCount } from '../../shared/hooks/useColCount';
 import householdDb from '../../core/data/household-db.json';
 import { HouseholdCategoryCard } from './components/HouseholdCategoryCard';
 
@@ -17,9 +18,23 @@ const CATEGORY_ORDER: HouseholdCategory[] = [
 
 const allItems = householdDb as HouseholdItem[];
 
+function distributeToColumns<T>(items: T[], getHeight: (item: T) => number, colCount: number): T[][] {
+    if (colCount <= 1) return [items];
+    const cols: T[][] = Array.from({ length: colCount }, () => []);
+    const heights = new Array<number>(colCount).fill(0);
+    const sorted = [...items].sort((a, b) => getHeight(b) - getHeight(a));
+    for (const item of sorted) {
+        const minIdx = heights.indexOf(Math.min(...heights));
+        cols[minIdx].push(item);
+        heights[minIdx] += getHeight(item);
+    }
+    return cols;
+}
+
 export const HouseholdModule = () => {
     const records = useLiveQuery(() => getRecords(), []);
     const [spinning, setSpinning] = useState(false);
+    const colCount = useColCount();
 
     const checkedIds = useMemo(() => {
         const set = new Set<string>();
@@ -45,6 +60,11 @@ export const HouseholdModule = () => {
             .filter(g => g.items.length > 0);
     }, []);
 
+    const columns = useMemo(
+        () => distributeToColumns(grouped, g => g.items.length, colCount),
+        [grouped, colCount]
+    );
+
     return (
         <div className="h-full flex flex-col gap-4 overflow-hidden">
             <div className="flex justify-between items-start shrink-0">
@@ -68,15 +88,22 @@ export const HouseholdModule = () => {
             </div>
 
             <div className="flex-1 min-h-0 overflow-y-auto pr-1" onScroll={markScrolling}>
-                <div className="columns-1 tablet:columns-2 lg:columns-3 gap-4 pb-4">
-                    {grouped.map((group, i) => (
-                        <div key={group.label} className="animate-fade-in-up break-inside-avoid" style={{ animationDelay: `${i * 60}ms` }}>
-                            <HouseholdCategoryCard
-                                label={group.label}
-                                items={group.items}
-                                checkedIds={checkedIds}
-                                onVerify={handleVerify}
-                            />
+                <div
+                    className="grid gap-4 pb-4 items-start"
+                    style={{ gridTemplateColumns: `repeat(${colCount}, 1fr)` }}
+                >
+                    {columns.map((col, ci) => (
+                        <div key={ci} className="flex flex-col gap-4">
+                            {col.map((group, i) => (
+                                <div key={group.label} className="animate-fade-in-up" style={{ animationDelay: `${(ci + i) * 60}ms` }}>
+                                    <HouseholdCategoryCard
+                                        label={group.label}
+                                        items={group.items}
+                                        checkedIds={checkedIds}
+                                        onVerify={handleVerify}
+                                    />
+                                </div>
+                            ))}
                         </div>
                     ))}
                 </div>

@@ -7,6 +7,7 @@ import { getShoppingListForDays, getBasesForDays, ConsolidatedIngredient, Ingred
 import { typedRecipesDb } from '../../core/utils/typedRecipesDb';
 import { markScrolling } from '../../shared/utils/scrollGuard';
 import { useMenuStore } from '../../shared/store/useMenuStore';
+import { useColCount } from '../../shared/hooks/useColCount';
 import { ShoppingCategoryCard } from './components/ShoppingCategoryCard';
 import { RecipeShoppingCard, RecipeCardIngredient, RecipeBaseGroup } from './components/RecipeShoppingCard';
 import { SourcesModal } from './components/SourcesModal';
@@ -31,6 +32,19 @@ const CATEGORY_ORDER: IngredientCategory[] = [
     IngredientCategory.UNKNOWN,
 ];
 
+function distributeToColumns<T>(items: T[], getHeight: (item: T) => number, colCount: number): T[][] {
+    if (colCount <= 1) return [items];
+    const cols: T[][] = Array.from({ length: colCount }, () => []);
+    const heights = new Array<number>(colCount).fill(0);
+    const sorted = [...items].sort((a, b) => getHeight(b) - getHeight(a));
+    for (const item of sorted) {
+        const minIdx = heights.indexOf(Math.min(...heights));
+        cols[minIdx].push(item);
+        heights[minIdx] += getHeight(item);
+    }
+    return cols;
+}
+
 function getPeriodKey(days: ShoppingDay[]): string {
     return [...days].map(d => `${d.year}-${d.week}-${d.day}`).sort().join('|');
 }
@@ -40,6 +54,7 @@ export const ShoppingModule = () => {
     const shoppingDays = useMenuStore((s) => s.shoppingDays);
     const periodKey = useMemo(() => getPeriodKey(shoppingDays), [shoppingDays]);
 
+    const colCount = Math.min(useColCount(), 3);
     const [viewMode, setViewMode] = useState<'meals' | 'ingredients'>('ingredients');
     const [ingredientFilter, setIngredientFilter] = useState<'all' | 'missing'>('all');
     const [activeSources, setActiveSources] = useState<{ key: string; sources: IngredientSource[] } | null>(null);
@@ -231,6 +246,16 @@ export const ShoppingModule = () => {
         }).length;
     }, [ingredients, checked, stocks, sourceChecked]);
 
+    const ingredientColumns = useMemo(
+        () => distributeToColumns(groupedItems, g => g.list.length, colCount),
+        [groupedItems, colCount]
+    );
+
+    const mealColumns = useMemo(
+        () => distributeToColumns(recipeCards, c => c.directIngredients.length + c.baseGroups.reduce((s, b) => s + b.ingredients.length, 0), colCount),
+        [recipeCards, colCount]
+    );
+
     const daysLabel = useMemo(() => {
         if (shoppingDays.length === 0) return null;
         const n = shoppingDays.length;
@@ -334,18 +359,22 @@ export const ShoppingModule = () => {
                         <p className="text-sm">Planifie des repas pour générer la liste</p>
                     </div>
                 ) : viewMode === 'meals' ? (
-                    <div className="columns-1 tablet:columns-2 lg:columns-3 gap-4 pb-4">
-                        {recipeCards.map((card, i) => (
-                            <div key={card.recipeId} className="animate-fade-in-up break-inside-avoid mb-4" style={{ animationDelay: `${i * 60}ms` }}>
-                                <RecipeShoppingCard
-                                    recipeId={card.recipeId}
-                                    recipeName={card.recipeName}
-                                    directIngredients={card.directIngredients}
-                                    baseGroups={card.baseGroups}
-                                    sourceChecked={sourceChecked}
-                                    onToggleSource={toggleSourceCheck}
-                                    onToggleBatch={toggleSourceBatch}
-                                />
+                    <div className="grid gap-4 pb-4 items-start" style={{ gridTemplateColumns: `repeat(${colCount}, 1fr)` }}>
+                        {mealColumns.map((col, ci) => (
+                            <div key={ci} className="flex flex-col gap-4">
+                                {col.map((card, i) => (
+                                    <div key={card.recipeId} className="animate-fade-in-up" style={{ animationDelay: `${(ci + i) * 60}ms` }}>
+                                        <RecipeShoppingCard
+                                            recipeId={card.recipeId}
+                                            recipeName={card.recipeName}
+                                            directIngredients={card.directIngredients}
+                                            baseGroups={card.baseGroups}
+                                            sourceChecked={sourceChecked}
+                                            onToggleSource={toggleSourceCheck}
+                                            onToggleBatch={toggleSourceBatch}
+                                        />
+                                    </div>
+                                ))}
                             </div>
                         ))}
                     </div>
@@ -356,19 +385,23 @@ export const ShoppingModule = () => {
                         <p className="text-sm">Rien à acheter — tout est en stock ou coché</p>
                     </div>
                 ) : (
-                    <div className="columns-1 tablet:columns-2 lg:columns-3 gap-4 pb-4">
-                        {groupedItems.map((group, i) => (
-                            <div key={group.label} className="animate-fade-in-up break-inside-avoid mb-4" style={{ animationDelay: `${i * 60}ms` }}>
-                                <ShoppingCategoryCard
-                                    label={group.label}
-                                    items={group.list}
-                                    checked={checked}
-                                    stocks={stocks}
-                                    sourceChecked={sourceChecked}
-                                    onToggle={toggleItem}
-                                    onSetStock={setStock}
-                                    onShowSources={(key, sources) => setActiveSources({ key, sources })}
-                                />
+                    <div className="grid gap-4 pb-4 items-start" style={{ gridTemplateColumns: `repeat(${colCount}, 1fr)` }}>
+                        {ingredientColumns.map((col, ci) => (
+                            <div key={ci} className="flex flex-col gap-4">
+                                {col.map((group, i) => (
+                                    <div key={group.label} className="animate-fade-in-up" style={{ animationDelay: `${(ci + i) * 60}ms` }}>
+                                        <ShoppingCategoryCard
+                                            label={group.label}
+                                            items={group.list}
+                                            checked={checked}
+                                            stocks={stocks}
+                                            sourceChecked={sourceChecked}
+                                            onToggle={toggleItem}
+                                            onSetStock={setStock}
+                                            onShowSources={(key, sources) => setActiveSources({ key, sources })}
+                                        />
+                                    </div>
+                                ))}
                             </div>
                         ))}
                     </div>

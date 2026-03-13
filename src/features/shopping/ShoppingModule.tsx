@@ -3,10 +3,11 @@ import { ShoppingCart, CalendarDays } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useNavigate } from 'react-router-dom';
 import { IngredientCategory, ShoppingDay } from '../../core/domain/types';
-import { getShoppingListForDays, ConsolidatedIngredient, IngredientSource } from '../../core/utils/shoppingLogic';
+import { getShoppingListForDays, getBasesForDays, ConsolidatedIngredient, IngredientSource } from '../../core/utils/shoppingLogic';
 import { markScrolling } from '../../shared/utils/scrollGuard';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { ShoppingCategoryCard } from './components/ShoppingCategoryCard';
+import { BaseCategoryCard } from './components/BaseCategoryCard';
 import { SourcesModal } from './components/SourcesModal';
 
 const CATEGORY_ORDER: IngredientCategory[] = [
@@ -71,6 +72,16 @@ export const ShoppingModule = () => {
         return new Set<string>();
     });
 
+    const [checkedBases, setCheckedBases] = useState<Set<string>>(() => {
+        try {
+            const s = JSON.parse(localStorage.getItem('cipe_shopping_bases_checked') ?? 'null');
+            if (s?.periodKey === getPeriodKey(useMenuStore.getState().shoppingDays)) {
+                return new Set<string>(s.keys);
+            }
+        } catch { /* localStorage indisponible */ }
+        return new Set<string>();
+    });
+
     useEffect(() => {
         localStorage.setItem('cipe_shopping_checked', JSON.stringify({ periodKey, keys: [...checked] }));
     }, [periodKey, checked]);
@@ -83,10 +94,20 @@ export const ShoppingModule = () => {
         localStorage.setItem('cipe_shopping_source_checked', JSON.stringify({ periodKey, keys: [...sourceChecked] }));
     }, [periodKey, sourceChecked]);
 
+    useEffect(() => {
+        localStorage.setItem('cipe_shopping_bases_checked', JSON.stringify({ periodKey, keys: [...checkedBases] }));
+    }, [periodKey, checkedBases]);
+
     const ingredients = useLiveQuery(
         () => getShoppingListForDays(shoppingDays),
         [shoppingDays]
     );
+
+    const basesRaw = useLiveQuery(
+        () => getBasesForDays(shoppingDays),
+        [shoppingDays]
+    );
+    const bases = useMemo(() => basesRaw ?? [], [basesRaw]);
 
     const toggleItem = (key: string) => {
         setChecked(prev => {
@@ -101,6 +122,28 @@ export const ShoppingModule = () => {
             const next = { ...prev };
             if (value <= 0) delete next[key];
             else next[key] = value;
+            return next;
+        });
+    };
+
+    const toggleBase = (baseId: string) => {
+        const willBeChecked = !checkedBases.has(baseId);
+        setCheckedBases(prev => {
+            const next = new Set(prev);
+            if (next.has(baseId)) { next.delete(baseId); } else { next.add(baseId); }
+            return next;
+        });
+        if (!ingredients) return;
+        setSourceCheckedState(prev => {
+            const next = new Set(prev);
+            for (const ingredient of ingredients) {
+                for (const source of ingredient.sources) {
+                    if (source.fromBaseId === baseId) {
+                        const k = `${ingredient.key}::${source.recipeId}::${source.day}::${source.slot}`;
+                        if (willBeChecked) { next.add(k); } else { next.delete(k); }
+                    }
+                }
+            }
             return next;
         });
     };
@@ -233,6 +276,15 @@ export const ShoppingModule = () => {
                     </div>
                 ) : (
                     <div className="columns-1 tablet:columns-2 lg:columns-3 gap-4 pb-4">
+                        {bases.length > 0 && (viewMode === 'all' || bases.some(b => !checkedBases.has(b.baseId))) && (
+                            <div className="animate-fade-in-up break-inside-avoid mb-4">
+                                <BaseCategoryCard
+                                    items={viewMode === 'missing' ? bases.filter(b => !checkedBases.has(b.baseId)) : bases}
+                                    checkedBases={checkedBases}
+                                    onToggle={toggleBase}
+                                />
+                            </div>
+                        )}
                         {groupedItems.map((group, i) => (
                             <div key={group.label} className="animate-fade-in-up break-inside-avoid mb-4" style={{ animationDelay: `${i * 60}ms` }}>
                                 <ShoppingCategoryCard

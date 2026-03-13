@@ -15,6 +15,7 @@ export interface IngredientSource {
   unit: string;
   persons?: number;
   baseQuantity?: number;
+  fromBaseId?: string;
 }
 
 export interface ConsolidatedIngredient {
@@ -27,10 +28,43 @@ export interface ConsolidatedIngredient {
   sources: IngredientSource[];
 }
 
+export interface BaseEntry {
+  baseId: string;
+  name: string;
+  totalPortions: number;
+  unit: string;
+}
+
 function cleanRecipeName(name: string): string {
   return name
     .replace(/\s+(ingrédients?|ingredients?|recettes?|recipes?|photo)$/i, "")
     .trim();
+}
+
+function resolveSlots(slots: MealSlot[]): MealSlot[] {
+  return slots;
+}
+
+function slotScaleFactor(
+  slot: MealSlot,
+  recipeId: string,
+  defaultPortions: number,
+): number {
+  const recipePersonsOverride = slot.recipePersons?.[recipeId];
+  const recipeGramsOverride = slot.recipeQuantities?.[recipeId];
+  const baseGrams = RECIPE_BASE_GRAMS[recipeId];
+  if (recipeGramsOverride !== undefined && baseGrams) {
+    const persons =
+      recipePersonsOverride ?? slot.persons ?? defaultPortions;
+    return (persons * recipeGramsOverride) / (defaultPortions * baseGrams);
+  }
+  if (recipePersonsOverride !== undefined && defaultPortions > 0) {
+    return recipePersonsOverride / defaultPortions;
+  }
+  if (slot.persons !== undefined && defaultPortions > 0) {
+    return slot.persons / defaultPortions;
+  }
+  return 1;
 }
 
 async function aggregateSlots(
@@ -72,29 +106,15 @@ async function aggregateSlots(
     }
   }
 
-  for (const slot of slots) {
+  for (const slot of resolveSlots(slots)) {
     const allIds = getAllRecipeIds(slot);
     for (const recipeId of allIds) {
       const details = data[recipeId];
       if (!details) continue;
 
       const recipeName = cleanRecipeName(details.name);
-      const recipePersonsOverride = slot.recipePersons?.[recipeId];
-      const recipeGramsOverride = slot.recipeQuantities?.[recipeId];
-      const baseGrams = RECIPE_BASE_GRAMS[recipeId];
-      let scaleFactor: number;
-      if (recipeGramsOverride !== undefined && baseGrams) {
-        const persons = recipePersonsOverride ?? slot.persons ?? details.defaultPortions;
-        scaleFactor = (persons * recipeGramsOverride) / (details.defaultPortions * baseGrams);
-      } else if (recipePersonsOverride !== undefined && details.defaultPortions > 0) {
-        scaleFactor = recipePersonsOverride / details.defaultPortions;
-      } else if (slot.persons !== undefined && details.defaultPortions > 0) {
-        scaleFactor = slot.persons / details.defaultPortions;
-      } else {
-        scaleFactor = 1;
-      }
-
-      const effectivePersons = recipePersonsOverride ?? slot.persons;
+      const scaleFactor = slotScaleFactor(slot, recipeId, details.defaultPortions);
+      const effectivePersons = slot.recipePersons?.[recipeId] ?? slot.persons;
 
       for (const ing of details.ingredients) {
         if (ing.baseId) {
@@ -112,6 +132,7 @@ async function aggregateSlots(
                 slot: slot.slot,
                 quantity: qty,
                 unit: baseIng.unit,
+                fromBaseId: ing.baseId,
                 ...(effectivePersons !== undefined && {
                   persons: effectivePersons,
                   baseQuantity: baseQty,
@@ -152,23 +173,45 @@ async function aggregateSlots(
     .sort((a, b) => a.name.localeCompare(b.name, "fr"));
 }
 
-export const getNextWeekShoppingList = async (): Promise<
-  ConsolidatedIngredient[]
-> => {
-  const nextWeekDate = addDays(new Date(), 7);
-  const nextWeek = getISOWeek(nextWeekDate);
-  const nextYear = getISOWeekYear(nextWeekDate);
+async function aggregateBases(slots: MealSlot[]): Promise<BaseEntry[]> {
+  const data = typedRecipesDb;
+  const map = new Map<string, BaseEntry>();
 
-  const slots = await getWeekSlots(nextYear, nextWeek);
+  for (const slot of slots) {
+    const allIds = getAllRecipeIds(slot);
+    for (const recipeId of allIds) {
+      const details = data[recipeId];
+      if (!details) continue;
 
-  return aggregateSlots(slots);
-};
+      const scaleFactor = slotScaleFactor(slot, recipeId, details.defaultPortions);
 
-export const getShoppingListForDays = async (
-  days: ShoppingDay[],
-): Promise<ConsolidatedIngredient[]> => {
-  if (days.length === 0) return [];
+      for (const ing of details.ingredients) {
+        if (!ing.baseId) continue;
+        const baseRecipe = data[ing.baseId];
+        if (!baseRecipe) continue;
 
+        const qty = (ing.quantity ?? 1) * scaleFactor;
+        const existing = map.get(ing.baseId);
+        if (existing) {
+          existing.totalPortions += qty;
+        } else {
+          map.set(ing.baseId, {
+            baseId: ing.baseId,
+            name: cleanRecipeName(baseRecipe.name),
+            totalPortions: qty,
+            unit: ing.unit,
+          });
+        }
+      }
+    }
+  }
+
+  return Array.from(map.values()).sort((a, b) =>
+    a.name.localeCompare(b.name, "fr"),
+  );
+}
+
+async function resolveWeekSlots(days: ShoppingDay[]): Promise<MealSlot[]> {
   const weekMap = new Map<
     string,
     { year: number; week: number; daySet: Set<string> }
@@ -185,6 +228,31 @@ export const getShoppingListForDays = async (
     const weekSlots = await getWeekSlots(year, week);
     slots.push(...weekSlots.filter((s) => daySet.has(s.day)));
   }
+  return slots;
+}
+
+export const getNextWeekShoppingList = async (): Promise<
+  ConsolidatedIngredient[]
+> => {
+  const nextWeekDate = addDays(new Date(), 7);
+  const nextWeek = getISOWeek(nextWeekDate);
+  const nextYear = getISOWeekYear(nextWeekDate);
+
+  const slots = await getWeekSlots(nextYear, nextWeek);
 
   return aggregateSlots(slots);
+};
+
+export const getShoppingListForDays = async (
+  days: ShoppingDay[],
+): Promise<ConsolidatedIngredient[]> => {
+  if (days.length === 0) return [];
+  return aggregateSlots(await resolveWeekSlots(days));
+};
+
+export const getBasesForDays = async (
+  days: ShoppingDay[],
+): Promise<BaseEntry[]> => {
+  if (days.length === 0) return [];
+  return aggregateBases(await resolveWeekSlots(days));
 };

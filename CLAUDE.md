@@ -149,6 +149,16 @@ The app uses a **CSS variable-based theme** defined in `src/index.css`. Tailwind
 
 When the user asks for a **commit**, respond with only the commit message text — do not run any git commands. Format: `feature: <description>` or `fix: <description>`. In English. Short, no bullet points, no technical details.
 
+### Versioning
+
+The app version is tracked in `package.json`. **Before proposing any commit message, always increment the version** according to these rules:
+
+- **New module** (new route + feature folder): MAJOR++, MINOR → 0, PATCH → 0
+- **New feature** (no new module): MINOR++, PATCH stays unchanged
+- **Fix / refactor / update / docs**: PATCH++
+
+Current version: **6.11.13**. The next commit must update `package.json` accordingly before the commit message is given.
+
 ## TypeScript conventions
 
 - **Enum variable names must be in English** — the string value can be in French, but the identifier must be English. Example: `MAINTENANCE = "Entretien"`, not `ENTRETIEN = "Entretien"`.

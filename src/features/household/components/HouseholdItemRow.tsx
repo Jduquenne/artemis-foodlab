@@ -11,17 +11,17 @@ export const HouseholdItemRow = ({ item, isChecked, onVerify }: HouseholdItemRow
   return (
     <div
       onClick={() => { if (!isChecked) onVerify(item.id); }}
-      className={`flex items-center gap-2 px-2 py-2.5 rounded-xl transition-colors select-none ${
+      className={`flex items-center gap-1.5 px-1.5 py-1 rounded-lg transition-colors select-none ${
         isChecked
           ? "opacity-40"
           : "hover:bg-slate-50 dark:hover:bg-slate-200/40 cursor-pointer"
       }`}
     >
       {isChecked
-        ? <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
-        : <Circle className="w-4 h-4 text-orange-400 shrink-0" />
+        ? <CheckCircle2 className="w-3.5 h-3.5 text-green-500 shrink-0" />
+        : <Circle className="w-3.5 h-3.5 text-orange-400 shrink-0" />
       }
-      <span className={`text-sm font-medium text-slate-800 truncate ${isChecked ? "line-through" : ""}`}>
+      <span className={`text-xs font-medium text-slate-800 truncate ${isChecked ? "line-through" : ""}`}>
         {item.name}
       </span>
     </div>

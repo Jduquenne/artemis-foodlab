@@ -148,11 +148,13 @@ export const ShoppingModule = () => {
         });
     };
 
-    const toggleSourceCheck = (ingredientKey: string, source: IngredientSource) => {
-        const k = `${ingredientKey}::${source.recipeId}::${source.day}::${source.slot}`;
+    const toggleSourceCheck = (ingredientKey: string, sources: IngredientSource[], checked: boolean) => {
         setSourceCheckedState(prev => {
             const next = new Set(prev);
-            if (next.has(k)) { next.delete(k); } else { next.add(k); }
+            for (const source of sources) {
+                const k = `${ingredientKey}::${source.recipeId}::${source.day}::${source.slot}`;
+                if (checked) { next.add(k); } else { next.delete(k); }
+            }
             return next;
         });
     };

@@ -1,7 +1,7 @@
 import { addDays } from "date-fns";
 import { getISOWeek, getISOWeekYear } from "date-fns";
 import { getWeekSlots, MealSlot } from "../services/planningService";
-import { IngredientCategory, ShoppingDay } from "../domain/types";
+import { Ingredient, IngredientCategory, ShoppingDay } from "../domain/types";
 import { getAllRecipeIds } from "../domain/recipePredicates";
 import { typedRecipesDb } from "./typedRecipesDb";
 import { RECIPE_BASE_GRAMS } from "./macroUtils";
@@ -40,6 +40,38 @@ async function aggregateSlots(
   const map = new Map<string, ConsolidatedIngredient>();
   const prepMap = new Map<string, Set<string>>();
 
+  function addIngredientToMap(
+    ing: Ingredient,
+    qty: number,
+    source: IngredientSource,
+  ) {
+    const key = `${ing.name.toLowerCase()}-${ing.unit}`;
+    const existing = map.get(key);
+    if (existing) {
+      existing.totalQuantity += qty;
+      const alreadyListed = existing.sources.some(
+        (s) =>
+          s.recipeId === source.recipeId &&
+          s.day === source.day &&
+          s.slot === source.slot,
+      );
+      if (!alreadyListed) existing.sources.push(source);
+    } else {
+      map.set(key, {
+        key,
+        name: ing.name,
+        totalQuantity: qty,
+        unit: ing.unit,
+        category: ing.category as IngredientCategory | undefined,
+        sources: [source],
+      });
+    }
+    if (ing.preparation) {
+      if (!prepMap.has(key)) prepMap.set(key, new Set());
+      prepMap.get(key)!.add(ing.preparation);
+    }
+  }
+
   for (const slot of slots) {
     const allIds = getAllRecipeIds(slot);
     for (const recipeId of allIds) {
@@ -62,12 +94,37 @@ async function aggregateSlots(
         scaleFactor = 1;
       }
 
+      const effectivePersons = recipePersonsOverride ?? slot.persons;
+
       for (const ing of details.ingredients) {
+        if (ing.baseId) {
+          const baseRecipe = data[ing.baseId];
+          if (baseRecipe) {
+            const basePortionScale = (ing.quantity ?? 1) / baseRecipe.defaultPortions;
+            const combinedScale = scaleFactor * basePortionScale;
+            for (const baseIng of baseRecipe.ingredients) {
+              const baseQty = baseIng.quantity ?? 0;
+              const qty = baseQty * combinedScale;
+              const source: IngredientSource = {
+                recipeId,
+                recipeName,
+                day: slot.day,
+                slot: slot.slot,
+                quantity: qty,
+                unit: baseIng.unit,
+                ...(effectivePersons !== undefined && {
+                  persons: effectivePersons,
+                  baseQuantity: baseQty,
+                }),
+              };
+              addIngredientToMap(baseIng, qty, source);
+            }
+            continue;
+          }
+        }
+
         const baseQty = ing.quantity ?? 0;
         const qty = baseQty * scaleFactor;
-        const key = `${ing.name.toLowerCase()}-${ing.unit}`;
-
-        const effectivePersons = recipePersonsOverride ?? slot.persons;
         const source: IngredientSource = {
           recipeId,
           recipeName,
@@ -80,32 +137,7 @@ async function aggregateSlots(
             baseQuantity: baseQty,
           }),
         };
-
-        const existing = map.get(key);
-        if (existing) {
-          existing.totalQuantity += qty;
-          const alreadyListed = existing.sources.some(
-            (s) =>
-              s.recipeId === source.recipeId &&
-              s.day === source.day &&
-              s.slot === source.slot,
-          );
-          if (!alreadyListed) existing.sources.push(source);
-        } else {
-          map.set(key, {
-            key,
-            name: ing.name,
-            totalQuantity: qty,
-            unit: ing.unit,
-            category: ing.category as IngredientCategory | undefined,
-            sources: [source],
-          });
-        }
-
-        if (ing.preparation) {
-          if (!prepMap.has(key)) prepMap.set(key, new Set());
-          prepMap.get(key)!.add(ing.preparation);
-        }
+        addIngredientToMap(ing, qty, source);
       }
     }
   }

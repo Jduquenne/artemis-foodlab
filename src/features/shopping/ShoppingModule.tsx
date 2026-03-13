@@ -39,7 +39,7 @@ export const ShoppingModule = () => {
     const periodKey = useMemo(() => getPeriodKey(shoppingDays), [shoppingDays]);
 
     const [viewMode, setViewMode] = useState<'all' | 'missing'>('all');
-    const [activeSources, setActiveSources] = useState<IngredientSource[] | null>(null);
+    const [activeSources, setActiveSources] = useState<{ key: string; sources: IngredientSource[] } | null>(null);
 
     const [checked, setChecked] = useState<Set<string>>(() => {
         try {
@@ -61,6 +61,16 @@ export const ShoppingModule = () => {
         return {};
     });
 
+    const [sourceChecked, setSourceCheckedState] = useState<Set<string>>(() => {
+        try {
+            const s = JSON.parse(localStorage.getItem('cipe_shopping_source_checked') ?? 'null');
+            if (s?.periodKey === getPeriodKey(useMenuStore.getState().shoppingDays)) {
+                return new Set<string>(s.keys);
+            }
+        } catch { /* localStorage indisponible */ }
+        return new Set<string>();
+    });
+
     useEffect(() => {
         localStorage.setItem('cipe_shopping_checked', JSON.stringify({ periodKey, keys: [...checked] }));
     }, [periodKey, checked]);
@@ -68,6 +78,10 @@ export const ShoppingModule = () => {
     useEffect(() => {
         localStorage.setItem('cipe_shopping_stocks', JSON.stringify({ periodKey, data: stocks }));
     }, [periodKey, stocks]);
+
+    useEffect(() => {
+        localStorage.setItem('cipe_shopping_source_checked', JSON.stringify({ periodKey, keys: [...sourceChecked] }));
+    }, [periodKey, sourceChecked]);
 
     const ingredients = useLiveQuery(
         () => getShoppingListForDays(shoppingDays),
@@ -91,12 +105,27 @@ export const ShoppingModule = () => {
         });
     };
 
+    const toggleSourceCheck = (ingredientKey: string, source: IngredientSource) => {
+        const k = `${ingredientKey}::${source.recipeId}::${source.day}::${source.slot}`;
+        setSourceCheckedState(prev => {
+            const next = new Set(prev);
+            if (next.has(k)) { next.delete(k); } else { next.add(k); }
+            return next;
+        });
+    };
+
     const groupedItems = useMemo(() => {
         if (!ingredients) return [];
+        const getEffective = (i: ConsolidatedIngredient) => {
+            const srcQty = i.sources
+                .filter(s => sourceChecked.has(`${i.key}::${s.recipeId}::${s.day}::${s.slot}`))
+                .reduce((sum, s) => sum + s.quantity, 0);
+            return Math.max(0, i.totalQuantity - srcQty);
+        };
         const isNeeded = (i: ConsolidatedIngredient) => {
             if (checked.has(i.key)) return false;
             if (i.totalQuantity === 0) return true;
-            return Math.max(0, i.totalQuantity - (stocks[i.key] ?? 0)) > 0;
+            return Math.max(0, getEffective(i) - (stocks[i.key] ?? 0)) > 0;
         };
         const filterItem = (i: ConsolidatedIngredient) => viewMode === 'all' || isNeeded(i);
         const groups: { label: string; list: ConsolidatedIngredient[] }[] = CATEGORY_ORDER
@@ -105,16 +134,20 @@ export const ShoppingModule = () => {
         const uncategorized = ingredients.filter(i => (!i.category || !CATEGORY_ORDER.includes(i.category)) && filterItem(i));
         if (uncategorized.length > 0) groups.push({ label: 'Autres', list: uncategorized });
         return groups;
-    }, [ingredients, viewMode, checked, stocks]);
+    }, [ingredients, viewMode, checked, stocks, sourceChecked]);
 
     const uncheckedCount = useMemo(() => {
         if (!ingredients) return 0;
         return ingredients.filter(i => {
             if (checked.has(i.key)) return false;
             if (i.totalQuantity === 0) return true;
-            return Math.max(0, i.totalQuantity - (stocks[i.key] ?? 0)) > 0;
+            const srcQty = i.sources
+                .filter(s => sourceChecked.has(`${i.key}::${s.recipeId}::${s.day}::${s.slot}`))
+                .reduce((sum, s) => sum + s.quantity, 0);
+            const effective = Math.max(0, i.totalQuantity - srcQty);
+            return Math.max(0, effective - (stocks[i.key] ?? 0)) > 0;
         }).length;
-    }, [ingredients, checked, stocks]);
+    }, [ingredients, checked, stocks, sourceChecked]);
 
     const daysLabel = useMemo(() => {
         if (shoppingDays.length === 0) return null;
@@ -207,9 +240,10 @@ export const ShoppingModule = () => {
                                     items={group.list}
                                     checked={checked}
                                     stocks={stocks}
+                                    sourceChecked={sourceChecked}
                                     onToggle={toggleItem}
                                     onSetStock={setStock}
-                                    onShowSources={setActiveSources}
+                                    onShowSources={(key, sources) => setActiveSources({ key, sources })}
                                 />
                             </div>
                         ))}
@@ -219,7 +253,13 @@ export const ShoppingModule = () => {
         </div>
 
         {activeSources && (
-            <SourcesModal sources={activeSources} onClose={() => setActiveSources(null)} />
+            <SourcesModal
+                ingredientKey={activeSources.key}
+                sources={activeSources.sources}
+                sourceChecked={sourceChecked}
+                onToggleSource={toggleSourceCheck}
+                onClose={() => setActiveSources(null)}
+            />
         )}
         </>
     );

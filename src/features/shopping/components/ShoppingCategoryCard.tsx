@@ -10,12 +10,13 @@ export interface ShoppingCategoryCardProps {
     items: ConsolidatedIngredient[];
     checked: Set<string>;
     stocks: Record<string, number>;
+    sourceChecked: Set<string>;
     onToggle: (key: string) => void;
     onSetStock: (key: string, value: number) => void;
-    onShowSources: (sources: IngredientSource[]) => void;
+    onShowSources: (key: string, sources: IngredientSource[]) => void;
 }
 
-export const ShoppingCategoryCard = ({ label, items, checked, stocks, onToggle, onSetStock, onShowSources }: ShoppingCategoryCardProps) => {
+export const ShoppingCategoryCard = ({ label, items, checked, stocks, sourceChecked, onToggle, onSetStock, onShowSources }: ShoppingCategoryCardProps) => {
     const checkedCount = items.filter(i => checked.has(i.key)).length;
     const [editingKey, setEditingKey] = useState<string | null>(null);
     const [editValue, setEditValue] = useState('');
@@ -47,8 +48,12 @@ export const ShoppingCategoryCard = ({ label, items, checked, stocks, onToggle, 
                 {items.map(item => {
                     const isChecked = checked.has(item.key);
                     const stock = stocks[item.key] ?? 0;
-                    const needed = item.totalQuantity === 0 ? 0 : Math.max(0, item.totalQuantity - stock);
-                    const hasStock = item.totalQuantity > 0 && stock > 0;
+                    const checkedSourceQty = item.sources
+                        .filter(s => sourceChecked.has(`${item.key}::${s.recipeId}::${s.day}::${s.slot}`))
+                        .reduce((sum, s) => sum + s.quantity, 0);
+                    const effectiveTotal = Math.max(0, item.totalQuantity - checkedSourceQty);
+                    const needed = effectiveTotal === 0 ? 0 : Math.max(0, effectiveTotal - stock);
+                    const hasStock = effectiveTotal > 0 && stock > 0;
                     const isEditing = editingKey === item.key;
                     const canEditStock = item.totalQuantity > 0;
 
@@ -122,7 +127,7 @@ export const ShoppingCategoryCard = ({ label, items, checked, stocks, onToggle, 
                                         </button>
                                     </>
                                 )}
-                                <IngredientTooltip sources={item.sources} onOpen={onShowSources} />
+                                <IngredientTooltip sources={item.sources} onOpen={(srcs) => onShowSources(item.key, srcs)} />
                             </div>
                         </div>
                     );

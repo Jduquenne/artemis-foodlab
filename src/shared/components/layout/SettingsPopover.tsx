@@ -78,6 +78,10 @@ export const SettingsPopover = () => {
                 <span className="text-sm text-slate-700">Thème</span>
                 <ThemeToggle />
               </div>
+              <div className="px-4 py-2 border-t border-slate-100 flex items-center justify-between">
+                <span className="text-xs text-slate-400">Artemis Foodlab</span>
+                <span className="text-xs font-mono text-slate-400">v{__APP_VERSION__}</span>
+              </div>
             </div>
           </>
         )}

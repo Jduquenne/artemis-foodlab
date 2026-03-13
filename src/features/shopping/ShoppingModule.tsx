@@ -2,12 +2,13 @@ import { useState, useMemo, useEffect } from 'react';
 import { ShoppingCart, CalendarDays } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useNavigate } from 'react-router-dom';
-import { IngredientCategory, ShoppingDay } from '../../core/domain/types';
+import { IngredientCategory, RecipeKind, ShoppingDay } from '../../core/domain/types';
 import { getShoppingListForDays, getBasesForDays, ConsolidatedIngredient, IngredientSource } from '../../core/utils/shoppingLogic';
+import { typedRecipesDb } from '../../core/utils/typedRecipesDb';
 import { markScrolling } from '../../shared/utils/scrollGuard';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { ShoppingCategoryCard } from './components/ShoppingCategoryCard';
-import { BaseCategoryCard } from './components/BaseCategoryCard';
+import { RecipeShoppingCard, RecipeCardIngredient, RecipeBaseGroup } from './components/RecipeShoppingCard';
 import { SourcesModal } from './components/SourcesModal';
 
 const CATEGORY_ORDER: IngredientCategory[] = [
@@ -39,7 +40,8 @@ export const ShoppingModule = () => {
     const shoppingDays = useMenuStore((s) => s.shoppingDays);
     const periodKey = useMemo(() => getPeriodKey(shoppingDays), [shoppingDays]);
 
-    const [viewMode, setViewMode] = useState<'all' | 'missing'>('all');
+    const [viewMode, setViewMode] = useState<'meals' | 'ingredients'>('ingredients');
+    const [ingredientFilter, setIngredientFilter] = useState<'all' | 'missing'>('all');
     const [activeSources, setActiveSources] = useState<{ key: string; sources: IngredientSource[] } | null>(null);
 
     const [checked, setChecked] = useState<Set<string>>(() => {
@@ -72,15 +74,6 @@ export const ShoppingModule = () => {
         return new Set<string>();
     });
 
-    const [checkedBases, setCheckedBases] = useState<Set<string>>(() => {
-        try {
-            const s = JSON.parse(localStorage.getItem('cipe_shopping_bases_checked') ?? 'null');
-            if (s?.periodKey === getPeriodKey(useMenuStore.getState().shoppingDays)) {
-                return new Set<string>(s.keys);
-            }
-        } catch { /* localStorage indisponible */ }
-        return new Set<string>();
-    });
 
     useEffect(() => {
         localStorage.setItem('cipe_shopping_checked', JSON.stringify({ periodKey, keys: [...checked] }));
@@ -94,10 +87,6 @@ export const ShoppingModule = () => {
         localStorage.setItem('cipe_shopping_source_checked', JSON.stringify({ periodKey, keys: [...sourceChecked] }));
     }, [periodKey, sourceChecked]);
 
-    useEffect(() => {
-        localStorage.setItem('cipe_shopping_bases_checked', JSON.stringify({ periodKey, keys: [...checkedBases] }));
-    }, [periodKey, checkedBases]);
-
     const ingredients = useLiveQuery(
         () => getShoppingListForDays(shoppingDays),
         [shoppingDays]
@@ -108,6 +97,63 @@ export const ShoppingModule = () => {
         [shoppingDays]
     );
     const bases = useMemo(() => basesRaw ?? [], [basesRaw]);
+
+    const recipeCards = useMemo(() => {
+        if (!ingredients) return [];
+        type RecipeAcc = {
+            recipeId: string;
+            recipeName: string;
+            directIngs: Map<string, RecipeCardIngredient>;
+            baseGroups: Map<string, { baseId: string; baseName: string; ings: Map<string, RecipeCardIngredient> }>;
+        };
+        const recipeMap = new Map<string, RecipeAcc>();
+        for (const ing of ingredients) {
+            for (const source of ing.sources) {
+                if (!recipeMap.has(source.recipeId)) {
+                    recipeMap.set(source.recipeId, {
+                        recipeId: source.recipeId,
+                        recipeName: source.recipeName,
+                        directIngs: new Map(),
+                        baseGroups: new Map(),
+                    });
+                }
+                const recipe = recipeMap.get(source.recipeId)!;
+                if (source.fromBaseId) {
+                    const baseName = bases.find(b => b.baseId === source.fromBaseId)?.name ?? source.fromBaseId;
+                    if (!recipe.baseGroups.has(source.fromBaseId)) {
+                        recipe.baseGroups.set(source.fromBaseId, { baseId: source.fromBaseId, baseName, ings: new Map() });
+                    }
+                    const baseGroup = recipe.baseGroups.get(source.fromBaseId)!;
+                    if (!baseGroup.ings.has(ing.key)) {
+                        baseGroup.ings.set(ing.key, { ingredientKey: ing.key, name: ing.name, quantity: source.quantity, unit: ing.unit, sources: [source] });
+                    } else {
+                        const ex = baseGroup.ings.get(ing.key)!;
+                        ex.quantity += source.quantity;
+                        ex.sources.push(source);
+                    }
+                } else {
+                    if (!recipe.directIngs.has(ing.key)) {
+                        recipe.directIngs.set(ing.key, { ingredientKey: ing.key, name: ing.name, quantity: source.quantity, unit: ing.unit, sources: [source] });
+                    } else {
+                        const ex = recipe.directIngs.get(ing.key)!;
+                        ex.quantity += source.quantity;
+                        ex.sources.push(source);
+                    }
+                }
+            }
+        }
+        return Array.from(recipeMap.values())
+            .filter(r => typedRecipesDb[r.recipeId]?.kind !== RecipeKind.INGREDIENT)
+            .map(r => ({
+                recipeId: r.recipeId,
+                recipeName: r.recipeName,
+                directIngredients: Array.from(r.directIngs.values()).sort((a, b) => a.name.localeCompare(b.name, 'fr')),
+                baseGroups: Array.from(r.baseGroups.values())
+                    .map(b => ({ baseId: b.baseId, baseName: b.baseName, ingredients: Array.from(b.ings.values()).sort((a, b) => a.name.localeCompare(b.name, 'fr')) } as RecipeBaseGroup))
+                    .sort((a, b) => a.baseName.localeCompare(b.baseName, 'fr')),
+            }))
+            .sort((a, b) => a.recipeName.localeCompare(b.recipeName, 'fr'));
+    }, [ingredients, bases]);
 
     const toggleItem = (key: string) => {
         setChecked(prev => {
@@ -126,34 +172,25 @@ export const ShoppingModule = () => {
         });
     };
 
-    const toggleBase = (baseId: string) => {
-        const willBeChecked = !checkedBases.has(baseId);
-        setCheckedBases(prev => {
-            const next = new Set(prev);
-            if (next.has(baseId)) { next.delete(baseId); } else { next.add(baseId); }
-            return next;
-        });
-        if (!ingredients) return;
-        setSourceCheckedState(prev => {
-            const next = new Set(prev);
-            for (const ingredient of ingredients) {
-                for (const source of ingredient.sources) {
-                    if (source.fromBaseId === baseId) {
-                        const k = `${ingredient.key}::${source.recipeId}::${source.day}::${source.slot}`;
-                        if (willBeChecked) { next.add(k); } else { next.delete(k); }
-                    }
-                }
-            }
-            return next;
-        });
-    };
-
     const toggleSourceCheck = (ingredientKey: string, sources: IngredientSource[], checked: boolean) => {
         setSourceCheckedState(prev => {
             const next = new Set(prev);
             for (const source of sources) {
                 const k = `${ingredientKey}::${source.recipeId}::${source.day}::${source.slot}`;
                 if (checked) { next.add(k); } else { next.delete(k); }
+            }
+            return next;
+        });
+    };
+
+    const toggleSourceBatch = (batch: Array<{ ingredientKey: string; sources: IngredientSource[] }>, checked: boolean) => {
+        setSourceCheckedState(prev => {
+            const next = new Set(prev);
+            for (const { ingredientKey, sources } of batch) {
+                for (const source of sources) {
+                    const k = `${ingredientKey}::${source.recipeId}::${source.day}::${source.slot}`;
+                    if (checked) { next.add(k); } else { next.delete(k); }
+                }
             }
             return next;
         });
@@ -172,14 +209,14 @@ export const ShoppingModule = () => {
             if (i.totalQuantity === 0) return true;
             return Math.max(0, getEffective(i) - (stocks[i.key] ?? 0)) > 0;
         };
-        const filterItem = (i: ConsolidatedIngredient) => viewMode === 'all' || isNeeded(i);
+        const filterItem = (i: ConsolidatedIngredient) => ingredientFilter === 'all' || isNeeded(i);
         const groups: { label: string; list: ConsolidatedIngredient[] }[] = CATEGORY_ORDER
             .map(cat => ({ label: cat as string, list: ingredients.filter(i => i.category === cat && filterItem(i)) }))
             .filter(g => g.list.length > 0);
         const uncategorized = ingredients.filter(i => (!i.category || !CATEGORY_ORDER.includes(i.category)) && filterItem(i));
         if (uncategorized.length > 0) groups.push({ label: 'Autres', list: uncategorized });
         return groups;
-    }, [ingredients, viewMode, checked, stocks, sourceChecked]);
+    }, [ingredients, ingredientFilter, checked, stocks, sourceChecked]);
 
     const uncheckedCount = useMemo(() => {
         if (!ingredients) return 0;
@@ -217,27 +254,53 @@ export const ShoppingModule = () => {
                         </p>
                     )}
                 </div>
-                <div className="flex rounded-xl overflow-hidden border border-slate-200 shrink-0">
-                    <button
-                        onClick={() => setViewMode('all')}
-                        className={`px-3 py-2 text-sm font-bold transition-colors ${
-                            viewMode === 'all'
-                                ? 'bg-orange-500 text-white'
-                                : 'bg-white dark:bg-slate-100 text-slate-600 hover:bg-slate-50 dark:hover:bg-slate-200'
-                        }`}
-                    >
-                        Complète
-                    </button>
-                    <button
-                        onClick={() => setViewMode('missing')}
-                        className={`px-3 py-2 text-sm font-bold transition-colors border-l border-slate-200 ${
-                            viewMode === 'missing'
-                                ? 'bg-orange-500 text-white'
-                                : 'bg-white dark:bg-slate-100 text-slate-600 hover:bg-slate-50 dark:hover:bg-slate-200'
-                        }`}
-                    >
-                        Manquants
-                    </button>
+                <div className="flex flex-col items-end gap-1.5 shrink-0">
+                    <div className="flex rounded-xl overflow-hidden border border-slate-200">
+                        <button
+                            onClick={() => setViewMode('meals')}
+                            className={`px-3 py-2 text-sm font-bold transition-colors ${
+                                viewMode === 'meals'
+                                    ? 'bg-orange-500 text-white'
+                                    : 'bg-white dark:bg-slate-100 text-slate-600 hover:bg-slate-50 dark:hover:bg-slate-200'
+                            }`}
+                        >
+                            Repas
+                        </button>
+                        <button
+                            onClick={() => setViewMode('ingredients')}
+                            className={`px-3 py-2 text-sm font-bold transition-colors border-l border-slate-200 ${
+                                viewMode === 'ingredients'
+                                    ? 'bg-orange-500 text-white'
+                                    : 'bg-white dark:bg-slate-100 text-slate-600 hover:bg-slate-50 dark:hover:bg-slate-200'
+                            }`}
+                        >
+                            Ingrédients
+                        </button>
+                    </div>
+                    {viewMode === 'ingredients' && (
+                        <div className="flex rounded-xl overflow-hidden border border-slate-200">
+                            <button
+                                onClick={() => setIngredientFilter('all')}
+                                className={`px-3 py-2 text-sm font-bold transition-colors ${
+                                    ingredientFilter === 'all'
+                                        ? 'bg-orange-500 text-white'
+                                        : 'bg-white dark:bg-slate-100 text-slate-600 hover:bg-slate-50 dark:hover:bg-slate-200'
+                                }`}
+                            >
+                                Complète
+                            </button>
+                            <button
+                                onClick={() => setIngredientFilter('missing')}
+                                className={`px-3 py-2 text-sm font-bold transition-colors border-l border-slate-200 ${
+                                    ingredientFilter === 'missing'
+                                        ? 'bg-orange-500 text-white'
+                                        : 'bg-white dark:bg-slate-100 text-slate-600 hover:bg-slate-50 dark:hover:bg-slate-200'
+                                }`}
+                            >
+                                Manquants
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
 
@@ -270,6 +333,22 @@ export const ShoppingModule = () => {
                         <p className="font-medium">Aucun repas planifié sur cette période</p>
                         <p className="text-sm">Planifie des repas pour générer la liste</p>
                     </div>
+                ) : viewMode === 'meals' ? (
+                    <div className="columns-1 tablet:columns-2 lg:columns-3 gap-4 pb-4">
+                        {recipeCards.map((card, i) => (
+                            <div key={card.recipeId} className="animate-fade-in-up break-inside-avoid mb-4" style={{ animationDelay: `${i * 60}ms` }}>
+                                <RecipeShoppingCard
+                                    recipeId={card.recipeId}
+                                    recipeName={card.recipeName}
+                                    directIngredients={card.directIngredients}
+                                    baseGroups={card.baseGroups}
+                                    sourceChecked={sourceChecked}
+                                    onToggleSource={toggleSourceCheck}
+                                    onToggleBatch={toggleSourceBatch}
+                                />
+                            </div>
+                        ))}
+                    </div>
                 ) : groupedItems.length === 0 ? (
                     <div className="h-full flex flex-col items-center justify-center gap-3 text-slate-400">
                         <ShoppingCart className="w-12 h-12 opacity-30" />
@@ -278,15 +357,6 @@ export const ShoppingModule = () => {
                     </div>
                 ) : (
                     <div className="columns-1 tablet:columns-2 lg:columns-3 gap-4 pb-4">
-                        {bases.length > 0 && (viewMode === 'all' || bases.some(b => !checkedBases.has(b.baseId))) && (
-                            <div className="animate-fade-in-up break-inside-avoid mb-4">
-                                <BaseCategoryCard
-                                    items={viewMode === 'missing' ? bases.filter(b => !checkedBases.has(b.baseId)) : bases}
-                                    checkedBases={checkedBases}
-                                    onToggle={toggleBase}
-                                />
-                            </div>
-                        )}
                         {groupedItems.map((group, i) => (
                             <div key={group.label} className="animate-fade-in-up break-inside-avoid mb-4" style={{ animationDelay: `${i * 60}ms` }}>
                                 <ShoppingCategoryCard

@@ -3,7 +3,7 @@ import { X, Check } from 'lucide-react';
 import { SearchBar } from '../../../../shared/components/ui/SearchBar';
 import { useSearchDesserts } from '../../../../shared/hooks/useSearch';
 
-interface DessertPickerProps {
+export interface DessertPickerProps {
     existingIds: string[];
     onSelect: (recipeId: string) => void;
     onClose: () => void;

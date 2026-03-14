@@ -4,7 +4,7 @@ import { RECIPE_BASE_GRAMS } from '../../../../core/utils/macroUtils';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 import { isDish, isBase } from '../../../../core/domain/recipePredicates';
 
-interface RecipeCellProps {
+export interface RecipeCellProps {
     recipeId: string;
     onNavigate: () => void;
     onRemove: () => void;
@@ -15,10 +15,8 @@ interface RecipeCellProps {
     onEditMeta?: () => void;
 }
 
-const data = plannableDb;
-
 export const RecipeCell = ({ recipeId, onNavigate, onRemove, onCopy, hideRemove, persons, grams, onEditMeta }: RecipeCellProps) => {
-    const recipe = data[recipeId];
+    const recipe = plannableDb[recipeId];
     const photoUrl = recipe?.assets?.photo?.url;
     const hasRecipesPage = Boolean(recipe?.assets?.instructionsPhoto?.url);
     const defaultGrams = RECIPE_BASE_GRAMS[recipeId] ?? 0;

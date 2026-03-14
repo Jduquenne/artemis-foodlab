@@ -5,7 +5,7 @@ import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 type DndListeners = ReturnType<typeof useDraggable>['listeners'];
 type DndAttributes = ReturnType<typeof useDraggable>['attributes'];
 
-interface MultiSlotActionsProps {
+export interface MultiSlotActionsProps {
     recipeIds: string[];
     canAddMore: boolean;
     listeners: DndListeners;

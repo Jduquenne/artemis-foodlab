@@ -8,7 +8,7 @@ import { SlotPersonsBadge } from './SlotPersonsBadge';
 import { SlotActions } from './SlotActions';
 import { DessertColumn } from './DessertColumn';
 
-interface MealSlotProps {
+export interface MealSlotProps {
     label: string;
     icon: string;
     slotId: string;
@@ -44,9 +44,8 @@ export const MealSlot = ({
     hasDessert, dessertIds, onAddDessert, onRemoveDessert,
     onCopyDessert, copySourceDessertId, dessertCopyTargetState, onSelectDessertAsTarget,
 }: MealSlotProps) => {
-    const data = plannableDb;
     const firstId = recipeIds[0];
-    const recipe = firstId ? data[firstId] : undefined;
+    const recipe = firstId ? plannableDb[firstId] : undefined;
     const photoUrl = recipe?.assets?.photo?.url;
     const hasRecipesPage = Boolean(recipe?.assets?.instructionsPhoto?.url);
     const defaultPortion = recipe?.defaultPortions;

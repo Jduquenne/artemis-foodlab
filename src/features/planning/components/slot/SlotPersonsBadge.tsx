@@ -1,7 +1,7 @@
 import { Users } from 'lucide-react';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 
-interface SlotPersonsBadgeProps {
+export interface SlotPersonsBadgeProps {
     persons: number;
     isCustom: boolean;
     isAnyEditing: boolean;

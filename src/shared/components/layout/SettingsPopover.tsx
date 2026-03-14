@@ -1,6 +1,6 @@
 import { lazy, Suspense, useRef, useState } from "react";
 import { Settings, Download, Upload, RefreshCw } from "lucide-react";
-import { applyImport, detectScopes, SyncPayload, isValidSyncPayload } from "../../../core/utils/syncSerializer";
+import { applyImport, detectScopes, isValidSyncPayload } from "../../../core/utils/syncSerializer";
 import { exportData } from "../../../core/services/backupService";
 import { ThemeToggle } from "./ThemeToggle";
 

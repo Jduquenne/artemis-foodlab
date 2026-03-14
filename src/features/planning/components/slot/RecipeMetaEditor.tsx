@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Check, RotateCcw, X, Users } from 'lucide-react';
 
-interface RecipeMetaEditorProps {
+export interface RecipeMetaEditorProps {
     initialPersons: number;
     defaultPersons: number;
     initialGrams: number;

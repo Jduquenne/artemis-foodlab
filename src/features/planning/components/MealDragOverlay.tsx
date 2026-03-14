@@ -5,8 +5,7 @@ export interface MealDragOverlayProps {
 }
 
 export const MealDragOverlay = ({ recipeId }: MealDragOverlayProps) => {
-    const data = plannableDb;
-    const recipe = data[recipeId];
+    const recipe = plannableDb[recipeId];
     const photoUrl = recipe?.assets?.photo?.url;
 
     if (!photoUrl) return null;

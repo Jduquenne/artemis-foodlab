@@ -1,7 +1,7 @@
 import { Plus, Check } from 'lucide-react';
 import { DessertCell } from './DessertCell';
 
-interface DessertColumnProps {
+export interface DessertColumnProps {
     dessertIds: string[];
     isAddMode?: boolean;
     dessertCopyTargetState?: 'selectable' | 'selected';

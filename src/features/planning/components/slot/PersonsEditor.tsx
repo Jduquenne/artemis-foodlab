@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Check, RotateCcw, X } from 'lucide-react';
 
-interface PersonsEditorProps {
+export interface PersonsEditorProps {
     initialValue: number;
     defaultPortion: number | undefined;
     onConfirm: (n: number) => void;

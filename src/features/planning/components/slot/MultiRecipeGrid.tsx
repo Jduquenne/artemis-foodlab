@@ -1,7 +1,7 @@
 import { Plus } from 'lucide-react';
 import { RecipeCell } from './RecipeCell';
 
-interface MultiRecipeGridProps {
+export interface MultiRecipeGridProps {
     recipeIds: string[];
     canAddMore: boolean;
     isTargetMode: boolean;

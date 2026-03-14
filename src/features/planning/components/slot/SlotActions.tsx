@@ -5,7 +5,7 @@ import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 type DndListeners = ReturnType<typeof useDraggable>['listeners'];
 type DndAttributes = ReturnType<typeof useDraggable>['attributes'];
 
-interface SlotActionsProps {
+export interface SlotActionsProps {
     listeners: DndListeners;
     attributes: DndAttributes;
     isAnyEditing: boolean;

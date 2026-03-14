@@ -9,9 +9,7 @@ import { MultiRecipeGrid } from './MultiRecipeGrid';
 import { MultiSlotActions } from './MultiSlotActions';
 import { RecipeMetaEditor } from './RecipeMetaEditor';
 
-const data = plannableDb;
-
-interface MultiMealSlotProps {
+export interface MultiMealSlotProps {
     label: string;
     icon: string;
     slotId: string;
@@ -48,7 +46,7 @@ export const MultiMealSlot = ({
 }: MultiMealSlotProps) => {
     const [editingMetaId, setEditingMetaId] = useState<string | null>(null);
 
-    const firstRecipe = recipeIds.length === 1 ? data[recipeIds[0]] : undefined;
+    const firstRecipe = recipeIds.length === 1 ? plannableDb[recipeIds[0]] : undefined;
     const singlePhotoUrl = firstRecipe?.assets?.photo?.url;
     const singleHasRecipesPage = Boolean(firstRecipe?.assets?.instructionsPhoto?.url);
     const singleIsDish = isDish(firstRecipe) || isBase(firstRecipe);
@@ -191,11 +189,11 @@ export const MultiMealSlot = ({
 
             {editingMetaId && onSaveRecipeMeta && (
                 <RecipeMetaEditor
-                    initialPersons={recipePersons?.[editingMetaId] ?? (isDish(data[editingMetaId]) || isBase(data[editingMetaId]) ? 1 : data[editingMetaId]?.defaultPortions ?? 1)}
-                    defaultPersons={isDish(data[editingMetaId]) || isBase(data[editingMetaId]) ? 1 : data[editingMetaId]?.defaultPortions ?? 1}
+                    initialPersons={recipePersons?.[editingMetaId] ?? (isDish(plannableDb[editingMetaId]) || isBase(plannableDb[editingMetaId]) ? 1 : plannableDb[editingMetaId]?.defaultPortions ?? 1)}
+                    defaultPersons={isDish(plannableDb[editingMetaId]) || isBase(plannableDb[editingMetaId]) ? 1 : plannableDb[editingMetaId]?.defaultPortions ?? 1}
                     initialGrams={recipeQuantities?.[editingMetaId] ?? Math.round(RECIPE_BASE_GRAMS[editingMetaId] ?? 0)}
                     defaultGrams={Math.round(RECIPE_BASE_GRAMS[editingMetaId] ?? 0)}
-                    isDish={isDish(data[editingMetaId]) || isBase(data[editingMetaId])}
+                    isDish={isDish(plannableDb[editingMetaId]) || isBase(plannableDb[editingMetaId])}
                     onConfirm={(persons, grams) => { onSaveRecipeMeta(editingMetaId, persons, grams); setEditingMetaId(null); }}
                     onCancel={() => setEditingMetaId(null)}
                 />

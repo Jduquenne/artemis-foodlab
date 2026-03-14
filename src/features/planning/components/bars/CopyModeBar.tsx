@@ -1,6 +1,6 @@
 import { Check, X } from 'lucide-react';
 
-interface CopyModeBarProps {
+export interface CopyModeBarProps {
     recipeName: string;
     selectedCount: number;
     onConfirm: () => void;

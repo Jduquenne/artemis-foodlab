@@ -2,7 +2,7 @@ import { X, Copy } from 'lucide-react';
 import { plannableDb } from '../../../../core/utils/plannableDb';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 
-interface DessertCellProps {
+export interface DessertCellProps {
     recipeId: string;
     onRemove: () => void;
     isAddMode?: boolean;

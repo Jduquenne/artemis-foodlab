@@ -1,21 +1,24 @@
 import React, { useState, useMemo, useRef } from 'react';
-import { ChevronLeft, ChevronRight, ShoppingCart, Check, X } from 'lucide-react';
+import { Check, X, ShoppingCart } from 'lucide-react';
 import { typedRecipesDb as recipesDb } from '../../core/utils/typedRecipesDb';
 import { plannableDb } from '../../core/utils/plannableDb';
-import { CopyModeBar } from './components/CopyModeBar';
+import { CopyModeBar } from './components/bars/CopyModeBar';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { getWeekSlots, saveSlot, deleteSlot, bulkSaveSlots, addDessertToSlot, removeDessertFromSlot } from '../../core/services/planningService';
-import { MealSlot } from './components/slot/MealSlot';
-import { MultiMealSlot } from './components/slot/MultiMealSlot';
+import { MealDragOverlay } from './components/MealDragOverlay';
 import { RecipePicker } from './components/pickers/RecipePicker';
 import { DessertPicker } from './components/pickers/DessertPicker';
-import { MealDragOverlay } from './components/MealDragOverlay';
-import { ShoppingSelectionBar } from './components/ShoppingSelectionBar';
+import { ShoppingSelectionBar } from './components/bars/ShoppingSelectionBar';
+import { PlanningHeader } from './components/PlanningHeader';
+import { PlanningSlot } from './components/slot/PlanningSlot';
+import { DayTabsBar } from './components/bars/DayTabsBar';
 import { getWeekNumber, getMonday, getWeekRange } from '../../shared/utils/weekUtils';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useMenuStore } from '../../shared/store/useMenuStore';
-import { ShoppingDay } from '../../core/domain/types';
+import { SlotType, ShoppingDay } from '../../core/domain/types';
 import { isDessert, canAddDessert, isSlotFull } from '../../core/domain/recipePredicates';
+import { MEAL_SLOTS, DAYS, CopyState } from '../../core/domain/planningConfig';
+import { computeSlotCopyProps } from '../../core/utils/planningUtils';
 import {
     DndContext,
     DragEndEvent,
@@ -28,30 +31,17 @@ import {
     closestCenter,
 } from '@dnd-kit/core';
 
-const MEAL_SLOTS = [
-    { id: 'breakfast', label: 'Petit déj.', icon: '☕', multi: true, flex: 2, hasDessert: false },
-    { id: 'lunch', label: 'Déjeuner', icon: '🍴', multi: false, flex: 3, hasDessert: true },
-    { id: 'snack', label: 'Goûter', icon: '🍎', multi: true, flex: 2, hasDessert: false },
-    { id: 'dinner', label: 'Dîner', icon: '🌙', multi: false, flex: 3, hasDessert: true },
-] as const;
-
-type SlotId = typeof MEAL_SLOTS[number]['id'];
-
-const DAYS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
-
 const todayDayName = (() => {
     const d = new Date().getDay();
     return DAYS[d === 0 ? 6 : d - 1];
 })();
 
 export const PlanningModule = () => {
-    const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
     const { shoppingDays, setShoppingDays } = useMenuStore();
-    const dateInputRef = useRef<HTMLInputElement>(null);
 
-    const [pickerSlot, setPickerSlot] = useState<{ day: string; slot: SlotId } | null>(null);
-    const [dessertPickerSlot, setDessertPickerSlot] = useState<{ day: string; slot: SlotId } | null>(null);
+    const [pickerSlot, setPickerSlot] = useState<{ day: string; slot: SlotType } | null>(null);
+    const [dessertPickerSlot, setDessertPickerSlot] = useState<{ day: string; slot: SlotType } | null>(null);
     const [activeDragId, setActiveDragId] = useState<string | null>(null);
     const [slideKey, setSlideKey] = useState(0);
     const [slideDir, setSlideDir] = useState<'left' | 'right'>('left');
@@ -71,22 +61,14 @@ export const PlanningModule = () => {
 
     const addRecipeId = searchParams.get('addRecipe');
     const isAddMode = !!addRecipeId;
-    const addRecipeName = addRecipeId
-        ? (recipesDb as Record<string, { name: string }>)[addRecipeId]?.name ?? ''
-        : null;
+    const addRecipeName = addRecipeId ? recipesDb[addRecipeId]?.name ?? '' : null;
     const clearAddMode = () =>
         setSearchParams(p => { p.delete('addRecipe'); return p; }, { replace: true });
 
     const [isSelectionMode, setIsSelectionMode] = useState(false);
     const [draftDays, setDraftDays] = useState<ShoppingDay[]>([]);
     const [editingPersonsSlotId, setEditingPersonsSlotId] = useState<string | null>(null);
-    const [copyState, setCopyState] = useState<{
-        recipeId: string;
-        slotType: SlotId;
-        sourceDay: string;
-        isDessert: boolean;
-        recipeName: string;
-    } | null>(null);
+    const [copyState, setCopyState] = useState<CopyState | null>(null);
     const [copyTargets, setCopyTargets] = useState<Set<string>>(new Set());
 
     const isAnyEditing = editingPersonsSlotId !== null;
@@ -164,23 +146,23 @@ export const PlanningModule = () => {
         handleSwipe(dx < 0 ? 'left' : 'right');
     };
 
-    const handleDeleteMeal = async (day: string, slot: SlotId) => {
+    const handleDeleteMeal = async (day: string, slot: SlotType) => {
         await deleteSlot(`${year}-W${weekNumber}-${day}-${slot}`);
     };
 
-    const handleAddDessert = async (day: string, slot: SlotId, recipeId: string) => {
+    const handleAddDessert = async (day: string, slot: SlotType, recipeId: string) => {
         const savedSlot = planningData.find(p => p.day === day && p.slot === slot);
         if (!savedSlot) return;
         await addDessertToSlot(savedSlot, recipeId);
     };
 
-    const handleRemoveDessert = async (day: string, slot: SlotId, recipeId: string) => {
+    const handleRemoveDessert = async (day: string, slot: SlotType, recipeId: string) => {
         const savedSlot = planningData.find(p => p.day === day && p.slot === slot);
         if (!savedSlot) return;
         await removeDessertFromSlot(savedSlot, recipeId);
     };
 
-    const handleRemoveRecipe = async (day: string, slot: SlotId, recipeIdToRemove: string) => {
+    const handleRemoveRecipe = async (day: string, slot: SlotType, recipeIdToRemove: string) => {
         const existing = planningData.find(p => p.day === day && p.slot === slot);
         if (!existing) return;
         const ids = existing.recipeIds.filter(id => id !== recipeIdToRemove);
@@ -195,7 +177,7 @@ export const PlanningModule = () => {
         if (!over || active.id === over.id) return;
 
         const prefix = `${year}-W${weekNumber}-`;
-        const parseSlot = (fullId: string): { day: string; slot: SlotId } | null => {
+        const parseSlot = (fullId: string): { day: string; slot: SlotType } | null => {
             const rest = fullId.slice(prefix.length);
             for (const m of MEAL_SLOTS) {
                 if (rest.endsWith(`-${m.id}`)) return { day: rest.slice(0, rest.length - m.id.length - 1), slot: m.id };
@@ -226,17 +208,17 @@ export const PlanningModule = () => {
         }
     };
 
-    const handleStartCopy = (recipeId: string, slotType: SlotId, sourceDay: string, isDessert: boolean) => {
+    const handleStartCopy = (recipeId: string, slotType: SlotType, sourceDay: string, isDessertCopy: boolean) => {
         const recipeName = plannableDb[recipeId]?.name ?? '';
-        setCopyState({ recipeId, slotType, sourceDay, isDessert, recipeName });
+        setCopyState({ recipeId, slotType, sourceDay, isDessert: isDessertCopy, recipeName });
         setCopyTargets(new Set());
     };
 
-    const toggleCopyTarget = (day: string, slotType: SlotId) => {
+    const toggleCopyTarget = (day: string, slotType: SlotType) => {
         const key = `${day}|${slotType}`;
         setCopyTargets(prev => {
             const next = new Set(prev);
-            if (next.has(key)) next.delete(key); else next.add(key);
+            if (next.has(key)) { next.delete(key); } else { next.add(key); }
             return next;
         });
     };
@@ -247,7 +229,7 @@ export const PlanningModule = () => {
         for (const target of copyTargets) {
             const sep = target.indexOf('|');
             const targetDay = target.slice(0, sep);
-            const targetSlot = target.slice(sep + 1) as SlotId;
+            const targetSlot = target.slice(sep + 1) as SlotType;
             const slotId = `${year}-W${weekNumber}-${targetDay}-${targetSlot}`;
             const existing = planningData.find(p => p.day === targetDay && p.slot === targetSlot);
             if (isDessertCopy) {
@@ -277,7 +259,7 @@ export const PlanningModule = () => {
         setEditingPersonsSlotId(null);
     };
 
-    const handleSaveRecipeMeta = async (day: string, slot: SlotId, recipeId: string, persons: number, grams: number) => {
+    const handleSaveRecipeMeta = async (day: string, slot: SlotType, recipeId: string, persons: number, grams: number) => {
         const existing = planningData.find(p => p.day === day && p.slot === slot);
         if (!existing) return;
         await saveSlot({
@@ -287,7 +269,7 @@ export const PlanningModule = () => {
         });
     };
 
-    const handleAddToSlot = async (day: string, slot: SlotId) => {
+    const handleAddToSlot = async (day: string, slot: SlotType) => {
         if (!addRecipeId) return;
         const slotId = `${year}-W${weekNumber}-${day}-${slot}`;
         const mealDef = MEAL_SLOTS.find(m => m.id === slot)!;
@@ -330,87 +312,37 @@ export const PlanningModule = () => {
     const renderSlot = (day: string, mealType: typeof MEAL_SLOTS[number]) => {
         const slotId = `${year}-W${weekNumber}-${day}-${mealType.id}`;
         const savedMeal = planningData.find(p => p.day === day && p.slot === mealType.id);
-        const recipeIds = savedMeal?.recipeIds ?? [];
         const isEditingThis = editingPersonsSlotId === slotId;
-
-        // Copy mode calculations
-        const isCopyRelevant = !isCopyMode || (
-            copyState!.isDessert ? mealType.hasDessert : mealType.id === copyState!.slotType
-        );
-        const isSource = isCopyMode && day === copyState!.sourceDay && mealType.id === copyState!.slotType;
-
-        let multiCopyTargetState: 'source' | 'selectable' | 'selected' | undefined;
-        if (isCopyMode && !copyState!.isDessert && mealType.id === copyState!.slotType) {
-            if (isSource) {
-                multiCopyTargetState = 'source';
-            } else {
-                const alreadyHas = savedMeal?.recipeIds.includes(copyState!.recipeId) ?? false;
-                const full = isSlotFull({ recipeIds });
-                if (!alreadyHas && !full) {
-                    multiCopyTargetState = copyTargets.has(`${day}|${mealType.id}`) ? 'selected' : 'selectable';
-                }
-            }
-        }
-
-        let dessertCopyTargetState: 'selectable' | 'selected' | undefined;
-        let copySourceDessertId: string | undefined;
-        if (isCopyMode && copyState!.isDessert && mealType.hasDessert) {
-            if (isSource) {
-                copySourceDessertId = copyState!.recipeId;
-            } else {
-                const hasMainMeal = (savedMeal?.recipeIds.length ?? 0) > 0;
-                const alreadyHas = savedMeal?.dessertIds?.includes(copyState!.recipeId) ?? false;
-                const canAdd = canAddDessert({ dessertIds: savedMeal?.dessertIds });
-                if (hasMainMeal && !alreadyHas && canAdd) {
-                    const key = `${day}|${mealType.id}`;
-                    dessertCopyTargetState = copyTargets.has(key) ? 'selected' : 'selectable';
-                }
-            }
-        }
-
-        const isDimmed = (isAnyEditing && !isEditingThis) || (isCopyMode && !isCopyRelevant);
+        const copyProps = computeSlotCopyProps(copyState, copyTargets, day, mealType, savedMeal);
+        const isDimmed = (isAnyEditing && !isEditingThis) || (isCopyMode && !copyProps.isCopyRelevant);
 
         return (
-            <div key={`${day}-${mealType.id}`} className={`relative h-full w-full min-h-0 min-w-0 transition-opacity ${isDimmed ? 'pointer-events-none opacity-30' : ''}`}>
-                {mealType.multi ? (
-                    <MultiMealSlot
-                        label={mealType.label} icon={mealType.icon} slotId={slotId} recipeIds={recipeIds}
-                        onAdd={isSelectionMode || isAddMode || isCopyMode ? () => { } : () => setPickerSlot({ day, slot: mealType.id })}
-                        onRemoveRecipe={isSelectionMode || isAddMode || isCopyMode ? () => { } : (rid) => handleRemoveRecipe(day, mealType.id, rid)}
-                        onNavigateToRecipe={isAddMode || isCopyMode ? () => { } : (rid) => navigate(`/recipes/detail/${rid}`)}
-                        isAddMode={isAddMode}
-                        onAddToSlot={isAddMode ? () => handleAddToSlot(day, mealType.id) : undefined}
-                        onCopyRecipe={!isSelectionMode && !isAddMode && !isCopyMode ? (rid) => handleStartCopy(rid, mealType.id, day, false) : undefined}
-                        copyTargetState={multiCopyTargetState}
-                        onSelectAsTarget={multiCopyTargetState === 'selectable' || multiCopyTargetState === 'selected' ? () => toggleCopyTarget(day, mealType.id) : undefined}
-                        recipePersons={savedMeal?.recipePersons}
-                        recipeQuantities={savedMeal?.recipeQuantities}
-                        onSaveRecipeMeta={!isSelectionMode && !isAddMode && !isCopyMode ? (rid, p, g) => handleSaveRecipeMeta(day, mealType.id, rid, p, g) : undefined}
-                    />
-                ) : (
-                    <MealSlot
-                        label={mealType.label} icon={mealType.icon} slotId={slotId} recipeIds={recipeIds}
-                        persons={savedMeal?.persons} isEditingPersons={isEditingThis} isAnyEditing={isAnyEditing || isCopyMode}
-                        onNavigate={() => navigate(`/recipes/detail/${savedMeal!.recipeIds[0]}`)}
-                        onOpenPicker={isSelectionMode || isAddMode || isCopyMode ? () => { } : () => setPickerSlot({ day, slot: mealType.id })}
-                        onModify={isSelectionMode || isAddMode || isCopyMode ? () => { } : () => setPickerSlot({ day, slot: mealType.id })}
-                        onDelete={isSelectionMode || isAddMode || isCopyMode ? () => { } : () => handleDeleteMeal(day, mealType.id)}
-                        onOpenPersonsEditor={isAddMode || isCopyMode ? () => { } : () => setEditingPersonsSlotId(slotId)}
-                        onConfirmPersons={(n) => handleConfirmPersons(slotId, n)}
-                        onCancelPersons={() => setEditingPersonsSlotId(null)}
-                        isAddMode={isAddMode}
-                        onAddToSlot={isAddMode ? () => handleAddToSlot(day, mealType.id) : undefined}
-                        hasDessert={mealType.hasDessert}
-                        dessertIds={savedMeal?.dessertIds ?? []}
-                        onAddDessert={isSelectionMode || isAddMode || isCopyMode ? undefined : () => setDessertPickerSlot({ day, slot: mealType.id })}
-                        onRemoveDessert={isCopyMode ? undefined : (rid) => handleRemoveDessert(day, mealType.id, rid)}
-                        onCopyDessert={!isSelectionMode && !isAddMode && !isCopyMode ? (rid) => handleStartCopy(rid, mealType.id, day, true) : undefined}
-                        copySourceDessertId={copySourceDessertId}
-                        dessertCopyTargetState={dessertCopyTargetState}
-                        onSelectDessertAsTarget={dessertCopyTargetState ? () => toggleCopyTarget(day, mealType.id) : undefined}
-                    />
-                )}
-            </div>
+            <PlanningSlot
+                key={`${day}-${mealType.id}`}
+                mealType={mealType}
+                slotId={slotId}
+                savedMeal={savedMeal}
+                isEditingPersons={isEditingThis}
+                isDimmed={isDimmed}
+                isAnyEditing={isAnyEditing}
+                isSelectionMode={isSelectionMode}
+                isAddMode={isAddMode}
+                isCopyMode={isCopyMode}
+                copyProps={copyProps}
+                onOpenPicker={() => setPickerSlot({ day, slot: mealType.id })}
+                onOpenDessertPicker={() => setDessertPickerSlot({ day, slot: mealType.id })}
+                onDelete={() => handleDeleteMeal(day, mealType.id)}
+                onAddToSlot={() => handleAddToSlot(day, mealType.id)}
+                onEditPersons={() => setEditingPersonsSlotId(slotId)}
+                onConfirmPersons={(n) => handleConfirmPersons(slotId, n)}
+                onCancelPersons={() => setEditingPersonsSlotId(null)}
+                onRemoveRecipe={(rid) => handleRemoveRecipe(day, mealType.id, rid)}
+                onSaveRecipeMeta={(rid, p, g) => handleSaveRecipeMeta(day, mealType.id, rid, p, g)}
+                onCopyRecipe={(rid) => handleStartCopy(rid, mealType.id, day, false)}
+                onCopyDessert={(rid) => handleStartCopy(rid, mealType.id, day, true)}
+                onRemoveDessert={(rid) => handleRemoveDessert(day, mealType.id, rid)}
+                onSelectAsTarget={() => toggleCopyTarget(day, mealType.id)}
+            />
         );
     };
 
@@ -423,66 +355,20 @@ export const PlanningModule = () => {
         >
             <div className="w-full h-[calc(100vh-2rem)] tablet:h-[calc(100vh-4rem)] flex flex-col gap-2 overflow-hidden">
 
-                {/* ── HEADER ── */}
-                <div className="flex items-center justify-between gap-3 shrink-0">
-                    <div className="flex flex-col leading-tight">
-                        <h1 className="text-xl sm:text-2xl tablet:text-3xl font-black text-slate-900">Ma Semaine</h1>
-                        <button
-                            onClick={() => !isAnyEditing && dateInputRef.current?.showPicker?.()}
-                            className="sm:pointer-events-none text-left text-xs sm:text-sm font-bold text-slate-400 hover:text-orange-500 sm:hover:text-slate-400 transition-colors"
-                        >
-                            Sem. {weekNumber} · {weekRange}
-                        </button>
-                    </div>
+                <PlanningHeader
+                    weekNumber={weekNumber}
+                    weekRange={weekRange}
+                    selectedDayDate={selectedDayDate}
+                    isAnyEditing={isAnyEditing}
+                    isSelectionMode={isSelectionMode}
+                    isAddMode={isAddMode}
+                    hasShoppingDays={shoppingDays.length > 0}
+                    onPrevWeek={() => changeWeek(-1)}
+                    onNextWeek={() => changeWeek(1)}
+                    onDateChange={(dateStr, dayIndex) => setSearchParams(p => { p.set('d', dateStr); p.set('day', DAYS[dayIndex]); return p; }, { replace: true })}
+                    onEnterSelectionMode={enterSelectionMode}
+                />
 
-                    <div className="flex items-center gap-2 shrink-0">
-                        <input ref={dateInputRef} type="date" tabIndex={-1}
-                            className="absolute opacity-0 w-px h-px pointer-events-none"
-                            value={selectedDayDate}
-                            onChange={(e) => {
-                                if (!e.target.value) return;
-                                const d = new Date(e.target.value + 'T12:00:00');
-                                const dayIndex = (d.getDay() + 6) % 7;
-                                setSearchParams(p => { p.set('d', e.target.value); p.set('day', DAYS[dayIndex]); return p; }, { replace: true });
-                            }}
-                        />
-                        <div className={`flex items-center gap-1 bg-white dark:bg-slate-100 px-2 py-1 rounded-2xl shadow-sm border border-slate-200 ${isAnyEditing ? 'opacity-40 pointer-events-none' : ''}`}>
-                            <button aria-label="Semaine précédente" onClick={() => changeWeek(-1)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-200 rounded-xl transition-colors">
-                                <ChevronLeft size={18} className="text-slate-600" />
-                            </button>
-                            <input type="date"
-                                className="h-8 px-2 bg-slate-100 dark:bg-slate-200 rounded-xl text-xs font-semibold text-slate-500 border-0 outline-none cursor-pointer hover:bg-orange-50 focus:ring-2 focus:ring-orange-400 scheme-light dark:scheme-dark transition-colors [&::-webkit-calendar-picker-indicator]:hidden sm:[&::-webkit-calendar-picker-indicator]:block"
-                                value={selectedDayDate}
-                                onChange={(e) => {
-                                    if (!e.target.value) return;
-                                    const d = new Date(e.target.value + 'T12:00:00');
-                                    const dayIndex = (d.getDay() + 6) % 7;
-                                    setSearchParams(p => { p.set('d', e.target.value); p.set('day', DAYS[dayIndex]); return p; }, { replace: true });
-                                }}
-                            />
-                            <button aria-label="Semaine suivante" onClick={() => changeWeek(1)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-200 rounded-xl transition-colors">
-                                <ChevronRight size={18} className="text-slate-600" />
-                            </button>
-                        </div>
-
-                        {!isSelectionMode && !isAddMode && (
-                            <button
-                                onClick={isAnyEditing ? undefined : enterSelectionMode}
-                                className={[
-                                    'flex items-center gap-1.5 px-3 py-2 rounded-2xl shadow-sm border font-bold text-sm transition-colors',
-                                    isAnyEditing ? 'opacity-40 pointer-events-none bg-white dark:bg-slate-100 border-slate-200 text-slate-600'
-                                        : shoppingDays.length > 0 ? 'bg-orange-500 border-orange-400 text-white hover:bg-orange-600'
-                                            : 'bg-white dark:bg-slate-100 border-slate-200 text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200',
-                                ].join(' ')}
-                            >
-                                <ShoppingCart size={15} />
-                                <span className="hidden sm:inline">Courses</span>
-                            </button>
-                        )}
-                    </div>
-                </div>
-
-                {/* ── ADD MODE BANNER ── */}
                 {isAddMode && addRecipeName && (
                     <div className="shrink-0 flex items-center justify-between gap-3 px-3 py-2 bg-orange-500 text-white rounded-xl">
                         <span className="text-sm font-bold truncate">📌 {addRecipeName}</span>
@@ -492,49 +378,20 @@ export const PlanningModule = () => {
                     </div>
                 )}
 
-                {/* ── MOBILE: BARRE DE JOURS ── */}
-                <div className="sm:hidden grid grid-cols-7 gap-0.5 shrink-0 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl p-1 shadow-sm">
-                    {DAYS.map(day => {
-                        const isActive = !isSelectionMode && selectedDay === day;
-                        const isDraft = isDayDraft(day);
-                        const isConfirmed = !isSelectionMode && isDayConfirmed(day);
-                        const hasMeals = planningData.some(p => p.day === day && p.recipeIds.length > 0);
-                        const blocked = isSelectionMode && !isDraft && atMax;
+                <DayTabsBar
+                    days={DAYS}
+                    selectedDay={selectedDay}
+                    isSelectionMode={isSelectionMode}
+                    isDraft={isDayDraft}
+                    isConfirmed={isDayConfirmed}
+                    hasMeals={(day) => planningData.some(p => p.day === day && p.recipeIds.length > 0)}
+                    atMax={atMax}
+                    onSelectDay={setSelectedDay}
+                    onToggleDraft={(day) => toggleDraftDay(year, weekNumber, day)}
+                />
 
-                        return (
-                            <button
-                                key={day}
-                                onClick={() => isSelectionMode
-                                    ? (!blocked ? toggleDraftDay(year, weekNumber, day) : undefined)
-                                    : setSelectedDay(day)
-                                }
-                                className={[
-                                    'flex flex-col items-center py-1.5 rounded-xl transition-all select-none',
-                                    isActive ? 'bg-orange-500 text-white shadow-sm' : '',
-                                    isDraft ? 'bg-orange-500 text-white shadow-sm' : '',
-                                    !isActive && !isDraft ? 'text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200' : '',
-                                    blocked ? 'opacity-30' : '',
-                                ].join(' ')}
-                            >
-                                <span className="text-[9px] font-black uppercase tracking-tight leading-none">
-                                    {day.slice(0, 3)}
-                                </span>
-                                <span className={[
-                                    'w-1 h-1 rounded-full mt-1',
-                                    !hasMeals ? 'bg-transparent' : '',
-                                    hasMeals && (isActive || isDraft) ? 'bg-white/60' : '',
-                                    hasMeals && !isActive && !isDraft && isConfirmed ? 'bg-orange-400' : '',
-                                    hasMeals && !isActive && !isDraft && !isConfirmed ? 'bg-slate-300' : '',
-                                ].join(' ')} />
-                            </button>
-                        );
-                    })}
-                </div>
-
-                {/* ── CONTENU PRINCIPAL ── */}
                 <div className="flex-1 min-h-0 overflow-hidden">
 
-                    {/* MOBILE — mode sélection courses */}
                     {isSelectionMode && (
                         <div className="sm:hidden h-full flex flex-col justify-center gap-5 px-1">
                             <p className="text-center text-[10px] font-black uppercase tracking-widest text-slate-400">
@@ -569,7 +426,6 @@ export const PlanningModule = () => {
                         </div>
                     )}
 
-                    {/* MOBILE — vue par jour */}
                     {!isSelectionMode && (
                         <div key={slideKey} className={`sm:hidden flex flex-col gap-1.5 h-full ${slideKey > 0 ? (slideDir === 'left' ? 'animate-slide-from-right' : 'animate-slide-from-left') : ''}`} onTouchStart={onSwipeTouchStart} onTouchEnd={onSwipeTouchEnd}>
                             {MEAL_SLOTS.map(mealType => (
@@ -585,7 +441,6 @@ export const PlanningModule = () => {
                         </div>
                     )}
 
-                    {/* TABLET+ — grille 7 jours */}
                     <div className="hidden sm:grid grid-cols-[repeat(7,1fr)] grid-rows-[30px_repeat(4,1fr)] gap-3 h-full min-h-0 px-2 pb-2">
                         {DAYS.map(day => {
                             const selected = isSelectionMode && isDayDraft(day);

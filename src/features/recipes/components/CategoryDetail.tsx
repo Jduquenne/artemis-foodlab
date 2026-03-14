@@ -8,7 +8,7 @@ import { MacroFilterButton } from './MacroFilterButton';
 import { PREDEFINED_FILTERS } from '../../../core/domain/predefinedFilters';
 import { isPlannable } from '../../../core/domain/recipePredicates';
 import { useMenuStore } from '../../../shared/store/useMenuStore';
-import { typedRecipesDb } from '../../../core/utils/typedRecipesDb';
+import { typedRecipesDb } from '../../../core/typed-db/typedRecipesDb';
 
 const data = typedRecipesDb;
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Plus, Check, Users } from 'lucide-react';
 import { useDraggable, useDroppable } from '@dnd-kit/core';
-import { plannableDb } from '../../../../core/utils/plannableDb';
+import { plannableDb } from '../../../../core/typed-db/plannableDb';
 import { RECIPE_BASE_GRAMS } from '../../../../core/utils/macroUtils';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 import { hasRecipes as slotHasRecipes, isSlotFull, isDish, isBase } from '../../../../core/domain/recipePredicates';

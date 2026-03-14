@@ -2,8 +2,8 @@ import { useState, useMemo } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Calculator, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Food } from '../../../core/domain/types';
-import { typedRecipesDb } from '../../../core/utils/typedRecipesDb';
-import { typedFoodDb } from '../../../core/utils/typedFoodDb';
+import { typedRecipesDb } from '../../../core/typed-db/typedRecipesDb';
+import { typedFoodDb } from '../../../core/typed-db/typedFoodDb';
 import { calculateRecipeMacros } from '../../../core/utils/macroUtils';
 
 const MACRO_LABELS = [

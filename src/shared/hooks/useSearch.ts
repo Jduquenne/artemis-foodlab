@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { RecipeDetails, RecipeKind } from "../../core/domain/types";
 import { isDessert } from "../../core/domain/recipePredicates";
-import { typedRecipesDb } from "../../core/utils/typedRecipesDb";
+import { typedRecipesDb } from "../../core/typed-db/typedRecipesDb";
 
 export interface SearchRecipeResult {
   id: string;

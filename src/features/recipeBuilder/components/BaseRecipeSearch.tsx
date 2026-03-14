@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Search } from "lucide-react";
-import { typedRecipesDb } from "../../../core/utils/typedRecipesDb";
+import { typedRecipesDb } from "../../../core/typed-db/typedRecipesDb";
 import { isBase } from "../../../core/domain/recipePredicates";
 
 export interface BaseRecipeSearchProps {

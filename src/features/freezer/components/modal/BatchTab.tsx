@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
 import { isBatchCookable } from "../../../../core/domain/recipePredicates";
-import { typedRecipesDb } from "../../../../core/utils/typedRecipesDb";
+import { typedRecipesDb } from "../../../../core/typed-db/typedRecipesDb";
 
 export interface BatchTabProps {
   selectedRecipeId: string | null;

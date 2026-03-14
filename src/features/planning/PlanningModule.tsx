@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useRef } from 'react';
 import { Check, X, ShoppingCart } from 'lucide-react';
-import { typedRecipesDb as recipesDb } from '../../core/utils/typedRecipesDb';
-import { plannableDb } from '../../core/utils/plannableDb';
+import { typedRecipesDb as recipesDb } from '../../core/typed-db/typedRecipesDb';
+import { plannableDb } from '../../core/typed-db/plannableDb';
 import { CopyModeBar } from './components/bars/CopyModeBar';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { getWeekSlots, saveSlot, deleteSlot, bulkSaveSlots, addDessertToSlot, removeDessertFromSlot } from '../../core/services/planningService';
@@ -80,7 +80,7 @@ export const PlanningModule = () => {
     const weekRange = useMemo(() => getWeekRange(monday), [monday]);
     const selectedDayDate = useMemo(() => {
         const d = new Date(monday);
-        d.setDate(d.getDate() + DAYS.indexOf(selectedDay));
+        d.setDate(d.getDate() + (DAYS as readonly string[]).indexOf(selectedDay));
         return d.toISOString().slice(0, 10);
     }, [monday, selectedDay]);
 
@@ -111,7 +111,7 @@ export const PlanningModule = () => {
         if (isAnyEditing || isSelectionMode) return;
         setSlideDir(direction);
         setSlideKey(k => k + 1);
-        const currentIndex = DAYS.indexOf(selectedDay);
+        const currentIndex = (DAYS as readonly string[]).indexOf(selectedDay);
         if (direction === 'left') {
             if (currentIndex < 6) {
                 setSelectedDay(DAYS[currentIndex + 1]);

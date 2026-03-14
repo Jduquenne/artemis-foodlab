@@ -1,5 +1,5 @@
 import { X, Copy, Users } from 'lucide-react';
-import { plannableDb } from '../../../../core/utils/plannableDb';
+import { plannableDb } from '../../../../core/typed-db/plannableDb';
 import { RECIPE_BASE_GRAMS } from '../../../../core/utils/macroUtils';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 import { isDish, isBase } from '../../../../core/domain/recipePredicates';

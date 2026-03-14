@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
-import { typedFoodDb } from "../../../../core/utils/typedFoodDb";
+import { typedFoodDb } from "../../../../core/typed-db/typedFoodDb";
 
 const ALL_FOODS = Object.values(typedFoodDb);
 

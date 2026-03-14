@@ -1,4 +1,4 @@
-import { plannableDb } from '../../../core/utils/plannableDb';
+import { plannableDb } from '../../../core/typed-db/plannableDb';
 
 export interface MealDragOverlayProps {
     recipeId: string;

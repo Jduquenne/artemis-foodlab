@@ -4,7 +4,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { useNavigate } from 'react-router-dom';
 import { IngredientCategory, RecipeKind, ShoppingDay } from '../../core/domain/types';
 import { getShoppingListForDays, getBasesForDays, ConsolidatedIngredient, IngredientSource } from '../../core/utils/shoppingLogic';
-import { typedRecipesDb } from '../../core/utils/typedRecipesDb';
+import { typedRecipesDb } from '../../core/typed-db/typedRecipesDb';
 import { markScrolling } from '../../shared/utils/scrollGuard';
 import { distributeToColumns } from '../../shared/utils/columnUtils';
 import { useMenuStore } from '../../shared/store/useMenuStore';

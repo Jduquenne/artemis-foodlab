@@ -1,8 +1,8 @@
 import { Food, Macronutrients, MealSlot, RecipeDetails, Unit } from "../domain/types";
 import { getAllRecipeIds, isDish, isBase } from "../domain/recipePredicates";
-import { typedRecipesDb } from "./typedRecipesDb";
-import { typedFoodDb } from "./typedFoodDb";
-import { plannableDb } from "./plannableDb";
+import { typedRecipesDb } from "../typed-db/typedRecipesDb";
+import { typedFoodDb } from "../typed-db/typedFoodDb";
+import { plannableDb } from "../typed-db/plannableDb";
 export const ZERO: Macronutrients = {
   kcal: 0,
   proteins: 0,

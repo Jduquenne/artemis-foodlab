@@ -1,5 +1,5 @@
 import { X, Copy } from 'lucide-react';
-import { plannableDb } from '../../../../core/utils/plannableDb';
+import { plannableDb } from '../../../../core/typed-db/plannableDb';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 
 export interface DessertCellProps {

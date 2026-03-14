@@ -2,7 +2,7 @@ import { Minus, Plus } from "lucide-react";
 import { RecipeKind } from "../../../../core/domain/types";
 import { RECIPE_BASE_GRAMS, RECIPE_MACROS } from "../../../../core/utils/macroUtils";
 import { useJournalStore } from "../../../../shared/store/useJournalStore";
-import { typedRecipesDb } from "../../../../core/utils/typedRecipesDb";
+import { typedRecipesDb } from "../../../../core/typed-db/typedRecipesDb";
 
 export interface RecipePortionRowProps {
   recipeId: string;

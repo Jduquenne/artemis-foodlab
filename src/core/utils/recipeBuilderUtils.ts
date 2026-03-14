@@ -2,8 +2,8 @@ import { Food, Macronutrients, Unit } from "../domain/types";
 import { DraftIngredient } from "../domain/recipeBuilderTypes";
 import { ZERO } from "./macroUtils";
 import { calculateRecipeMacros } from "./macroUtils";
-import { typedFoodDb } from "./typedFoodDb";
-import { typedRecipesDb } from "./typedRecipesDb";
+import { typedFoodDb } from "../typed-db/typedFoodDb";
+import { typedRecipesDb } from "../typed-db/typedRecipesDb";
 
 export const CATEGORY_PREFIX: Record<string, string> = {
   "bases": "BASE",

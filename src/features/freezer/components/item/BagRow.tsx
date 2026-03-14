@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { MoreVertical, Copy, Trash2 } from "lucide-react";
-import { FreezerBag, Unit } from "../../../../core/domain/types";
+import { FreezerBag } from "../../../../core/domain/types";
 import { addBagToFoodItem, removeBagFromFoodItem } from "../../../../core/services/freezerService";
 import { pluralizeUnit } from "../../../../core/utils/unitUtils";
 
@@ -14,7 +14,7 @@ export interface BagRowProps {
 export const BagRow = ({ bag, categoryId, itemId, formattedDate }: BagRowProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const displayUnit = bag.unit && bag.unit !== Unit.NONE
+  const displayUnit = bag.unit
     ? " " + pluralizeUnit(bag.unit, parseFloat(bag.quantity))
     : "";
 

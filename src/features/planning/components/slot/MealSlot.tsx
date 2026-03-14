@@ -1,7 +1,7 @@
 import { Plus } from 'lucide-react';
 import { PersonsEditor } from './PersonsEditor';
 import { useDraggable, useDroppable } from '@dnd-kit/core';
-import { plannableDb } from '../../../../core/utils/plannableDb';
+import { plannableDb } from '../../../../core/typed-db/plannableDb';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 import { isOutdoor } from '../../../../core/domain/recipePredicates';
 import { SlotPersonsBadge } from './SlotPersonsBadge';

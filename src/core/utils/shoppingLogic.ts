@@ -2,7 +2,7 @@ import { addDays, getISOWeek, getISOWeekYear } from "date-fns";
 import { getWeekSlots } from "../services/planningService";
 import { Ingredient, IngredientCategory, MealSlot, ShoppingDay } from "../domain/types";
 import { getAllRecipeIds } from "../domain/recipePredicates";
-import { typedRecipesDb } from "./typedRecipesDb";
+import { typedRecipesDb } from "../typed-db/typedRecipesDb";
 import { RECIPE_BASE_GRAMS } from "./macroUtils";
 
 export interface IngredientSource {

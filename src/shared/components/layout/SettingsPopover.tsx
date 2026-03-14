@@ -97,7 +97,7 @@ export const SettingsPopover = () => {
           />
         )}
 
-        {importModalData && isValidSyncPayload(importModalData) && (
+        {!!importModalData && isValidSyncPayload(importModalData) && (
           <ScopeSelectorModal
             mode="import"
             availableScopes={detectScopes(importModalData)}

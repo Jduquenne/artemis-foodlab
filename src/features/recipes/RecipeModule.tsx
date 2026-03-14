@@ -12,8 +12,8 @@ import { PREDEFINED_FILTERS } from '../../core/domain/predefinedFilters';
 import { Food } from '../../core/domain/types';
 import { isPlannable } from '../../core/domain/recipePredicates';
 import { useMenuStore } from '../../shared/store/useMenuStore';
-import { typedRecipesDb } from '../../core/utils/typedRecipesDb';
-import { typedFoodDb } from '../../core/utils/typedFoodDb';
+import { typedRecipesDb } from '../../core/typed-db/typedRecipesDb';
+import { typedFoodDb } from '../../core/typed-db/typedFoodDb';
 import { calculateRecipeMacros } from '../../core/utils/macroUtils';
 
 export const RecipeModule = () => {

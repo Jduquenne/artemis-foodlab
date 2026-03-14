@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { Check, X } from "lucide-react";
-import { Unit, FreezerBag } from "../../../core/domain/types";
+import { Unit, FreezerBag } from "../../../../core/domain/types";
 
-
-interface AddBagFormProps {
+export interface AddBagFormProps {
   onSave: (bag: Omit<FreezerBag, "id" | "addedDate">) => void;
   onCancel: () => void;
   initialUnit?: Unit;

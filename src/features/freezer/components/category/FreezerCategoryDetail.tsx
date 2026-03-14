@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { ArrowLeft, Plus, Pencil, Check, X } from "lucide-react";
-import { FreezerCategory } from "../../../core/domain/types";
-import { removeItemFromCategory, updateCategoryName } from "../../../core/services/freezerService";
-import { FreezerItemRow } from "./FreezerItemRow";
-import { AddFreezerItemModal } from "./AddFreezerItemModal";
-import { markScrolling } from "../../../shared/utils/scrollGuard";
+import { ArrowLeft, Plus, Pencil } from "lucide-react";
+import { FreezerCategory } from "../../../../core/domain/types";
+import { removeItemFromCategory, updateCategoryName } from "../../../../core/services/freezerService";
+import { FreezerItemRow } from "../item/FreezerItemRow";
+import { AddFreezerItemModal } from "../modal/AddFreezerItemModal";
+import { InlineNameEditor } from "../InlineNameEditor";
+import { markScrolling } from "../../../../shared/utils/scrollGuard";
 
-interface FreezerCategoryDetailProps {
+export interface FreezerCategoryDetailProps {
   category: FreezerCategory;
   onBack: () => void;
 }
@@ -41,21 +42,14 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
         </button>
 
         {editing ? (
-          <div className="flex-1 flex items-center gap-2 min-w-0 animate-fade-in-up">
-            <input
-              autoFocus
-              value={nameInput}
-              onChange={e => setNameInput(e.target.value)}
-              onKeyDown={e => { if (e.key === "Enter") handleRename(); if (e.key === "Escape") handleCancelRename(); }}
-              className="flex-1 min-w-0 text-xl font-black bg-transparent border-b-2 border-orange-400 text-slate-900 focus:outline-none"
-            />
-            <button aria-label="Confirmer" onClick={handleRename} className="p-1.5 rounded-lg text-orange-500 hover:bg-orange-50 transition-colors">
-              <Check className="w-4 h-4" />
-            </button>
-            <button aria-label="Annuler" onClick={handleCancelRename} className="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors">
-              <X className="w-4 h-4" />
-            </button>
-          </div>
+          <InlineNameEditor
+            value={nameInput}
+            onChange={setNameInput}
+            onConfirm={handleRename}
+            onCancel={handleCancelRename}
+            inputClassName="text-xl font-black"
+            className="animate-fade-in-up"
+          />
         ) : (
           <div className="flex-1 flex items-center gap-2 min-w-0">
             <h1 className="text-xl font-black text-slate-900 truncate">{category.name}</h1>

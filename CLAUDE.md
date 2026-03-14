@@ -228,7 +228,7 @@ A `.tsx` file must **only** export React components. Hooks, contexts, constants,
 
 ## Component & interface conventions
 
-- **One component per file**: every component that uses hooks, has meaningful logic, or exceeds ~15 lines must live in its own file. Inline sub-components inside a module file are only acceptable for trivial, purely presentational wrappers with no hooks and no props interface.
+- **One component per file**: every component that uses hooks, has meaningful logic, or exceeds ~15 lines must live in its own file. Inline sub-components inside a module file are only acceptable for trivial, purely presentational wrappers with no hooks and no props interface. **The "used only once" argument never justifies keeping a component inline** — extraction is about readability and maintainability, not reuse count.
 - **Feature folder structure (strict)**: each feature folder contains **only** `XModule.tsx` at its root — the primary entry point routed from `App.tsx`. Every other file (sub-views, modals, cards, rows, detail pages) goes in `components/`. No exceptions: if it's not the Module, it belongs in `components/`.
 - **File location**: feature-specific components go in `src/features/<feature>/components/`. Shared components go in `src/shared/components/` (split into `layout/` for app-shell components and `ui/` for generic reusable components).
 - **Props interfaces**: always named `<ComponentName>Props` (e.g. `CategoryCardProps`), co-located in the same file as the component. Never use generic names like `interface Props`.

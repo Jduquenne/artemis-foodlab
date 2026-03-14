@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from "react";
-import { MoreVertical, Pencil, Trash2, ChevronUp, ChevronDown, Check, X } from "lucide-react";
-import { FreezerCategory } from "../../../core/domain/types";
-import { updateCategoryName, deleteCategory, moveCategory } from "../../../core/services/freezerService";
+import { MoreVertical, Pencil, Trash2, ChevronUp, ChevronDown } from "lucide-react";
+import { FreezerCategory } from "../../../../core/domain/types";
+import { updateCategoryName, deleteCategory, moveCategory } from "../../../../core/services/freezerService";
+import { InlineNameEditor } from "../InlineNameEditor";
 
-interface FreezerCategoryCardProps {
+export interface FreezerCategoryCardProps {
   category: FreezerCategory;
   isFirst: boolean;
   isLast: boolean;
@@ -34,6 +35,11 @@ export const FreezerCategoryCard = ({ category, isFirst, isLast, onClick }: Free
     setMenuOpen(false);
   };
 
+  const handleCancelRename = () => {
+    setNameInput(category.name);
+    setRenaming(false);
+  };
+
   const handleDelete = async () => {
     setMenuOpen(false);
     await deleteCategory(category.id);
@@ -48,25 +54,13 @@ export const FreezerCategoryCard = ({ category, isFirst, isLast, onClick }: Free
     <div className="bg-white dark:bg-slate-100 rounded-2xl border border-slate-200 shadow-sm">
       <div className="flex items-center gap-2 px-4 pt-3 pb-2">
         {renaming ? (
-          <div className="flex-1 flex items-center gap-2 min-w-0">
-            <input
-              autoFocus
-              value={nameInput}
-              onChange={e => setNameInput(e.target.value)}
-              onKeyDown={e => {
-                if (e.key === "Enter") handleRename();
-                if (e.key === "Escape") { setNameInput(category.name); setRenaming(false); }
-              }}
-              onClick={e => e.stopPropagation()}
-              className="flex-1 min-w-0 text-sm font-bold bg-transparent border-b-2 border-orange-400 text-slate-900 focus:outline-none"
-            />
-            <button aria-label="Confirmer" onClick={e => { e.stopPropagation(); handleRename(); }} className="p-1 rounded-lg text-orange-500 hover:bg-orange-50 transition-colors">
-              <Check className="w-3.5 h-3.5" />
-            </button>
-            <button aria-label="Annuler" onClick={e => { e.stopPropagation(); setNameInput(category.name); setRenaming(false); }} className="p-1 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors">
-              <X className="w-3.5 h-3.5" />
-            </button>
-          </div>
+          <InlineNameEditor
+            value={nameInput}
+            onChange={setNameInput}
+            onConfirm={handleRename}
+            onCancel={handleCancelRename}
+            inputClassName="text-sm font-bold"
+          />
         ) : (
           <button className="flex-1 min-w-0 text-left" onClick={onClick}>
             <span className="text-sm font-bold text-slate-800 truncate block">{category.name}</span>

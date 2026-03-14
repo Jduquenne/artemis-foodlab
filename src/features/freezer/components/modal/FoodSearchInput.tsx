@@ -1,11 +1,10 @@
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
-import { Food } from "../../../core/domain/types";
-import foodDb from "../../../core/data/food-db.json";
+import { typedFoodDb } from "../../../../core/utils/typedFoodDb";
 
-const ALL_FOODS = Object.values(foodDb as Record<string, Food>);
+const ALL_FOODS = Object.values(typedFoodDb);
 
-interface FoodSearchInputProps {
+export interface FoodSearchInputProps {
   value: string;
   onChange: (name: string, foodId?: string) => void;
 }

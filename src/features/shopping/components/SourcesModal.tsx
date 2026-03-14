@@ -2,6 +2,7 @@ import { X, CheckCircle2, Circle } from 'lucide-react';
 import { IngredientSource } from '../../../core/utils/shoppingLogic';
 import { pluralizeUnit } from '../../../core/utils/unitUtils';
 import { SLOT_LABELS } from '../../../shared/utils/slotLabels';
+import { SlotType } from '../../../core/domain/types';
 
 const DAY_LABELS: Record<string, string> = {
     monday: 'Lundi', tuesday: 'Mardi', wednesday: 'Mercredi',
@@ -55,7 +56,7 @@ export const SourcesModal = ({ ingredientKey, sources, sourceChecked, onToggleSo
                             const totalQty = group.reduce((sum, s) => sum + s.quantity, 0);
                             const unit = group[0].unit;
                             const uniqueSlots = [...new Set(group.map(s => s.slot))];
-                            const slotLabel = uniqueSlots.length === 1 ? (SLOT_LABELS[uniqueSlots[0]] ?? uniqueSlots[0]) : null;
+                            const slotLabel = uniqueSlots.length === 1 ? (SLOT_LABELS[uniqueSlots[0] as SlotType] ?? uniqueSlots[0]) : null;
 
                             return (
                                 <div
@@ -115,7 +116,7 @@ export const SourcesModal = ({ ingredientKey, sources, sourceChecked, onToggleSo
                                     <p className="text-xs text-slate-400 mt-0.5">
                                         {DAY_LABELS[src.day] ?? src.day}
                                         <span className="mx-1 text-slate-300">·</span>
-                                        {SLOT_LABELS[src.slot] ?? src.slot}
+                                        {SLOT_LABELS[src.slot as SlotType] ?? src.slot}
                                         <span className="mx-1 text-slate-300">·</span>
                                         <span className="text-orange-500 font-medium">
                                             {src.quantity === 0 ? '—' : `${parseFloat(src.quantity.toFixed(2))}\u00a0${pluralizeUnit(src.unit, src.quantity)}`}

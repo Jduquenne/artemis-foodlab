@@ -93,6 +93,19 @@ export const updateBagInFoodItem = (
     ),
   }));
 
+export const updateBatchPortions = (
+  categoryId: string,
+  itemId: string,
+  portions: number
+) =>
+  withCategory(categoryId, cat => ({
+    items: cat.items.map(item =>
+      item.id === itemId && item.type === "batch"
+        ? { ...item, portions }
+        : item
+    ),
+  }));
+
 export const updateItemInCategory = (
   categoryId: string,
   itemId: string,

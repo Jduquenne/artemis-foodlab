@@ -66,7 +66,7 @@ export const BatchTab = ({ selectedRecipeId, portions, onSelectRecipe, onPortion
 
       {selectedRecipeId && (
         <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-bold text-slate-500 uppercase tracking-wide">Nombre de repas</label>
+          <label className="text-xs font-bold text-slate-500 uppercase tracking-wide">Nombre de portions</label>
           <div className="flex items-center gap-4">
             <button
               aria-label="Diminuer"

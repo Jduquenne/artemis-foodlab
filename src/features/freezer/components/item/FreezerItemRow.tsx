@@ -34,7 +34,7 @@ export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowPro
   }, [itemMenuOpen]);
 
   if (item.type === "batch") {
-    return <BatchFreezerItemRow item={item} onDelete={onDelete} formattedDate={formatDate(item.addedDate)} />;
+    return <BatchFreezerItemRow item={item} categoryId={categoryId} onDelete={onDelete} formattedDate={formatDate(item.addedDate)} />;
   }
 
   return (

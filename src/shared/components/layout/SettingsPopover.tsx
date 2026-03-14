@@ -5,7 +5,7 @@ import { exportData } from "../../../core/services/backupService";
 import { ThemeToggle } from "./ThemeToggle";
 
 const SyncModal = lazy(() => import("../../../features/sync/SyncModal").then(m => ({ default: m.SyncModal })));
-const ScopeSelectorModal = lazy(() => import("../../../features/sync/components/ScopeSelectorModal").then(m => ({ default: m.ScopeSelectorModal })));
+const ScopeSelectorModal = lazy(() => import("../../../features/sync/components/scope/ScopeSelectorModal").then(m => ({ default: m.ScopeSelectorModal })));
 
 export const SettingsPopover = () => {
   const [open, setOpen] = useState(false);

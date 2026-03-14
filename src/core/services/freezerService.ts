@@ -79,6 +79,20 @@ export const removeBagFromFoodItem = (categoryId: string, itemId: string, bagId:
     };
   });
 
+export const updateBagInFoodItem = (
+  categoryId: string,
+  itemId: string,
+  bagId: string,
+  updates: Partial<Omit<FreezerBag, "id" | "addedDate">>
+) =>
+  withCategory(categoryId, cat => ({
+    items: cat.items.map(item =>
+      item.id === itemId && item.type === "food"
+        ? { ...item, bags: item.bags.map(b => b.id === bagId ? { ...b, ...updates } : b) }
+        : item
+    ),
+  }));
+
 export const updateItemInCategory = (
   categoryId: string,
   itemId: string,

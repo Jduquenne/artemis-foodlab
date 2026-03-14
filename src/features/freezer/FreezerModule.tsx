@@ -31,7 +31,7 @@ export const FreezerModule = () => {
             <p className="text-xs text-center">Crée ta première catégorie pour organiser ton congélateur</p>
           </div>
         ) : (
-          <div className="flex flex-col gap-3 pb-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 pb-4 items-start">
             {categories.map((category, i) => (
               <FreezerCategoryCard
                 key={category.id}

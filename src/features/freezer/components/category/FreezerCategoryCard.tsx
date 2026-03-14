@@ -45,14 +45,14 @@ export const FreezerCategoryCard = ({ category, isFirst, isLast, onClick }: Free
     await deleteCategory(category.id);
   };
 
-  const preview = category.items.slice(0, 3).map(i =>
+  const preview = category.items.slice(0, 7).map(i =>
     i.type === "food" ? i.name : i.recipeName
   );
   const extra = category.items.length - preview.length;
 
   return (
-    <div className="bg-white dark:bg-slate-100 rounded-2xl border border-slate-200 shadow-sm">
-      <div className="flex items-center gap-2 px-4 pt-3 pb-2">
+    <div className="bg-white dark:bg-slate-100 rounded-2xl border border-slate-200 shadow-sm md:min-h-36 flex flex-col">
+      <div className="flex items-center gap-2 px-4 pt-3 pb-2 md:pt-5 md:pb-3">
         {renaming ? (
           <InlineNameEditor
             value={nameInput}
@@ -115,7 +115,7 @@ export const FreezerCategoryCard = ({ category, isFirst, isLast, onClick }: Free
         </div>
       </div>
 
-      <button className="w-full text-left px-4 pb-3" onClick={onClick}>
+      <button className="w-full text-left px-4 pb-3 md:pb-5 flex-1" onClick={onClick}>
         {category.items.length === 0 ? (
           <p className="text-xs text-slate-400 italic">Vide</p>
         ) : (

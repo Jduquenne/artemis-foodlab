@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { RecipeBuilderState, DraftIngredient, initialRecipeBuilderState } from "../../features/recipeBuilder/types";
+import { RecipeBuilderState, DraftIngredient, initialRecipeBuilderState } from "../../core/domain/recipeBuilderTypes";
 
 interface RecipeBuilderStore {
   draft: RecipeBuilderState;

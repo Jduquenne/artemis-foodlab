@@ -1,96 +1,35 @@
 import { useMemo, useState } from "react";
-import { Food, Macronutrients, Unit } from "../../../core/domain/types";
-import { calculateRecipeMacros } from "../../../core/utils/macroUtils";
-import { typedFoodDb } from "../../../core/utils/typedFoodDb";
-import { typedRecipesDb } from "../../../core/utils/typedRecipesDb";
-import { DraftIngredient } from "../types";
+import { Macronutrients } from "../../../core/domain/types";
+import { DraftIngredient } from "../../../core/domain/recipeBuilderTypes";
+import { computeDraftTotal } from "../../../core/utils/recipeBuilderUtils";
 
-interface MacroPreviewProps {
+export interface MacroPreviewProps {
   ingredients: DraftIngredient[];
   defaultPortions: number;
 }
 
-const foodDb: Record<string, Food> = typedFoodDb;
-const recipesDb = typedRecipesDb;
-
-const ZERO: Macronutrients = { kcal: 0, proteins: 0, lipids: 0, carbohydrates: 0, fibers: 0 };
-
-function add(a: Macronutrients, b: Macronutrients): Macronutrients {
-  return {
-    kcal: a.kcal + b.kcal,
-    proteins: a.proteins + b.proteins,
-    lipids: a.lipids + b.lipids,
-    carbohydrates: a.carbohydrates + b.carbohydrates,
-    fibers: a.fibers + b.fibers,
-  };
-}
-
-function scaleM(m: Macronutrients, f: number): Macronutrients {
-  return {
-    kcal: m.kcal * f,
-    proteins: m.proteins * f,
-    lipids: m.lipids * f,
-    carbohydrates: m.carbohydrates * f,
-    fibers: m.fibers * f,
-  };
-}
-
-function toGrams(qty: number, unit: Unit, unitWeight?: number): number | null {
-  switch (unit) {
-    case Unit.G: return qty;
-    case Unit.KG: return qty * 1000;
-    case Unit.ML: return qty;
-    case Unit.PIECE:
-    case Unit.PORTION:
-    case Unit.TRANCHE:
-    case Unit.FEUILLE:
-    case Unit.SACHET:
-      return unitWeight != null ? qty * unitWeight : null;
-    default: return null;
-  }
-}
-
-function computeTotal(ingredients: DraftIngredient[]): { macros: Macronutrients; missing: number } {
-  let total = { ...ZERO };
-  let missing = 0;
-
-  for (const ing of ingredients) {
-    if (ing.quantity == null || ing.quantity === 0) continue;
-
-    if (ing.foodId) {
-      const food = foodDb[ing.foodId];
-      if (!food) { missing++; continue; }
-      const grams = toGrams(ing.quantity, ing.unit, food.unitWeight);
-      if (grams == null) { missing++; continue; }
-      total = add(total, scaleM(food.macros, grams / 100));
-    } else if (ing.baseId) {
-      const base = recipesDb[ing.baseId];
-      if (!base) { missing++; continue; }
-      const basePerPortion = calculateRecipeMacros(base, recipesDb, foodDb);
-      total = add(total, scaleM(basePerPortion, ing.quantity));
-    } else {
-      missing++;
-    }
-  }
-
-  return { macros: total, missing };
-}
-
-const MACRO_LABELS = [
-  { key: "kcal" as const, label: "Kcal", unit: "" },
-  { key: "proteins" as const, label: "Protéines", unit: "g" },
-  { key: "lipids" as const, label: "Lipides", unit: "g" },
-  { key: "carbohydrates" as const, label: "Glucides", unit: "g" },
-  { key: "fibers" as const, label: "Fibres", unit: "g" },
+const MACRO_LABELS: { key: keyof Macronutrients; label: string; unit: string }[] = [
+  { key: "kcal", label: "Kcal", unit: "" },
+  { key: "proteins", label: "Protéines", unit: "g" },
+  { key: "lipids", label: "Lipides", unit: "g" },
+  { key: "carbohydrates", label: "Glucides", unit: "g" },
+  { key: "fibers", label: "Fibres", unit: "g" },
 ];
 
 export const MacroPreview = ({ ingredients, defaultPortions }: MacroPreviewProps) => {
   const [mode, setMode] = useState<"portion" | "total">("portion");
 
-  const { macros: total, missing } = useMemo(() => computeTotal(ingredients), [ingredients]);
+  const { macros: total, missing } = useMemo(() => computeDraftTotal(ingredients), [ingredients]);
 
   const portions = Math.max(defaultPortions, 1);
-  const displayed = mode === "portion" ? scaleM(total, 1 / portions) : total;
+  const factor = mode === "portion" ? 1 / portions : 1;
+  const displayed: Macronutrients = {
+    kcal: total.kcal * factor,
+    proteins: total.proteins * factor,
+    lipids: total.lipids * factor,
+    carbohydrates: total.carbohydrates * factor,
+    fibers: total.fibers * factor,
+  };
 
   const hasIngredients = ingredients.length > 0;
 

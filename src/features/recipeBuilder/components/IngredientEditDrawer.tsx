@@ -3,7 +3,7 @@ import { X } from "lucide-react";
 import { Unit, IngredientCategory } from "../../../core/domain/types";
 import { IngredientFoodSearch } from "./IngredientFoodSearch";
 import { BaseRecipeSearch } from "./BaseRecipeSearch";
-import { DraftIngredient } from "../types";
+import { DraftIngredient } from "../../../core/domain/recipeBuilderTypes";
 
 export interface IngredientEditDrawerProps {
   ingredient: DraftIngredient;

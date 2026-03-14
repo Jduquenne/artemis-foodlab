@@ -1,8 +1,9 @@
 import { RecipeKind } from "../../../core/domain/types";
 import { CATEGORIES } from "../../../core/domain/categories";
-import { RecipeBuilderState, CATEGORY_PREFIX, buildRecipeId } from "../types";
+import { RecipeBuilderState } from "../../../core/domain/recipeBuilderTypes";
+import { CATEGORY_PREFIX, buildRecipeId } from "../../../core/utils/recipeBuilderUtils";
 
-interface RecipeMetaFormProps {
+export interface RecipeMetaFormProps {
   state: RecipeBuilderState;
   onChange: (patch: Partial<RecipeBuilderState>) => void;
 }

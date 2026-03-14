@@ -4,10 +4,10 @@ import { Unit, IngredientCategory } from "../../../core/domain/types";
 import { IngredientBuilderRow } from "./IngredientBuilderRow";
 import { IngredientMobileCard } from "./IngredientMobileCard";
 import { IngredientEditDrawer } from "./IngredientEditDrawer";
-import { DraftIngredient } from "../types";
+import { DraftIngredient } from "../../../core/domain/recipeBuilderTypes";
 import { markScrolling } from "../../../shared/utils/scrollGuard";
 
-interface IngredientBuilderListProps {
+export interface IngredientBuilderListProps {
   ingredients: DraftIngredient[];
   onChange: (ingredients: DraftIngredient[]) => void;
 }

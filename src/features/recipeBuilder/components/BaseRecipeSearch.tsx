@@ -3,7 +3,7 @@ import { Search } from "lucide-react";
 import { typedRecipesDb } from "../../../core/utils/typedRecipesDb";
 import { isBase } from "../../../core/domain/recipePredicates";
 
-interface BaseRecipeSearchProps {
+export interface BaseRecipeSearchProps {
   value: string;
   onChange: (name: string, baseId: string) => void;
 }

@@ -2,9 +2,9 @@ import { Trash2 } from "lucide-react";
 import { Unit, IngredientCategory } from "../../../core/domain/types";
 import { IngredientFoodSearch } from "./IngredientFoodSearch";
 import { BaseRecipeSearch } from "./BaseRecipeSearch";
-import { DraftIngredient } from "../types";
+import { DraftIngredient } from "../../../core/domain/recipeBuilderTypes";
 
-interface IngredientBuilderRowProps {
+export interface IngredientBuilderRowProps {
   ingredient: DraftIngredient;
   onChange: (updated: DraftIngredient) => void;
   onRemove: () => void;

@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Search } from "lucide-react";
-import foodDbRaw from "../../../core/data/food-db.json";
+import { typedFoodDb } from "../../../core/utils/typedFoodDb";
 import { Food, IngredientCategory } from "../../../core/domain/types";
 
-interface IngredientFoodSearchProps {
+export interface IngredientFoodSearchProps {
   value: string;
   onChange: (name: string, foodId?: string, category?: IngredientCategory, unit?: string) => void;
 }
 
-const foods = Object.values(foodDbRaw) as Food[];
+const foods: Food[] = Object.values(typedFoodDb);
 
 export const IngredientFoodSearch = ({ value, onChange }: IngredientFoodSearchProps) => {
   const [open, setOpen] = useState(false);

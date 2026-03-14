@@ -178,7 +178,7 @@ The app version is tracked in `package.json`. **Before proposing any commit mess
 - **New feature** (no new module): MINOR++, PATCH stays unchanged
 - **Fix / refactor / update / docs**: PATCH++
 
-Current version: **6.13.5**. The next commit must update `package.json` accordingly before the commit message is given.
+Current version: **6.13.6**. The next commit must update `package.json` accordingly before the commit message is given.
 
 ## TypeScript conventions
 

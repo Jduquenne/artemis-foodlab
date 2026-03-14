@@ -9,8 +9,8 @@ import { markScrolling } from '../../shared/utils/scrollGuard';
 import { distributeToColumns } from '../../shared/utils/columnUtils';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { useColCount } from '../../shared/hooks/useColCount';
-import { ShoppingCategoryCard } from './components/ShoppingCategoryCard';
-import { RecipeShoppingCard, RecipeCardIngredient, RecipeBaseGroup } from './components/RecipeShoppingCard';
+import { ShoppingCategoryCard } from './components/ingredients/ShoppingCategoryCard';
+import { RecipeShoppingCard, RecipeCardIngredient, RecipeBaseGroup } from './components/meals/RecipeShoppingCard';
 import { SourcesModal } from './components/SourcesModal';
 
 const CATEGORY_ORDER: IngredientCategory[] = [

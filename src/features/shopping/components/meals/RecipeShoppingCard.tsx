@@ -1,14 +1,9 @@
 import { CheckCircle2, Circle } from 'lucide-react';
-import { IngredientSource } from '../../../core/utils/shoppingLogic';
-import { pluralizeUnit } from '../../../core/utils/unitUtils';
+import { IngredientSource } from '../../../../core/utils/shoppingLogic';
+import { RecipeCardIngredient, isIngChecked } from './ingredientUtils';
+import { IngredientRow } from './IngredientRow';
 
-export interface RecipeCardIngredient {
-    ingredientKey: string;
-    name: string;
-    quantity: number;
-    unit: string;
-    sources: IngredientSource[];
-}
+export type { RecipeCardIngredient };
 
 export interface RecipeBaseGroup {
     baseId: string;
@@ -25,49 +20,6 @@ export interface RecipeShoppingCardProps {
     onToggleSource: (ingredientKey: string, sources: IngredientSource[], checked: boolean) => void;
     onToggleBatch: (batch: Array<{ ingredientKey: string; sources: IngredientSource[] }>, checked: boolean) => void;
 }
-
-const formatQty = (n: number) => n % 1 === 0 ? String(n) : n.toFixed(1);
-
-function isIngChecked(ing: RecipeCardIngredient, sourceChecked: Set<string>): boolean {
-    return ing.sources.length > 0 && ing.sources.every(
-        s => sourceChecked.has(`${ing.ingredientKey}::${s.recipeId}::${s.day}::${s.slot}`)
-    );
-}
-
-interface IngRowProps {
-    ing: RecipeCardIngredient;
-    sourceChecked: Set<string>;
-    onToggleSource: (ingredientKey: string, sources: IngredientSource[], checked: boolean) => void;
-}
-
-const IngRow = ({ ing, sourceChecked, onToggleSource }: IngRowProps) => {
-    const allChecked = isIngChecked(ing, sourceChecked);
-    return (
-        <div
-            onClick={() => onToggleSource(ing.ingredientKey, ing.sources, !allChecked)}
-            className={`flex items-center justify-between gap-1.5 px-1.5 py-1 rounded-lg transition-all cursor-pointer select-none ${
-                allChecked
-                    ? 'opacity-40 bg-slate-50 dark:bg-slate-200/40'
-                    : 'hover:bg-slate-50 dark:hover:bg-slate-200/40'
-            }`}
-        >
-            <div className="flex items-center gap-1.5 min-w-0 flex-1">
-                {allChecked
-                    ? <CheckCircle2 className="w-3.5 h-3.5 text-green-500 shrink-0" />
-                    : <Circle className="w-3.5 h-3.5 text-slate-300 shrink-0" />
-                }
-                <span className={`text-xs font-medium text-slate-800 truncate ${allChecked ? 'line-through' : ''}`}>
-                    {ing.name}
-                </span>
-            </div>
-            {ing.quantity > 0 && (
-                <span className="text-xs font-bold px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-200 text-slate-500 shrink-0">
-                    {formatQty(ing.quantity)} {pluralizeUnit(ing.unit, ing.quantity)}
-                </span>
-            )}
-        </div>
-    );
-};
 
 export const RecipeShoppingCard = ({
     recipeName,
@@ -108,7 +60,7 @@ export const RecipeShoppingCard = ({
             </div>
             <div className="space-y-0.5">
                 {directIngredients.map(ing => (
-                    <IngRow key={ing.ingredientKey} ing={ing} sourceChecked={sourceChecked} onToggleSource={onToggleSource} />
+                    <IngredientRow key={ing.ingredientKey} ing={ing} sourceChecked={sourceChecked} onToggleSource={onToggleSource} />
                 ))}
                 {baseGroups.map(base => {
                     const allBaseChecked = base.ingredients.length > 0 && base.ingredients.every(ing => isIngChecked(ing, sourceChecked));
@@ -132,7 +84,7 @@ export const RecipeShoppingCard = ({
                             </div>
                             <div className="space-y-0.5">
                                 {base.ingredients.map(ing => (
-                                    <IngRow key={ing.ingredientKey} ing={ing} sourceChecked={sourceChecked} onToggleSource={onToggleSource} />
+                                    <IngredientRow key={ing.ingredientKey} ing={ing} sourceChecked={sourceChecked} onToggleSource={onToggleSource} />
                                 ))}
                             </div>
                         </div>

@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { CheckCircle2, Circle } from 'lucide-react';
-import { ConsolidatedIngredient } from '../../../core/utils/shoppingLogic';
+import { ConsolidatedIngredient, IngredientSource } from '../../../../core/utils/shoppingLogic';
 import { IngredientTooltip } from './IngredientTooltip';
-import { IngredientSource } from '../../../core/utils/shoppingLogic';
-import { pluralizeUnit } from '../../../core/utils/unitUtils';
+import { pluralizeUnit } from '../../../../core/utils/unitUtils';
 
 export interface ShoppingCategoryCardProps {
     label: string;

@@ -1,5 +1,5 @@
 import { Info } from 'lucide-react';
-import { IngredientSource } from '../../../core/utils/shoppingLogic';
+import { IngredientSource } from '../../../../core/utils/shoppingLogic';
 
 export interface IngredientTooltipProps {
     sources: IngredientSource[];

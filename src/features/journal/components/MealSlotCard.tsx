@@ -1,4 +1,4 @@
-import { MealSlot, RecipeKind } from "../../../core/domain/types";
+import { Macronutrients, MealSlot, RecipeKind } from "../../../core/domain/types";
 import { getAllRecipeIds, hasDesserts } from "../../../core/domain/recipePredicates";
 import { RECIPE_BASE_GRAMS, RECIPE_MACROS } from "../../../core/utils/macroUtils";
 import { useJournalStore } from "../../../shared/store/useJournalStore";
@@ -19,21 +19,40 @@ const SLOT_LABELS: Record<string, string> = {
   snack: "Collation",
 };
 
+const ZERO: Macronutrients = { kcal: 0, proteins: 0, lipids: 0, carbohydrates: 0, fibers: 0 };
+
+const MACRO_ITEMS: { key: keyof Omit<Macronutrients, "kcal">; label: string }[] = [
+  { key: "proteins", label: "Prot" },
+  { key: "lipids", label: "Lip" },
+  { key: "carbohydrates", label: "Glu" },
+  { key: "fibers", label: "Fib" },
+];
+
 export const MealSlotCard = ({ slotType, slot }: MealSlotCardProps) => {
   const { portionOverrides, gramOverrides } = useJournalStore();
 
   const allIds = slot ? getAllRecipeIds(slot) : [];
-  const totalKcal = allIds.reduce((sum, id) => {
+  const totalMacros = allIds.reduce((sum, id) => {
     const key = `${slot!.id}-${id}`;
     const recipe = data[id];
     const baseGrams = RECIPE_BASE_GRAMS[id] ?? 0;
+    const m = RECIPE_MACROS[id];
+    if (!m) return sum;
+    let factor: number;
     if (recipe?.kind === RecipeKind.INGREDIENT && baseGrams > 0) {
       const grams = gramOverrides[key] ?? Math.round(baseGrams);
-      return sum + (RECIPE_MACROS[id]?.kcal ?? 0) * (grams / baseGrams);
+      factor = grams / baseGrams;
+    } else {
+      factor = portionOverrides[key] ?? 1;
     }
-    const portions = portionOverrides[key] ?? 1;
-    return sum + (RECIPE_MACROS[id]?.kcal ?? 0) * portions;
-  }, 0);
+    return {
+      kcal: sum.kcal + m.kcal * factor,
+      proteins: sum.proteins + m.proteins * factor,
+      lipids: sum.lipids + m.lipids * factor,
+      carbohydrates: sum.carbohydrates + m.carbohydrates * factor,
+      fibers: sum.fibers + m.fibers * factor,
+    };
+  }, { ...ZERO });
 
   const hasContent = allIds.length > 0;
 
@@ -45,10 +64,21 @@ export const MealSlotCard = ({ slotType, slot }: MealSlotCardProps) => {
         </span>
         {hasContent && (
           <span className="text-xs font-bold text-orange-500">
-            {Math.round(totalKcal)} kcal
+            {Math.round(totalMacros.kcal)} kcal
           </span>
         )}
       </div>
+
+      {hasContent && (
+        <div className="flex gap-1 shrink-0">
+          {MACRO_ITEMS.map(({ key, label }) => (
+            <div key={key} className="flex-1 bg-slate-50 dark:bg-slate-200 rounded-lg px-1.5 py-1 flex flex-col items-center gap-0.5">
+              <span className="text-[8px] font-bold uppercase tracking-wide text-slate-300 leading-none">{label}</span>
+              <span className="text-[10px] font-bold text-slate-600 leading-none tabular-nums">{Math.round(totalMacros[key])}</span>
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className="flex-1 min-h-0 overflow-hidden">
         {hasContent ? (

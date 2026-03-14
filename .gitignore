@@ -13,6 +13,9 @@ dist-ssr
 *.local
 scripts
 
+# Dev-only data (local seeds, not committed)
+dev/
+
 # Backup files
 src/core/data/recipes-ingredients_backup.json
 src/core/data/recipes-db_backup.json

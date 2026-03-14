@@ -34,18 +34,6 @@ export const FoodTab = ({
         <p className="text-xs text-orange-500 font-medium pl-1">✓ Lié à la base d'aliments</p>
       )}
     </div>
-    <div className="flex flex-col gap-1.5">
-      <label className="text-xs font-bold text-slate-500 uppercase tracking-wide">
-        Préparation <span className="normal-case font-normal">(optionnel)</span>
-      </label>
-      <input
-        type="text"
-        value={foodPreparation}
-        onChange={e => onPreparationChange(e.target.value)}
-        placeholder="Ex: émincé, en rondelles, entier..."
-        className="w-full px-4 py-3 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
-      />
-    </div>
     <div className="flex gap-3">
       <div className="flex flex-col gap-1.5 flex-1">
         <label className="text-xs font-bold text-slate-500 uppercase tracking-wide">Quantité</label>
@@ -70,6 +58,18 @@ export const FoodTab = ({
           ))}
         </select>
       </div>
+    </div>
+    <div className="flex flex-col gap-1.5">
+      <label className="text-xs font-bold text-slate-500 uppercase tracking-wide">
+        Préparation <span className="normal-case font-normal">(optionnel)</span>
+      </label>
+      <input
+        type="text"
+        value={foodPreparation}
+        onChange={e => onPreparationChange(e.target.value)}
+        placeholder="Ex: émincé, en rondelles, entier..."
+        className="w-full px-4 py-3 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
+      />
     </div>
   </>
 );

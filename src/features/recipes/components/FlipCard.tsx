@@ -3,7 +3,7 @@ import { Layers, Plus } from 'lucide-react';
 import { isScrollingActive } from '../../../shared/utils/scrollGuard';
 import { IS_TOUCH } from '../../../shared/utils/deviceUtils';
 
-interface FlipCardProps {
+export interface FlipCardProps {
     name: string;
     frontImage: string;
     backImage?: string;

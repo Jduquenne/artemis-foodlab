@@ -8,9 +8,9 @@ import { useAppInit } from './shared/hooks/useAppInit';
 
 import { JournalModule } from './features/journal/JournalModule';
 import { RecipeModule } from './features/recipes/RecipeModule';
-import { CategoryDetail } from './features/recipes/components/CategoryDetail';
-import { RecipeDetail } from './features/recipes/components/RecipeDetail';
-import { RecipeMacroPage } from './features/recipes/components/RecipeMacroPage';
+import { CategoryDetail } from './features/recipes/components/detail/CategoryDetail';
+import { RecipeDetail } from './features/recipes/components/detail/RecipeDetail';
+import { RecipeMacroPage } from './features/recipes/components/macro/RecipeMacroPage';
 import { PlanningModule } from './features/planning/PlanningModule';
 import { ShoppingModule } from './features/shopping/ShoppingModule';
 import { HouseholdModule } from './features/household/HouseholdModule';

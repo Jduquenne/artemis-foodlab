@@ -7,9 +7,8 @@ import { FlipCard } from './components/FlipCard';
 import { useSearchRecipes } from '../../shared/hooks/useSearch';
 import { CATEGORIES } from '../../core/domain/categories';
 import { markScrolling } from '../../shared/utils/scrollGuard';
-import { MacroFilterButton } from './components/MacroFilterButton';
+import { MacroFilterButton } from './components/filter/MacroFilterButton';
 import { PREDEFINED_FILTERS } from '../../core/domain/predefinedFilters';
-import { Food } from '../../core/domain/types';
 import { isPlannable } from '../../core/domain/recipePredicates';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { typedRecipesDb } from '../../core/typed-db/typedRecipesDb';
@@ -29,14 +28,12 @@ export const RecipeModule = () => {
 
     const filteredResults = useMemo(() => {
         if (activeFilterIds.length === 0) return baseResults;
-        const allRecipes = typedRecipesDb;
-        const foods: Record<string, Food> = typedFoodDb;
         const activeFilters = PREDEFINED_FILTERS.filter(f => activeFilterIds.includes(f.id));
         return baseResults.filter((recipe) => {
             const id = recipe.recipeId || recipe.id;
-            const details = allRecipes[id];
+            const details = typedRecipesDb[id];
             if (!details) return false;
-            const macros = calculateRecipeMacros(details, allRecipes, foods);
+            const macros = calculateRecipeMacros(details, typedRecipesDb, typedFoodDb);
             return activeFilters.every(f => f.check(macros));
         });
     }, [baseResults, activeFilterIds]);

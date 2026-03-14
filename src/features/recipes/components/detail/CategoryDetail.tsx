@@ -1,16 +1,14 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { FlipCard } from './FlipCard';
+import { FlipCard } from '../FlipCard';
 import { ArrowLeft, X } from 'lucide-react';
 import { useMemo } from 'react';
-import { CATEGORIES } from '../../../core/domain/categories';
-import { markScrolling } from '../../../shared/utils/scrollGuard';
-import { MacroFilterButton } from './MacroFilterButton';
-import { PREDEFINED_FILTERS } from '../../../core/domain/predefinedFilters';
-import { isPlannable } from '../../../core/domain/recipePredicates';
-import { useMenuStore } from '../../../shared/store/useMenuStore';
-import { typedRecipesDb } from '../../../core/typed-db/typedRecipesDb';
-
-const data = typedRecipesDb;
+import { CATEGORIES } from '../../../../core/domain/categories';
+import { markScrolling } from '../../../../shared/utils/scrollGuard';
+import { MacroFilterButton } from '../filter/MacroFilterButton';
+import { PREDEFINED_FILTERS } from '../../../../core/domain/predefinedFilters';
+import { isPlannable } from '../../../../core/domain/recipePredicates';
+import { useMenuStore } from '../../../../shared/store/useMenuStore';
+import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
 
 export const CategoryDetail = () => {
     const { categoryId } = useParams();
@@ -19,7 +17,7 @@ export const CategoryDetail = () => {
 
     const categoryInfo = CATEGORIES.find(cat => cat.id === categoryId);
     const recipes = useMemo(() => {
-        return Object.entries(data)
+        return Object.entries(typedRecipesDb)
             .filter(([, recipe]) => recipe.categoryId === categoryId && recipe.assets?.photo)
             .map(([recipeId, recipe]) => ({
                 id: recipeId,
@@ -34,7 +32,7 @@ export const CategoryDetail = () => {
         if (activeFilterIds.length === 0) return recipes;
         const activeFilters = PREDEFINED_FILTERS.filter(f => activeFilterIds.includes(f.id));
         return recipes.filter((recipe) => {
-            const macros = data[recipe.id]?.macronutriment;
+            const macros = typedRecipesDb[recipe.id]?.macronutriment;
             if (!macros) return false;
             return activeFilters.every(f => f.check(macros));
         });
@@ -96,7 +94,7 @@ export const CategoryDetail = () => {
                                 backImage={recipe.ingredientsUrl}
                                 recipeUrl={recipe.recipeUrl}
                                 onClick={() => navigate(`/recipes/detail/${recipe.id}?category=${categoryId}`)}
-                                onAddToPlanning={isPlannable(data[recipe.id]) ? () => navigate(`/planning?addRecipe=${recipe.id}`) : undefined}
+                                onAddToPlanning={isPlannable(typedRecipesDb[recipe.id]) ? () => navigate(`/planning?addRecipe=${recipe.id}`) : undefined}
                             />
                         </div>
                     ))}

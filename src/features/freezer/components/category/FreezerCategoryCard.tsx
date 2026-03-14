@@ -51,7 +51,13 @@ export const FreezerCategoryCard = ({ category, isFirst, isLast, onClick }: Free
   const extra = category.items.length - preview.length;
 
   return (
-    <div className="bg-white dark:bg-slate-100 rounded-2xl border border-slate-200 shadow-sm md:min-h-36 flex flex-col">
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={onClick}
+      onKeyDown={e => { if (e.key === "Enter" || e.key === " ") onClick(); }}
+      className="bg-white dark:bg-slate-100 rounded-2xl border border-slate-200 shadow-sm md:min-h-36 flex flex-col cursor-pointer hover:border-orange-300 transition-colors"
+    >
       <div className="flex items-center gap-2 px-4 pt-3 pb-2 md:pt-5 md:pb-3">
         {renaming ? (
           <InlineNameEditor
@@ -62,12 +68,10 @@ export const FreezerCategoryCard = ({ category, isFirst, isLast, onClick }: Free
             inputClassName="text-sm font-bold"
           />
         ) : (
-          <button className="flex-1 min-w-0 text-left" onClick={onClick}>
-            <span className="text-sm font-bold text-slate-800 truncate block">{category.name}</span>
-          </button>
+          <span className="flex-1 min-w-0 text-sm font-bold text-slate-800 truncate block">{category.name}</span>
         )}
 
-        <div className="flex items-center gap-1 shrink-0">
+        <div className="flex items-center gap-1 shrink-0" onClick={e => e.stopPropagation()}>
           <span className="text-xs font-bold text-slate-400 min-w-5 text-center">
             {category.items.length}
           </span>
@@ -115,7 +119,7 @@ export const FreezerCategoryCard = ({ category, isFirst, isLast, onClick }: Free
         </div>
       </div>
 
-      <button className="w-full text-left px-4 pb-3 md:pb-5 flex-1" onClick={onClick}>
+      <div className="w-full text-left px-4 pb-3 md:pb-5 flex-1">
         {category.items.length === 0 ? (
           <p className="text-xs text-slate-400 italic">Vide</p>
         ) : (
@@ -132,7 +136,7 @@ export const FreezerCategoryCard = ({ category, isFirst, isLast, onClick }: Free
             )}
           </div>
         )}
-      </button>
+      </div>
     </div>
   );
 };

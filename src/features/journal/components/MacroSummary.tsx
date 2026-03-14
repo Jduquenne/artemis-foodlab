@@ -2,7 +2,7 @@ import { useState } from "react";
 import { SlidersHorizontal } from "lucide-react";
 import { Macronutrients } from "../../../core/domain/types";
 import { useJournalStore } from "../../../shared/store/useJournalStore";
-import { MacroTargetsModal } from "./MacroTargetsModal";
+import { MacroTargetsModal } from "./modal/MacroTargetsModal";
 
 export interface MacroSummaryProps {
   macros: Macronutrients;

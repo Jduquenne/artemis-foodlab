@@ -1,7 +1,9 @@
-import { Food, Macronutrients, RecipeDetails, Unit } from "../domain/types";
+import { Food, Macronutrients, MealSlot, RecipeDetails, Unit } from "../domain/types";
+import { getAllRecipeIds, isDish, isBase } from "../domain/recipePredicates";
 import { typedRecipesDb } from "./typedRecipesDb";
 import { typedFoodDb } from "./typedFoodDb";
-const ZERO: Macronutrients = {
+import { plannableDb } from "./plannableDb";
+export const ZERO: Macronutrients = {
   kcal: 0,
   proteins: 0,
   lipids: 0,
@@ -116,3 +118,41 @@ export const RECIPE_BASE_GRAMS: Record<string, number> = Object.fromEntries(
     return grams > 0 ? [[id, grams]] : [];
   })
 );
+
+export function computeDayMacros(
+  slots: MealSlot[],
+  portionOverrides: Record<string, number>,
+  gramOverrides: Record<string, number>,
+): Macronutrients {
+  return slots.reduce((total, slot) => {
+    return getAllRecipeIds(slot).reduce((sum, id) => {
+      const m = RECIPE_MACROS[id];
+      if (!m) return sum;
+      const key = `${slot.id}-${id}`;
+      const portionMult = portionOverrides[key] ?? 1;
+      const recipe = plannableDb[id];
+      const recipeIsDish = isDish(recipe) || isBase(recipe);
+      let factor: number;
+      if (recipeIsDish) {
+        factor = (slot.recipePersons?.[id] ?? 1) * portionMult;
+      } else {
+        const baseGrams = RECIPE_BASE_GRAMS[id];
+        const journalGrams = gramOverrides[key];
+        if (journalGrams !== undefined && baseGrams) {
+          factor = journalGrams / baseGrams;
+        } else {
+          const recipeGrams = slot.recipeQuantities?.[id];
+          const gramsFactor = recipeGrams !== undefined && baseGrams ? recipeGrams / baseGrams : 1;
+          factor = portionMult * gramsFactor;
+        }
+      }
+      return {
+        kcal: sum.kcal + m.kcal * factor,
+        proteins: sum.proteins + m.proteins * factor,
+        lipids: sum.lipids + m.lipids * factor,
+        carbohydrates: sum.carbohydrates + m.carbohydrates * factor,
+        fibers: sum.fibers + m.fibers * factor,
+      };
+    }, total);
+  }, { ...ZERO });
+}

@@ -1,10 +1,8 @@
 import { Minus, Plus } from "lucide-react";
-import { RecipeKind } from "../../../core/domain/types";
-import { RECIPE_BASE_GRAMS, RECIPE_MACROS } from "../../../core/utils/macroUtils";
-import { useJournalStore } from "../../../shared/store/useJournalStore";
-import { typedRecipesDb } from "../../../core/utils/typedRecipesDb";
-
-const data = typedRecipesDb;
+import { RecipeKind } from "../../../../core/domain/types";
+import { RECIPE_BASE_GRAMS, RECIPE_MACROS } from "../../../../core/utils/macroUtils";
+import { useJournalStore } from "../../../../shared/store/useJournalStore";
+import { typedRecipesDb } from "../../../../core/utils/typedRecipesDb";
 
 export interface RecipePortionRowProps {
   recipeId: string;
@@ -14,7 +12,7 @@ export interface RecipePortionRowProps {
 export const RecipePortionRow = ({ recipeId, slotId }: RecipePortionRowProps) => {
   const { portionOverrides, setPortionOverride, gramOverrides, setGramOverride } = useJournalStore();
   const key = `${slotId}-${recipeId}`;
-  const recipe = data[recipeId];
+  const recipe = typedRecipesDb[recipeId];
   const name = recipe?.name ?? recipeId;
   const isIngredient = recipe?.kind === RecipeKind.INGREDIENT;
   const baseGrams = RECIPE_BASE_GRAMS[recipeId] ?? 0;

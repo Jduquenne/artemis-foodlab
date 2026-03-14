@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { X, Check } from "lucide-react";
-import { useJournalStore } from "../../../shared/store/useJournalStore";
+import { useJournalStore } from "../../../../shared/store/useJournalStore";
 
 export interface MacroTargetsModalProps {
   onClose: () => void;

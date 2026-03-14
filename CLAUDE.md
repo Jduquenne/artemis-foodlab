@@ -93,6 +93,27 @@ Root `/` redirects to `/journal`. Uses `HashRouter` for GitHub Pages compatibili
 - **Non-indexed Dexie fields**: adding optional fields to a stored object (e.g. `dessertIds?`) does **not** require a schema version bump as long as the field is not used as a Dexie index. Only structural changes (new stores, new indexes, fields used in `.where()`) require a new `.version(n+1)` block.
 - **Asset manifest**: `scripts/generate-manifest.cjs` generates `core/data/assets-manifest.json` listing recipe images under `public/`. Run if adding new images.
 
+### Business logic in components (critical)
+
+**Never write business logic inline inside a component or hook.** This includes any computation that:
+- iterates over domain data (slots, ingredients, recipes) to produce a derived value
+- applies domain rules (portions, grams, factors, aggregations)
+- would be unit-testable in isolation
+
+Such logic must live in `core/utils/` as a named, exported pure function. The component calls it inside a `useMemo` with the appropriate deps — nothing more.
+
+```typescript
+// Wrong: 30-line reduce directly inside useMemo in a component
+const total = useMemo(() => slots.reduce((acc, slot) => { ... complex logic ... }), [slots]);
+
+// Right: extract to core/utils/macroUtils.ts
+export function computeDayMacros(slots, portionOverrides, gramOverrides): Macronutrients { ... }
+// Component becomes:
+const total = useMemo(() => computeDayMacros(slots, portionOverrides, gramOverrides), [slots, portionOverrides, gramOverrides]);
+```
+
+The threshold is low: if a `useMemo` or handler body exceeds ~5 lines of logic, extract it.
+
 ### Domain predicates (critical)
 
 **Never write inline business-rule conditions in components or hooks.** All such conditions live in `core/domain/recipePredicates.ts` as pure, typed functions.
@@ -157,7 +178,7 @@ The app version is tracked in `package.json`. **Before proposing any commit mess
 - **New feature** (no new module): MINOR++, PATCH stays unchanged
 - **Fix / refactor / update / docs**: PATCH++
 
-Current version: **6.12.14**. The next commit must update `package.json` accordingly before the commit message is given.
+Current version: **6.13.4**. The next commit must update `package.json` accordingly before the commit message is given.
 
 ## TypeScript conventions
 

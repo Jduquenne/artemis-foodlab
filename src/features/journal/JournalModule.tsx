@@ -2,14 +2,12 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import { addDays, subDays } from "date-fns";
 import { getWeekNumber, getMonday } from "../../shared/utils/weekUtils";
 import { getWeekSlots } from "../../core/services/planningService";
-import { MealSlot, Macronutrients } from "../../core/domain/types";
-import { getAllRecipeIds, isDish, isBase } from "../../core/domain/recipePredicates";
-import { RECIPE_MACROS, RECIPE_BASE_GRAMS } from "../../core/utils/macroUtils";
-import { plannableDb } from "../../core/utils/plannableDb";
+import { MealSlot } from "../../core/domain/types";
+import { computeDayMacros } from "../../core/utils/macroUtils";
 import { useJournalStore } from "../../shared/store/useJournalStore";
 import { DayNav } from "./components/DayNav";
 import { MacroSummary } from "./components/MacroSummary";
-import { MealSlotCard } from "./components/MealSlotCard";
+import { MealSlotCard } from "./components/slot/MealSlotCard";
 
 const SLOT_ORDER = ["breakfast", "lunch", "snack", "dinner"] as const;
 const DAYS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
@@ -18,8 +16,6 @@ function getDayKey(date: Date): string {
   const d = date.getDay();
   return DAYS[d === 0 ? 6 : d - 1];
 }
-
-const ZERO: Macronutrients = { kcal: 0, proteins: 0, lipids: 0, carbohydrates: 0, fibers: 0 };
 
 export const JournalModule = () => {
   const { portionOverrides, gramOverrides } = useJournalStore();
@@ -55,39 +51,7 @@ export const JournalModule = () => {
   }, [daySlots]);
 
   const totalMacros = useMemo(
-    () =>
-      daySlots.reduce((total, slot) => {
-        return getAllRecipeIds(slot).reduce((sum, id) => {
-          const m = RECIPE_MACROS[id];
-          if (!m) return sum;
-          const key = `${slot.id}-${id}`;
-          const portionMult = portionOverrides[key] ?? 1;
-          const recipe = plannableDb[id];
-          const recipeIsDish = isDish(recipe) || isBase(recipe);
-          let factor: number;
-          if (recipeIsDish) {
-            const plannedPortions = slot.recipePersons?.[id];
-            factor = (plannedPortions ?? 1) * portionMult;
-          } else {
-            const baseGrams = RECIPE_BASE_GRAMS[id];
-            const journalGrams = gramOverrides[key];
-            if (journalGrams !== undefined && baseGrams) {
-              factor = journalGrams / baseGrams;
-            } else {
-              const recipeGrams = slot.recipeQuantities?.[id];
-              const gramsFactor = recipeGrams !== undefined && baseGrams ? recipeGrams / baseGrams : 1;
-              factor = portionMult * gramsFactor;
-            }
-          }
-          return {
-            kcal: sum.kcal + m.kcal * factor,
-            proteins: sum.proteins + m.proteins * factor,
-            lipids: sum.lipids + m.lipids * factor,
-            carbohydrates: sum.carbohydrates + m.carbohydrates * factor,
-            fibers: sum.fibers + m.fibers * factor,
-          };
-        }, total);
-      }, { ...ZERO }),
+    () => computeDayMacros(daySlots, portionOverrides, gramOverrides),
     [daySlots, portionOverrides, gramOverrides]
   );
 

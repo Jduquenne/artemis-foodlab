@@ -1,25 +1,15 @@
-import { Macronutrients, MealSlot, RecipeKind, SlotType } from "../../../core/domain/types";
-import { getAllRecipeIds, hasDesserts } from "../../../core/domain/recipePredicates";
-import { RECIPE_BASE_GRAMS, RECIPE_MACROS } from "../../../core/utils/macroUtils";
-import { useJournalStore } from "../../../shared/store/useJournalStore";
-import { typedRecipesDb } from "../../../core/utils/typedRecipesDb";
+import { Macronutrients, MealSlot, RecipeKind, SlotType } from "../../../../core/domain/types";
+import { getAllRecipeIds, hasDesserts } from "../../../../core/domain/recipePredicates";
+import { RECIPE_BASE_GRAMS, RECIPE_MACROS, ZERO } from "../../../../core/utils/macroUtils";
+import { useJournalStore } from "../../../../shared/store/useJournalStore";
+import { typedRecipesDb } from "../../../../core/utils/typedRecipesDb";
+import { SLOT_LABELS } from "../../../../shared/utils/slotLabels";
 import { RecipePortionRow } from "./RecipePortionRow";
-
-const data = typedRecipesDb;
 
 export interface MealSlotCardProps {
   slotType: SlotType;
   slot?: MealSlot;
 }
-
-const SLOT_LABELS: Record<SlotType, string> = {
-  breakfast: "Petit-déj",
-  lunch: "Déjeuner",
-  dinner: "Dîner",
-  snack: "Collation",
-};
-
-const ZERO: Macronutrients = { kcal: 0, proteins: 0, lipids: 0, carbohydrates: 0, fibers: 0 };
 
 const MACRO_ITEMS: { key: keyof Omit<Macronutrients, "kcal">; label: string }[] = [
   { key: "proteins", label: "Prot" },
@@ -34,7 +24,7 @@ export const MealSlotCard = ({ slotType, slot }: MealSlotCardProps) => {
   const allIds = slot ? getAllRecipeIds(slot) : [];
   const totalMacros = allIds.reduce((sum, id) => {
     const key = `${slot!.id}-${id}`;
-    const recipe = data[id];
+    const recipe = typedRecipesDb[id];
     const baseGrams = RECIPE_BASE_GRAMS[id] ?? 0;
     const m = RECIPE_MACROS[id];
     if (!m) return sum;
@@ -90,8 +80,8 @@ export const MealSlotCard = ({ slotType, slot }: MealSlotCardProps) => {
             {slot && hasDesserts(slot) && (
               <>
                 <div className="my-1 border-t border-dashed border-slate-100" />
-                {slot!.dessertIds!.map((id) => (
-                  <RecipePortionRow key={id} recipeId={id} slotId={slot!.id} />
+                {(slot.dessertIds ?? []).map((id) => (
+                  <RecipePortionRow key={id} recipeId={id} slotId={slot.id} />
                 ))}
               </>
             )}

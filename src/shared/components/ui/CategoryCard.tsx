@@ -1,4 +1,4 @@
-interface CategoryCardProps {
+export interface CategoryCardProps {
     name: string;
     onClick: () => void;
 }

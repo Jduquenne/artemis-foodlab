@@ -1,6 +1,7 @@
 import { X, CheckCircle2, Circle } from 'lucide-react';
 import { IngredientSource } from '../../../core/utils/shoppingLogic';
 import { pluralizeUnit } from '../../../core/utils/unitUtils';
+import { SLOT_LABELS } from '../../../shared/utils/slotLabels';
 
 const DAY_LABELS: Record<string, string> = {
     monday: 'Lundi', tuesday: 'Mardi', wednesday: 'Mercredi',
@@ -13,10 +14,6 @@ const DAY_SHORT: Record<string, string> = {
 };
 
 const DAY_ORDER = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-
-const SLOT_LABELS: Record<string, string> = {
-    breakfast: 'Petit déj.', lunch: 'Déjeuner', snack: 'Goûter', dinner: 'Dîner',
-};
 
 export interface SourcesModalProps {
     ingredientKey: string;

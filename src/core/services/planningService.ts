@@ -1,7 +1,6 @@
 import { db } from "./databaseService";
 import { MealSlot } from "../domain/types";
-
-export type { MealSlot };
+import { canAddDessert } from "../domain/recipePredicates";
 
 export const getWeekSlots = (year: number, week: number) =>
   db.planning.where("[year+week]").equals([year, week]).toArray();
@@ -16,7 +15,7 @@ export const deleteSlot = (id: string) => db.planning.delete(id);
 
 export const addDessertToSlot = async (slot: MealSlot, recipeId: string) => {
   const ids = slot.dessertIds ?? [];
-  if (ids.length >= 3 || ids.includes(recipeId)) return;
+  if (!canAddDessert(slot) || ids.includes(recipeId)) return;
   await saveSlot({ ...slot, dessertIds: [...ids, recipeId] });
 };
 

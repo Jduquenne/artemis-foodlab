@@ -1,7 +1,7 @@
 export interface Category {
-  id: string; // Doit correspondre exactement au nom du dossier dans /public
-  name: string; // Nom affiché dans l'interface
-  color: string; // Pour l'UI
+  id: string;
+  name: string;
+  color: string;
 }
 
 export const CATEGORIES: Category[] = [
@@ -21,6 +21,5 @@ export const CATEGORIES: Category[] = [
   { id: "outdoor", name: "Extérieur", color: "bg-rose-500" },
 ];
 
-// Helper pour récupérer une catégorie par son ID
 export const getCategoryById = (id: string) =>
   CATEGORIES.find((c) => c.id === id);

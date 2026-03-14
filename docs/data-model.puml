@@ -112,6 +112,21 @@ package "Énumérations" as ENUMS #E8E0D2 {
 }
 
 ' ═══════════════════════════════════════════════════════════════
+' ALIASES DE TYPE
+' ═══════════════════════════════════════════════════════════════
+
+package "Aliases de type" as ALIASES #EEE8DC {
+
+  class SlotType <<type alias>> {
+    "breakfast" | "lunch" | "snack" | "dinner"
+  }
+
+  class RecipeAssetKey <<type alias>> {
+    "photo" | "ingredientsPhoto" | "instructionsPhoto"
+  }
+}
+
+' ═══════════════════════════════════════════════════════════════
 ' DOMAINE RECETTES — Données statiques (JSON)
 ' ═══════════════════════════════════════════════════════════════
 
@@ -220,6 +235,8 @@ package "Planning — IndexedDB" as PLANNING #EDFAF2 {
 
 MealSlot  "N" ----> "N" Recipe       : recipeIds
 ShoppingDay  ..>        MealSlot     : interroge
+MealSlot     ..>        SlotType     : slot
+RecipeAssets ..>        RecipeAssetKey : clés
 
 ' ═══════════════════════════════════════════════════════════════
 ' DOMAINE CONGÉLATEUR — IndexedDB (table : freezerCategories)

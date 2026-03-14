@@ -1,4 +1,4 @@
-import { Macronutrients, MealSlot, RecipeKind } from "../../../core/domain/types";
+import { Macronutrients, MealSlot, RecipeKind, SlotType } from "../../../core/domain/types";
 import { getAllRecipeIds, hasDesserts } from "../../../core/domain/recipePredicates";
 import { RECIPE_BASE_GRAMS, RECIPE_MACROS } from "../../../core/utils/macroUtils";
 import { useJournalStore } from "../../../shared/store/useJournalStore";
@@ -8,11 +8,11 @@ import { RecipePortionRow } from "./RecipePortionRow";
 const data = typedRecipesDb;
 
 export interface MealSlotCardProps {
-  slotType: string;
+  slotType: SlotType;
   slot?: MealSlot;
 }
 
-const SLOT_LABELS: Record<string, string> = {
+const SLOT_LABELS: Record<SlotType, string> = {
   breakfast: "Petit-déj",
   lunch: "Déjeuner",
   dinner: "Dîner",

@@ -83,8 +83,8 @@ export async function createSenderSession(scope: SyncScope[] = ALL_SCOPES, callb
       await pc.setRemoteDescription({ type: "answer", sdp: answerSdp });
     },
     cleanup: () => {
-      try { channel.close(); } catch { /* empty */ }
-      try { pc.close(); } catch { /* empty */ }
+      try { channel.close(); } catch { /* already closed */ }
+      try { pc.close(); } catch { /* already closed */ }
     },
   };
 }

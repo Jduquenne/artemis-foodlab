@@ -1,7 +1,6 @@
-import { addDays } from "date-fns";
-import { getISOWeek, getISOWeekYear } from "date-fns";
-import { getWeekSlots, MealSlot } from "../services/planningService";
-import { Ingredient, IngredientCategory, ShoppingDay } from "../domain/types";
+import { addDays, getISOWeek, getISOWeekYear } from "date-fns";
+import { getWeekSlots } from "../services/planningService";
+import { Ingredient, IngredientCategory, MealSlot, ShoppingDay } from "../domain/types";
 import { getAllRecipeIds } from "../domain/recipePredicates";
 import { typedRecipesDb } from "./typedRecipesDb";
 import { RECIPE_BASE_GRAMS } from "./macroUtils";
@@ -39,10 +38,6 @@ function cleanRecipeName(name: string): string {
   return name
     .replace(/\s+(ingrédients?|ingredients?|recettes?|recipes?|photo)$/i, "")
     .trim();
-}
-
-function resolveSlots(slots: MealSlot[]): MealSlot[] {
-  return slots;
 }
 
 function slotScaleFactor(
@@ -106,7 +101,7 @@ async function aggregateSlots(
     }
   }
 
-  for (const slot of resolveSlots(slots)) {
+  for (const slot of slots) {
     const allIds = getAllRecipeIds(slot);
     for (const recipeId of allIds) {
       const details = data[recipeId];

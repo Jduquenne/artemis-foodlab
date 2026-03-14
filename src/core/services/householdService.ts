@@ -1,7 +1,4 @@
 import { db } from "./databaseService";
-import { HouseholdRecord } from "../domain/types";
-
-export type { HouseholdRecord };
 
 export const getRecords = () => db.household.toArray();
 

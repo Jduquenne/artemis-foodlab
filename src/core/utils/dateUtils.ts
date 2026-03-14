@@ -18,8 +18,8 @@ export const getDaysOfWeek = (date: Date = new Date()) => {
   return Array.from({ length: 7 }, (_, i) => {
     const day = addDays(start, i);
     return {
-      key: format(day, "eeee").toLowerCase(), // monday, tuesday...
-      label: format(day, "EEEE d", { locale: fr }), // Lundi 9
+      key: format(day, "eeee").toLowerCase(),
+      label: format(day, "EEEE d", { locale: fr }),
       date: day,
     };
   });

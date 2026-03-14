@@ -27,7 +27,7 @@ export enum IngredientCategory {
   NON_PURCHASE = "Hors achat",
   FROZEN = "Surgelés",
   INTERNET = "Internet",
-  UNKNOWN = "Inconnu", // Pratique pour votre script de debug !
+  UNKNOWN = "Inconnu",
 }
 
 export interface Recipe {
@@ -84,6 +84,8 @@ export enum RecipeKind {
   BASE = "base",
 }
 
+export type RecipeAssetKey = "photo" | "ingredientsPhoto" | "instructionsPhoto";
+
 export interface RecipeAsset {
   url: string;
 }
@@ -96,9 +98,7 @@ export interface RecipeDetails {
   macronutriment: Macronutrients;
   defaultPortions: number;
   ingredients: Ingredient[];
-  assets: Partial<
-    Record<"photo" | "ingredientsPhoto" | "instructionsPhoto", RecipeAsset>
-  >;
+  assets: Partial<Record<RecipeAssetKey, RecipeAsset>>;
   batchCooking?: boolean;
   isDessert?: boolean;
 }
@@ -163,10 +163,12 @@ export interface PredefinedFilter {
   check: (macros: Macronutrients) => boolean;
 }
 
+export type SlotType = "breakfast" | "lunch" | "snack" | "dinner";
+
 export interface MealSlot {
   id: string;
   day: string;
-  slot: "breakfast" | "lunch" | "snack" | "dinner";
+  slot: SlotType;
   recipeIds: string[];
   dessertIds?: string[];
   year: number;

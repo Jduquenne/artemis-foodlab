@@ -1,5 +1,5 @@
 import { Pencil, Trash2 } from "lucide-react";
-import { DraftIngredient } from "../../../core/domain/recipeBuilderTypes";
+import { DraftIngredient } from "../../../../core/domain/recipeBuilderTypes";
 
 export interface IngredientMobileCardProps {
   ingredient: DraftIngredient;

@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Plus } from "lucide-react";
-import { Unit, IngredientCategory } from "../../../core/domain/types";
+import { Unit, IngredientCategory } from "../../../../core/domain/types";
 import { IngredientBuilderRow } from "./IngredientBuilderRow";
 import { IngredientMobileCard } from "./IngredientMobileCard";
 import { IngredientEditDrawer } from "./IngredientEditDrawer";
-import { DraftIngredient } from "../../../core/domain/recipeBuilderTypes";
-import { markScrolling } from "../../../shared/utils/scrollGuard";
+import { DraftIngredient } from "../../../../core/domain/recipeBuilderTypes";
+import { markScrolling } from "../../../../shared/utils/scrollGuard";
 
 export interface IngredientBuilderListProps {
   ingredients: DraftIngredient[];

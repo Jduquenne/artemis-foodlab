@@ -1,8 +1,8 @@
 import { Trash2 } from "lucide-react";
-import { Unit, IngredientCategory } from "../../../core/domain/types";
+import { Unit, IngredientCategory } from "../../../../core/domain/types";
 import { IngredientFoodSearch } from "./IngredientFoodSearch";
 import { BaseRecipeSearch } from "./BaseRecipeSearch";
-import { DraftIngredient } from "../../../core/domain/recipeBuilderTypes";
+import { DraftIngredient } from "../../../../core/domain/recipeBuilderTypes";
 
 export interface IngredientBuilderRowProps {
   ingredient: DraftIngredient;

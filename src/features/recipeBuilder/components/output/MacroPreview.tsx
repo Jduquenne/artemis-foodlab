@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
-import { Macronutrients } from "../../../core/domain/types";
-import { DraftIngredient } from "../../../core/domain/recipeBuilderTypes";
-import { computeDraftTotal } from "../../../core/utils/recipeBuilderUtils";
+import { Macronutrients } from "../../../../core/domain/types";
+import { DraftIngredient } from "../../../../core/domain/recipeBuilderTypes";
+import { computeDraftTotal } from "../../../../core/utils/recipeBuilderUtils";
 
 export interface MacroPreviewProps {
   ingredients: DraftIngredient[];

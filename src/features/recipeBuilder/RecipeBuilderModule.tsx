@@ -1,9 +1,9 @@
 import { RotateCcw } from "lucide-react";
 import { useRecipeBuilderStore } from "../../shared/store/useRecipeBuilderStore";
-import { RecipeMetaForm } from "./components/RecipeMetaForm";
-import { IngredientBuilderList } from "./components/IngredientBuilderList";
-import { OutputPanel } from "./components/OutputPanel";
-import { MacroPreview } from "./components/MacroPreview";
+import { RecipeMetaForm } from "./components/meta/RecipeMetaForm";
+import { IngredientBuilderList } from "./components/ingredients/IngredientBuilderList";
+import { OutputPanel } from "./components/output/OutputPanel";
+import { MacroPreview } from "./components/output/MacroPreview";
 
 export const RecipeBuilderModule = () => {
   const { draft, patch, patchIngredients, reset } = useRecipeBuilderStore();

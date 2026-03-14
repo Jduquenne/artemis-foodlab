@@ -1,25 +1,28 @@
 import { useState } from "react";
 import { Search } from "lucide-react";
-import { typedFoodDb } from "../../../core/typed-db/typedFoodDb";
-import { Food, IngredientCategory } from "../../../core/domain/types";
+import { typedRecipesDb } from "../../../../core/typed-db/typedRecipesDb";
+import { isBase } from "../../../../core/domain/recipePredicates";
 
-export interface IngredientFoodSearchProps {
+export interface BaseRecipeSearchProps {
   value: string;
-  onChange: (name: string, foodId?: string, category?: IngredientCategory, unit?: string) => void;
+  onChange: (name: string, baseId: string) => void;
 }
 
-const foods: Food[] = Object.values(typedFoodDb);
+const bases = Object.entries(typedRecipesDb)
+  .filter(([, r]) => isBase(r))
+  .map(([id, r]) => ({ id, name: r.name }));
 
-export const IngredientFoodSearch = ({ value, onChange }: IngredientFoodSearchProps) => {
+export const BaseRecipeSearch = ({ value, onChange }: BaseRecipeSearchProps) => {
   const [open, setOpen] = useState(false);
 
   const suggestions =
-    open && value.length > 0
+    open
       ? (() => {
           const q = value.toLowerCase();
-          const startsWith = foods.filter(f => f.name.toLowerCase().startsWith(q));
-          const contains = foods.filter(
-            f => !f.name.toLowerCase().startsWith(q) && f.name.toLowerCase().includes(q)
+          if (!q) return bases.slice(0, 8);
+          const startsWith = bases.filter(r => r.name.toLowerCase().startsWith(q));
+          const contains = bases.filter(
+            r => !r.name.toLowerCase().startsWith(q) && r.name.toLowerCase().includes(q)
           );
           return [...startsWith, ...contains].slice(0, 8);
         })()
@@ -32,28 +35,28 @@ export const IngredientFoodSearch = ({ value, onChange }: IngredientFoodSearchPr
         <input
           type="text"
           value={value}
-          onChange={e => onChange(e.target.value, undefined, undefined)}
+          onChange={e => onChange(e.target.value, "")}
           onFocus={() => setOpen(true)}
           onBlur={() => setOpen(false)}
-          placeholder="Aliment…"
+          placeholder="Rechercher une base…"
           className="w-full pl-8 pr-3 py-2 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
         />
       </div>
       {open && suggestions.length > 0 && (
         <div className="absolute z-30 top-full left-0 right-0 mt-1 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl shadow-lg overflow-hidden">
-          {suggestions.map(food => (
+          {suggestions.map(base => (
             <button
-              key={food.id}
+              key={base.id}
               type="button"
               onMouseDown={e => e.preventDefault()}
               onClick={() => {
-                onChange(food.name, food.id, food.category as IngredientCategory, food.unit);
+                onChange(base.name, base.id);
                 setOpen(false);
               }}
               className="flex items-center justify-between w-full px-3 py-2 text-left hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors border-b border-slate-100 last:border-0"
             >
-              <span className="text-sm font-semibold text-slate-800">{food.name}</span>
-              <span className="text-xs text-slate-400 ml-2 shrink-0">{food.category}</span>
+              <span className="text-sm font-semibold text-slate-800">{base.name}</span>
+              <span className="text-xs text-slate-400 ml-2 shrink-0">base</span>
             </button>
           ))}
         </div>

@@ -66,18 +66,13 @@ export const addBagToFoodItem = async (
 };
 
 export const removeBagFromFoodItem = (categoryId: string, itemId: string, bagId: string) =>
-  withCategory(categoryId, cat => {
-    const item = cat.items.find(i => i.id === itemId);
-    if (!item || item.type !== "food") return {};
-    const remainingBags = item.bags.filter(b => b.id !== bagId);
-    return {
-      items: remainingBags.length === 0
-        ? cat.items.filter(i => i.id !== itemId)
-        : cat.items.map(i =>
-            i.id === itemId && i.type === "food" ? { ...i, bags: remainingBags } : i
-          ),
-    };
-  });
+  withCategory(categoryId, cat => ({
+    items: cat.items.map(i =>
+      i.id === itemId && i.type === "food"
+        ? { ...i, bags: i.bags.filter(b => b.id !== bagId) }
+        : i
+    ),
+  }));
 
 export const updateBagInFoodItem = (
   categoryId: string,

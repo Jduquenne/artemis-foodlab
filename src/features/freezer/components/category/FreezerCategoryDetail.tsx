@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { ArrowLeft, Plus, Pencil } from "lucide-react";
 import { FreezerCategory } from "../../../../core/domain/types";
 import { removeItemFromCategory, updateCategoryName } from "../../../../core/services/freezerService";
@@ -6,16 +6,32 @@ import { FreezerItemRow } from "../item/FreezerItemRow";
 import { AddFreezerItemModal } from "../modal/AddFreezerItemModal";
 import { InlineNameEditor } from "../InlineNameEditor";
 import { markScrolling } from "../../../../shared/utils/scrollGuard";
+import { useColCount } from "../../../../shared/hooks/useColCount";
+import { distributeToColumns } from "../../../../shared/utils/columnUtils";
 
 export interface FreezerCategoryDetailProps {
   category: FreezerCategory;
   onBack: () => void;
 }
 
+const itemHeight = (item: FreezerCategory["items"][number]) =>
+  item.type === "batch" ? 1 : 1 + item.bags.length;
+
 export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetailProps) => {
   const [addOpen, setAddOpen] = useState(false);
   const [editing, setEditing] = useState(false);
   const [nameInput, setNameInput] = useState(category.name);
+
+  const colCount = Math.min(useColCount(), 3);
+  const columns = useMemo(
+    () => distributeToColumns(category.items, itemHeight, colCount),
+    [category.items, colCount]
+  );
+
+  const existingFoodNames = useMemo(
+    () => category.items.filter(i => i.type === "food").map(i => i.name),
+    [category.items]
+  );
 
   const handleRename = async () => {
     const trimmed = nameInput.trim();
@@ -75,14 +91,18 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
             <p className="text-xs">Ajoute un aliment ou un batch cooking</p>
           </div>
         ) : (
-          <div className="flex flex-col gap-2 pb-4">
-            {category.items.map(item => (
-              <FreezerItemRow
-                key={item.id}
-                item={item}
-                categoryId={category.id}
-                onDelete={() => removeItemFromCategory(category.id, item.id)}
-              />
+          <div className="grid gap-2 pb-4" style={{ gridTemplateColumns: `repeat(${colCount}, 1fr)` }}>
+            {columns.map((col, ci) => (
+              <div key={ci} className="flex flex-col gap-2">
+                {col.map(item => (
+                  <FreezerItemRow
+                    key={item.id}
+                    item={item}
+                    categoryId={category.id}
+                    onDelete={() => removeItemFromCategory(category.id, item.id)}
+                  />
+                ))}
+              </div>
             ))}
           </div>
         )}
@@ -98,7 +118,7 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
         </button>
       </div>
 
-      {addOpen && <AddFreezerItemModal categoryId={category.id} onClose={() => setAddOpen(false)} />}
+      {addOpen && <AddFreezerItemModal categoryId={category.id} existingFoodNames={existingFoodNames} onClose={() => setAddOpen(false)} />}
     </div>
   );
 };

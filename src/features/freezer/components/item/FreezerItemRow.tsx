@@ -37,35 +37,37 @@ export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowPro
     return <BatchFreezerItemRow item={item} categoryId={categoryId} onDelete={onDelete} formattedDate={formatDate(item.addedDate)} />;
   }
 
-  return (
-    <div className="bg-white dark:bg-slate-100 rounded-2xl px-4 py-3">
-      <div className="flex items-center gap-2">
-        <div className="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-200 flex items-center justify-center shrink-0">
-          <Snowflake className="w-4 h-4 text-slate-500" />
-        </div>
-        <p className="flex-1 min-w-0 text-sm font-semibold text-slate-800 truncate">{item.name}</p>
+  const isEmpty = item.bags.length === 0;
 
-        <div className="flex items-center gap-1 shrink-0">
+  return (
+    <div className={`bg-white dark:bg-slate-100 rounded-2xl px-3 py-2.5 transition-opacity ${isEmpty ? "opacity-60" : ""}`}>
+      <div className="flex items-center gap-2">
+        <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${isEmpty ? "bg-slate-100 dark:bg-slate-200" : "bg-slate-100 dark:bg-slate-200"}`}>
+          <Snowflake className={`w-3.5 h-3.5 ${isEmpty ? "text-slate-300" : "text-slate-500"}`} />
+        </div>
+        <p className={`flex-1 min-w-0 text-sm font-semibold truncate ${isEmpty ? "text-slate-400" : "text-slate-800"}`}>{item.name}</p>
+
+        <div className="flex items-center gap-0.5 shrink-0">
           <span className="text-xs font-bold text-slate-400">
-            {item.bags.length} sac{item.bags.length > 1 ? "s" : ""}
+            {isEmpty ? "Vide" : `${item.bags.length} sac${item.bags.length > 1 ? "s" : ""}`}
           </span>
           <button
             aria-label="Ajouter un sac"
             onClick={() => setAddingBag(a => !a)}
-            className="p-2.5 rounded-xl text-slate-400 hover:text-orange-500 hover:bg-orange-50 transition-colors"
+            className="p-2 rounded-xl text-slate-400 hover:text-orange-500 hover:bg-orange-50 transition-colors"
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="w-3.5 h-3.5" />
           </button>
           <div className="relative" ref={itemMenuRef}>
             <button
               aria-label="Options"
               onClick={() => setItemMenuOpen(o => !o)}
-              className="p-2.5 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
+              className="p-2 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
             >
-              <MoreVertical className="w-4 h-4" />
+              <MoreVertical className="w-3.5 h-3.5" />
             </button>
             {itemMenuOpen && (
-              <div className="absolute right-0 top-11 z-20 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl shadow-lg overflow-hidden min-w-44">
+              <div className="absolute right-0 top-9 z-20 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl shadow-lg overflow-hidden min-w-44">
                 <button
                   onClick={() => { setItemMenuOpen(false); onDelete(); }}
                   className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-500 hover:bg-red-50 transition-colors"
@@ -79,7 +81,7 @@ export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowPro
         </div>
       </div>
 
-      <div className="mt-2 flex flex-col gap-1 pl-12">
+      <div className="mt-1.5 flex flex-col gap-0.5 pl-9">
         {item.bags.map(bag => (
           <BagRow
             key={bag.id}

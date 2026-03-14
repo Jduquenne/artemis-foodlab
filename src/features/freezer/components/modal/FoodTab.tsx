@@ -7,6 +7,7 @@ export interface FoodTabProps {
   foodQty: string;
   foodUnit: Unit;
   foodPreparation: string;
+  existingNames?: string[];
   onNameChange: (name: string, id?: string) => void;
   onQtyChange: (qty: string) => void;
   onUnitChange: (unit: Unit) => void;
@@ -19,6 +20,7 @@ export const FoodTab = ({
   foodQty,
   foodUnit,
   foodPreparation,
+  existingNames,
   onNameChange,
   onQtyChange,
   onUnitChange,
@@ -27,7 +29,7 @@ export const FoodTab = ({
   <>
     <div className="flex flex-col gap-1.5">
       <label className="text-xs font-bold text-slate-500 uppercase tracking-wide">Nom</label>
-      <FoodSearchInput value={foodName} onChange={onNameChange} />
+      <FoodSearchInput value={foodName} onChange={onNameChange} existingNames={existingNames} />
       {foodId && (
         <p className="text-xs text-orange-500 font-medium pl-1">✓ Lié à la base d'aliments</p>
       )}

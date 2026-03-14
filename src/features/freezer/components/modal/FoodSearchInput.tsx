@@ -7,10 +7,16 @@ const ALL_FOODS = Object.values(typedFoodDb);
 export interface FoodSearchInputProps {
   value: string;
   onChange: (name: string, foodId?: string) => void;
+  existingNames?: string[];
 }
 
-export const FoodSearchInput = ({ value, onChange }: FoodSearchInputProps) => {
+export const FoodSearchInput = ({ value, onChange, existingNames }: FoodSearchInputProps) => {
   const [open, setOpen] = useState(false);
+
+  const existingNamesLower = useMemo(
+    () => new Set((existingNames ?? []).map(n => n.toLowerCase())),
+    [existingNames]
+  );
 
   const suggestions = useMemo(() => {
     const q = value.toLowerCase().trim();
@@ -46,17 +52,21 @@ export const FoodSearchInput = ({ value, onChange }: FoodSearchInputProps) => {
 
       {showList && (
         <div className="flex flex-col rounded-2xl border border-slate-200 overflow-hidden bg-white dark:bg-slate-100 shadow-sm">
-          {suggestions.map(food => (
-            <button
-              key={food.id}
-              onMouseDown={e => e.preventDefault()}
-              onClick={() => { onChange(food.name, food.id); setOpen(false); }}
-              className="flex items-center justify-between px-4 py-2.5 text-left hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors border-b border-slate-100 last:border-0"
-            >
-              <span className="text-sm font-semibold text-slate-800">{food.name}</span>
-              <span className="text-xs text-slate-400 ml-3 shrink-0">{food.category}</span>
-            </button>
-          ))}
+          {suggestions.map(food => {
+            const isDuplicate = existingNamesLower.has(food.name.toLowerCase());
+            return (
+              <button
+                key={food.id}
+                onMouseDown={e => e.preventDefault()}
+                onClick={() => { if (!isDuplicate) { onChange(food.name, food.id); setOpen(false); } }}
+                disabled={isDuplicate}
+                className={`flex items-center justify-between px-4 py-2.5 text-left transition-colors border-b border-slate-100 last:border-0 ${isDuplicate ? "opacity-40 cursor-not-allowed" : "hover:bg-slate-50 dark:hover:bg-slate-200"}`}
+              >
+                <span className="text-sm font-semibold text-slate-800">{food.name}</span>
+                <span className="text-xs text-slate-400 ml-3 shrink-0">{isDuplicate ? "Déjà ajouté" : food.category}</span>
+              </button>
+            );
+          })}
         </div>
       )}
     </div>

@@ -7,10 +7,11 @@ import { BatchTab } from "./BatchTab";
 
 export interface AddFreezerItemModalProps {
   categoryId: string;
+  existingFoodNames?: string[];
   onClose: () => void;
 }
 
-export const AddFreezerItemModal = ({ categoryId, onClose }: AddFreezerItemModalProps) => {
+export const AddFreezerItemModal = ({ categoryId, existingFoodNames, onClose }: AddFreezerItemModalProps) => {
   const [tab, setTab] = useState<"food" | "batch">("food");
   const [saving, setSaving] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -27,8 +28,12 @@ export const AddFreezerItemModal = ({ categoryId, onClose }: AddFreezerItemModal
 
   const handleClose = () => { setIsClosing(true); setTimeout(onClose, 300); };
 
+  const isDuplicateName = tab === "food" && (existingFoodNames ?? []).some(
+    n => n.toLowerCase() === foodName.trim().toLowerCase()
+  );
+
   const canSave =
-    tab === "food" ? foodName.trim().length > 0 && foodQty.trim().length > 0
+    tab === "food" ? foodName.trim().length > 0 && foodQty.trim().length > 0 && !isDuplicateName
       : selectedRecipeId !== null && portions > 0;
 
   const handleSave = async () => {
@@ -94,6 +99,7 @@ export const AddFreezerItemModal = ({ categoryId, onClose }: AddFreezerItemModal
               foodQty={foodQty}
               foodUnit={foodUnit}
               foodPreparation={foodPreparation}
+              existingNames={existingFoodNames}
               onNameChange={(name, id) => { setFoodName(name); setFoodId(id); }}
               onQtyChange={setFoodQty}
               onUnitChange={setFoodUnit}
@@ -109,7 +115,10 @@ export const AddFreezerItemModal = ({ categoryId, onClose }: AddFreezerItemModal
           )}
         </div>
 
-        <div className="px-5 pb-6 pt-3 shrink-0 border-t border-slate-200">
+        <div className="px-5 pb-6 pt-3 shrink-0 border-t border-slate-200 flex flex-col gap-3">
+          {isDuplicateName && (
+            <p className="text-xs text-red-500 font-medium text-center">Cet aliment est déjà dans la catégorie</p>
+          )}
           <button
             onClick={handleSave}
             disabled={!canSave || saving}

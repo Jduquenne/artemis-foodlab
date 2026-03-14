@@ -22,9 +22,9 @@ export const BatchFreezerItemRow = ({ item, categoryId, onDelete, formattedDate 
     };
 
     return (
-        <div className={`flex items-center gap-3 px-4 py-3 bg-white dark:bg-slate-100 rounded-2xl transition-opacity ${isEmpty ? 'opacity-60' : ''}`}>
-            <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${isEmpty ? 'bg-slate-100 dark:bg-slate-200' : 'bg-orange-100'}`}>
-                <ChefHat className={`w-4 h-4 ${isEmpty ? 'text-slate-400' : 'text-orange-500'}`} />
+        <div className={`flex items-center gap-2 px-3 py-2.5 bg-white dark:bg-slate-100 rounded-2xl transition-opacity ${isEmpty ? 'opacity-60' : ''}`}>
+            <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${isEmpty ? 'bg-slate-100 dark:bg-slate-200' : 'bg-orange-100'}`}>
+                <ChefHat className={`w-3.5 h-3.5 ${isEmpty ? 'text-slate-400' : 'text-orange-500'}`} />
             </div>
 
             <div className="flex-1 min-w-0">

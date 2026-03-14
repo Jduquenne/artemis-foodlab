@@ -1,7 +1,7 @@
 import { HouseholdItem } from "../../../core/domain/types";
 import { HouseholdItemRow } from "./HouseholdItemRow";
 
-interface HouseholdCategoryCardProps {
+export interface HouseholdCategoryCardProps {
   label: string;
   items: HouseholdItem[];
   checkedIds: Set<string>;

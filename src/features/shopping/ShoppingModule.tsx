@@ -6,6 +6,7 @@ import { IngredientCategory, RecipeKind, ShoppingDay } from '../../core/domain/t
 import { getShoppingListForDays, getBasesForDays, ConsolidatedIngredient, IngredientSource } from '../../core/utils/shoppingLogic';
 import { typedRecipesDb } from '../../core/utils/typedRecipesDb';
 import { markScrolling } from '../../shared/utils/scrollGuard';
+import { distributeToColumns } from '../../shared/utils/columnUtils';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { useColCount } from '../../shared/hooks/useColCount';
 import { ShoppingCategoryCard } from './components/ShoppingCategoryCard';
@@ -31,19 +32,6 @@ const CATEGORY_ORDER: IngredientCategory[] = [
     IngredientCategory.NON_PURCHASE,
     IngredientCategory.UNKNOWN,
 ];
-
-function distributeToColumns<T>(items: T[], getHeight: (item: T) => number, colCount: number): T[][] {
-    if (colCount <= 1) return [items];
-    const cols: T[][] = Array.from({ length: colCount }, () => []);
-    const heights = new Array<number>(colCount).fill(0);
-    const sorted = [...items].sort((a, b) => getHeight(b) - getHeight(a));
-    for (const item of sorted) {
-        const minIdx = heights.indexOf(Math.min(...heights));
-        cols[minIdx].push(item);
-        heights[minIdx] += getHeight(item);
-    }
-    return cols;
-}
 
 function getPeriodKey(days: ShoppingDay[]): string {
     return [...days].map(d => `${d.year}-${d.week}-${d.day}`).sort().join('|');

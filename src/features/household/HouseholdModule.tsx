@@ -5,6 +5,7 @@ import { HouseholdItem, HouseholdCategory } from '../../core/domain/types';
 import { getRecords, checkItem, clearAll } from '../../core/services/householdService';
 import { markScrolling } from '../../shared/utils/scrollGuard';
 import { useColCount } from '../../shared/hooks/useColCount';
+import { distributeToColumns } from '../../shared/utils/columnUtils';
 import householdDb from '../../core/data/household-db.json';
 import { HouseholdCategoryCard } from './components/HouseholdCategoryCard';
 
@@ -18,19 +19,6 @@ const CATEGORY_ORDER: HouseholdCategory[] = [
 
 const allItems = householdDb as HouseholdItem[];
 
-function distributeToColumns<T>(items: T[], getHeight: (item: T) => number, colCount: number): T[][] {
-    if (colCount <= 1) return [items];
-    const cols: T[][] = Array.from({ length: colCount }, () => []);
-    const heights = new Array<number>(colCount).fill(0);
-    const sorted = [...items].sort((a, b) => getHeight(b) - getHeight(a));
-    for (const item of sorted) {
-        const minIdx = heights.indexOf(Math.min(...heights));
-        cols[minIdx].push(item);
-        heights[minIdx] += getHeight(item);
-    }
-    return cols;
-}
-
 export const HouseholdModule = () => {
     const records = useLiveQuery(() => getRecords(), []);
     const [spinning, setSpinning] = useState(false);
@@ -41,10 +29,6 @@ export const HouseholdModule = () => {
         for (const r of records ?? []) set.add(r.id);
         return set;
     }, [records]);
-
-    const handleVerify = async (id: string) => {
-        await checkItem(id);
-    };
 
     const handleReset = async () => {
         setSpinning(true);
@@ -100,7 +84,7 @@ export const HouseholdModule = () => {
                                         label={group.label}
                                         items={group.items}
                                         checkedIds={checkedIds}
-                                        onVerify={handleVerify}
+                                        onVerify={checkItem}
                                     />
                                 </div>
                             ))}

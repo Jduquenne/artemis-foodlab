@@ -1,7 +1,7 @@
 import { CheckCircle2, Circle } from "lucide-react";
 import { HouseholdItem } from "../../../core/domain/types";
 
-interface HouseholdItemRowProps {
+export interface HouseholdItemRowProps {
   item: HouseholdItem;
   isChecked: boolean;
   onVerify: (id: string) => void;

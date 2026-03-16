@@ -63,24 +63,12 @@ function toGrams(qty: number, unit: Unit, unitWeight?: number): number | null {
 
 const foodDb: Record<string, Food> = typedFoodDb;
 
-const INGREDIENT_LIST_CATEGORY_ORDER: IngredientCategory[] = [
-  IngredientCategory.INTERNET,
-  IngredientCategory.DELI,
-  IngredientCategory.MEAT,
-  IngredientCategory.FISH,
-  IngredientCategory.RECIPE,
-  IngredientCategory.BAKERY,
-  IngredientCategory.STARCH,
-  IngredientCategory.FRUIT_VEGETABLE,
-  IngredientCategory.FROZEN,
-  IngredientCategory.DAIRY,
-  IngredientCategory.FARM,
-  IngredientCategory.CANNED,
-  IngredientCategory.DRIED_FRUIT,
-  IngredientCategory.SWEET_GROCERY,
-  IngredientCategory.SPICE_CONDIMENT,
-  IngredientCategory.NON_PURCHASE,
-  IngredientCategory.UNKNOWN,
+const INGREDIENT_LIST_CATEGORY_ORDER: IngredientCategory[][] = [
+  [IngredientCategory.INTERNET, IngredientCategory.DELI, IngredientCategory.MEAT, IngredientCategory.FISH],
+  [IngredientCategory.RECIPE, IngredientCategory.BAKERY, IngredientCategory.STARCH],
+  [IngredientCategory.FRUIT_VEGETABLE, IngredientCategory.FROZEN],
+  [IngredientCategory.DAIRY, IngredientCategory.FARM],
+  [IngredientCategory.CANNED, IngredientCategory.DRIED_FRUIT, IngredientCategory.SWEET_GROCERY, IngredientCategory.SPICE_CONDIMENT, IngredientCategory.NON_PURCHASE, IngredientCategory.UNKNOWN],
 ];
 
 function formatIngredientQty(quantity: number | null, unit: Unit): string {
@@ -123,8 +111,13 @@ export function generateIngredientListOutput(state: RecipeBuilderState): string 
     groups.get(ing.category)!.push(line);
   }
   return INGREDIENT_LIST_CATEGORY_ORDER
-    .filter(cat => groups.has(cat))
-    .map(cat => groups.get(cat)!.join("\n"))
+    .map(superGroup =>
+      superGroup
+        .filter(cat => groups.has(cat))
+        .map(cat => groups.get(cat)!.join("\n"))
+        .join("\n")
+    )
+    .filter(block => block.length > 0)
     .join("\n\n");
 }
 

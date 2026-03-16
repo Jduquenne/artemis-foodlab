@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Copy, Check, X, FileCode2 } from "lucide-react";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
-import { buildRecipeId } from "../../../../core/utils/recipeBuilderUtils";
+import { buildRecipeId, generateCsvOutput, generateIngredientListOutput } from "../../../../core/utils/recipeBuilderUtils";
 
 export interface OutputPanelProps {
   state: RecipeBuilderState;
@@ -11,27 +11,6 @@ interface OutputItem {
   key: string;
   label: string;
   value: string;
-}
-
-function generateCsv(state: RecipeBuilderState): string {
-  const cells: string[] = [
-    buildRecipeId(state.categoryId, state.recipeNumber),
-    state.name,
-    String(state.defaultPortions),
-    state.mealTypes,
-    state.kind,
-    state.isDessert ? "TRUE" : "FALSE",
-    state.batchCooking ? "TRUE" : "FALSE",
-  ];
-  for (const ing of state.ingredients) {
-    cells.push(ing.name);
-    const qtyUnit =
-      ing.quantity != null
-        ? `${ing.quantity}${ing.unit ? " " + ing.unit : ""}`.trim()
-        : "";
-    cells.push(qtyUnit);
-  }
-  return cells.join("\t");
 }
 
 function generateImageName(state: RecipeBuilderState, type: string): string {
@@ -46,7 +25,8 @@ export const OutputPanel = ({ state }: OutputPanelProps) => {
   const [isClosing, setIsClosing] = useState(false);
 
   const outputs: OutputItem[] = [
-    { key: "csv", label: "CSV", value: generateCsv(state) },
+    { key: "csv", label: "CSV", value: generateCsvOutput(state) },
+    { key: "liste", label: "Liste ingrédients", value: generateIngredientListOutput(state) },
     { key: "photo", label: "Photo", value: generateImageName(state, "Photo") },
     { key: "recette", label: "Recette", value: generateImageName(state, "Recette") },
     { key: "ingredients", label: "Ingrédients", value: generateImageName(state, "Ingrédients") },
@@ -114,7 +94,7 @@ export const OutputPanel = ({ state }: OutputPanelProps) => {
                       {copiedKey === key ? "Copié" : "Copier"}
                     </button>
                   </div>
-                  <div className="px-3 py-2 bg-slate-50 dark:bg-slate-200 border border-slate-200 rounded-xl text-[11px] font-mono text-slate-700 break-all">
+                  <div className="px-3 py-2 bg-slate-50 dark:bg-slate-200 border border-slate-200 rounded-xl text-[11px] font-mono text-slate-700 break-all whitespace-pre-wrap">
                     {value || <span className="text-slate-400 italic">—</span>}
                   </div>
                 </div>

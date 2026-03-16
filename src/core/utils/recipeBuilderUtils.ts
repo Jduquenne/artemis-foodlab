@@ -1,5 +1,5 @@
-import { Food, Macronutrients, Unit } from "../domain/types";
-import { DraftIngredient } from "../domain/recipeBuilderTypes";
+import { Food, IngredientCategory, Macronutrients, Unit } from "../domain/types";
+import { DraftIngredient, RecipeBuilderState } from "../domain/recipeBuilderTypes";
 import { ZERO } from "./macroUtils";
 import { calculateRecipeMacros } from "./macroUtils";
 import { typedFoodDb } from "../typed-db/typedFoodDb";
@@ -62,6 +62,71 @@ function toGrams(qty: number, unit: Unit, unitWeight?: number): number | null {
 }
 
 const foodDb: Record<string, Food> = typedFoodDb;
+
+const INGREDIENT_LIST_CATEGORY_ORDER: IngredientCategory[] = [
+  IngredientCategory.MEAT,
+  IngredientCategory.FISH,
+  IngredientCategory.DELI,
+  IngredientCategory.DAIRY,
+  IngredientCategory.FARM,
+  IngredientCategory.FRUIT_VEGETABLE,
+  IngredientCategory.STARCH,
+  IngredientCategory.CANNED,
+  IngredientCategory.SPICE_CONDIMENT,
+  IngredientCategory.SWEET_GROCERY,
+  IngredientCategory.BAKERY,
+  IngredientCategory.DRIED_FRUIT,
+  IngredientCategory.FROZEN,
+  IngredientCategory.RECIPE,
+  IngredientCategory.INTERNET,
+  IngredientCategory.NON_PURCHASE,
+  IngredientCategory.UNKNOWN,
+];
+
+function formatIngredientQty(quantity: number | null, unit: Unit): string {
+  if (quantity == null) return "";
+  if (unit === Unit.PORTION) {
+    return ` - ${quantity} ${quantity <= 1 ? "portion" : "portions"}`;
+  }
+  if (unit === Unit.NONE) return ` - ${quantity}`;
+  return ` - ${quantity}${unit}`;
+}
+
+export function generateCsvOutput(state: RecipeBuilderState): string {
+  const cells: string[] = [
+    buildRecipeId(state.categoryId, state.recipeNumber),
+    state.name,
+    String(state.defaultPortions),
+    state.mealTypes,
+    state.kind,
+    state.isDessert ? "TRUE" : "FALSE",
+    state.batchCooking ? "TRUE" : "FALSE",
+  ];
+  for (const ing of state.ingredients) {
+    cells.push(ing.name);
+    const qtyUnit =
+      ing.quantity != null
+        ? `${ing.quantity}${ing.unit ? " " + ing.unit : ""}`.trim()
+        : "";
+    cells.push(qtyUnit);
+  }
+  return cells.join("\t");
+}
+
+export function generateIngredientListOutput(state: RecipeBuilderState): string {
+  const groups = new Map<IngredientCategory, string[]>();
+  for (const ing of state.ingredients) {
+    const label = ing.preparation ? `${ing.name} (${ing.preparation})` : ing.name;
+    const qty = formatIngredientQty(ing.quantity, ing.unit);
+    const line = `${label}${qty}`;
+    if (!groups.has(ing.category)) groups.set(ing.category, []);
+    groups.get(ing.category)!.push(line);
+  }
+  return INGREDIENT_LIST_CATEGORY_ORDER
+    .filter(cat => groups.has(cat))
+    .map(cat => groups.get(cat)!.join("\n"))
+    .join("\n\n");
+}
 
 export function computeDraftTotal(ingredients: DraftIngredient[]): { macros: Macronutrients; missing: number } {
   let total = { ...ZERO };

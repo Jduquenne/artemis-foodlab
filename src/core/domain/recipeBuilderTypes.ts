@@ -20,6 +20,7 @@ export interface RecipeBuilderState {
   kind: RecipeKind;
   mealTypes: "meal" | "side";
   defaultPortions: number;
+  isDessert: boolean;
   batchCooking: boolean;
   ingredients: DraftIngredient[];
 }
@@ -31,6 +32,7 @@ export const initialRecipeBuilderState = (): RecipeBuilderState => ({
   kind: RecipeKind.DISH,
   mealTypes: "meal",
   defaultPortions: 4,
+  isDessert: false,
   batchCooking: false,
   ingredients: [],
 });

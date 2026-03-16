@@ -20,6 +20,7 @@ function generateCsv(state: RecipeBuilderState): string {
     String(state.defaultPortions),
     state.mealTypes,
     state.kind,
+    state.isDessert ? "TRUE" : "FALSE",
     state.batchCooking ? "TRUE" : "FALSE",
   ];
   for (const ing of state.ingredients) {
@@ -104,11 +105,10 @@ export const OutputPanel = ({ state }: OutputPanelProps) => {
                     <button
                       type="button"
                       onClick={() => copy(value, key)}
-                      className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors ${
-                        copiedKey === key
+                      className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors ${copiedKey === key
                           ? "text-green-600 bg-green-50 dark:bg-green-900/20"
                           : "text-slate-400 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900/20"
-                      }`}
+                        }`}
                     >
                       {copiedKey === key ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
                       {copiedKey === key ? "Copié" : "Copier"}

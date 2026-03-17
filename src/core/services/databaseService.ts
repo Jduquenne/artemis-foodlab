@@ -103,6 +103,30 @@ class AppDatabase extends Dexie {
           await tx.table("freezerCategories").update(cat.id, { items: updatedItems });
         }
       });
+    this.version(11)
+      .stores({
+        planning: "id, [year+week], year, week",
+        household: "id",
+        freezerCategories: "id, position",
+      })
+      .upgrade(async (tx) => {
+        const categories = await tx.table("freezerCategories").toArray();
+        for (const cat of categories) {
+          const updatedItems = (cat.items ?? []).map((item: Record<string, unknown>) => {
+            if (item.type === "food" && Array.isArray(item.bags)) {
+              const updatedBags = (item.bags as Record<string, unknown>[]).map((bag) => {
+                if (typeof bag.quantity === "string") {
+                  return { ...bag, quantity: parseFloat(bag.quantity as string) || 0 };
+                }
+                return bag;
+              });
+              return { ...item, bags: updatedBags };
+            }
+            return item;
+          });
+          await tx.table("freezerCategories").update(cat.id, { items: updatedItems });
+        }
+      });
   }
 }
 

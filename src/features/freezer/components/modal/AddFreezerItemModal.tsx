@@ -32,8 +32,9 @@ export const AddFreezerItemModal = ({ categoryId, existingFoodNames, onClose }: 
     n => n.toLowerCase() === foodName.trim().toLowerCase()
   );
 
+  const parsedFoodQty = parseFloat(foodQty);
   const canSave =
-    tab === "food" ? foodName.trim().length > 0 && foodQty.trim().length > 0 && !isDuplicateName
+    tab === "food" ? foodName.trim().length > 0 && !isNaN(parsedFoodQty) && parsedFoodQty > 0 && !isDuplicateName
       : selectedRecipeId !== null && portions > 0;
 
   const handleSave = async () => {
@@ -46,7 +47,7 @@ export const AddFreezerItemModal = ({ categoryId, existingFoodNames, onClose }: 
         ...(foodId ? { foodId } : {}),
         bags: [{
           id: crypto.randomUUID(),
-          quantity: foodQty.trim(),
+          quantity: parsedFoodQty,
           unit: foodUnit,
           preparation: foodPreparation.trim() || undefined,
           addedDate: new Date().toISOString().slice(0, 10),

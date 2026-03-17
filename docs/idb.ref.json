@@ -43,7 +43,7 @@
             "bags":        "FreezerBag[]",
             "_FreezerBag": {
               "id":          "string — uuid",
-              "quantity":    "string — ATTENTION: actuellement string, cible = number",
+              "quantity":    "number — quantité stockée (ex: 500, 1.5)",
               "unit":        "string — valeur de l'enum Unit ('g', 'kg', 'portion', etc.)",
               "preparation": "string? — ex: 'émincé', 'cuit à la vapeur'",
               "addedDate":   "string — date ISO YYYY-MM-DD"

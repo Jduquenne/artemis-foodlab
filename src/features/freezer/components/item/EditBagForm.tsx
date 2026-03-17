@@ -9,16 +9,17 @@ export interface EditBagFormProps {
 }
 
 export const EditBagForm = ({ bag, onSave, onCancel }: EditBagFormProps) => {
-    const [quantity, setQuantity] = useState(bag.quantity);
+    const [quantity, setQuantity] = useState(String(bag.quantity));
     const [unit, setUnit] = useState<Unit>(bag.unit);
     const [preparation, setPreparation] = useState(bag.preparation ?? "");
 
-    const canSave = quantity.trim().length > 0;
+    const parsedQty = parseFloat(quantity);
+    const canSave = !isNaN(parsedQty) && parsedQty > 0;
 
     const handleSave = () => {
         if (!canSave) return;
         onSave({
-            quantity: quantity.trim(),
+            quantity: parsedQty,
             unit,
             preparation: preparation.trim() || undefined,
         });

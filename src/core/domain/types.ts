@@ -125,7 +125,7 @@ export interface HouseholdItem {
 
 export interface FreezerBag {
   id: string;
-  quantity: string;
+  quantity: number;
   unit: Unit;
   preparation?: string;
   addedDate: string;

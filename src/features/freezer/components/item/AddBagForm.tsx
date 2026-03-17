@@ -13,12 +13,13 @@ export const AddBagForm = ({ onSave, onCancel, initialUnit = Unit.G }: AddBagFor
   const [unit, setUnit] = useState<Unit>(initialUnit);
   const [preparation, setPreparation] = useState("");
 
-  const canSave = quantity.trim().length > 0;
+  const parsedQty = parseFloat(quantity);
+  const canSave = !isNaN(parsedQty) && parsedQty > 0;
 
   const handleSave = () => {
     if (!canSave) return;
     onSave({
-      quantity: quantity.trim(),
+      quantity: parsedQty,
       unit,
       preparation: preparation.trim() || undefined,
     });

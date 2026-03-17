@@ -17,7 +17,7 @@ export const BagRow = ({ bag, categoryId, itemId, formattedDate }: BagRowProps) 
     const [isEditing, setIsEditing] = useState(false);
 
     const displayUnit = bag.unit
-        ? " " + pluralizeUnit(bag.unit, parseFloat(bag.quantity))
+        ? " " + pluralizeUnit(bag.unit, bag.quantity)
         : "";
 
     if (isEditing) {

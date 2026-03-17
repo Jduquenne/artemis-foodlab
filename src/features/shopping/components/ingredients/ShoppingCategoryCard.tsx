@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { CheckCircle2, Circle, Snowflake } from 'lucide-react';
 import { ConsolidatedIngredient, IngredientSource } from '../../../../core/utils/shoppingLogic';
+import { FreezerBag } from '../../../../core/domain/types';
 import { IngredientTooltip } from './IngredientTooltip';
 import { pluralizeUnit } from '../../../../core/utils/unitUtils';
 
@@ -12,11 +13,11 @@ export interface ShoppingCategoryCardProps {
     sourceChecked: Set<string>;
     onToggle: (key: string) => void;
     onSetStock: (key: string, value: number) => void;
-    onShowSources: (key: string, sources: IngredientSource[], freezerQty: number, unit: string) => void;
-    foodQuantities?: Map<string, Map<string, number>>;
+    onShowSources: (key: string, sources: IngredientSource[], freezerBags: FreezerBag[]) => void;
+    foodBags?: Map<string, FreezerBag[]>;
 }
 
-export const ShoppingCategoryCard = ({ label, items, checked, stocks, sourceChecked, onToggle, onSetStock, onShowSources, foodQuantities }: ShoppingCategoryCardProps) => {
+export const ShoppingCategoryCard = ({ label, items, checked, stocks, sourceChecked, onToggle, onSetStock, onShowSources, foodBags }: ShoppingCategoryCardProps) => {
     const checkedCount = items.filter(i => checked.has(i.key)).length;
     const [editingKey, setEditingKey] = useState<string | null>(null);
     const [editValue, setEditValue] = useState('');
@@ -48,9 +49,9 @@ export const ShoppingCategoryCard = ({ label, items, checked, stocks, sourceChec
                 {items.map(item => {
                     const isChecked = checked.has(item.key);
                     const stock = stocks[item.key] ?? 0;
-                    const freezerUnitMap = item.foodId ? foodQuantities?.get(item.foodId) : undefined;
-                    const inFreezer = (freezerUnitMap?.size ?? 0) > 0;
-                    const freezerQty = freezerUnitMap?.get(item.unit) ?? 0;
+                    const allFreezerBags = item.foodId ? foodBags?.get(item.foodId) : undefined;
+                    const inFreezer = (allFreezerBags?.length ?? 0) > 0;
+                    const matchingBags = allFreezerBags?.filter(b => b.unit === item.unit) ?? [];
                     const checkedSourceQty = item.sources
                         .filter(s => sourceChecked.has(`${item.key}::${s.recipeId}::${s.day}::${s.slot}`))
                         .reduce((sum, s) => sum + s.quantity, 0);
@@ -133,7 +134,7 @@ export const ShoppingCategoryCard = ({ label, items, checked, stocks, sourceChec
                                         </button>
                                     </>
                                 )}
-                                <IngredientTooltip sources={item.sources} onOpen={(srcs) => onShowSources(item.key, srcs, freezerQty, item.unit)} />
+                                <IngredientTooltip sources={item.sources} onOpen={(srcs) => onShowSources(item.key, srcs, matchingBags)} />
                             </div>
                         </div>
                     );

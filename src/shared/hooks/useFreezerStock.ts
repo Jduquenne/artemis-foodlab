@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../../core/services/databaseService';
-import { getBatchRecipeIdsInFreezer, getFoodIdsInFreezer, getFoodQuantitiesInFreezer } from '../../core/utils/freezerMatchUtils';
+import { getBatchRecipeIdsInFreezer, getFoodIdsInFreezer, getFoodBagsInFreezer } from '../../core/utils/freezerMatchUtils';
 
 export function useFreezerStock() {
   const categoriesRaw = useLiveQuery(() => db.freezerCategories.orderBy('position').toArray());
@@ -9,7 +9,7 @@ export function useFreezerStock() {
 
   const batchRecipeIds = useMemo(() => getBatchRecipeIdsInFreezer(categories), [categories]);
   const foodIds = useMemo(() => getFoodIdsInFreezer(categories), [categories]);
-  const foodQuantities = useMemo(() => getFoodQuantitiesInFreezer(categories), [categories]);
+  const foodBags = useMemo(() => getFoodBagsInFreezer(categories), [categories]);
 
-  return { batchRecipeIds, foodIds, foodQuantities };
+  return { batchRecipeIds, foodIds, foodBags };
 }

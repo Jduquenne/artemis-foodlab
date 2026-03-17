@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { ShoppingCart, CalendarDays } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useNavigate } from 'react-router-dom';
-import { IngredientCategory, RecipeKind, ShoppingDay } from '../../core/domain/types';
+import { FreezerBag, IngredientCategory, RecipeKind, ShoppingDay } from '../../core/domain/types';
 import { getShoppingListForDays, getBasesForDays, ConsolidatedIngredient, IngredientSource } from '../../core/utils/shoppingLogic';
 import { typedRecipesDb } from '../../core/typed-db/typedRecipesDb';
 import { markScrolling } from '../../shared/utils/scrollGuard';
@@ -10,6 +10,7 @@ import { distributeToColumns } from '../../shared/utils/columnUtils';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { useColCount } from '../../shared/hooks/useColCount';
 import { useFreezerStock } from '../../shared/hooks/useFreezerStock';
+import { computeFreezerBagSelection } from '../../core/utils/freezerMatchUtils';
 import { ShoppingCategoryCard } from './components/ingredients/ShoppingCategoryCard';
 import { RecipeShoppingCard, RecipeCardIngredient, RecipeBaseGroup } from './components/meals/RecipeShoppingCard';
 import { SourcesModal } from './components/SourcesModal';
@@ -44,10 +45,18 @@ export const ShoppingModule = () => {
     const periodKey = useMemo(() => getPeriodKey(shoppingDays), [shoppingDays]);
 
     const colCount = Math.min(useColCount(), 3);
-    const { foodQuantities } = useFreezerStock();
+    const { foodBags } = useFreezerStock();
     const [viewMode, setViewMode] = useState<'meals' | 'ingredients'>('ingredients');
     const [ingredientFilter, setIngredientFilter] = useState<'all' | 'missing'>('all');
-    const [activeSources, setActiveSources] = useState<{ key: string; sources: IngredientSource[]; freezerQty: number; unit: string } | null>(null);
+    const [activeSources, setActiveSources] = useState<{ key: string; sources: IngredientSource[]; freezerBags: FreezerBag[] } | null>(null);
+
+    const [freezerSelection, setFreezerSelectionState] = useState<Record<string, string[]>>(() => {
+        try {
+            const s = JSON.parse(localStorage.getItem('cipe_shopping_freezer') ?? 'null');
+            if (s?.periodKey === getPeriodKey(useMenuStore.getState().shoppingDays)) return s.data ?? {};
+        } catch { /* localStorage indisponible */ }
+        return {};
+    });
 
     const [checked, setChecked] = useState<Set<string>>(() => {
         try {
@@ -91,6 +100,10 @@ export const ShoppingModule = () => {
     useEffect(() => {
         localStorage.setItem('cipe_shopping_source_checked', JSON.stringify({ periodKey, keys: [...sourceChecked] }));
     }, [periodKey, sourceChecked]);
+
+    useEffect(() => {
+        localStorage.setItem('cipe_shopping_freezer', JSON.stringify({ periodKey, data: freezerSelection }));
+    }, [periodKey, freezerSelection]);
 
     const ingredients = useLiveQuery(
         () => getShoppingListForDays(shoppingDays),
@@ -199,6 +212,15 @@ export const ShoppingModule = () => {
             }
             return next;
         });
+    };
+
+    const toggleFreezerBag = (bagId: string) => {
+        if (!activeSources) return;
+        const { key: ingredientKey, freezerBags } = activeSources;
+        const current = freezerSelection[ingredientKey] ?? [];
+        const { next, total } = computeFreezerBagSelection(current, bagId, freezerBags);
+        setFreezerSelectionState(prev => ({ ...prev, [ingredientKey]: next }));
+        setStock(ingredientKey, total);
     };
 
     const groupedItems = useMemo(() => {
@@ -388,8 +410,8 @@ export const ShoppingModule = () => {
                                             sourceChecked={sourceChecked}
                                             onToggle={toggleItem}
                                             onSetStock={setStock}
-                                            onShowSources={(key, sources, fqty, unit) => setActiveSources({ key, sources, freezerQty: fqty, unit })}
-                                            foodQuantities={foodQuantities}
+                                            onShowSources={(key, sources, bags) => setActiveSources({ key, sources, freezerBags: bags })}
+                                            foodBags={foodBags}
                                         />
                                     </div>
                                 ))}
@@ -407,10 +429,9 @@ export const ShoppingModule = () => {
                 sourceChecked={sourceChecked}
                 onToggleSource={toggleSourceCheck}
                 onClose={() => setActiveSources(null)}
-                freezerQty={activeSources.freezerQty}
-                freezerUnit={activeSources.unit}
-                freezerUsed={activeSources.freezerQty > 0 && stocks[activeSources.key] === activeSources.freezerQty}
-                onUseFreezer={(use) => setStock(activeSources.key, use ? activeSources.freezerQty : 0)}
+                freezerBags={activeSources.freezerBags}
+                selectedBagIds={freezerSelection[activeSources.key] ?? []}
+                onToggleBag={toggleFreezerBag}
             />
         )}
         </>

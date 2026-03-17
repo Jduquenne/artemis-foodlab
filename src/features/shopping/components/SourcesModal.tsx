@@ -1,8 +1,9 @@
-import { X, CheckCircle2, Circle, Snowflake } from 'lucide-react';
+import { useState } from 'react';
+import { X, CheckCircle2, Circle, Snowflake, ChevronDown, ChevronUp } from 'lucide-react';
 import { IngredientSource } from '../../../core/utils/shoppingLogic';
+import { FreezerBag, SlotType } from '../../../core/domain/types';
 import { pluralizeUnit } from '../../../core/utils/unitUtils';
 import { SLOT_LABELS } from '../../../shared/utils/slotLabels';
-import { SlotType } from '../../../core/domain/types';
 
 const DAY_LABELS: Record<string, string> = {
     monday: 'Lundi', tuesday: 'Mardi', wednesday: 'Mercredi',
@@ -22,13 +23,22 @@ export interface SourcesModalProps {
     sourceChecked: Set<string>;
     onToggleSource: (ingredientKey: string, sources: IngredientSource[], checked: boolean) => void;
     onClose: () => void;
-    freezerQty?: number;
-    freezerUnit?: string;
-    freezerUsed?: boolean;
-    onUseFreezer?: (use: boolean) => void;
+    freezerBags?: FreezerBag[];
+    selectedBagIds?: string[];
+    onToggleBag?: (bagId: string) => void;
 }
 
-export const SourcesModal = ({ ingredientKey, sources, sourceChecked, onToggleSource, onClose, freezerQty, freezerUnit, freezerUsed, onUseFreezer }: SourcesModalProps) => {
+const COLLAPSE_THRESHOLD = 3;
+
+const formatDate = (iso: string) => {
+    const d = new Date(iso);
+    return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+};
+
+const formatQty = (n: number) => n % 1 === 0 ? String(n) : n.toFixed(1);
+
+export const SourcesModal = ({ ingredientKey, sources, sourceChecked, onToggleSource, onClose, freezerBags, selectedBagIds = [], onToggleBag }: SourcesModalProps) => {
+    const [bagsExpanded, setBagsExpanded] = useState(false);
     const groups: IngredientSource[][] = [];
     const seen = new Map<string, IngredientSource[]>();
     for (const src of sources) {
@@ -49,31 +59,70 @@ export const SourcesModal = ({ ingredientKey, sources, sourceChecked, onToggleSo
                         <X className="w-4 h-4" />
                     </button>
                 </div>
-                {freezerQty !== undefined && freezerQty > 0 && freezerUnit !== undefined && (
+                {freezerBags && freezerBags.length > 0 && (
                     <div className="px-5 pb-3 border-b border-slate-100">
-                        <p className="text-xs font-black text-cyan-600 uppercase tracking-widest mb-1.5">Congélateur</p>
-                        <div
-                            onClick={() => onUseFreezer?.(!freezerUsed)}
-                            className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl cursor-pointer select-none transition-all ${
-                                freezerUsed ? 'bg-cyan-50 dark:bg-cyan-900/20' : 'hover:bg-cyan-50 dark:hover:bg-cyan-900/20'
-                            }`}
-                        >
-                            <div className="shrink-0">
-                                {freezerUsed
-                                    ? <CheckCircle2 className="w-4 h-4 text-cyan-500" />
-                                    : <Circle className="w-4 h-4 text-slate-300" />
-                                }
-                            </div>
-                            <div className="min-w-0 flex-1">
-                                <p className="text-sm font-semibold text-slate-800">
-                                    {freezerQty % 1 === 0 ? freezerQty : parseFloat(freezerQty.toFixed(1))} {pluralizeUnit(freezerUnit, freezerQty)} disponibles
-                                </p>
-                                <p className="text-xs text-slate-400">
-                                    {freezerUsed ? 'Quantité déduite de la liste' : 'Utiliser depuis le congélateur'}
-                                </p>
-                            </div>
-                            <Snowflake className="w-4 h-4 text-cyan-400 shrink-0" />
+                        <div className="flex items-center justify-between mb-1.5">
+                            <p className="text-xs font-black text-cyan-600 uppercase tracking-widest flex items-center gap-1.5">
+                                <Snowflake className="w-3 h-3" />
+                                Congélateur
+                            </p>
+                            {freezerBags.length > COLLAPSE_THRESHOLD && (
+                                <button
+                                    onClick={() => setBagsExpanded(e => !e)}
+                                    className="flex items-center gap-1 text-xs text-slate-400 hover:text-cyan-500 transition-colors"
+                                >
+                                    {bagsExpanded ? 'Réduire' : `${freezerBags.length} sacs`}
+                                    {bagsExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                                </button>
+                            )}
                         </div>
+                        <div className="space-y-0.5">
+                            {(freezerBags.length <= COLLAPSE_THRESHOLD || bagsExpanded
+                                ? freezerBags
+                                : freezerBags.filter(b => selectedBagIds.includes(b.id))
+                            ).map(bag => {
+                                const isSelected = selectedBagIds.includes(bag.id);
+                                const qty = Number(bag.quantity) || 0;
+                                return (
+                                    <div
+                                        key={bag.id}
+                                        onClick={() => onToggleBag?.(bag.id)}
+                                        className={`flex items-center gap-2.5 px-3 py-2 rounded-xl cursor-pointer select-none transition-all ${
+                                            isSelected ? 'bg-cyan-50 dark:bg-cyan-900/20' : 'hover:bg-cyan-50 dark:hover:bg-cyan-900/20'
+                                        }`}
+                                    >
+                                        <div className="shrink-0">
+                                            {isSelected
+                                                ? <CheckCircle2 className="w-4 h-4 text-cyan-500" />
+                                                : <Circle className="w-4 h-4 text-slate-300" />
+                                            }
+                                        </div>
+                                        <div className="min-w-0 flex-1">
+                                            <p className="text-sm font-semibold text-slate-800">
+                                                {formatQty(qty)} {pluralizeUnit(bag.unit, qty)}
+                                            </p>
+                                            <p className="text-xs text-slate-400">
+                                                {formatDate(bag.addedDate)}
+                                                {bag.preparation && <><span className="mx-1 text-slate-300">·</span>{bag.preparation}</>}
+                                            </p>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                            {freezerBags.length > COLLAPSE_THRESHOLD && !bagsExpanded && freezerBags.filter(b => !selectedBagIds.includes(b.id)).length > 0 && (
+                                <button
+                                    onClick={() => setBagsExpanded(true)}
+                                    className="w-full text-xs text-slate-400 hover:text-cyan-500 py-1.5 transition-colors"
+                                >
+                                    + {freezerBags.filter(b => !selectedBagIds.includes(b.id)).length} sac(s) non sélectionné(s)
+                                </button>
+                            )}
+                        </div>
+                        {selectedBagIds.length > 0 && (
+                            <p className="text-xs text-cyan-600 font-semibold mt-2 px-3">
+                                {formatQty(freezerBags.filter(b => selectedBagIds.includes(b.id)).reduce((s, b) => s + (Number(b.quantity) || 0), 0))} {pluralizeUnit(freezerBags.find(b => selectedBagIds.includes(b.id))?.unit ?? '', 0)} déduits de la liste
+                            </p>
+                        )}
                     </div>
                 )}
                 <div className="px-5 pb-5 space-y-1">

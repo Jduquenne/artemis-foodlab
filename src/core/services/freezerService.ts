@@ -78,7 +78,7 @@ export const updateBagInFoodItem = (
   categoryId: string,
   itemId: string,
   bagId: string,
-  updates: Partial<Omit<FreezerBag, "id" | "addedDate">>
+  updates: Partial<Omit<FreezerBag, "id">>
 ) =>
   withCategory(categoryId, cat => ({
     items: cat.items.map(item =>

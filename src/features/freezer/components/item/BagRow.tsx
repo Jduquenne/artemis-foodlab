@@ -24,8 +24,8 @@ export const BagRow = ({ bag, categoryId, itemId, formattedDate }: BagRowProps) 
         return (
             <EditBagForm
                 bag={bag}
-                onSave={(updates) => {
-                    updateBagInFoodItem(categoryId, itemId, bag.id, updates);
+                onSave={({ addedDate, ...rest }) => {
+                    updateBagInFoodItem(categoryId, itemId, bag.id, { ...rest, addedDate });
                     setIsEditing(false);
                 }}
                 onCancel={() => setIsEditing(false)}

@@ -29,6 +29,7 @@ export interface PlanningSlotProps {
   onCopyDessert: (id: string) => void;
   onRemoveDessert: (id: string) => void;
   onSelectAsTarget: () => void;
+  batchRecipeIds?: Set<string>;
 }
 
 export const PlanningSlot = ({
@@ -40,6 +41,7 @@ export const PlanningSlot = ({
   onEditPersons, onConfirmPersons, onCancelPersons,
   onRemoveRecipe, onSaveRecipeMeta,
   onCopyRecipe, onCopyDessert, onRemoveDessert, onSelectAsTarget,
+  batchRecipeIds,
 }: PlanningSlotProps) => {
   const navigate = useNavigate();
   const recipeIds = savedMeal?.recipeIds ?? [];
@@ -68,6 +70,7 @@ export const PlanningSlot = ({
           recipePersons={savedMeal?.recipePersons}
           recipeQuantities={savedMeal?.recipeQuantities}
           onSaveRecipeMeta={!blocked ? onSaveRecipeMeta : undefined}
+          batchRecipeIds={batchRecipeIds}
         />
       ) : (
         <MealSlotComp
@@ -95,6 +98,7 @@ export const PlanningSlot = ({
           copySourceDessertId={copyProps.copySourceDessertId}
           dessertCopyTargetState={copyProps.dessertCopyTargetState}
           onSelectDessertAsTarget={copyProps.dessertCopyTargetState ? onSelectAsTarget : undefined}
+          inFreezer={recipeIds.length > 0 && batchRecipeIds?.has(recipeIds[0])}
         />
       )}
     </div>

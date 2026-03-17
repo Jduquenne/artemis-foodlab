@@ -1,4 +1,4 @@
-import { X, CheckCircle2, Circle } from 'lucide-react';
+import { X, CheckCircle2, Circle, Snowflake } from 'lucide-react';
 import { IngredientSource } from '../../../core/utils/shoppingLogic';
 import { pluralizeUnit } from '../../../core/utils/unitUtils';
 import { SLOT_LABELS } from '../../../shared/utils/slotLabels';
@@ -22,9 +22,13 @@ export interface SourcesModalProps {
     sourceChecked: Set<string>;
     onToggleSource: (ingredientKey: string, sources: IngredientSource[], checked: boolean) => void;
     onClose: () => void;
+    freezerQty?: number;
+    freezerUnit?: string;
+    freezerUsed?: boolean;
+    onUseFreezer?: (use: boolean) => void;
 }
 
-export const SourcesModal = ({ ingredientKey, sources, sourceChecked, onToggleSource, onClose }: SourcesModalProps) => {
+export const SourcesModal = ({ ingredientKey, sources, sourceChecked, onToggleSource, onClose, freezerQty, freezerUnit, freezerUsed, onUseFreezer }: SourcesModalProps) => {
     const groups: IngredientSource[][] = [];
     const seen = new Map<string, IngredientSource[]>();
     for (const src of sources) {
@@ -45,6 +49,33 @@ export const SourcesModal = ({ ingredientKey, sources, sourceChecked, onToggleSo
                         <X className="w-4 h-4" />
                     </button>
                 </div>
+                {freezerQty !== undefined && freezerQty > 0 && freezerUnit !== undefined && (
+                    <div className="px-5 pb-3 border-b border-slate-100">
+                        <p className="text-xs font-black text-cyan-600 uppercase tracking-widest mb-1.5">Congélateur</p>
+                        <div
+                            onClick={() => onUseFreezer?.(!freezerUsed)}
+                            className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl cursor-pointer select-none transition-all ${
+                                freezerUsed ? 'bg-cyan-50 dark:bg-cyan-900/20' : 'hover:bg-cyan-50 dark:hover:bg-cyan-900/20'
+                            }`}
+                        >
+                            <div className="shrink-0">
+                                {freezerUsed
+                                    ? <CheckCircle2 className="w-4 h-4 text-cyan-500" />
+                                    : <Circle className="w-4 h-4 text-slate-300" />
+                                }
+                            </div>
+                            <div className="min-w-0 flex-1">
+                                <p className="text-sm font-semibold text-slate-800">
+                                    {freezerQty % 1 === 0 ? freezerQty : parseFloat(freezerQty.toFixed(1))} {pluralizeUnit(freezerUnit, freezerQty)} disponibles
+                                </p>
+                                <p className="text-xs text-slate-400">
+                                    {freezerUsed ? 'Quantité déduite de la liste' : 'Utiliser depuis le congélateur'}
+                                </p>
+                            </div>
+                            <Snowflake className="w-4 h-4 text-cyan-400 shrink-0" />
+                        </div>
+                    </div>
+                )}
                 <div className="px-5 pb-5 space-y-1">
                     {groups.map((group, i) => {
                         const allChecked = group.every(s =>

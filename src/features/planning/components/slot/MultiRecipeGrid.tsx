@@ -14,6 +14,7 @@ export interface MultiRecipeGridProps {
     recipePersons?: Record<string, number>;
     recipeQuantities?: Record<string, number>;
     onEditMeta?: (recipeId: string) => void;
+    batchRecipeIds?: Set<string>;
 }
 
 export const MultiRecipeGrid = ({
@@ -29,6 +30,7 @@ export const MultiRecipeGrid = ({
     recipePersons,
     recipeQuantities,
     onEditMeta,
+    batchRecipeIds,
 }: MultiRecipeGridProps) => (
     <div className={`w-full h-full flex flex-row sm:grid sm:grid-cols-2 sm:grid-rows-2 gap-0.5 p-0.5 ${isTargetMode ? 'pointer-events-none' : ''}`}>
         {Array.from({ length: 4 }).map((_, idx) => {
@@ -45,6 +47,7 @@ export const MultiRecipeGrid = ({
                         persons={recipePersons?.[rid]}
                         grams={recipeQuantities?.[rid]}
                         onEditMeta={onEditMeta && !isAddMode && !copyTargetState ? () => onEditMeta(rid) : undefined}
+                        inFreezer={batchRecipeIds?.has(rid)}
                     />
                 );
             }

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Plus, Check, Users } from 'lucide-react';
+import { Plus, Check, Users, Snowflake } from 'lucide-react';
 import { useDraggable, useDroppable } from '@dnd-kit/core';
 import { plannableDb } from '../../../../core/typed-db/plannableDb';
 import { RECIPE_BASE_GRAMS } from '../../../../core/utils/macroUtils';
@@ -25,6 +25,7 @@ export interface MultiMealSlotProps {
     recipePersons?: Record<string, number>;
     recipeQuantities?: Record<string, number>;
     onSaveRecipeMeta?: (recipeId: string, persons: number, grams: number) => void;
+    batchRecipeIds?: Set<string>;
 }
 
 export const MultiMealSlot = ({
@@ -43,6 +44,7 @@ export const MultiMealSlot = ({
     recipePersons,
     recipeQuantities,
     onSaveRecipeMeta,
+    batchRecipeIds,
 }: MultiMealSlotProps) => {
     const [editingMetaId, setEditingMetaId] = useState<string | null>(null);
 
@@ -120,14 +122,21 @@ export const MultiMealSlot = ({
                 )}
 
                 {recipeIds.length === 1 && (
-                    <button
-                        onClick={!isTargetMode && singleHasRecipesPage ? () => onNavigateToRecipe(recipeIds[0]) : undefined}
-                        className={`w-full h-full ${!singleHasRecipesPage || isTargetMode ? 'cursor-default' : ''}`}
-                    >
-                        {singlePhotoUrl && (
-                            <img src={singlePhotoUrl} loading="lazy" decoding="async" className="w-full h-full object-contain" alt={firstRecipe!.name} />
+                    <>
+                        <button
+                            onClick={!isTargetMode && singleHasRecipesPage ? () => onNavigateToRecipe(recipeIds[0]) : undefined}
+                            className={`w-full h-full ${!singleHasRecipesPage || isTargetMode ? 'cursor-default' : ''}`}
+                        >
+                            {singlePhotoUrl && (
+                                <img src={singlePhotoUrl} loading="lazy" decoding="async" className="w-full h-full object-contain" alt={firstRecipe!.name} />
+                            )}
+                        </button>
+                        {batchRecipeIds?.has(recipeIds[0]) && (
+                            <div className="absolute top-1 left-1 p-1 bg-cyan-500/80 text-white rounded-lg z-10 shadow-sm pointer-events-none">
+                                <Snowflake size={10} />
+                            </div>
                         )}
-                    </button>
+                    </>
                 )}
 
                 {recipeIds.length >= 2 && (
@@ -144,6 +153,7 @@ export const MultiMealSlot = ({
                         recipePersons={recipePersons}
                         recipeQuantities={recipeQuantities}
                         onEditMeta={onSaveRecipeMeta ? (rid) => setEditingMetaId(rid) : undefined}
+                        batchRecipeIds={batchRecipeIds}
                     />
                 )}
 

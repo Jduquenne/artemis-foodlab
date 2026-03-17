@@ -1,4 +1,4 @@
-import { X, Copy, Users } from 'lucide-react';
+import { X, Copy, Users, Snowflake } from 'lucide-react';
 import { plannableDb } from '../../../../core/typed-db/plannableDb';
 import { RECIPE_BASE_GRAMS } from '../../../../core/utils/macroUtils';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
@@ -13,9 +13,10 @@ export interface RecipeCellProps {
     persons?: number;
     grams?: number;
     onEditMeta?: () => void;
+    inFreezer?: boolean;
 }
 
-export const RecipeCell = ({ recipeId, onNavigate, onRemove, onCopy, hideRemove, persons, grams, onEditMeta }: RecipeCellProps) => {
+export const RecipeCell = ({ recipeId, onNavigate, onRemove, onCopy, hideRemove, persons, grams, onEditMeta, inFreezer }: RecipeCellProps) => {
     const recipe = plannableDb[recipeId];
     const photoUrl = recipe?.assets?.photo?.url;
     const hasRecipesPage = Boolean(recipe?.assets?.instructionsPhoto?.url);
@@ -59,6 +60,11 @@ export const RecipeCell = ({ recipeId, onNavigate, onRemove, onCopy, hideRemove,
                 >
                     <X size={9} />
                 </button>
+            )}
+            {inFreezer && (
+                <div className="absolute top-0.5 left-0.5 p-0.5 bg-cyan-500/80 text-white rounded z-10 shadow-sm pointer-events-none">
+                    <Snowflake size={8} />
+                </div>
             )}
             {!hideRemove && onCopy && (
                 <button

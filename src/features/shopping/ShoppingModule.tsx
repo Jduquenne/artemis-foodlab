@@ -9,6 +9,7 @@ import { markScrolling } from '../../shared/utils/scrollGuard';
 import { distributeToColumns } from '../../shared/utils/columnUtils';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { useColCount } from '../../shared/hooks/useColCount';
+import { useFreezerStock } from '../../shared/hooks/useFreezerStock';
 import { ShoppingCategoryCard } from './components/ingredients/ShoppingCategoryCard';
 import { RecipeShoppingCard, RecipeCardIngredient, RecipeBaseGroup } from './components/meals/RecipeShoppingCard';
 import { SourcesModal } from './components/SourcesModal';
@@ -43,9 +44,10 @@ export const ShoppingModule = () => {
     const periodKey = useMemo(() => getPeriodKey(shoppingDays), [shoppingDays]);
 
     const colCount = Math.min(useColCount(), 3);
+    const { foodQuantities } = useFreezerStock();
     const [viewMode, setViewMode] = useState<'meals' | 'ingredients'>('ingredients');
     const [ingredientFilter, setIngredientFilter] = useState<'all' | 'missing'>('all');
-    const [activeSources, setActiveSources] = useState<{ key: string; sources: IngredientSource[] } | null>(null);
+    const [activeSources, setActiveSources] = useState<{ key: string; sources: IngredientSource[]; freezerQty: number; unit: string } | null>(null);
 
     const [checked, setChecked] = useState<Set<string>>(() => {
         try {
@@ -386,7 +388,8 @@ export const ShoppingModule = () => {
                                             sourceChecked={sourceChecked}
                                             onToggle={toggleItem}
                                             onSetStock={setStock}
-                                            onShowSources={(key, sources) => setActiveSources({ key, sources })}
+                                            onShowSources={(key, sources, fqty, unit) => setActiveSources({ key, sources, freezerQty: fqty, unit })}
+                                            foodQuantities={foodQuantities}
                                         />
                                     </div>
                                 ))}
@@ -404,6 +407,10 @@ export const ShoppingModule = () => {
                 sourceChecked={sourceChecked}
                 onToggleSource={toggleSourceCheck}
                 onClose={() => setActiveSources(null)}
+                freezerQty={activeSources.freezerQty}
+                freezerUnit={activeSources.unit}
+                freezerUsed={activeSources.freezerQty > 0 && stocks[activeSources.key] === activeSources.freezerQty}
+                onUseFreezer={(use) => setStock(activeSources.key, use ? activeSources.freezerQty : 0)}
             />
         )}
         </>

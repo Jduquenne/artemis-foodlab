@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useRef } from 'react';
+import { useFreezerStock } from '../../shared/hooks/useFreezerStock';
 import { Check, X, ShoppingCart } from 'lucide-react';
 import { typedRecipesDb as recipesDb } from '../../core/typed-db/typedRecipesDb';
 import { plannableDb } from '../../core/typed-db/plannableDb';
@@ -39,6 +40,7 @@ const todayDayName = (() => {
 export const PlanningModule = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const { shoppingDays, setShoppingDays } = useMenuStore();
+    const { batchRecipeIds } = useFreezerStock();
 
     const [pickerSlot, setPickerSlot] = useState<{ day: string; slot: SlotType } | null>(null);
     const [dessertPickerSlot, setDessertPickerSlot] = useState<{ day: string; slot: SlotType } | null>(null);
@@ -342,6 +344,7 @@ export const PlanningModule = () => {
                 onCopyDessert={(rid) => handleStartCopy(rid, mealType.id, day, true)}
                 onRemoveDessert={(rid) => handleRemoveDessert(day, mealType.id, rid)}
                 onSelectAsTarget={() => toggleCopyTarget(day, mealType.id)}
+                batchRecipeIds={batchRecipeIds}
             />
         );
     };

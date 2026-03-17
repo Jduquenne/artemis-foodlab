@@ -20,6 +20,7 @@ export interface IngredientSource {
 export interface ConsolidatedIngredient {
   key: string;
   name: string;
+  foodId?: string;
   totalQuantity: number;
   unit: string;
   category: IngredientCategory | undefined;
@@ -89,6 +90,7 @@ async function aggregateSlots(
       map.set(key, {
         key,
         name: ing.name,
+        foodId: ing.foodId,
         totalQuantity: qty,
         unit: ing.unit,
         category: ing.category as IngredientCategory | undefined,

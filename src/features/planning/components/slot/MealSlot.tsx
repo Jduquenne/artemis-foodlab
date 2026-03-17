@@ -1,4 +1,4 @@
-import { Plus } from 'lucide-react';
+import { Plus, Snowflake } from 'lucide-react';
 import { PersonsEditor } from './PersonsEditor';
 import { useDraggable, useDroppable } from '@dnd-kit/core';
 import { plannableDb } from '../../../../core/typed-db/plannableDb';
@@ -33,6 +33,7 @@ export interface MealSlotProps {
     copySourceDessertId?: string;
     dessertCopyTargetState?: 'selectable' | 'selected';
     onSelectDessertAsTarget?: () => void;
+    inFreezer?: boolean;
 }
 
 export const MealSlot = ({
@@ -43,6 +44,7 @@ export const MealSlot = ({
     isAddMode, onAddToSlot,
     hasDessert, dessertIds, onAddDessert, onRemoveDessert,
     onCopyDessert, copySourceDessertId, dessertCopyTargetState, onSelectDessertAsTarget,
+    inFreezer,
 }: MealSlotProps) => {
     const firstId = recipeIds[0];
     const recipe = firstId ? plannableDb[firstId] : undefined;
@@ -105,6 +107,12 @@ export const MealSlot = ({
                     </>
                 )}
             </button>
+
+            {inFreezer && photoUrl && !isDragging && !isAddMode && (
+                <div className="absolute top-1 left-1 p-1 bg-cyan-500/80 text-white rounded-lg z-10 shadow-sm pointer-events-none">
+                    <Snowflake size={10} />
+                </div>
+            )}
 
             {photoUrl && !isEditingPersons && !isDragging && !isAddMode && displayPersons !== undefined && (
                 <SlotPersonsBadge

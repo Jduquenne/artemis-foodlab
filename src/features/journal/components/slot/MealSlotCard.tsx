@@ -63,7 +63,7 @@ export const MealSlotCard = ({ slotType, slot }: MealSlotCardProps) => {
         <div className="flex gap-1 shrink-0">
           {MACRO_ITEMS.map(({ key, label }) => (
             <div key={key} className="flex-1 bg-slate-50 dark:bg-slate-200 rounded-lg px-1.5 py-1 flex flex-col items-center gap-0.5">
-              <span className="text-[8px] font-bold uppercase tracking-wide text-slate-300 leading-none">{label}</span>
+              <span className="text-[8px] font-bold uppercase tracking-wide text-slate-400 leading-none">{label}</span>
               <span className="text-[10px] font-bold text-slate-600 leading-none tabular-nums">{Math.round(totalMacros[key])}</span>
             </div>
           ))}
@@ -87,7 +87,7 @@ export const MealSlotCard = ({ slotType, slot }: MealSlotCardProps) => {
             )}
           </div>
         ) : (
-          <p className="text-xs text-slate-300 italic">Non planifié</p>
+          <p className="text-xs text-slate-400 italic">Non planifié</p>
         )}
       </div>
     </div>

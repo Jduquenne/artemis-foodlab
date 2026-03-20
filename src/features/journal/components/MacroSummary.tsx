@@ -27,12 +27,12 @@ export const MacroSummary = ({ macros }: MacroSummaryProps) => {
     <>
       <div className="bg-white dark:bg-slate-100 rounded-2xl px-4 py-3 flex flex-col gap-3 shrink-0">
         <div className="flex items-center justify-between">
-          <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">
+          <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">
             Macronutriments
           </span>
           <button
             onClick={() => setShowModal(true)}
-            className="flex items-center gap-1 px-2 py-1 rounded-lg text-slate-400 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors"
+            className="flex items-center gap-1 px-2 py-1 rounded-lg text-slate-500 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors"
           >
             <SlidersHorizontal className="w-3.5 h-3.5" />
             <span className="text-[10px] font-semibold">Objectifs</span>
@@ -45,9 +45,9 @@ export const MacroSummary = ({ macros }: MacroSummaryProps) => {
               <span className={`text-3xl font-black leading-none ${isKcalOver ? "text-orange-600" : "text-slate-900"}`}>
                 {Math.round(macros.kcal)}
               </span>
-              <span className="text-sm text-slate-400 leading-none">kcal</span>
+              <span className="text-sm text-slate-500 leading-none">kcal</span>
             </div>
-            <span className="text-xs text-slate-400">
+            <span className="text-xs text-slate-500">
               {isKcalOver
                 ? `+${Math.round(macros.kcal - kcalTarget)} au-dessus`
                 : `${Math.round(kcalRemaining)} restantes · obj. ${kcalTarget}`}
@@ -55,14 +55,14 @@ export const MacroSummary = ({ macros }: MacroSummaryProps) => {
           </div>
           <div className="h-2 bg-slate-100 dark:bg-slate-200 rounded-full overflow-hidden">
             <div
-              className="h-full rounded-full bg-orange-500 transition-all duration-700"
-              style={{ width: `${kcalPct}%` }}
+              className="h-full w-full rounded-full bg-orange-500 origin-left transition-transform duration-700"
+              style={{ transform: `scaleX(${kcalPct / 100})` }}
             />
           </div>
           <div className="flex justify-between">
-            <span className="text-[10px] text-slate-300">0</span>
+            <span className="text-[10px] text-slate-500">0</span>
             <span className="text-[10px] font-bold text-orange-500">{kcalPct}%</span>
-            <span className="text-[10px] text-slate-300">{kcalTarget}</span>
+            <span className="text-[10px] text-slate-500">{kcalTarget}</span>
           </div>
         </div>
 
@@ -75,19 +75,19 @@ export const MacroSummary = ({ macros }: MacroSummaryProps) => {
 
             return (
               <div key={key} className="bg-slate-50 dark:bg-slate-200 rounded-xl px-2 py-2 flex flex-col gap-1">
-                <span className="text-[9px] sm:text-[10px] font-semibold uppercase tracking-wide text-slate-400 leading-none">
+                <span className="text-[9px] sm:text-[10px] font-semibold uppercase tracking-wide text-slate-500 leading-none">
                   {label}
                 </span>
                 <div className="flex items-baseline gap-0.5">
                   <span className={`text-sm font-black leading-none ${isOver ? "text-orange-500" : "text-slate-800"}`}>
                     {Math.round(value)}
                   </span>
-                  <span className="text-[9px] text-slate-300 leading-none">/{target}g</span>
+                  <span className="text-[9px] text-slate-500 leading-none">/{target}g</span>
                 </div>
                 <div className="h-1 bg-slate-200 dark:bg-slate-300 rounded-full overflow-hidden">
                   <div
-                    className="h-full rounded-full bg-orange-400 transition-all duration-500"
-                    style={{ width: `${pct}%` }}
+                    className="h-full w-full rounded-full bg-orange-400 origin-left transition-transform duration-500"
+                    style={{ transform: `scaleX(${pct / 100})` }}
                   />
                 </div>
               </div>

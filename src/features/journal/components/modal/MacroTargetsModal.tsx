@@ -59,6 +59,7 @@ export const MacroTargetsModal = ({ onClose }: MacroTargetsModalProps) => {
           </p>
           <button
             onClick={handleClose}
+            aria-label="Fermer"
             className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
           >
             <X className="w-4 h-4" />
@@ -68,9 +69,10 @@ export const MacroTargetsModal = ({ onClose }: MacroTargetsModalProps) => {
         <div className="px-5 py-3 flex flex-col gap-3">
           {FIELDS.map(({ key, label, unit, min, max, step }) => (
             <div key={key} className="flex items-center justify-between gap-3">
-              <label className="text-sm font-semibold text-slate-600 shrink-0">{label}</label>
+              <label htmlFor={`macro-input-${key}`} className="text-sm font-semibold text-slate-600 shrink-0">{label}</label>
               <div className="flex items-center gap-1.5">
                 <input
+                  id={`macro-input-${key}`}
                   type="number"
                   min={min}
                   max={max}

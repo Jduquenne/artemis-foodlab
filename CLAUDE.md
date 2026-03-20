@@ -84,6 +84,18 @@ Instead, use the dedicated reference files in `docs/`:
 
 Root `/` redirects to `/journal`. Uses `HashRouter` for GitHub Pages compatibility.
 
+**Route lazy loading (critical)**: all feature modules in `App.tsx` are loaded via `React.lazy` to enable route-level code splitting. Every new module added must follow the same pattern — never use a static import for a route component:
+
+```tsx
+// Wrong: static import bundles everything on every page
+import { FooModule } from './features/foo/FooModule';
+
+// Right: lazy import — Vite creates a separate chunk, loaded only on navigation
+const FooModule = lazy(() => import('./features/foo/FooModule').then(({ FooModule: m }) => ({ default: m })));
+```
+
+The `<Routes>` tree is wrapped in a `<Suspense>` with no visible fallback (seamless transition).
+
 ### Key implementation notes
 
 - **Week utilities**: `core/utils/dateUtils.ts` — ISO week ID generation (`getWeekId`, `getDaysOfWeek`) used by the store. `shared/utils/weekUtils.ts` — week navigation helpers for the planning UI (`getWeekNumber`, `getMonday`, `getWeekRange`).
@@ -165,6 +177,7 @@ The app uses a **CSS variable-based theme** defined in `src/index.css`. Tailwind
 - **`white` is reserved for constant-light contexts** (`text-white` on orange buttons). Using `dark:bg-slate-100` is the correct way to create dark surfaces; never rely on `bg-white` resolving to a dark color.
 - When adding new palette colors (only when explicitly requested), define them as CSS variables in both `:root` and `.dark` in `index.css`, then register them via `@theme inline`.
 - On every scrolling page, use markscrolling on scroll event for overpass the scrolling + click problem
+- **Composited animations only**: never animate `width` or `height` directly — these trigger layout and paint on every frame. For progress bars, use `transform: scaleX()` + `transition-transform` + `origin-left` on a `w-full` inner element. Only `transform` and `opacity` are GPU-composited and safe to animate.
 
 ## Git workflow
 

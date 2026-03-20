@@ -12,10 +12,19 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          "vendor-react": ["react", "react-dom", "react-router-dom"],
-          "vendor-dnd": ["@dnd-kit/core", "@dnd-kit/sortable", "@dnd-kit/utilities"],
-          "vendor-db": ["dexie", "dexie-react-hooks"],
+        manualChunks(id) {
+          if (id.includes("node_modules/react") || id.includes("node_modules/react-dom") || id.includes("node_modules/react-router-dom")) {
+            return "vendor-react";
+          }
+          if (id.includes("node_modules/@dnd-kit")) {
+            return "vendor-dnd";
+          }
+          if (id.includes("node_modules/dexie")) {
+            return "vendor-db";
+          }
+          if (id.includes("src/core/data/recipes-db.json") || id.includes("src/core/data/food-db.json") || id.includes("src/core/data/assets-manifest.json")) {
+            return "data";
+          }
         },
       },
     },

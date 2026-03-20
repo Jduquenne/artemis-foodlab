@@ -33,6 +33,7 @@ export const RecipePortionRow = ({ recipeId, slotId }: RecipePortionRowProps) =>
               type="number"
               min={1}
               defaultValue={grams}
+              aria-label={`Quantité en grammes — ${name}`}
               onChange={(e) => {
                 const v = parseInt(e.target.value, 10);
                 if (!isNaN(v) && v > 0) setGramOverride(key, v);
@@ -61,16 +62,18 @@ export const RecipePortionRow = ({ recipeId, slotId }: RecipePortionRowProps) =>
         <div className="flex items-center gap-0.5">
           <button
             onClick={() => setPortionOverride(key, Math.max(1, portions - 1))}
-            className="w-5 h-5 flex items-center justify-center rounded text-slate-300 hover:text-orange-500 transition-colors"
+            aria-label={`Réduire les portions — ${name}`}
+            className="w-5 h-5 flex items-center justify-center rounded text-slate-400 hover:text-orange-500 transition-colors"
           >
             <Minus className="w-3 h-3" />
           </button>
-          <span className={`text-[11px] font-bold w-5 text-center leading-none ${portions > 1 ? "text-orange-500" : "text-slate-300"}`}>
+          <span className={`text-[11px] font-bold w-5 text-center leading-none ${portions > 1 ? "text-orange-500" : "text-slate-400"}`}>
             {portions}×
           </span>
           <button
             onClick={() => setPortionOverride(key, Math.min(10, portions + 1))}
-            className="w-5 h-5 flex items-center justify-center rounded text-slate-300 hover:text-orange-500 transition-colors"
+            aria-label={`Augmenter les portions — ${name}`}
+            className="w-5 h-5 flex items-center justify-center rounded text-slate-400 hover:text-orange-500 transition-colors"
           >
             <Plus className="w-3 h-3" />
           </button>

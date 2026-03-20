@@ -5,7 +5,7 @@ import { typedRecipesDb as recipesDb } from '../../core/typed-db/typedRecipesDb'
 import { plannableDb } from '../../core/typed-db/plannableDb';
 import { CopyModeBar } from './components/bars/CopyModeBar';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { getWeekSlots, saveSlot, deleteSlot, bulkSaveSlots, addDessertToSlot, removeDessertFromSlot } from '../../core/services/planningService';
+import { getWeekSlots, saveSlot, deleteSlot, bulkSaveSlots, addDessertToSlot, removeDessertFromSlot, setRecipePersonsOnSlot } from '../../core/services/planningService';
 import { MealDragOverlay } from './components/MealDragOverlay';
 import { RecipePicker } from './components/pickers/RecipePicker';
 import { DessertPicker } from './components/pickers/DessertPicker';
@@ -212,8 +212,16 @@ export const PlanningModule = () => {
 
     const handleStartCopy = (recipeId: string, slotType: SlotType, sourceDay: string, isDessertCopy: boolean) => {
         const recipeName = plannableDb[recipeId]?.name ?? '';
-        setCopyState({ recipeId, slotType, sourceDay, isDessert: isDessertCopy, recipeName });
+        const sourceSlot = planningData.find(p => p.day === sourceDay && p.slot === slotType);
+        const sourcePersons = sourceSlot?.recipePersons?.[recipeId];
+        setCopyState({ recipeId, slotType, sourceDay, isDessert: isDessertCopy, recipeName, sourcePersons });
         setCopyTargets(new Set());
+    };
+
+    const handleSetDessertPersons = async (day: string, slot: SlotType, dessertId: string, persons: number) => {
+        const existing = planningData.find(p => p.day === day && p.slot === slot);
+        if (!existing) return;
+        await setRecipePersonsOnSlot(existing, dessertId, persons);
     };
 
     const toggleCopyTarget = (day: string, slotType: SlotType) => {
@@ -227,22 +235,25 @@ export const PlanningModule = () => {
 
     const confirmCopy = async () => {
         if (!copyState) return;
-        const { recipeId, isDessert: isDessertCopy } = copyState;
+        const { recipeId, sourcePersons } = copyState;
         for (const target of copyTargets) {
             const sep = target.indexOf('|');
             const targetDay = target.slice(0, sep);
             const targetSlot = target.slice(sep + 1) as SlotType;
             const slotId = `${year}-W${weekNumber}-${targetDay}-${targetSlot}`;
             const existing = planningData.find(p => p.day === targetDay && p.slot === targetSlot);
-            if (isDessertCopy) {
+            const personsUpdate = sourcePersons !== undefined
+                ? { recipePersons: { ...existing?.recipePersons, [recipeId]: sourcePersons } }
+                : {};
+            if (copyState.isDessert) {
                 if (existing && canAddDessert(existing) && !existing.dessertIds?.includes(recipeId)) {
-                    await addDessertToSlot(existing, recipeId);
+                    await saveSlot({ ...existing, dessertIds: [...(existing.dessertIds ?? []), recipeId], ...personsUpdate });
                 }
             } else {
                 if (!existing) {
-                    await saveSlot({ id: slotId, day: targetDay, slot: targetSlot, recipeIds: [recipeId], year, week: weekNumber });
+                    await saveSlot({ id: slotId, day: targetDay, slot: targetSlot, recipeIds: [recipeId], year, week: weekNumber, ...personsUpdate });
                 } else if (!isSlotFull(existing) && !existing.recipeIds.includes(recipeId)) {
-                    await saveSlot({ ...existing, recipeIds: [...existing.recipeIds, recipeId] });
+                    await saveSlot({ ...existing, recipeIds: [...existing.recipeIds, recipeId], ...personsUpdate });
                 }
             }
         }
@@ -343,6 +354,7 @@ export const PlanningModule = () => {
                 onCopyRecipe={(rid) => handleStartCopy(rid, mealType.id, day, false)}
                 onCopyDessert={(rid) => handleStartCopy(rid, mealType.id, day, true)}
                 onRemoveDessert={(rid) => handleRemoveDessert(day, mealType.id, rid)}
+                onSetDessertPersons={(rid, n) => handleSetDessertPersons(day, mealType.id, rid, n)}
                 onSelectAsTarget={() => toggleCopyTarget(day, mealType.id)}
                 batchRecipeIds={batchRecipeIds}
             />
@@ -502,7 +514,11 @@ export const PlanningModule = () => {
                             if (isMulti && existing && existing.recipeIds.length < 4 && !existing.recipeIds.includes(recipe.recipeId)) {
                                 await saveSlot({ ...existing, recipeIds: [...existing.recipeIds, recipe.recipeId] });
                             } else {
-                                await saveSlot({ id: slotId, day: pickerSlot.day, slot: pickerSlot.slot, recipeIds: [recipe.recipeId], year, week: weekNumber });
+                                await saveSlot({
+                                    id: slotId, day: pickerSlot.day, slot: pickerSlot.slot,
+                                    recipeIds: [recipe.recipeId], year, week: weekNumber,
+                                    ...(existing && { dessertIds: existing.dessertIds, persons: existing.persons }),
+                                });
                             }
                             setPickerSlot(null);
                         }}

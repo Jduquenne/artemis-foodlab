@@ -15,6 +15,7 @@ export interface CopyState {
   sourceDay: string;
   isDessert: boolean;
   recipeName: string;
+  sourcePersons?: number;
 }
 
 export const DAYS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"] as const;

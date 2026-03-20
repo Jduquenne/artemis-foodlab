@@ -60,6 +60,9 @@ function slotScaleFactor(
   if (slot.persons !== undefined && defaultPortions > 0) {
     return slot.persons / defaultPortions;
   }
+  if (slot.dessertIds?.includes(recipeId) && defaultPortions > 0) {
+    return 1 / defaultPortions;
+  }
   return 1;
 }
 

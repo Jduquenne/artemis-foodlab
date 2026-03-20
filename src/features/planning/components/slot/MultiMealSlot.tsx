@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Plus, Check, Users, Snowflake } from 'lucide-react';
+import { PersonsEditor } from './PersonsEditor';
+import { SlotPersonsBadge } from './SlotPersonsBadge';
 import { useDraggable, useDroppable } from '@dnd-kit/core';
 import { plannableDb } from '../../../../core/typed-db/plannableDb';
 import { RECIPE_BASE_GRAMS } from '../../../../core/utils/macroUtils';
@@ -26,6 +28,11 @@ export interface MultiMealSlotProps {
     recipeQuantities?: Record<string, number>;
     onSaveRecipeMeta?: (recipeId: string, persons: number, grams: number) => void;
     batchRecipeIds?: Set<string>;
+    persons?: number;
+    isEditingPersons?: boolean;
+    onOpenPersonsEditor?: () => void;
+    onConfirmPersons?: (n: number) => void;
+    onCancelPersons?: () => void;
 }
 
 export const MultiMealSlot = ({
@@ -45,6 +52,11 @@ export const MultiMealSlot = ({
     recipeQuantities,
     onSaveRecipeMeta,
     batchRecipeIds,
+    persons,
+    isEditingPersons,
+    onOpenPersonsEditor,
+    onConfirmPersons,
+    onCancelPersons,
 }: MultiMealSlotProps) => {
     const [editingMetaId, setEditingMetaId] = useState<string | null>(null);
 
@@ -96,7 +108,12 @@ export const MultiMealSlot = ({
     const singleCurrentGrams = singleRecipeId ? recipeQuantities?.[singleRecipeId] : undefined;
     const singleCurrentPersons = singleRecipeId ? recipePersons?.[singleRecipeId] : undefined;
     const singleIsCustom = singleCurrentPersons !== undefined || (!singleIsDish && singleCurrentGrams !== undefined);
-    const showSingleBadge = !!singleRecipeId && !isAddMode && !copyTargetState && !!onSaveRecipeMeta && (singleIsDish || singleBaseGrams > 0 || singleCurrentPersons !== undefined);
+    const showSingleBadge = !!singleRecipeId && !isAddMode && !copyTargetState && !!onSaveRecipeMeta && !isEditingPersons && (singleIsDish || singleBaseGrams > 0 || singleCurrentPersons !== undefined);
+
+    const inFreezer = recipeIds.length === 1 && (batchRecipeIds?.has(recipeIds[0]) ?? false);
+    const displayPersons = persons ?? (recipeIds.length === 1 ? firstRecipe?.defaultPortions : undefined);
+    const isPersonsCustom = persons !== undefined;
+    const showPersonsBadge = hasRecipes && !isAddMode && !copyTargetState && !editingMetaId && !isEditingPersons && displayPersons !== undefined && !!onOpenPersonsEditor;
 
     return (
         <div
@@ -122,21 +139,14 @@ export const MultiMealSlot = ({
                 )}
 
                 {recipeIds.length === 1 && (
-                    <>
-                        <button
-                            onClick={!isTargetMode && singleHasRecipesPage ? () => onNavigateToRecipe(recipeIds[0]) : undefined}
-                            className={`w-full h-full ${!singleHasRecipesPage || isTargetMode ? 'cursor-default' : ''}`}
-                        >
-                            {singlePhotoUrl && (
-                                <img src={singlePhotoUrl} loading="lazy" decoding="async" className="w-full h-full object-contain" alt={firstRecipe!.name} />
-                            )}
-                        </button>
-                        {batchRecipeIds?.has(recipeIds[0]) && (
-                            <div className="absolute top-1 left-1 p-1 bg-cyan-500/80 text-white rounded-lg z-10 shadow-sm pointer-events-none">
-                                <Snowflake size={10} />
-                            </div>
+                    <button
+                        onClick={!isTargetMode && singleHasRecipesPage ? () => onNavigateToRecipe(recipeIds[0]) : undefined}
+                        className={`w-full h-full ${!singleHasRecipesPage || isTargetMode ? 'cursor-default' : ''}`}
+                    >
+                        {singlePhotoUrl && (
+                            <img src={singlePhotoUrl} loading="lazy" decoding="async" className="w-full h-full object-contain" alt={firstRecipe!.name} />
                         )}
-                    </>
+                    </button>
                 )}
 
                 {recipeIds.length >= 2 && (
@@ -166,6 +176,24 @@ export const MultiMealSlot = ({
                 )}
             </div>
 
+            {hasRecipes && !isAddMode && !copyTargetState && !editingMetaId && (inFreezer || showPersonsBadge) && (
+                <div className="absolute top-1 left-1 z-20 flex items-center gap-1">
+                    {inFreezer && (
+                        <div className="p-1 bg-cyan-500/80 text-white rounded-lg shadow-sm pointer-events-none">
+                            <Snowflake size={10} />
+                        </div>
+                    )}
+                    {showPersonsBadge && (
+                        <SlotPersonsBadge
+                            persons={displayPersons!}
+                            isCustom={isPersonsCustom}
+                            isAnyEditing={false}
+                            onEdit={onOpenPersonsEditor!}
+                        />
+                    )}
+                </div>
+            )}
+
             {showSingleBadge && !editingMetaId && (
                 <button
                     onPointerDown={(e) => e.stopPropagation()}
@@ -194,6 +222,15 @@ export const MultiMealSlot = ({
                     onCopyRecipe={onCopyRecipe}
                     onRemoveRecipe={onRemoveRecipe}
                     onAdd={onAdd}
+                />
+            )}
+
+            {isEditingPersons && onConfirmPersons && onCancelPersons && (
+                <PersonsEditor
+                    initialValue={persons ?? firstRecipe?.defaultPortions ?? 2}
+                    defaultPortion={recipeIds.length === 1 ? firstRecipe?.defaultPortions : undefined}
+                    onConfirm={onConfirmPersons}
+                    onCancel={onCancelPersons}
                 />
             )}
 

@@ -28,6 +28,7 @@ export interface PlanningSlotProps {
   onCopyRecipe: (id: string) => void;
   onCopyDessert: (id: string) => void;
   onRemoveDessert: (id: string) => void;
+  onSetDessertPersons: (id: string, n: number) => void;
   onSelectAsTarget: () => void;
   batchRecipeIds?: Set<string>;
 }
@@ -40,7 +41,7 @@ export const PlanningSlot = ({
   onOpenPicker, onOpenDessertPicker, onDelete, onAddToSlot,
   onEditPersons, onConfirmPersons, onCancelPersons,
   onRemoveRecipe, onSaveRecipeMeta,
-  onCopyRecipe, onCopyDessert, onRemoveDessert, onSelectAsTarget,
+  onCopyRecipe, onCopyDessert, onRemoveDessert, onSetDessertPersons, onSelectAsTarget,
   batchRecipeIds,
 }: PlanningSlotProps) => {
   const navigate = useNavigate();
@@ -71,6 +72,11 @@ export const PlanningSlot = ({
           recipeQuantities={savedMeal?.recipeQuantities}
           onSaveRecipeMeta={!blocked ? onSaveRecipeMeta : undefined}
           batchRecipeIds={batchRecipeIds}
+          persons={savedMeal?.persons}
+          isEditingPersons={isEditingPersons}
+          onOpenPersonsEditor={isAddMode || isCopyMode ? () => {} : onEditPersons}
+          onConfirmPersons={onConfirmPersons}
+          onCancelPersons={onCancelPersons}
         />
       ) : (
         <MealSlotComp
@@ -95,6 +101,8 @@ export const PlanningSlot = ({
           onAddDessert={blocked ? undefined : onOpenDessertPicker}
           onRemoveDessert={isCopyMode ? undefined : onRemoveDessert}
           onCopyDessert={!blocked ? onCopyDessert : undefined}
+          onSetDessertPersons={!blocked ? onSetDessertPersons : undefined}
+          recipePersons={savedMeal?.recipePersons}
           copySourceDessertId={copyProps.copySourceDessertId}
           dessertCopyTargetState={copyProps.dessertCopyTargetState}
           onSelectDessertAsTarget={copyProps.dessertCopyTargetState ? onSelectAsTarget : undefined}

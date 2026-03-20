@@ -1,4 +1,4 @@
-import { GripVertical, Users, RefreshCw, Trash2 } from 'lucide-react';
+import { GripVertical, RefreshCw, Trash2 } from 'lucide-react';
 import { useDraggable } from '@dnd-kit/core';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 
@@ -8,8 +8,6 @@ type DndAttributes = ReturnType<typeof useDraggable>['attributes'];
 export interface SlotActionsProps {
     listeners: DndListeners;
     attributes: DndAttributes;
-    isAnyEditing: boolean;
-    onOpenPersonsEditor: () => void;
     onModify?: () => void;
     onDelete?: () => void;
 }
@@ -17,8 +15,6 @@ export interface SlotActionsProps {
 export const SlotActions = ({
     listeners,
     attributes,
-    isAnyEditing,
-    onOpenPersonsEditor,
     onModify,
     onDelete,
 }: SlotActionsProps) => (
@@ -31,17 +27,6 @@ export const SlotActions = ({
             >
                 <GripVertical size={14} className="text-slate-400" />
             </div>
-        )}
-
-        {!IS_TOUCH && (
-            <button
-                aria-label="Modifier le nombre de personnes"
-                onPointerDown={(e) => e.stopPropagation()}
-                onClick={(e) => { e.stopPropagation(); if (!isAnyEditing) onOpenPersonsEditor(); }}
-                className="absolute top-1 right-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-slate-500 rounded-lg shadow-md border border-slate-200 hover:bg-orange-50 hover:text-orange-600 dark:hover:bg-orange-950/40 z-20 opacity-0 group-hover:opacity-100 transition-opacity"
-            >
-                <Users size={14} />
-            </button>
         )}
 
         <button

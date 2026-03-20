@@ -22,3 +22,7 @@ export const addDessertToSlot = async (slot: MealSlot, recipeId: string) => {
 export const removeDessertFromSlot = async (slot: MealSlot, recipeId: string) => {
   await saveSlot({ ...slot, dessertIds: (slot.dessertIds ?? []).filter(id => id !== recipeId) });
 };
+
+export const setRecipePersonsOnSlot = async (slot: MealSlot, recipeId: string, persons: number) => {
+  await saveSlot({ ...slot, recipePersons: { ...slot.recipePersons, [recipeId]: persons } });
+};

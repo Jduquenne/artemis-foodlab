@@ -10,6 +10,9 @@ export interface DessertColumnProps {
     onRemoveDessert?: (id: string) => void;
     onCopyDessert?: (id: string) => void;
     onSelectAsTarget?: () => void;
+    recipePersons?: Record<string, number>;
+    slotPersons?: number;
+    onSetDessertPersons?: (id: string, n: number) => void;
 }
 
 export const DessertColumn = ({
@@ -21,6 +24,9 @@ export const DessertColumn = ({
     onRemoveDessert,
     onCopyDessert,
     onSelectAsTarget,
+    recipePersons,
+    slotPersons,
+    onSetDessertPersons,
 }: DessertColumnProps) => {
     const isTargetMode = dessertCopyTargetState === 'selectable' || dessertCopyTargetState === 'selected';
     const addButtonShown = dessertIds.length < 3 && !isAddMode && !isTargetMode && !!onAddDessert;
@@ -31,17 +37,24 @@ export const DessertColumn = ({
             className={`relative flex flex-col gap-1 w-[35%] shrink-0 h-full ${isTargetMode ? 'cursor-pointer' : ''}`}
             onClick={isTargetMode ? (e) => { e.stopPropagation(); onSelectAsTarget?.(); } : undefined}
         >
-            {dessertIds.map(rid => (
-                <DessertCell
-                    key={rid}
-                    recipeId={rid}
-                    onRemove={() => onRemoveDessert?.(rid)}
-                    isAddMode={isAddMode}
-                    onCopy={onCopyDessert ? () => onCopyDessert(rid) : undefined}
-                    isCopySource={rid === copySourceDessertId}
-                    hideActions={isTargetMode}
-                />
-            ))}
+            {dessertIds.map(rid => {
+                const effectivePersons = recipePersons?.[rid] ?? slotPersons ?? 1;
+                const isPersonsCustom = recipePersons?.[rid] !== undefined;
+                return (
+                    <DessertCell
+                        key={rid}
+                        recipeId={rid}
+                        onRemove={() => onRemoveDessert?.(rid)}
+                        isAddMode={isAddMode}
+                        onCopy={onCopyDessert ? () => onCopyDessert(rid) : undefined}
+                        isCopySource={rid === copySourceDessertId}
+                        hideActions={isTargetMode}
+                        persons={effectivePersons}
+                        isPersonsCustom={isPersonsCustom}
+                        onSetPersons={onSetDessertPersons ? (n) => onSetDessertPersons(rid, n) : undefined}
+                    />
+                );
+            })}
             {addButtonShown && (
                 <button
                     onClick={(e) => { e.stopPropagation(); onAddDessert?.(); }}

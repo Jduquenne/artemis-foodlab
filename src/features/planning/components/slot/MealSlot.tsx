@@ -34,6 +34,8 @@ export interface MealSlotProps {
     dessertCopyTargetState?: 'selectable' | 'selected';
     onSelectDessertAsTarget?: () => void;
     inFreezer?: boolean;
+    recipePersons?: Record<string, number>;
+    onSetDessertPersons?: (id: string, n: number) => void;
 }
 
 export const MealSlot = ({
@@ -44,7 +46,7 @@ export const MealSlot = ({
     isAddMode, onAddToSlot,
     hasDessert, dessertIds, onAddDessert, onRemoveDessert,
     onCopyDessert, copySourceDessertId, dessertCopyTargetState, onSelectDessertAsTarget,
-    inFreezer,
+    inFreezer, recipePersons, onSetDessertPersons,
 }: MealSlotProps) => {
     const firstId = recipeIds[0];
     const recipe = firstId ? plannableDb[firstId] : undefined;
@@ -108,27 +110,28 @@ export const MealSlot = ({
                 )}
             </button>
 
-            {inFreezer && photoUrl && !isDragging && !isAddMode && (
-                <div className="absolute top-1 left-1 p-1 bg-cyan-500/80 text-white rounded-lg z-10 shadow-sm pointer-events-none">
-                    <Snowflake size={10} />
+            {photoUrl && !isDragging && !isAddMode && (inFreezer || (!isEditingPersons && displayPersons !== undefined)) && (
+                <div className="absolute top-1 left-1 z-20 flex items-center gap-1">
+                    {inFreezer && (
+                        <div className="p-1 bg-cyan-500/80 text-white rounded-lg shadow-sm pointer-events-none">
+                            <Snowflake size={10} />
+                        </div>
+                    )}
+                    {!isEditingPersons && displayPersons !== undefined && (
+                        <SlotPersonsBadge
+                            persons={displayPersons}
+                            isCustom={isCustom}
+                            isAnyEditing={isAnyEditing}
+                            onEdit={onOpenPersonsEditor}
+                        />
+                    )}
                 </div>
-            )}
-
-            {photoUrl && !isEditingPersons && !isDragging && !isAddMode && displayPersons !== undefined && (
-                <SlotPersonsBadge
-                    persons={displayPersons}
-                    isCustom={isCustom}
-                    isAnyEditing={isAnyEditing}
-                    onEdit={onOpenPersonsEditor}
-                />
             )}
 
             {photoUrl && !isDragging && !isEditingPersons && !isAddMode && (
                 <SlotActions
                     listeners={listeners}
                     attributes={attributes}
-                    isAnyEditing={isAnyEditing}
-                    onOpenPersonsEditor={onOpenPersonsEditor}
                     onModify={onModify}
                     onDelete={onDelete}
                 />
@@ -160,6 +163,9 @@ export const MealSlot = ({
                     onRemoveDessert={onRemoveDessert}
                     onCopyDessert={onCopyDessert}
                     onSelectAsTarget={onSelectDessertAsTarget}
+                    recipePersons={recipePersons}
+                    slotPersons={displayPersons}
+                    onSetDessertPersons={onSetDessertPersons}
                 />
             </div>
         );

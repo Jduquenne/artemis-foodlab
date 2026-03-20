@@ -223,6 +223,16 @@ export const ShoppingModule = () => {
         setStock(ingredientKey, total);
     };
 
+    const allGroupedItems = useMemo(() => {
+        if (!ingredients) return [];
+        const groups: { label: string; list: ConsolidatedIngredient[] }[] = CATEGORY_ORDER
+            .map(cat => ({ label: cat as string, list: ingredients.filter(i => i.category === cat) }))
+            .filter(g => g.list.length > 0);
+        const uncategorized = ingredients.filter(i => !i.category || !CATEGORY_ORDER.includes(i.category));
+        if (uncategorized.length > 0) groups.push({ label: 'Autres', list: uncategorized });
+        return groups;
+    }, [ingredients]);
+
     const groupedItems = useMemo(() => {
         if (!ingredients) return [];
         const getEffective = (i: ConsolidatedIngredient) => {
@@ -258,10 +268,17 @@ export const ShoppingModule = () => {
         }).length;
     }, [ingredients, checked, stocks, sourceChecked]);
 
-    const ingredientColumns = useMemo(
-        () => distributeToColumns(groupedItems, g => g.list.length, colCount),
-        [groupedItems, colCount]
-    );
+    const ingredientColumns = useMemo(() => {
+        const stableAssignment = distributeToColumns(allGroupedItems, g => g.list.length, colCount);
+        const colForLabel = new Map<string, number>();
+        stableAssignment.forEach((col, ci) => col.forEach(g => colForLabel.set(g.label, ci)));
+        const cols: { label: string; list: ConsolidatedIngredient[] }[][] = Array.from({ length: colCount }, () => []);
+        for (const group of groupedItems) {
+            const ci = colForLabel.get(group.label) ?? 0;
+            cols[ci].push(group);
+        }
+        return cols;
+    }, [allGroupedItems, groupedItems, colCount]);
 
     const mealColumns = useMemo(
         () => distributeToColumns(recipeCards, c => c.directIngredients.length + c.baseGroups.reduce((s, b) => s + b.ingredients.length, 0), colCount),

@@ -2461,6 +2461,11 @@
   },
   {
     "categoryFolder": "fish",
+    "typeFolder": "photo",
+    "fileName": "POI_71_Salade_printaniere_au_saumon_fume_Photo.png"
+  },
+  {
+    "categoryFolder": "fish",
     "typeFolder": "ingredients",
     "fileName": "POI_01_Nouilles_sautées_aux_crevettes_et_légumes_Ingrédients.webp"
   },
@@ -2811,6 +2816,11 @@
   },
   {
     "categoryFolder": "fish",
+    "typeFolder": "ingredients",
+    "fileName": "POI_71_Salade_printaniere_au_saumon_fume_Ingredients.png"
+  },
+  {
+    "categoryFolder": "fish",
     "typeFolder": "recipes",
     "fileName": "POI_01_Nouilles_sautées_aux_crevettes_Recette.webp"
   },
@@ -3158,6 +3168,11 @@
     "categoryFolder": "fish",
     "typeFolder": "recipes",
     "fileName": "POI_70_Quinoa_saumon_chou_romanesco_et_carottes_Recette.webp"
+  },
+  {
+    "categoryFolder": "fish",
+    "typeFolder": "recipes",
+    "fileName": "POI_71_Salade_printaniere_au_saumon_fume_Recette.png"
   },
   {
     "categoryFolder": "fruits",
@@ -4226,6 +4241,11 @@
   },
   {
     "categoryFolder": "plant-proteins",
+    "typeFolder": "photo",
+    "fileName": "PV_51_Quiche_sans_pate_epinard_Feta_et_salade_de_lentilles_Photo.png"
+  },
+  {
+    "categoryFolder": "plant-proteins",
     "typeFolder": "ingredients",
     "fileName": "PV_01_Orzo_méditerranéen_Ingrédients.webp"
   },
@@ -4476,6 +4496,11 @@
   },
   {
     "categoryFolder": "plant-proteins",
+    "typeFolder": "ingredients",
+    "fileName": "PV_51_Quiche_sans_pate_epinard_Feta_et_salade_de_lentilles_Ingredients.png"
+  },
+  {
+    "categoryFolder": "plant-proteins",
     "typeFolder": "recipes",
     "fileName": "PV_01_Orzo_méditerranéen_Recette.webp"
   },
@@ -4723,6 +4748,11 @@
     "categoryFolder": "plant-proteins",
     "typeFolder": "recipes",
     "fileName": "PV_50_Gratin_de_poireaux_et_haricots_blancs_Recette.webp"
+  },
+  {
+    "categoryFolder": "plant-proteins",
+    "typeFolder": "recipes",
+    "fileName": "PV_51_Quiche_sans_pate_epinard_Feta_et_salade_de_lentilles_Recette.png"
   },
   {
     "categoryFolder": "red-meat",
@@ -7526,6 +7556,11 @@
   },
   {
     "categoryFolder": "white-meat",
+    "typeFolder": "photo",
+    "fileName": "VB_78_Quinoa_filet_de_poulet_legumes_sautes_Photo.png"
+  },
+  {
+    "categoryFolder": "white-meat",
     "typeFolder": "ingredients",
     "fileName": "VB_01_Semoule,_poulet,_patate_douce_et_brocolis_Ingrédients.webp"
   },
@@ -7911,6 +7946,11 @@
   },
   {
     "categoryFolder": "white-meat",
+    "typeFolder": "ingredients",
+    "fileName": "VB_78_Quinoa_filet_de_poulet_legumes_sautes_Ingredients.png"
+  },
+  {
+    "categoryFolder": "white-meat",
     "typeFolder": "recipes",
     "fileName": "VB_01_Semoule,_poulet,_patate_douce_et_brocolis_Recette.webp"
   },
@@ -8293,6 +8333,11 @@
     "categoryFolder": "white-meat",
     "typeFolder": "recipes",
     "fileName": "VB_77_Risotto_poulet_chou_romanesco_et_carottes_Recette.webp"
+  },
+  {
+    "categoryFolder": "white-meat",
+    "typeFolder": "recipes",
+    "fileName": "VB_78_Quinoa_filet_de_poulet_legumes_sautes_Recette.png"
   },
   {
     "categoryFolder": "sweet-grocery",

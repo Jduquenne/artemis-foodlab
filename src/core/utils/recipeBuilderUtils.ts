@@ -92,6 +92,7 @@ export function generateCsvOutput(state: RecipeBuilderState): string {
   ];
   for (const ing of state.ingredients) {
     cells.push(ing.name);
+    cells.push(ing.preparation ?? "");
     const qtyUnit =
       ing.quantity != null
         ? `${ing.quantity}${ing.unit && ing.unit !== Unit.G ? " " + ing.unit : ""}`.trim()

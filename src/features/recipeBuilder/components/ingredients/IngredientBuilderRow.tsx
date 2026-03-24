@@ -1,5 +1,5 @@
 import { Trash2 } from "lucide-react";
-import { Unit, IngredientCategory } from "../../../../core/domain/types";
+import { Unit, IngredientCategory, Preparation } from "../../../../core/domain/types";
 import { IngredientFoodSearch } from "./IngredientFoodSearch";
 import { BaseRecipeSearch } from "./BaseRecipeSearch";
 import { DraftIngredient } from "../../../../core/domain/recipeBuilderTypes";
@@ -102,13 +102,16 @@ export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: Ingredi
               <option key={u} value={u}>{u}</option>
             ))}
           </select>
-          <input
-            type="text"
+          <select
             value={ingredient.preparation}
-            onChange={e => update({ preparation: e.target.value })}
-            placeholder="Préparation…"
-            className="flex-1 min-w-0 px-2 py-2 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
-          />
+            onChange={e => update({ preparation: e.target.value as Preparation | "" })}
+            className="w-32 px-1 py-2 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
+          >
+            <option value="">—</option>
+            {Object.values(Preparation).map(p => (
+              <option key={p} value={p}>{p}</option>
+            ))}
+          </select>
           <select
             value={ingredient.category}
             onChange={e => update({ category: e.target.value as IngredientCategory })}

@@ -1,4 +1,4 @@
-import { RecipeKind, Unit, IngredientCategory } from "./types";
+import { RecipeKind, Unit, IngredientCategory, Preparation } from "./types";
 import { CATEGORIES } from "./categories";
 
 export interface DraftIngredient {
@@ -9,7 +9,7 @@ export interface DraftIngredient {
   baseId?: string;
   quantity: number | null;
   unit: Unit;
-  preparation: string;
+  preparation: Preparation | "";
   category: IngredientCategory;
 }
 

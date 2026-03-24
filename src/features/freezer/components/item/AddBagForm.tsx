@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Check, X } from "lucide-react";
-import { Unit, FreezerBag } from "../../../../core/domain/types";
+import { Unit, FreezerBag, Preparation } from "../../../../core/domain/types";
 
 export interface AddBagFormProps {
   onSave: (bag: Omit<FreezerBag, "id" | "addedDate">) => void;
@@ -11,7 +11,7 @@ export interface AddBagFormProps {
 export const AddBagForm = ({ onSave, onCancel, initialUnit = Unit.G }: AddBagFormProps) => {
   const [quantity, setQuantity] = useState("");
   const [unit, setUnit] = useState<Unit>(initialUnit);
-  const [preparation, setPreparation] = useState("");
+  const [preparation, setPreparation] = useState<Preparation | "">("");
 
   const parsedQty = parseFloat(quantity);
   const canSave = !isNaN(parsedQty) && parsedQty > 0;
@@ -21,7 +21,7 @@ export const AddBagForm = ({ onSave, onCancel, initialUnit = Unit.G }: AddBagFor
     onSave({
       quantity: parsedQty,
       unit,
-      preparation: preparation.trim() || undefined,
+      preparation: preparation || undefined,
     });
   };
 
@@ -46,14 +46,16 @@ export const AddBagForm = ({ onSave, onCancel, initialUnit = Unit.G }: AddBagFor
           <option key={u} value={u}>{u || "unité"}</option>
         ))}
       </select>
-      <input
-        type="text"
+      <select
         value={preparation}
-        onChange={e => setPreparation(e.target.value)}
-        onKeyDown={e => { if (e.key === "Enter") handleSave(); if (e.key === "Escape") onCancel(); }}
-        placeholder="Préparation (optionnel)"
-        className="flex-1 min-w-0 px-2 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400"
-      />
+        onChange={e => setPreparation(e.target.value as Preparation | "")}
+        className="flex-1 min-w-0 px-1.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 focus:outline-none focus:border-orange-400"
+      >
+        <option value="">—</option>
+        {Object.values(Preparation).map(p => (
+          <option key={p} value={p}>{p}</option>
+        ))}
+      </select>
       <button
         aria-label="Confirmer"
         onClick={handleSave}

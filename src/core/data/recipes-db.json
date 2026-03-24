@@ -1809,7 +1809,7 @@
         "id": "005",
         "foodId": "fv-045",
         "name": "Carottes",
-        "preparation": "râpées",
+        "preparation": "râpé",
         "quantity": 100,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -3278,7 +3278,7 @@
         "id": "005",
         "foodId": "fv-045",
         "name": "Carottes",
-        "preparation": "râpées",
+        "preparation": "râpé",
         "quantity": 100,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -3930,7 +3930,7 @@
         "id": "007",
         "foodId": "fv-045",
         "name": "Carottes",
-        "preparation": "râpées",
+        "preparation": "râpé",
         "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -4412,6 +4412,138 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/charcuterie/recipes/CHAR_46_Coquillettes_crémeuses_au_jambon_et_courge_Recette.webp"
+      }
+    }
+  },
+  "char-047": {
+    "id": "char-047",
+    "name": "Tomates farcies au hachis de porc",
+    "categoryId": "charcuterie",
+    "mealTypes": [
+      "lunch",
+      "dinner"
+    ],
+    "kind": "dish",
+    "defaultPortions": 4,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-085",
+        "name": "Tomates cœur de bœuf",
+        "quantity": 800,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "ch-008",
+        "name": "Hachis de porc",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Charcuterie"
+      },
+      {
+        "id": "003",
+        "foodId": "fc-017",
+        "name": "Riz Basmati",
+        "quantity": 160,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "004",
+        "foodId": "bo-003",
+        "name": "Pain complet",
+        "quantity": 0.5,
+        "unit": "portion",
+        "category": "Boulangerie"
+      },
+      {
+        "id": "005",
+        "foodId": "fv-065",
+        "name": "Échalote",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "006",
+        "foodId": "fc-030",
+        "name": "Lentille vertes sèches",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "007",
+        "foodId": "fv-048",
+        "name": "Céleri branche",
+        "preparation": "brunoise",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "008",
+        "foodId": "fv-045",
+        "name": "Carottes",
+        "preparation": "brunoise",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "009",
+        "foodId": "fv-002",
+        "name": "Ail",
+        "quantity": 4,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "010",
+        "foodId": "fv-072",
+        "name": "Oignon jaune",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "011",
+        "foodId": "ep-031",
+        "name": "Herbes aromatiques",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "012",
+        "foodId": "ep-035",
+        "name": "Huile d'olive",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "013",
+        "foodId": "ep-049",
+        "name": "Paprika",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/charcuterie/photo/CHAR_47_Tomates_farcies_au_hachis_de_porc_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/charcuterie/ingredients/CHAR_47_Tomates_farcies_au_hachis_de_porc_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/charcuterie/recipes/CHAR_47_Tomates_farcies_au_hachis_de_porc_Recette.webp"
       }
     }
   },
@@ -6818,7 +6950,7 @@
         "id": "003",
         "foodId": "fv-064",
         "name": "Courgette",
-        "preparation": "râpée",
+        "preparation": "râpé",
         "quantity": 100,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -8527,7 +8659,7 @@
         "id": "002",
         "foodId": "fv-064",
         "name": "Courgette",
-        "preparation": "râpée",
+        "preparation": "râpé",
         "quantity": 80,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -8628,7 +8760,7 @@
         "id": "003",
         "foodId": "fv-045",
         "name": "Carottes",
-        "preparation": "râpées",
+        "preparation": "râpé",
         "quantity": 170,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -8769,7 +8901,7 @@
         "id": "003",
         "foodId": "fv-064",
         "name": "Courgette",
-        "preparation": "râpée",
+        "preparation": "râpé",
         "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -22463,7 +22595,7 @@
         "id": "003",
         "foodId": "fv-045",
         "name": "Carottes",
-        "preparation": "râpées",
+        "preparation": "râpé",
         "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -33090,7 +33222,7 @@
         "id": "003",
         "foodId": "fv-045",
         "name": "Carottes",
-        "preparation": "râpées",
+        "preparation": "râpé",
         "quantity": 100,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -33241,7 +33373,7 @@
         "id": "003",
         "foodId": "fv-045",
         "name": "Carottes",
-        "preparation": "râpées",
+        "preparation": "râpé",
         "quantity": 500,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -33490,7 +33622,7 @@
         "id": "004",
         "foodId": "fv-083",
         "name": "Tomates",
-        "quantity": 300,
+        "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -33498,7 +33630,7 @@
         "id": "005",
         "foodId": "fv-078",
         "name": "Poivrons",
-        "quantity": 300,
+        "quantity": 250,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -36137,7 +36269,7 @@
         "id": "002",
         "foodId": "fv-064",
         "name": "Courgette",
-        "preparation": "râpée",
+        "preparation": "râpé",
         "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -36154,7 +36286,7 @@
         "id": "004",
         "foodId": "fv-045",
         "name": "Carottes",
-        "preparation": "râpées",
+        "preparation": "râpé",
         "quantity": 150,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -38487,7 +38619,7 @@
         "id": "003",
         "foodId": "fv-045",
         "name": "Carottes",
-        "preparation": "râpées",
+        "preparation": "râpé",
         "quantity": 150,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -42326,7 +42458,7 @@
         "id": "004",
         "foodId": "fv-045",
         "name": "Carottes",
-        "preparation": "râpées",
+        "preparation": "râpé",
         "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -42776,7 +42908,7 @@
         "id": "004",
         "foodId": "fv-045",
         "name": "Carottes",
-        "preparation": "râpées",
+        "preparation": "râpé",
         "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -49256,7 +49388,7 @@
         "id": "005",
         "foodId": "fv-045",
         "name": "Carottes",
-        "preparation": "râpées",
+        "preparation": "râpé",
         "quantity": 100,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -50819,7 +50951,7 @@
         "foodId": "fv-045",
         "name": "Carottes",
         "preparation": "rondelles",
-        "quantity": 500,
+        "quantity": 400,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -50835,7 +50967,7 @@
         "id": "004",
         "foodId": "fv-029",
         "name": "Pommes de terre",
-        "quantity": 300,
+        "quantity": 250,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -52098,6 +52230,7 @@
         "id": "001",
         "foodId": "vm-006",
         "name": "Filet de poulet",
+        "preparation": "escalope",
         "quantity": 640,
         "unit": "g",
         "category": "Viande"
@@ -52341,8 +52474,9 @@
       },
       {
         "id": "003",
-        "foodId": "fv-046",
-        "name": "Carottes (râpée)",
+        "foodId": "fv-045",
+        "name": "Carottes",
+        "preparation": "râpé",
         "quantity": 150,
         "unit": "g",
         "category": "Fruits et légumes"

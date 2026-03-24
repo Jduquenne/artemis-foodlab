@@ -1651,6 +1651,11 @@
   },
   {
     "categoryFolder": "charcuterie",
+    "typeFolder": "photo",
+    "fileName": "CHAR_47_Tomates_farcies_au_hachis_de_porc_Photo.webp"
+  },
+  {
+    "categoryFolder": "charcuterie",
     "typeFolder": "ingredients",
     "fileName": "CHAR_01_Purée_Brocoli,_carottes_et_pâté_Ingrédients.webp"
   },
@@ -1881,6 +1886,11 @@
   },
   {
     "categoryFolder": "charcuterie",
+    "typeFolder": "ingredients",
+    "fileName": "CHAR_47_Tomates_farcies_au_hachis_de_porc_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "charcuterie",
     "typeFolder": "recipes",
     "fileName": "CHAR_01_Purée_Brocoli_et_pâté_Recette.webp"
   },
@@ -2108,6 +2118,11 @@
     "categoryFolder": "charcuterie",
     "typeFolder": "recipes",
     "fileName": "CHAR_46_Coquillettes_crémeuses_au_jambon_et_courge_Recette.webp"
+  },
+  {
+    "categoryFolder": "charcuterie",
+    "typeFolder": "recipes",
+    "fileName": "CHAR_47_Tomates_farcies_au_hachis_de_porc_Recette.webp"
   },
   {
     "categoryFolder": "fish",

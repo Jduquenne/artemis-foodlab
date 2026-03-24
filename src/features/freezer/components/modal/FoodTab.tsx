@@ -1,4 +1,4 @@
-import { Unit } from "../../../../core/domain/types";
+import { Unit, Preparation } from "../../../../core/domain/types";
 import { FoodSearchInput } from "./FoodSearchInput";
 
 export interface FoodTabProps {
@@ -6,12 +6,12 @@ export interface FoodTabProps {
   foodId: string | undefined;
   foodQty: string;
   foodUnit: Unit;
-  foodPreparation: string;
+  foodPreparation: Preparation | "";
   existingNames?: string[];
   onNameChange: (name: string, id?: string) => void;
   onQtyChange: (qty: string) => void;
   onUnitChange: (unit: Unit) => void;
-  onPreparationChange: (prep: string) => void;
+  onPreparationChange: (prep: Preparation | "") => void;
 }
 
 export const FoodTab = ({
@@ -63,13 +63,16 @@ export const FoodTab = ({
       <label className="text-xs font-bold text-slate-500 uppercase tracking-wide">
         Préparation <span className="normal-case font-normal">(optionnel)</span>
       </label>
-      <input
-        type="text"
+      <select
         value={foodPreparation}
-        onChange={e => onPreparationChange(e.target.value)}
-        placeholder="Ex: émincé, en rondelles, entier..."
-        className="w-full px-4 py-3 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
-      />
+        onChange={e => onPreparationChange(e.target.value as Preparation | "")}
+        className="w-full px-4 py-3 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
+      >
+        <option value="">—</option>
+        {Object.values(Preparation).map(p => (
+          <option key={p} value={p}>{p}</option>
+        ))}
+      </select>
     </div>
   </>
 );

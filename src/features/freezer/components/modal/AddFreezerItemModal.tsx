@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { X } from "lucide-react";
-import { Unit, FoodFreezerItem, BatchFreezerItem } from "../../../../core/domain/types";
+import { Unit, FoodFreezerItem, BatchFreezerItem, Preparation } from "../../../../core/domain/types";
 import { addItemToCategory } from "../../../../core/services/freezerService";
 import { FoodTab } from "./FoodTab";
 import { BatchTab } from "./BatchTab";
@@ -20,7 +20,7 @@ export const AddFreezerItemModal = ({ categoryId, existingFoodNames, onClose }: 
   const [foodId, setFoodId] = useState<string | undefined>(undefined);
   const [foodQty, setFoodQty] = useState("");
   const [foodUnit, setFoodUnit] = useState<Unit>(Unit.G);
-  const [foodPreparation, setFoodPreparation] = useState("");
+  const [foodPreparation, setFoodPreparation] = useState<Preparation | "">("");
 
   const [selectedRecipeId, setSelectedRecipeId] = useState<string | null>(null);
   const [selectedRecipeName, setSelectedRecipeName] = useState<string>("");
@@ -49,7 +49,7 @@ export const AddFreezerItemModal = ({ categoryId, existingFoodNames, onClose }: 
           id: crypto.randomUUID(),
           quantity: parsedFoodQty,
           unit: foodUnit,
-          preparation: foodPreparation.trim() || undefined,
+          preparation: foodPreparation || undefined,
           addedDate: new Date().toISOString().slice(0, 10),
         }],
       };

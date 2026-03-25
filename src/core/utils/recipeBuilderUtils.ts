@@ -1,4 +1,4 @@
-import { Food, IngredientCategory, Macronutrients, Unit } from "../domain/types";
+import { Food, IngredientCategory, Macronutrients, MealType, Preparation, RecipeDetails, Unit } from "../domain/types";
 import { DraftIngredient, RecipeBuilderState } from "../domain/recipeBuilderTypes";
 import { ZERO } from "./macroUtils";
 import { calculateRecipeMacros } from "./macroUtils";
@@ -78,6 +78,35 @@ function formatIngredientQty(quantity: number | null, unit: Unit): string {
   }
   if (unit === Unit.NONE) return ` - ${quantity}`;
   return ` - ${quantity}${unit}`;
+}
+
+export function recipeToBuilderState(recipeId: string, recipe: RecipeDetails): RecipeBuilderState {
+  const recipeNumber = recipeId.replace(/^[a-z]+-/, "");
+  const mealTypes: "meal" | "side" = (recipe.mealTypes ?? []).some(
+    (t: MealType) => t === MealType.LUNCH || t === MealType.DINNER
+  ) ? "meal" : "side";
+  const ingredients: DraftIngredient[] = recipe.ingredients.map(ing => ({
+    id: crypto.randomUUID(),
+    ingredientType: ing.baseId ? "base" : "food",
+    name: ing.name,
+    foodId: ing.foodId,
+    baseId: ing.baseId,
+    quantity: ing.quantity,
+    unit: ing.unit as Unit,
+    preparation: (ing.preparation ?? "") as Preparation | "",
+    category: ing.category as IngredientCategory,
+  }));
+  return {
+    recipeNumber,
+    name: recipe.name,
+    categoryId: recipe.categoryId,
+    kind: recipe.kind,
+    mealTypes,
+    defaultPortions: recipe.defaultPortions,
+    isDessert: recipe.isDessert ?? false,
+    batchCooking: recipe.batchCooking ?? false,
+    ingredients,
+  };
 }
 
 export function generateCsvOutput(state: RecipeBuilderState): string {

@@ -1,12 +1,15 @@
-import { RotateCcw } from "lucide-react";
+import { useState } from "react";
+import { RotateCcw, FolderOpen } from "lucide-react";
 import { useRecipeBuilderStore } from "../../shared/store/useRecipeBuilderStore";
 import { RecipeMetaForm } from "./components/meta/RecipeMetaForm";
 import { IngredientBuilderList } from "./components/ingredients/IngredientBuilderList";
 import { OutputPanel } from "./components/output/OutputPanel";
 import { MacroPreview } from "./components/output/MacroPreview";
+import { LoadRecipeModal } from "./components/LoadRecipeModal";
 
 export const RecipeBuilderModule = () => {
-  const { draft, patch, patchIngredients, reset } = useRecipeBuilderStore();
+  const { draft, patch, patchIngredients, reset, loadFromRecipe } = useRecipeBuilderStore();
+  const [loadModalOpen, setLoadModalOpen] = useState(false);
 
   const handleReset = () => {
     if (!draft.name && draft.ingredients.length === 0) return;
@@ -22,6 +25,14 @@ export const RecipeBuilderModule = () => {
         </div>
         <div className="flex items-center gap-1">
           <OutputPanel state={draft} />
+          <button
+            type="button"
+            onClick={() => setLoadModalOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-slate-500 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900/20 rounded-xl transition-colors"
+          >
+            <FolderOpen className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Charger</span>
+          </button>
           <button
             type="button"
             onClick={handleReset}
@@ -55,6 +66,13 @@ export const RecipeBuilderModule = () => {
           </div>
         </div>
       </div>
+
+      {loadModalOpen && (
+        <LoadRecipeModal
+          onLoad={loadFromRecipe}
+          onClose={() => setLoadModalOpen(false)}
+        />
+      )}
     </div>
   );
 };

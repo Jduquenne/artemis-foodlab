@@ -7,6 +7,7 @@ interface RecipeBuilderStore {
   patch: (update: Partial<RecipeBuilderState>) => void;
   patchIngredients: (ingredients: DraftIngredient[]) => void;
   reset: () => void;
+  loadFromRecipe: (state: RecipeBuilderState) => void;
 }
 
 export const useRecipeBuilderStore = create<RecipeBuilderStore>()(
@@ -16,6 +17,7 @@ export const useRecipeBuilderStore = create<RecipeBuilderStore>()(
       patch: (update) => set((s) => ({ draft: { ...s.draft, ...update } })),
       patchIngredients: (ingredients) => set((s) => ({ draft: { ...s.draft, ingredients } })),
       reset: () => set({ draft: initialRecipeBuilderState() }),
+      loadFromRecipe: (state) => set({ draft: state }),
     }),
     { name: "cipe_recipe_builder" }
   )

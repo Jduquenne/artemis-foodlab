@@ -43,6 +43,7 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
   };
 
   const isBase = ingredient.ingredientType === "base";
+  const canClose = isBase ? !!ingredient.baseId || !ingredient.name.trim() : !!ingredient.foodId || !ingredient.name.trim();
 
   return (
     <div
@@ -105,10 +106,14 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
             ) : (
               <IngredientFoodSearch
                 value={ingredient.name}
+                linked={!!ingredient.foodId}
                 onChange={(name, foodId, category, unit) =>
                   update({ name, foodId, category: category ?? ingredient.category, unit: (unit as Unit) ?? ingredient.unit })
                 }
               />
+            )}
+            {!isBase && ingredient.name.trim().length > 0 && !ingredient.foodId && (
+              <p className="text-xs text-orange-500 mt-1">Sélectionne un aliment dans la liste pour le lier à la base</p>
             )}
           </div>
 
@@ -175,7 +180,8 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
           <button
             type="button"
             onClick={close}
-            className="w-full py-3 bg-orange-500 hover:bg-orange-600 text-white text-sm font-black rounded-xl transition-colors"
+            disabled={!canClose}
+            className="w-full py-3 bg-orange-500 hover:bg-orange-600 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-black rounded-xl transition-colors"
           >
             Terminé
           </button>

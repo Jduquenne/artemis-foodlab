@@ -29,6 +29,9 @@ export const IngredientMobileCard = ({ ingredient, onEdit, onRemove }: Ingredien
       <span className="flex-1 min-w-0 text-sm font-medium text-slate-700 truncate">
         {ingredient.name || <em className="text-slate-400 font-normal not-italic">Sans nom</em>}
       </span>
+      {!isBase && ingredient.name.trim().length > 0 && !ingredient.foodId && (
+        <span className="text-[10px] font-bold text-orange-500 bg-orange-50 dark:bg-orange-900/20 px-1.5 py-0.5 rounded shrink-0">Non lié</span>
+      )}
 
       {qtyLabel && (
         <span className="text-xs text-slate-400 shrink-0 tabular-nums">{qtyLabel}</span>

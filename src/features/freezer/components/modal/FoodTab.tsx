@@ -30,9 +30,10 @@ export const FoodTab = ({
     <div className="flex flex-col gap-1.5">
       <label className="text-xs font-bold text-slate-500 uppercase tracking-wide">Nom</label>
       <FoodSearchInput value={foodName} onChange={onNameChange} existingNames={existingNames} />
-      {foodId && (
-        <p className="text-xs text-orange-500 font-medium pl-1">✓ Lié à la base d'aliments</p>
-      )}
+      {foodId
+        ? <p className="text-xs text-orange-500 font-medium pl-1">✓ Lié à la base d'aliments</p>
+        : foodName.trim().length > 0 && <p className="text-xs text-slate-400 pl-1">Sélectionne un aliment dans la liste pour continuer</p>
+      }
     </div>
     <div className="flex gap-3">
       <div className="flex flex-col gap-1.5 flex-1">

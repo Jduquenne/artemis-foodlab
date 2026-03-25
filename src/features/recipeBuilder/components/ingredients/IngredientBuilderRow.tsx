@@ -79,6 +79,7 @@ export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: Ingredi
         <>
           <IngredientFoodSearch
             value={ingredient.name}
+            linked={!!ingredient.foodId}
             onChange={(name, foodId, category, unit) =>
               update({ name, foodId, category: category ?? ingredient.category, unit: (unit as Unit) ?? ingredient.unit })
             }

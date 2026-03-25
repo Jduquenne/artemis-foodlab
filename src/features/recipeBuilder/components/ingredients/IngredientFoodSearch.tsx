@@ -5,12 +5,14 @@ import { Food, IngredientCategory } from "../../../../core/domain/types";
 
 export interface IngredientFoodSearchProps {
   value: string;
+  linked?: boolean;
   onChange: (name: string, foodId?: string, category?: IngredientCategory, unit?: string) => void;
 }
 
 const foods: Food[] = Object.values(typedFoodDb);
 
-export const IngredientFoodSearch = ({ value, onChange }: IngredientFoodSearchProps) => {
+export const IngredientFoodSearch = ({ value, linked, onChange }: IngredientFoodSearchProps) => {
+  const isUnlinked = value.trim().length > 0 && !linked;
   const [open, setOpen] = useState(false);
 
   const suggestions =
@@ -36,7 +38,11 @@ export const IngredientFoodSearch = ({ value, onChange }: IngredientFoodSearchPr
           onFocus={() => setOpen(true)}
           onBlur={() => setOpen(false)}
           placeholder="Aliment…"
-          className="w-full pl-8 pr-3 py-2 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
+          className={`w-full pl-8 pr-3 py-2 bg-white dark:bg-slate-100 border rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 ${
+            isUnlinked
+              ? 'border-orange-300 focus:border-orange-400 focus:ring-orange-400'
+              : 'border-slate-200 focus:border-orange-400 focus:ring-orange-400'
+          }`}
         />
       </div>
       {open && suggestions.length > 0 && (

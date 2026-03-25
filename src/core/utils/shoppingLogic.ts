@@ -82,6 +82,7 @@ async function aggregateSlots(
     const existing = map.get(key);
     if (existing) {
       existing.totalQuantity += qty;
+      if (!existing.foodId && ing.foodId) existing.foodId = ing.foodId;
       const alreadyListed = existing.sources.some(
         (s) =>
           s.recipeId === source.recipeId &&

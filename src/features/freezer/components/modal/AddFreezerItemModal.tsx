@@ -34,7 +34,7 @@ export const AddFreezerItemModal = ({ categoryId, existingFoodNames, onClose }: 
 
   const parsedFoodQty = parseFloat(foodQty);
   const canSave =
-    tab === "food" ? foodName.trim().length > 0 && !isNaN(parsedFoodQty) && parsedFoodQty > 0 && !isDuplicateName
+    tab === "food" ? !!foodId && foodName.trim().length > 0 && !isNaN(parsedFoodQty) && parsedFoodQty > 0 && !isDuplicateName
       : selectedRecipeId !== null && portions > 0;
 
   const handleSave = async () => {

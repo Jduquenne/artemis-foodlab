@@ -4,6 +4,7 @@ import { Layout } from './shared/components/layout/Layout';
 import { NotificationBanner } from './shared/components/ui/NotificationBanner';
 import { SplashScreen } from './shared/components/ui/SplashScreen';
 import { useBackupReminder } from './shared/hooks/useBackupReminder';
+import { useVersionCheck } from './shared/hooks/useVersionCheck';
 import { useAppInit } from './shared/hooks/useAppInit';
 
 const JournalModule = lazy(() => import('./features/journal/JournalModule').then(({ JournalModule: m }) => ({ default: m })));
@@ -23,6 +24,7 @@ function App() {
   const splashExiting = isReady && !splashDone;
 
   useBackupReminder();
+  useVersionCheck();
 
   useEffect(() => {
     if (!isReady) return;

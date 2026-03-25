@@ -1,10 +1,24 @@
-import { defineConfig } from "vite";
+import { defineConfig, Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { version } from "./package.json";
+import { writeFileSync } from "fs";
+import { resolve } from "path";
+
+function versionJsonPlugin(): Plugin {
+  return {
+    name: "version-json",
+    buildStart() {
+      writeFileSync(
+        resolve(__dirname, "public/version.json"),
+        JSON.stringify({ version }),
+      );
+    },
+  };
+}
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), versionJsonPlugin()],
   define: {
     __APP_VERSION__: JSON.stringify(version),
   },

@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { ArrowLeft, Plus, Pencil } from "lucide-react";
 import { FreezerCategory } from "../../../../core/domain/types";
 import { removeItemFromCategory, updateCategoryName } from "../../../../core/services/freezerService";
@@ -23,10 +23,29 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
   const [nameInput, setNameInput] = useState(category.name);
 
   const colCount = Math.min(useColCount(), 3);
-  const columns = useMemo(
-    () => distributeToColumns(category.items, itemHeight, colCount),
-    [category.items, colCount]
-  );
+
+  const frozenIdsRef = useRef('');
+  const frozenColCountRef = useRef(0);
+  const frozenMapRef = useRef<Map<string, number>>(new Map());
+
+  const currentIds = category.items.map(i => i.id).join(',');
+  if (currentIds !== frozenIdsRef.current || colCount !== frozenColCountRef.current) {
+    frozenIdsRef.current = currentIds;
+    frozenColCountRef.current = colCount;
+    const dist = distributeToColumns(category.items, itemHeight, colCount);
+    const map = new Map<string, number>();
+    dist.forEach((col, ci) => col.forEach(item => map.set(item.id, ci)));
+    frozenMapRef.current = map;
+  }
+
+  const columns = useMemo(() => {
+    const colArrays: FreezerCategory["items"][] = Array.from({ length: colCount }, () => []);
+    for (const item of category.items) {
+      const ci = frozenMapRef.current.get(item.id) ?? 0;
+      colArrays[ci].push(item);
+    }
+    return colArrays;
+  }, [category.items, colCount]);
 
   const existingFoodNames = useMemo(
     () => category.items.filter(i => i.type === "food").map(i => i.name),

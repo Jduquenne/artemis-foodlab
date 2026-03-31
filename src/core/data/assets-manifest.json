@@ -2486,6 +2486,21 @@
   },
   {
     "categoryFolder": "fish",
+    "typeFolder": "photo",
+    "fileName": "POI_72_Ebly_filets_de_maquereaux_et_carottes_Photo.webp"
+  },
+  {
+    "categoryFolder": "fish",
+    "typeFolder": "photo",
+    "fileName": "POI_73_Filets_de_maquereaux_et_couscous_de_legumes_rotis_Photo.webp"
+  },
+  {
+    "categoryFolder": "fish",
+    "typeFolder": "photo",
+    "fileName": "POI_74_Salade_de_pommes_de_terre_aux_filets_de_maquereaux_Photo.webp"
+  },
+  {
+    "categoryFolder": "fish",
     "typeFolder": "ingredients",
     "fileName": "POI_01_Nouilles_sautées_aux_crevettes_et_légumes_Ingrédients.webp"
   },
@@ -2841,6 +2856,21 @@
   },
   {
     "categoryFolder": "fish",
+    "typeFolder": "ingredients",
+    "fileName": "POI_72_Ebly_filets_de_maquereaux_et_carottes_Ingredients.webp"
+  },
+  {
+    "categoryFolder": "fish",
+    "typeFolder": "ingredients",
+    "fileName": "POI_73_Filets_de_maquereaux_et_couscous_de_legumes_rotis_Ingredients.webp"
+  },
+  {
+    "categoryFolder": "fish",
+    "typeFolder": "ingredients",
+    "fileName": "POI_74_Salade_de_pommes_de_terre_aux_filets_de_maquereaux_Ingredients.webp"
+  },
+  {
+    "categoryFolder": "fish",
     "typeFolder": "recipes",
     "fileName": "POI_01_Nouilles_sautées_aux_crevettes_Recette.webp"
   },
@@ -3193,6 +3223,21 @@
     "categoryFolder": "fish",
     "typeFolder": "recipes",
     "fileName": "POI_71_Salade_printaniere_au_saumon_fume_Recette.png"
+  },
+  {
+    "categoryFolder": "fish",
+    "typeFolder": "recipes",
+    "fileName": "POI_72_Ebly_filets_de_maquereaux_et_carottes_Recette.webp"
+  },
+  {
+    "categoryFolder": "fish",
+    "typeFolder": "recipes",
+    "fileName": "POI_73_Filets_de_maquereaux_et_couscous_de_legumes_rotis_Recette.webp"
+  },
+  {
+    "categoryFolder": "fish",
+    "typeFolder": "recipes",
+    "fileName": "POI_74_Salade_de_pommes_de_terre_aux_filets_de_maquereaux_Recette.webp"
   },
   {
     "categoryFolder": "fruits",

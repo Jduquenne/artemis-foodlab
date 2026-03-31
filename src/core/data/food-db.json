@@ -4865,5 +4865,18 @@
       "fibers": 0
     },
     "unit": "g"
+  },
+  "es-055": {
+    "id": "es-055",
+    "name": "Psyllium blond",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 192,
+      "proteins": 0.8,
+      "lipids": 0,
+      "carbohydrates": 2.2,
+      "fibers": 90
+    },
+    "unit": "g"
   }
 }

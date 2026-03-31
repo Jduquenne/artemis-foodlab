@@ -4430,14 +4430,6 @@
     "ingredients": [
       {
         "id": "001",
-        "foodId": "fv-085",
-        "name": "Tomates cœur de bœuf",
-        "quantity": 800,
-        "unit": "g",
-        "category": "Fruits et légumes"
-      },
-      {
-        "id": "002",
         "foodId": "ch-002",
         "name": "Hachis de porc",
         "quantity": 300,
@@ -4445,7 +4437,7 @@
         "category": "Charcuterie"
       },
       {
-        "id": "003",
+        "id": "002",
         "foodId": "fc-023",
         "name": "Riz Basmati",
         "quantity": 160,
@@ -4453,57 +4445,23 @@
         "category": "Féculents"
       },
       {
-        "id": "004",
-        "foodId": "bo-003",
-        "name": "Pain complet",
-        "quantity": 0.5,
-        "unit": "portion",
-        "category": "Boulangerie"
-      },
-      {
-        "id": "005",
-        "foodId": "fv-039",
-        "name": "Échalote",
-        "quantity": 20,
-        "unit": "g",
-        "category": "Fruits et légumes"
-      },
-      {
-        "id": "006",
-        "foodId": "fc-009",
-        "name": "Lentille vertes sèches",
-        "quantity": 50,
-        "unit": "g",
-        "category": "Féculents"
-      },
-      {
-        "id": "007",
-        "foodId": "fv-017",
-        "name": "Céleri branche",
-        "preparation": "brunoise",
-        "quantity": 50,
-        "unit": "g",
-        "category": "Fruits et légumes"
-      },
-      {
-        "id": "008",
+        "id": "003",
         "foodId": "fv-014",
         "name": "Carottes",
-        "preparation": "brunoise",
         "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
       },
       {
-        "id": "009",
-        "foodId": "fv-002",
-        "name": "Ail",
-        "quantity": 4,
-        "unit": "pièce",
+        "id": "004",
+        "foodId": "fv-017",
+        "name": "Céleri branche",
+        "quantity": 50,
+        "unit": "g",
         "category": "Fruits et légumes"
       },
       {
-        "id": "010",
+        "id": "005",
         "foodId": "fv-059",
         "name": "Oignon jaune",
         "quantity": 1,
@@ -4511,15 +4469,15 @@
         "category": "Fruits et légumes"
       },
       {
-        "id": "011",
-        "foodId": "ep-032",
-        "name": "Herbes aromatiques",
-        "quantity": null,
-        "unit": null,
-        "category": "Epices et condiments"
+        "id": "006",
+        "foodId": "fv-002",
+        "name": "Ail",
+        "quantity": 4,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
       },
       {
-        "id": "012",
+        "id": "007",
         "foodId": "ep-036",
         "name": "Huile d'olive",
         "quantity": 8,
@@ -4527,12 +4485,59 @@
         "category": "Epices et condiments"
       },
       {
-        "id": "013",
+        "id": "008",
+        "foodId": "fv-085",
+        "name": "Tomates cœur de bœuf",
+        "quantity": 800,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "009",
+        "foodId": "bo-003",
+        "name": "Pain complet",
+        "quantity": 0.5,
+        "unit": "portion",
+        "category": "Boulangerie"
+      },
+      {
+        "id": "010",
+        "foodId": "fv-039",
+        "name": "Échalote",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "011",
         "foodId": "ep-050",
         "name": "Paprika",
         "quantity": null,
         "unit": null,
         "category": "Epices et condiments"
+      },
+      {
+        "id": "012",
+        "foodId": "ep-032",
+        "name": "Herbes aromatiques",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "013",
+        "foodId": "fc-009",
+        "name": "Lentille vertes sèches",
+        "quantity": null,
+        "unit": null,
+        "category": "Féculents"
+      },
+      {
+        "id": "014",
+        "name": "50",
+        "quantity": null,
+        "unit": null,
+        "category": "Inconnu"
       }
     ],
     "assets": {
@@ -19957,6 +19962,308 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/fish/recipes/POI_71_Salade_printaniere_au_saumon_fume_Recette.png"
+      }
+    }
+  },
+  "poi-072": {
+    "id": "poi-072",
+    "name": "Ebly filets de maquereaux et carottes",
+    "categoryId": "fish",
+    "mealTypes": [
+      "lunch",
+      "dinner"
+    ],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fc-001",
+        "name": "Blé",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-014",
+        "name": "Carottes",
+        "quantity": 500,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "ep-039",
+        "name": "Huile de sésame",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-059",
+        "name": "Oignon jaune",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "foodId": "fv-002",
+        "name": "Ail",
+        "quantity": 2,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-058",
+        "name": "Sauce soja",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "po-008",
+        "name": "Filets de Maquereaux",
+        "quantity": 170,
+        "unit": "g",
+        "category": "Poisson"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-014",
+        "name": "Coriandre feuilles",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/fish/photo/POI_72_Ebly_filets_de_maquereaux_et_carottes_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/fish/ingredients/POI_72_Ebly_filets_de_maquereaux_et_carottes_Ingredients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/fish/recipes/POI_72_Ebly_filets_de_maquereaux_et_carottes_Recette.webp"
+      }
+    }
+  },
+  "poi-073": {
+    "id": "poi-073",
+    "name": "Filets de maquereaux et couscous de légumes rôtis",
+    "categoryId": "fish",
+    "mealTypes": [
+      "lunch",
+      "dinner"
+    ],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "po-008",
+        "name": "Filets de Maquereaux",
+        "quantity": 170,
+        "unit": "g",
+        "category": "Poisson"
+      },
+      {
+        "id": "002",
+        "foodId": "fc-029",
+        "name": "Semoule semi complète",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-037",
+        "name": "Courgette",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-069",
+        "name": "Poivrons",
+        "quantity": 250,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "foodId": "fv-060",
+        "name": "Oignon rouge",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "006",
+        "foodId": "fv-025",
+        "name": "Citron non traité",
+        "quantity": null,
+        "unit": null,
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "007",
+        "foodId": "ep-036",
+        "name": "Huile d'olive",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-052",
+        "name": "Persil",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/fish/photo/POI_73_Filets_de_maquereaux_et_couscous_de_legumes_rotis_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/fish/ingredients/POI_73_Filets_de_maquereaux_et_couscous_de_legumes_rotis_Ingredients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/fish/recipes/POI_73_Filets_de_maquereaux_et_couscous_de_legumes_rotis_Recette.webp"
+      }
+    }
+  },
+  "poi-074": {
+    "id": "poi-074",
+    "name": "Salade de pommes de terre aux filets de maquereaux",
+    "categoryId": "fish",
+    "mealTypes": [
+      "lunch",
+      "dinner"
+    ],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "po-008",
+        "name": "Filets de Maquereaux",
+        "quantity": 170,
+        "unit": "g",
+        "category": "Poisson"
+      },
+      {
+        "id": "002",
+        "foodId": "ep-052",
+        "name": "Persil",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-046",
+        "name": "Grenailles",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "ep-016",
+        "name": "Cornichons",
+        "quantity": 60,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "fv-078",
+        "name": "Radis",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-038",
+        "name": "Huile de colza",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "fv-082",
+        "name": "Salade",
+        "quantity": null,
+        "unit": null,
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "008",
+        "foodId": "su-008",
+        "name": "Haricots verts",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Surgelés"
+      },
+      {
+        "id": "009",
+        "foodId": "ep-063",
+        "name": "Vinaigre balsamique",
+        "quantity": 5,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "010",
+        "foodId": "ep-054",
+        "name": "Persillade",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "011",
+        "foodId": "fv-039",
+        "name": "Échalote",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "012",
+        "foodId": "ep-047",
+        "name": "Moutarde",
+        "quantity": 5,
+        "unit": "g",
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/fish/photo/POI_74_Salade_de_pommes_de_terre_aux_filets_de_maquereaux_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/fish/ingredients/POI_74_Salade_de_pommes_de_terre_aux_filets_de_maquereaux_Ingredients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/fish/recipes/POI_74_Salade_de_pommes_de_terre_aux_filets_de_maquereaux_Recette.webp"
       }
     }
   },
@@ -52112,6 +52419,165 @@
         "url": "/artemis-foodlab/red-meat/recipes/VR_55_Pâtes_steak_carottes_et_champignons_Recette.webp"
       }
     }
+  },
+  "vr-056": {
+    "id": "vr-056",
+    "name": "Pâtes échine de porc champignons brocoli",
+    "categoryId": "red-meat",
+    "mealTypes": [
+      "lunch",
+      "dinner"
+    ],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "vm-012",
+        "name": "Rôti de porc",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Viande"
+      },
+      {
+        "id": "002",
+        "foodId": "fc-017",
+        "name": "Pâtes complètes",
+        "quantity": 80,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-011",
+        "name": "Brocoli",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-019",
+        "name": "Champignons",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "foodId": "fv-059",
+        "name": "Oignon jaune",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-058",
+        "name": "Sauce soja",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "es-027",
+        "name": "Fécule de maïs",
+        "quantity": 5,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-036",
+        "name": "Huile d'olive",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Epices et condiments"
+      }
+    ]
+  },
+  "vr-057": {
+    "id": "vr-057",
+    "name": "Echine de porc rôtie aux légumes",
+    "categoryId": "red-meat",
+    "mealTypes": [
+      "lunch",
+      "dinner"
+    ],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "vm-012",
+        "name": "Rôti de porc",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Viande"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-014",
+        "name": "Carottes",
+        "preparation": "rondelles",
+        "quantity": 400,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-062",
+        "name": "Panais",
+        "quantity": 250,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-059",
+        "name": "Oignon jaune",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "foodId": "fv-002",
+        "name": "Ail",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-036",
+        "name": "Huile d'olive",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "es-035",
+        "name": "Miel",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-060",
+        "name": "Sauge",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ]
   },
   "base-001": {
     "id": "base-001",

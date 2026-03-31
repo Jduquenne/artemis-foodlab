@@ -4852,5 +4852,18 @@
     },
     "unit": "g",
     "isFreezable": true
+  },
+  "po-008": {
+    "id": "po-008",
+    "name": "Filets de Maquereaux",
+    "category": "Poisson",
+    "macros": {
+      "kcal": 220,
+      "proteins": 19,
+      "lipids": 16,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g"
   }
 }

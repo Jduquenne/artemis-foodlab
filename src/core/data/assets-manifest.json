@@ -781,6 +781,11 @@
   },
   {
     "categoryFolder": "cereal-products",
+    "typeFolder": "photo",
+    "fileName": "PC_40_Cornflakes_Photo.webp"
+  },
+  {
+    "categoryFolder": "cereal-products",
     "typeFolder": "ingredients",
     "fileName": "PC32_Pancakes_Vegan_noisette_Ingrédients.webp"
   },

@@ -55887,7 +55887,7 @@
         "id": "001",
         "foodId": "fv-053",
         "name": "Melon",
-        "quantity": 100,
+        "quantity": 150,
         "unit": "g",
         "category": "Fruits et légumes"
       }
@@ -55987,7 +55987,7 @@
         "id": "001",
         "foodId": "fv-058",
         "name": "Nectarine",
-        "quantity": 120,
+        "quantity": 100,
         "unit": "g",
         "category": "Fruits et légumes"
       }
@@ -56012,7 +56012,7 @@
         "id": "001",
         "foodId": "fv-061",
         "name": "Orange non traitée",
-        "quantity": 150,
+        "quantity": 110,
         "unit": "g",
         "category": "Fruits et légumes"
       }
@@ -56037,7 +56037,7 @@
         "id": "001",
         "foodId": "fv-063",
         "name": "Pastèque",
-        "quantity": 100,
+        "quantity": 150,
         "unit": "g",
         "category": "Fruits et légumes"
       }
@@ -56062,7 +56062,7 @@
         "id": "001",
         "foodId": "fv-065",
         "name": "Pêche",
-        "quantity": 130,
+        "quantity": 100,
         "unit": "g",
         "category": "Fruits et légumes"
       }
@@ -56370,6 +56370,31 @@
     "assets": {
       "photo": {
         "url": "/artemis-foodlab/cereal-products/photo/PC_38_Flocons_d'épeautre_Photo.webp"
+      }
+    }
+  },
+  "pc-040": {
+    "id": "pc-040",
+    "name": "Cornflakes",
+    "categoryId": "cereal-products",
+    "mealTypes": [],
+    "kind": "ingredient",
+    "defaultPortions": 1,
+    "batchCooking": false,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-014",
+        "name": "Cornflakes",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/cereal-products/photo/PC_40_Cornflakes_Photo.webp"
       }
     }
   },

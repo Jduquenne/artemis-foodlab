@@ -196,6 +196,11 @@
   },
   {
     "categoryFolder": "bases",
+    "typeFolder": "photo",
+    "fileName": "BASE_40_Buns_de_lentilles_corail_vegans_Photo.webp"
+  },
+  {
+    "categoryFolder": "bases",
     "typeFolder": "ingredients",
     "fileName": "BASE_01_Pain_à_burger_à_la_farine_semi-complète_Ingrédients.webp"
   },
@@ -391,6 +396,11 @@
   },
   {
     "categoryFolder": "bases",
+    "typeFolder": "ingredients",
+    "fileName": "BASE_40_Buns_de_lentilles_corail_vegans_Ingredients.webp"
+  },
+  {
+    "categoryFolder": "bases",
     "typeFolder": "recipes",
     "fileName": "BASE_01_Pain_à_burger_à_la_farine_semi-complète_Recette.webp"
   },
@@ -583,6 +593,11 @@
     "categoryFolder": "bases",
     "typeFolder": "recipes",
     "fileName": "BASE_39_Taboulé_oriental_(accompagnement)_Recette.webp"
+  },
+  {
+    "categoryFolder": "bases",
+    "typeFolder": "recipes",
+    "fileName": "BASE_40_Buns_de_lentilles_corail_vegans_Recette.webp"
   },
   {
     "categoryFolder": "cereal-products",
@@ -5096,6 +5111,16 @@
   },
   {
     "categoryFolder": "red-meat",
+    "typeFolder": "photo",
+    "fileName": "VR_56_Pates_echine_de_porc_champignons_brocoli_Photo.webp"
+  },
+  {
+    "categoryFolder": "red-meat",
+    "typeFolder": "photo",
+    "fileName": "VR_57_Echine_de_porc_rotie_aux_legumes_Photo.webp"
+  },
+  {
+    "categoryFolder": "red-meat",
     "typeFolder": "ingredients",
     "fileName": "VR_01_Fajitas_au_bœuf_et_aux_carottes_Ingrédients.webp"
   },
@@ -5371,6 +5396,16 @@
   },
   {
     "categoryFolder": "red-meat",
+    "typeFolder": "ingredients",
+    "fileName": "VR_56_Pates_echine_de_porc_champignons_brocoli_Ingredients.webp"
+  },
+  {
+    "categoryFolder": "red-meat",
+    "typeFolder": "ingredients",
+    "fileName": "VR_57_Echine_de_porc_rotie_aux_legumes_Ingredients.webp"
+  },
+  {
+    "categoryFolder": "red-meat",
     "typeFolder": "recipes",
     "fileName": "VR_01_Fajitas_au_bœuf_et_aux_carottes_Recette.webp"
   },
@@ -5643,6 +5678,16 @@
     "categoryFolder": "red-meat",
     "typeFolder": "recipes",
     "fileName": "VR_55_Pâtes_steak_carottes_et_champignons_Recette.webp"
+  },
+  {
+    "categoryFolder": "red-meat",
+    "typeFolder": "recipes",
+    "fileName": "VR_56_Pates_echine_de_porc_champignons_brocoli_Recette.webp"
+  },
+  {
+    "categoryFolder": "red-meat",
+    "typeFolder": "recipes",
+    "fileName": "VR_57_Echine_de_porc_rotie_aux_legumes_Recette.webp"
   },
   {
     "categoryFolder": "veggies",

@@ -4528,16 +4528,9 @@
         "id": "013",
         "foodId": "fc-009",
         "name": "Lentille vertes sèches",
-        "quantity": null,
+        "quantity": 50,
         "unit": null,
         "category": "Féculents"
-      },
-      {
-        "id": "014",
-        "name": "50",
-        "quantity": null,
-        "unit": null,
-        "category": "Inconnu"
       }
     ],
     "assets": {
@@ -52497,7 +52490,18 @@
         "unit": "g",
         "category": "Epices et condiments"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/red-meat/photo/VR_56_Pates_echine_de_porc_champignons_brocoli_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/red-meat/ingredients/VR_56_Pates_echine_de_porc_champignons_brocoli_Ingredients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/red-meat/recipes/VR_56_Pates_echine_de_porc_champignons_brocoli_Recette.webp"
+      }
+    }
   },
   "vr-057": {
     "id": "vr-057",
@@ -52577,7 +52581,18 @@
         "unit": null,
         "category": "Epices et condiments"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/red-meat/photo/VR_57_Echine_de_porc_rotie_aux_legumes_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/red-meat/ingredients/VR_57_Echine_de_porc_rotie_aux_legumes_Ingredients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/red-meat/recipes/VR_57_Echine_de_porc_rotie_aux_legumes_Recette.webp"
+      }
+    }
   },
   "base-001": {
     "id": "base-001",
@@ -55611,6 +55626,93 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/bases/recipes/BASE_39_Taboulé_oriental_(accompagnement)_Recette.webp"
+      }
+    }
+  },
+  "base-040": {
+    "id": "base-040",
+    "name": "Buns de lentilles corail vegans",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 4,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fc-010",
+        "name": "Lentilles corail sèches",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "002",
+        "foodId": "fs-011",
+        "name": "Graines de lin",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "003",
+        "foodId": "ha-001",
+        "name": "Eau",
+        "quantity": 90,
+        "unit": "g",
+        "category": "Hors achat"
+      },
+      {
+        "id": "004",
+        "foodId": "ep-004",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "ep-064",
+        "name": "Vinaigre de cidre",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "fs-012",
+        "name": "Graines de pavot",
+        "quantity": 5,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "007",
+        "foodId": "fs-013",
+        "name": "Graines de sésame",
+        "quantity": 5,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "008",
+        "foodId": "es-055",
+        "name": "Psyllium blond",
+        "quantity": 30,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/bases/photo/BASE_40_Buns_de_lentilles_corail_vegans_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/bases/ingredients/BASE_40_Buns_de_lentilles_corail_vegans_Ingredients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/bases/recipes/BASE_40_Buns_de_lentilles_corail_vegans_Recette.webp"
       }
     }
   },

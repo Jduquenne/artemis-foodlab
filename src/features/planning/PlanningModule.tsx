@@ -487,7 +487,7 @@ export const PlanningModule = () => {
                 </div>
 
                 {isSelectionMode && (
-                    <ShoppingSelectionBar count={draftDays.length} onConfirm={confirmSelection} onCancel={cancelSelection} />
+                    <ShoppingSelectionBar count={draftDays.length} onConfirm={confirmSelection} onCancel={cancelSelection} onReset={() => setDraftDays([])} />
                 )}
 
                 {isCopyMode && copyState && (

@@ -1,12 +1,13 @@
-import { ShoppingCart, X, Check } from 'lucide-react';
+import { ShoppingCart, X, Check, RotateCcw } from 'lucide-react';
 
 export interface ShoppingSelectionBarProps {
     count: number;
     onConfirm: () => void;
     onCancel: () => void;
+    onReset: () => void;
 }
 
-export const ShoppingSelectionBar = ({ count, onConfirm, onCancel }: ShoppingSelectionBarProps) => {
+export const ShoppingSelectionBar = ({ count, onConfirm, onCancel, onReset }: ShoppingSelectionBarProps) => {
     const atMax = count >= 10;
 
     return (
@@ -32,6 +33,15 @@ export const ShoppingSelectionBar = ({ count, onConfirm, onCancel }: ShoppingSel
                     <X className="w-3.5 h-3.5" />
                     <span className="hidden sm:inline">Annuler</span>
                 </button>
+                {count > 0 && (
+                    <button
+                        onClick={onReset}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-semibold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-200/20 transition-colors"
+                    >
+                        <RotateCcw className="w-3.5 h-3.5" />
+                        <span className="hidden sm:inline">Reset</span>
+                    </button>
+                )}
                 <button
                     onClick={onConfirm}
                     className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-sm font-bold bg-orange-500 hover:bg-orange-600 text-white transition-colors"

@@ -3582,6 +3582,11 @@
   {
     "categoryFolder": "pastries",
     "typeFolder": "photo",
+    "fileName": "PAT_41_Madeleine_au_beurre_de_cacahuete_Photo.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "photo",
     "fileName": "PAT_41_Madeleine_au_beurre_de_cacahuète_Photo.webp"
   },
   {
@@ -3608,6 +3613,21 @@
     "categoryFolder": "pastries",
     "typeFolder": "photo",
     "fileName": "PAT_46_Gâteau_courgette_et_noix_Photo.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "photo",
+    "fileName": "PAT_47_Madeleine_puree_de_cajou_chocolat_Photo.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "photo",
+    "fileName": "PAT_48_Gateau_vegan_cacao_Photo.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "photo",
+    "fileName": "PAT_49_Cake_vegan_chocolat_courgette_Photo.webp"
   },
   {
     "categoryFolder": "pastries",
@@ -3812,6 +3832,11 @@
   {
     "categoryFolder": "pastries",
     "typeFolder": "ingredients",
+    "fileName": "PAT_41_Madeleine_au_beurre_de_cacahuete_Ingredients.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "ingredients",
     "fileName": "PAT_41_Madeleine_au_beurre_de_cacahuète_Ingrédients.webp"
   },
   {
@@ -3838,6 +3863,21 @@
     "categoryFolder": "pastries",
     "typeFolder": "ingredients",
     "fileName": "PAT_46_Gâteau_courgette_et_noix_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "ingredients",
+    "fileName": "PAT_47_Madeleine_puree_de_cajou_chocolat_Ingredients.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "ingredients",
+    "fileName": "PAT_48_Gateau_vegan_cacao_Ingredients.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "ingredients",
+    "fileName": "PAT_49_Cake_vegan_chocolat_courgette_Ingredients.webp"
   },
   {
     "categoryFolder": "pastries",
@@ -4042,6 +4082,11 @@
   {
     "categoryFolder": "pastries",
     "typeFolder": "recipes",
+    "fileName": "PAT_41_Madeleine_au_beurre_de_cacahuete_Recette.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "recipes",
     "fileName": "PAT_41_Madeleine_au_beurre_de_cacahuète_Recette.webp"
   },
   {
@@ -4068,6 +4113,21 @@
     "categoryFolder": "pastries",
     "typeFolder": "recipes",
     "fileName": "PAT_46_Gâteau_courgette_et_noix_Recette.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "recipes",
+    "fileName": "PAT_47_Madeleine_puree_de_cajou_chocolat_Recette.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "recipes",
+    "fileName": "PAT_48_Gateau_vegan_cacao_Recette.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "recipes",
+    "fileName": "PAT_49_Cake_vegan_chocolat_courgette_Recette.webp"
   },
   {
     "categoryFolder": "plant-proteins",

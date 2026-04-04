@@ -8373,7 +8373,7 @@
       "dinner"
     ],
     "kind": "dish",
-    "defaultPortions": 9,
+    "defaultPortions": 13,
     "batchCooking": true,
     "isDessert": false,
     "ingredients": [
@@ -8996,6 +8996,380 @@
         "url": "/artemis-foodlab/pastries/recipes/PAT_46_Gâteau_courgette_et_noix_Recette.webp"
       }
     }
+  },
+  "pat-047": {
+    "id": "pat-047",
+    "name": "Madeleine purée de cajou chocolat",
+    "categoryId": "pastries",
+    "mealTypes": [
+      "breakfast",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "kind": "dish",
+    "defaultPortions": 14,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 2,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "002",
+        "foodId": "fs-020",
+        "name": "Noix de cajou",
+        "quantity": 90,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "003",
+        "foodId": "es-046",
+        "name": "Sirop d'agave",
+        "quantity": 30,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "004",
+        "foodId": "es-026",
+        "name": "Farine semi complète",
+        "quantity": 70,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "005",
+        "foodId": "ep-004",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "es-040",
+        "name": "Pépites de chocolat 70%",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "007",
+        "foodId": "pl-019",
+        "name": "Lait demi écrémé",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-041",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/pastries/photo/PAT_47_Madeleine_puree_de_cajou_chocolat_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/pastries/ingredients/PAT_47_Madeleine_puree_de_cajou_chocolat_Ingredients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/pastries/recipes/PAT_47_Madeleine_puree_de_cajou_chocolat_Recette.webp"
+      }
+    }
+  },
+  "pat-048": {
+    "id": "pat-048",
+    "name": "Gâteau vegan cacao",
+    "categoryId": "pastries",
+    "mealTypes": [
+      "breakfast",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "kind": "dish",
+    "defaultPortions": 12,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-028",
+        "name": "Compote de pomme maison",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "es-006",
+        "name": "Cassonade Graeffe",
+        "quantity": 75,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "003",
+        "foodId": "ep-040",
+        "name": "Huile de tournesol",
+        "quantity": 40,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "004",
+        "foodId": "pl-003",
+        "name": "Boisson soja nature",
+        "quantity": 250,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "005",
+        "foodId": "es-026",
+        "name": "Farine semi complète",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "006",
+        "foodId": "es-004",
+        "name": "Cacao non sucré",
+        "quantity": 30,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "007",
+        "foodId": "ep-004",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-041",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "009",
+        "foodId": "ep-061",
+        "name": "Sel",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/pastries/photo/PAT_48_Gateau_vegan_cacao_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/pastries/ingredients/PAT_48_Gateau_vegan_cacao_Ingredients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/pastries/recipes/PAT_48_Gateau_vegan_cacao_Recette.webp"
+      }
+    }
+  },
+  "pat-049": {
+    "id": "pat-049",
+    "name": "Cake vegan chocolat courgette",
+    "categoryId": "pastries",
+    "mealTypes": [
+      "breakfast",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "kind": "dish",
+    "defaultPortions": 12,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-037",
+        "name": "Courgette",
+        "preparation": "râpé",
+        "quantity": 400,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "pl-034",
+        "name": "Yaourt soja nature",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "003",
+        "foodId": "es-051",
+        "name": "Sucre de coco",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "004",
+        "foodId": "es-027",
+        "name": "Fécule de maïs",
+        "quantity": 30,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "005",
+        "foodId": "ep-004",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "es-004",
+        "name": "Cacao non sucré",
+        "quantity": 40,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "007",
+        "foodId": "ep-041",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "es-026",
+        "name": "Farine semi complète",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "009",
+        "foodId": "es-008",
+        "name": "Chocolat 74% cacao",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/pastries/photo/PAT_49_Cake_vegan_chocolat_courgette_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/pastries/ingredients/PAT_49_Cake_vegan_chocolat_courgette_Ingredients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/pastries/recipes/PAT_49_Cake_vegan_chocolat_courgette_Recette.webp"
+      }
+    }
+  },
+  "pat-050": {
+    "id": "pat-050",
+    "name": "Ultra moelleux vegan aux pommes",
+    "categoryId": "pastries",
+    "mealTypes": [
+      "breakfast",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "kind": "dish",
+    "defaultPortions": 12,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-017",
+        "name": "Farine blanche",
+        "quantity": 250,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "es-050",
+        "name": "Sucre complet",
+        "quantity": 30,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "003",
+        "foodId": "es-006",
+        "name": "Cassonade Graeffe",
+        "quantity": 30,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "004",
+        "foodId": "ep-038",
+        "name": "Huile de colza",
+        "quantity": 30,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "pl-034",
+        "name": "Yaourt soja nature",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "006",
+        "foodId": "fv-071",
+        "name": "Pomme",
+        "quantity": 600,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "007",
+        "foodId": "ep-004",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-041",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ]
   },
   "pc-001": {
     "id": "pc-001",

@@ -12226,7 +12226,7 @@
       "dinner"
     ],
     "kind": "dish",
-    "defaultPortions": 16,
+    "defaultPortions": 25,
     "batchCooking": true,
     "isDessert": false,
     "ingredients": [

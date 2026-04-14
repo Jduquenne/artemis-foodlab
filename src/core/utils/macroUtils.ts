@@ -129,30 +129,16 @@ export function computeDayMacros(
       const m = RECIPE_MACROS[id];
       if (!m) return sum;
       const key = `${slot.id}-${id}`;
-      const portionMult = portionOverrides[key] ?? 1;
       const recipe = plannableDb[id];
-      const recipeIsDish = isDish(recipe) || isBase(recipe);
+      const baseGrams = RECIPE_BASE_GRAMS[id];
       let factor: number;
-      if (recipeIsDish) {
-        factor = (slot.recipePersons?.[id] ?? 1) * portionMult;
+      if (!isDish(recipe) && !isBase(recipe) && baseGrams) {
+        const grams = gramOverrides[key] ?? baseGrams;
+        factor = grams / baseGrams;
       } else {
-        const baseGrams = RECIPE_BASE_GRAMS[id];
-        const journalGrams = gramOverrides[key];
-        if (journalGrams !== undefined && baseGrams) {
-          factor = journalGrams / baseGrams;
-        } else {
-          const recipeGrams = slot.recipeQuantities?.[id];
-          const gramsFactor = recipeGrams !== undefined && baseGrams ? recipeGrams / baseGrams : 1;
-          factor = portionMult * gramsFactor;
-        }
+        factor = portionOverrides[key] ?? 1;
       }
-      return {
-        kcal: sum.kcal + m.kcal * factor,
-        proteins: sum.proteins + m.proteins * factor,
-        lipids: sum.lipids + m.lipids * factor,
-        carbohydrates: sum.carbohydrates + m.carbohydrates * factor,
-        fibers: sum.fibers + m.fibers * factor,
-      };
+      return add(sum, scale(m, factor));
     }, total);
   }, { ...ZERO });
 }

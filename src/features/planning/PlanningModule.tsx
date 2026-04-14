@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { useFreezerStock } from '../../shared/hooks/useFreezerStock';
 import { Check, X, ShoppingCart } from 'lucide-react';
 import { typedRecipesDb as recipesDb } from '../../core/typed-db/typedRecipesDb';
@@ -7,6 +7,7 @@ import { CopyModeBar } from './components/bars/CopyModeBar';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { getWeekSlots, saveSlot, deleteSlot, bulkSaveSlots, addDessertToSlot, removeDessertFromSlot, setRecipePersonsOnSlot } from '../../core/services/planningService';
 import { MealDragOverlay } from './components/MealDragOverlay';
+import { WeekNavZone } from './components/WeekNavZone';
 import { RecipePicker } from './components/pickers/RecipePicker';
 import { DessertPicker } from './components/pickers/DessertPicker';
 import { ShoppingSelectionBar } from './components/bars/ShoppingSelectionBar';
@@ -16,10 +17,10 @@ import { DayTabsBar } from './components/bars/DayTabsBar';
 import { getWeekNumber, getMonday, getWeekRange } from '../../shared/utils/weekUtils';
 import { useSearchParams } from 'react-router-dom';
 import { useMenuStore } from '../../shared/store/useMenuStore';
-import { SlotType, ShoppingDay } from '../../core/domain/types';
+import { SlotType, ShoppingDay, MealSlot } from '../../core/domain/types';
 import { isDessert, canAddDessert, isSlotFull } from '../../core/domain/recipePredicates';
 import { MEAL_SLOTS, DAYS, CopyState } from '../../core/domain/planningConfig';
-import { computeSlotCopyProps } from '../../core/utils/planningUtils';
+import { computeSlotCopyProps, parseFullSlotId } from '../../core/utils/planningUtils';
 import {
     DndContext,
     DragEndEvent,
@@ -45,6 +46,8 @@ export const PlanningModule = () => {
     const [pickerSlot, setPickerSlot] = useState<{ day: string; slot: SlotType } | null>(null);
     const [dessertPickerSlot, setDessertPickerSlot] = useState<{ day: string; slot: SlotType } | null>(null);
     const [activeDragId, setActiveDragId] = useState<string | null>(null);
+    const [weekNavZone, setWeekNavZone] = useState<'prev' | 'next' | null>(null);
+    const [dragSourceSlot, setDragSourceSlot] = useState<MealSlot | null>(null);
     const [slideKey, setSlideKey] = useState(0);
     const [slideDir, setSlideDir] = useState<'left' | 'right'>('left');
     const swipeStartX = useRef<number | null>(null);
@@ -98,8 +101,11 @@ export const PlanningModule = () => {
     const planningData = useMemo(() => liveData ?? [], [liveData]);
 
     const activeMeal = useMemo(
-        () => activeDragId ? planningData.find(p => `${year}-W${weekNumber}-${p.day}-${p.slot}` === activeDragId) : null,
-        [activeDragId, planningData, year, weekNumber]
+        () => {
+            if (!activeDragId) return null;
+            return planningData.find(p => `${year}-W${weekNumber}-${p.day}-${p.slot}` === activeDragId) ?? dragSourceSlot;
+        },
+        [activeDragId, planningData, year, weekNumber, dragSourceSlot]
     );
 
     const changeWeek = (offset: number) => {
@@ -108,6 +114,41 @@ export const PlanningModule = () => {
         d.setDate(d.getDate() + offset * 7);
         setSelectedDate(d);
     };
+
+    const changeWeekRef = useRef(changeWeek);
+    changeWeekRef.current = changeWeek;
+
+    useEffect(() => {
+        if (!activeDragId) {
+            setWeekNavZone(null);
+            return;
+        }
+        const ZONE_WIDTH = 72;
+        const handlePointerMove = (e: PointerEvent) => {
+            const x = e.clientX;
+            if (x < ZONE_WIDTH) {
+                setWeekNavZone('prev');
+            } else if (x > window.innerWidth - ZONE_WIDTH) {
+                setWeekNavZone('next');
+            } else {
+                setWeekNavZone(null);
+            }
+        };
+        window.addEventListener('pointermove', handlePointerMove);
+        return () => {
+            window.removeEventListener('pointermove', handlePointerMove);
+            setWeekNavZone(null);
+        };
+    }, [activeDragId]);
+
+    useEffect(() => {
+        if (!weekNavZone) return;
+        const timer = setTimeout(() => {
+            changeWeekRef.current(weekNavZone === 'prev' ? -1 : 1);
+            setWeekNavZone(null);
+        }, 1000);
+        return () => clearTimeout(timer);
+    }, [weekNavZone]);
 
     const handleSwipe = (direction: 'left' | 'right') => {
         if (isAnyEditing || isSelectionMode) return;
@@ -172,41 +213,47 @@ export const PlanningModule = () => {
         else await saveSlot({ ...existing, recipeIds: ids });
     };
 
-    const handleDragStart = ({ active }: DragStartEvent) => setActiveDragId(active.id as string);
+    const handleDragStart = ({ active }: DragStartEvent) => {
+        setActiveDragId(active.id as string);
+        const meal = planningData.find(p => `${year}-W${weekNumber}-${p.day}-${p.slot}` === (active.id as string));
+        setDragSourceSlot(meal ?? null);
+    };
 
     const handleDragEnd = async ({ active, over }: DragEndEvent) => {
         setActiveDragId(null);
+        setWeekNavZone(null);
+        const sourceMeal = dragSourceSlot;
+        setDragSourceSlot(null);
+
         if (!over || active.id === over.id) return;
 
-        const prefix = `${year}-W${weekNumber}-`;
-        const parseSlot = (fullId: string): { day: string; slot: SlotType } | null => {
-            const rest = fullId.slice(prefix.length);
-            for (const m of MEAL_SLOTS) {
-                if (rest.endsWith(`-${m.id}`)) return { day: rest.slice(0, rest.length - m.id.length - 1), slot: m.id };
-            }
-            return null;
-        };
-
-        const from = parseSlot(active.id as string);
-        const to = parseSlot(over.id as string);
+        const from = parseFullSlotId(active.id as string);
+        const to = parseFullSlotId(over.id as string);
         if (!from || !to) return;
 
         const fromDef = MEAL_SLOTS.find(m => m.id === from.slot);
         const toDef = MEAL_SLOTS.find(m => m.id === to.slot);
         if (!fromDef || !toDef || fromDef.multi !== toDef.multi) return;
 
-        const fromMeal = planningData.find(p => p.day === from.day && p.slot === from.slot);
+        const isCrossWeek = from.year !== to.year || from.week !== to.week;
+        const fromMeal = isCrossWeek
+            ? sourceMeal
+            : planningData.find(p => p.day === from.day && p.slot === from.slot);
         const toMeal = planningData.find(p => p.day === to.day && p.slot === to.slot);
+
         if (!fromMeal) return;
+
+        const fromId = `${from.year}-W${from.week}-${from.day}-${from.slot}`;
+        const toId = `${to.year}-W${to.week}-${to.day}-${to.slot}`;
 
         if (toMeal) {
             await bulkSaveSlots([
-                { ...fromMeal, recipeIds: toMeal.recipeIds, persons: undefined, recipePersons: undefined, recipeQuantities: undefined },
-                { ...toMeal, recipeIds: fromMeal.recipeIds, persons: undefined, recipePersons: undefined, recipeQuantities: undefined },
+                { ...fromMeal, id: fromId, day: from.day, slot: from.slot, year: from.year, week: from.week, recipeIds: toMeal.recipeIds, persons: undefined, recipePersons: undefined, recipeQuantities: undefined },
+                { ...toMeal, id: toId, day: to.day, slot: to.slot, year: to.year, week: to.week, recipeIds: fromMeal.recipeIds, persons: undefined, recipePersons: undefined, recipeQuantities: undefined },
             ]);
         } else {
             await deleteSlot(fromMeal.id);
-            await saveSlot({ id: over.id as string, day: to.day, slot: to.slot, recipeIds: fromMeal.recipeIds, year, week: weekNumber });
+            await saveSlot({ id: toId, day: to.day, slot: to.slot, recipeIds: fromMeal.recipeIds, year: to.year, week: to.week });
         }
     };
 
@@ -537,6 +584,9 @@ export const PlanningModule = () => {
                     />
                 )}
             </div>
+
+            <WeekNavZone direction="prev" visible={!!activeDragId} isActive={weekNavZone === 'prev'} />
+            <WeekNavZone direction="next" visible={!!activeDragId} isActive={weekNavZone === 'next'} />
 
             <DragOverlay dropAnimation={null}>
                 {activeMeal && activeMeal.recipeIds.length > 0 && (

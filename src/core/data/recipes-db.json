@@ -9371,6 +9371,130 @@
       }
     ]
   },
+  "pat-051": {
+    "id": "pat-051",
+    "name": "Tarte avoine créme citron fruits rouges",
+    "categoryId": "pastries",
+    "mealTypes": [
+      "breakfast",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "kind": "dish",
+    "defaultPortions": 8,
+    "batchCooking": true,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-027",
+        "name": "Fécule de maïs",
+        "quantity": 25,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-025",
+        "name": "Citron non traité",
+        "quantity": 1,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "pl-019",
+        "name": "Lait demi écrémé",
+        "quantity": 500,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "004",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 2,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "005",
+        "foodId": "es-049",
+        "name": "Sucre",
+        "quantity": 40,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "006",
+        "foodId": "es-029",
+        "name": "Flocons d'avoine",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "007",
+        "foodId": "es-002",
+        "name": "Amandes en poudre",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "008",
+        "foodId": "fv-028",
+        "name": "Compote de pomme maison",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "009",
+        "foodId": "fv-043",
+        "name": "Fraises",
+        "quantity": 250,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "010",
+        "foodId": "fv-044",
+        "name": "Framboises",
+        "quantity": 125,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "011",
+        "foodId": "fv-056",
+        "name": "Myrtilles",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "012",
+        "foodId": "ep-046",
+        "name": "Menthe",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/pastries/photo/PAT_51_Tarte_avoine_creme_citron_fruits_rouges_Photo.png"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/pastries/ingredients/PAT_51_Tarte_avoine_creme_citron_fruits_rouges_Ingredients.png"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/pastries/recipes/PAT_51_Tarte_avoine_creme_citron_fruits_rouges_Recette.png"
+      }
+    }
+  },
   "pc-001": {
     "id": "pc-001",
     "name": "Pancakes de pommes à l’alsacienne",

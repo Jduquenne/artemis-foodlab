@@ -3631,6 +3631,11 @@
   },
   {
     "categoryFolder": "pastries",
+    "typeFolder": "photo",
+    "fileName": "PAT_51_Tarte_avoine_creme_citron_fruits_rouges_Photo.png"
+  },
+  {
+    "categoryFolder": "pastries",
     "typeFolder": "ingredients",
     "fileName": "PAT_01_Cookies_protéinés_banane_chocolat_Ingrédients.webp"
   },
@@ -3881,6 +3886,11 @@
   },
   {
     "categoryFolder": "pastries",
+    "typeFolder": "ingredients",
+    "fileName": "PAT_51_Tarte_avoine_creme_citron_fruits_rouges_Ingredients.png"
+  },
+  {
+    "categoryFolder": "pastries",
     "typeFolder": "recipes",
     "fileName": "PAT_01_Cookies_protéinés_banane_chocolat_Recette.webp"
   },
@@ -4128,6 +4138,11 @@
     "categoryFolder": "pastries",
     "typeFolder": "recipes",
     "fileName": "PAT_49_Cake_vegan_chocolat_courgette_Recette.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "recipes",
+    "fileName": "PAT_51_Tarte_avoine_creme_citron_fruits_rouges_Recette.png"
   },
   {
     "categoryFolder": "plant-proteins",

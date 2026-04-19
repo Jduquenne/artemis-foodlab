@@ -21,7 +21,8 @@ export enum Preparation {
   HALF = "demie",
   HALF_ROUNDS = "demi-rondelles",
   STICKS = "bâtonnets",
-  WHOLE = "entiers",
+  WHOLE = "entier",
+  LING = "julienne",
 }
 
 export enum IngredientCategory {

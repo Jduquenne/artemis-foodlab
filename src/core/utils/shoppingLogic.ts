@@ -1,9 +1,10 @@
 import { addDays, getISOWeek, getISOWeekYear } from "date-fns";
 import { getWeekSlots } from "../services/planningService";
-import { Ingredient, IngredientCategory, MealSlot, ShoppingDay } from "../domain/types";
+import { HouseholdItem, Ingredient, IngredientCategory, MealSlot, ShoppingDay } from "../domain/types";
 import { getAllRecipeIds } from "../domain/recipePredicates";
 import { typedRecipesDb } from "../typed-db/typedRecipesDb";
 import { RECIPE_BASE_GRAMS } from "./macroUtils";
+import { pluralizeUnit } from "./unitUtils";
 
 export interface IngredientSource {
   recipeId: string;
@@ -257,3 +258,54 @@ export const getBasesForDays = async (
   if (days.length === 0) return [];
   return aggregateBases(await resolveWeekSlots(days));
 };
+
+export function buildShoppingClipboardText(
+  allGroupedItems: { label: string; list: ConsolidatedIngredient[] }[],
+  checked: Set<string>,
+  stocks: Record<string, number>,
+  sourceChecked: Set<string>,
+  uncheckedHouseholdItems: HouseholdItem[],
+): string {
+  const fmt = (n: number) => (n % 1 === 0 ? String(n) : n.toFixed(1));
+
+  const lines: string[] = [];
+
+  for (const group of allGroupedItems) {
+    const items = group.list.filter((i) => {
+      if (checked.has(i.key)) return false;
+      if (i.totalQuantity === 0) return true;
+      const srcQty = i.sources
+        .filter((s) => sourceChecked.has(`${i.key}::${s.recipeId}::${s.day}::${s.slot}`))
+        .reduce((sum, s) => sum + s.quantity, 0);
+      const effective = Math.max(0, i.totalQuantity - srcQty);
+      return Math.max(0, effective - (stocks[i.key] ?? 0)) > 0;
+    });
+
+    if (items.length === 0) continue;
+
+    lines.push(group.label);
+    for (const item of items) {
+      const srcQty = item.sources
+        .filter((s) => sourceChecked.has(`${item.key}::${s.recipeId}::${s.day}::${s.slot}`))
+        .reduce((sum, s) => sum + s.quantity, 0);
+      const effective = Math.max(0, item.totalQuantity - srcQty);
+      const needed = item.totalQuantity === 0 ? 0 : Math.max(0, effective - (stocks[item.key] ?? 0));
+
+      let line = `- ${item.name}`;
+      if (item.preparation) line += ` (${item.preparation})`;
+      if (item.totalQuantity > 0) line += ` - ${fmt(needed)} ${pluralizeUnit(item.unit, needed)}`;
+      lines.push(line);
+    }
+    lines.push("");
+  }
+
+  if (uncheckedHouseholdItems.length > 0) {
+    lines.push("Articles du quotidien");
+    for (const item of uncheckedHouseholdItems) {
+      lines.push(`- ${item.name}`);
+    }
+    lines.push("");
+  }
+
+  return lines.join("\n").trim();
+}

@@ -1,9 +1,9 @@
 import { useState, useMemo, useEffect } from 'react';
-import { ShoppingCart, CalendarDays } from 'lucide-react';
+import { ShoppingCart, CalendarDays, Clipboard, Check } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useNavigate } from 'react-router-dom';
 import { FreezerBag, HouseholdItem, IngredientCategory, RecipeKind, ShoppingDay } from '../../core/domain/types';
-import { getShoppingListForDays, getBasesForDays, ConsolidatedIngredient, IngredientSource } from '../../core/utils/shoppingLogic';
+import { getShoppingListForDays, getBasesForDays, buildShoppingClipboardText, ConsolidatedIngredient, IngredientSource } from '../../core/utils/shoppingLogic';
 import { getRecords as getHouseholdRecords } from '../../core/services/householdService';
 import { typedRecipesDb } from '../../core/typed-db/typedRecipesDb';
 import { markScrolling } from '../../shared/utils/scrollGuard';
@@ -53,6 +53,7 @@ export const ShoppingModule = () => {
     const { foodBags } = useFreezerStock();
     const [viewMode, setViewMode] = useState<'meals' | 'ingredients'>('ingredients');
     const [ingredientFilter, setIngredientFilter] = useState<'all' | 'missing'>('all');
+    const [copied, setCopied] = useState(false);
     const [activeSources, setActiveSources] = useState<{ key: string; sources: IngredientSource[]; freezerBags: FreezerBag[] } | null>(null);
 
     const [freezerSelection, setFreezerSelectionState] = useState<Record<string, string[]>>(() => {
@@ -309,6 +310,14 @@ export const ShoppingModule = () => {
         return `${n} jour${n > 1 ? 's' : ''} sélectionné${n > 1 ? 's' : ''}`;
     }, [shoppingDays]);
 
+    const handleCopy = async () => {
+        const uncheckedHousehold = householdItems.filter(i => !checked.has(`household::${i.id}`));
+        const text = buildShoppingClipboardText(allGroupedItems, checked, stocks, sourceChecked, uncheckedHousehold);
+        await navigator.clipboard.writeText(text);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+
     return (
         <>
         <div className="h-full flex flex-col gap-4 overflow-hidden">
@@ -327,7 +336,24 @@ export const ShoppingModule = () => {
                     )}
                 </div>
                 <div className="flex flex-col items-end gap-1.5 shrink-0">
-                    <div className="flex rounded-xl overflow-hidden border border-slate-200">
+                    <div className="flex items-center gap-2">
+                        {ingredients && shoppingDays.length > 0 && (
+                            <button
+                                onClick={handleCopy}
+                                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl border text-sm font-bold transition-colors ${
+                                    copied
+                                        ? 'bg-green-50 dark:bg-green-900/20 border-green-300 text-green-600'
+                                        : 'bg-white dark:bg-slate-100 border-slate-200 text-slate-500 hover:text-orange-600 hover:border-orange-300'
+                                }`}
+                            >
+                                {copied
+                                    ? <Check className="w-4 h-4" />
+                                    : <Clipboard className="w-4 h-4" />
+                                }
+                                <span className="hidden sm:inline">{copied ? 'Copié !' : 'Copier'}</span>
+                            </button>
+                        )}
+                        <div className="flex rounded-xl overflow-hidden border border-slate-200">
                         <button
                             onClick={() => setViewMode('meals')}
                             className={`px-3 py-2 text-sm font-bold transition-colors ${
@@ -348,6 +374,7 @@ export const ShoppingModule = () => {
                         >
                             Ingrédients
                         </button>
+                    </div>
                     </div>
                     {viewMode === 'ingredients' && (
                         <div className="flex rounded-xl overflow-hidden border border-slate-200">

@@ -68,9 +68,9 @@
       }
     ],
     "assets": {
-      "photo":             { "url": "/artemis-foodlab/white-meat/photo/WM_01_Poulet_roti_herbes_Photo.webp" },
-      "ingredientsPhoto":  { "url": "/artemis-foodlab/white-meat/ingredients/WM_01_Poulet_roti_herbes_Ingredients.webp" },
-      "instructionsPhoto": { "url": "/artemis-foodlab/white-meat/recipes/WM_01_Poulet_roti_herbes_Recette.webp" }
+      "photo":             { "url": "/artemis-foodlab/assets/white-meat/photo/WM_01_Poulet_roti_herbes_Photo.webp" },
+      "ingredientsPhoto":  { "url": "/artemis-foodlab/assets/white-meat/ingredients/WM_01_Poulet_roti_herbes_Ingredients.webp" },
+      "instructionsPhoto": { "url": "/artemis-foodlab/assets/white-meat/recipes/WM_01_Poulet_roti_herbes_Recette.webp" }
     },
     "batchCooking": true
   },
@@ -141,7 +141,7 @@
       }
     ],
     "assets": {
-      "photo": { "url": "/artemis-foodlab/cereal-products/photo/CP_01_Porridge_fruits_rouges_Photo.webp" }
+      "photo": { "url": "/artemis-foodlab/assets/cereal-products/photo/CP_01_Porridge_fruits_rouges_Photo.webp" }
     },
     "batchCooking": false
   },
@@ -197,8 +197,8 @@
       }
     ],
     "assets": {
-      "photo":             { "url": "/artemis-foodlab/bases/photo/BS_01_Bechamel_Photo.webp" },
-      "instructionsPhoto": { "url": "/artemis-foodlab/bases/recipes/BS_01_Bechamel_Recette.webp" }
+      "photo":             { "url": "/artemis-foodlab/assets/bases/photo/BS_01_Bechamel_Photo.webp" },
+      "instructionsPhoto": { "url": "/artemis-foodlab/assets/bases/recipes/BS_01_Bechamel_Recette.webp" }
     },
     "batchCooking": true
   },
@@ -221,7 +221,7 @@
       }
     ],
     "assets": {
-      "photo": { "url": "/artemis-foodlab/fruits/photo/FR_01_Avocat_Hass_Photo.webp" }
+      "photo": { "url": "/artemis-foodlab/assets/fruits/photo/FR_01_Avocat_Hass_Photo.webp" }
     },
     "batchCooking": false,
     "isDessert": true
@@ -319,9 +319,9 @@
       }
     ],
     "assets": {
-      "photo":             { "url": "/artemis-foodlab/plant-proteins/photo/PP_01_Curry_pois_chiches_epinards_Photo.webp" },
-      "ingredientsPhoto":  { "url": "/artemis-foodlab/plant-proteins/ingredients/PP_01_Curry_pois_chiches_epinards_Ingredients.webp" },
-      "instructionsPhoto": { "url": "/artemis-foodlab/plant-proteins/recipes/PP_01_Curry_pois_chiches_epinards_Recette.webp" }
+      "photo":             { "url": "/artemis-foodlab/assets/plant-proteins/photo/PP_01_Curry_pois_chiches_epinards_Photo.webp" },
+      "ingredientsPhoto":  { "url": "/artemis-foodlab/assets/plant-proteins/ingredients/PP_01_Curry_pois_chiches_epinards_Ingredients.webp" },
+      "instructionsPhoto": { "url": "/artemis-foodlab/assets/plant-proteins/recipes/PP_01_Curry_pois_chiches_epinards_Recette.webp" }
     },
     "batchCooking": true
   }

@@ -5,7 +5,7 @@
     "categoryId": "outdoor",
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/outdoor/photo/OUTDOOR_01_féte_Photo.webp"
+        "url": "/artemis-foodlab/assets/outdoor/photo/OUTDOOR_01_féte_Photo.webp"
       }
     }
   },
@@ -15,7 +15,7 @@
     "categoryId": "outdoor",
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/outdoor/photo/OUTDOOR_02_friterie_Photo.webp"
+        "url": "/artemis-foodlab/assets/outdoor/photo/OUTDOOR_02_friterie_Photo.webp"
       }
     }
   },
@@ -25,7 +25,7 @@
     "categoryId": "outdoor",
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/outdoor/photo/OUTDOOR_03_guesnain_Photo.webp"
+        "url": "/artemis-foodlab/assets/outdoor/photo/OUTDOOR_03_guesnain_Photo.webp"
       }
     }
   },
@@ -35,7 +35,7 @@
     "categoryId": "outdoor",
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/outdoor/photo/OUTDOOR_04_hazebrouck_Photo.webp"
+        "url": "/artemis-foodlab/assets/outdoor/photo/OUTDOOR_04_hazebrouck_Photo.webp"
       }
     }
   },
@@ -45,7 +45,7 @@
     "categoryId": "outdoor",
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/outdoor/photo/OUTDOOR_05_merris_Photo.webp"
+        "url": "/artemis-foodlab/assets/outdoor/photo/OUTDOOR_05_merris_Photo.webp"
       }
     }
   },
@@ -55,7 +55,7 @@
     "categoryId": "outdoor",
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/outdoor/photo/OUTDOOR_06_merville_Photo.webp"
+        "url": "/artemis-foodlab/assets/outdoor/photo/OUTDOOR_06_merville_Photo.webp"
       }
     }
   },
@@ -65,7 +65,7 @@
     "categoryId": "outdoor",
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/outdoor/photo/OUTDOOR_07_nouveau_monde_Photo.webp"
+        "url": "/artemis-foodlab/assets/outdoor/photo/OUTDOOR_07_nouveau_monde_Photo.webp"
       }
     }
   },
@@ -75,7 +75,7 @@
     "categoryId": "outdoor",
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/outdoor/photo/OUTDOOR_08_restes_divers_Photo.webp"
+        "url": "/artemis-foodlab/assets/outdoor/photo/OUTDOOR_08_restes_divers_Photo.webp"
       }
     }
   },
@@ -85,7 +85,7 @@
     "categoryId": "outdoor",
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/outdoor/photo/OUTDOOR_09_restaurant_Photo.webp"
+        "url": "/artemis-foodlab/assets/outdoor/photo/OUTDOOR_09_restaurant_Photo.webp"
       }
     }
   }

@@ -320,86 +320,80 @@ export const ShoppingModule = () => {
 
     return (
         <>
-        <div className="h-full flex flex-col gap-4 overflow-hidden">
-            <div className="flex justify-between items-start shrink-0">
-                <div>
-                    <h1 className="text-xl sm:text-2xl tablet:text-3xl font-black text-slate-900">Liste de courses</h1>
-                    {daysLabel ? (
-                        <p className="text-slate-500 text-sm">{daysLabel}</p>
-                    ) : (
-                        <p className="text-slate-400 text-sm italic">Aucune période sélectionnée</p>
-                    )}
-                    {ingredients && shoppingDays.length > 0 && (
-                        <p className="text-sm font-medium text-orange-600 mt-0.5">
-                            {uncheckedCount} article{uncheckedCount !== 1 ? 's' : ''} restant{uncheckedCount !== 1 ? 's' : ''}
+        <div className="h-full flex flex-col gap-3 overflow-hidden">
+            <div className="shrink-0">
+                <div className="flex items-start justify-between">
+                    <div>
+                        <h1 className="text-xl sm:text-2xl tablet:text-3xl font-black text-slate-900">Liste de courses</h1>
+                        <p className="text-slate-500 text-sm mt-0.5">
+                            {daysLabel ?? <span className="italic text-slate-400">Aucune période sélectionnée</span>}
+                            {ingredients && shoppingDays.length > 0 && (
+                                <span className="text-orange-600 font-medium before:content-['·'] before:mx-1.5">
+                                    {uncheckedCount} restant{uncheckedCount !== 1 ? 's' : ''}
+                                </span>
+                            )}
                         </p>
+                    </div>
+                    {ingredients && shoppingDays.length > 0 && (
+                        <button
+                            onClick={handleCopy}
+                            title={copied ? 'Copié !' : 'Copier la liste'}
+                            className={`shrink-0 p-2 rounded-xl border transition-colors ${
+                                copied
+                                    ? 'bg-green-50 dark:bg-green-900/20 border-green-300 text-green-600'
+                                    : 'bg-white dark:bg-slate-100 border-slate-200 text-slate-400 hover:text-orange-600 hover:border-orange-300'
+                            }`}
+                        >
+                            {copied ? <Check className="w-4 h-4" /> : <Clipboard className="w-4 h-4" />}
+                        </button>
                     )}
                 </div>
-                <div className="flex flex-col items-end gap-1.5 shrink-0">
-                    <div className="flex items-center gap-2">
-                        {ingredients && shoppingDays.length > 0 && (
-                            <button
-                                onClick={handleCopy}
-                                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl border text-sm font-bold transition-colors ${
-                                    copied
-                                        ? 'bg-green-50 dark:bg-green-900/20 border-green-300 text-green-600'
-                                        : 'bg-white dark:bg-slate-100 border-slate-200 text-slate-500 hover:text-orange-600 hover:border-orange-300'
-                                }`}
-                            >
-                                {copied
-                                    ? <Check className="w-4 h-4" />
-                                    : <Clipboard className="w-4 h-4" />
-                                }
-                                <span className="hidden sm:inline">{copied ? 'Copié !' : 'Copier'}</span>
-                            </button>
-                        )}
-                        <div className="flex rounded-xl overflow-hidden border border-slate-200">
+
+                <div className="flex items-center justify-between mt-3 bg-slate-100 dark:bg-slate-200/60 rounded-2xl p-1">
+                    <div className="flex gap-0.5">
                         <button
                             onClick={() => setViewMode('meals')}
-                            className={`px-3 py-2 text-sm font-bold transition-colors ${
+                            className={`px-3.5 py-1.5 rounded-xl text-sm font-bold transition-all ${
                                 viewMode === 'meals'
-                                    ? 'bg-orange-500 text-white'
-                                    : 'bg-white dark:bg-slate-100 text-slate-600 hover:bg-slate-50 dark:hover:bg-slate-200'
+                                    ? 'bg-white dark:bg-slate-100 text-slate-900 shadow-sm'
+                                    : 'text-slate-500 hover:text-slate-700'
                             }`}
                         >
                             Repas
                         </button>
                         <button
                             onClick={() => setViewMode('ingredients')}
-                            className={`px-3 py-2 text-sm font-bold transition-colors border-l border-slate-200 ${
+                            className={`px-3.5 py-1.5 rounded-xl text-sm font-bold transition-all ${
                                 viewMode === 'ingredients'
-                                    ? 'bg-orange-500 text-white'
-                                    : 'bg-white dark:bg-slate-100 text-slate-600 hover:bg-slate-50 dark:hover:bg-slate-200'
+                                    ? 'bg-white dark:bg-slate-100 text-slate-900 shadow-sm'
+                                    : 'text-slate-500 hover:text-slate-700'
                             }`}
                         >
                             Ingrédients
                         </button>
                     </div>
+                    <div className={`flex gap-0.5 transition-opacity duration-200 ${viewMode === 'ingredients' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                        <button
+                            onClick={() => setIngredientFilter('all')}
+                            className={`px-3.5 py-1.5 rounded-xl text-sm font-bold transition-all ${
+                                ingredientFilter === 'all'
+                                    ? 'bg-white dark:bg-slate-100 text-slate-900 shadow-sm'
+                                    : 'text-slate-500 hover:text-slate-700'
+                            }`}
+                        >
+                            Complète
+                        </button>
+                        <button
+                            onClick={() => setIngredientFilter('missing')}
+                            className={`px-3.5 py-1.5 rounded-xl text-sm font-bold transition-all ${
+                                ingredientFilter === 'missing'
+                                    ? 'bg-white dark:bg-slate-100 text-slate-900 shadow-sm'
+                                    : 'text-slate-500 hover:text-slate-700'
+                            }`}
+                        >
+                            Manquants
+                        </button>
                     </div>
-                    {viewMode === 'ingredients' && (
-                        <div className="flex rounded-xl overflow-hidden border border-slate-200">
-                            <button
-                                onClick={() => setIngredientFilter('all')}
-                                className={`px-3 py-2 text-sm font-bold transition-colors ${
-                                    ingredientFilter === 'all'
-                                        ? 'bg-orange-500 text-white'
-                                        : 'bg-white dark:bg-slate-100 text-slate-600 hover:bg-slate-50 dark:hover:bg-slate-200'
-                                }`}
-                            >
-                                Complète
-                            </button>
-                            <button
-                                onClick={() => setIngredientFilter('missing')}
-                                className={`px-3 py-2 text-sm font-bold transition-colors border-l border-slate-200 ${
-                                    ingredientFilter === 'missing'
-                                        ? 'bg-orange-500 text-white'
-                                        : 'bg-white dark:bg-slate-100 text-slate-600 hover:bg-slate-50 dark:hover:bg-slate-200'
-                                }`}
-                            >
-                                Manquants
-                            </button>
-                        </div>
-                    )}
                 </div>
             </div>
 

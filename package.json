@@ -1,7 +1,7 @@
 {
   "name": "artemis-foodlab",
   "private": true,
-  "version": "6.27.4",
+  "version": "6.27.5",
   "type": "module",
   "scripts": {
     "dev": "vite",

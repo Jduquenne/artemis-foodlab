@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { RotateCcw } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { HouseholdItem, HouseholdCategory } from '../../core/domain/types';
-import { getRecords, checkItem, clearAll } from '../../core/services/householdService';
+import { getRecords, toggleItem, clearAll } from '../../core/services/householdService';
 import { markScrolling } from '../../shared/utils/scrollGuard';
 import { useColCount } from '../../shared/hooks/useColCount';
 import { distributeToColumns } from '../../shared/utils/columnUtils';
@@ -36,7 +36,7 @@ export const HouseholdModule = () => {
         setTimeout(() => setSpinning(false), 600);
     };
 
-    const uncheckedCount = allItems.length - checkedIds.size;
+    const checkedCount = checkedIds.size;
 
     const grouped = useMemo(() => {
         return CATEGORY_ORDER
@@ -55,15 +55,15 @@ export const HouseholdModule = () => {
                 <div>
                     <h1 className="text-xl sm:text-2xl tablet:text-3xl font-black text-slate-900">Articles du quotidien</h1>
                     <p className="text-slate-500 text-sm mt-0.5">
-                        {uncheckedCount > 0
-                            ? <span className="text-orange-600 font-medium">{uncheckedCount} article{uncheckedCount > 1 ? 's' : ''} à vérifier</span>
-                            : <span>Tout est vérifié</span>
+                        {checkedCount > 0
+                            ? <span className="text-orange-600 font-medium">{checkedCount} article{checkedCount > 1 ? 's' : ''} à acheter</span>
+                            : <span>Aucun article sélectionné</span>
                         }
                     </p>
                 </div>
                 <button
                     onClick={handleReset}
-                    title="Réinitialiser toutes les vérifications"
+                    title="Tout désélectionner"
                     className="flex items-center gap-2 bg-white dark:bg-slate-100 border border-slate-200 px-3 py-2 rounded-xl text-sm font-bold text-slate-500 hover:text-orange-600 hover:border-orange-300 transition-colors shrink-0"
                 >
                     <RotateCcw className={`w-4 h-4 ${spinning ? 'animate-spin-once' : ''}`} />
@@ -84,7 +84,7 @@ export const HouseholdModule = () => {
                                         label={group.label}
                                         items={group.items}
                                         checkedIds={checkedIds}
-                                        onVerify={checkItem}
+                                        onToggle={toggleItem}
                                     />
                                 </div>
                             ))}

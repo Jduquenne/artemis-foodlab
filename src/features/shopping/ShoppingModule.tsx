@@ -2,8 +2,9 @@ import { useState, useMemo, useEffect } from 'react';
 import { ShoppingCart, CalendarDays } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useNavigate } from 'react-router-dom';
-import { FreezerBag, IngredientCategory, RecipeKind, ShoppingDay } from '../../core/domain/types';
+import { FreezerBag, HouseholdItem, IngredientCategory, RecipeKind, ShoppingDay } from '../../core/domain/types';
 import { getShoppingListForDays, getBasesForDays, ConsolidatedIngredient, IngredientSource } from '../../core/utils/shoppingLogic';
+import { getRecords as getHouseholdRecords } from '../../core/services/householdService';
 import { typedRecipesDb } from '../../core/typed-db/typedRecipesDb';
 import { markScrolling } from '../../shared/utils/scrollGuard';
 import { distributeToColumns } from '../../shared/utils/columnUtils';
@@ -14,6 +15,10 @@ import { computeFreezerBagSelection } from '../../core/utils/freezerMatchUtils';
 import { ShoppingCategoryCard } from './components/ingredients/ShoppingCategoryCard';
 import { RecipeShoppingCard, RecipeCardIngredient, RecipeBaseGroup } from './components/meals/RecipeShoppingCard';
 import { SourcesModal } from './components/SourcesModal';
+import { HouseholdShoppingCard } from './components/HouseholdShoppingCard';
+import householdDb from '../../core/data/household-db.json';
+
+const allHouseholdItems = householdDb as HouseholdItem[];
 
 const CATEGORY_ORDER: IngredientCategory[] = [
     IngredientCategory.FRUIT_VEGETABLE,
@@ -115,6 +120,13 @@ export const ShoppingModule = () => {
         [shoppingDays]
     );
     const bases = useMemo(() => basesRaw ?? [], [basesRaw]);
+
+    const householdRecords = useLiveQuery(() => getHouseholdRecords(), []);
+    const householdItems = useMemo(() => {
+        if (!householdRecords) return [];
+        const checkedIds = new Set(householdRecords.map(r => r.id));
+        return allHouseholdItems.filter(i => checkedIds.has(i.id));
+    }, [householdRecords]);
 
     const recipeCards = useMemo(() => {
         if (!ingredients) return [];
@@ -255,9 +267,13 @@ export const ShoppingModule = () => {
         return groups;
     }, [ingredients, ingredientFilter, checked, stocks, sourceChecked]);
 
+    const visibleHouseholdItems = useMemo(() => {
+        if (ingredientFilter === 'all') return householdItems;
+        return householdItems.filter(i => !checked.has(`household::${i.id}`));
+    }, [householdItems, ingredientFilter, checked]);
+
     const uncheckedCount = useMemo(() => {
-        if (!ingredients) return 0;
-        return ingredients.filter(i => {
+        const ingredientUnchecked = !ingredients ? 0 : ingredients.filter(i => {
             if (checked.has(i.key)) return false;
             if (i.totalQuantity === 0) return true;
             const srcQty = i.sources
@@ -266,7 +282,9 @@ export const ShoppingModule = () => {
             const effective = Math.max(0, i.totalQuantity - srcQty);
             return Math.max(0, effective - (stocks[i.key] ?? 0)) > 0;
         }).length;
-    }, [ingredients, checked, stocks, sourceChecked]);
+        const householdUnchecked = householdItems.filter(i => !checked.has(`household::${i.id}`)).length;
+        return ingredientUnchecked + householdUnchecked;
+    }, [ingredients, checked, stocks, sourceChecked, householdItems]);
 
     const ingredientColumns = useMemo(() => {
         const stableAssignment = distributeToColumns(allGroupedItems, g => g.list.length, colCount);
@@ -381,13 +399,14 @@ export const ShoppingModule = () => {
                     <div className="h-full flex items-center justify-center text-slate-400">
                         Chargement...
                     </div>
-                ) : ingredients.length === 0 ? (
+                ) : viewMode === 'meals' ? (
+                    ingredients.length === 0 ? (
                     <div className="h-full flex flex-col items-center justify-center gap-3 text-slate-400">
                         <ShoppingCart className="w-12 h-12 opacity-30" />
                         <p className="font-medium">Aucun repas planifié sur cette période</p>
                         <p className="text-sm">Planifie des repas pour générer la liste</p>
                     </div>
-                ) : viewMode === 'meals' ? (
+                    ) :
                     <div className="grid gap-4 pb-4 items-start" style={{ gridTemplateColumns: `repeat(${colCount}, 1fr)` }}>
                         {mealColumns.map((col, ci) => (
                             <div key={ci} className="flex flex-col gap-4">
@@ -407,34 +426,53 @@ export const ShoppingModule = () => {
                             </div>
                         ))}
                     </div>
-                ) : groupedItems.length === 0 ? (
+                ) : ingredients.length === 0 && visibleHouseholdItems.length === 0 ? (
+                    <div className="h-full flex flex-col items-center justify-center gap-3 text-slate-400">
+                        <ShoppingCart className="w-12 h-12 opacity-30" />
+                        <p className="font-medium">Aucun repas planifié sur cette période</p>
+                        <p className="text-sm">Planifie des repas pour générer la liste</p>
+                    </div>
+                ) : groupedItems.length === 0 && visibleHouseholdItems.length === 0 ? (
                     <div className="h-full flex flex-col items-center justify-center gap-3 text-slate-400">
                         <ShoppingCart className="w-12 h-12 opacity-30" />
                         <p className="font-medium text-slate-500">Tout est couvert !</p>
                         <p className="text-sm">Rien à acheter — tout est en stock ou coché</p>
                     </div>
                 ) : (
-                    <div className="grid gap-4 pb-4 items-start" style={{ gridTemplateColumns: `repeat(${colCount}, 1fr)` }}>
-                        {ingredientColumns.map((col, ci) => (
-                            <div key={ci} className="flex flex-col gap-4">
-                                {col.map((group, i) => (
-                                    <div key={group.label} className="animate-fade-in-up" style={{ animationDelay: `${(ci + i) * 60}ms` }}>
-                                        <ShoppingCategoryCard
-                                            label={group.label}
-                                            items={group.list}
-                                            checked={checked}
-                                            stocks={stocks}
-                                            sourceChecked={sourceChecked}
-                                            onToggle={toggleItem}
-                                            onSetStock={setStock}
-                                            onShowSources={(key, sources, bags) => setActiveSources({ key, sources, freezerBags: bags })}
-                                            foodBags={foodBags}
-                                        />
+                    <>
+                        {groupedItems.length > 0 && (
+                            <div className="grid gap-4 pb-4 items-start" style={{ gridTemplateColumns: `repeat(${colCount}, 1fr)` }}>
+                                {ingredientColumns.map((col, ci) => (
+                                    <div key={ci} className="flex flex-col gap-4">
+                                        {col.map((group, i) => (
+                                            <div key={group.label} className="animate-fade-in-up" style={{ animationDelay: `${(ci + i) * 60}ms` }}>
+                                                <ShoppingCategoryCard
+                                                    label={group.label}
+                                                    items={group.list}
+                                                    checked={checked}
+                                                    stocks={stocks}
+                                                    sourceChecked={sourceChecked}
+                                                    onToggle={toggleItem}
+                                                    onSetStock={setStock}
+                                                    onShowSources={(key, sources, bags) => setActiveSources({ key, sources, freezerBags: bags })}
+                                                    foodBags={foodBags}
+                                                />
+                                            </div>
+                                        ))}
                                     </div>
                                 ))}
                             </div>
-                        ))}
-                    </div>
+                        )}
+                        {visibleHouseholdItems.length > 0 && (
+                            <div className="pb-4">
+                                <HouseholdShoppingCard
+                                    items={visibleHouseholdItems}
+                                    checked={checked}
+                                    onToggle={toggleItem}
+                                />
+                            </div>
+                        )}
+                    </>
                 )}
             </div>
         </div>

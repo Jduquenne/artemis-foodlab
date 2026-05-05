@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, useEffect } from 'react';
+import React, { useState, useMemo, useRef, useEffect, useLayoutEffect } from 'react';
 import { useFreezerStock } from '../../shared/hooks/useFreezerStock';
 import { Check, X, ShoppingCart } from 'lucide-react';
 import { typedRecipesDb as recipesDb } from '../../core/typed-db/typedRecipesDb';
@@ -116,13 +116,12 @@ export const PlanningModule = () => {
     };
 
     const changeWeekRef = useRef(changeWeek);
-    changeWeekRef.current = changeWeek;
+    useLayoutEffect(() => {
+        changeWeekRef.current = changeWeek;
+    });
 
     useEffect(() => {
-        if (!activeDragId) {
-            setWeekNavZone(null);
-            return;
-        }
+        if (!activeDragId) return;
         const ZONE_WIDTH = 72;
         const handlePointerMove = (e: PointerEvent) => {
             const x = e.clientX;

@@ -5,10 +5,10 @@ export interface HouseholdCategoryCardProps {
   label: string;
   items: HouseholdItem[];
   checkedIds: Set<string>;
-  onVerify: (id: string) => void;
+  onToggle: (id: string) => void;
 }
 
-export const HouseholdCategoryCard = ({ label, items, checkedIds, onVerify }: HouseholdCategoryCardProps) => {
+export const HouseholdCategoryCard = ({ label, items, checkedIds, onToggle }: HouseholdCategoryCardProps) => {
   return (
     <div className="break-inside-avoid mb-4">
       <div className="bg-white dark:bg-slate-100 border border-slate-200 rounded-xl p-2 shadow-sm">
@@ -21,7 +21,7 @@ export const HouseholdCategoryCard = ({ label, items, checkedIds, onVerify }: Ho
               key={item.id}
               item={item}
               isChecked={checkedIds.has(item.id)}
-              onVerify={onVerify}
+              onToggle={onToggle}
             />
           ))}
         </div>

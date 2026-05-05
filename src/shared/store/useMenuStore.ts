@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { getISOWeek, getISOWeekYear } from "date-fns";
 import { getWeekId } from "../../core/utils/dateUtils";
 import { ShoppingDay } from "../../core/domain/types";
+import { clearAll as clearHouseholdItems } from "../../core/services/householdService";
 
 function safeParseJson<T>(key: string, fallback: T): T {
   try {
@@ -32,6 +33,7 @@ export const useMenuStore = create<MenuState>((set) => ({
 
   setShoppingDays: (days) => {
     localStorage.setItem("cipe_shopping_days", JSON.stringify(days));
+    clearHouseholdItems();
     set({ shoppingDays: days });
   },
 

@@ -11,10 +11,7 @@ export const WeekNavZone = ({ direction, visible, isActive }: WeekNavZoneProps) 
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
-        if (!isActive) {
-            setProgress(0);
-            return;
-        }
+        if (!isActive) return;
         const start = performance.now();
         const DURATION = 950;
         let raf: number;
@@ -24,7 +21,10 @@ export const WeekNavZone = ({ direction, visible, isActive }: WeekNavZoneProps) 
             if (p < 1) raf = requestAnimationFrame(tick);
         };
         raf = requestAnimationFrame(tick);
-        return () => cancelAnimationFrame(raf);
+        return () => {
+            cancelAnimationFrame(raf);
+            setProgress(0);
+        };
     }, [isActive]);
 
     if (!visible) return null;

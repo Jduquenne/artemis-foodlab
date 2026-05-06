@@ -480,11 +480,18 @@ export const ShoppingModule = () => {
                                                 />
                                             </div>
                                         ))}
+                                        {ci === ingredientColumns.length - 1 && visibleHouseholdItems.length > 0 && (
+                                            <HouseholdShoppingCard
+                                                items={visibleHouseholdItems}
+                                                checked={checked}
+                                                onToggle={toggleItem}
+                                            />
+                                        )}
                                     </div>
                                 ))}
                             </div>
                         )}
-                        {visibleHouseholdItems.length > 0 && (
+                        {groupedItems.length === 0 && visibleHouseholdItems.length > 0 && (
                             <div className="pb-4">
                                 <HouseholdShoppingCard
                                     items={visibleHouseholdItems}

@@ -283,27 +283,26 @@ export function buildShoppingClipboardText(
 
     if (items.length === 0) continue;
 
-    lines.push(group.label);
-    for (const item of items) {
+    const itemParts = items.map((item) => {
       const srcQty = item.sources
         .filter((s) => sourceChecked.has(`${item.key}::${s.recipeId}::${s.day}::${s.slot}`))
         .reduce((sum, s) => sum + s.quantity, 0);
       const effective = Math.max(0, item.totalQuantity - srcQty);
       const needed = item.totalQuantity === 0 ? 0 : Math.max(0, effective - (stocks[item.key] ?? 0));
 
-      let line = `- ${item.name}`;
-      if (item.preparation) line += ` (${item.preparation})`;
-      if (item.totalQuantity > 0) line += ` - ${fmt(needed)} ${pluralizeUnit(item.unit, needed)}`;
-      lines.push(line);
-    }
+      let part = item.name;
+      if (item.preparation) part += ` (${item.preparation})`;
+      if (item.totalQuantity > 0) part += ` ${fmt(needed)}${pluralizeUnit(item.unit, needed)}`;
+      return part;
+    });
+
+    lines.push(group.label);
+    lines.push(itemParts.join(" - "));
     lines.push("");
   }
 
   if (uncheckedHouseholdItems.length > 0) {
-    lines.push("Articles du quotidien");
-    for (const item of uncheckedHouseholdItems) {
-      lines.push(`- ${item.name}`);
-    }
+    lines.push(uncheckedHouseholdItems.map((item) => item.name).join(" - "));
     lines.push("");
   }
 

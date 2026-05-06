@@ -267,6 +267,11 @@ export function buildShoppingClipboardText(
   uncheckedHouseholdItems: HouseholdItem[],
 ): string {
   const fmt = (n: number) => (n % 1 === 0 ? String(n) : n.toFixed(1));
+  const fmtUnit = (unit: string, qty: number): string => {
+    if (unit === 'pièce') return '';
+    if (unit === 'tranche') return 'tr';
+    return pluralizeUnit(unit, qty);
+  };
 
   const lines: string[] = [];
 
@@ -292,7 +297,7 @@ export function buildShoppingClipboardText(
 
       let part = item.name;
       if (item.preparation) part += ` (${item.preparation})`;
-      if (item.totalQuantity > 0) part += ` ${fmt(needed)}${pluralizeUnit(item.unit, needed)}`;
+      if (item.totalQuantity > 0) part += ` ${fmt(needed)}${fmtUnit(item.unit, needed)}`;
       return part;
     });
 

@@ -2516,6 +2516,11 @@
   },
   {
     "categoryFolder": "fish",
+    "typeFolder": "photo",
+    "fileName": "POI_75_Saumon_quinoa_haricots_verts_et_tomates_cerises_Photo.webp"
+  },
+  {
+    "categoryFolder": "fish",
     "typeFolder": "ingredients",
     "fileName": "POI_01_Nouilles_sautées_aux_crevettes_et_légumes_Ingrédients.webp"
   },
@@ -2886,6 +2891,11 @@
   },
   {
     "categoryFolder": "fish",
+    "typeFolder": "ingredients",
+    "fileName": "POI_75_Saumon_quinoa_haricots_verts_et_tomates_cerises_Ingredients.webp"
+  },
+  {
+    "categoryFolder": "fish",
     "typeFolder": "recipes",
     "fileName": "POI_01_Nouilles_sautées_aux_crevettes_Recette.webp"
   },
@@ -3253,6 +3263,11 @@
     "categoryFolder": "fish",
     "typeFolder": "recipes",
     "fileName": "POI_74_Salade_de_pommes_de_terre_aux_filets_de_maquereaux_Recette.webp"
+  },
+  {
+    "categoryFolder": "fish",
+    "typeFolder": "recipes",
+    "fileName": "POI_75_Saumon_quinoa_haricots_verts_et_tomates_cerises_Recette.webp"
   },
   {
     "categoryFolder": "fruits",
@@ -4401,6 +4416,11 @@
   },
   {
     "categoryFolder": "plant-proteins",
+    "typeFolder": "photo",
+    "fileName": "PV_52_Salade_pois_chiches_courgette_Photo.webp"
+  },
+  {
+    "categoryFolder": "plant-proteins",
     "typeFolder": "ingredients",
     "fileName": "PV_01_Orzo_méditerranéen_Ingrédients.webp"
   },
@@ -4656,6 +4676,11 @@
   },
   {
     "categoryFolder": "plant-proteins",
+    "typeFolder": "ingredients",
+    "fileName": "PV_52_Salade_pois_chiches_courgette_Ingredients.webp"
+  },
+  {
+    "categoryFolder": "plant-proteins",
     "typeFolder": "recipes",
     "fileName": "PV_01_Orzo_méditerranéen_Recette.webp"
   },
@@ -4908,6 +4933,11 @@
     "categoryFolder": "plant-proteins",
     "typeFolder": "recipes",
     "fileName": "PV_51_Quiche_sans_pate_epinard_Feta_et_salade_de_lentilles_Recette.png"
+  },
+  {
+    "categoryFolder": "plant-proteins",
+    "typeFolder": "recipes",
+    "fileName": "PV_52_Salade_pois_chiches_courgette_Recette.webp"
   },
   {
     "categoryFolder": "red-meat",
@@ -5196,6 +5226,11 @@
   },
   {
     "categoryFolder": "red-meat",
+    "typeFolder": "photo",
+    "fileName": "VR_58_Riz_courgette_au_boeuf_hache_Photo.webp"
+  },
+  {
+    "categoryFolder": "red-meat",
     "typeFolder": "ingredients",
     "fileName": "VR_01_Fajitas_au_bœuf_et_aux_carottes_Ingrédients.webp"
   },
@@ -5481,6 +5516,11 @@
   },
   {
     "categoryFolder": "red-meat",
+    "typeFolder": "ingredients",
+    "fileName": "VR_58_Riz_courgette_au_boeuf_hache_Ingredients.webp"
+  },
+  {
+    "categoryFolder": "red-meat",
     "typeFolder": "recipes",
     "fileName": "VR_01_Fajitas_au_bœuf_et_aux_carottes_Recette.webp"
   },
@@ -5763,6 +5803,11 @@
     "categoryFolder": "red-meat",
     "typeFolder": "recipes",
     "fileName": "VR_57_Echine_de_porc_rotie_aux_legumes_Recette.webp"
+  },
+  {
+    "categoryFolder": "red-meat",
+    "typeFolder": "recipes",
+    "fileName": "VR_58_Riz_courgette_au_boeuf_hache_Recette.webp"
   },
   {
     "categoryFolder": "veggies",

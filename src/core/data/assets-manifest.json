@@ -801,6 +801,16 @@
   },
   {
     "categoryFolder": "cereal-products",
+    "typeFolder": "photo",
+    "fileName": "PC_41_Overnight_oats_epeautre_Photo.webp"
+  },
+  {
+    "categoryFolder": "cereal-products",
+    "typeFolder": "photo",
+    "fileName": "PC_42_Overnight_oats_avoine_Photo.webp"
+  },
+  {
+    "categoryFolder": "cereal-products",
     "typeFolder": "ingredients",
     "fileName": "PC32_Pancakes_Vegan_noisette_Ingrédients.webp"
   },
@@ -963,6 +973,16 @@
     "categoryFolder": "cereal-products",
     "typeFolder": "ingredients",
     "fileName": "PC_39_Pancakes_aux_flocons_de_quinoa_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "cereal-products",
+    "typeFolder": "ingredients",
+    "fileName": "PC_41_Overnight_oats_epeautre_Ingredients.webp"
+  },
+  {
+    "categoryFolder": "cereal-products",
+    "typeFolder": "ingredients",
+    "fileName": "PC_42_Overnight_oats_avoine_Ingredients.webp"
   },
   {
     "categoryFolder": "cereal-products",
@@ -2521,6 +2541,16 @@
   },
   {
     "categoryFolder": "fish",
+    "typeFolder": "photo",
+    "fileName": "POI_76_Cabillaud_et_poelee_de_fenouil_Photo.webp"
+  },
+  {
+    "categoryFolder": "fish",
+    "typeFolder": "photo",
+    "fileName": "POI_77_Salade_de_riz_facon_Thai_Photo.webp"
+  },
+  {
+    "categoryFolder": "fish",
     "typeFolder": "ingredients",
     "fileName": "POI_01_Nouilles_sautées_aux_crevettes_et_légumes_Ingrédients.webp"
   },
@@ -2896,6 +2926,16 @@
   },
   {
     "categoryFolder": "fish",
+    "typeFolder": "ingredients",
+    "fileName": "POI_76_Cabillaud_et_poelee_de_fenouil_Ingredients.webp"
+  },
+  {
+    "categoryFolder": "fish",
+    "typeFolder": "ingredients",
+    "fileName": "POI_77_Salade_de_riz_facon_Thai_Ingredients.webp"
+  },
+  {
+    "categoryFolder": "fish",
     "typeFolder": "recipes",
     "fileName": "POI_01_Nouilles_sautées_aux_crevettes_Recette.webp"
   },
@@ -3268,6 +3308,16 @@
     "categoryFolder": "fish",
     "typeFolder": "recipes",
     "fileName": "POI_75_Saumon_quinoa_haricots_verts_et_tomates_cerises_Recette.webp"
+  },
+  {
+    "categoryFolder": "fish",
+    "typeFolder": "recipes",
+    "fileName": "POI_76_Cabillaud_et_poelee_de_fenouil_Recette.webp"
+  },
+  {
+    "categoryFolder": "fish",
+    "typeFolder": "recipes",
+    "fileName": "POI_77_Salade_de_riz_facon_Thai_Recette.webp"
   },
   {
     "categoryFolder": "fruits",
@@ -5892,6 +5942,11 @@
   {
     "categoryFolder": "veggies",
     "typeFolder": "photo",
+    "fileName": "VEG_107_Riz_saute_choux_et_carottes_Photo.webp"
+  },
+  {
+    "categoryFolder": "veggies",
+    "typeFolder": "photo",
     "fileName": "VEG_10_Gratin_de_crozets_aux_poireaux_Photo.webp"
   },
   {
@@ -6422,6 +6477,11 @@
   {
     "categoryFolder": "veggies",
     "typeFolder": "ingredients",
+    "fileName": "VEG_107_Riz_saute_choux_et_carottes_Ingredients.webp"
+  },
+  {
+    "categoryFolder": "veggies",
+    "typeFolder": "ingredients",
     "fileName": "VEG_10_Gratin_de_crozets_aux_poireaux_Ingrédients.webp"
   },
   {
@@ -6948,6 +7008,11 @@
     "categoryFolder": "veggies",
     "typeFolder": "recipes",
     "fileName": "VEG_106_Œufs_à_la_coque_d'hiver_Recette.webp"
+  },
+  {
+    "categoryFolder": "veggies",
+    "typeFolder": "recipes",
+    "fileName": "VEG_107_Riz_saute_choux_et_carottes_Recette.webp"
   },
   {
     "categoryFolder": "veggies",

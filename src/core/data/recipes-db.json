@@ -11951,6 +11951,94 @@
       }
     }
   },
+  "pc-041": {
+    "id": "pc-041",
+    "name": "Overnight oats épeautre",
+    "categoryId": "cereal-products",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 1,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-030",
+        "name": "Flocons d'épeautre",
+        "quantity": 30,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "pl-019",
+        "name": "Lait demi écrémé",
+        "quantity": 125,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "003",
+        "foodId": "fs-009",
+        "name": "Graines de chia",
+        "quantity": 5,
+        "unit": "g",
+        "category": "Fruits secs"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/cereal-products/photo/PC_41_Overnight_oats_epeautre_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/ingredients/PC_41_Overnight_oats_epeautre_Ingredients.webp"
+      }
+    }
+  },
+  "pc-042": {
+    "id": "pc-042",
+    "name": "Overnight oats avoine",
+    "categoryId": "cereal-products",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 1,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-029",
+        "name": "Flocons d'avoine",
+        "quantity": 25,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "pl-019",
+        "name": "Lait demi écrémé",
+        "quantity": 125,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "003",
+        "foodId": "fs-009",
+        "name": "Graines de chia",
+        "quantity": 5,
+        "unit": "g",
+        "category": "Fruits secs"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/cereal-products/photo/PC_42_Overnight_oats_avoine_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/ingredients/PC_42_Overnight_oats_avoine_Ingredients.webp"
+      }
+    }
+  },
   "pl-001": {
     "id": "pl-001",
     "name": "Lait végétal maison Amande",
@@ -20023,6 +20111,205 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_75_Saumon_quinoa_haricots_verts_et_tomates_cerises_Recette.webp"
+      }
+    }
+  },
+  "poi-076": {
+    "id": "poi-076",
+    "name": "Cabillaud et poêlée de fenouil",
+    "categoryId": "fish",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "po-004",
+        "name": "Poisson blanc",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Poisson"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-045",
+        "name": "Fenouil",
+        "quantity": 400,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-050",
+        "name": "Grenailles",
+        "quantity": 400,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "ep-052",
+        "name": "Persil",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "ep-036",
+        "name": "Huile d'olive",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-027",
+        "name": "Feuille de Laurier",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "fv-042",
+        "name": "Échalote",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/fish/photo/POI_76_Cabillaud_et_poelee_de_fenouil_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/fish/ingredients/POI_76_Cabillaud_et_poelee_de_fenouil_Ingredients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/assets/fish/recipes/POI_76_Cabillaud_et_poelee_de_fenouil_Recette.webp"
+      }
+    }
+  },
+  "poi-077": {
+    "id": "poi-077",
+    "name": "Salade de riz façon Thaï",
+    "categoryId": "fish",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fc-026",
+        "name": "Riz thaï",
+        "quantity": 80,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-015",
+        "name": "Carottes",
+        "preparation": "râpé",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "cn-005",
+        "name": "Pousses de haricots mungo",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Conserves"
+      },
+      {
+        "id": "004",
+        "foodId": "po-001",
+        "name": "Crevettes",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Poisson"
+      },
+      {
+        "id": "005",
+        "foodId": "fv-032",
+        "name": "Concombre",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "006",
+        "foodId": "es-045",
+        "name": "Purée de cacahuètes",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "007",
+        "foodId": "ep-058",
+        "name": "Sauce soja",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-039",
+        "name": "Huile de sésame",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "009",
+        "foodId": "ep-014",
+        "name": "Coriandre feuilles",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "010",
+        "foodId": "fs-013",
+        "name": "Graines de sésame",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "011",
+        "foodId": "fs-005",
+        "name": "Cacahuètes",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "012",
+        "foodId": "ep-063",
+        "name": "Vinaigre balsamique",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/fish/photo/POI_77_Salade_de_riz_facon_Thai_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/fish/ingredients/POI_77_Salade_de_riz_facon_Thai_Ingredients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/assets/fish/recipes/POI_77_Salade_de_riz_facon_Thai_Recette.webp"
       }
     }
   },
@@ -45874,6 +46161,94 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_106_Œufs_à_la_coque_d'hiver_Recette.webp"
+      }
+    }
+  },
+  "veg-107": {
+    "id": "veg-107",
+    "name": "Riz sauté choux et carottes",
+    "categoryId": "veggies",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fc-023",
+        "name": "Riz Basmati",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-015",
+        "name": "Carottes",
+        "preparation": "demi-rondelles",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-022",
+        "name": "Chou blanc",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-063",
+        "name": "Oignon jaune",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 3,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-058",
+        "name": "Sauce soja",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "ep-036",
+        "name": "Huile d'olive",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-014",
+        "name": "Coriandre feuilles",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/veggies/photo/VEG_107_Riz_saute_choux_et_carottes_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/ingredients/VEG_107_Riz_saute_choux_et_carottes_Ingredients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/recipes/VEG_107_Riz_saute_choux_et_carottes_Recette.webp"
       }
     }
   },

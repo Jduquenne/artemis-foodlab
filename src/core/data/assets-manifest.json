@@ -1696,6 +1696,11 @@
   },
   {
     "categoryFolder": "charcuterie",
+    "typeFolder": "photo",
+    "fileName": "CHAR_48_Chou_rouge_pomme_saucisse_et_purée_Photo.webp"
+  },
+  {
+    "categoryFolder": "charcuterie",
     "typeFolder": "ingredients",
     "fileName": "CHAR_01_Purée_Brocoli,_carottes_et_pâté_Ingrédients.webp"
   },
@@ -1931,6 +1936,11 @@
   },
   {
     "categoryFolder": "charcuterie",
+    "typeFolder": "ingredients",
+    "fileName": "CHAR_48_Chou_rouge_pomme_saucisse_et_purée_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "charcuterie",
     "typeFolder": "recipes",
     "fileName": "CHAR_01_Purée_Brocoli_et_pâté_Recette.webp"
   },
@@ -2163,6 +2173,11 @@
     "categoryFolder": "charcuterie",
     "typeFolder": "recipes",
     "fileName": "CHAR_47_Tomates_farcies_au_hachis_de_porc_Recette.webp"
+  },
+  {
+    "categoryFolder": "charcuterie",
+    "typeFolder": "recipes",
+    "fileName": "CHAR_48_Chou_rouge_pomme_saucisse_et_purée_Recette.webp"
   },
   {
     "categoryFolder": "fish",
@@ -2551,6 +2566,16 @@
   },
   {
     "categoryFolder": "fish",
+    "typeFolder": "photo",
+    "fileName": "POI_78_Filet_de_poisson_blanc_et_quinoa_au_fenouil_Photo.webp"
+  },
+  {
+    "categoryFolder": "fish",
+    "typeFolder": "photo",
+    "fileName": "POI_79_Plancha_de_cabillaud_aux_legumes_et_au_citron_Photo.webp"
+  },
+  {
+    "categoryFolder": "fish",
     "typeFolder": "ingredients",
     "fileName": "POI_01_Nouilles_sautées_aux_crevettes_et_légumes_Ingrédients.webp"
   },
@@ -2933,6 +2958,16 @@
     "categoryFolder": "fish",
     "typeFolder": "ingredients",
     "fileName": "POI_77_Salade_de_riz_facon_Thai_Ingredients.webp"
+  },
+  {
+    "categoryFolder": "fish",
+    "typeFolder": "ingredients",
+    "fileName": "POI_78_Filet_de_poisson_blanc_et_quinoa_au_fenouil_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "fish",
+    "typeFolder": "ingredients",
+    "fileName": "POI_79_Plancha_de_cabillaud_aux_legumes_et_au_citron_Ingredients.webp"
   },
   {
     "categoryFolder": "fish",
@@ -3320,6 +3355,16 @@
     "fileName": "POI_77_Salade_de_riz_facon_Thai_Recette.webp"
   },
   {
+    "categoryFolder": "fish",
+    "typeFolder": "recipes",
+    "fileName": "POI_78_Filet_de_poisson_blanc_et_quinoa_au_fenouil_Recette.webp"
+  },
+  {
+    "categoryFolder": "fish",
+    "typeFolder": "recipes",
+    "fileName": "POI_79_Plancha_de_cabillaud_aux_legumes_et_au_citron_Recette.webp"
+  },
+  {
     "categoryFolder": "fruits",
     "typeFolder": "photo",
     "fileName": "FR_01_Abricots_Photo.webp"
@@ -3701,6 +3746,11 @@
   },
   {
     "categoryFolder": "pastries",
+    "typeFolder": "photo",
+    "fileName": "PAT_52_Mini_cakes_protéinés_Photo.webp"
+  },
+  {
+    "categoryFolder": "pastries",
     "typeFolder": "ingredients",
     "fileName": "PAT_01_Cookies_protéinés_banane_chocolat_Ingrédients.webp"
   },
@@ -3956,6 +4006,11 @@
   },
   {
     "categoryFolder": "pastries",
+    "typeFolder": "ingredients",
+    "fileName": "PAT_52_Mini_cakes_protéinés_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "pastries",
     "typeFolder": "recipes",
     "fileName": "PAT_01_Cookies_protéinés_banane_chocolat_Recette.webp"
   },
@@ -4208,6 +4263,11 @@
     "categoryFolder": "pastries",
     "typeFolder": "recipes",
     "fileName": "PAT_51_Tarte_avoine_creme_citron_fruits_rouges_Recette.png"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "recipes",
+    "fileName": "PAT_52_Mini_cakes_protéinés_Recette.webp"
   },
   {
     "categoryFolder": "plant-proteins",
@@ -4471,6 +4531,16 @@
   },
   {
     "categoryFolder": "plant-proteins",
+    "typeFolder": "photo",
+    "fileName": "PV_53_Bowl_chou_rouge_haricots_blancs_patate_douce_Photo.webp"
+  },
+  {
+    "categoryFolder": "plant-proteins",
+    "typeFolder": "photo",
+    "fileName": "PV_54_Salade_quinoa_pois_chiche_concombre_Photo.webp"
+  },
+  {
+    "categoryFolder": "plant-proteins",
     "typeFolder": "ingredients",
     "fileName": "PV_01_Orzo_méditerranéen_Ingrédients.webp"
   },
@@ -4731,6 +4801,16 @@
   },
   {
     "categoryFolder": "plant-proteins",
+    "typeFolder": "ingredients",
+    "fileName": "PV_53_Bowl_chou_rouge_haricots_blancs_patate_douce_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "plant-proteins",
+    "typeFolder": "ingredients",
+    "fileName": "PV_54_Salade_quinoa_pois_chiche_concombre_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "plant-proteins",
     "typeFolder": "recipes",
     "fileName": "PV_01_Orzo_méditerranéen_Recette.webp"
   },
@@ -4988,6 +5068,16 @@
     "categoryFolder": "plant-proteins",
     "typeFolder": "recipes",
     "fileName": "PV_52_Salade_pois_chiches_courgette_Recette.webp"
+  },
+  {
+    "categoryFolder": "plant-proteins",
+    "typeFolder": "recipes",
+    "fileName": "PV_53_Bowl_chou_rouge_haricots_blancs_patate_douce_Recette.webp"
+  },
+  {
+    "categoryFolder": "plant-proteins",
+    "typeFolder": "recipes",
+    "fileName": "PV_54_Salade_quinoa_pois_chiche_concombre_Recette.webp"
   },
   {
     "categoryFolder": "red-meat",
@@ -5281,6 +5371,16 @@
   },
   {
     "categoryFolder": "red-meat",
+    "typeFolder": "photo",
+    "fileName": "VR_59_Roti_de_porc_purée_au_fenouil_Photo.webp"
+  },
+  {
+    "categoryFolder": "red-meat",
+    "typeFolder": "photo",
+    "fileName": "VR_60_Orzo_boulette_courgette_petits_pois_Photo.webp"
+  },
+  {
+    "categoryFolder": "red-meat",
     "typeFolder": "ingredients",
     "fileName": "VR_01_Fajitas_au_bœuf_et_aux_carottes_Ingrédients.webp"
   },
@@ -5568,6 +5668,16 @@
     "categoryFolder": "red-meat",
     "typeFolder": "ingredients",
     "fileName": "VR_58_Riz_courgette_au_boeuf_hache_Ingredients.webp"
+  },
+  {
+    "categoryFolder": "red-meat",
+    "typeFolder": "ingredients",
+    "fileName": "VR_59_Roti_de_porc_purée_au_fenouil_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "red-meat",
+    "typeFolder": "ingredients",
+    "fileName": "VR_60_Orzo_boulette_courgette_petits_pois_Ingredients.webp"
   },
   {
     "categoryFolder": "red-meat",
@@ -5860,6 +5970,16 @@
     "fileName": "VR_58_Riz_courgette_au_boeuf_hache_Recette.webp"
   },
   {
+    "categoryFolder": "red-meat",
+    "typeFolder": "recipes",
+    "fileName": "VR_59_Roti_de_porc_purée_au_fenouil_Recette.webp"
+  },
+  {
+    "categoryFolder": "red-meat",
+    "typeFolder": "recipes",
+    "fileName": "VR_60_Orzo_boulette_courgette_petits_pois_Recette.webp"
+  },
+  {
     "categoryFolder": "veggies",
     "typeFolder": "photo",
     "fileName": "VEG_01_Gratin_de_macaronis_au_soja_Photo.webp"
@@ -5943,6 +6063,11 @@
     "categoryFolder": "veggies",
     "typeFolder": "photo",
     "fileName": "VEG_107_Riz_saute_choux_et_carottes_Photo.webp"
+  },
+  {
+    "categoryFolder": "veggies",
+    "typeFolder": "photo",
+    "fileName": "VEG_108_Tarte_poivrons_Feta_Photo.webp"
   },
   {
     "categoryFolder": "veggies",
@@ -6482,6 +6607,11 @@
   {
     "categoryFolder": "veggies",
     "typeFolder": "ingredients",
+    "fileName": "VEG_108_Tarte_poivrons_Feta_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "veggies",
+    "typeFolder": "ingredients",
     "fileName": "VEG_10_Gratin_de_crozets_aux_poireaux_Ingrédients.webp"
   },
   {
@@ -7013,6 +7143,11 @@
     "categoryFolder": "veggies",
     "typeFolder": "recipes",
     "fileName": "VEG_107_Riz_saute_choux_et_carottes_Recette.webp"
+  },
+  {
+    "categoryFolder": "veggies",
+    "typeFolder": "recipes",
+    "fileName": "VEG_108_Tarte_poivrons_Feta_Recette.webp"
   },
   {
     "categoryFolder": "veggies",
@@ -7856,6 +7991,11 @@
   },
   {
     "categoryFolder": "white-meat",
+    "typeFolder": "photo",
+    "fileName": "VB_79_Quiche_poulet_fenouil_petits_pois_Photo.webp"
+  },
+  {
+    "categoryFolder": "white-meat",
     "typeFolder": "ingredients",
     "fileName": "VB_01_Semoule,_poulet,_patate_douce_et_brocolis_Ingrédients.webp"
   },
@@ -8246,6 +8386,16 @@
   },
   {
     "categoryFolder": "white-meat",
+    "typeFolder": "ingredients",
+    "fileName": "VB_79_Quiche_poulet_fenouil_petits_pois_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "white-meat",
+    "typeFolder": "recipes",
+    "fileName": "VB 60 Poule au riz Recette.webp"
+  },
+  {
+    "categoryFolder": "white-meat",
     "typeFolder": "recipes",
     "fileName": "VB_01_Semoule,_poulet,_patate_douce_et_brocolis_Recette.webp"
   },
@@ -8633,6 +8783,11 @@
     "categoryFolder": "white-meat",
     "typeFolder": "recipes",
     "fileName": "VB_78_Quinoa_filet_de_poulet_legumes_sautes_Recette.png"
+  },
+  {
+    "categoryFolder": "white-meat",
+    "typeFolder": "recipes",
+    "fileName": "VB_79_Quiche_poulet_fenouil_petits_pois_Recette.webp"
   },
   {
     "categoryFolder": "sweet-grocery",

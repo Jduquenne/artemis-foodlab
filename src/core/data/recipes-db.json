@@ -4404,6 +4404,101 @@
       }
     }
   },
+  "char-048": {
+    "id": "char-048",
+    "name": "Chou rouge pomme saucisse et purée",
+    "categoryId": "charcuterie",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "ch-007",
+        "name": "Saucisse",
+        "quantity": 2,
+        "unit": "pièce",
+        "category": "Charcuterie"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-025",
+        "name": "Chou rouge",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-076",
+        "name": "Pommes de terre",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-063",
+        "name": "Oignon jaune",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "foodId": "fv-075",
+        "name": "Pomme",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "006",
+        "foodId": "pl-019",
+        "name": "Lait demi écrémé",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "007",
+        "foodId": "fm-002",
+        "name": "Jaune d’œuf",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-048",
+        "name": "Muscade",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "009",
+        "foodId": "ep-036",
+        "name": "Huile d'olive",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/charcuterie/photo/CHAR_48_Chou_rouge_pomme_saucisse_et_purée_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/ingredients/CHAR_48_Chou_rouge_pomme_saucisse_et_purée_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_48_Chou_rouge_pomme_saucisse_et_purée_Recette.webp"
+      }
+    }
+  },
   "pat-001": {
     "id": "pat-001",
     "name": "Cookies protéinés banane chocolat",
@@ -7250,8 +7345,8 @@
       },
       {
         "id": "003",
-        "foodId": "fv-079",
-        "name": "Potiron ou butternut",
+        "foodId": "fv-037",
+        "name": "Courge butternut ou potiron",
         "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -9096,6 +9191,85 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_51_Tarte_avoine_creme_citron_fruits_rouges_Recette.png"
+      }
+    }
+  },
+  "pat-052": {
+    "id": "pat-052",
+    "name": "Mini cakes protéinés",
+    "categoryId": "pastries",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 8,
+    "batchCooking": true,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-020",
+        "name": "Farine d’épeautre",
+        "quantity": 120,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "pl-029",
+        "name": "Skyr",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "003",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 3,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "004",
+        "foodId": "es-046",
+        "name": "Sirop d'agave",
+        "quantity": 30,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "005",
+        "foodId": "ep-004",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-041",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "es-040",
+        "name": "Pépites de chocolat 70%",
+        "quantity": 60,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/pastries/photo/PAT_52_Mini_cakes_protéinés_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/ingredients/PAT_52_Mini_cakes_protéinés_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/recipes/PAT_52_Mini_cakes_protéinés_Recette.webp"
       }
     }
   },
@@ -13695,8 +13869,8 @@
       },
       {
         "id": "007",
-        "foodId": "pl-031",
-        "name": "St Môret ou Petit Billy",
+        "foodId": "pl-015",
+        "name": "Fromage frais",
         "quantity": 60,
         "unit": "g",
         "category": "Produits laitiers"
@@ -20313,6 +20487,296 @@
       }
     }
   },
+  "poi-078": {
+    "id": "poi-078",
+    "name": "Filet de poisson blanc et quinoa au fenouil",
+    "categoryId": "fish",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fc-022",
+        "name": "Quinoa",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-045",
+        "name": "Fenouil",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-063",
+        "name": "Oignon jaune",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-018",
+        "name": "Céleri branche",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "foodId": "ep-006",
+        "name": "Bouillon de légumes",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "po-004",
+        "name": "Poisson blanc",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Poisson"
+      },
+      {
+        "id": "007",
+        "foodId": "fv-028",
+        "name": "Citron non traité",
+        "quantity": null,
+        "unit": null,
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-002",
+        "name": "Aneth",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "009",
+        "foodId": "ep-036",
+        "name": "Huile d'olive",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/fish/photo/POI_78_Filet_de_poisson_blanc_et_quinoa_au_fenouil_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/fish/ingredients/POI_78_Filet_de_poisson_blanc_et_quinoa_au_fenouil_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/assets/fish/recipes/POI_78_Filet_de_poisson_blanc_et_quinoa_au_fenouil_Recette.webp"
+      }
+    }
+  },
+  "poi-079": {
+    "id": "poi-079",
+    "name": "Plancha de cabillaud aux légumes et au citron",
+    "categoryId": "fish",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "po-004",
+        "name": "Poisson blanc",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Poisson"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-064",
+        "name": "Oignon rouge",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-002",
+        "name": "Ail",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-040",
+        "name": "Courgette",
+        "quantity": 500,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "foodId": "cn-004",
+        "name": "Olives verte",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Conserves"
+      },
+      {
+        "id": "006",
+        "foodId": "fv-028",
+        "name": "Citron non traité",
+        "quantity": null,
+        "unit": null,
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "007",
+        "foodId": "ep-036",
+        "name": "Huile d'olive",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-052",
+        "name": "Persil",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "009",
+        "foodId": "fv-076",
+        "name": "Pommes de terre",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "010",
+        "foodId": "ep-050",
+        "name": "Paprika",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "011",
+        "foodId": "ep-062",
+        "name": "Thym",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/fish/photo/POI_79_Plancha_de_cabillaud_aux_legumes_et_au_citron_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/fish/ingredients/POI_79_Plancha_de_cabillaud_aux_legumes_et_au_citron_Ingredients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/assets/fish/recipes/POI_79_Plancha_de_cabillaud_aux_legumes_et_au_citron_Recette.webp"
+      }
+    }
+  },
+  "poi-080": {
+    "id": "poi-080",
+    "name": "Salade de lentilles nordique",
+    "categoryId": "fish",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fc-009",
+        "name": "Lentille vertes sèches",
+        "quantity": 60,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "002",
+        "foodId": "fc-002",
+        "name": "Boulgour",
+        "quantity": 60,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "003",
+        "foodId": "pl-025",
+        "name": "Mozzarella",
+        "quantity": 125,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "004",
+        "foodId": "po-006",
+        "name": "Saumon fumé",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Poisson"
+      },
+      {
+        "id": "005",
+        "foodId": "fv-042",
+        "name": "Échalote",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-036",
+        "name": "Huile d'olive",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "ep-041",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-002",
+        "name": "Aneth",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "009",
+        "foodId": "ep-011",
+        "name": "Ciboulette",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ]
+  },
   "pv-001": {
     "id": "pv-001",
     "name": "Orzo méditerranéen",
@@ -20359,7 +20823,7 @@
         "id": "005",
         "foodId": "fv-002",
         "name": "Ail",
-        "quantity": 1,
+        "quantity": 2,
         "unit": "pièce",
         "category": "Fruits et légumes"
       },
@@ -26538,6 +27002,212 @@
       }
     }
   },
+  "pv-053": {
+    "id": "pv-053",
+    "name": "Bowl chou rouge haricots blancs patate douce",
+    "categoryId": "plant-proteins",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fc-007",
+        "name": "Haricots blancs secs",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-068",
+        "name": "Patate douce",
+        "quantity": 250,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-055",
+        "name": "Mâche",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-008",
+        "name": "Avocat",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "foodId": "fv-025",
+        "name": "Chou rouge",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-036",
+        "name": "Huile d'olive",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "ep-038",
+        "name": "Huile de colza",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-050",
+        "name": "Paprika",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "009",
+        "foodId": "ep-064",
+        "name": "Vinaigre de cidre",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/plant-proteins/photo/PV_53_Bowl_chou_rouge_haricots_blancs_patate_douce_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/ingredients/PV_53_Bowl_chou_rouge_haricots_blancs_patate_douce_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_53_Bowl_chou_rouge_haricots_blancs_patate_douce_Recette.webp"
+      }
+    }
+  },
+  "pv-054": {
+    "id": "pv-054",
+    "name": "Salade quinoa pois chiche concombre",
+    "categoryId": "plant-proteins",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fc-022",
+        "name": "Quinoa",
+        "quantity": 80,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-032",
+        "name": "Concombre",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-088",
+        "name": "Tomates",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-064",
+        "name": "Oignon rouge",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "baseId": "base-013",
+        "name": "Pois chiches grillés",
+        "quantity": 2,
+        "unit": "portion",
+        "category": "Recette"
+      },
+      {
+        "id": "006",
+        "foodId": "pl-014",
+        "name": "Fromage blanc 3%",
+        "quantity": 125,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "007",
+        "foodId": "ep-036",
+        "name": "Huile d'olive",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-052",
+        "name": "Persil",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "009",
+        "foodId": "fv-002",
+        "name": "Ail",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "010",
+        "foodId": "ep-047",
+        "name": "Moutarde",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "011",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 2,
+        "unit": "pièce",
+        "category": "Ferme"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/plant-proteins/photo/PV_54_Salade_quinoa_pois_chiche_concombre_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/ingredients/PV_54_Salade_quinoa_pois_chiche_concombre_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_54_Salade_quinoa_pois_chiche_concombre_Recette.webp"
+      }
+    }
+  },
   "vb-001": {
     "id": "vb-001",
     "name": "Semoule, poulet, patate douce et brocolis",
@@ -27265,8 +27935,8 @@
       },
       {
         "id": "004",
-        "foodId": "fv-074",
-        "name": "Poivrons lanières",
+        "foodId": "fv-073",
+        "name": "Poivrons",
         "quantity": 500,
         "unit": "g",
         "category": "Fruits et légumes"
@@ -34790,6 +35460,109 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_78_Quinoa_filet_de_poulet_legumes_sautes_Recette.png"
+      }
+    }
+  },
+  "vb-079": {
+    "id": "vb-079",
+    "name": "Quiche poulet fenouil petits pois",
+    "categoryId": "white-meat",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 4,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "vm-006",
+        "name": "Filet de poulet",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Viande"
+      },
+      {
+        "id": "002",
+        "baseId": "base-009",
+        "name": "Pâte brisée au skyr",
+        "quantity": 4,
+        "unit": "portion",
+        "category": "Recette"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-045",
+        "name": "Fenouil",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 3,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "005",
+        "foodId": "pl-014",
+        "name": "Fromage blanc 3%",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-036",
+        "name": "Huile d'olive",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "fv-064",
+        "name": "Oignon rouge",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "008",
+        "foodId": "su-011",
+        "name": "Petits pois",
+        "quantity": 120,
+        "unit": "g",
+        "category": "Surgelés"
+      },
+      {
+        "id": "009",
+        "foodId": "pl-009",
+        "name": "Comté",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "010",
+        "foodId": "ep-002",
+        "name": "Aneth",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/white-meat/photo/VB_79_Quiche_poulet_fenouil_petits_pois_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/ingredients/VB_79_Quiche_poulet_fenouil_petits_pois_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/recipes/VB_79_Quiche_poulet_fenouil_petits_pois_Recette.webp"
       }
     }
   },
@@ -46252,6 +47025,161 @@
       }
     }
   },
+  "veg-108": {
+    "id": "veg-108",
+    "name": "Tarte poivrons Feta",
+    "categoryId": "veggies",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "baseId": "base-011",
+        "name": "Pâte à pizza",
+        "quantity": 2,
+        "unit": "portion",
+        "category": "Recette"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-073",
+        "name": "Poivrons",
+        "quantity": 500,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-064",
+        "name": "Oignon rouge",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "ep-047",
+        "name": "Moutarde",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "fv-002",
+        "name": "Ail",
+        "quantity": 2,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "006",
+        "foodId": "pl-010",
+        "name": "Feta",
+        "quantity": 80,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "007",
+        "foodId": "es-035",
+        "name": "Miel",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-036",
+        "name": "Huile d'olive",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "009",
+        "foodId": "ep-062",
+        "name": "Thym",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/veggies/photo/VEG_108_Tarte_poivrons_Feta_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/ingredients/VEG_108_Tarte_poivrons_Feta_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/recipes/VEG_108_Tarte_poivrons_Feta_Recette.webp"
+      }
+    }
+  },
+  "veg-109": {
+    "id": "veg-109",
+    "name": "Risotto sarrasin carotte oeufs au plat",
+    "categoryId": "veggies",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fc-027",
+        "name": "Sarrasin",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-015",
+        "name": "Carottes",
+        "quantity": 250,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-063",
+        "name": "Oignon jaune",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 4,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "005",
+        "foodId": "ep-036",
+        "name": "Huile d'olive",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-006",
+        "name": "Bouillon de légumes",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ]
+  },
   "vr-001": {
     "id": "vr-001",
     "name": "Fajitas au bœuf et aux carottes",
@@ -52030,6 +52958,204 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_58_Riz_courgette_au_boeuf_hache_Recette.webp"
+      }
+    }
+  },
+  "vr-059": {
+    "id": "vr-059",
+    "name": "Roti de porc purée au fenouil",
+    "categoryId": "red-meat",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "vm-012",
+        "name": "Rôti de porc",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Viande"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-045",
+        "name": "Fenouil",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-076",
+        "name": "Pommes de terre",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "ep-062",
+        "name": "Thym",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "ep-036",
+        "name": "Huile d'olive",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "pl-001",
+        "name": "Beurre",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "007",
+        "foodId": "fv-087",
+        "name": "Salade",
+        "quantity": null,
+        "unit": null,
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-038",
+        "name": "Huile de colza",
+        "quantity": 5,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "009",
+        "foodId": "ep-063",
+        "name": "Vinaigre balsamique",
+        "quantity": 5,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "010",
+        "foodId": "ep-054",
+        "name": "Persillade",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/red-meat/photo/VR_59_Roti_de_porc_purée_au_fenouil_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/ingredients/VR_59_Roti_de_porc_purée_au_fenouil_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/recipes/VR_59_Roti_de_porc_purée_au_fenouil_Recette.webp"
+      }
+    }
+  },
+  "vr-060": {
+    "id": "vr-060",
+    "name": "Orzo boulette courgette petits pois",
+    "categoryId": "red-meat",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-040",
+        "name": "Courgette",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fc-013",
+        "name": "Orzo",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "003",
+        "baseId": "base-014",
+        "name": "Boulettes de boeuf",
+        "quantity": 2,
+        "unit": "portion",
+        "category": "Recette"
+      },
+      {
+        "id": "004",
+        "foodId": "su-011",
+        "name": "Petits pois",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Surgelés"
+      },
+      {
+        "id": "005",
+        "foodId": "fv-042",
+        "name": "Échalote",
+        "quantity": 30,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "006",
+        "foodId": "fv-002",
+        "name": "Ail",
+        "quantity": 2,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "007",
+        "foodId": "ep-006",
+        "name": "Bouillon de légumes",
+        "quantity": 250,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "pl-026",
+        "name": "Parmesan",
+        "quantity": 25,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "009",
+        "foodId": "ep-041",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/red-meat/photo/VR_60_Orzo_boulette_courgette_petits_pois_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/ingredients/VR_60_Orzo_boulette_courgette_petits_pois_Ingredients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/recipes/VR_60_Orzo_boulette_courgette_petits_pois_Recette.webp"
       }
     }
   },

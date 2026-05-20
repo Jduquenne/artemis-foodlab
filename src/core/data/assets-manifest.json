@@ -811,6 +811,11 @@
   },
   {
     "categoryFolder": "cereal-products",
+    "typeFolder": "photo",
+    "fileName": "PC_43_Muffins_anglais_semi-complets_Photo.webp"
+  },
+  {
+    "categoryFolder": "cereal-products",
     "typeFolder": "ingredients",
     "fileName": "PC32_Pancakes_Vegan_noisette_Ingrédients.webp"
   },
@@ -996,6 +1001,11 @@
   },
   {
     "categoryFolder": "cereal-products",
+    "typeFolder": "ingredients",
+    "fileName": "PC_43_Muffins_anglais_semi-complets_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "cereal-products",
     "typeFolder": "recipes",
     "fileName": "PC_01_Pancakes_de_pommes_à_l’alsacienne_Recette.webp"
   },
@@ -1158,6 +1168,11 @@
     "categoryFolder": "cereal-products",
     "typeFolder": "recipes",
     "fileName": "PC_39_Pancakes_aux_flocons_de_quinoa_Recette.webp"
+  },
+  {
+    "categoryFolder": "cereal-products",
+    "typeFolder": "recipes",
+    "fileName": "PC_43_Muffins_anglais_semi-complets_Recette.webp"
   },
   {
     "categoryFolder": "dairy-products",
@@ -3761,6 +3776,36 @@
   },
   {
     "categoryFolder": "pastries",
+    "typeFolder": "photo",
+    "fileName": "PAT_53_Cakes_café_noix_Photo.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "photo",
+    "fileName": "PAT_54_Biscuits_au_café_Photo.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "photo",
+    "fileName": "PAT_56_Gâteau_au_café_Photo.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "photo",
+    "fileName": "PAT_57_Muffins_fromage_blanc_fourrés_fraise_Photo.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "photo",
+    "fileName": "PAT_58_Cake_lentilles_et_noisette_Photo.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "photo",
+    "fileName": "PAT_59_Brownie_lentilles_Photo.webp"
+  },
+  {
+    "categoryFolder": "pastries",
     "typeFolder": "ingredients",
     "fileName": "PAT_01_Cookies_protéinés_banane_chocolat_Ingrédients.webp"
   },
@@ -4021,6 +4066,36 @@
   },
   {
     "categoryFolder": "pastries",
+    "typeFolder": "ingredients",
+    "fileName": "PAT_53_Cakes_café_noix_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "ingredients",
+    "fileName": "PAT_54_Biscuits_au_café_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "ingredients",
+    "fileName": "PAT_56_Gâteau_au_café_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "ingredients",
+    "fileName": "PAT_57_Muffins_fromage_blanc_fourrés_fraise_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "ingredients",
+    "fileName": "PAT_58_Cake_lentilles_et_noisette_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "ingredients",
+    "fileName": "PAT_59_Brownie_lentilles_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "pastries",
     "typeFolder": "recipes",
     "fileName": "PAT_01_Cookies_protéinés_banane_chocolat_Recette.webp"
   },
@@ -4278,6 +4353,36 @@
     "categoryFolder": "pastries",
     "typeFolder": "recipes",
     "fileName": "PAT_52_Mini_cakes_protéinés_Recette.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "recipes",
+    "fileName": "PAT_53_Cakes_café_noix_Recette.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "recipes",
+    "fileName": "PAT_54_Biscuits_au_café_Recette.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "recipes",
+    "fileName": "PAT_56_Gâteau_au_café_Recette.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "recipes",
+    "fileName": "PAT_57_Muffins_fromage_blanc_fourrés_fraise_Recette.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "recipes",
+    "fileName": "PAT_58_Cake_lentilles_et_noisette_Recette.webp"
+  },
+  {
+    "categoryFolder": "pastries",
+    "typeFolder": "recipes",
+    "fileName": "PAT_59_Brownie_lentilles_Recette.webp"
   },
   {
     "categoryFolder": "plant-proteins",
@@ -4551,6 +4656,16 @@
   },
   {
     "categoryFolder": "plant-proteins",
+    "typeFolder": "photo",
+    "fileName": "PV_55_Lentilles_au_miel_et_à_la_moutarde_Photo.webp"
+  },
+  {
+    "categoryFolder": "plant-proteins",
+    "typeFolder": "photo",
+    "fileName": "PV_56_Lentilles_kung_pao_Photo.webp"
+  },
+  {
+    "categoryFolder": "plant-proteins",
     "typeFolder": "ingredients",
     "fileName": "PV_01_Orzo_méditerranéen_Ingrédients.webp"
   },
@@ -4821,6 +4936,16 @@
   },
   {
     "categoryFolder": "plant-proteins",
+    "typeFolder": "ingredients",
+    "fileName": "PV_55_Lentilles_au_miel_et_à_la_moutarde_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "plant-proteins",
+    "typeFolder": "ingredients",
+    "fileName": "PV_56_Lentilles_kung_pao_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "plant-proteins",
     "typeFolder": "recipes",
     "fileName": "PV_01_Orzo_méditerranéen_Recette.webp"
   },
@@ -5088,6 +5213,16 @@
     "categoryFolder": "plant-proteins",
     "typeFolder": "recipes",
     "fileName": "PV_54_Salade_quinoa_pois_chiche_concombre_Recette.webp"
+  },
+  {
+    "categoryFolder": "plant-proteins",
+    "typeFolder": "recipes",
+    "fileName": "PV_55_Lentilles_au_miel_et_à_la_moutarde_Recette.webp"
+  },
+  {
+    "categoryFolder": "plant-proteins",
+    "typeFolder": "recipes",
+    "fileName": "PV_56_Lentilles_kung_pao_Recette.webp"
   },
   {
     "categoryFolder": "red-meat",

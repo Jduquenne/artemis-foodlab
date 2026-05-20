@@ -9371,7 +9371,18 @@
         "unit": "g",
         "category": "Produits laitiers"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/pastries/photo/PAT_53_Cakes_café_noix_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/ingredients/PAT_53_Cakes_café_noix_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/recipes/PAT_53_Cakes_café_noix_Recette.webp"
+      }
+    }
   },
   "pat-054": {
     "id": "pat-054",
@@ -9431,7 +9442,18 @@
         "unit": "g",
         "category": "Produits laitiers"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/pastries/photo/PAT_54_Biscuits_au_café_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/ingredients/PAT_54_Biscuits_au_café_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/recipes/PAT_54_Biscuits_au_café_Recette.webp"
+      }
+    }
   },
   "pat-055": {
     "id": "pat-055",
@@ -9607,7 +9629,18 @@
         "unit": "g",
         "category": "Fruits secs"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/pastries/photo/PAT_56_Gâteau_au_café_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/ingredients/PAT_56_Gâteau_au_café_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/recipes/PAT_56_Gâteau_au_café_Recette.webp"
+      }
+    }
   },
   "pat-057": {
     "id": "pat-057",
@@ -9691,7 +9724,18 @@
         "unit": "g",
         "category": "Epicerie sucrée"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/pastries/photo/PAT_57_Muffins_fromage_blanc_fourrés_fraise_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/ingredients/PAT_57_Muffins_fromage_blanc_fourrés_fraise_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/recipes/PAT_57_Muffins_fromage_blanc_fourrés_fraise_Recette.webp"
+      }
+    }
   },
   "pat-058": {
     "id": "pat-058",
@@ -9767,7 +9811,18 @@
         "unit": null,
         "category": "Epices et condiments"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/pastries/photo/PAT_58_Cake_lentilles_et_noisette_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/ingredients/PAT_58_Cake_lentilles_et_noisette_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/recipes/PAT_58_Cake_lentilles_et_noisette_Recette.webp"
+      }
+    }
   },
   "pat-059": {
     "id": "pat-059",
@@ -9835,7 +9890,18 @@
         "unit": null,
         "category": "Epices et condiments"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/pastries/photo/PAT_59_Brownie_lentilles_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/ingredients/PAT_59_Brownie_lentilles_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/recipes/PAT_59_Brownie_lentilles_Recette.webp"
+      }
+    }
   },
   "pc-001": {
     "id": "pc-001",
@@ -11227,7 +11293,7 @@
     "categoryId": "cereal-products",
     "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
-    "defaultPortions": 8,
+    "defaultPortions": 6,
     "batchCooking": true,
     "isDessert": false,
     "ingredients": [
@@ -12827,7 +12893,18 @@
         "unit": "g",
         "category": "Epicerie sucrée"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/cereal-products/photo/PC_43_Muffins_anglais_semi-complets_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/ingredients/PC_43_Muffins_anglais_semi-complets_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_43_Muffins_anglais_semi-complets_Recette.webp"
+      }
+    }
   },
   "pl-001": {
     "id": "pl-001",
@@ -27923,7 +28000,18 @@
         "unit": "pièce",
         "category": "Fruits et légumes"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/plant-proteins/photo/PV_55_Lentilles_au_miel_et_à_la_moutarde_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/ingredients/PV_55_Lentilles_au_miel_et_à_la_moutarde_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_55_Lentilles_au_miel_et_à_la_moutarde_Recette.webp"
+      }
+    }
   },
   "pv-056": {
     "id": "pv-056",
@@ -28047,7 +28135,18 @@
         "unit": "g",
         "category": "Epicerie sucrée"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/plant-proteins/photo/PV_56_Lentilles_kung_pao_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/ingredients/PV_56_Lentilles_kung_pao_Ingrédients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_56_Lentilles_kung_pao_Recette.webp"
+      }
+    }
   },
   "vb-001": {
     "id": "vb-001",

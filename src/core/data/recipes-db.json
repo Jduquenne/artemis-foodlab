@@ -9273,6 +9273,570 @@
       }
     }
   },
+  "pat-053": {
+    "id": "pat-053",
+    "name": "Cakes café noix",
+    "categoryId": "pastries",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 12,
+    "batchCooking": true,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-020",
+        "name": "Farine d’épeautre",
+        "quantity": 180,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "es-051",
+        "name": "Sucre de coco",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "003",
+        "foodId": "ep-004",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "004",
+        "foodId": "ep-041",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "fs-018",
+        "name": "Noix",
+        "quantity": 60,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "006",
+        "foodId": "es-005",
+        "name": "Café espresso",
+        "quantity": 40,
+        "unit": "ml",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "007",
+        "foodId": "es-054",
+        "name": "Vanille",
+        "quantity": null,
+        "unit": null,
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "008",
+        "foodId": "pl-019",
+        "name": "Lait demi écrémé",
+        "quantity": 180,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "009",
+        "foodId": "ep-038",
+        "name": "Huile de colza",
+        "quantity": 30,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "010",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "011",
+        "foodId": "pl-014",
+        "name": "Fromage blanc 3%",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Produits laitiers"
+      }
+    ]
+  },
+  "pat-054": {
+    "id": "pat-054",
+    "name": "Biscuits au café",
+    "categoryId": "pastries",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 25,
+    "batchCooking": true,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-018",
+        "name": "Farine complète",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "es-051",
+        "name": "Sucre de coco",
+        "quantity": 80,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "003",
+        "foodId": "ep-004",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "004",
+        "foodId": "ep-041",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "es-005",
+        "name": "Café espresso",
+        "quantity": 130,
+        "unit": "ml",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "006",
+        "foodId": "pl-001",
+        "name": "Beurre",
+        "quantity": 70,
+        "unit": "g",
+        "category": "Produits laitiers"
+      }
+    ]
+  },
+  "pat-055": {
+    "id": "pat-055",
+    "name": "Biscotti café amandes",
+    "categoryId": "pastries",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 30,
+    "batchCooking": true,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-018",
+        "name": "Farine complète",
+        "quantity": 450,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "es-051",
+        "name": "Sucre de coco",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "003",
+        "foodId": "ep-004",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "004",
+        "foodId": "ep-041",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "es-005",
+        "name": "Café espresso",
+        "quantity": 80,
+        "unit": "ml",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "006",
+        "foodId": "fv-031",
+        "name": "Compote de pomme maison",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "007",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 2,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "008",
+        "foodId": "fs-002",
+        "name": "Amandes",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fruits secs"
+      }
+    ]
+  },
+  "pat-056": {
+    "id": "pat-056",
+    "name": "Gâteau au café",
+    "categoryId": "pastries",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 10,
+    "batchCooking": true,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-018",
+        "name": "Farine complète",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "es-027",
+        "name": "Fécule de maïs",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "003",
+        "foodId": "ep-004",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "004",
+        "foodId": "ep-041",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "es-005",
+        "name": "Café espresso",
+        "quantity": 100,
+        "unit": "ml",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "006",
+        "foodId": "pl-019",
+        "name": "Lait demi écrémé",
+        "quantity": 120,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "007",
+        "foodId": "es-046",
+        "name": "Sirop d'agave",
+        "quantity": 40,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "008",
+        "foodId": "pl-001",
+        "name": "Beurre",
+        "quantity": 80,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "009",
+        "foodId": "es-051",
+        "name": "Sucre de coco",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "010",
+        "foodId": "es-002",
+        "name": "Amandes en poudre",
+        "quantity": 60,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "011",
+        "foodId": "fs-011",
+        "name": "Graines de lin",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Fruits secs"
+      }
+    ]
+  },
+  "pat-057": {
+    "id": "pat-057",
+    "name": "Muffins fromage blanc fourrés fraise",
+    "categoryId": "pastries",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 10,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-020",
+        "name": "Farine d’épeautre",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-031",
+        "name": "Compote de pomme maison",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 3,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "004",
+        "foodId": "es-046",
+        "name": "Sirop d'agave",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "005",
+        "foodId": "ep-041",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-004",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "pl-014",
+        "name": "Fromage blanc 3%",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "008",
+        "foodId": "fv-047",
+        "name": "Fraises",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "009",
+        "foodId": "es-051",
+        "name": "Sucre de coco",
+        "quantity": 40,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      }
+    ]
+  },
+  "pat-058": {
+    "id": "pat-058",
+    "name": "Cake lentilles et noisette",
+    "categoryId": "pastries",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 10,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fc-009",
+        "name": "Lentille vertes sèches",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "002",
+        "foodId": "fs-016",
+        "name": "Noisettes",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "003",
+        "foodId": "es-006",
+        "name": "Cassonade Graeffe",
+        "quantity": 30,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "004",
+        "foodId": "es-035",
+        "name": "Miel",
+        "quantity": 30,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "005",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 2,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-004",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "pl-002",
+        "name": "Beurre demi sel",
+        "quantity": 30,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-064",
+        "name": "Vinaigre de cidre",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ]
+  },
+  "pat-059": {
+    "id": "pat-059",
+    "name": "Brownie lentilles",
+    "categoryId": "pastries",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 9,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fc-009",
+        "name": "Lentille vertes sèches",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "002",
+        "foodId": "es-008",
+        "name": "Chocolat 74% cacao",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "003",
+        "foodId": "es-006",
+        "name": "Cassonade Graeffe",
+        "quantity": 30,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "004",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 2,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "005",
+        "foodId": "ep-004",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "pl-002",
+        "name": "Beurre demi sel",
+        "quantity": 40,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "007",
+        "foodId": "ep-064",
+        "name": "Vinaigre de cidre",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      }
+    ]
+  },
   "pc-001": {
     "id": "pc-001",
     "name": "Pancakes de pommes à l’alsacienne",
@@ -10663,7 +11227,7 @@
     "categoryId": "cereal-products",
     "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
-    "defaultPortions": 6,
+    "defaultPortions": 8,
     "batchCooking": true,
     "isDessert": false,
     "ingredients": [
@@ -10671,7 +11235,7 @@
         "id": "001",
         "foodId": "es-017",
         "name": "Farine blanche",
-        "quantity": 120,
+        "quantity": 170,
         "unit": "g",
         "category": "Epicerie sucrée"
       },
@@ -11628,7 +12192,7 @@
     "categoryId": "cereal-products",
     "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
-    "defaultPortions": 10,
+    "defaultPortions": 16,
     "batchCooking": true,
     "isDessert": false,
     "ingredients": [
@@ -11636,7 +12200,7 @@
         "id": "001",
         "foodId": "es-026",
         "name": "Farine semi complète",
-        "quantity": 270,
+        "quantity": 540,
         "unit": "g",
         "category": "Epicerie sucrée"
       },
@@ -11668,7 +12232,7 @@
         "id": "005",
         "foodId": "es-033",
         "name": "Levure boulangère fraîche",
-        "quantity": 14,
+        "quantity": 10,
         "unit": "g",
         "category": "Epicerie sucrée"
       },
@@ -12014,8 +12578,8 @@
       },
       {
         "id": "006",
-        "foodId": "ep-042",
-        "name": "Jus de citron ou vinaigre de cidre",
+        "foodId": "ep-041",
+        "name": "Jus de citron",
         "quantity": null,
         "unit": null,
         "category": "Epices et condiments"
@@ -12212,6 +12776,58 @@
         "url": "/artemis-foodlab/assets/cereal-products/ingredients/PC_42_Overnight_oats_avoine_Ingredients.webp"
       }
     }
+  },
+  "pc-043": {
+    "id": "pc-043",
+    "name": "Muffins anglais semi-complets",
+    "categoryId": "cereal-products",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 8,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-026",
+        "name": "Farine semi complète",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "pl-019",
+        "name": "Lait demi écrémé",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "003",
+        "foodId": "es-033",
+        "name": "Levure boulangère fraîche",
+        "quantity": 7,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "004",
+        "foodId": "ep-036",
+        "name": "Huile d'olive",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "es-049",
+        "name": "Sucre",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      }
+    ]
   },
   "pl-001": {
     "id": "pl-001",
@@ -27207,6 +27823,231 @@
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_54_Salade_quinoa_pois_chiche_concombre_Recette.webp"
       }
     }
+  },
+  "pv-055": {
+    "id": "pv-055",
+    "name": "Lentilles au miel et à la moutarde",
+    "categoryId": "plant-proteins",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fc-009",
+        "name": "Lentille vertes sèches",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-015",
+        "name": "Carottes",
+        "preparation": "râpé",
+        "quantity": 125,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-089",
+        "name": "Tomates cerises",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-064",
+        "name": "Oignon rouge",
+        "quantity": 0.5,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "foodId": "cn-003",
+        "name": "Maïs",
+        "quantity": 140,
+        "unit": "g",
+        "category": "Conserves"
+      },
+      {
+        "id": "006",
+        "foodId": "fv-040",
+        "name": "Courgette",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "007",
+        "foodId": "ep-036",
+        "name": "Huile d'olive",
+        "quantity": 38,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-047",
+        "name": "Moutarde",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "009",
+        "foodId": "es-035",
+        "name": "Miel",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "010",
+        "foodId": "ep-041",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "011",
+        "foodId": "fv-002",
+        "name": "Ail",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      }
+    ]
+  },
+  "pv-056": {
+    "id": "pv-056",
+    "name": "Lentilles kung pao",
+    "categoryId": "plant-proteins",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fc-009",
+        "name": "Lentille vertes sèches",
+        "quantity": 80,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "002",
+        "foodId": "fc-023",
+        "name": "Riz Basmati",
+        "quantity": 80,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "003",
+        "foodId": "fs-020",
+        "name": "Noix de cajou",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-018",
+        "name": "Céleri branche",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "foodId": "fv-073",
+        "name": "Poivrons",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-030",
+        "name": "Gingembre en poudre",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "ep-036",
+        "name": "Huile d'olive",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "fv-063",
+        "name": "Oignon jaune",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "009",
+        "foodId": "ep-041",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "010",
+        "foodId": "fv-002",
+        "name": "Ail",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "011",
+        "foodId": "ep-058",
+        "name": "Sauce soja",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "012",
+        "foodId": "ep-039",
+        "name": "Huile de sésame",
+        "quantity": 5,
+        "unit": "g",
+        "category": "Epices et condiments"
+      },
+      {
+        "id": "013",
+        "foodId": "es-047",
+        "name": "Sirop d'érable",
+        "quantity": 5,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "016",
+        "foodId": "es-027",
+        "name": "Fécule de maïs",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      }
+    ]
   },
   "vb-001": {
     "id": "vb-001",

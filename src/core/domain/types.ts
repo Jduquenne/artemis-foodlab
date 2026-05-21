@@ -197,3 +197,9 @@ export interface HouseholdRecord {
   id: string;
   lastCheckedAt: string;
 }
+
+export interface ChangelogEntry {
+  date: string;
+  recipeIds: string[];
+  note?: string;
+}

@@ -183,6 +183,17 @@ The app uses a **CSS variable-based theme** defined in `src/index.css`. Tailwind
 
 When the user asks for a **commit**, respond with only the commit message text — do not run any git commands. Format: `feature: <description>` or `fix: <description>`. In English. Short, no bullet points, no technical details.
 
+### New recipes commit
+
+When the user asks for a **commit and mentions new recipes**, before proposing the commit message:
+
+1. Run `git diff --name-only --diff-filter=A HEAD` (or `git status`) to list newly added files under `public/assets/`.
+2. For each new image file, extract the recipe ID:
+   - Image filenames follow the pattern `PREFIX_NN_…` (uppercase, e.g. `CHAR_01_…`, `VR_58_…`).
+   - Convert to recipe ID: lowercase prefix + `-` + zero-padded 3-digit number (e.g. `CHAR_01` → `char-001`, `VR_58` → `vr-058`). Verify the ID exists in `recipes-db.json`.
+3. Update `src/core/data/changelog.json`: prepend a new entry `{ "date": "<today ISO>", "recipeIds": [...] }` at the top of the array.
+4. Then increment the version and give the commit message as usual.
+
 ### Versioning
 
 The app version is tracked in `package.json`. **Before proposing any commit message, always increment the version** according to these rules:

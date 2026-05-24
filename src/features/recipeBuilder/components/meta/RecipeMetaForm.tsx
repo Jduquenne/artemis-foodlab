@@ -153,6 +153,17 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
           ))}
         </div>
       </div>
+
+      <div>
+        <label className={labelClass}>Instructions</label>
+        <textarea
+          value={(state.instructions ?? []).join("\n")}
+          onChange={e => onChange({ instructions: e.target.value === "" ? [] : e.target.value.split("\n") })}
+          placeholder={"Étape 1\nÉtape 2\n..."}
+          rows={4}
+          className={`${inputClass} resize-none font-mono text-xs leading-relaxed`}
+        />
+      </div>
     </div>
   );
 };

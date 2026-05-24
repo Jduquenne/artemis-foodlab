@@ -23,6 +23,7 @@ export interface RecipeBuilderState {
   isDessert: boolean;
   batchCooking: boolean;
   ingredients: DraftIngredient[];
+  instructions: string[];
 }
 
 export const initialRecipeBuilderState = (): RecipeBuilderState => ({
@@ -35,4 +36,5 @@ export const initialRecipeBuilderState = (): RecipeBuilderState => ({
   isDessert: false,
   batchCooking: false,
   ingredients: [],
+  instructions: [],
 });

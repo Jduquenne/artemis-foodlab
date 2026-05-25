@@ -19,6 +19,11 @@ const INSTRUCTION_TEXT_INDENT = 10;
 const SMALL_CARD_TEXT_X = 71;
 const SMALL_CARD_ITEM_DY = 7;
 const SMALL_CARD_CAT_DY = 12;
+const SMALL_CARD_BASE_FONT = 6;
+const SMALL_CARD_MD_THRESHOLD = 12;
+const SMALL_CARD_SM_THRESHOLD = 16;
+const SMALL_CARD_MD_FONT = 5.5;
+const SMALL_CARD_SM_FONT = 5;
 
 const RECETTE_TEXT_Y = 110;
 const RECETTE_TEXT_X = 29.5;
@@ -26,9 +31,27 @@ const RECETTE_LINE_H = 11;
 const RECETTE_CAT_EXTRA_H = 3;
 const RECETTE_LINE_MAX_CHARS = 38;
 const RECETTE_BADGE_W = 14;
+const RECETTE_BADGE_H = 8;
 const RECETTE_BADGE_GAP = 3;
 const RECETTE_BADGE_OFFSET_Y = 7;
 const RECETTE_BADGE_FONT_SIZE = 5.5;
+const RECETTE_BASE_FONT = 8;
+const RECETTE_MD_THRESHOLD = 12;
+const RECETTE_SM_THRESHOLD = 18;
+const RECETTE_MD_FONT = 7;
+const RECETTE_SM_FONT = 6;
+
+export function computeSmallCardFontSize(count: number): number {
+  if (count > SMALL_CARD_SM_THRESHOLD) return SMALL_CARD_SM_FONT;
+  if (count > SMALL_CARD_MD_THRESHOLD) return SMALL_CARD_MD_FONT;
+  return SMALL_CARD_BASE_FONT;
+}
+
+export function computeRecetteFontSize(count: number): number {
+  if (count > RECETTE_SM_THRESHOLD) return RECETTE_SM_FONT;
+  if (count > RECETTE_MD_THRESHOLD) return RECETTE_MD_FONT;
+  return RECETTE_BASE_FONT;
+}
 
 export function escapeXml(s: string): string {
   return s
@@ -150,10 +173,13 @@ export function buildInstructionText(
   return `<text font-family="${INSTRUCTION_FONT_FAMILY}" font-size="${INSTRUCTION_FONT_SIZE}" fill="#000000" y="${firstY}">${parts.join("")}</text>`;
 }
 
-export function buildSmallIngredientTspans(lines: IngredientLineItem[]): string {
+export function buildSmallIngredientTspans(lines: IngredientLineItem[], fontSize: number = SMALL_CARD_BASE_FONT): string {
+  const scale = fontSize / SMALL_CARD_BASE_FONT;
+  const itemDy = SMALL_CARD_ITEM_DY * scale;
+  const catDy = SMALL_CARD_CAT_DY * scale;
   return lines
     .map((item, i) => {
-      const dy = i === 0 ? "0" : item.isNewCategory ? SMALL_CARD_CAT_DY : SMALL_CARD_ITEM_DY;
+      const dy = i === 0 ? "0" : item.isNewCategory ? catDy : itemDy;
       const content = item.baseLabel
         ? `<tspan font-weight="bold">${item.baseLabel}</tspan> ${item.text}`
         : item.text;
@@ -165,15 +191,25 @@ export function buildSmallIngredientTspans(lines: IngredientLineItem[]): string 
 export function buildRecetteIngredients(
   ingredients: IngredientLineItem[],
   colors: CardColors,
+  fontSize: number = RECETTE_BASE_FONT,
 ): { tspans: string; rects: string } {
+  const scale = fontSize / RECETTE_BASE_FONT;
+  const lineH = RECETTE_LINE_H * scale;
+  const catExtraH = RECETTE_CAT_EXTRA_H * scale;
+  const lineMaxChars = Math.round(RECETTE_LINE_MAX_CHARS / scale);
+  const badgeW = RECETTE_BADGE_W * scale;
+  const badgeH = RECETTE_BADGE_H * scale;
+  const badgeOffsetY = RECETTE_BADGE_OFFSET_Y * scale;
+  const badgeFontSize = RECETTE_BADGE_FONT_SIZE * scale;
+
   const tspanParts: string[] = [];
   const rectParts: string[] = [];
   let cumY = RECETTE_TEXT_Y;
-  const ctx = makeMeasureCtx("8px Oswald, Arial Narrow, sans-serif");
+  const ctx = makeMeasureCtx(`${fontSize}px Oswald, Arial Narrow, sans-serif`);
 
   for (let i = 0; i < ingredients.length; i++) {
     const item = ingredients[i];
-    const subLines = wrapLineAtMaxChars(item.text, RECETTE_LINE_MAX_CHARS);
+    const subLines = wrapLineAtMaxChars(item.text, lineMaxChars);
 
     for (let si = 0; si < subLines.length; si++) {
       const isVeryFirst = i === 0 && si === 0;
@@ -181,20 +217,20 @@ export function buildRecetteIngredients(
       if (isVeryFirst) {
         tspanParts.push(`  <tspan x="${RECETTE_TEXT_X}" dy="0">${escapeXml(subLines[si])}</tspan>`);
       } else if (si === 0) {
-        const dy = item.isNewCategory ? RECETTE_LINE_H + RECETTE_CAT_EXTRA_H : RECETTE_LINE_H;
+        const dy = item.isNewCategory ? lineH + catExtraH : lineH;
         cumY += dy;
-        tspanParts.push(`  <tspan x="${RECETTE_TEXT_X}" dy="${dy}">${escapeXml(subLines[si])}</tspan>`);
+        tspanParts.push(`  <tspan x="${RECETTE_TEXT_X}" dy="${dy.toFixed(2)}">${escapeXml(subLines[si])}</tspan>`);
       } else {
-        cumY += RECETTE_LINE_H;
-        tspanParts.push(`  <tspan x="${RECETTE_TEXT_X}" dy="${RECETTE_LINE_H}">${escapeXml(subLines[si])}</tspan>`);
+        cumY += lineH;
+        tspanParts.push(`  <tspan x="${RECETTE_TEXT_X}" dy="${lineH.toFixed(2)}">${escapeXml(subLines[si])}</tspan>`);
       }
 
       if (si === 0 && item.baseLabel) {
         const textWidth = ctx.measureText(subLines[0]).width;
         const badgeX = RECETTE_TEXT_X + textWidth + RECETTE_BADGE_GAP;
         rectParts.push(
-          `<rect x="${badgeX.toFixed(1)}" y="${cumY - RECETTE_BADGE_OFFSET_Y}" width="${RECETTE_BADGE_W}" height="8" rx="1.5" fill="${colors.band}" />`,
-          `<text x="${(badgeX + RECETTE_BADGE_W / 2).toFixed(1)}" y="${cumY - 0.5}" font-size="${RECETTE_BADGE_FONT_SIZE}" fill="white" font-weight="bold" text-anchor="middle" font-family="Oswald, sans-serif">${item.baseLabel}</text>`,
+          `<rect x="${badgeX.toFixed(1)}" y="${(cumY - badgeOffsetY).toFixed(1)}" width="${badgeW.toFixed(1)}" height="${badgeH.toFixed(1)}" rx="1.5" fill="${colors.band}" />`,
+          `<text x="${(badgeX + badgeW / 2).toFixed(1)}" y="${(cumY - 0.5 * scale).toFixed(1)}" font-size="${badgeFontSize.toFixed(1)}" fill="white" font-weight="bold" text-anchor="middle" font-family="Oswald, sans-serif">${item.baseLabel}</text>`,
         );
       }
     }

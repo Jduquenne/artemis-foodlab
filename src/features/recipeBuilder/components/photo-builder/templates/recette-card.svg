@@ -204,7 +204,7 @@ href="[[IMAGE_HREF]]"
   x="0" 
   y="110" 
   font-family="Oswald, 'Arial Narrow', sans-serif" 
-  font-size="8" 
+  font-size="[[INGREDIENT_FONT_SIZE]]"
   fill="#000000" 
   text-anchor="left">
 [[INGREDIENT_TSPANS]]

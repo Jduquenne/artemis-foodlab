@@ -41,7 +41,7 @@
           fill="#000000" text-anchor="middle" style="letter-spacing: -0.3px;">
           <tspan x="70" dy="0">INGREDIENTS ([[PORTIONS]] PARTS)</tspan>
         </text>
-        <text x="0" y="36" font-family="'Glacial Indifference', 'Century Gothic', Futura, sans-serif" font-size="6"
+        <text x="0" y="36" font-family="'Glacial Indifference', 'Century Gothic', Futura, sans-serif" font-size="[[INGREDIENT_FONT_SIZE]]"
           fill="#000000" text-anchor="middle" text-align="center" style="letter-spacing: -0.5px;">
           [[INGREDIENT_TSPANS]]
         </text>

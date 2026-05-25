@@ -816,6 +816,11 @@
   },
   {
     "categoryFolder": "cereal-products",
+    "typeFolder": "photo",
+    "fileName": "PC_44_Pancakes_5_cereales_au_petit-lait_Photo.webp"
+  },
+  {
+    "categoryFolder": "cereal-products",
     "typeFolder": "ingredients",
     "fileName": "PC32_Pancakes_Vegan_noisette_Ingrédients.webp"
   },
@@ -1006,6 +1011,11 @@
   },
   {
     "categoryFolder": "cereal-products",
+    "typeFolder": "ingredients",
+    "fileName": "PC_44_Pancakes_5_cereales_au_petit-lait_Ingredients.webp"
+  },
+  {
+    "categoryFolder": "cereal-products",
     "typeFolder": "recipes",
     "fileName": "PC_01_Pancakes_de_pommes_à_l’alsacienne_Recette.webp"
   },
@@ -1173,6 +1183,11 @@
     "categoryFolder": "cereal-products",
     "typeFolder": "recipes",
     "fileName": "PC_43_Muffins_anglais_semi-complets_Recette.webp"
+  },
+  {
+    "categoryFolder": "cereal-products",
+    "typeFolder": "recipes",
+    "fileName": "PC_44_Pancakes_5_cereales_au_petit-lait_Recette.webp"
   },
   {
     "categoryFolder": "dairy-products",

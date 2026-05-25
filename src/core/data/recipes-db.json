@@ -13068,7 +13068,18 @@
         "unit": "g",
         "category": "Produits laitiers"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/cereal-products/photo/PC_44_Pancakes_5_cereales_au_petit-lait_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/ingredients/PC_44_Pancakes_5_cereales_au_petit-lait_Ingredients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_44_Pancakes_5_cereales_au_petit-lait_Recette.webp"
+      }
+    }
   },
   "pl-001": {
     "id": "pl-001",

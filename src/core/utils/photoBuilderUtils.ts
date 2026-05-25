@@ -12,7 +12,7 @@ const RECIPE_NAME_FONT = "Alice, Georgia, serif";
 
 const INSTRUCTION_FONT_SIZE = 7.5;
 const INSTRUCTION_FONT_FAMILY = "'Proxima Nova', Helvetica, Arial, sans-serif";
-const INSTRUCTION_LINE_HEIGHT_RATIO = 1.4;
+const INSTRUCTION_LINE_HEIGHT_RATIO = 1.2;
 const INSTRUCTION_BULLET_OFFSET = 2;
 const INSTRUCTION_TEXT_INDENT = 10;
 

@@ -17,8 +17,8 @@ const INSTRUCTION_BULLET_OFFSET = 2;
 const INSTRUCTION_TEXT_INDENT = 10;
 
 const SMALL_CARD_TEXT_X = 71;
-const SMALL_CARD_ITEM_DY = 7;
-const SMALL_CARD_CAT_DY = 12;
+const SMALL_CARD_ITEM_DY = 6.5;
+const SMALL_CARD_CAT_DY = 10;
 const SMALL_CARD_BASE_FONT = 6;
 const SMALL_CARD_MD_THRESHOLD = 12;
 const SMALL_CARD_SM_THRESHOLD = 16;
@@ -113,7 +113,10 @@ export function calculateCardScale(
   availableH: number,
   availableW: number,
 ): number {
-  return Math.max(Math.min(availableH / cardH, availableW / cardW), MIN_CARD_SCALE);
+  return Math.max(
+    Math.min(availableH / cardH, availableW / cardW),
+    MIN_CARD_SCALE,
+  );
 }
 
 export function buildRecipeNameText(
@@ -147,7 +150,9 @@ export function buildInstructionText(
   const lineH = INSTRUCTION_FONT_SIZE * INSTRUCTION_LINE_HEIGHT_RATIO;
   const bulletX = x + INSTRUCTION_BULLET_OFFSET;
   const textX = x + INSTRUCTION_TEXT_INDENT;
-  const ctx = makeMeasureCtx(`${INSTRUCTION_FONT_SIZE}px Proxima Nova, Helvetica, Arial, sans-serif`);
+  const ctx = makeMeasureCtx(
+    `${INSTRUCTION_FONT_SIZE}px Proxima Nova, Helvetica, Arial, sans-serif`,
+  );
   const firstY = y + INSTRUCTION_FONT_SIZE;
   const maxY = y + areaHeight;
   const parts: string[] = [];
@@ -173,7 +178,10 @@ export function buildInstructionText(
   return `<text font-family="${INSTRUCTION_FONT_FAMILY}" font-size="${INSTRUCTION_FONT_SIZE}" fill="#000000" y="${firstY}">${parts.join("")}</text>`;
 }
 
-export function buildSmallIngredientTspans(lines: IngredientLineItem[], fontSize: number = SMALL_CARD_BASE_FONT): string {
+export function buildSmallIngredientTspans(
+  lines: IngredientLineItem[],
+  fontSize: number = SMALL_CARD_BASE_FONT,
+): string {
   const scale = fontSize / SMALL_CARD_BASE_FONT;
   const itemDy = SMALL_CARD_ITEM_DY * scale;
   const catDy = SMALL_CARD_CAT_DY * scale;
@@ -215,14 +223,20 @@ export function buildRecetteIngredients(
       const isVeryFirst = i === 0 && si === 0;
 
       if (isVeryFirst) {
-        tspanParts.push(`  <tspan x="${RECETTE_TEXT_X}" dy="0">${escapeXml(subLines[si])}</tspan>`);
+        tspanParts.push(
+          `  <tspan x="${RECETTE_TEXT_X}" dy="0">${escapeXml(subLines[si])}</tspan>`,
+        );
       } else if (si === 0) {
         const dy = item.isNewCategory ? lineH + catExtraH : lineH;
         cumY += dy;
-        tspanParts.push(`  <tspan x="${RECETTE_TEXT_X}" dy="${dy.toFixed(2)}">${escapeXml(subLines[si])}</tspan>`);
+        tspanParts.push(
+          `  <tspan x="${RECETTE_TEXT_X}" dy="${dy.toFixed(2)}">${escapeXml(subLines[si])}</tspan>`,
+        );
       } else {
         cumY += lineH;
-        tspanParts.push(`  <tspan x="${RECETTE_TEXT_X}" dy="${lineH.toFixed(2)}">${escapeXml(subLines[si])}</tspan>`);
+        tspanParts.push(
+          `  <tspan x="${RECETTE_TEXT_X}" dy="${lineH.toFixed(2)}">${escapeXml(subLines[si])}</tspan>`,
+        );
       }
 
       if (si === 0 && item.baseLabel) {

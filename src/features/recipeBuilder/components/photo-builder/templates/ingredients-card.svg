@@ -1,67 +1,52 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="189" zoomAndPan="magnify" viewBox="0 0 141.75 155.999997" height="208" preserveAspectRatio="xMidYMid meet" version="1.0">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="189" zoomAndPan="magnify"
+  viewBox="0 0 141.75 155.999997" height="208" preserveAspectRatio="xMidYMid meet" version="1.0">
   <defs>
-    <g/>
+    <g />
     <clipPath id="59e0adf544">
-      <path d="M 0 0.136719 L 141.5 0.136719 L 141.5 155.863281 L 0 155.863281 Z M 0 0.136719 " clip-rule="nonzero"/>
+      <path d="M 0 0.136719 L 141.5 0.136719 L 141.5 155.863281 L 0 155.863281 Z M 0 0.136719 " clip-rule="nonzero" />
     </clipPath>
     <clipPath id="5de98271c4">
-      <path d="M 0 0.136719 L 141.5 0.136719 L 141.5 155.863281 L 0 155.863281 Z M 0 0.136719 " clip-rule="nonzero"/>
+      <path d="M 0 0.136719 L 141.5 0.136719 L 141.5 155.863281 L 0 155.863281 Z M 0 0.136719 " clip-rule="nonzero" />
     </clipPath>
     <clipPath id="9a84f90045">
-      <path d="M 58 2 L 61 2 L 61 11.9375 L 58 11.9375 Z M 58 2 " clip-rule="nonzero"/>
+      <path d="M 58 2 L 61 2 L 61 11.9375 L 58 11.9375 Z M 58 2 " clip-rule="nonzero" />
     </clipPath>
     <clipPath id="3bd7415fa0">
-      <path d="M 95 2 L 98 2 L 98 11.9375 L 95 11.9375 Z M 95 2 " clip-rule="nonzero"/>
+      <path d="M 95 2 L 98 2 L 98 11.9375 L 95 11.9375 Z M 95 2 " clip-rule="nonzero" />
     </clipPath>
     <clipPath id="edb3b399ef">
-      <rect x="0" width="99" y="0" height="12"/>
+      <rect x="0" width="99" y="0" height="12" />
     </clipPath>
     <clipPath id="475555cf1e">
-      <path d="M 5 4 L 9 4 L 9 9.230469 L 5 9.230469 Z M 5 4 " clip-rule="nonzero"/>
+      <path d="M 5 4 L 9 4 L 9 9.230469 L 5 9.230469 Z M 5 4 " clip-rule="nonzero" />
     </clipPath>
     <clipPath id="7d2d17a468">
-      <rect x="0" width="30" y="0" height="10"/>
+      <rect x="0" width="30" y="0" height="10" />
     </clipPath>
     <clipPath id="59859104eb">
-      <rect x="0" width="142" y="0" height="156"/>
+      <rect x="0" width="142" y="0" height="156" />
     </clipPath>
   </defs>
   <g clip-path="url(#59e0adf544)">
-    <path fill="#ffffff" d="M 0 0.136719 L 141.5 0.136719 L 141.5 155.863281 L 0 155.863281 Z M 0 0.136719 " fill-opacity="1" fill-rule="nonzero"/>
+    <path fill="#ffffff" d="M 0 0.136719 L 141.5 0.136719 L 141.5 155.863281 L 0 155.863281 Z M 0 0.136719 "
+      fill-opacity="1" fill-rule="nonzero" />
     <g transform="matrix(1, 0, 0, 1, 0, -0.000000000000021816)">
       <g clip-path="url(#59859104eb)">
         <g clip-path="url(#5de98271c4)">
-          <path fill="[[COLOR_BG]]" d="M 0 0.136719 L 141.519531 0.136719 L 141.519531 155.882812 L 0 155.882812 Z M 0 0.136719 " fill-opacity="1" fill-rule="nonzero"/>
+          <path fill="[[COLOR_BG]]"
+            d="M 0 0.136719 L 141.519531 0.136719 L 141.519531 155.882812 L 0 155.882812 Z M 0 0.136719 "
+            fill-opacity="1" fill-rule="nonzero" />
         </g>
-        <text
-  x="0"
-  y="20"
-  font-family="Forum, Garamond, 'Times New Roman', serif"
-  font-size="9.5"
-  fill="#000000"
-  text-anchor="middle"
-  style="letter-spacing: -0.3px;">
-  <tspan x="70" dy="0">INGREDIENTS ([[PORTIONS]] PARTS)</tspan>
+        <text x="0" y="20" font-family="Glacial Indifference', 'Century Gothic', Futura, sans-serif" font-size="9.5"
+          fill="#000000" text-anchor="middle" style="letter-spacing: -0.3px;">
+          <tspan x="70" dy="0">INGREDIENTS ([[PORTIONS]] PARTS)</tspan>
         </text>
-        <text
-  x="0"
-  y="36"
-  font-family="'Glacial Indifference', 'Century Gothic', Futura, sans-serif"
-  font-size="6"
-  fill="#000000"
-  text-anchor="middle"
-  text-align="center"
-  style="letter-spacing: -0.5px;">
-  [[INGREDIENT_TSPANS]]
+        <text x="0" y="36" font-family="'Glacial Indifference', 'Century Gothic', Futura, sans-serif" font-size="6"
+          fill="#000000" text-anchor="middle" text-align="center" style="letter-spacing: -0.5px;">
+          [[INGREDIENT_TSPANS]]
         </text>
-        <text
-  x="135"
-  y="145"
-  font-family="Alice, Georgia, serif"
-  font-size="10.3"
-  fill="[[COLOR_BAND]]"
-  text-anchor="end"
-  font-weight="bold">[[RECIPE_NUMBER]]</text>
+        <text x="135" y="145" font-family="Alice, Georgia, serif" font-size="10.3" fill="[[COLOR_BAND]]"
+          text-anchor="end" font-weight="bold">[[RECIPE_NUMBER]]</text>
       </g>
     </g>
   </g>

@@ -13,6 +13,7 @@ import {
 } from "../domain/recipeBuilderTypes";
 import { ZERO } from "./macroUtils";
 import { calculateRecipeMacros } from "./macroUtils";
+import { wrapLineAtMaxChars } from "./photoBuilderUtils";
 import { typedFoodDb } from "../typed-db/typedFoodDb";
 import { typedRecipesDb } from "../typed-db/typedRecipesDb";
 
@@ -168,6 +169,7 @@ export interface IngredientLineItem {
 }
 
 const INGREDIENT_CATEGORY_ORDER: IngredientCategory[] = [
+  IngredientCategory.RECIPE,
   IngredientCategory.MEAT,
   IngredientCategory.FISH,
   IngredientCategory.DELI,
@@ -182,7 +184,6 @@ const INGREDIENT_CATEGORY_ORDER: IngredientCategory[] = [
   IngredientCategory.SPICE,
   IngredientCategory.AROMATIC_HERB,
   IngredientCategory.BAKERY,
-  IngredientCategory.RECIPE,
   IngredientCategory.NON_PURCHASE,
   IngredientCategory.FROZEN,
   IngredientCategory.INTERNET,
@@ -192,13 +193,17 @@ const INGREDIENT_CATEGORY_ORDER: IngredientCategory[] = [
 const EPICERIE_CATEGORIES = new Set<IngredientCategory>([
   IngredientCategory.CANNED,
   IngredientCategory.SWEET_GROCERY,
-  IngredientCategory.CONDIMENT,
-  IngredientCategory.SPICE,
-  IngredientCategory.AROMATIC_HERB,
   IngredientCategory.BAKERY,
 ]);
 
+const COMMA_JOIN_CATEGORIES = new Set<IngredientCategory>([
+  IngredientCategory.CONDIMENT,
+  IngredientCategory.SPICE,
+  IngredientCategory.AROMATIC_HERB,
+]);
+
 const EPICERIE_COMMA_MAX_CHARS = 45;
+
 
 const WORD_UNITS = new Set<Unit>([
   Unit.FEUILLE,
@@ -226,14 +231,14 @@ function extractBaseLabel(baseId: string | undefined): string | undefined {
   return Number.isNaN(num) ? undefined : `B${num}`;
 }
 
-function wrapCommaSeparated(items: string[], maxChars: number): string[] {
+function wrapJoined(items: string[], maxChars: number, sep: string): string[] {
   const lines: string[] = [];
   let current = "";
   for (const item of items) {
     if (!current) {
       current = item;
     } else {
-      const candidate = `${current}, ${item}`;
+      const candidate = `${current}${sep}${item}`;
       if (candidate.length > maxChars) {
         lines.push(current);
         current = item;
@@ -244,6 +249,10 @@ function wrapCommaSeparated(items: string[], maxChars: number): string[] {
   }
   if (current) lines.push(current);
   return lines;
+}
+
+function wrapCommaSeparated(items: string[], maxChars: number): string[] {
+  return wrapJoined(items, maxChars, ", ");
 }
 
 export function formatIngredientsForIngredientCard(
@@ -284,7 +293,10 @@ export function formatIngredientsForIngredientCard(
         epicerieAdded = true;
         let firstInGroup = true;
         for (const ing of epicerieWithQty) {
-          push(formatIngredientText(ing), firstInGroup, extractBaseLabel(ing.baseId));
+          const wrapped = wrapLineAtMaxChars(formatIngredientText(ing), EPICERIE_COMMA_MAX_CHARS);
+          for (let li = 0; li < wrapped.length; li++) {
+            push(wrapped[li], firstInGroup && li === 0, li === 0 ? extractBaseLabel(ing.baseId) : undefined);
+          }
           firstInGroup = false;
         }
         for (const line of wrapCommaSeparated(
@@ -300,8 +312,35 @@ export function formatIngredientsForIngredientCard(
 
     const items = groups.get(cat);
     if (!items) continue;
+
+    if (COMMA_JOIN_CATEGORIES.has(cat)) {
+      let firstInGroup = true;
+      const withQty = items.filter(i => i.quantity != null);
+      const noQty = items
+        .filter(i => i.quantity == null)
+        .map(i => {
+          const prep = i.preparation ? ` (${i.preparation})` : "";
+          return `${i.name}${prep}`;
+        });
+      for (const ing of withQty) {
+        const wrapped = wrapLineAtMaxChars(formatIngredientText(ing), EPICERIE_COMMA_MAX_CHARS);
+        for (let li = 0; li < wrapped.length; li++) {
+          push(wrapped[li], firstInGroup && li === 0, li === 0 ? extractBaseLabel(ing.baseId) : undefined);
+        }
+        firstInGroup = false;
+      }
+      for (const line of wrapJoined(noQty, EPICERIE_COMMA_MAX_CHARS, " - ")) {
+        push(line, firstInGroup);
+        firstInGroup = false;
+      }
+      continue;
+    }
+
     for (let i = 0; i < items.length; i++) {
-      push(formatIngredientText(items[i]), i === 0, extractBaseLabel(items[i].baseId));
+      const wrapped = wrapLineAtMaxChars(formatIngredientText(items[i]), EPICERIE_COMMA_MAX_CHARS);
+      for (let li = 0; li < wrapped.length; li++) {
+        push(wrapped[li], i === 0 && li === 0, li === 0 ? extractBaseLabel(items[i].baseId) : undefined);
+      }
     }
   }
 

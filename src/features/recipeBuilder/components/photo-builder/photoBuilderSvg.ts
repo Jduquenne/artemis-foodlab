@@ -1,36 +1,20 @@
 import photoTemplate from "./templates/photo-card.svg?raw";
 import ingredientsTemplate from "./templates/ingredients-card.svg?raw";
 import recetteTemplate from "./templates/recette-card.svg?raw";
-import { SmallCardData, IngredientsCardData, RecetteCardData, IngredientLineItem } from "./photoBuilderTypes";
+import {
+  SmallCardData,
+  IngredientsCardData,
+  RecetteCardData,
+  IngredientLineItem,
+} from "./photoBuilderTypes";
 import { CardColors } from "./photoBuilderColors";
+import { escapeXml, makeMeasureCtx, wrapToLines, wrapLineAtMaxChars } from "../../../../core/utils/photoBuilderUtils";
 
-function escapeXml(s: string): string {
-  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-}
-
-function makeMeasureCtx(font: string): CanvasRenderingContext2D {
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d")!;
-  ctx.font = font;
-  return ctx;
-}
-
-function wrapToLines(text: string, maxWidth: number, ctx: CanvasRenderingContext2D): string[] {
-  const words = text.split(" ");
-  const lines: string[] = [];
-  let current = "";
-  for (const word of words) {
-    const test = current ? `${current} ${word}` : word;
-    if (ctx.measureText(test).width > maxWidth && current) {
-      lines.push(current);
-      current = word;
-    } else {
-      current = test;
-    }
-  }
-  if (current) lines.push(current);
-  return lines;
-}
+const RECETTE_TEXT_Y = 110;
+const RECETTE_LINE_H = 11;
+const RECETTE_CAT_EXTRA_H = 3;
+const RECETTE_LINE_MAX_CHARS = 38;
+const BADGE_W = 14;
 
 function buildRecipeNameText(
   name: string,
@@ -38,7 +22,7 @@ function buildRecipeNameText(
   cy: number,
   maxWidth: number,
   fontSize: number,
-  color: string
+  color: string,
 ): string {
   const fontFamily = "Alice, Georgia, serif";
   const ctx = makeMeasureCtx(`${fontSize}px ${fontFamily}`);
@@ -46,12 +30,21 @@ function buildRecipeNameText(
   const lineH = fontSize * 0.95;
   const firstY = cy - ((lines.length - 1) * lineH) / 2;
   const tspans = lines
-    .map((line, i) => `<tspan x="${cx}"${i > 0 ? ` dy="${lineH}"` : ""}>${escapeXml(line)}</tspan>`)
+    .map(
+      (line, i) =>
+        `<tspan x="${cx}"${i > 0 ? ` dy="${lineH}"` : ""}>${escapeXml(line)}</tspan>`,
+    )
     .join("");
   return `<text font-family="${fontFamily}" font-size="${fontSize}" fill="${color}" text-anchor="middle" dominant-baseline="middle" x="${cx}" y="${firstY}">${tspans}</text>`;
 }
 
-function buildInstructionText(instructions: string[], x: number, y: number, areaWidth: number, areaHeight: number): string {
+function buildInstructionText(
+  instructions: string[],
+  x: number,
+  y: number,
+  areaWidth: number,
+  areaHeight: number,
+): string {
   const fontSize = 7.5;
   const fontFamily = "'Proxima Nova', Helvetica, Arial, sans-serif";
   const lineH = fontSize * 1.4;
@@ -69,9 +62,13 @@ function buildInstructionText(instructions: string[], x: number, y: number, area
       if (curY > maxY) break;
       if (li === 0) {
         const dy = parts.length > 0 ? ` dy="${lineH}"` : "";
-        parts.push(`<tspan x="${bulletX}"${dy}>•</tspan><tspan x="${textX}">${escapeXml(lines[0])}</tspan>`);
+        parts.push(
+          `<tspan x="${bulletX}"${dy}>•</tspan><tspan x="${textX}">${escapeXml(lines[0])}</tspan>`,
+        );
       } else {
-        parts.push(`<tspan x="${textX}" dy="${lineH}">${escapeXml(lines[li])}</tspan>`);
+        parts.push(
+          `<tspan x="${textX}" dy="${lineH}">${escapeXml(lines[li])}</tspan>`,
+        );
       }
       curY += lineH;
     }
@@ -115,39 +112,55 @@ export function buildIngredientsSvg(data: IngredientsCardData): string {
     .replace('fill="[[COLOR_BAND]]"', `fill="${data.colors.band}"`);
 }
 
-const RECETTE_TEXT_Y = 110;
-const RECETTE_LINE_H = 11;
-const BADGE_W = 14;
+function buildRecetteIngredients(
+  ingredients: IngredientLineItem[],
+  colors: CardColors,
+): { tspans: string; rects: string } {
+  const tspanParts: string[] = [];
+  const rectParts: string[] = [];
+  let cumY = RECETTE_TEXT_Y;
+  const ctx = makeMeasureCtx("8px Oswald, Arial Narrow, sans-serif");
 
-function buildRecetteTspans(ingredients: IngredientLineItem[]): string {
-  return ingredients
-    .map((item, i) => {
-      const x = item.baseLabel ? "46" : "29.5";
-      return `  <tspan x="${x}" dy="${i === 0 ? "0" : RECETTE_LINE_H}">${item.text}</tspan>`;
-    })
-    .join("\n");
-}
+  for (let i = 0; i < ingredients.length; i++) {
+    const item = ingredients[i];
+    const subLines = wrapLineAtMaxChars(item.text, RECETTE_LINE_MAX_CHARS);
 
-function buildBaseRects(ingredients: IngredientLineItem[], colors: CardColors): string {
-  return ingredients
-    .flatMap((item, i) => {
-      if (!item.baseLabel) return [];
-      const y = RECETTE_TEXT_Y + i * RECETTE_LINE_H;
-      return [
-        `<rect x="29.5" y="${y - 7}" width="${BADGE_W}" height="8" rx="1.5" fill="${colors.band}" />`,
-        `<text x="${29.5 + BADGE_W / 2}" y="${y - 0.5}" font-size="5.5" fill="white" font-weight="bold" text-anchor="middle" font-family="Oswald, sans-serif">${item.baseLabel}</text>`,
-      ];
-    })
-    .join("\n");
+    for (let si = 0; si < subLines.length; si++) {
+      const isVeryFirst = i === 0 && si === 0;
+
+      if (isVeryFirst) {
+        tspanParts.push(`  <tspan x="29.5" dy="0">${escapeXml(subLines[si])}</tspan>`);
+      } else if (si === 0) {
+        const dy = item.isNewCategory ? RECETTE_LINE_H + RECETTE_CAT_EXTRA_H : RECETTE_LINE_H;
+        cumY += dy;
+        tspanParts.push(`  <tspan x="29.5" dy="${dy}">${escapeXml(subLines[si])}</tspan>`);
+      } else {
+        cumY += RECETTE_LINE_H;
+        tspanParts.push(`  <tspan x="29.5" dy="${RECETTE_LINE_H}">${escapeXml(subLines[si])}</tspan>`);
+      }
+
+      if (si === 0 && item.baseLabel) {
+        const textWidth = ctx.measureText(subLines[0]).width;
+        const badgeX = 29.5 + textWidth + 3;
+        rectParts.push(
+          `<rect x="${badgeX.toFixed(1)}" y="${cumY - 7}" width="${BADGE_W}" height="8" rx="1.5" fill="${colors.band}" />`,
+          `<text x="${(badgeX + BADGE_W / 2).toFixed(1)}" y="${cumY - 0.5}" font-size="5.5" fill="white" font-weight="bold" text-anchor="middle" font-family="Oswald, sans-serif">${item.baseLabel}</text>`,
+        );
+      }
+    }
+  }
+
+  return { tspans: tspanParts.join("\n"), rects: rectParts.join("\n") };
 }
 
 export function buildRecetteSvg(data: RecetteCardData): string {
+  const { tspans, rects } = buildRecetteIngredients(data.ingredients, data.colors);
   return recetteTemplate
     .replace('href="[[IMAGE_HREF]]"', `href="${data.imageHref}"`)
     .replace("[[RECIPE_NAME_TEXT]]", buildRecipeNameText(data.recipeName, 140, 23, 250, 17.9, "#ffffff"))
     .replace("[[PORTIONS]]", String(data.portions))
-    .replace("[[INGREDIENT_TSPANS]]", buildRecetteTspans(data.ingredients))
-    .replace("[[BASE_RECTS]]", buildBaseRects(data.ingredients, data.colors))
+    .replace("[[INGREDIENT_TSPANS]]", tspans)
+    .replace("[[BASE_RECTS]]", rects)
     .replace("[[INSTRUCTION_TEXT]]", buildInstructionText(data.instructions, 160, 112, 247, 175))
     .replace("[[RECIPE_NUMBER]]", String(data.recipeNumber))
     .replace('fill="[[COLOR_BG]]"', `fill="${data.colors.bg}"`)

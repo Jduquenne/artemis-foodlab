@@ -1,12 +1,12 @@
-import { useRef, useState, useEffect, useMemo } from "react";
-import { Upload, X } from "lucide-react";
+import { useRef, useState, useEffect, useMemo, useCallback } from "react";
+import { Upload, X, Download, FolderDown, Loader2 } from "lucide-react";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
-import { computeDraftTotal, formatIngredientsForIngredientCard } from "../../../../core/utils/recipeBuilderUtils";
-import { PhotoCard } from "./PhotoCard";
-import { IngredientsCard } from "./IngredientsCard";
-import { RecetteCard } from "./RecetteCard";
+import { computeDraftTotal, formatIngredientsForIngredientCard, buildRecipeId } from "../../../../core/utils/recipeBuilderUtils";
+import { SvgCard } from "./SvgCard";
 import { SmallCardData, IngredientsCardData, RecetteCardData } from "./photoBuilderTypes";
 import { getCardColors } from "./photoBuilderColors";
+import { buildPhotoSvg, buildIngredientsSvg, buildRecetteSvg } from "./photoBuilderSvg";
+import { downloadSingleCard, downloadCardPack } from "./photoBuilderExport";
 
 type CardId = "photo" | "ingredients" | "recette";
 
@@ -29,6 +29,7 @@ export const AssetsPanel = ({ state }: AssetsPanelProps) => {
   const [cardsW, setCardsW] = useState(800);
   const [selected, setSelected] = useState<CardId | null>(null);
   const [imageBase64, setImageBase64] = useState("");
+  const [downloading, setDownloading] = useState(false);
 
   useEffect(() => {
     const el = cardsAreaRef.current;
@@ -99,6 +100,36 @@ export const AssetsPanel = ({ state }: AssetsPanelProps) => {
     [imageBase64, state.name, state.recipeNumber, portions, ingredientLines, state.instructions, colors]
   );
 
+  const photoSvg = useMemo(() => buildPhotoSvg(smallData), [smallData]);
+  const ingredientsSvg = useMemo(() => buildIngredientsSvg(ingredientsData), [ingredientsData]);
+  const recetteSvg = useMemo(() => buildRecetteSvg(recetteData), [recetteData]);
+
+  const baseName = buildRecipeId(state.categoryId, state.recipeNumber);
+
+  const handleDownload = useCallback(async (id: CardId) => {
+    setDownloading(true);
+    try {
+      const { w, h } = CARD_DIMS[id];
+      const svg = id === "photo" ? photoSvg : id === "ingredients" ? ingredientsSvg : recetteSvg;
+      await downloadSingleCard(svg, w, h, `${baseName}_${id}`);
+    } finally {
+      setDownloading(false);
+    }
+  }, [photoSvg, ingredientsSvg, recetteSvg, baseName]);
+
+  const handleDownloadPack = useCallback(async () => {
+    setDownloading(true);
+    try {
+      await downloadCardPack([
+        { svg: photoSvg, w: 189, h: 208, suffix: "photo" },
+        { svg: ingredientsSvg, w: 189, h: 208, suffix: "ingredients" },
+        { svg: recetteSvg, w: 559, h: 397, suffix: "recette" },
+      ], baseName);
+    } finally {
+      setDownloading(false);
+    }
+  }, [photoSvg, ingredientsSvg, recetteSvg, baseName]);
+
   const thumbH = cardsH / 3;
   const thumbCellW = (cardsW - 16) / 3;
   const expandH = (cardsH * 2) / 3;
@@ -114,14 +145,9 @@ export const AssetsPanel = ({ state }: AssetsPanelProps) => {
   };
 
   const renderCard = (id: CardId, scale: number) => {
-    switch (id) {
-      case "photo":
-        return <PhotoCard {...smallData} scale={scale} />;
-      case "ingredients":
-        return <IngredientsCard {...ingredientsData} scale={scale} />;
-      case "recette":
-        return <RecetteCard {...recetteData} scale={scale} />;
-    }
+    const { w, h } = CARD_DIMS[id];
+    const svg = id === "photo" ? photoSvg : id === "ingredients" ? ingredientsSvg : recetteSvg;
+    return <SvgCard svgContent={svg} width={w} height={h} scale={scale} />;
   };
 
   return (
@@ -163,6 +189,38 @@ export const AssetsPanel = ({ state }: AssetsPanelProps) => {
             </span>
           </button>
         )}
+      </div>
+
+      <div className="shrink-0 flex items-center gap-1.5">
+        {CARD_IDS.map((id) => (
+          <button
+            key={id}
+            type="button"
+            disabled={downloading}
+            onClick={() => handleDownload(id)}
+            className="flex-1 flex items-center justify-center gap-1 px-2 py-1 rounded-lg bg-slate-100 dark:bg-slate-200 hover:bg-orange-100 dark:hover:bg-orange-900/20 hover:text-orange-600 text-slate-500 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            {downloading ? (
+              <Loader2 className="w-3 h-3 animate-spin shrink-0" />
+            ) : (
+              <Download className="w-3 h-3 shrink-0" />
+            )}
+            <span className="text-[11px] font-medium">{CARD_LABELS[id]}</span>
+          </button>
+        ))}
+        <button
+          type="button"
+          disabled={downloading}
+          onClick={handleDownloadPack}
+          className="flex items-center gap-1 px-2 py-1 rounded-lg bg-orange-500 hover:bg-orange-600 text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
+        >
+          {downloading ? (
+            <Loader2 className="w-3 h-3 animate-spin shrink-0" />
+          ) : (
+            <FolderDown className="w-3 h-3 shrink-0" />
+          )}
+          <span className="text-[11px] font-medium">Pack</span>
+        </button>
       </div>
 
       <div ref={cardsAreaRef} className="flex-1 min-h-0 flex flex-col gap-2 overflow-hidden">

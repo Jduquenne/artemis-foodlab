@@ -116,19 +116,7 @@ href="[[IMAGE_HREF]]"
             <g clip-path="url(#fa821a9a07)">
               <g clip-path="url(#7aab8c09fa)">
                 <path fill="[[COLOR_BAND]]" d="M -17.4375 0.832031 L 435.878906 0.832031 L 435.878906 44.992188 L -17.4375 44.992188 Z M -17.4375 0.832031 " fill-opacity="1" fill-rule="nonzero"/>
-                <foreignObject x="15" y="5" width="250" height="36"> <div style="
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    font-family: Alice, Georgia, serif;
-    font-size: 17.9px;
-    color: #ffffff;
-    text-align: center;
-    line-height: 0.95;
-  ">
-[[RECIPE_NAME]]</div>
-</foreignObject>
+                [[RECIPE_NAME_TEXT]]
               </g>
             </g>
           </g>
@@ -222,23 +210,7 @@ href="[[IMAGE_HREF]]"
 [[INGREDIENT_TSPANS]]
               </text>
 [[BASE_RECTS]]
-       <foreignObject x="160" y="112" width="247" height="175">
-  <div style="
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    height: 100%;
-    font-family: 'Proxima Nova', Helvetica, Arial, sans-serif;
-    font-size: 7.5px;
-    color: #000000;
-    text-align: left;
-    line-height: 1.4;
-  ">
-    <ul style="margin:0; padding-left: 15px; list-style-type: disc; width: 100%;">
-[[INSTRUCTION_ITEMS]]    </ul>
-  </div>
-</foreignObject>
+       [[INSTRUCTION_TEXT]]
         
       </g>
     </g>

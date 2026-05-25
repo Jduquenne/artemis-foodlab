@@ -397,20 +397,7 @@
                 <path fill="[[COLOR_BAND]]" d="M 0 0.679688 L 141.488281 0.679688 L 141.488281 30.199219 L 0 30.199219 Z M 0 0.679688 " fill-opacity="1" fill-rule="nonzero"/>
               </g>
             </g>
-            <foreignObject x="10" y="2.5" width="121.75" height="26">
-              <div style="
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    font-family: Alice, Georgia, serif;
-    font-size: 11.1px;
-    color: #ffffff;
-    text-align: center;
-    line-height: 0.95;
-  ">
-[[RECIPE_NAME]]</div>
-            </foreignObject>
+            [[RECIPE_NAME_TEXT]]
           </g>
         </g>
         <g clip-path="url(#bbb8da6819)">

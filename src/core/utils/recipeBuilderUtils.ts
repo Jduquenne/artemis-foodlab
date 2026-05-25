@@ -37,7 +37,9 @@ export function buildRecipeId(
   recipeNumber: string,
 ): string {
   const prefix = CATEGORY_PREFIX[categoryId] ?? categoryId.toUpperCase();
-  return recipeNumber ? `${prefix}_${recipeNumber}` : prefix;
+  if (!recipeNumber) return prefix;
+  const num = parseInt(recipeNumber, 10);
+  return `${prefix}_${isNaN(num) ? recipeNumber : String(num).padStart(2, "0")}`;
 }
 
 function addMacros(a: Macronutrients, b: Macronutrients): Macronutrients {

@@ -1,5 +1,47 @@
 import JSZip from "jszip";
 
+const fontDataCache = new Map<string, string>();
+
+async function fetchFontDataUrl(url: string): Promise<string | null> {
+  if (fontDataCache.has(url)) return fontDataCache.get(url)!;
+  try {
+    const resp = await fetch(url);
+    if (!resp.ok) return null;
+    const blob = await resp.blob();
+    const dataUrl = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+    fontDataCache.set(url, dataUrl);
+    return dataUrl;
+  } catch {
+    return null;
+  }
+}
+
+async function buildFontStyleTag(): Promise<string> {
+  await document.fonts.ready;
+  const rules: string[] = [];
+  for (const sheet of Array.from(document.styleSheets)) {
+    try {
+      for (const rule of Array.from(sheet.cssRules)) {
+        if (!rule.cssText.startsWith("@font-face")) continue;
+        let cssText = rule.cssText;
+        const urlMatches = [...cssText.matchAll(/url\(["']?([^"')]+)["']?\)/g)];
+        for (const match of urlMatches) {
+          const absoluteUrl = new URL(match[1], window.location.href).href;
+          const dataUrl = await fetchFontDataUrl(absoluteUrl);
+          if (dataUrl) cssText = cssText.replace(match[0], `url("${dataUrl}")`);
+        }
+        rules.push(cssText);
+      }
+    } catch { /* feuille cross-origin inaccessible */ }
+  }
+  return rules.length ? `<style>${rules.join("\n")}</style>` : "";
+}
+
 async function svgToWebpBlob(svgString: string, width: number, height: number): Promise<Blob> {
   const pixelRatio = 3;
   const canvas = document.createElement("canvas");
@@ -7,7 +49,10 @@ async function svgToWebpBlob(svgString: string, width: number, height: number): 
   canvas.height = height * pixelRatio;
   const ctx = canvas.getContext("2d")!;
 
-  const svgBlob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
+  const fontStyle = await buildFontStyleTag();
+  const enrichedSvg = fontStyle ? svgString.replace("<defs>", `<defs>${fontStyle}`) : svgString;
+
+  const svgBlob = new Blob([enrichedSvg], { type: "image/svg+xml;charset=utf-8" });
   const blobUrl = URL.createObjectURL(svgBlob);
   try {
     await new Promise<void>((resolve, reject) => {

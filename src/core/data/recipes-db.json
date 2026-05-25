@@ -37411,7 +37411,7 @@
         "id": "002",
         "foodId": "fv-017",
         "name": "Champignons",
-        "quantity": 400,
+        "quantity": 300,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -37427,8 +37427,8 @@
         "id": "004",
         "foodId": "fv-055",
         "name": "Mâche",
-        "quantity": null,
-        "unit": null,
+        "quantity": 60,
+        "unit": "g",
         "category": "Fruits et légumes"
       },
       {
@@ -37443,7 +37443,7 @@
         "id": "006",
         "foodId": "pl-027",
         "name": "Parmesan",
-        "quantity": 40,
+        "quantity": 30,
         "unit": "g",
         "category": "Produits laitiers"
       },
@@ -37478,6 +37478,14 @@
         "quantity": null,
         "unit": null,
         "category": "Herbe aromatique"
+      },
+      {
+        "id": "011",
+        "foodId": "cd-013",
+        "name": "Huile de colza",
+        "quantity": 5,
+        "unit": "g",
+        "category": "Condiments"
       }
     ],
     "assets": {
@@ -37808,7 +37816,7 @@
         "id": "006",
         "foodId": "fv-055",
         "name": "Mâche",
-        "quantity": 100,
+        "quantity": 50,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -39218,7 +39226,7 @@
     "categoryId": "veggies",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
-    "defaultPortions": 8,
+    "defaultPortions": 2,
     "batchCooking": false,
     "isDessert": false,
     "ingredients": [
@@ -39226,7 +39234,7 @@
         "id": "001",
         "foodId": "fc-017",
         "name": "Orzo ou autres pâtes",
-        "quantity": 400,
+        "quantity": 100,
         "unit": "g",
         "category": "Féculents"
       },
@@ -39235,20 +39243,12 @@
         "foodId": "fv-010",
         "name": "Betterave rouge",
         "preparation": "dés",
-        "quantity": 1000,
+        "quantity": 250,
         "unit": "g",
         "category": "Fruits et légumes"
       },
       {
         "id": "003",
-        "foodId": "fs-020",
-        "name": "Noix de cajou",
-        "quantity": 100,
-        "unit": "g",
-        "category": "Fruits secs"
-      },
-      {
-        "id": "004",
         "foodId": "fv-088",
         "name": "Salade",
         "quantity": 80,
@@ -39256,44 +39256,52 @@
         "category": "Fruits et légumes"
       },
       {
-        "id": "005",
+        "id": "004",
         "foodId": "fv-038",
         "name": "Échalote",
-        "quantity": 40,
+        "quantity": 10,
         "unit": "g",
         "category": "Fruits et légumes"
       },
       {
-        "id": "006",
-        "foodId": "fv-002",
-        "name": "Ail",
-        "quantity": 2,
-        "unit": "pièce",
-        "category": "Fruits et légumes"
-      },
-      {
-        "id": "007",
+        "id": "005",
         "foodId": "pl-012",
         "name": "Feta ou Fromage frais",
-        "quantity": 400,
+        "quantity": 100,
         "unit": "g",
         "category": "Produits laitiers"
       },
       {
-        "id": "008",
+        "id": "006",
         "foodId": "cd-013",
         "name": "Huile de colza",
-        "quantity": 20,
+        "quantity": 5,
         "unit": "g",
         "category": "Condiments"
       },
       {
-        "id": "009",
+        "id": "007",
         "foodId": "cd-026",
         "name": "Vinaigre balsamique",
-        "quantity": 20,
+        "quantity": 5,
         "unit": "g",
         "category": "Condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "ha-017",
+        "name": "Persillade",
+        "quantity": null,
+        "unit": null,
+        "category": "Herbe aromatique"
+      },
+      {
+        "id": "009",
+        "baseId": "base-041",
+        "name": "Crème de betterave",
+        "quantity": 2,
+        "unit": "portion",
+        "category": "Recette"
       },
       {
         "id": "010",
@@ -39403,7 +39411,7 @@
         "id": "009",
         "foodId": "fv-088",
         "name": "Salade",
-        "quantity": 80,
+        "quantity": 60,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -39673,7 +39681,7 @@
         "id": "002",
         "foodId": "fv-089",
         "name": "Tomates",
-        "quantity": 200,
+        "quantity": 100,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -39705,7 +39713,7 @@
         "id": "006",
         "foodId": "pl-030",
         "name": "Ricotta",
-        "quantity": 30,
+        "quantity": 20,
         "unit": "g",
         "category": "Produits laitiers"
       },
@@ -45001,7 +45009,7 @@
         "id": "003",
         "foodId": "fv-002",
         "name": "Ail",
-        "quantity": 4,
+        "quantity": 2,
         "unit": "pièce",
         "category": "Fruits et légumes"
       },
@@ -45025,7 +45033,7 @@
         "id": "006",
         "foodId": "cn-003",
         "name": "Purée de tomates",
-        "quantity": 200,
+        "quantity": 150,
         "unit": "g",
         "category": "Conserves"
       },

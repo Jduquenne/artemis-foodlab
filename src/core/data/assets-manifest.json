@@ -1726,6 +1726,11 @@
   },
   {
     "categoryFolder": "charcuterie",
+    "typeFolder": "photo",
+    "fileName": "CHAR_49_Salade_de_pâtes_jambon_petits_pois_Photo.webp"
+  },
+  {
+    "categoryFolder": "charcuterie",
     "typeFolder": "ingredients",
     "fileName": "CHAR_01_Purée_Brocoli,_carottes_et_pâté_Ingrédients.webp"
   },
@@ -1966,6 +1971,11 @@
   },
   {
     "categoryFolder": "charcuterie",
+    "typeFolder": "ingredients",
+    "fileName": "CHAR_49_Salade_de_pâtes_jambon_petits_pois_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "charcuterie",
     "typeFolder": "recipes",
     "fileName": "CHAR_01_Purée_Brocoli_et_pâté_Recette.webp"
   },
@@ -2203,6 +2213,11 @@
     "categoryFolder": "charcuterie",
     "typeFolder": "recipes",
     "fileName": "CHAR_48_Chou_rouge_pomme_saucisse_et_purée_Recette.webp"
+  },
+  {
+    "categoryFolder": "charcuterie",
+    "typeFolder": "recipes",
+    "fileName": "CHAR_49_Salade_de_pâtes_jambon_petits_pois_Recette.webp"
   },
   {
     "categoryFolder": "fish",
@@ -2601,6 +2616,11 @@
   },
   {
     "categoryFolder": "fish",
+    "typeFolder": "photo",
+    "fileName": "POI_81_Salade_méditerranéenne_aux_sardines_et_olives_Photo.webp"
+  },
+  {
+    "categoryFolder": "fish",
     "typeFolder": "ingredients",
     "fileName": "POI_01_Nouilles_sautées_aux_crevettes_et_légumes_Ingrédients.webp"
   },
@@ -2996,6 +3016,11 @@
   },
   {
     "categoryFolder": "fish",
+    "typeFolder": "ingredients",
+    "fileName": "POI_81_Salade_méditerranéenne_aux_sardines_et_olives_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "fish",
     "typeFolder": "recipes",
     "fileName": "POI_01_Nouilles_sautées_aux_crevettes_Recette.webp"
   },
@@ -3388,6 +3413,11 @@
     "categoryFolder": "fish",
     "typeFolder": "recipes",
     "fileName": "POI_79_Plancha_de_cabillaud_aux_legumes_et_au_citron_Recette.webp"
+  },
+  {
+    "categoryFolder": "fish",
+    "typeFolder": "recipes",
+    "fileName": "POI_81_Salade_méditerranéenne_aux_sardines_et_olives_Recette.webp"
   },
   {
     "categoryFolder": "fruits",
@@ -4666,6 +4696,16 @@
   },
   {
     "categoryFolder": "plant-proteins",
+    "typeFolder": "photo",
+    "fileName": "PV_57_Salade_de_lentilles_méditerranéenne_Photo.webp"
+  },
+  {
+    "categoryFolder": "plant-proteins",
+    "typeFolder": "photo",
+    "fileName": "PV_58_Bowl_pois_chiches_champignons_œuf_mollet_Photo.webp"
+  },
+  {
+    "categoryFolder": "plant-proteins",
     "typeFolder": "ingredients",
     "fileName": "PV_01_Orzo_méditerranéen_Ingrédients.webp"
   },
@@ -4946,6 +4986,16 @@
   },
   {
     "categoryFolder": "plant-proteins",
+    "typeFolder": "ingredients",
+    "fileName": "PV_57_Salade_de_lentilles_méditerranéenne_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "plant-proteins",
+    "typeFolder": "ingredients",
+    "fileName": "PV_58_Bowl_pois_chiches_champignons_œuf_mollet_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "plant-proteins",
     "typeFolder": "recipes",
     "fileName": "PV_01_Orzo_méditerranéen_Recette.webp"
   },
@@ -5223,6 +5273,16 @@
     "categoryFolder": "plant-proteins",
     "typeFolder": "recipes",
     "fileName": "PV_56_Lentilles_kung_pao_Recette.webp"
+  },
+  {
+    "categoryFolder": "plant-proteins",
+    "typeFolder": "recipes",
+    "fileName": "PV_57_Salade_de_lentilles_méditerranéenne_Recette.webp"
+  },
+  {
+    "categoryFolder": "plant-proteins",
+    "typeFolder": "recipes",
+    "fileName": "PV_58_Bowl_pois_chiches_champignons_œuf_mollet_Recette.webp"
   },
   {
     "categoryFolder": "red-meat",
@@ -5526,6 +5586,11 @@
   },
   {
     "categoryFolder": "red-meat",
+    "typeFolder": "photo",
+    "fileName": "VR_61_Steak_salade_de_pomme_de_terre_jardinière_Photo.webp"
+  },
+  {
+    "categoryFolder": "red-meat",
     "typeFolder": "ingredients",
     "fileName": "VR_01_Fajitas_au_bœuf_et_aux_carottes_Ingrédients.webp"
   },
@@ -5826,6 +5891,11 @@
   },
   {
     "categoryFolder": "red-meat",
+    "typeFolder": "ingredients",
+    "fileName": "VR_61_Steak_salade_de_pomme_de_terre_jardinière_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "red-meat",
     "typeFolder": "recipes",
     "fileName": "VR_01_Fajitas_au_bœuf_et_aux_carottes_Recette.webp"
   },
@@ -6123,6 +6193,11 @@
     "categoryFolder": "red-meat",
     "typeFolder": "recipes",
     "fileName": "VR_60_Orzo_boulette_courgette_petits_pois_Recette.webp"
+  },
+  {
+    "categoryFolder": "red-meat",
+    "typeFolder": "recipes",
+    "fileName": "VR_61_Steak_salade_de_pomme_de_terre_jardinière_Recette.webp"
   },
   {
     "categoryFolder": "veggies",
@@ -8141,6 +8216,16 @@
   },
   {
     "categoryFolder": "white-meat",
+    "typeFolder": "photo",
+    "fileName": "VB_80_Sauté_de_poulet_paprika,_radis_rôtis_et_quinoa_Photo.webp"
+  },
+  {
+    "categoryFolder": "white-meat",
+    "typeFolder": "photo",
+    "fileName": "VB_81_Salade_de_riz_au_poulet_Photo.webp"
+  },
+  {
+    "categoryFolder": "white-meat",
     "typeFolder": "ingredients",
     "fileName": "VB_01_Semoule,_poulet,_patate_douce_et_brocolis_Ingrédients.webp"
   },
@@ -8533,6 +8618,16 @@
     "categoryFolder": "white-meat",
     "typeFolder": "ingredients",
     "fileName": "VB_79_Quiche_poulet_fenouil_petits_pois_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "white-meat",
+    "typeFolder": "ingredients",
+    "fileName": "VB_80_Sauté_de_poulet_paprika,_radis_rôtis_et_quinoa_Ingrédients.webp"
+  },
+  {
+    "categoryFolder": "white-meat",
+    "typeFolder": "ingredients",
+    "fileName": "VB_81_Salade_de_riz_au_poulet_Ingrédients.webp"
   },
   {
     "categoryFolder": "white-meat",
@@ -8933,6 +9028,16 @@
     "categoryFolder": "white-meat",
     "typeFolder": "recipes",
     "fileName": "VB_79_Quiche_poulet_fenouil_petits_pois_Recette.webp"
+  },
+  {
+    "categoryFolder": "white-meat",
+    "typeFolder": "recipes",
+    "fileName": "VB_80_Sauté_de_poulet_paprika,_radis_rôtis_et_quinoa_Recette.webp"
+  },
+  {
+    "categoryFolder": "white-meat",
+    "typeFolder": "recipes",
+    "fileName": "VB_81_Salade_de_riz_au_poulet_Recette.webp"
   },
   {
     "categoryFolder": "sweet-grocery",

@@ -1,5 +1,9 @@
 [
   {
+    "date": "2026-05-25",
+    "recipeIds": ["char-049", "poi-081", "pv-057", "pv-058", "vr-061", "vb-080", "vb-081"]
+  },
+  {
     "date": "2026-05-21",
     "recipeIds": ["pc-017", "pc-028"],
     "note": "Nouvelles recettes ! Miam !"

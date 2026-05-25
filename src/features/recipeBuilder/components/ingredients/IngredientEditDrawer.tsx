@@ -135,7 +135,7 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
               <div>
                 <label className={LABEL_CLASS}>Unité</label>
                 <select
-                  value={ingredient.unit}
+                  value={ingredient.unit ?? Unit.NONE}
                   onChange={e => update({ unit: e.target.value as Unit })}
                   className={FIELD_CLASS}
                 >
@@ -149,7 +149,7 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
               <div>
                 <label className={LABEL_CLASS}>Préparation</label>
                 <select
-                  value={ingredient.preparation}
+                  value={ingredient.preparation ?? ""}
                   onChange={e => update({ preparation: e.target.value as Preparation | "" })}
                   className={FIELD_CLASS}
                 >
@@ -163,7 +163,7 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
               <div>
                 <label className={LABEL_CLASS}>Catégorie</label>
                 <select
-                  value={ingredient.category}
+                  value={ingredient.category ?? IngredientCategory.UNKNOWN}
                   onChange={e => update({ category: e.target.value as IngredientCategory })}
                   className={FIELD_CLASS}
                 >

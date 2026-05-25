@@ -94,7 +94,7 @@ export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: Ingredi
             className="w-14 px-2 py-2 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 text-center"
           />
           <select
-            value={ingredient.unit}
+            value={ingredient.unit ?? Unit.NONE}
             onChange={e => update({ unit: e.target.value as Unit })}
             className="w-20 px-1 py-2 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
           >
@@ -104,7 +104,7 @@ export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: Ingredi
             ))}
           </select>
           <select
-            value={ingredient.preparation}
+            value={ingredient.preparation ?? ""}
             onChange={e => update({ preparation: e.target.value as Preparation | "" })}
             className="w-32 px-1 py-2 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
           >
@@ -114,7 +114,7 @@ export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: Ingredi
             ))}
           </select>
           <select
-            value={ingredient.category}
+            value={ingredient.category ?? IngredientCategory.UNKNOWN}
             onChange={e => update({ category: e.target.value as IngredientCategory })}
             className="w-28 px-1 py-2 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-xs text-slate-600 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
           >

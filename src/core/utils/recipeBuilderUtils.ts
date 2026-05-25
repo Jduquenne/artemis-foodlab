@@ -101,7 +101,9 @@ const INGREDIENT_LIST_CATEGORY_ORDER: IngredientCategory[][] = [
     IngredientCategory.CANNED,
     IngredientCategory.DRIED_FRUIT,
     IngredientCategory.SWEET_GROCERY,
-    IngredientCategory.SPICE_CONDIMENT,
+    IngredientCategory.CONDIMENT,
+    IngredientCategory.SPICE,
+    IngredientCategory.AROMATIC_HERB,
     IngredientCategory.NON_PURCHASE,
     IngredientCategory.UNKNOWN,
   ],
@@ -132,7 +134,7 @@ export function recipeToBuilderState(
     quantity: ing.quantity,
     unit: ing.unit as Unit,
     preparation: (ing.preparation ?? "") as Preparation | "",
-    category: ing.category as IngredientCategory,
+    category: (ing.category as IngredientCategory) ?? IngredientCategory.UNKNOWN,
   }));
   return {
     recipeNumber,
@@ -165,7 +167,9 @@ const INGREDIENT_CATEGORY_ORDER: IngredientCategory[] = [
   IngredientCategory.FARM,
   IngredientCategory.CANNED,
   IngredientCategory.SWEET_GROCERY,
-  IngredientCategory.SPICE_CONDIMENT,
+  IngredientCategory.CONDIMENT,
+  IngredientCategory.SPICE,
+  IngredientCategory.AROMATIC_HERB,
   IngredientCategory.BAKERY,
   IngredientCategory.RECIPE,
   IngredientCategory.NON_PURCHASE,
@@ -177,7 +181,9 @@ const INGREDIENT_CATEGORY_ORDER: IngredientCategory[] = [
 const EPICERIE_CATEGORIES = new Set<IngredientCategory>([
   IngredientCategory.CANNED,
   IngredientCategory.SWEET_GROCERY,
-  IngredientCategory.SPICE_CONDIMENT,
+  IngredientCategory.CONDIMENT,
+  IngredientCategory.SPICE,
+  IngredientCategory.AROMATIC_HERB,
   IngredientCategory.BAKERY,
 ]);
 

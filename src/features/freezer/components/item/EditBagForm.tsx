@@ -10,7 +10,7 @@ export interface EditBagFormProps {
 
 export const EditBagForm = ({ bag, onSave, onCancel }: EditBagFormProps) => {
     const [quantity, setQuantity] = useState(String(bag.quantity));
-    const [unit, setUnit] = useState<Unit>(bag.unit);
+    const [unit, setUnit] = useState<Unit>(bag.unit ?? Unit.G);
     const [preparation, setPreparation] = useState<Preparation | "">(bag.preparation ?? "");
     const [addedDate, setAddedDate] = useState(bag.addedDate);
 

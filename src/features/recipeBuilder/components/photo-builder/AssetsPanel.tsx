@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect, useMemo, useCallback } from "react";
 import { Upload, X, Download, FolderDown, Loader2 } from "lucide-react";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
-import { computeDraftTotal, formatIngredientsForIngredientCard, buildRecipeId, buildImageName } from "../../../../core/utils/recipeBuilderUtils";
+import { computeDraftTotal, formatIngredientsForIngredientCard, buildImageName } from "../../../../core/utils/recipeBuilderUtils";
 import { SvgCard } from "./SvgCard";
 import { SmallCardData, IngredientsCardData, RecetteCardData } from "./photoBuilderTypes";
 import { getCardColors } from "./photoBuilderColors";

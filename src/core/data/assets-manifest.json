@@ -201,6 +201,11 @@
   },
   {
     "categoryFolder": "bases",
+    "typeFolder": "photo",
+    "fileName": "BASE_41_Creme_de_betterave_Photo.webp"
+  },
+  {
+    "categoryFolder": "bases",
     "typeFolder": "ingredients",
     "fileName": "BASE_01_Pain_à_burger_à_la_farine_semi-complète_Ingrédients.webp"
   },
@@ -401,6 +406,11 @@
   },
   {
     "categoryFolder": "bases",
+    "typeFolder": "ingredients",
+    "fileName": "BASE_41_Creme_de_betterave_Ingredients.webp"
+  },
+  {
+    "categoryFolder": "bases",
     "typeFolder": "recipes",
     "fileName": "BASE_01_Pain_à_burger_à_la_farine_semi-complète_Recette.webp"
   },
@@ -598,6 +608,11 @@
     "categoryFolder": "bases",
     "typeFolder": "recipes",
     "fileName": "BASE_40_Buns_de_lentilles_corail_vegans_Recette.webp"
+  },
+  {
+    "categoryFolder": "bases",
+    "typeFolder": "recipes",
+    "fileName": "BASE_41_Creme_de_betterave_Recette.webp"
   },
   {
     "categoryFolder": "cereal-products",

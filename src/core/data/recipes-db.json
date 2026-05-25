@@ -58104,6 +58104,53 @@
       }
     }
   },
+  "base-041": {
+    "id": "base-041",
+    "name": "Crème de betterave",
+    "categoryId": "bases",
+    "mealTypes": [],
+    "kind": "base",
+    "defaultPortions": 8,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-011",
+        "name": "Betterave rouge",
+        "quantity": 500,
+        "unit": null,
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fs-020",
+        "name": "Noix de cajou",
+        "quantity": 80,
+        "unit": null,
+        "category": "Fruits secs"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-003",
+        "name": "Ail",
+        "quantity": 2,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/bases/photo/BASE_41_Creme_de_betterave_Photo.webp"
+      },
+      "ingredientsPhoto": {
+        "url": "/artemis-foodlab/assets/bases/ingredients/BASE_41_Creme_de_betterave_Ingredients.webp"
+      },
+      "instructionsPhoto": {
+        "url": "/artemis-foodlab/assets/bases/recipes/BASE_41_Creme_de_betterave_Recette.webp"
+      }
+    }
+  },
   "as-001": {
     "id": "as-001",
     "name": "Abricots secs",

@@ -1,5 +1,8 @@
 import JSZip from "jszip";
 
+const EXPORT_PIXEL_RATIO = 3;
+const WEBP_QUALITY = 0.95;
+
 const fontDataCache = new Map<string, string>();
 
 async function fetchFontDataUrl(url: string): Promise<string | null> {
@@ -43,10 +46,9 @@ async function buildFontStyleTag(): Promise<string> {
 }
 
 async function svgToWebpBlob(svgString: string, width: number, height: number): Promise<Blob> {
-  const pixelRatio = 3;
   const canvas = document.createElement("canvas");
-  canvas.width = width * pixelRatio;
-  canvas.height = height * pixelRatio;
+  canvas.width = width * EXPORT_PIXEL_RATIO;
+  canvas.height = height * EXPORT_PIXEL_RATIO;
   const ctx = canvas.getContext("2d")!;
 
   const fontStyle = await buildFontStyleTag();
@@ -72,7 +74,7 @@ async function svgToWebpBlob(svgString: string, width: number, height: number): 
     canvas.toBlob(
       (b) => (b ? resolve(b) : reject(new Error("toBlob failed"))),
       "image/webp",
-      0.95
+      WEBP_QUALITY
     );
   });
 }

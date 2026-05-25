@@ -1,4 +1,4 @@
-import { CardColors } from "./photoBuilderColors";
+import { CardColors } from "../../../../core/utils/photoBuilderUtils";
 import { IngredientLineItem } from "../../../../core/utils/recipeBuilderUtils";
 
 export type { IngredientLineItem };

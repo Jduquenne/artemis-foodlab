@@ -7,6 +7,7 @@ import { SmallCardData, IngredientsCardData, RecetteCardData } from "./photoBuil
 import { getCardColors } from "./photoBuilderColors";
 import { buildPhotoSvg, buildIngredientsSvg, buildRecetteSvg } from "./photoBuilderSvg";
 import { downloadSingleCard, downloadCardPack } from "./photoBuilderExport";
+import { calculateCardScale } from "../../../../core/utils/photoBuilderUtils";
 
 type CardId = "photo" | "ingredients" | "recette";
 
@@ -17,6 +18,8 @@ const CARD_DIMS: Record<CardId, { w: number; h: number }> = {
   ingredients: { w: 189, h: 208 },
   recette: { w: 559, h: 397 },
 };
+
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 
 export interface AssetsPanelProps {
   state: RecipeBuilderState;
@@ -57,7 +60,7 @@ export const AssetsPanel = ({ state }: AssetsPanelProps) => {
 
   const loadImageFile = useCallback((file: File) => {
     if (!file.type.startsWith("image/")) return;
-    if (file.size > 5 * 1024 * 1024) return;
+    if (file.size > MAX_IMAGE_SIZE) return;
     const reader = new FileReader();
     reader.onload = (ev) => setImageBase64((ev.target?.result as string) ?? "");
     reader.readAsDataURL(file);
@@ -159,9 +162,9 @@ export const AssetsPanel = ({ state }: AssetsPanelProps) => {
     try {
       const baseName = buildImageName(state.categoryId, state.recipeNumber, state.name);
       await downloadCardPack([
-        { svg: photoSvg, w: 189, h: 208, suffix: "Photo" },
-        { svg: ingredientsSvg, w: 189, h: 208, suffix: "Ingrédients" },
-        { svg: recetteSvg, w: 559, h: 397, suffix: "Recette" },
+        { svg: photoSvg, w: CARD_DIMS.photo.w, h: CARD_DIMS.photo.h, suffix: "Photo" },
+        { svg: ingredientsSvg, w: CARD_DIMS.ingredients.w, h: CARD_DIMS.ingredients.h, suffix: "Ingrédients" },
+        { svg: recetteSvg, w: CARD_DIMS.recette.w, h: CARD_DIMS.recette.h, suffix: "Recette" },
       ], baseName);
     } finally {
       setDownloading(false);
@@ -172,12 +175,12 @@ export const AssetsPanel = ({ state }: AssetsPanelProps) => {
 
   const thumbScale = (id: CardId) => {
     const { w, h } = CARD_DIMS[id];
-    return Math.max(Math.min((thumbH - 8) / h, (thumbCellW - 8) / w), 0.05);
+    return calculateCardScale(w, h, thumbH - 8, thumbCellW - 8);
   };
 
   const expandScale = (id: CardId) => {
     const { w, h } = CARD_DIMS[id];
-    return Math.max(Math.min((expandH - 16) / h, (expandW - 16) / w), 0.05);
+    return calculateCardScale(w, h, expandH - 16, expandW - 16);
   };
 
   const renderCard = (id: CardId, scale: number) => {

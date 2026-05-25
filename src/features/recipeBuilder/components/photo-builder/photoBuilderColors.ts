@@ -1,8 +1,6 @@
-export interface CardColors {
-  bg: string;
-  band: string;
-  circle: string;
-}
+import { CardColors } from "../../../../core/utils/photoBuilderUtils";
+
+export type { CardColors };
 
 const CARD_COLORS: Record<string, CardColors> = {
   charcuterie:       { bg: "#cbc2d1", band: "#8238bd", circle: "#410d6b" },

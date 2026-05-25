@@ -42,6 +42,17 @@ export function buildRecipeId(
   return `${prefix}_${isNaN(num) ? recipeNumber : String(num).padStart(2, "0")}`;
 }
 
+export function buildImageName(
+  categoryId: string,
+  recipeNumber: string,
+  recipeName: string,
+  type?: string,
+): string {
+  const id = buildRecipeId(categoryId, recipeNumber);
+  const namePart = recipeName.trim().replace(/ /g, "_");
+  return type ? `${id}_${namePart}_${type}` : `${id}_${namePart}`;
+}
+
 function addMacros(a: Macronutrients, b: Macronutrients): Macronutrients {
   return {
     kcal: a.kcal + b.kcal,

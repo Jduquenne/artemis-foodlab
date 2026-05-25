@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect, useMemo, useCallback } from "react";
 import { Upload, X, Download, FolderDown, Loader2 } from "lucide-react";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
-import { computeDraftTotal, formatIngredientsForIngredientCard, buildRecipeId } from "../../../../core/utils/recipeBuilderUtils";
+import { computeDraftTotal, formatIngredientsForIngredientCard, buildRecipeId, buildImageName } from "../../../../core/utils/recipeBuilderUtils";
 import { SvgCard } from "./SvgCard";
 import { SmallCardData, IngredientsCardData, RecetteCardData } from "./photoBuilderTypes";
 import { getCardColors } from "./photoBuilderColors";
@@ -142,31 +142,31 @@ export const AssetsPanel = ({ state }: AssetsPanelProps) => {
   const ingredientsSvg = useMemo(() => buildIngredientsSvg(ingredientsData), [ingredientsData]);
   const recetteSvg = useMemo(() => buildRecetteSvg(recetteData), [recetteData]);
 
-  const baseName = buildRecipeId(state.categoryId, state.recipeNumber);
-
   const handleDownload = useCallback(async (id: CardId) => {
     setDownloading(true);
     try {
       const { w, h } = CARD_DIMS[id];
       const svg = id === "photo" ? photoSvg : id === "ingredients" ? ingredientsSvg : recetteSvg;
-      await downloadSingleCard(svg, w, h, `${baseName}_${id}`);
+      const type = id === "photo" ? "Photo" : id === "recette" ? "Recette" : "Ingrédients";
+      await downloadSingleCard(svg, w, h, buildImageName(state.categoryId, state.recipeNumber, state.name, type));
     } finally {
       setDownloading(false);
     }
-  }, [photoSvg, ingredientsSvg, recetteSvg, baseName]);
+  }, [photoSvg, ingredientsSvg, recetteSvg, state.categoryId, state.recipeNumber, state.name]);
 
   const handleDownloadPack = useCallback(async () => {
     setDownloading(true);
     try {
+      const baseName = buildImageName(state.categoryId, state.recipeNumber, state.name);
       await downloadCardPack([
-        { svg: photoSvg, w: 189, h: 208, suffix: "photo" },
-        { svg: ingredientsSvg, w: 189, h: 208, suffix: "ingredients" },
-        { svg: recetteSvg, w: 559, h: 397, suffix: "recette" },
+        { svg: photoSvg, w: 189, h: 208, suffix: "Photo" },
+        { svg: ingredientsSvg, w: 189, h: 208, suffix: "Ingrédients" },
+        { svg: recetteSvg, w: 559, h: 397, suffix: "Recette" },
       ], baseName);
     } finally {
       setDownloading(false);
     }
-  }, [photoSvg, ingredientsSvg, recetteSvg, baseName]);
+  }, [photoSvg, ingredientsSvg, recetteSvg, state.categoryId, state.recipeNumber, state.name]);
 
   const thumbCellW = (thumbW - 16) / 3;
 

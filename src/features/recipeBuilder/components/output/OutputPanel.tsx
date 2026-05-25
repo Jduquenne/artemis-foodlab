@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Copy, Check, X, FileCode2 } from "lucide-react";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
-import { buildRecipeId, generateCsvOutput, generateIngredientListOutput } from "../../../../core/utils/recipeBuilderUtils";
+import { buildImageName, generateCsvOutput, generateIngredientListOutput } from "../../../../core/utils/recipeBuilderUtils";
 
 export interface OutputPanelProps {
   state: RecipeBuilderState;
@@ -13,11 +13,6 @@ interface OutputItem {
   value: string;
 }
 
-function generateImageName(state: RecipeBuilderState, type: string): string {
-  const id = buildRecipeId(state.categoryId, state.recipeNumber);
-  const namePart = state.name.trim().replace(/ /g, "_");
-  return `${id}_${namePart}_${type}`;
-}
 
 export const OutputPanel = ({ state }: OutputPanelProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,9 +22,9 @@ export const OutputPanel = ({ state }: OutputPanelProps) => {
   const outputs: OutputItem[] = [
     { key: "csv", label: "CSV", value: generateCsvOutput(state) },
     { key: "liste", label: "Liste ingrédients", value: generateIngredientListOutput(state) },
-    { key: "photo", label: "Photo", value: generateImageName(state, "Photo") },
-    { key: "recette", label: "Recette", value: generateImageName(state, "Recette") },
-    { key: "ingredients", label: "Ingrédients", value: generateImageName(state, "Ingrédients") },
+    { key: "photo", label: "Photo", value: buildImageName(state.categoryId, state.recipeNumber, state.name, "Photo") },
+    { key: "recette", label: "Recette", value: buildImageName(state.categoryId, state.recipeNumber, state.name, "Recette") },
+    { key: "ingredients", label: "Ingrédients", value: buildImageName(state.categoryId, state.recipeNumber, state.name, "Ingrédients") },
   ];
 
   const copy = async (text: string, key: string) => {

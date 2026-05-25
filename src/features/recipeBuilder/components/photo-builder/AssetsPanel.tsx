@@ -23,38 +23,76 @@ export interface AssetsPanelProps {
 }
 
 export const AssetsPanel = ({ state }: AssetsPanelProps) => {
-  const cardsAreaRef = useRef<HTMLDivElement>(null);
+  const thumbsRowRef = useRef<HTMLDivElement>(null);
+  const expandAreaRef = useRef<HTMLDivElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
-  const [cardsH, setCardsH] = useState(450);
-  const [cardsW, setCardsW] = useState(800);
+  const [thumbH, setThumbH] = useState(140);
+  const [thumbW, setThumbW] = useState(800);
+  const [expandH, setExpandH] = useState(280);
+  const [expandW, setExpandW] = useState(800);
   const [selected, setSelected] = useState<CardId | null>(null);
   const [imageBase64, setImageBase64] = useState("");
   const [downloading, setDownloading] = useState(false);
+  const [dragging, setDragging] = useState(false);
 
   useEffect(() => {
-    const el = cardsAreaRef.current;
-    if (!el) return;
-    const ro = new ResizeObserver(([entry]) => {
-      setCardsH(entry.contentRect.height);
-      setCardsW(entry.contentRect.width);
+    const thumbEl = thumbsRowRef.current;
+    const expandEl = expandAreaRef.current;
+    if (!thumbEl || !expandEl) return;
+    const ro = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.target === thumbEl) {
+          setThumbH(entry.contentRect.height);
+          setThumbW(entry.contentRect.width);
+        } else {
+          setExpandH(entry.contentRect.height);
+          setExpandW(entry.contentRect.width);
+        }
+      }
     });
-    ro.observe(el);
+    ro.observe(thumbEl);
+    ro.observe(expandEl);
     return () => ro.disconnect();
+  }, []);
+
+  const loadImageFile = useCallback((file: File) => {
+    if (!file.type.startsWith("image/")) return;
+    if (file.size > 5 * 1024 * 1024) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => setImageBase64((ev.target?.result as string) ?? "");
+    reader.readAsDataURL(file);
   }, []);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file) return;
-    if (file.size > 5 * 1024 * 1024) {
-      e.target.value = "";
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      setImageBase64((ev.target?.result as string) ?? "");
-    };
-    reader.readAsDataURL(file);
+    if (file) loadImageFile(file);
+    e.target.value = "";
   };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    if (!e.currentTarget.contains(e.relatedTarget as Node)) setDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragging(false);
+    const file = e.dataTransfer.files[0];
+    if (file) loadImageFile(file);
+  };
+
+  const handlePaste = useCallback((e: React.ClipboardEvent | ClipboardEvent) => {
+    const item = Array.from(e.clipboardData?.items ?? []).find(
+      i => i.kind === "file" || i.type.startsWith("image/")
+    );
+    if (!item) return;
+    const file = item.getAsFile();
+    if (file) loadImageFile(file);
+  }, [loadImageFile]);
 
   const { macros } = useMemo(() => computeDraftTotal(state.ingredients), [state.ingredients]);
   const portions = Math.max(state.defaultPortions, 1);
@@ -130,9 +168,7 @@ export const AssetsPanel = ({ state }: AssetsPanelProps) => {
     }
   }, [photoSvg, ingredientsSvg, recetteSvg, baseName]);
 
-  const thumbH = cardsH / 3;
-  const thumbCellW = (cardsW - 16) / 3;
-  const expandH = (cardsH * 2) / 3;
+  const thumbCellW = (thumbW - 16) / 3;
 
   const thumbScale = (id: CardId) => {
     const { w, h } = CARD_DIMS[id];
@@ -141,7 +177,7 @@ export const AssetsPanel = ({ state }: AssetsPanelProps) => {
 
   const expandScale = (id: CardId) => {
     const { w, h } = CARD_DIMS[id];
-    return Math.max(Math.min((expandH - 16) / h, (cardsW - 16) / w), 0.05);
+    return Math.max(Math.min((expandH - 16) / h, (expandW - 16) / w), 0.05);
   };
 
   const renderCard = (id: CardId, scale: number) => {
@@ -151,7 +187,14 @@ export const AssetsPanel = ({ state }: AssetsPanelProps) => {
   };
 
   return (
-    <div className="flex-1 min-h-0 flex flex-col gap-2 overflow-hidden">
+    <div
+      className="flex-1 min-h-0 flex flex-col gap-2 overflow-hidden outline-none"
+      tabIndex={0}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+      onPaste={handlePaste}
+    >
       <div className="shrink-0 flex items-center gap-2">
         <h2 className="text-xs font-black text-slate-500 uppercase tracking-wide shrink-0">Création assets</h2>
         <input ref={imageInputRef} type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
@@ -182,7 +225,7 @@ export const AssetsPanel = ({ state }: AssetsPanelProps) => {
           >
             <Upload className="w-3 h-3 text-slate-400 group-hover:text-orange-500 transition-colors shrink-0" />
             <span className="text-[11px] text-slate-400 group-hover:text-orange-500 transition-colors">
-              Ajouter une image
+              Parcourir / glisser / Ctrl+V
             </span>
             <span className="ml-auto text-[10px] text-slate-300 group-hover:text-orange-400 transition-colors shrink-0">
               max 5 Mo
@@ -223,8 +266,13 @@ export const AssetsPanel = ({ state }: AssetsPanelProps) => {
         </button>
       </div>
 
-      <div ref={cardsAreaRef} className="flex-1 min-h-0 flex flex-col gap-2 overflow-hidden">
-        <div className="shrink-0 flex gap-2" style={{ height: thumbH }}>
+      <div className="flex-1 min-h-0 flex flex-col gap-2 overflow-hidden relative">
+        {dragging && (
+          <div className="absolute inset-0 z-20 flex items-center justify-center bg-orange-50/80 dark:bg-orange-900/20 rounded-xl border-2 border-orange-400 pointer-events-none">
+            <p className="text-sm font-bold text-orange-500">Déposer l'image ici</p>
+          </div>
+        )}
+        <div ref={thumbsRowRef} className="shrink-0 flex gap-2" style={{ height: "33%" }}>
           {CARD_IDS.map(id => (
             <button
               key={id}
@@ -242,7 +290,7 @@ export const AssetsPanel = ({ state }: AssetsPanelProps) => {
           ))}
         </div>
 
-        <div className="flex-1 min-h-0 flex items-center justify-center overflow-hidden">
+        <div ref={expandAreaRef} className="flex-1 min-h-0 flex items-center justify-center overflow-hidden">
           {selected ? (
             renderCard(selected, expandScale(selected))
           ) : (
@@ -255,3 +303,4 @@ export const AssetsPanel = ({ state }: AssetsPanelProps) => {
     </div>
   );
 };
+

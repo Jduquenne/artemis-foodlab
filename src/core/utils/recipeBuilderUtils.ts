@@ -16,6 +16,7 @@ import { calculateRecipeMacros } from "./macroUtils";
 import { wrapLineAtMaxChars } from "./photoBuilderUtils";
 import { typedFoodDb } from "../typed-db/typedFoodDb";
 import { typedRecipesDb } from "../typed-db/typedRecipesDb";
+import { typedInstructionsDb } from "../typed-db/typedInstructionsDb";
 
 export const CATEGORY_PREFIX: Record<string, string> = {
   bases: "BASE",
@@ -158,7 +159,7 @@ export function recipeToBuilderState(
     isDessert: recipe.isDessert ?? false,
     batchCooking: recipe.batchCooking ?? false,
     ingredients,
-    instructions: [],
+    instructions: typedInstructionsDb[recipeId]?.instructions.split("\n") ?? [],
   };
 }
 

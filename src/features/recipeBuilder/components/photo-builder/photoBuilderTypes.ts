@@ -31,3 +31,14 @@ export interface RecetteCardData {
   instructions: string[];
   colors: CardColors;
 }
+
+export interface RecetteBookCardData {
+  imageHref: string;
+  bookImageHref: string;
+  recipeName: string;
+  recipeNumber: number;
+  portions: number;
+  ingredients: IngredientLineItem[];
+  pageNumber: number;
+  colors: CardColors;
+}

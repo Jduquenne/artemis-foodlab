@@ -158,6 +158,7 @@ export function recipeToBuilderState(
     defaultPortions: recipe.defaultPortions,
     isDessert: recipe.isDessert ?? false,
     batchCooking: recipe.batchCooking ?? false,
+    fromBook: false,
     ingredients,
     instructions: typedInstructionsDb[recipeId]?.instructions.split("\n") ?? [],
   };

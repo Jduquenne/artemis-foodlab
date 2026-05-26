@@ -200,6 +200,8 @@ export function buildRecetteIngredients(
   ingredients: IngredientLineItem[],
   colors: CardColors,
   fontSize: number = RECETTE_BASE_FONT,
+  xStart: number = RECETTE_TEXT_X,
+  yStart: number = RECETTE_TEXT_Y,
 ): { tspans: string; rects: string } {
   const scale = fontSize / RECETTE_BASE_FONT;
   const lineH = RECETTE_LINE_H * scale;
@@ -212,7 +214,7 @@ export function buildRecetteIngredients(
 
   const tspanParts: string[] = [];
   const rectParts: string[] = [];
-  let cumY = RECETTE_TEXT_Y;
+  let cumY = yStart;
   const ctx = makeMeasureCtx(`${fontSize}px Oswald, Arial Narrow, sans-serif`);
 
   for (let i = 0; i < ingredients.length; i++) {
@@ -224,24 +226,24 @@ export function buildRecetteIngredients(
 
       if (isVeryFirst) {
         tspanParts.push(
-          `  <tspan x="${RECETTE_TEXT_X}" dy="0">${escapeXml(subLines[si])}</tspan>`,
+          `  <tspan x="${xStart}" dy="0">${escapeXml(subLines[si])}</tspan>`,
         );
       } else if (si === 0) {
         const dy = item.isNewCategory ? lineH + catExtraH : lineH;
         cumY += dy;
         tspanParts.push(
-          `  <tspan x="${RECETTE_TEXT_X}" dy="${dy.toFixed(2)}">${escapeXml(subLines[si])}</tspan>`,
+          `  <tspan x="${xStart}" dy="${dy.toFixed(2)}">${escapeXml(subLines[si])}</tspan>`,
         );
       } else {
         cumY += lineH;
         tspanParts.push(
-          `  <tspan x="${RECETTE_TEXT_X}" dy="${lineH.toFixed(2)}">${escapeXml(subLines[si])}</tspan>`,
+          `  <tspan x="${xStart}" dy="${lineH.toFixed(2)}">${escapeXml(subLines[si])}</tspan>`,
         );
       }
 
       if (si === 0 && item.baseLabel) {
         const textWidth = ctx.measureText(subLines[0]).width;
-        const badgeX = RECETTE_TEXT_X + textWidth + RECETTE_BADGE_GAP;
+        const badgeX = xStart + textWidth + RECETTE_BADGE_GAP;
         rectParts.push(
           `<rect x="${badgeX.toFixed(1)}" y="${(cumY - badgeOffsetY).toFixed(1)}" width="${badgeW.toFixed(1)}" height="${badgeH.toFixed(1)}" rx="1.5" fill="${colors.band}" />`,
           `<text x="${(badgeX + badgeW / 2).toFixed(1)}" y="${(cumY - 0.5 * scale).toFixed(1)}" font-size="${badgeFontSize.toFixed(1)}" fill="white" font-weight="bold" text-anchor="middle" font-family="Oswald, sans-serif">${item.baseLabel}</text>`,

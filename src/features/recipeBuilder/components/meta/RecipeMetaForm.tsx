@@ -132,6 +132,20 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
             {state.batchCooking ? "Activé" : "Désactivé"}
           </button>
         </div>
+        <div className="flex-1 flex flex-col justify-end">
+          <label className={labelClass}>Livre</label>
+          <button
+            type="button"
+            onClick={() => onChange({ fromBook: !state.fromBook })}
+            className={`w-full py-1.5 sm:py-2.5 rounded-xl text-xs font-bold transition-colors ${
+              state.fromBook
+                ? "bg-orange-500 text-white"
+                : "bg-slate-100 dark:bg-slate-200 text-slate-600 hover:bg-slate-200 dark:hover:bg-slate-300"
+            }`}
+          >
+            {state.fromBook ? "Activé" : "Désactivé"}
+          </button>
+        </div>
       </div>
 
       <div>
@@ -154,16 +168,18 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
         </div>
       </div>
 
-      <div>
-        <label className={labelClass}>Instructions</label>
-        <textarea
-          value={(state.instructions ?? []).join("\n")}
-          onChange={e => onChange({ instructions: e.target.value === "" ? [] : e.target.value.split("\n") })}
-          placeholder={"Étape 1\nÉtape 2\n..."}
-          rows={4}
-          className={`${inputClass} resize-none font-mono text-xs leading-relaxed`}
-        />
-      </div>
+      {!state.fromBook && (
+        <div>
+          <label className={labelClass}>Instructions</label>
+          <textarea
+            value={(state.instructions ?? []).join("\n")}
+            onChange={e => onChange({ instructions: e.target.value === "" ? [] : e.target.value.split("\n") })}
+            placeholder={"Étape 1\nÉtape 2\n..."}
+            rows={4}
+            className={`${inputClass} resize-none font-mono text-xs leading-relaxed`}
+          />
+        </div>
+      )}
     </div>
   );
 };

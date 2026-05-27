@@ -1,5 +1,3 @@
-import JSZip from "jszip";
-
 const EXPORT_PIXEL_RATIO = 3;
 const WEBP_QUALITY = 0.95;
 
@@ -105,12 +103,13 @@ export interface CardExportSpec {
   suffix: string;
 }
 
-export async function downloadCardPack(cards: CardExportSpec[], baseName: string): Promise<void> {
-  const zip = new JSZip();
+export async function downloadAllCards(cards: CardExportSpec[], baseName: string): Promise<void> {
+  const results: { blob: Blob; filename: string }[] = [];
   for (const card of cards) {
-    const b = await svgToWebpBlob(card.svg, card.w, card.h);
-    zip.file(`${baseName}_${card.suffix}.webp`, b);
+    const blob = await svgToWebpBlob(card.svg, card.w, card.h);
+    results.push({ blob, filename: `${baseName}_${card.suffix}.webp` });
   }
-  const zipBlob = await zip.generateAsync({ type: "blob" });
-  triggerDownload(zipBlob, `${baseName}.zip`);
+  results.forEach(({ blob, filename }, i) => {
+    setTimeout(() => triggerDownload(blob, filename), i * 150);
+  });
 }

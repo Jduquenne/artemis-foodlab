@@ -1,12 +1,12 @@
 import { useRef, useState, useEffect, useMemo, useCallback } from "react";
-import { Upload, X, Download, FolderDown, Loader2 } from "lucide-react";
+import { Upload, X, Download, Loader2 } from "lucide-react";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
 import { computeDraftTotal, formatIngredientsForIngredientCard, buildImageName } from "../../../../core/utils/recipeBuilderUtils";
 import { SvgCard } from "./SvgCard";
 import { SmallCardData, IngredientsCardData, RecetteCardData, RecetteBookCardData } from "./photoBuilderTypes";
 import { getCardColors } from "./photoBuilderColors";
 import { buildPhotoSvg, buildIngredientsSvg, buildRecetteSvg, buildRecetteBookSvg } from "./photoBuilderSvg";
-import { downloadSingleCard, downloadCardPack } from "./photoBuilderExport";
+import { downloadSingleCard, downloadAllCards } from "./photoBuilderExport";
 import { calculateCardScale } from "../../../../core/utils/photoBuilderUtils";
 
 type CardId = "photo" | "ingredients" | "recette" | "livre";
@@ -215,7 +215,7 @@ export const AssetsPanel = ({ state }: AssetsPanelProps) => {
       } else {
         entries.push({ svg: recetteSvg, w: CARD_DIMS.recette.w, h: CARD_DIMS.recette.h, suffix: "Recette" });
       }
-      await downloadCardPack(entries, baseName);
+      await downloadAllCards(entries, baseName);
     } finally {
       setDownloading(false);
     }
@@ -358,9 +358,9 @@ export const AssetsPanel = ({ state }: AssetsPanelProps) => {
           {downloading ? (
             <Loader2 className="w-3 h-3 animate-spin shrink-0" />
           ) : (
-            <FolderDown className="w-3 h-3 shrink-0" />
+            <Download className="w-3 h-3 shrink-0" />
           )}
-          <span className="text-[11px] font-medium">Pack</span>
+          <span className="text-[11px] font-medium">Tout</span>
         </button>
       </div>
 

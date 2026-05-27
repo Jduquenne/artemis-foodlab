@@ -11024,22 +11024,14 @@
       },
       {
         "id": "002",
-        "foodId": "fs-015",
-        "name": "Mélange de graines",
-        "quantity": 50,
-        "unit": "g",
-        "category": "Fruits secs"
-      },
-      {
-        "id": "003",
         "foodId": "es-034",
         "name": "Levure boulangère sèche",
-        "quantity": 1,
-        "unit": "sachet",
+        "quantity": 5,
+        "unit": "g",
         "category": "Epicerie sucrée"
       },
       {
-        "id": "004",
+        "id": "003",
         "foodId": "es-033",
         "name": "Levure boulangère fraîche",
         "quantity": 20,
@@ -11047,20 +11039,28 @@
         "category": "Epicerie sucrée"
       },
       {
-        "id": "005",
-        "foodId": "es-048",
-        "name": "Sirop d'érable",
-        "quantity": 10,
+        "id": "004",
+        "foodId": "es-050",
+        "name": "Sucre",
+        "quantity": 5,
         "unit": "g",
         "category": "Epicerie sucrée"
       },
       {
-        "id": "006",
+        "id": "005",
         "foodId": "cd-025",
         "name": "Sel",
         "quantity": null,
         "unit": null,
         "category": "Condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "ha-005",
+        "name": "Eau",
+        "quantity": 330,
+        "unit": "g",
+        "category": "Hors achat"
       },
       {
         "id": "007",
@@ -22837,7 +22837,7 @@
         "id": "001",
         "baseId": "base-004",
         "name": "Tortillas maison",
-        "quantity": 8,
+        "quantity": 4,
         "unit": "portion",
         "category": "Recette"
       },
@@ -23004,7 +23004,7 @@
         "id": "001",
         "baseId": "base-004",
         "name": "Tortillas maison",
-        "quantity": 8,
+        "quantity": 4,
         "unit": "portion",
         "category": "Recette"
       },
@@ -23608,9 +23608,9 @@
     "ingredients": [
       {
         "id": "001",
-        "baseId": "base-004",
-        "name": "Tortillas maison",
-        "quantity": 8,
+        "baseId": "base-008",
+        "name": "Pâte à Lasagnes",
+        "quantity": 4,
         "unit": "portion",
         "category": "Recette"
       },
@@ -23749,6 +23749,14 @@
         "quantity": 5,
         "unit": "g",
         "category": "Condiments"
+      },
+      {
+        "id": "019",
+        "foodId": "cn-003",
+        "name": "Purée de tomates",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Conserves"
       }
     ],
     "assets": {
@@ -28779,7 +28787,7 @@
   },
   "vb-002": {
     "id": "vb-002",
-    "name": "Cuisse de poulet, pommes de terre rissolées",
+    "name": "Pommes de terre rissolées au poulet",
     "categoryId": "white-meat",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -29040,7 +29048,7 @@
         "id": "004",
         "foodId": "fv-070",
         "name": "Petits pois",
-        "quantity": 125,
+        "quantity": 100,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -29385,7 +29393,7 @@
         "foodId": "vm-006",
         "name": "Filet de poulet",
         "preparation": "dés",
-        "quantity": 200,
+        "quantity": 400,
         "unit": "g",
         "category": "Viande"
       },
@@ -29393,7 +29401,7 @@
         "id": "002",
         "baseId": "base-004",
         "name": "Tortillas maison",
-        "quantity": 8,
+        "quantity": 4,
         "unit": "portion",
         "category": "Recette"
       },
@@ -29409,17 +29417,17 @@
         "id": "004",
         "foodId": "fv-075",
         "name": "Poivrons",
-        "quantity": 500,
+        "quantity": 400,
         "unit": "g",
         "category": "Fruits et légumes"
       },
       {
         "id": "005",
-        "foodId": "cn-002",
-        "name": "Pulpe de tomates",
+        "foodId": "fv-089",
+        "name": "Tomates",
         "quantity": 800,
         "unit": "g",
-        "category": "Conserves"
+        "category": "Fruits et légumes"
       },
       {
         "id": "006",
@@ -29492,6 +29500,14 @@
         "quantity": 10,
         "unit": "g",
         "category": "Condiments"
+      },
+      {
+        "id": "015",
+        "foodId": "fv-038",
+        "name": "Échalote",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Fruits et légumes"
       }
     ],
     "assets": {
@@ -29625,7 +29641,7 @@
         "id": "003",
         "foodId": "fv-089",
         "name": "Tomates",
-        "quantity": 200,
+        "quantity": 100,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -29641,7 +29657,7 @@
         "id": "005",
         "foodId": "fv-075",
         "name": "Poivrons",
-        "quantity": 100,
+        "quantity": 50,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -29666,7 +29682,7 @@
         "foodId": "pl-026",
         "name": "Mozzarella",
         "quantity": 62.5,
-        "unit": "g",
+        "unit": null,
         "category": "Produits laitiers"
       },
       {
@@ -29841,7 +29857,7 @@
         "id": "010",
         "foodId": "cd-011",
         "name": "Huile d'olive",
-        "quantity": 8,
+        "quantity": 10,
         "unit": "g",
         "category": "Condiments"
       },
@@ -30137,7 +30153,7 @@
         "id": "003",
         "foodId": "fv-090",
         "name": "Tomates cerises",
-        "quantity": 500,
+        "quantity": 300,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -30218,7 +30234,7 @@
         "foodId": "fv-014",
         "name": "Carottes",
         "preparation": "julienne",
-        "quantity": 250,
+        "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -30274,7 +30290,7 @@
         "id": "011",
         "foodId": "fs-013",
         "name": "Graines de sésame",
-        "quantity": 20,
+        "quantity": 10,
         "unit": "g",
         "category": "Fruits secs"
       }
@@ -30346,7 +30362,7 @@
         "id": "006",
         "foodId": "pl-010",
         "name": "Comté",
-        "quantity": 60,
+        "quantity": 80,
         "unit": "g",
         "category": "Produits laitiers"
       },
@@ -30453,7 +30469,7 @@
   },
   "vb-016": {
     "id": "vb-016",
-    "name": "Poêlée de riz au poulet, carottes et haricots verts",
+    "name": "Poêlée riz poulet carottes haricots verts",
     "categoryId": "white-meat",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -31335,7 +31351,7 @@
         "id": "003",
         "foodId": "fv-049",
         "name": "Haricots verts",
-        "quantity": 250,
+        "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -32421,7 +32437,7 @@
         "id": "002",
         "foodId": "fc-025",
         "name": "Quinoa",
-        "quantity": 100,
+        "quantity": 90,
         "unit": "g",
         "category": "Féculents"
       },
@@ -32429,7 +32445,7 @@
         "id": "003",
         "foodId": "fv-029",
         "name": "Concombre",
-        "quantity": 200,
+        "quantity": 150,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -32552,7 +32568,7 @@
   },
   "vb-032": {
     "id": "vb-032",
-    "name": "Pommes de terre, poulet, poêlée haricots champignons",
+    "name": "Pommes de terre poulet haricots champignons",
     "categoryId": "white-meat",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -32677,7 +32693,7 @@
         "id": "003",
         "foodId": "fv-074",
         "name": "Poivron rouge",
-        "quantity": 500,
+        "quantity": 400,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -33192,7 +33208,7 @@
   },
   "vb-038": {
     "id": "vb-038",
-    "name": "Salade de pâtes aux tomates cerises, poulet et concombre",
+    "name": "Salade de pâtes tomate poulet concombre",
     "categoryId": "white-meat",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -33317,7 +33333,7 @@
         "id": "003",
         "foodId": "fv-070",
         "name": "Petits pois",
-        "quantity": 75,
+        "quantity": 50,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -33612,7 +33628,7 @@
         "id": "002",
         "foodId": "fc-025",
         "name": "Quinoa",
-        "quantity": 80,
+        "quantity": 70,
         "unit": "g",
         "category": "Féculents"
       },
@@ -33620,7 +33636,7 @@
         "id": "003",
         "foodId": "fv-075",
         "name": "Poivrons",
-        "quantity": 250,
+        "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -33628,7 +33644,7 @@
         "id": "004",
         "foodId": "fv-089",
         "name": "Tomates",
-        "quantity": 200,
+        "quantity": 150,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -33828,7 +33844,7 @@
         "id": "004",
         "foodId": "fv-012",
         "name": "Brocoli",
-        "quantity": 500,
+        "quantity": 400,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -35165,7 +35181,7 @@
         "id": "006",
         "foodId": "fs-026",
         "name": "Raisins secs",
-        "quantity": 20,
+        "quantity": 15,
         "unit": "g",
         "category": "Fruits secs"
       },
@@ -35189,7 +35205,7 @@
         "id": "009",
         "foodId": "pl-033",
         "name": "Yaourt au lait entier",
-        "quantity": 200,
+        "quantity": 125,
         "unit": "g",
         "category": "Produits laitiers"
       },
@@ -38031,7 +38047,7 @@
         "id": "003",
         "foodId": "fv-077",
         "name": "Pommes de terre",
-        "quantity": 400,
+        "quantity": 300,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -38053,8 +38069,8 @@
       },
       {
         "id": "006",
-        "foodId": "pl-032",
-        "name": "St Môret",
+        "foodId": "pl-006",
+        "name": "Carré Frais Nature 0%",
         "quantity": 50,
         "unit": "g",
         "category": "Produits laitiers"
@@ -38110,7 +38126,7 @@
     "categoryId": "veggies",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
-    "defaultPortions": 6,
+    "defaultPortions": 8,
     "batchCooking": true,
     "isDessert": false,
     "ingredients": [
@@ -38118,7 +38134,7 @@
         "id": "001",
         "foodId": "bo-002",
         "name": "Pain",
-        "quantity": 6,
+        "quantity": 8,
         "unit": "portion",
         "category": "Boulangerie"
       },
@@ -38157,8 +38173,8 @@
       },
       {
         "id": "006",
-        "foodId": "pl-032",
-        "name": "St Môret",
+        "foodId": "pl-006",
+        "name": "Carré Frais Nature 0%",
         "quantity": 50,
         "unit": "g",
         "category": "Produits laitiers"
@@ -38167,7 +38183,7 @@
         "id": "007",
         "foodId": "pl-016",
         "name": "Fromage frais",
-        "quantity": 150,
+        "quantity": 200,
         "unit": "g",
         "category": "Produits laitiers"
       },
@@ -38175,7 +38191,7 @@
         "id": "008",
         "foodId": "pl-013",
         "name": "Fromage",
-        "quantity": 180,
+        "quantity": 240,
         "unit": "g",
         "category": "Produits laitiers"
       },
@@ -40814,7 +40830,7 @@
         "id": "005",
         "foodId": "fv-089",
         "name": "Tomates",
-        "quantity": 300,
+        "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -40822,7 +40838,7 @@
         "id": "006",
         "foodId": "fv-075",
         "name": "Poivrons",
-        "quantity": 250,
+        "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -40917,7 +40933,7 @@
         "id": "004",
         "foodId": "fv-036",
         "name": "Courgette",
-        "quantity": 250,
+        "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -40925,7 +40941,7 @@
         "id": "005",
         "foodId": "pl-030",
         "name": "Ricotta",
-        "quantity": 50,
+        "quantity": 40,
         "unit": "g",
         "category": "Produits laitiers"
       },
@@ -40973,7 +40989,7 @@
         "id": "011",
         "foodId": "cd-026",
         "name": "Vinaigre balsamique",
-        "quantity": 10,
+        "quantity": 8,
         "unit": "g",
         "category": "Condiments"
       },
@@ -41045,7 +41061,7 @@
         "id": "004",
         "foodId": "fv-083",
         "name": "Radis",
-        "quantity": 100,
+        "quantity": 80,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -41075,9 +41091,9 @@
       },
       {
         "id": "008",
-        "foodId": "pl-030",
-        "name": "Ricotta",
-        "quantity": 50,
+        "foodId": "pl-015",
+        "name": "Fromage blanc 3%",
+        "quantity": 40,
         "unit": "g",
         "category": "Produits laitiers"
       },
@@ -41085,7 +41101,7 @@
         "id": "009",
         "foodId": "cd-013",
         "name": "Huile de colza",
-        "quantity": 5,
+        "quantity": 10,
         "unit": "g",
         "category": "Condiments"
       },
@@ -41101,7 +41117,7 @@
         "id": "011",
         "foodId": "cd-021",
         "name": "Moutarde",
-        "quantity": 6,
+        "quantity": 4,
         "unit": "g",
         "category": "Condiments"
       },
@@ -41156,7 +41172,7 @@
         "id": "003",
         "foodId": "fv-049",
         "name": "Haricots verts",
-        "quantity": 400,
+        "quantity": 300,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -41446,7 +41462,7 @@
   },
   "veg-036": {
     "id": "veg-036",
-    "name": "Salade de perles au pesto, tomates et mozzarella",
+    "name": "Salade de perles pesto tomates et mozzarella",
     "categoryId": "veggies",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -41466,7 +41482,7 @@
         "id": "002",
         "foodId": "fv-090",
         "name": "Tomates cerises",
-        "quantity": 300,
+        "quantity": 250,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -41718,17 +41734,17 @@
       },
       {
         "id": "012",
-        "foodId": "pl-031",
-        "name": "Skyr",
-        "quantity": 40,
+        "foodId": "cd-013",
+        "name": "Huile de colza",
+        "quantity": 8,
         "unit": "g",
-        "category": "Produits laitiers"
+        "category": "Condiments"
       },
       {
         "id": "013",
         "foodId": "cd-026",
         "name": "Vinaigre balsamique",
-        "quantity": 10,
+        "quantity": 8,
         "unit": "g",
         "category": "Condiments"
       },
@@ -42021,7 +42037,7 @@
         "id": "002",
         "foodId": "fv-012",
         "name": "Brocoli",
-        "quantity": 300,
+        "quantity": 250,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -42106,8 +42122,8 @@
     "ingredients": [
       {
         "id": "001",
-        "baseId": "base-010",
-        "name": "Pâte brisée sans beurre",
+        "baseId": "base-009",
+        "name": "Pâte brisée au skyr",
         "quantity": 2,
         "unit": "portion",
         "category": "Recette"
@@ -42148,7 +42164,7 @@
         "id": "006",
         "foodId": "pl-010",
         "name": "Comté",
-        "quantity": 20,
+        "quantity": 40,
         "unit": "g",
         "category": "Produits laitiers"
       },
@@ -42172,7 +42188,7 @@
         "id": "009",
         "foodId": "cd-011",
         "name": "Huile d'olive",
-        "quantity": 5,
+        "quantity": 10,
         "unit": "g",
         "category": "Condiments"
       },
@@ -42530,7 +42546,7 @@
         "id": "002",
         "foodId": "fv-090",
         "name": "Tomates cerises",
-        "quantity": 300,
+        "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -42941,8 +42957,8 @@
       },
       {
         "id": "005",
-        "foodId": "pl-032",
-        "name": "St Môret",
+        "foodId": "pl-006",
+        "name": "Carré Frais Nature 0%",
         "quantity": 50,
         "unit": "g",
         "category": "Produits laitiers"
@@ -43182,8 +43198,8 @@
         "id": "003",
         "foodId": "fv-091",
         "name": "Tomates cœur de bœuf",
-        "quantity": 1000,
-        "unit": "g",
+        "quantity": 1,
+        "unit": "kg",
         "category": "Fruits et légumes"
       },
       {
@@ -43214,7 +43230,7 @@
         "id": "007",
         "foodId": "cn-001",
         "name": "Concentré de tomates",
-        "quantity": 30,
+        "quantity": 50,
         "unit": "g",
         "category": "Conserves"
       },
@@ -43394,8 +43410,8 @@
     "ingredients": [
       {
         "id": "001",
-        "baseId": "base-010",
-        "name": "Pâte brisée sans beurre",
+        "baseId": "base-009",
+        "name": "Pâte brisée au skyr",
         "quantity": 2,
         "unit": "portion",
         "category": "Recette"
@@ -43473,6 +43489,14 @@
         "category": "Herbe aromatique"
       },
       {
+        "id": "011",
+        "foodId": "fv-038",
+        "name": "Échalote",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
         "id": "014",
         "foodId": "fv-038",
         "name": "Échalote",
@@ -43515,7 +43539,7 @@
         "id": "002",
         "foodId": "fv-068",
         "name": "Patate douce",
-        "quantity": 800,
+        "quantity": 700,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -43524,7 +43548,7 @@
         "foodId": "fv-014",
         "name": "Carottes",
         "preparation": "rondelles",
-        "quantity": 200,
+        "quantity": 300,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -43546,8 +43570,8 @@
       },
       {
         "id": "006",
-        "foodId": "pl-030",
-        "name": "Ricotta",
+        "foodId": "pl-006",
+        "name": "Carré Frais Nature 0%",
         "quantity": 25,
         "unit": "g",
         "category": "Produits laitiers"
@@ -43643,7 +43667,7 @@
         "id": "003",
         "foodId": "pl-004",
         "name": "Bûche de chèvre",
-        "quantity": 40,
+        "quantity": 30,
         "unit": "g",
         "category": "Produits laitiers"
       },
@@ -44208,7 +44232,7 @@
         "id": "011",
         "foodId": "pl-013",
         "name": "Fromage",
-        "quantity": 240,
+        "quantity": 180,
         "unit": "g",
         "category": "Produits laitiers"
       }
@@ -44239,7 +44263,7 @@
         "id": "001",
         "foodId": "fc-020",
         "name": "Pâtes complètes",
-        "quantity": 80,
+        "quantity": 100,
         "unit": "g",
         "category": "Féculents"
       },
@@ -44247,7 +44271,7 @@
         "id": "002",
         "foodId": "fv-083",
         "name": "Radis",
-        "quantity": 50,
+        "quantity": 80,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -44263,15 +44287,15 @@
         "id": "004",
         "foodId": "fv-055",
         "name": "Mâche",
-        "quantity": null,
-        "unit": null,
+        "quantity": 100,
+        "unit": "g",
         "category": "Fruits et légumes"
       },
       {
         "id": "005",
         "foodId": "pl-026",
         "name": "Mozzarella",
-        "quantity": 250,
+        "quantity": 125,
         "unit": "g",
         "category": "Produits laitiers"
       },
@@ -44279,7 +44303,7 @@
         "id": "006",
         "foodId": "cd-011",
         "name": "Huile d'olive",
-        "quantity": 8,
+        "quantity": 10,
         "unit": "g",
         "category": "Condiments"
       },
@@ -44287,7 +44311,7 @@
         "id": "007",
         "foodId": "cd-026",
         "name": "Vinaigre balsamique",
-        "quantity": 5,
+        "quantity": 8,
         "unit": "g",
         "category": "Condiments"
       },
@@ -44364,8 +44388,8 @@
       },
       {
         "id": "006",
-        "foodId": "pl-030",
-        "name": "Ricotta",
+        "foodId": "pl-006",
+        "name": "Carré Frais Nature 0%",
         "quantity": 50,
         "unit": "g",
         "category": "Produits laitiers"
@@ -44421,7 +44445,7 @@
         "id": "001",
         "foodId": "fc-025",
         "name": "Quinoa",
-        "quantity": 80,
+        "quantity": 70,
         "unit": "g",
         "category": "Féculents"
       },
@@ -44437,7 +44461,7 @@
         "id": "003",
         "foodId": "fv-012",
         "name": "Brocoli",
-        "quantity": 300,
+        "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -44524,7 +44548,7 @@
         "id": "001",
         "foodId": "fc-025",
         "name": "Quinoa",
-        "quantity": 100,
+        "quantity": 70,
         "unit": "g",
         "category": "Féculents"
       },
@@ -44532,7 +44556,7 @@
         "id": "002",
         "foodId": "fv-007",
         "name": "Aubergine",
-        "quantity": 150,
+        "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -44548,7 +44572,7 @@
         "id": "004",
         "foodId": "fv-036",
         "name": "Courgette",
-        "quantity": 150,
+        "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -46411,7 +46435,7 @@
   },
   "veg-082": {
     "id": "veg-082",
-    "name": "Lasagnes courge butternut et sauce tomate",
+    "name": "Lasagnes courge butternut sauce tomate",
     "categoryId": "veggies",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -46703,7 +46727,7 @@
   },
   "veg-086": {
     "id": "veg-086",
-    "name": "Gratin de pâtes choux de Bruxelles, brocoli, carottes",
+    "name": "Gratin de pâtes choux de Bruxelles brocoli",
     "categoryId": "veggies",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -46825,9 +46849,9 @@
       },
       {
         "id": "005",
-        "foodId": "pl-032",
-        "name": "St Môret",
-        "quantity": 20,
+        "foodId": "pl-006",
+        "name": "Carré Frais Nature 0%",
+        "quantity": 25,
         "unit": "g",
         "category": "Produits laitiers"
       },
@@ -46870,7 +46894,7 @@
   },
   "veg-088": {
     "id": "veg-088",
-    "name": "Courge Jack Be Little farcie au risotto champignons",
+    "name": "Courge Jack Be Little farcie au risotto",
     "categoryId": "veggies",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -46969,7 +46993,7 @@
         "id": "001",
         "baseId": "base-027",
         "name": "Galettes de blé noir",
-        "quantity": 4,
+        "quantity": 2,
         "unit": "portion",
         "category": "Recette"
       },
@@ -46977,7 +47001,7 @@
         "id": "002",
         "foodId": "fv-012",
         "name": "Brocoli",
-        "quantity": 400,
+        "quantity": 300,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -46993,7 +47017,7 @@
         "id": "004",
         "foodId": "pl-011",
         "name": "Feta",
-        "quantity": 40,
+        "quantity": 50,
         "unit": "g",
         "category": "Produits laitiers"
       },
@@ -47001,7 +47025,7 @@
         "id": "005",
         "foodId": "fm-003",
         "name": "Oeuf",
-        "quantity": 4,
+        "quantity": 2,
         "unit": "pièce",
         "category": "Ferme"
       },
@@ -47009,23 +47033,23 @@
         "id": "006",
         "baseId": "base-017",
         "name": "Pesto verde",
-        "quantity": 1,
+        "quantity": 2,
         "unit": "portion",
         "category": "Recette"
       },
       {
         "id": "007",
-        "foodId": "pl-031",
-        "name": "Skyr",
-        "quantity": 20,
+        "foodId": "cd-013",
+        "name": "Huile de colza",
+        "quantity": 8,
         "unit": "g",
-        "category": "Produits laitiers"
+        "category": "Condiments"
       },
       {
         "id": "008",
         "foodId": "cd-026",
         "name": "Vinaigre balsamique",
-        "quantity": 10,
+        "quantity": 8,
         "unit": "g",
         "category": "Condiments"
       },
@@ -47548,9 +47572,9 @@
       },
       {
         "id": "005",
-        "foodId": "pl-032",
-        "name": "St Môret",
-        "quantity": 30,
+        "foodId": "pl-006",
+        "name": "Carré Frais Nature 0%",
+        "quantity": 25,
         "unit": "g",
         "category": "Produits laitiers"
       },
@@ -48193,7 +48217,7 @@
         "id": "002",
         "foodId": "fv-012",
         "name": "Brocoli",
-        "quantity": 600,
+        "quantity": 500,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -48207,8 +48231,8 @@
       },
       {
         "id": "004",
-        "foodId": "pl-032",
-        "name": "St Môret",
+        "foodId": "pl-030",
+        "name": "Ricotta",
         "quantity": 50,
         "unit": "g",
         "category": "Produits laitiers"
@@ -48559,7 +48583,7 @@
         "foodId": "fv-014",
         "name": "Carottes",
         "preparation": "rondelles",
-        "quantity": 250,
+        "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -48567,7 +48591,7 @@
         "id": "005",
         "foodId": "fv-032",
         "name": "Courge butternut",
-        "quantity": 250,
+        "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -48626,7 +48650,7 @@
   },
   "veg-107": {
     "id": "veg-107",
-    "name": "Riz sauté choux et carottes",
+    "name": "Riz sauté chou blanc carottes",
     "categoryId": "veggies",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -48889,7 +48913,7 @@
         "id": "002",
         "baseId": "base-004",
         "name": "Tortillas maison",
-        "quantity": 8,
+        "quantity": 4,
         "unit": "portion",
         "category": "Recette"
       },
@@ -49049,7 +49073,7 @@
         "id": "002",
         "baseId": "base-004",
         "name": "Tortillas maison",
-        "quantity": 8,
+        "quantity": 4,
         "unit": "portion",
         "category": "Recette"
       },
@@ -49327,7 +49351,7 @@
         "id": "003",
         "foodId": "fv-049",
         "name": "Haricots verts",
-        "quantity": 400,
+        "quantity": 300,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -49589,7 +49613,7 @@
         "id": "004",
         "foodId": "fv-049",
         "name": "Haricots verts",
-        "quantity": 300,
+        "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -54988,7 +55012,7 @@
     "categoryId": "bases",
     "mealTypes": [],
     "kind": "base",
-    "defaultPortions": 4,
+    "defaultPortions": 6,
     "batchCooking": true,
     "isDessert": false,
     "ingredients": [
@@ -54996,7 +55020,7 @@
         "id": "001",
         "foodId": "es-026",
         "name": "Farine semi complète",
-        "quantity": 75,
+        "quantity": 90,
         "unit": "g",
         "category": "Epicerie sucrée"
       },
@@ -55004,7 +55028,7 @@
         "id": "002",
         "foodId": "es-017",
         "name": "Farine blanche",
-        "quantity": 175,
+        "quantity": 210,
         "unit": "g",
         "category": "Epicerie sucrée"
       },
@@ -55028,7 +55052,7 @@
         "id": "005",
         "foodId": "pl-020",
         "name": "Lait demi écrémé",
-        "quantity": 60,
+        "quantity": 75,
         "unit": "g",
         "category": "Produits laitiers"
       },
@@ -55036,15 +55060,15 @@
         "id": "006",
         "foodId": "es-034",
         "name": "Levure boulangère sèche",
-        "quantity": 1,
-        "unit": "sachet",
+        "quantity": 5,
+        "unit": "g",
         "category": "Epicerie sucrée"
       },
       {
         "id": "007",
         "foodId": "es-033",
         "name": "Levure boulangère fraîche",
-        "quantity": 20,
+        "quantity": 15,
         "unit": "g",
         "category": "Epicerie sucrée"
       },
@@ -55068,9 +55092,17 @@
         "id": "010",
         "foodId": "fs-015",
         "name": "Mélange de graines",
-        "quantity": 8,
+        "quantity": 10,
         "unit": "g",
         "category": "Fruits secs"
+      },
+      {
+        "id": "011",
+        "foodId": "cd-011",
+        "name": "Huile d'olive",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Condiments"
       }
     ],
     "assets": {
@@ -55258,7 +55290,7 @@
         "id": "001",
         "foodId": "es-026",
         "name": "Farine semi complète",
-        "quantity": 125,
+        "quantity": 190,
         "unit": "g",
         "category": "Epicerie sucrée"
       },
@@ -55266,7 +55298,7 @@
         "id": "002",
         "foodId": "es-022",
         "name": "Farine de maïs",
-        "quantity": 75,
+        "quantity": 110,
         "unit": "g",
         "category": "Epicerie sucrée"
       },
@@ -55274,7 +55306,7 @@
         "id": "003",
         "foodId": "cd-013",
         "name": "Huile de colza",
-        "quantity": 15,
+        "quantity": 20,
         "unit": "g",
         "category": "Condiments"
       },
@@ -55301,6 +55333,14 @@
         "quantity": null,
         "unit": null,
         "category": "Condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "ha-005",
+        "name": "Eau",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Hors achat"
       }
     ],
     "assets": {

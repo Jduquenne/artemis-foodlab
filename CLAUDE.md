@@ -185,6 +185,44 @@ The app uses a **CSS variable-based theme** defined in `src/index.css`. Tailwind
 - On every scrolling page, use markscrolling on scroll event for overpass the scrolling + click problem
 - **Composited animations only**: never animate `width` or `height` directly — these trigger layout and paint on every frame. For progress bars, use `transform: scaleX()` + `transition-transform` + `origin-left` on a `w-full` inner element. Only `transform` and `opacity` are GPU-composited and safe to animate.
 
+## Issue tracking
+
+### "nouvelle issue" command
+
+When the user says **"nouvelle issue"** (anywhere in their message), immediately add the issue to `dev/issues.json` without asking for confirmation. Steps:
+
+1. Read `dev/issues.json` to get the current issues array.
+2. Compute the next `id` = highest existing `id` + 1.
+3. Infer the fields from the user's description:
+   - `title` — short, imperative title (French ok)
+   - `description` — full context from what the user said; expand/reformulate if needed for clarity
+   - `labels` — pick the most relevant from `_schema.validLabels`; use multiple if appropriate
+   - `priority` — infer from the user's tone/words (`"urgent"` / `"bloquant"` → `high`; default → `medium`; `"un jour"` / `"idée"` → `low`)
+   - `status` — always `"open"`
+   - `createdAt` — today's ISO date
+4. Write the updated file.
+5. Confirm with a one-line summary: `✅ Issue #N ajoutée — "<title>"`.
+
+Do **not** ask clarifying questions before adding — add immediately, then show the result. If something is genuinely ambiguous (e.g. title is unclear), add the issue with a best guess and flag it in the confirmation message.
+
+### "analyse nos issues" command
+
+When the user says **"analyse nos issues"**, read `dev/issues.json` and display all `open` and `in-progress` issues as a structured list, sorted by priority (high → medium → low), then by id. Format:
+
+```
+#ID [PRIORITY] Title
+     Labels: label1, label2
+     Description courte (1 ligne max)
+```
+
+After the list, ask the user which issue to tackle first.
+
+### Issue lifecycle
+
+- When the user **starts working on an issue**, update its `status` to `"in-progress"` in `dev/issues.json`.
+- When an issue is **fully implemented and confirmed by the user**, delete it from the `issues` array in `dev/issues.json` immediately — do not set it to `"closed"`, just remove it.
+- Never remove an issue without explicit user confirmation that the work is done.
+
 ## Git workflow
 
 When the user asks for a **commit**, respond with only the commit message text — do not run any git commands. Format: `feature: <description>` or `fix: <description>`. In English. Short, no bullet points, no technical details.

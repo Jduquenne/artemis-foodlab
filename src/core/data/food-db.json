@@ -943,7 +943,8 @@
       "carbohydrates": 0,
       "fibers": 0
     },
-    "unit": "g"
+    "unit": "pièce",
+    "unitWeight": 90
   },
   "fv-026": {
     "id": "fv-026",
@@ -1714,7 +1715,8 @@
       "carbohydrates": 0,
       "fibers": 0
     },
-    "unit": "g"
+    "unit": "g",
+    "unitWeight": 7
   },
   "pl-011": {
     "id": "pl-011",
@@ -3307,7 +3309,7 @@
       "carbohydrates": 48,
       "fibers": 3
     },
-    "unit": "portion",
+    "unit": "tranche",
     "unitWeight": 20,
     "isFreezable": true
   },

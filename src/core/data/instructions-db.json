@@ -85,7 +85,7 @@
   },
   "char-022": {
     "id": "char-022",
-    "instructions": ""
+    "instructions": "Faire mariner le poulet coupé en aiguillettes ou dés avec de l'huile et des épices.\nLaver les pommes de terre grenailles et les laisser entières avec leur peau.\nCuire à la vapeur pendant 8 à 12 min.\nPeler ou non et laisser refroidir, puis les couper en rondelles avant de les mélanger avec l'échalote et la ciboulette ciselées, un filet d'huile d'olive, du sel et du poivre.\nLaver et couper les poivrons, la courgette, les champignons et l'oignon en morceaux.\nLes étaler sur une plaque de cuisson et fair rôtir 15 min au four.\nFaire chauffer une plancha légèrement huilée.\nSaisir la viande jusqu'à ce qu'elle soit bien dorée.\nAjouter les légumes précuits et les tomates cerises entières pour les faire sauter 3 à 5 minutes.\nServir chaud avec la salade de grenailles et la salade verte assaisonnée."
   },
   "char-023": {
     "id": "char-023",
@@ -225,7 +225,7 @@
   },
   "pat-008": {
     "id": "pat-008",
-    "instructions": "Biscuit : Mixer grossièrement dans un robot les amandes, les flocons et le son d'avoine, le sel pour obtenir une sorte de chapelure puis verser le sirop d'agave et l'huile. Faire quelques pulsions jusqu'à ce que la pâte s'amalgame et colle (si elle ne colle pas assez, rajouter du sirop d'agave).\nRecouvrir le fond d'un moule à charnière d'un disque de papier cuisson.\nVerser la pâte dessus et aplatir avec les mains et/ou le dos d'une cuillère en une couche homogène.\nEnfourner pour 15 à 20min à 165°C. Laisser refroidir.\nCheesecake : Mélanger le fromage blanc, le sirop d'agave, le jus et le zeste d'un citron.\nAjouter la poudre d'agar-agar, bien mélanger pour que celle ci soit correctement répartie. Verser le tout dans une casserole, puis porter à ébullition à feu moyen.\nMélanger régulièrement, aux premières ébullitions, retirer la casserole du feu et laisser refroidir pendant 30 minutes.\nVerser la crème sur la base du cheesecake puis réserver au réfrigérateur 2h30. \nDans une petite casserole, mélanger la confiture, l’eau et l’agar-agar.\nPorter à ébullition pendant 30 sec (c’est important pour activer l’agar-agar). Tiédir 1-2 min puis verser doucement sur le dessus du cheesecake bien refroidi et déjà figé.\nLaisse prendre au frais au moins 2h."
+    "instructions": "Mixer grossièrement les amandes, les flocons, le son d'avoine et le sel pour obtenir une chapelure puis verser 75g de sirop d'agave et l'huile. Faire quelques pulsions jusqu'à ce que la pâte s'amalgame et colle (si elle ne colle pas assez, rajouter du sirop d'agave).\nVerser la pâte dans un moule recouvert de papier cuisson et aplatir avec le dos d'une cuillère.\nEnfourner pour 15-20min à 165°C. Laisser refroidir.\nMélanger le fromage blanc, 50g de sirop d'agave, le jus et le zeste d'un citron.\nAjouter 3g d'agar-agar, bien mélanger. Verser le tout dans une casserole, puis porter à ébullition à feu moyen.\nMélanger régulièrement. Aux premières ébullitions, retirer la casserole du feu et laisser refroidir 30 min.\nVerser la crème sur la base du cheesecake puis réserver au réfrigérateur 2h30. \nDans une casserole, mélanger la confiture, 40g d'eau et 2g d'agar-agar.\nPorter à ébullition 30 sec pour activer l’agar-agar. Tiédir 1-2 min puis verser doucement sur le dessus du cheesecake bien refroidi et déjà figé. Laisser prendre au frais au moins 2h."
   },
   "pat-009": {
     "id": "pat-009",
@@ -653,7 +653,7 @@
   },
   "poi-007": {
     "id": "poi-007",
-    "instructions": "Couper les avocats en 2, retirer les \n       noyaux et la chair et réserver la peau sur le coté.\nEgoutter le thon, écraser la chair de l’avocat et mélanger les deux avec la mayonnaise ou le St Môret. \nCouper les cornichons en petits dès et les ajouter à la préparation.\nCouper les tomates cerise en deux, ajouter la salade lavée et essorée, parsemer de basilic ciselé ou séché et assaisonner avec l’huile d’olive et le vinaigre balsamique. Saler et poivrer.\nRemettre la préparation au thon dans la peau des avocats et servir ½ avocat par personne avec la salade aux tomates et du pain toasté."
+    "instructions": "Couper les avocats en 2, retirer les noyaux et la chair et réserver la peau sur le coté.\nEgoutter le thon, écraser la chair de l’avocat et mélanger les deux avec la mayonnaise ou le St Môret. \nCouper les cornichons en petits dès et les ajouter à la préparation.\nCouper les tomates cerise en deux, ajouter la salade lavée et essorée, parsemer de basilic ciselé ou séché et assaisonner avec l’huile d’olive et le vinaigre balsamique. Saler et poivrer.\nRemettre la préparation au thon dans la peau des avocats et servir ½ avocat par personne avec la salade aux tomates et du pain toasté."
   },
   "poi-008": {
     "id": "poi-008",
@@ -693,7 +693,7 @@
   },
   "poi-017": {
     "id": "poi-017",
-    "instructions": "Émincer l’oignon et le poireau, écraser l’ail et les faire revenir dans l’huile d’olive.\nCouper les pavés de saumon en dés et les ajouter à la poêle.\nQuand le saumon est bien doré, ajouter les épinards (préalablement rincés et essorés s’ils sont frais) et faire cuire en remuant régulièrement jusqu’à ce qu’ils flétrissent et qu'il n'y ait plus d'eau dans la sauteuse.\nDéglacer avec le vinaigre et ajouter la ricotta diluée avec le lait.\nMélanger et assaisonner de sel, poivre et muscade.\nPréparer la béchamel.\nHuiler un plat à gratin et y placer une couche de pâtes\nTartiner de béchamel au pinceau et y ajouter 1/3 de préparation au saumon, déposer une lasagne par dessus et recommencer l’opération 2 fois.\nTerminer par une pâte et recouvrir du reste de béchamel, saupoudrer de parmesan râpé et enfourner pour 30 min à 180°C"
+    "instructions": "Émincer l’oignon et le poireau, écraser l’ail et les faire revenir dans l’huile d’olive.\nAjouter les épinards (préalablement rincés et essorés s’ils sont frais) et faire cuire en remuant régulièrement jusqu’à ce qu’ils flétrissent et qu'il n'y ait plus d'eau dans la sauteuse.\nDéglacer avec le vinaigre et ajouter la ricotta diluée avec le lait.\nFaire cuire le saumon à la vapeur 4 min puis le couper en dés.\nMélanger et assaisonner de sel, poivre et muscade.\nPréparer la béchamel.\nHuiler un plat à gratin et y placer 1/3 de préparation au saumon, déposer une lasagne par dessus, tartiner de béchamel et recommencer l’opération 2 fois.\nTerminer par le reste de béchamel, saupoudrer de parmesan râpé et enfourner pour 30 min à 180°C"
   },
   "poi-018": {
     "id": "poi-018",

@@ -2073,7 +2073,7 @@
   },
   "char-023": {
     "id": "char-023",
-    "name": "Pommes de terre saucisses et endive caramélisées",
+    "name": "Pommes de terre saucisses endives",
     "categoryId": "charcuterie",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -2124,13 +2124,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/assets/charcuterie/photo/CHAR_23_Pommes_de_terre_saucisses_et_endive_caramélisées_Photo.webp"
+        "url": "/artemis-foodlab/assets/charcuterie/photo/CHAR_23_Pommes_de_terre_saucisses_endives_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/charcuterie/ingredients/CHAR_23_Pommes_de_terre_saucisses_et_endive_caramélisées_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/charcuterie/ingredients/CHAR_23_Pommes_de_terre_saucisses_endives_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_23_Pommes_de_terre_saucisses_et_endive_caramélisées_Recette.webp"
+        "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_23_Pommes_de_terre_saucisses_endives_Recette.webp"
       }
     }
   },
@@ -2597,7 +2597,7 @@
   },
   "char-029": {
     "id": "char-029",
-    "name": "Pommes de terre, saucisses et choux de Bruxelles",
+    "name": "Grenailles saucisses choux de Bruxelles",
     "categoryId": "charcuterie",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -2656,13 +2656,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/assets/charcuterie/photo/CHAR_29_Pommes_de_terre,_saucisses_et_choux_de_Bruxelles_Photo.webp"
+        "url": "/artemis-foodlab/assets/charcuterie/photo/CHAR_29_Grenailles_saucisses_choux_de_Bruxelles_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/charcuterie/ingredients/CHAR_29_Pommes_de_terre,_saucisses_et_choux_de_Bruxelles_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/charcuterie/ingredients/CHAR_29_Grenailles_saucisses_choux_de_Bruxelles_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_29_Pommes_de_terre,_saucisses_et_choux_de_Bruxelles_Recette.webp"
+        "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_29_Grenailles_saucisses_choux_de_Bruxelles_Recette.webp"
       }
     }
   },
@@ -3964,7 +3964,7 @@
   },
   "char-043": {
     "id": "char-043",
-    "name": "Salade de pommes de terre chou fleur au jambon",
+    "name": "Salade pommes de terre chou fleur au jambon",
     "categoryId": "charcuterie",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -4047,13 +4047,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/assets/charcuterie/photo/CHAR_43_Salade_de_pommes_de_terre_chou_fleur_au_jambon_Photo.webp"
+        "url": "/artemis-foodlab/assets/charcuterie/photo/CHAR_43_Salade_pommes_de_terre_chou_fleur_au_jambon_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/charcuterie/ingredients/CHAR_43_Salade_de_pommes_de_terre_chou_fleur_au_jambon_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/charcuterie/ingredients/CHAR_43_Salade_pommes_de_terre_chou_fleur_au_jambon_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_43_Salade_de_pommes_de_terre_chou_fleur_au_jambon_Recette.webp"
+        "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_43_Salade_pommes_de_terre_chou_fleur_au_jambon_Recette.webp"
       }
     }
   },
@@ -4700,7 +4700,7 @@
   },
   "pat-002": {
     "id": "pat-002",
-    "name": "Cookies protéinés banane fruits secs et noix de cajou",
+    "name": "Cookies banane fruits secs noix de cajou",
     "categoryId": "pastries",
     "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
@@ -4807,13 +4807,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/assets/pastries/photo/PAT_02_Cookies_protéinés_banane_fruits_secs_et_noix_de_cajou_Photo.webp"
+        "url": "/artemis-foodlab/assets/pastries/photo/PAT_02_Cookies_banane_fruits_secs_noix_de_cajou_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/pastries/ingredients/PAT_02_Cookies_protéinés_banane_fruits_secs_et_noix_de_cajou_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/pastries/ingredients/PAT_02_Cookies_banane_fruits_secs_noix_de_cajou_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/pastries/recipes/PAT_02_Cookies_protéinés_banane_fruits_secs_et_noix_de_cajou_Recette.webp"
+        "url": "/artemis-foodlab/assets/pastries/recipes/PAT_02_Cookies_banane_fruits_secs_noix_de_cajou_Recette.webp"
       }
     }
   },
@@ -16412,7 +16412,7 @@
   },
   "poi-025": {
     "id": "poi-025",
-    "name": "Salade de pomme de terre au saumon et haricots verts",
+    "name": "Salade pomme de terre saumon haricots verts",
     "categoryId": "fish",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -16511,13 +16511,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/assets/fish/photo/POI_25_Salade_de_pomme_de_terre_au_saumon_et_haricots_verts_Photo.webp"
+        "url": "/artemis-foodlab/assets/fish/photo/POI_25_Salade_pomme_de_terre_saumon_haricots_verts_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/fish/ingredients/POI_25_Salade_de_pomme_de_terre_au_saumon_et_haricots_verts_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/fish/ingredients/POI_25_Salade_pomme_de_terre_saumon_haricots_verts_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/fish/recipes/POI_25_Salade_de_pomme_de_terre_au_saumon_et_haricots_verts_Recette.webp"
+        "url": "/artemis-foodlab/assets/fish/recipes/POI_25_Salade_pomme_de_terre_saumon_haricots_verts_Recette.webp"
       }
     }
   },
@@ -17514,7 +17514,7 @@
   },
   "poi-035": {
     "id": "poi-035",
-    "name": "Salade de pommes de terre, haricots verts et sardines",
+    "name": "Salade pommes de terre haricots verts sardines",
     "categoryId": "fish",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -17589,13 +17589,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/assets/fish/photo/POI_35_Salade_de_pommes_de_terre,_haricots_verts_et_sardines_Photo.webp"
+        "url": "/artemis-foodlab/assets/fish/photo/POI_35_Salade_pommes_de_terre_haricots_verts_sardines_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/fish/ingredients/POI_35_Salade_de_pommes_de_terre,_haricots_verts_et_sardines_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/fish/ingredients/POI_35_Salade_pommes_de_terre_haricots_verts_sardines_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/fish/recipes/POI_35_Salade_de_pommes_de_terre,_haricots_verts_et_sardines_Recette.webp"
+        "url": "/artemis-foodlab/assets/fish/recipes/POI_35_Salade_pommes_de_terre_haricots_verts_sardines_Recette.webp"
       }
     }
   },
@@ -17681,7 +17681,7 @@
   },
   "poi-037": {
     "id": "poi-037",
-    "name": "Salade de pâtes, haricots blancs, sardines, œufs et légumes",
+    "name": "Salade pâtes haricots blancs sardines oeufs",
     "categoryId": "fish",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -17773,13 +17773,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/assets/fish/photo/POI_37_Salade_de_pâtes,_haricots_blancs,_sardines,_œufs_et_légumes_Photo.webp"
+        "url": "/artemis-foodlab/assets/fish/photo/POI_37_Salade_pâtes_haricots_blancs_sardines_oeufs_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/fish/ingredients/POI_37_Salade_de_pâtes,_haricots_blancs,_sardines,_œufs_et_légumes_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/fish/ingredients/POI_37_Salade_pâtes_haricots_blancs_sardines_oeufs_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/fish/recipes/POI_37_Salade_de_pâtes,_haricots_blancs,_sardines,_œufs_et_légumes_Recette.webp"
+        "url": "/artemis-foodlab/assets/fish/recipes/POI_37_Salade_pâtes_haricots_blancs_sardines_oeufs_Recette.webp"
       }
     }
   },
@@ -17856,7 +17856,7 @@
   },
   "poi-039": {
     "id": "poi-039",
-    "name": "Salade de pâtes haricots rouges, sardines et brocolis",
+    "name": "Salade pâtes haricots rouges sardines brocolis",
     "categoryId": "fish",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -17931,13 +17931,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/assets/fish/photo/POI_39_Salade_de_pâtes_haricots_rouges,_sardines_et_brocolis_Photo.webp"
+        "url": "/artemis-foodlab/assets/fish/photo/POI_39_Salade_pâtes_haricots_rouges_sardines_brocolis_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/fish/ingredients/POI_39_Salade_de_pâtes_haricots_rouges,_sardines_et_brocolis_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/fish/ingredients/POI_39_Salade_pâtes_haricots_rouges_sardines_brocolis_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/fish/recipes/POI_39_Salade_de_pâtes_haricots_rouges,_sardines_et_brocolis_Recette.webp"
+        "url": "/artemis-foodlab/assets/fish/recipes/POI_39_Salade_pâtes_haricots_rouges_sardines_brocolis_Recette.webp"
       }
     }
   },
@@ -18935,7 +18935,7 @@
   },
   "poi-050": {
     "id": "poi-050",
-    "name": "Croque monsieur poireau truite fumée ricotta",
+    "name": "Croque poireau truite fumée ricotta",
     "categoryId": "fish",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -19026,13 +19026,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/assets/fish/photo/POI_50_Croque_monsieur_poireau_truite_fumée_ricotta_Photo.webp"
+        "url": "/artemis-foodlab/assets/fish/photo/POI_50_Croque_poireau_truite_fumée_ricotta_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/fish/ingredients/POI_50_Croque_monsieur_poireau_truite_fumée_ricotta_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/fish/ingredients/POI_50_Croque_poireau_truite_fumée_ricotta_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/fish/recipes/POI_50_Croque_monsieur_poireau_truite_fumée_ricotta_Recette.webp"
+        "url": "/artemis-foodlab/assets/fish/recipes/POI_50_Croque_poireau_truite_fumée_ricotta_Recette.webp"
       }
     }
   },
@@ -22177,7 +22177,7 @@
   },
   "pv-003": {
     "id": "pv-003",
-    "name": "Soupe aux haricots à la tomate, cèleri et carottes",
+    "name": "Soupe aux haricots à la tomate cèleri carottes",
     "categoryId": "plant-proteins",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -22277,13 +22277,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/assets/plant-proteins/photo/PV_03_Soupe_aux_haricots_à_la_tomate,_cèleri_et_carottes_Photo.webp"
+        "url": "/artemis-foodlab/assets/plant-proteins/photo/PV_03_Soupe_aux_haricots_à_la_tomate_cèleri_carottes_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/plant-proteins/ingredients/PV_03_Soupe_aux_haricots_à_la_tomate,_cèleri_et_carottes_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/plant-proteins/ingredients/PV_03_Soupe_aux_haricots_à_la_tomate_cèleri_carottes_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_03_Soupe_aux_haricots_à_la_tomate,_cèleri_et_carottes_Recette.webp"
+        "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_03_Soupe_aux_haricots_à_la_tomate_cèleri_carottes_Recette.webp"
       }
     }
   },
@@ -23428,7 +23428,7 @@
   },
   "pv-013": {
     "id": "pv-013",
-    "name": "Chakchouka pois chiches carottes et épinards",
+    "name": "Chakchouka pois chiches épinards",
     "categoryId": "plant-proteins",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -23552,13 +23552,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/assets/plant-proteins/photo/PV_13_Chakchouka_pois_chiches_carottes_et_épinards_Photo.webp"
+        "url": "/artemis-foodlab/assets/plant-proteins/photo/PV_13_Chakchouka_pois_chiches_épinards_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/plant-proteins/ingredients/PV_13_Chakchouka_pois_chiches_carottes_et_épinards_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/plant-proteins/ingredients/PV_13_Chakchouka_pois_chiches_épinards_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_13_Chakchouka_pois_chiches_carottes_et_épinards_Recette.webp"
+        "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_13_Chakchouka_pois_chiches_épinards_Recette.webp"
       }
     }
   },
@@ -23961,7 +23961,7 @@
   },
   "pv-017": {
     "id": "pv-017",
-    "name": "Dahl de lentilles corail, patate douce et épinards",
+    "name": "Dahl de lentilles corail patate douce épinards",
     "categoryId": "plant-proteins",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -24077,13 +24077,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/assets/plant-proteins/photo/PV_17_Dahl_de_lentilles_corail,_patate_douce_et_épinards_Photo.webp"
+        "url": "/artemis-foodlab/assets/plant-proteins/photo/PV_17_Dahl_de_lentilles_corail_patate_douce_épinards_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/plant-proteins/ingredients/PV_17_Dahl_de_lentilles_corail,_patate_douce_et_épinards_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/plant-proteins/ingredients/PV_17_Dahl_de_lentilles_corail_patate_douce_épinards_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_17_Dahl_de_lentilles_corail,_patate_douce_et_épinards_Recette.webp"
+        "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_17_Dahl_de_lentilles_corail_patate_douce_épinards_Recette.webp"
       }
     }
   },
@@ -27973,7 +27973,7 @@
   },
   "pv-051": {
     "id": "pv-051",
-    "name": "Quiche sans pâte épinard Feta et salade de lentilles",
+    "name": "Quiche épinard Feta et salade de lentilles",
     "categoryId": "plant-proteins",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -28072,13 +28072,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/assets/plant-proteins/photo/PV_51_Quiche_sans_pâte_épinard_Feta_et_salade_de_lentilles_Photo.webp"
+        "url": "/artemis-foodlab/assets/plant-proteins/photo/PV_51_Quiche_épinard_Feta_et_salade_de_lentilles_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/plant-proteins/ingredients/PV_51_Quiche_sans_pâte_épinard_Feta_et_salade_de_lentilles_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/plant-proteins/ingredients/PV_51_Quiche_épinard_Feta_et_salade_de_lentilles_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_51_Quiche_sans_pâte_épinard_Feta_et_salade_de_lentilles_Recette.webp"
+        "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_51_Quiche_épinard_Feta_et_salade_de_lentilles_Recette.webp"
       }
     }
   },
@@ -28171,7 +28171,7 @@
   },
   "pv-053": {
     "id": "pv-053",
-    "name": "Bowl chou rouge haricots blancs patate douce",
+    "name": "Bowl chou rouge haricots patate douce",
     "categoryId": "plant-proteins",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -28254,13 +28254,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/assets/plant-proteins/photo/PV_53_Bowl_chou_rouge_haricots_blancs_patate_douce_Photo.webp"
+        "url": "/artemis-foodlab/assets/plant-proteins/photo/PV_53_Bowl_chou_rouge_haricots_patate_douce_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/plant-proteins/ingredients/PV_53_Bowl_chou_rouge_haricots_blancs_patate_douce_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/plant-proteins/ingredients/PV_53_Bowl_chou_rouge_haricots_patate_douce_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_53_Bowl_chou_rouge_haricots_blancs_patate_douce_Recette.webp"
+        "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_53_Bowl_chou_rouge_haricots_patate_douce_Recette.webp"
       }
     }
   },
@@ -32174,7 +32174,7 @@
   },
   "vb-027": {
     "id": "vb-027",
-    "name": "Poulet pommes de terres petits pois carottes",
+    "name": "Poulet grenailles petits pois carottes",
     "categoryId": "white-meat",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -32266,13 +32266,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/assets/white-meat/photo/VB_27_Poulet_pommes_de_terres_petits_pois_carottes_Photo.webp"
+        "url": "/artemis-foodlab/assets/white-meat/photo/VB_27_Poulet_grenailles_petits_pois_carottes_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/white-meat/ingredients/VB_27_Poulet_pommes_de_terres_petits_pois_carottes_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/white-meat/ingredients/VB_27_Poulet_grenailles_petits_pois_carottes_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/white-meat/recipes/VB_27_Poulet_pommes_de_terres_petits_pois_carottes_Recette.webp"
+        "url": "/artemis-foodlab/assets/white-meat/recipes/VB_27_Poulet_grenailles_petits_pois_carottes_Recette.webp"
       }
     }
   },
@@ -33495,7 +33495,7 @@
   },
   "vb-039": {
     "id": "vb-039",
-    "name": "Salade de pâtes au poulet, pesto et légumes grillés",
+    "name": "Salade de pâtes poulet pesto légumes grillés",
     "categoryId": "white-meat",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -33579,13 +33579,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/assets/white-meat/photo/VB_39_Salade_de_pâtes_au_poulet,_pesto_et_légumes_grillés_Photo.webp"
+        "url": "/artemis-foodlab/assets/white-meat/photo/VB_39_Salade_de_pâtes_poulet_pesto_légumes_grillés_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/white-meat/ingredients/VB_39_Salade_de_pâtes_au_poulet,_pesto_et_légumes_grillés_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/white-meat/ingredients/VB_39_Salade_de_pâtes_poulet_pesto_légumes_grillés_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/white-meat/recipes/VB_39_Salade_de_pâtes_au_poulet,_pesto_et_légumes_grillés_Recette.webp"
+        "url": "/artemis-foodlab/assets/white-meat/recipes/VB_39_Salade_de_pâtes_poulet_pesto_légumes_grillés_Recette.webp"
       }
     }
   },
@@ -34166,7 +34166,7 @@
   },
   "vb-047": {
     "id": "vb-047",
-    "name": "Courge Jack Be Little façon vol au vent au poulet",
+    "name": "Courge Jack Be Little façon vol au vent",
     "categoryId": "white-meat",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -34226,13 +34226,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/assets/white-meat/photo/VB_47_Courge_Jack_Be_Little_façon_vol_au_vent_au_poulet_Photo.webp"
+        "url": "/artemis-foodlab/assets/white-meat/photo/VB_47_Courge_Jack_Be_Little_façon_vol_au_vent_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/white-meat/ingredients/VB_47_Courge_Jack_Be_Little_façon_vol_au_vent_au_poulet_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/white-meat/ingredients/VB_47_Courge_Jack_Be_Little_façon_vol_au_vent_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/white-meat/recipes/VB_47_Courge_Jack_Be_Little_façon_vol_au_vent_au_poulet_Recette.webp"
+        "url": "/artemis-foodlab/assets/white-meat/recipes/VB_47_Courge_Jack_Be_Little_façon_vol_au_vent_Recette.webp"
       }
     }
   },
@@ -36302,7 +36302,7 @@
   },
   "vb-069": {
     "id": "vb-069",
-    "name": "Tenders, carottes et purée de pommes de terre",
+    "name": "Tenders carottes purée de pommes de terre",
     "categoryId": "white-meat",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -36386,13 +36386,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/assets/white-meat/photo/VB_69_Tenders,_carottes_et_purée_de_pommes_de_terre_Photo.webp"
+        "url": "/artemis-foodlab/assets/white-meat/photo/VB_69_Tenders_carottes_purée_de_pommes_de_terre_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/white-meat/ingredients/VB_69_Tenders,_carottes_et_purée_de_pommes_de_terre_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/white-meat/ingredients/VB_69_Tenders_carottes_purée_de_pommes_de_terre_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/white-meat/recipes/VB_69_Tenders,_carottes_et_purée_de_pommes_de_terre_Recette.webp"
+        "url": "/artemis-foodlab/assets/white-meat/recipes/VB_69_Tenders_carottes_purée_de_pommes_de_terre_Recette.webp"
       }
     }
   },
@@ -38201,7 +38201,7 @@
         "url": "/artemis-foodlab/assets/veggies/photo/VEG_07_Nouilles_chinoises_végétariennes_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/veggies/ingredients/VEG_07_Nouilles_chinoises_végétariennes_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/veggies/ingredients/VEG_07_Nouilles_chinoises_végétariennes_Ingredients.webp"
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_07_Nouilles_chinoises_végétariennes_Recette.webp"
@@ -41764,7 +41764,7 @@
   },
   "veg-037": {
     "id": "veg-037",
-    "name": "Perles au pesto, champignons et épinards",
+    "name": "Perles au pesto champignons épinards",
     "categoryId": "veggies",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -41815,13 +41815,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/assets/veggies/photo/VEG_37_Perles_au_pesto,_champignons_et_épinards_Photo.webp"
+        "url": "/artemis-foodlab/assets/veggies/photo/VEG_37_Perles_au_pesto_champignons_épinards_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/veggies/ingredients/VEG_37_Perles_au_pesto,_champignons_et_épinards_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/veggies/ingredients/VEG_37_Perles_au_pesto_champignons_épinards_Ingredients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/veggies/recipes/VEG_37_Perles_au_pesto,_champignons_et_épinards_Recette.webp"
+        "url": "/artemis-foodlab/assets/veggies/recipes/VEG_37_Perles_au_pesto_champignons_épinards_Recette.webp"
       }
     }
   },
@@ -44838,7 +44838,7 @@
   },
   "veg-066": {
     "id": "veg-066",
-    "name": "Pâtes œufs au plat champignons et haricots",
+    "name": "Pâtes œufs au plat champignons haricots",
     "categoryId": "veggies",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -44937,13 +44937,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/assets/veggies/photo/VEG_66_Pâtes_œufs_au_plat_champignons_et_haricots_Photo.webp"
+        "url": "/artemis-foodlab/assets/veggies/photo/VEG_66_Pâtes_œufs_au_plat_champignons_haricots_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/veggies/ingredients/VEG_66_Pâtes_œufs_au_plat_champignons_et_haricots_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/veggies/ingredients/VEG_66_Pâtes_œufs_au_plat_champignons_haricots_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/veggies/recipes/VEG_66_Pâtes_œufs_au_plat_champignons_et_haricots_Recette.webp"
+        "url": "/artemis-foodlab/assets/veggies/recipes/VEG_66_Pâtes_œufs_au_plat_champignons_haricots_Recette.webp"
       }
     }
   },
@@ -45299,7 +45299,7 @@
   },
   "veg-070": {
     "id": "veg-070",
-    "name": "Riz sauté aux courgettes, tomates, ail et œuf",
+    "name": "Riz sauté courgettes tomates aux oeufs",
     "categoryId": "veggies",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -45375,13 +45375,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/assets/veggies/photo/VEG_70_Riz_sauté_aux_courgettes,_tomates,_ail_et_œuf_Photo.webp"
+        "url": "/artemis-foodlab/assets/veggies/photo/VEG_70_Riz_sauté_courgettes_tomates_aux_oeufs_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/veggies/ingredients/VEG_70_Riz_sauté_aux_courgettes,_tomates,_ail_et_œuf_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/veggies/ingredients/VEG_70_Riz_sauté_courgettes_tomates_aux_oeufs_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/veggies/recipes/VEG_70_Riz_sauté_aux_courgettes,_tomates,_ail_et_œuf_Recette.webp"
+        "url": "/artemis-foodlab/assets/veggies/recipes/VEG_70_Riz_sauté_courgettes_tomates_aux_oeufs_Recette.webp"
       }
     }
   },
@@ -45674,7 +45674,7 @@
   },
   "veg-073": {
     "id": "veg-073",
-    "name": "Polenta crémeuse, champignons et petits pois",
+    "name": "Polenta crémeuse champignons petits pois",
     "categoryId": "veggies",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -45765,19 +45765,19 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/assets/veggies/photo/VEG_73_Polenta_crémeuse,_champignons_et_petits_pois_Photo.webp"
+        "url": "/artemis-foodlab/assets/veggies/photo/VEG_73_Polenta_crémeuse_champignons_petits_pois_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/veggies/ingredients/VEG_73_Polenta_crémeuse,_champignons_et_petits_pois_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/veggies/ingredients/VEG_73_Polenta_crémeuse_champignons_petits_pois_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/veggies/recipes/VEG_73_Polenta_crémeuse,_champignons_et_petits_pois_Recette.webp"
+        "url": "/artemis-foodlab/assets/veggies/recipes/VEG_73_Polenta_crémeuse_champignons_petits_pois_Recette.webp"
       }
     }
   },
   "veg-074": {
     "id": "veg-074",
-    "name": "Lasagne à la Courge Butternut et aux Champignons",
+    "name": "Lasagne courge butternut champignons",
     "categoryId": "veggies",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -45855,10 +45855,10 @@
         "url": "/artemis-foodlab/assets/veggies/photo/VEG_74_Lasagne_à_la_Courge_Butternut_et_aux_Champignons_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/veggies/ingredients/VEG_74_Lasagne_à_la_Courge_Butternut_et_aux_Champignons_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/veggies/ingredients/VEG_74_Lasagne_courge_butternut_champignons_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/veggies/recipes/VEG_74_Lasagne_à_la_Courge_Butternut_et_aux_Champignons_Recette.webp"
+        "url": "/artemis-foodlab/assets/veggies/recipes/VEG_74_Lasagne_courge_butternut_champignons_Recette.webp"
       }
     }
   },
@@ -46261,7 +46261,7 @@
   },
   "veg-079": {
     "id": "veg-079",
-    "name": "Galettes de blé noir, champignons et béchamel au comté",
+    "name": "Galettes de blé noir champignons au comté",
     "categoryId": "veggies",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -46352,13 +46352,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/assets/veggies/photo/VEG_79_Galettes_de_blé_noir,_champignons_et_béchamel_au_comté_Photo.webp"
+        "url": "/artemis-foodlab/assets/veggies/photo/VEG_79_Galettes_de_blé_noir_champignons_au_comté_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/veggies/ingredients/VEG_79_Galettes_de_blé_noir,_champignons_et_béchamel_au_comté_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/veggies/ingredients/VEG_79_Galettes_de_blé_noir_champignons_au_comté_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/veggies/recipes/VEG_79_Galettes_de_blé_noir,_champignons_et_béchamel_au_comté_Recette.webp"
+        "url": "/artemis-foodlab/assets/veggies/recipes/VEG_79_Galettes_de_blé_noir_champignons_au_comté_Recette.webp"
       }
     }
   },
@@ -51850,7 +51850,7 @@
   },
   "vr-028": {
     "id": "vr-028",
-    "name": "Pâtes à la sauce tomate, steak haché et haricots verts",
+    "name": "Pâtes steak haché haricots verts",
     "categoryId": "red-meat",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -51925,13 +51925,13 @@
     ],
     "assets": {
       "photo": {
-        "url": "/artemis-foodlab/assets/red-meat/photo/VR_28_Pâtes_à_la_sauce_tomate,_steak_haché_et_haricots_verts_Photo.webp"
+        "url": "/artemis-foodlab/assets/red-meat/photo/VR_28_Pâtes_steak_haché_haricots_verts_Photo.webp"
       },
       "ingredientsPhoto": {
-        "url": "/artemis-foodlab/assets/red-meat/ingredients/VR_28_Pâtes_à_la_sauce_tomate,_steak_haché_et_haricots_verts_Ingrédients.webp"
+        "url": "/artemis-foodlab/assets/red-meat/ingredients/VR_28_Pâtes_steak_haché_haricots_verts_Ingrédients.webp"
       },
       "instructionsPhoto": {
-        "url": "/artemis-foodlab/assets/red-meat/recipes/VR_28_Pâtes_à_la_sauce_tomate,_steak_haché_et_haricots_verts_Recette.webp"
+        "url": "/artemis-foodlab/assets/red-meat/recipes/VR_28_Pâtes_steak_haché_haricots_verts_Recette.webp"
       }
     }
   },
@@ -59922,7 +59922,12 @@
         "unit": "g",
         "category": "Epicerie sucrée"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/sweet-grocery/photo/ES_01_Confiture_Photo.webp"
+      }
+    }
   },
   "es-002": {
     "id": "es-002",
@@ -59942,7 +59947,12 @@
         "unit": "g",
         "category": "Epicerie sucrée"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/sweet-grocery/photo/ES_02_Confiture_intense_Photo.webp"
+      }
+    }
   },
   "es-003": {
     "id": "es-003",
@@ -59962,7 +59972,12 @@
         "unit": "g",
         "category": "Epicerie sucrée"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/sweet-grocery/photo/ES_03_Pâte_à_tartiner_Photo.webp"
+      }
+    }
   },
   "es-004": {
     "id": "es-004",
@@ -59982,6 +59997,11 @@
         "unit": "g",
         "category": "Epicerie sucrée"
       }
-    ]
+    ],
+    "assets": {
+      "photo": {
+        "url": "/artemis-foodlab/assets/sweet-grocery/photo/ES_04_Purée_de_cacahuète_Photo.webp"
+      }
+    }
   }
 }

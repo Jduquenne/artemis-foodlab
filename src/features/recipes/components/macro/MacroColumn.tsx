@@ -15,7 +15,7 @@ const MACRO_LABELS = [
 export const MacroColumn = ({ macros }: MacroColumnProps) => (
   <div className="flex flex-col gap-2">
     {MACRO_LABELS.map(({ key, label, unit }) => (
-      <div key={key} className="w-24 h-24 rounded-full bg-white dark:bg-slate-100 shadow-md flex flex-col items-center justify-center">
+      <div key={key} className="w-24 h-24 rounded-full bg-white dark:bg-slate-200 shadow-md flex flex-col items-center justify-center">
         <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide leading-none mb-1">{label}</span>
         <span className="text-xl font-black text-slate-800 leading-none">
           {Math.round(macros[key])}{unit}

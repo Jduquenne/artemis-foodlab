@@ -5,6 +5,7 @@ import {
   MealType,
   Preparation,
   RecipeDetails,
+  RecipeKind,
   Unit,
 } from "../domain/types";
 import {
@@ -350,13 +351,14 @@ export function formatIngredientsForIngredientCard(
 }
 
 export function generateCsvOutput(state: RecipeBuilderState): string {
+  const isBase = state.kind === RecipeKind.BASE;
   const cells: string[] = [
     buildRecipeId(state.categoryId, state.recipeNumber),
     state.name,
     String(state.defaultPortions),
-    state.mealTypes,
+    ...(isBase ? [] : [state.mealTypes]),
     state.kind,
-    state.isDessert ? "TRUE" : "FALSE",
+    ...(isBase ? [] : [state.isDessert ? "TRUE" : "FALSE"]),
     state.batchCooking ? "TRUE" : "FALSE",
   ];
   for (const ing of state.ingredients) {

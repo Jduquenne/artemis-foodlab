@@ -4,9 +4,10 @@ import { ArrowLeft, Calculator, ChevronLeft, ChevronRight, Pencil } from 'lucide
 import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
 import { typedFoodDb } from '../../../../core/typed-db/typedFoodDb';
 import { calculateRecipeMacros } from '../../../../core/utils/macroUtils';
+import { getLinkedBases } from '../../../../core/utils/recipeUtils';
 import { recipeToBuilderState } from '../../../../core/utils/recipeBuilderUtils';
 import { useRecipeBuilderStore } from '../../../../shared/store/useRecipeBuilderStore';
-import { MacroBar } from '../macro/MacroBar';
+import { MacroColumn } from '../macro/MacroColumn';
 
 export const RecipeDetail = () => {
   const { recipeId } = useParams();
@@ -39,6 +40,8 @@ export const RecipeDetail = () => {
     }
   }, [recipe]);
 
+  const linkedBases = useMemo(() => (recipe ? getLinkedBases(recipe) : []), [recipe]);
+
   if (!recipe || !recipeUrl) return null;
 
   const handleEditInBuilder = () => {
@@ -58,7 +61,7 @@ export const RecipeDetail = () => {
   return (
     <div className={`fixed inset-0 z-50 bg-slate-50 flex flex-col p-4 md:p-6 ${isLeaving ? 'modal-center-exit' : 'modal-center-enter'}`}>
 
-      <div className="flex items-center gap-3 shrink-0 mb-3">
+      <div className="flex items-center gap-3 shrink-0 mb-4">
         <button
           aria-label="Retour"
           onClick={handleBack}
@@ -85,13 +88,8 @@ export const RecipeDetail = () => {
         </button>
       </div>
 
-      {macros && (
-        <div className="shrink-0 mb-3">
-          <MacroBar macros={macros} />
-        </div>
-      )}
+      <div className="flex-1 min-h-0 flex items-center gap-2">
 
-      <div className="flex-1 min-h-0 flex items-center justify-center gap-2">
         {categoryId && (
           <button
             aria-label="Recette précédente"
@@ -102,11 +100,38 @@ export const RecipeDetail = () => {
             <ChevronLeft className="w-6 h-6" />
           </button>
         )}
+
+        <div className="flex-1 min-h-0 flex items-center justify-end pr-3">
+          <div className="flex flex-col items-center gap-3">
+            {linkedBases.map(({ id, name, photoUrl }) => (
+              <a
+                key={id}
+                href={`#/recipes/detail/${id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center gap-2 group"
+              >
+                <img
+                  src={photoUrl}
+                  alt={name}
+                  className="h-28 md:h-32 rounded-2xl shadow-md ring-1 ring-slate-200 dark:ring-slate-300 group-hover:opacity-75 group-hover:ring-orange-300 transition-all"
+                />
+                <span className="text-xs font-semibold text-slate-500 text-center w-20 leading-tight line-clamp-2">{name}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+
         <img
           src={recipeUrl}
           alt={recipe.name}
-          className="flex-1 min-w-0 max-h-full object-contain rounded-2xl shadow-sm"
+          className="flex-[3] min-w-0 max-h-full object-contain rounded-2xl shadow-sm"
         />
+
+        <div className="flex-1 min-h-0 flex items-center justify-start pl-3">
+          {macros && <MacroColumn macros={macros} />}
+        </div>
+
         {categoryId && (
           <button
             aria-label="Recette suivante"
@@ -117,6 +142,7 @@ export const RecipeDetail = () => {
             <ChevronRight className="w-6 h-6" />
           </button>
         )}
+
       </div>
 
     </div>

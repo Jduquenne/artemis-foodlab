@@ -123,6 +123,7 @@ package "Aliases de type" as ALIASES #EEE8DC {
 
   class RecipeAssetKey <<type alias>> {
     "photo" | "ingredientsPhoto" | "instructionsPhoto"
+    "mealPhoto" | "bookPhoto"
   }
 }
 
@@ -160,6 +161,8 @@ package "Recettes — JSON statique" as RECIPES #FFF4ED {
     + photo?             : url : string
     + ingredientsPhoto?  : url : string
     + instructionsPhoto? : url : string
+    + mealPhoto?         : url : string
+    + bookPhoto?         : url : string
   }
 
   class RecipeIngredient {
@@ -183,6 +186,8 @@ package "Recettes — JSON statique" as RECIPES #FFF4ED {
     + defaultPortions  : number
     + batchCooking     : boolean
     + isDessert        : boolean
+    + fromBook?        : boolean
+    + bookPage?        : number
   }
 
   Food            "1" *-right- "1"    Macronutrients   : macros

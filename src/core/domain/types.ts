@@ -101,7 +101,7 @@ export enum RecipeKind {
   BASE = "base",
 }
 
-export type RecipeAssetKey = "photo" | "ingredientsPhoto" | "instructionsPhoto";
+export type RecipeAssetKey = "photo" | "ingredientsPhoto" | "instructionsPhoto" | "mealPhoto" | "bookPhoto";
 
 export interface RecipeAsset {
   url: string;
@@ -118,6 +118,8 @@ export interface RecipeDetails {
   assets: Partial<Record<RecipeAssetKey, RecipeAsset>>;
   batchCooking?: boolean;
   isDessert?: boolean;
+  fromBook?: boolean;
+  bookPage?: number;
 }
 
 export interface ShoppingDay {

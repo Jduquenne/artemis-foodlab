@@ -8,6 +8,7 @@ import { getLinkedBases } from '../../../../core/utils/recipeUtils';
 import { recipeToBuilderState } from '../../../../core/utils/recipeBuilderUtils';
 import { useRecipeBuilderStore } from '../../../../shared/store/useRecipeBuilderStore';
 import { MacroColumn } from '../macro/MacroColumn';
+import { MacroRow } from '../macro/MacroRow';
 
 export const RecipeDetail = () => {
   const { recipeId } = useParams();
@@ -101,26 +102,28 @@ export const RecipeDetail = () => {
           </button>
         )}
 
-        <div className="flex-1 min-h-0 flex items-center justify-end pr-3">
-          <div className="flex flex-col items-center gap-3">
-            {linkedBases.map(({ id, name, photoUrl }) => (
-              <a
-                key={id}
-                href={`#/recipes/detail/${id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-col items-center gap-2 group"
-              >
-                <img
-                  src={photoUrl}
-                  alt={name}
-                  className="h-28 md:h-32 rounded-2xl shadow-md ring-1 ring-slate-200 dark:ring-slate-300 group-hover:opacity-75 group-hover:ring-orange-300 transition-all"
-                />
-                <span className="text-xs font-semibold text-slate-500 text-center w-20 leading-tight line-clamp-2">{name}</span>
-              </a>
-            ))}
+        {linkedBases.length > 0 && (
+          <div className="hidden sm:flex flex-1 min-h-0 items-center justify-end pr-3">
+            <div className="flex flex-col items-center gap-3">
+              {linkedBases.map(({ id, name, photoUrl }) => (
+                <a
+                  key={id}
+                  href={`#/recipes/detail/${id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-col items-center gap-2 group"
+                >
+                  <img
+                    src={photoUrl}
+                    alt={name}
+                    className="h-28 md:h-32 rounded-2xl shadow-md ring-1 ring-slate-200 dark:ring-slate-300 group-hover:opacity-75 group-hover:ring-orange-300 transition-all"
+                  />
+                  <span className="text-xs font-semibold text-slate-500 text-center w-20 leading-tight line-clamp-2">{name}</span>
+                </a>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         <img
           src={recipeUrl}
@@ -128,7 +131,7 @@ export const RecipeDetail = () => {
           className="flex-[3] min-w-0 max-h-full object-contain rounded-2xl shadow-sm"
         />
 
-        <div className="flex-1 min-h-0 flex items-center justify-start pl-3">
+        <div className="hidden sm:flex flex-1 min-h-0 items-center justify-start pl-3">
           {macros && <MacroColumn macros={macros} />}
         </div>
 
@@ -144,6 +147,32 @@ export const RecipeDetail = () => {
         )}
 
       </div>
+
+      {(macros || linkedBases.length > 0) && (
+        <div className="flex sm:hidden shrink-0 pt-3 items-center gap-4">
+          {macros && <MacroRow macros={macros} />}
+          {linkedBases.length > 0 && (
+            <div className="flex gap-3 items-center">
+              {linkedBases.map(({ id, name, photoUrl }) => (
+                <a
+                  key={id}
+                  href={`#/recipes/detail/${id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-col items-center gap-1 group"
+                >
+                  <img
+                    src={photoUrl}
+                    alt={name}
+                    className="h-14 rounded-xl shadow-md ring-1 ring-slate-200 dark:ring-slate-300 group-hover:opacity-75 group-hover:ring-orange-300 transition-all"
+                  />
+                  <span className="text-[10px] font-semibold text-slate-500 text-center w-14 leading-tight line-clamp-2">{name}</span>
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
     </div>
   );

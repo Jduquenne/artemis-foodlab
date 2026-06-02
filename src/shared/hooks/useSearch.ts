@@ -7,8 +7,6 @@ export interface SearchRecipeResult {
   id: string;
   recipeId: string;
   name: string;
-  photoUrl: string;
-  ingredientsUrl: string;
   recipeUrl?: string;
   matchedIngredients: string[];
 }
@@ -57,9 +55,7 @@ function toResult(
     id: recipeId,
     recipeId,
     name: recipe.name,
-    photoUrl: recipe.assets.photo!.url,
-    ingredientsUrl: recipe.assets.ingredientsPhoto?.url ?? "",
-    recipeUrl: recipe.assets.instructionsPhoto?.url,
+    recipeUrl: recipe.assets.mealPhoto?.url ?? recipe.assets.instructionsPhoto?.url,
     matchedIngredients: isNumeric ? [] : getMatchedIngredients(recipe, query),
   };
 }
@@ -80,7 +76,7 @@ function search(
   const normalizedQuery = query.toLowerCase().trim();
 
   const results = Object.entries(db)
-    .filter(([, recipe]) => Boolean(recipe.assets?.photo))
+    .filter(([, recipe]) => Boolean(recipe.assets?.mealPhoto))
     .filter(([, recipe]) => !kinds || kinds.includes(recipe.kind))
     .filter(
       ([recipeId, recipe]) =>
@@ -135,7 +131,7 @@ export const useSearchDesserts = (query: string | null): SearchRecipeResult[] =>
     if (query === null) return [];
     const normalizedQuery = query.toLowerCase().trim();
     const results = Object.entries(db)
-      .filter(([, recipe]) => Boolean(recipe.assets?.photo))
+      .filter(([, recipe]) => Boolean(recipe.assets?.mealPhoto))
       .filter(([, recipe]) => isDessert(recipe))
       .filter(([recipeId, recipe]) => !normalizedQuery || matchesQuery(recipeId, recipe, normalizedQuery))
       .map(([recipeId, recipe]) => toResult(recipeId, recipe, normalizedQuery));

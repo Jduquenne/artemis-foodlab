@@ -5,10 +5,13 @@ import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
 import { typedFoodDb } from '../../../../core/typed-db/typedFoodDb';
 import { calculateRecipeMacros } from '../../../../core/utils/macroUtils';
 import { getLinkedBases } from '../../../../core/utils/recipeUtils';
+import { RecipePhotoCard } from '../../../../shared/components/ui/RecipePhotoCard';
 import { recipeToBuilderState } from '../../../../core/utils/recipeBuilderUtils';
 import { useRecipeBuilderStore } from '../../../../shared/store/useRecipeBuilderStore';
 import { MacroColumn } from '../macro/MacroColumn';
 import { MacroRow } from '../macro/MacroRow';
+import { RecipeRecetteCard } from '../../../../shared/components/ui/RecipeRecetteCard';
+import { RecipeBookCard } from '../../../../shared/components/ui/RecipeBookCard';
 
 export const RecipeDetail = () => {
   const { recipeId } = useParams();
@@ -17,14 +20,14 @@ export const RecipeDetail = () => {
   const [isLeaving, setIsLeaving] = useState(false);
 
   const recipe = recipeId ? typedRecipesDb[recipeId] : undefined;
-  const recipeUrl = recipe?.assets?.instructionsPhoto?.url;
+  const mealPhotoUrl = recipe?.assets?.mealPhoto?.url;
+  const instructionsPhotoUrl = recipe?.assets?.instructionsPhoto?.url;
   const categoryId = searchParams.get('category');
   const loadFromRecipe = useRecipeBuilderStore(s => s.loadFromRecipe);
-
   const categoryRecipeIds = useMemo(() => {
     if (!categoryId) return [];
     return Object.entries(typedRecipesDb)
-      .filter(([, r]) => r.categoryId === categoryId && r.assets?.instructionsPhoto)
+      .filter(([, r]) => r.categoryId === categoryId && (r.assets?.mealPhoto || r.assets?.instructionsPhoto))
       .map(([id]) => id);
   }, [categoryId]);
 
@@ -43,7 +46,7 @@ export const RecipeDetail = () => {
 
   const linkedBases = useMemo(() => (recipe ? getLinkedBases(recipe) : []), [recipe]);
 
-  if (!recipe || !recipeUrl) return null;
+  if (!recipe || (!mealPhotoUrl && !instructionsPhotoUrl)) return null;
 
   const handleEditInBuilder = () => {
     loadFromRecipe(recipeToBuilderState(recipeId!, recipe));
@@ -105,7 +108,7 @@ export const RecipeDetail = () => {
         {linkedBases.length > 0 && (
           <div className="hidden sm:flex flex-1 min-h-0 items-center justify-end pr-3">
             <div className="flex flex-col items-center gap-3">
-              {linkedBases.map(({ id, name, photoUrl }) => (
+              {linkedBases.map(({ id, name }) => (
                 <a
                   key={id}
                   href={`#/recipes/detail/${id}`}
@@ -113,11 +116,9 @@ export const RecipeDetail = () => {
                   rel="noopener noreferrer"
                   className="flex flex-col items-center gap-2 group"
                 >
-                  <img
-                    src={photoUrl}
-                    alt={name}
-                    className="h-28 md:h-32 rounded-2xl shadow-md ring-1 ring-slate-200 dark:ring-slate-300 group-hover:opacity-75 group-hover:ring-orange-300 transition-all"
-                  />
+                  <div className="h-28 md:h-32 aspect-[189/208] rounded-2xl overflow-hidden shadow-md ring-1 ring-slate-200 dark:ring-slate-300 group-hover:opacity-75 group-hover:ring-orange-300 transition-all">
+                    <RecipePhotoCard recipeId={id} recipe={typedRecipesDb[id]} fill />
+                  </div>
                   <span className="text-xs font-semibold text-slate-500 text-center w-20 leading-tight line-clamp-2">{name}</span>
                 </a>
               ))}
@@ -125,11 +126,20 @@ export const RecipeDetail = () => {
           </div>
         )}
 
-        <img
-          src={recipeUrl}
-          alt={recipe.name}
-          className="flex-[3] min-w-0 max-h-full object-contain rounded-2xl shadow-sm"
-        />
+        {mealPhotoUrl ? (
+          <div className="flex-[3] min-w-0 self-stretch overflow-hidden">
+            {recipe.assets.bookPhoto
+              ? <RecipeBookCard recipeId={recipeId!} recipe={recipe} fill />
+              : <RecipeRecetteCard recipeId={recipeId!} recipe={recipe} fill />
+            }
+          </div>
+        ) : (
+          <img
+            src={instructionsPhotoUrl}
+            alt={recipe.name}
+            className="flex-[3] min-w-0 max-h-full object-contain rounded-2xl shadow-sm"
+          />
+        )}
 
         <div className="hidden sm:flex flex-1 min-h-0 items-center justify-start pl-3">
           {macros && <MacroColumn macros={macros} />}
@@ -153,7 +163,7 @@ export const RecipeDetail = () => {
           {macros && <MacroRow macros={macros} />}
           {linkedBases.length > 0 && (
             <div className="flex gap-3 items-center">
-              {linkedBases.map(({ id, name, photoUrl }) => (
+              {linkedBases.map(({ id, name }) => (
                 <a
                   key={id}
                   href={`#/recipes/detail/${id}`}
@@ -161,11 +171,9 @@ export const RecipeDetail = () => {
                   rel="noopener noreferrer"
                   className="flex flex-col items-center gap-1 group"
                 >
-                  <img
-                    src={photoUrl}
-                    alt={name}
-                    className="h-14 rounded-xl shadow-md ring-1 ring-slate-200 dark:ring-slate-300 group-hover:opacity-75 group-hover:ring-orange-300 transition-all"
-                  />
+                  <div className="h-14 aspect-[189/208] rounded-xl overflow-hidden shadow-md ring-1 ring-slate-200 dark:ring-slate-300 group-hover:opacity-75 group-hover:ring-orange-300 transition-all">
+                    <RecipePhotoCard recipeId={id} recipe={typedRecipesDb[id]} fill />
+                  </div>
                   <span className="text-[10px] font-semibold text-slate-500 text-center w-14 leading-tight line-clamp-2">{name}</span>
                 </a>
               ))}

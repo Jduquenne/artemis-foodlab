@@ -118,7 +118,6 @@ export interface RecipeDetails {
   assets: Partial<Record<RecipeAssetKey, RecipeAsset>>;
   batchCooking?: boolean;
   isDessert?: boolean;
-  fromBook?: boolean;
   bookPage?: number;
 }
 

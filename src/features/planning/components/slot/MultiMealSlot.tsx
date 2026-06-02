@@ -61,8 +61,8 @@ export const MultiMealSlot = ({
     const [editingMetaId, setEditingMetaId] = useState<string | null>(null);
 
     const firstRecipe = recipeIds.length === 1 ? plannableDb[recipeIds[0]] : undefined;
-    const singlePhotoUrl = firstRecipe?.assets?.photo?.url;
-    const singleHasRecipesPage = Boolean(firstRecipe?.assets?.instructionsPhoto?.url);
+    const singleHasPhoto = Boolean(firstRecipe?.assets?.mealPhoto);
+    const singleHasRecipesPage = Boolean(firstRecipe?.assets?.mealPhoto || firstRecipe?.assets?.instructionsPhoto);
     const singleIsDish = isDish(firstRecipe) || isBase(firstRecipe);
 
     const hasRecipes = slotHasRecipes({ recipeIds });
@@ -143,8 +143,14 @@ export const MultiMealSlot = ({
                         onClick={!isTargetMode && singleHasRecipesPage ? () => onNavigateToRecipe(recipeIds[0]) : undefined}
                         className={`w-full h-full ${!singleHasRecipesPage || isTargetMode ? 'cursor-default' : ''}`}
                     >
-                        {singlePhotoUrl && (
-                            <img src={singlePhotoUrl} loading="lazy" decoding="async" className="w-full h-full object-contain" alt={firstRecipe!.name} />
+                        {singleHasPhoto && firstRecipe && (
+                            <div className="relative w-full h-full">
+                                <img src={firstRecipe.assets.mealPhoto!.url} loading="lazy" decoding="async" className="w-full h-full object-cover" alt={firstRecipe.name} />
+                                <div className="absolute inset-0 bg-black/20" />
+                                <div className="absolute inset-0 flex items-center justify-center p-2">
+                                    <span className="bg-black/70 text-white text-[14px] font-bold px-1.5 py-0.5 rounded-md leading-tight line-clamp-4 text-center">{firstRecipe.name}</span>
+                                </div>
+                            </div>
                         )}
                     </button>
                 )}

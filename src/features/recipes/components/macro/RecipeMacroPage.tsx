@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { RecipeDetails, Unit } from '../../../../core/domain/types';
 import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
+import { RecipePhotoCard } from '../../../../shared/components/ui/RecipePhotoCard';
 import { typedFoodDb } from '../../../../core/typed-db/typedFoodDb';
 import { calculateRecipeMacros } from '../../../../core/utils/macroUtils';
 import { MacroBar } from './MacroBar';
@@ -63,8 +64,6 @@ export const RecipeMacroPage = () => {
 
   if (!recipe) return null;
 
-  const photoUrl = recipe.assets?.photo?.url;
-
   const handleBack = () => {
     setIsLeaving(true);
     setTimeout(() => navigate(-1), 280);
@@ -110,12 +109,10 @@ export const RecipeMacroPage = () => {
             <ArrowLeft className="w-5 h-5" />
           </button>
 
-          {photoUrl ? (
-            <img
-              src={photoUrl}
-              alt={recipe.name}
-              className="w-16 h-16 rounded-xl object-cover shrink-0 border border-slate-200"
-            />
+          {recipe.assets?.mealPhoto ? (
+            <div className="w-16 h-16 rounded-xl overflow-hidden shrink-0 border border-slate-200">
+              <RecipePhotoCard recipeId={recipeId!} recipe={recipe} fill />
+            </div>
           ) : (
             <div className="w-16 h-16 rounded-xl bg-slate-200 shrink-0" />
           )}

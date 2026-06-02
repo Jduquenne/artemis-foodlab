@@ -50,8 +50,8 @@ export const MealSlot = ({
 }: MealSlotProps) => {
     const firstId = recipeIds[0];
     const recipe = firstId ? plannableDb[firstId] : undefined;
-    const photoUrl = recipe?.assets?.photo?.url;
-    const hasRecipesPage = Boolean(recipe?.assets?.instructionsPhoto?.url);
+    const hasPhoto = Boolean(recipe?.assets?.mealPhoto);
+    const hasRecipesPage = Boolean(recipe?.assets?.mealPhoto || recipe?.assets?.instructionsPhoto);
     const defaultPortion = recipe?.defaultPortions;
 
     const { setNodeRef: setDropRef, isOver } = useDroppable({ id: slotId });
@@ -68,7 +68,7 @@ export const MealSlot = ({
     const handleMainClick = () => {
         if (isAddMode) { onAddToSlot?.(); return; }
         if (isAnyEditing) return;
-        if (photoUrl) {
+        if (hasPhoto) {
             if (hasRecipesPage) onNavigate();
         } else {
             onOpenPicker();
@@ -81,22 +81,28 @@ export const MealSlot = ({
             ? 'opacity-30 border-slate-200'
             : isOver
                 ? 'border-orange-400 bg-orange-50/40'
-                : photoUrl
+                : hasPhoto
                     ? 'border-slate-200 shadow-sm hover:border-orange-200'
                     : 'border-dashed border-slate-200 hover:bg-orange-50/30';
 
     const displayPersons = persons ?? defaultPortion;
     const isCustom = persons !== undefined;
-    const showDessertColumn = hasDessert && !isOutdoor(recipe) && !!photoUrl;
+    const showDessertColumn = hasDessert && !isOutdoor(recipe) && !!hasPhoto;
 
     const mainContent = (
         <>
             <button
                 onClick={handleMainClick}
-                className={`relative w-full h-full rounded-xl border-2 transition-all overflow-hidden bg-white dark:bg-slate-100 ${borderClass} ${photoUrl && !hasRecipesPage ? 'cursor-default' : ''}`}
+                className={`relative w-full h-full rounded-xl border-2 transition-all overflow-hidden bg-white dark:bg-slate-100 ${borderClass} ${hasPhoto && !hasRecipesPage ? 'cursor-default' : ''}`}
             >
-                {photoUrl ? (
-                    <img src={photoUrl} loading="lazy" decoding="async" className="w-full h-full object-contain" alt={recipe!.name} />
+                {hasPhoto ? (
+                    <div className="relative w-full h-full">
+                        <img src={recipe!.assets.mealPhoto!.url} loading="lazy" decoding="async" className="w-full h-full object-cover" alt={recipe!.name} />
+                        <div className="absolute inset-0 bg-black/20" />
+                        <div className="absolute inset-0 flex items-center justify-center p-2">
+                            <span className="bg-black/70 text-white text-[14px] font-bold px-1.5 py-0.5 rounded-md leading-tight line-clamp-4 text-center">{recipe!.name}</span>
+                        </div>
+                    </div>
                 ) : (
                     <>
                         <div className="flex flex-col items-center justify-center gap-1 h-full w-full opacity-40">
@@ -110,7 +116,7 @@ export const MealSlot = ({
                 )}
             </button>
 
-            {photoUrl && !isDragging && !isAddMode && (inFreezer || (!isEditingPersons && displayPersons !== undefined)) && (
+            {hasPhoto && !isDragging && !isAddMode && (inFreezer || (!isEditingPersons && displayPersons !== undefined)) && (
                 <div className="absolute top-1 left-1 z-20 flex items-center gap-1">
                     {inFreezer && (
                         <div className="p-1 bg-cyan-500/80 text-white rounded-lg shadow-sm pointer-events-none">
@@ -128,7 +134,7 @@ export const MealSlot = ({
                 </div>
             )}
 
-            {photoUrl && !isDragging && !isEditingPersons && !isAddMode && (
+            {hasPhoto && !isDragging && !isEditingPersons && !isAddMode && (
                 <SlotActions
                     listeners={listeners}
                     attributes={attributes}

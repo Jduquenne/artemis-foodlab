@@ -17,11 +17,10 @@ export interface DessertCellProps {
 
 export const DessertCell = ({ recipeId, onRemove, isAddMode, onCopy, isCopySource, hideActions, persons, isPersonsCustom, onSetPersons }: DessertCellProps) => {
     const recipe = plannableDb[recipeId];
-    const photoUrl = recipe?.assets?.photo?.url;
     const [isEditingPersons, setIsEditingPersons] = useState(false);
     const [draft, setDraft] = useState(persons ?? 1);
 
-    if (!photoUrl) return null;
+    if (!recipe?.assets?.mealPhoto) return null;
 
     const openEditor = (e: React.MouseEvent | React.PointerEvent) => {
         e.stopPropagation();
@@ -42,13 +41,11 @@ export const DessertCell = ({ recipeId, onRemove, isAddMode, onCopy, isCopySourc
 
     return (
         <div className={`relative flex-1 min-h-0 rounded-lg overflow-hidden group ${isCopySource ? 'ring-2 ring-violet-500' : ''}`}>
-            <img
-                src={photoUrl}
-                loading="lazy"
-                decoding="async"
-                className="w-full h-full object-cover"
-                alt={recipe?.name ?? ''}
-            />
+            <img src={recipe!.assets.mealPhoto!.url} loading="lazy" decoding="async" className="w-full h-full object-cover" alt={recipe?.name ?? ''} />
+            <div className="absolute inset-0 bg-black/20" />
+            <div className="absolute inset-0 flex items-center justify-center p-1.5">
+                <span className="bg-black/70 text-white text-[13px] font-bold px-1 py-0.5 rounded leading-tight line-clamp-4 text-center">{recipe!.name}</span>
+            </div>
 
             {!isAddMode && !hideActions && !isEditingPersons && (
                 <button

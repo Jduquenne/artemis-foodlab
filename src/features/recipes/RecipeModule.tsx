@@ -14,6 +14,9 @@ import { useMenuStore } from '../../shared/store/useMenuStore';
 import { typedRecipesDb } from '../../core/typed-db/typedRecipesDb';
 import { typedFoodDb } from '../../core/typed-db/typedFoodDb';
 import { calculateRecipeMacros } from '../../core/utils/macroUtils';
+import { RecipePhotoCard } from '../../shared/components/ui/RecipePhotoCard';
+import { RecipeIngredientsCard } from '../../shared/components/ui/RecipeIngredientsCard';
+import { LazyRender } from '../../shared/components/ui/LazyRender';
 
 export const RecipeModule = () => {
     const navigate = useNavigate();
@@ -23,7 +26,7 @@ export const RecipeModule = () => {
     const excluded = ["Produits Sucrés", "Extérieur"];
 
     const isSearchActive = isSearchOpen || searchQuery.length > 0;
-    const showResults = searchQuery.length >= 1 || activeFilterIds.length > 0;
+    const showResults = searchQuery.length >= 3 || activeFilterIds.length > 0;
     const baseResults = useSearchRecipes(showResults ? searchQuery : null);
 
     const filteredResults = useMemo(() => {
@@ -119,22 +122,25 @@ export const RecipeModule = () => {
                         </h2>
                         {filteredResults.length === 0 ? (
                             <div className="text-center py-10 text-slate-400">
-                                {searchQuery.length >= 1
+                                {searchQuery.length >= 3
                                     ? `Aucune recette trouvée pour "${searchQuery}"`
-                                    : 'Aucune recette ne correspond à ces filtres'}
+                                    : searchQuery.length > 0
+                                        ? `Encore ${3 - searchQuery.length} caractère${3 - searchQuery.length > 1 ? 's' : ''}…`
+                                        : 'Aucune recette ne correspond à ces filtres'}
                             </div>
                         ) : (
                             <div className="grid gap-3 pb-4" style={{ gridTemplateColumns: 'repeat(auto-fill, 5cm)', gridAutoRows: '5.5cm', justifyContent: 'center' }}>
                                 {filteredResults.map((recipe) => (
-                                    <FlipCard
-                                        key={recipe.id}
-                                        name={recipe.name}
-                                        frontImage={recipe.photoUrl || ''}
-                                        backImage={recipe.ingredientsUrl}
-                                        recipeUrl={recipe.recipeUrl}
-                                        onClick={() => navigate(`/recipes/detail/${recipe.recipeId || recipe.id}`)}
-                                        onAddToPlanning={isPlannable(typedRecipesDb[recipe.recipeId || recipe.id]) ? () => navigate(`/planning?addRecipe=${recipe.recipeId || recipe.id}`) : undefined}
-                                    />
+                                    <LazyRender key={recipe.id} className="h-full">
+                                        <FlipCard
+                                            name={recipe.name}
+                                            frontContent={<RecipePhotoCard recipeId={recipe.recipeId} recipe={typedRecipesDb[recipe.recipeId]} fill />}
+                                            backContent={<RecipeIngredientsCard recipeId={recipe.recipeId} recipe={typedRecipesDb[recipe.recipeId]} fill />}
+                                            recipeUrl={recipe.recipeUrl}
+                                            onClick={() => navigate(`/recipes/detail/${recipe.recipeId || recipe.id}`)}
+                                            onAddToPlanning={isPlannable(typedRecipesDb[recipe.recipeId || recipe.id]) ? () => navigate(`/planning?addRecipe=${recipe.recipeId || recipe.id}`) : undefined}
+                                        />
+                                    </LazyRender>
                                 ))}
                             </div>
                         )}

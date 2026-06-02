@@ -2,10 +2,10 @@ import { useRef, useState, useEffect, useMemo, useCallback } from "react";
 import { Upload, X, Download, Loader2 } from "lucide-react";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
 import { computeDraftTotal, formatIngredientsForIngredientCard, buildImageName } from "../../../../core/utils/recipeBuilderUtils";
-import { SvgCard } from "./SvgCard";
-import { SmallCardData, IngredientsCardData, RecetteCardData, RecetteBookCardData } from "./photoBuilderTypes";
-import { getCardColors } from "./photoBuilderColors";
-import { buildPhotoSvg, buildIngredientsSvg, buildRecetteSvg, buildRecetteBookSvg } from "./photoBuilderSvg";
+import { SvgCard } from "../../../../shared/components/ui/SvgCard";
+import { SmallCardData, IngredientsCardData, RecetteCardData, RecetteBookCardData } from "../../../../core/utils/photoBuilderTypes";
+import { getCardColors } from "../../../../core/utils/photoBuilderColors";
+import { buildPhotoSvg, buildIngredientsSvg, buildRecetteSvg, buildRecetteBookSvg } from "../../../../core/utils/photoBuilderSvg";
 import { downloadSingleCard, downloadAllCards } from "./photoBuilderExport";
 import { calculateCardScale } from "../../../../core/utils/photoBuilderUtils";
 

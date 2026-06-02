@@ -76,6 +76,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_01_Purée_Brocoli_et_pâté_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_01_mealPhoto.webp"
       }
     }
   },
@@ -196,6 +199,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_02_Croque_monsieur_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_02_mealPhoto.webp"
       }
     }
   },
@@ -291,6 +297,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_03_Crêpes_béchamel_au_jambon_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_03_mealPhoto.webp"
       }
     }
   },
@@ -378,6 +387,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_04_Purée_Saucisse_et_épinards_à_l’ail_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_04_mealPhoto.webp"
       }
     }
   },
@@ -474,6 +486,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_05_Purée_Saucisse_au_chou_blanc_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_05_mealPhoto.webp"
       }
     }
   },
@@ -553,6 +568,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_06_Gratin_d’endives_au_jambon_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_06_mealPhoto.webp"
       }
     }
   },
@@ -672,6 +690,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_07_Bouchée_à_la_reine_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_07_mealPhoto.webp"
       }
     }
   },
@@ -823,6 +844,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_08_Cake_olives_et_lardons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_08_mealPhoto.webp"
       }
     }
   },
@@ -918,6 +942,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_09_Pommes_de_terres,_pâté_et_poivrons_au_paprika_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_09_mealPhoto.webp"
       }
     }
   },
@@ -1013,6 +1040,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_10_Ebly,_poivron,_pâté_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_10_mealPhoto.webp"
       }
     }
   },
@@ -1100,6 +1130,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_11_Risotto_à_la_saucisse_et_aux_poireaux_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_11_mealPhoto.webp"
       }
     }
   },
@@ -1155,6 +1188,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_12_Choucroute_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_12_mealPhoto.webp"
       }
     }
   },
@@ -1259,6 +1295,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_13_Pâtes_béchamel_champignons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_13_mealPhoto.webp"
       }
     }
   },
@@ -1354,6 +1393,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_14_Hot_dog_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_14_mealPhoto.webp"
       }
     }
   },
@@ -1441,6 +1483,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_15_Pommes_de_terre_haricots_verts_jambon_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_15_mealPhoto.webp"
       }
     }
   },
@@ -1504,6 +1549,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_16_Pâtes_courgettes_et_jambon_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_16_mealPhoto.webp"
       }
     }
   },
@@ -1559,6 +1607,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_17_Pâtes_saucisses_à_la_provençale_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_17_mealPhoto.webp"
       }
     }
   },
@@ -1606,6 +1657,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_18_Paupiette_ratatouille_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_18_mealPhoto.webp"
       }
     }
   },
@@ -1701,6 +1755,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_19_Pâtes_omelette_aux_lardons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_19_mealPhoto.webp"
       }
     }
   },
@@ -1813,6 +1870,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_20_Pizza_Régina_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_20_mealPhoto.webp"
       }
     }
   },
@@ -1925,6 +1985,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_21_Paupiette_aux_champignons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_21_mealPhoto.webp"
       }
     }
   },
@@ -2068,6 +2131,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_22_Plancha_saucisse_poulet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_22_mealPhoto.webp"
       }
     }
   },
@@ -2131,6 +2197,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_23_Pommes_de_terre_saucisses_endives_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_23_mealPhoto.webp"
       }
     }
   },
@@ -2226,6 +2295,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_24_Potatoes,_pâté_et_salade_d’endives_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_24_mealPhoto.webp"
       }
     }
   },
@@ -2321,6 +2393,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_25_Purée_jambon_petits_pois_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_25_mealPhoto.webp"
       }
     }
   },
@@ -2417,6 +2492,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_26_Riz_cantonais_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_26_mealPhoto.webp"
       }
     }
   },
@@ -2488,6 +2566,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_27_Riz_sauté_aux_merguez_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_27_mealPhoto.webp"
       }
     }
   },
@@ -2592,6 +2673,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_28_Saucisses_lentilles_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_28_mealPhoto.webp"
       }
     }
   },
@@ -2663,6 +2747,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_29_Grenailles_saucisses_choux_de_Bruxelles_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_29_mealPhoto.webp"
       }
     }
   },
@@ -2734,6 +2821,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_30_Pâtes,_jambon_et_endives_caramélisées_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_30_mealPhoto.webp"
       }
     }
   },
@@ -2838,6 +2928,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_31_Ebly_pâté_haricots_blancs_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_31_mealPhoto.webp"
       }
     }
   },
@@ -2909,6 +3002,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_32_Gratin_de_chou_fleur_au_jambon_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_32_mealPhoto.webp"
       }
     }
   },
@@ -2988,6 +3084,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_33_Pommes_de_terre_haricots_verts_pâté_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_33_mealPhoto.webp"
       }
     }
   },
@@ -3075,6 +3174,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_34_Crêpes_chou_fleur_jambon_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_34_mealPhoto.webp"
       }
     }
   },
@@ -3122,6 +3224,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_35_Riz_saucisse_ratatouille_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_35_mealPhoto.webp"
       }
     }
   },
@@ -3298,6 +3403,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_36_Merguez_taboulé_crudités_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_36_mealPhoto.webp"
       }
     }
   },
@@ -3401,6 +3509,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_37_Pizza_oranaise_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_37_mealPhoto.webp"
       }
     }
   },
@@ -3512,6 +3623,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_38_Galette_de_blé_noir_jambon_champignons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_38_mealPhoto.webp"
       }
     }
   },
@@ -3656,6 +3770,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_39_Couscous_merguez_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_39_mealPhoto.webp"
       }
     }
   },
@@ -3743,6 +3860,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_40_Courge_spaghetti_à_la_carbonara_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_40_mealPhoto.webp"
       }
     }
   },
@@ -3863,6 +3983,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_41_Barbecue_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_41_mealPhoto.webp"
       }
     }
   },
@@ -3959,6 +4082,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_42_Frites_pâté_salade_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_42_mealPhoto.webp"
       }
     }
   },
@@ -4054,6 +4180,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_43_Salade_pommes_de_terre_chou_fleur_au_jambon_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_43_mealPhoto.webp"
       }
     }
   },
@@ -4141,6 +4270,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_44_Frites_pâté_haricots_verts_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_44_mealPhoto.webp"
       }
     }
   },
@@ -4212,8 +4344,15 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_45_Gnocchis_maison_à_la_cantonnaise_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_45_mealPhoto.webp"
+      },
+      "bookPhoto": {
+        "url": "/artemis-foodlab/assets/books/veggie_ou_presque.webp"
       }
-    }
+    },
+    "bookPage": 150
   },
   "char-046": {
     "id": "char-046",
@@ -4275,6 +4414,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_46_Coquillettes_crémeuses_au_jambon_et_courge_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_46_mealPhoto.webp"
       }
     }
   },
@@ -4402,6 +4544,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_47_Tomates_farcies_au_hachis_de_porc_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_47_mealPhoto.webp"
       }
     }
   },
@@ -4497,6 +4642,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_48_Chou_rouge_pomme_saucisse_et_purée_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_48_mealPhoto.webp"
       }
     }
   },
@@ -4592,6 +4740,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/charcuterie/recipes/CHAR_49_Salade_de_pâtes_jambon_petits_pois_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_49_mealPhoto.webp"
       }
     }
   },
@@ -4695,6 +4846,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_01_Cookies_protéinés_banane_chocolat_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_01_mealPhoto.webp"
       }
     }
   },
@@ -4814,6 +4968,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_02_Cookies_banane_fruits_secs_noix_de_cajou_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_02_mealPhoto.webp"
       }
     }
   },
@@ -4909,6 +5066,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_03_Cookies_avoine_compote_chocolat_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_03_mealPhoto.webp"
       }
     }
   },
@@ -5020,6 +5180,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_04_Cookies_avoine_compote_fruits_secs_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_04_mealPhoto.webp"
       }
     }
   },
@@ -5083,6 +5246,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_05_Cookies_cacahuètes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_05_mealPhoto.webp"
       }
     }
   },
@@ -5178,6 +5344,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_06_Mini_cakes_citron_compote_amande_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_06_mealPhoto.webp"
       }
     }
   },
@@ -5257,6 +5426,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_07_Moelleux_amande_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_07_mealPhoto.webp"
       }
     }
   },
@@ -5376,6 +5548,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_08_Cheesecake_fraise_myrtille_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_08_mealPhoto.webp"
       }
     }
   },
@@ -5487,6 +5662,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_09_Cookies_baies_de_goji_tournesol_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_09_mealPhoto.webp"
       }
     }
   },
@@ -5590,6 +5768,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_10_Cookies_raisins_secs_coco_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_10_mealPhoto.webp"
       }
     }
   },
@@ -5661,6 +5842,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_11_Gâteau_Banane_Coco_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_11_mealPhoto.webp"
       }
     }
   },
@@ -5748,6 +5932,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_12_Muffins_aux_Pépites_de_Chocolat_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_12_mealPhoto.webp"
       }
     }
   },
@@ -5843,6 +6030,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_13_Gâteau_Banane,_Avoine_et_Noisettes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_13_mealPhoto.webp"
       }
     }
   },
@@ -5962,6 +6152,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_14_Moelleux_amande_et_framboise_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_14_mealPhoto.webp"
       }
     }
   },
@@ -6033,6 +6226,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_15_Gâteau_léger_au_skyr_et_pépites_de_chocolat_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_15_mealPhoto.webp"
       }
     }
   },
@@ -6104,6 +6300,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_16_Cakes_aux_flocons_d'avoine_et_chocolat_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_16_mealPhoto.webp"
       }
     }
   },
@@ -6199,6 +6398,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_17_Gaufres_version_brownie_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_17_mealPhoto.webp"
       }
     }
   },
@@ -6302,6 +6504,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_18_Cookies_sarrasin_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_18_mealPhoto.webp"
       }
     }
   },
@@ -6373,6 +6578,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_19_Gaufres_briochées_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_19_mealPhoto.webp"
       }
     }
   },
@@ -6460,6 +6668,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_20_Cake_chocolat_compote_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_20_mealPhoto.webp"
       }
     }
   },
@@ -6555,6 +6766,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_21_Fondant_ricotta_framboises_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_21_mealPhoto.webp"
       }
     }
   },
@@ -6650,6 +6864,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_22_Cookies_coco_chocolat_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_22_mealPhoto.webp"
       }
     }
   },
@@ -6753,6 +6970,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_23_Cookies_noisette_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_23_mealPhoto.webp"
       }
     }
   },
@@ -6848,6 +7068,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_24_Cake_Léger_au_Potiron_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_24_mealPhoto.webp"
       }
     }
   },
@@ -6920,6 +7143,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_25_Moelleux_chocolat_courgette_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_25_mealPhoto.webp"
       }
     }
   },
@@ -6991,6 +7217,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_26_Brownie_à_la_compote_de_pomme_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_26_mealPhoto.webp"
       }
     }
   },
@@ -7070,6 +7299,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_27_Muffins_chocolat_betterave_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_27_mealPhoto.webp"
       }
     }
   },
@@ -7157,6 +7389,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_28_Brownie_patate_douce_et_beurre_de_cacahuètes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_28_mealPhoto.webp"
       }
     }
   },
@@ -7236,6 +7471,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_29_Fondant_au_chocolat_et_patate_douce_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_29_mealPhoto.webp"
       }
     }
   },
@@ -7331,6 +7569,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_30_Cookies_à_la_courge_butternut_végan_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_30_mealPhoto.webp"
       }
     }
   },
@@ -7418,6 +7659,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_31_Cookie_butternut_amande_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_31_mealPhoto.webp"
       }
     }
   },
@@ -7521,6 +7765,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_32_Gâteau_au_potiron_et_amande_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_32_mealPhoto.webp"
       }
     }
   },
@@ -7616,6 +7863,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_33_Cookies_moelleux_aux_amandes_et_à_l’okara_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_33_mealPhoto.webp"
       }
     }
   },
@@ -7727,6 +7977,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_34_Brownies_aux_flocons_d’avoine_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_34_mealPhoto.webp"
       }
     }
   },
@@ -7838,6 +8091,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_35_Gâteau_haricots_blancs_coco_chocolat_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_35_mealPhoto.webp"
       }
     }
   },
@@ -7901,6 +8157,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_36_Amaretti_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_36_mealPhoto.webp"
       }
     }
   },
@@ -7988,6 +8247,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_37_Madeleines_au_skyr_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_37_mealPhoto.webp"
       }
     }
   },
@@ -8051,6 +8313,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_38_Brownie_aux_noix_à_la_compote_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_38_mealPhoto.webp"
       }
     }
   },
@@ -8138,6 +8403,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_39_Muffin_cacao_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_39_mealPhoto.webp"
       }
     }
   },
@@ -8217,6 +8485,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_40_Cake_marbré_compote_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_40_mealPhoto.webp"
       }
     }
   },
@@ -8296,6 +8567,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_41_Madeleine_au_beurre_de_cacahuète_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_41_mealPhoto.webp"
       }
     }
   },
@@ -8383,6 +8657,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_42_Muffins_aux_framboises_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_42_mealPhoto.webp"
       }
     }
   },
@@ -8470,6 +8747,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_43_Moelleux_au_chocolat_haricots_rouges_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_43_mealPhoto.webp"
       }
     }
   },
@@ -8558,6 +8838,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_44_Muffins_courgette_chocolat_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_44_mealPhoto.webp"
       }
     }
   },
@@ -8694,6 +8977,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_45_Muffin_carot_cake_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_45_mealPhoto.webp"
       }
     }
   },
@@ -8822,6 +9108,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_46_Gâteau_courgette_et_noix_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_46_mealPhoto.webp"
       }
     }
   },
@@ -8909,6 +9198,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_47_Madeleine_purée_de_cajou_chocolat_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_47_mealPhoto.webp"
       }
     }
   },
@@ -9004,6 +9296,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_48_Gâteau_vegan_cacao_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_48_mealPhoto.webp"
       }
     }
   },
@@ -9100,6 +9395,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_49_Cake_vegan_chocolat_courgette_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_49_mealPhoto.webp"
       }
     }
   },
@@ -9187,6 +9485,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_50_Ultra_moelleux_vegan_aux_pommes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_50_mealPhoto.webp"
       }
     }
   },
@@ -9306,6 +9607,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_51_Tarte_avoine_créme_citron_fruits_rouges_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_51_mealPhoto.webp"
       }
     }
   },
@@ -9385,6 +9689,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_52_Mini_cakes_protéinés_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_52_mealPhoto.webp"
       }
     }
   },
@@ -9496,6 +9803,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_53_Cakes_café_noix_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_53_mealPhoto.webp"
       }
     }
   },
@@ -9567,6 +9877,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_54_Biscuits_au_café_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_54_mealPhoto.webp"
       }
     }
   },
@@ -9654,6 +9967,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_55_Biscotti_café_amandes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_55_mealPhoto.webp"
       }
     }
   },
@@ -9765,6 +10081,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_56_Gâteau_au_café_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_56_mealPhoto.webp"
       }
     }
   },
@@ -9860,6 +10179,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_57_Muffins_fromage_blanc_fourrés_fraise_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_57_mealPhoto.webp"
       }
     }
   },
@@ -9947,6 +10269,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_58_Cake_lentilles_et_noisette_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_58_mealPhoto.webp"
       }
     }
   },
@@ -10026,8 +10351,127 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/pastries/recipes/PAT_59_Brownie_lentilles_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_59_mealPhoto.webp"
       }
     }
+  },
+  "pat-060": {
+    "id": "pat-060",
+    "name": "Gâteau citron gelée de framboise",
+    "categoryId": "pastries",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 12,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-017",
+        "name": "Farine blanche",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "es-050",
+        "name": "Sucre",
+        "quantity": 90,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "003",
+        "foodId": "pl-020",
+        "name": "Lait demi écrémé",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "004",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 4,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "005",
+        "foodId": "cd-013",
+        "name": "Huile de colza",
+        "quantity": 30,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "cd-002",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "cd-016",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "pl-020",
+        "name": "Lait demi écrémé",
+        "quantity": 330,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "009",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 1.3,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "010",
+        "foodId": "fv-025",
+        "name": "Citron non traité",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "011",
+        "foodId": "es-050",
+        "name": "Sucre",
+        "quantity": 33,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "012",
+        "foodId": "es-027",
+        "name": "Fécule de maïs",
+        "quantity": 33,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "013",
+        "foodId": "es-012",
+        "name": "Confiture",
+        "quantity": 80,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      }
+    ]
   },
   "pc-001": {
     "id": "pc-001",
@@ -10129,6 +10573,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_01_Pancakes_de_pommes_à_l’alsacienne_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_01_mealPhoto.webp"
       }
     }
   },
@@ -10261,6 +10708,9 @@
       },
       "ingredientsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/ingredients/PC_02_Barres_céréales_avoine_compote_fruits_secs_Ingrédients.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_02_mealPhoto.webp"
       }
     }
   },
@@ -10332,6 +10782,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_03_Gaufres_à_la_compote_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_03_mealPhoto.webp"
       }
     }
   },
@@ -10435,6 +10888,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_04_Pancake_compote_fruits_secs_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_04_mealPhoto.webp"
       }
     }
   },
@@ -10514,6 +10970,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_05_Pancake_compote_chocolat_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_05_mealPhoto.webp"
       }
     }
   },
@@ -10593,6 +11052,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_06_Pancakes_aux_blancs_d’œufs_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_06_mealPhoto.webp"
       }
     }
   },
@@ -10677,6 +11139,9 @@
       },
       "ingredientsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/ingredients/PC_07_Pancakes_à_l’amande_Ingrédients.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_07_mealPhoto.webp"
       }
     }
   },
@@ -10764,6 +11229,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_08_Gaufres_à_la_fleur_d’oranger_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_08_mealPhoto.webp"
       }
     }
   },
@@ -10859,6 +11327,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_09_Pancakes_aux_fraises_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_09_mealPhoto.webp"
       }
     }
   },
@@ -10938,6 +11409,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_10_Pancakes_skyr_compote_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_10_mealPhoto.webp"
       }
     }
   },
@@ -11033,6 +11507,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_11_Pain_nordique_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_11_mealPhoto.webp"
       }
     }
   },
@@ -11112,6 +11589,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_12_Pain_semi_complet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_12_mealPhoto.webp"
       }
     }
   },
@@ -11191,6 +11671,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_13_Muffin_anglais_aux_graines_de_chia_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_13_mealPhoto.webp"
       }
     }
   },
@@ -11278,6 +11761,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_14_Gaufres_de_Liège_sans_beurre_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_14_mealPhoto.webp"
       }
     }
   },
@@ -11341,6 +11827,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_15_Muffins_anglais_végans_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_15_mealPhoto.webp"
       }
     }
   },
@@ -11420,6 +11909,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_16_Mini_brioches_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_16_mealPhoto.webp"
       }
     }
   },
@@ -11504,6 +11996,9 @@
       },
       "ingredientsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/ingredients/PC_17_Gaufres_fromage_blanc_pépites_de_chocolat_Ingrédients.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_17_mealPhoto.webp"
       }
     }
   },
@@ -11591,6 +12086,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_18_Pan_de_Muerto_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_18_mealPhoto.webp"
       }
     }
   },
@@ -11718,6 +12216,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_19_Coquille_de_Noël_Vegan_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_19_mealPhoto.webp"
       }
     }
   },
@@ -11821,6 +12322,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_20_Coquille_de_Noël_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_20_mealPhoto.webp"
       }
     }
   },
@@ -11892,6 +12396,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_21_Pain_de_mie_semi_complet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_21_mealPhoto.webp"
       }
     }
   },
@@ -11995,6 +12502,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_22_Pains_protéinés_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_22_mealPhoto.webp"
       }
     }
   },
@@ -12066,6 +12576,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_23_Brioche_aux_pépites_de_chocolat_Vegan_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_23_mealPhoto.webp"
       }
     }
   },
@@ -12185,6 +12698,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_24_Biscuits_sarrasin_avoine_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_24_mealPhoto.webp"
       }
     }
   },
@@ -12264,6 +12780,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_25_Biscuits_banane_aux_graines_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_25_mealPhoto.webp"
       }
     }
   },
@@ -12311,6 +12830,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_26_Galettes_aux_flocons_de_sarrasin_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_26_mealPhoto.webp"
       }
     }
   },
@@ -12390,6 +12912,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_27_Crêpes_légères_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_27_mealPhoto.webp"
       }
     }
   },
@@ -12493,6 +13018,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_28_Pain_sportif_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_28_mealPhoto.webp"
       }
     }
   },
@@ -12588,6 +13116,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_29_Biscuits_noisettes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_29_mealPhoto.webp"
       }
     }
   },
@@ -12667,6 +13198,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_30_Pancakes_noix_de_coco_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_30_mealPhoto.webp"
       }
     }
   },
@@ -12738,6 +13272,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_31_Crêpes_vegan_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_31_mealPhoto.webp"
       }
     }
   },
@@ -12809,6 +13346,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_32_Pancakes_Vegan_noisette_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_32_mealPhoto.webp"
       }
     }
   },
@@ -12904,6 +13444,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_39_Pancakes_aux_flocons_de_quinoa_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_39_mealPhoto.webp"
       }
     }
   },
@@ -12948,6 +13491,9 @@
       },
       "ingredientsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/ingredients/PC_41_Overnight_oats_épeautre_Ingrédients.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_41_mealPhoto.webp"
       }
     }
   },
@@ -12992,6 +13538,9 @@
       },
       "ingredientsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/ingredients/PC_42_Overnight_oats_avoine_Ingrédients.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_42_mealPhoto.webp"
       }
     }
   },
@@ -13055,6 +13604,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/recipes/PC_43_Muffins_anglais_semi-complets_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_43_mealPhoto.webp"
       }
     }
   },
@@ -13131,6 +13683,9 @@
       },
       "ingredientsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/ingredients/PC_44_Pancakes_5_céréales_au_petit-lait_Ingrédients.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_44_mealPhoto.webp"
       }
     }
   },
@@ -13215,6 +13770,9 @@
       },
       "ingredientsPhoto": {
         "url": "/artemis-foodlab/assets/cereal-products/ingredients/PC_45_Gaufres_petit_lait_compote_Ingrédients.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_45_mealPhoto.webp"
       }
     }
   },
@@ -13254,6 +13812,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/dairy-products/recipes/PL_01_Lait_végétal_maison_Amande_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/dairy-products/meal/PL_01_mealPhoto.webp"
       }
     }
   },
@@ -13309,6 +13870,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/dairy-products/recipes/PL_02_Crème_au_café_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/dairy-products/meal/PL_02_mealPhoto.webp"
       }
     }
   },
@@ -13364,6 +13928,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/dairy-products/recipes/PL_03_Crème_dessert_chocolat_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/dairy-products/meal/PL_03_mealPhoto.webp"
       }
     }
   },
@@ -13427,6 +13994,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/dairy-products/recipes/PL_04_Crème_à_la_vanille_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/dairy-products/meal/PL_04_mealPhoto.webp"
       }
     }
   },
@@ -13490,6 +14060,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/dairy-products/recipes/PL_05_Crème_au_citron_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/dairy-products/meal/PL_05_mealPhoto.webp"
       }
     }
   },
@@ -13529,6 +14102,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/dairy-products/recipes/PL_06_Yaourt_nature_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/dairy-products/meal/PL_06_mealPhoto.webp"
       }
     }
   },
@@ -13584,6 +14160,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/dairy-products/recipes/PL_07_Yaourt_nature_citron_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/dairy-products/meal/PL_07_mealPhoto.webp"
       }
     }
   },
@@ -13647,6 +14226,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/dairy-products/recipes/PL_08_Flan_léger_vanille_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/dairy-products/meal/PL_08_mealPhoto.webp"
       }
     }
   },
@@ -13718,6 +14300,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/dairy-products/recipes/PL_09_Flan_léger_cacao_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/dairy-products/meal/PL_09_mealPhoto.webp"
       }
     }
   },
@@ -13749,6 +14334,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/dairy-products/recipes/PL_17_Lait_de_coco_maison_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/dairy-products/meal/PL_17_mealPhoto.webp"
       }
     }
   },
@@ -13780,6 +14368,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/dairy-products/recipes/PL_19_Lait_végétal_maison_Noisette_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/dairy-products/meal/PL_19_mealPhoto.webp"
       }
     }
   },
@@ -13811,6 +14402,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/dairy-products/recipes/PL_20_Lait_végétal_maison_Cajou_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/dairy-products/meal/PL_20_mealPhoto.webp"
       }
     }
   },
@@ -13938,6 +14532,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_01_Nouilles_sautées_aux_crevettes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_01_mealPhoto.webp"
       }
     }
   },
@@ -14065,6 +14662,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_02_Burger_à_la_truite_fumée_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_02_mealPhoto.webp"
       }
     }
   },
@@ -14152,6 +14752,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_03_Riz_au_poisson_et_purée_de_petits_pois_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_03_mealPhoto.webp"
       }
     }
   },
@@ -14247,6 +14850,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_04_Potatoes_au_poisson_et_purée_de_petits_pois_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_04_mealPhoto.webp"
       }
     }
   },
@@ -14342,6 +14948,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_05_Riz_au_saumon_aux_poireaux_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_05_mealPhoto.webp"
       }
     }
   },
@@ -14445,6 +15054,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_06_Pâtes_au_saumon_à_la_courgette_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_06_mealPhoto.webp"
       }
     }
   },
@@ -14556,6 +15168,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_07_Avocat_au_thon_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_07_mealPhoto.webp"
       }
     }
   },
@@ -14707,6 +15322,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_08_Cake_au_saumon_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_08_mealPhoto.webp"
       }
     }
   },
@@ -14851,6 +15469,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_09_Purée,_saumon,_haricots_vert_et_carottes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_09_mealPhoto.webp"
       }
     }
   },
@@ -14954,6 +15575,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_10_Croque_monsieur_truite_fumée_et_épinards_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_10_mealPhoto.webp"
       }
     }
   },
@@ -15041,6 +15665,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_11_Fish_burger_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_11_mealPhoto.webp"
       }
     }
   },
@@ -15144,6 +15771,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_12_Pâtes_carbonara_saumon_champignons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_12_mealPhoto.webp"
       }
     }
   },
@@ -15255,6 +15885,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_13_Jambalaya_aux_crevettes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_13_mealPhoto.webp"
       }
     }
   },
@@ -15391,6 +16024,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_14_Nouilles_sautées_aux_crevettes_et_brocoli_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_14_mealPhoto.webp"
       }
     }
   },
@@ -15526,6 +16162,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_15_Nouilles_sautées_aux_crevettes_et_poivrons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_15_mealPhoto.webp"
       }
     }
   },
@@ -15653,6 +16292,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_16_Pizza_au_thon_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_16_mealPhoto.webp"
       }
     }
   },
@@ -15772,6 +16414,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_17_Lasagnes_saumon_épinards_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_17_mealPhoto.webp"
       }
     }
   },
@@ -15843,6 +16488,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_18_Poisson_pommes_de_terre_poireaux_béchamel_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_18_mealPhoto.webp"
       }
     }
   },
@@ -15931,6 +16579,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_19_Poisson,_semoule_et_légumes_au_curry_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_19_mealPhoto.webp"
       }
     }
   },
@@ -16010,6 +16661,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_20_Poisson,_pommes_de_terre_et_haricots_verts_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_20_mealPhoto.webp"
       }
     }
   },
@@ -16105,6 +16759,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_21_Risotto_champignons_et_noix_de_saint-jacques_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_21_mealPhoto.webp"
       }
     }
   },
@@ -16216,6 +16873,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_22_Riz_au_thon_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_22_mealPhoto.webp"
       }
     }
   },
@@ -16328,6 +16988,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_23_Riz_sauté_au_thon_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_23_mealPhoto.webp"
       }
     }
   },
@@ -16407,6 +17070,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_24_Riz_poisson_flageolets_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_24_mealPhoto.webp"
       }
     }
   },
@@ -16518,6 +17184,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_25_Salade_pomme_de_terre_saumon_haricots_verts_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_25_mealPhoto.webp"
       }
     }
   },
@@ -16637,6 +17306,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_26_Salade_au_saumon_fumé_et_avocat_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_26_mealPhoto.webp"
       }
     }
   },
@@ -16748,6 +17420,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_27_Salade_de_pâtes_au_thon_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_27_mealPhoto.webp"
       }
     }
   },
@@ -16851,6 +17526,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_28_Salade_de_pâtes_thon,_oeufs_durs,_olives_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_28_mealPhoto.webp"
       }
     }
   },
@@ -16946,6 +17624,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_29_Sandwich_au_thon_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_29_mealPhoto.webp"
       }
     }
   },
@@ -17089,6 +17770,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_30_Tarte_au_thon_à_la_tomate_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_30_mealPhoto.webp"
       }
     }
   },
@@ -17192,6 +17876,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_31_Tomates_farcies_au_thon_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_31_mealPhoto.webp"
       }
     }
   },
@@ -17295,6 +17982,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_32_Quiche_au_poireau_et_saumon_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_32_mealPhoto.webp"
       }
     }
   },
@@ -17406,6 +18096,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_33_Toast_avocat_sardine_et_salade_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_33_mealPhoto.webp"
       }
     }
   },
@@ -17509,6 +18202,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_34_Salade_œufs_durs_tomates_sardines_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_34_mealPhoto.webp"
       }
     }
   },
@@ -17596,6 +18292,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_35_Salade_pommes_de_terre_haricots_verts_sardines_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_35_mealPhoto.webp"
       }
     }
   },
@@ -17676,6 +18375,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_36_Salade_de_semoule,_betteraves_et_sardines_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_36_mealPhoto.webp"
       }
     }
   },
@@ -17780,6 +18482,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_37_Salade_pâtes_haricots_blancs_sardines_oeufs_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_37_mealPhoto.webp"
       }
     }
   },
@@ -17851,6 +18556,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_38_Pâtes_aux_sardines,_citron_et_haricots_verts_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_38_mealPhoto.webp"
       }
     }
   },
@@ -17938,6 +18646,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_39_Salade_pâtes_haricots_rouges_sardines_brocolis_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_39_mealPhoto.webp"
       }
     }
   },
@@ -18034,6 +18745,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_40_Saumon_brocolis_patate_douce_rôtie_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_40_mealPhoto.webp"
       }
     }
   },
@@ -18137,6 +18851,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_41_Risotto_crevettes_aux_asperges_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_41_mealPhoto.webp"
       }
     }
   },
@@ -18232,6 +18949,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_42_Poke_bowl_truite_fumée_et_avocat_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_42_mealPhoto.webp"
       }
     }
   },
@@ -18351,6 +19071,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_43_Riz,_piperade_au_poisson_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_43_mealPhoto.webp"
       }
     }
   },
@@ -18479,6 +19202,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_44_Gratin_pomme_de_terre_carotte_et_thon_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_44_mealPhoto.webp"
       }
     }
   },
@@ -18550,6 +19276,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_45_Gratin_pommes_de_terre_chou_fleur_saumon_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_45_mealPhoto.webp"
       }
     }
   },
@@ -18661,6 +19390,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_46_Pâtes_saumon_petits_pois_ricotta_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_46_mealPhoto.webp"
       }
     }
   },
@@ -18764,6 +19496,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_47_Riz_poisson_haricots_verts_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_47_mealPhoto.webp"
       }
     }
   },
@@ -18859,6 +19594,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_48_Salade_de_pâtes_au_thon_poivrons_mozzarella_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_48_mealPhoto.webp"
       }
     }
   },
@@ -18930,6 +19668,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_49_Gratin_de_pâtes_chou_fleur_saumon_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_49_mealPhoto.webp"
       }
     }
   },
@@ -19033,6 +19774,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_50_Croque_poireau_truite_fumée_ricotta_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_50_mealPhoto.webp"
       }
     }
   },
@@ -19128,6 +19872,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_51_Purée_épinards_poisson_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_51_mealPhoto.webp"
       }
     }
   },
@@ -19215,6 +19962,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_52_Pâtes_poisson_épinards_ricotta_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_52_mealPhoto.webp"
       }
     }
   },
@@ -19310,6 +20060,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_53_Poisson_au_blé_et_au_poivron_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_53_mealPhoto.webp"
       }
     }
   },
@@ -19437,6 +20190,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_54_Concombre_farcis_au_thon_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_54_mealPhoto.webp"
       }
     }
   },
@@ -19556,6 +20312,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_55_Salade_Méditerranéenne_Thon_Quinoa_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_55_mealPhoto.webp"
       }
     }
   },
@@ -19659,6 +20418,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_56_Riz_saumon_courgette_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_56_mealPhoto.webp"
       }
     }
   },
@@ -19746,6 +20508,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_57_Gratin_d’endives_au_poisson_fumé_et_curry_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_57_mealPhoto.webp"
       }
     }
   },
@@ -19777,11 +20542,11 @@
       },
       {
         "id": "003",
-        "foodId": "cd-011",
-        "name": "Huile d'olive",
-        "quantity": 8,
+        "foodId": "pl-001",
+        "name": "Beurre",
+        "quantity": 10,
         "unit": "g",
-        "category": "Condiments"
+        "category": "Produits laitiers"
       },
       {
         "id": "004",
@@ -19811,7 +20576,7 @@
         "id": "007",
         "foodId": "fm-002",
         "name": "Jaune d’œuf",
-        "quantity": 2,
+        "quantity": 1,
         "unit": "pièce",
         "category": "Ferme"
       },
@@ -19819,7 +20584,7 @@
         "id": "008",
         "foodId": "pl-020",
         "name": "Lait demi écrémé",
-        "quantity": 75,
+        "quantity": 50,
         "unit": "g",
         "category": "Produits laitiers"
       },
@@ -19841,6 +20606,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_58_Poisson,_ratatouille_et_purée_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_58_mealPhoto.webp"
       }
     }
   },
@@ -19912,6 +20680,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_59_Riz,_poisson,_ratatouille_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_59_mealPhoto.webp"
       }
     }
   },
@@ -19991,6 +20762,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_60_Pâtes_courge_spaghetti_au_saumon_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_60_mealPhoto.webp"
       }
     }
   },
@@ -20062,8 +20836,15 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_61_Chili_aux_noix_de_saint_Jacques_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_61_mealPhoto.webp"
+      },
+      "bookPhoto": {
+        "url": "/artemis-foodlab/assets/books/recettes_enchantees_disney.webp"
       }
-    }
+    },
+    "bookPage": 152
   },
   "poi-062": {
     "id": "poi-062",
@@ -20157,8 +20938,15 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_62_Sandwich_aux_rillettes_aux_deux_saumon_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_62_mealPhoto.webp"
+      },
+      "bookPhoto": {
+        "url": "/artemis-foodlab/assets/books/super_nickel.webp"
       }
-    }
+    },
+    "bookPage": 56
   },
   "poi-063": {
     "id": "poi-063",
@@ -20244,8 +21032,15 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_63_Crevettes_à_la_feta_et_à_la_tomate_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_63_mealPhoto.webp"
+      },
+      "bookPhoto": {
+        "url": "/artemis-foodlab/assets/books/light_pour_soir.webp"
       }
-    }
+    },
+    "bookPage": 168
   },
   "poi-064": {
     "id": "poi-064",
@@ -20323,8 +21118,15 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_64_Poisson_à_la_tomate_et_au_thym_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_64_mealPhoto.webp"
+      },
+      "bookPhoto": {
+        "url": "/artemis-foodlab/assets/books/light_pour_soir.webp"
       }
-    }
+    },
+    "bookPage": 142
   },
   "poi-065": {
     "id": "poi-065",
@@ -20402,6 +21204,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_65_Fish_and_chips_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_65_mealPhoto.webp"
       }
     }
   },
@@ -20514,6 +21319,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_66_Parmentier_de_saumon_aux_légumes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_66_mealPhoto.webp"
       }
     }
   },
@@ -20593,6 +21401,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_67_Poisson_pané_riz_aux_légumes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_67_mealPhoto.webp"
       }
     }
   },
@@ -20672,6 +21483,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_68_Poisson_pané_quinoa_champignons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_68_mealPhoto.webp"
       }
     }
   },
@@ -20743,6 +21557,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_69_Gratin_de_pommes_de_terre_saumon_brocoli_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_69_mealPhoto.webp"
       }
     }
   },
@@ -20815,6 +21632,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_70_Quinoa_saumon_chou_romanesco_et_carottes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_70_mealPhoto.webp"
       }
     }
   },
@@ -20926,6 +21746,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_71_Salade_printanière_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_71_mealPhoto.webp"
       }
     }
   },
@@ -21013,6 +21836,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_72_Ebly_filets_de_maquereaux_et_carottes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_72_mealPhoto.webp"
       }
     }
   },
@@ -21100,6 +21926,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_73_Filets_de_maquereaux_couscous_légumes_rôtis_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_73_mealPhoto.webp"
       }
     }
   },
@@ -21219,6 +22048,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_74_Salade_pommes_de_terre_filets_de_maquereaux_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_74_mealPhoto.webp"
       }
     }
   },
@@ -21330,6 +22162,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_75_Saumon_quinoa_haricots_verts_et_tomates_cerises_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_75_mealPhoto.webp"
       }
     }
   },
@@ -21409,6 +22244,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_76_Cabillaud_et_poêlée_de_fenouil_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_76_mealPhoto.webp"
       }
     }
   },
@@ -21529,6 +22367,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_77_Salade_de_riz_façon_Thaï_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_77_mealPhoto.webp"
       }
     }
   },
@@ -21624,6 +22465,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_78_Filet_de_poisson_blanc_et_quinoa_au_fenouil_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_78_mealPhoto.webp"
       }
     }
   },
@@ -21735,6 +22579,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_79_Plancha_de_cabillaud_aux_légumes_et_au_citron_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_79_mealPhoto.webp"
       }
     }
   },
@@ -21830,6 +22677,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_80_Salade_de_lentilles_nordique_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_80_mealPhoto.webp"
       }
     }
   },
@@ -21933,6 +22783,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/fish/recipes/POI_81_Salade_méditerranéenne_aux_sardines_et_olives_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_81_mealPhoto.webp"
       }
     }
   },
@@ -22036,6 +22889,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_01_Orzo_méditerranéen_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_01_mealPhoto.webp"
       }
     }
   },
@@ -22172,6 +23028,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_02_Couscous_végétarien_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_02_mealPhoto.webp"
       }
     }
   },
@@ -22284,6 +23143,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_03_Soupe_aux_haricots_à_la_tomate_cèleri_carottes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_03_mealPhoto.webp"
       }
     }
   },
@@ -22444,6 +23306,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_04_Riz_et_lentilles_à_la_tomate_et_aux_carottes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_04_mealPhoto.webp"
       }
     }
   },
@@ -22523,6 +23388,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_05_Omelette_pâtes_flageolets_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_05_mealPhoto.webp"
       }
     }
   },
@@ -22610,6 +23478,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_06_Omelette_frites_de_patate_douce_flageolets_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_06_mealPhoto.webp"
       }
     }
   },
@@ -22753,6 +23624,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_07_Chili_sin_carne_d’été_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_07_mealPhoto.webp"
       }
     }
   },
@@ -22897,6 +23771,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_08_Chili_sin_carne_d’automne_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_08_mealPhoto.webp"
       }
     }
   },
@@ -23008,6 +23885,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_09_Cassoulet_courgette_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_09_mealPhoto.webp"
       }
     }
   },
@@ -23175,6 +24055,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_10_Fajitas_végétariennes_d’été_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_10_mealPhoto.webp"
       }
     }
   },
@@ -23343,6 +24226,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_11_Fajitas_végétariennes_d’automne_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_11_mealPhoto.webp"
       }
     }
   },
@@ -23423,6 +24309,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_12_Boulgour,_carottes,_pois_chiches_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_12_mealPhoto.webp"
       }
     }
   },
@@ -23559,6 +24448,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_13_Chakchouka_pois_chiches_épinards_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_13_mealPhoto.webp"
       }
     }
   },
@@ -23686,6 +24578,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_14_Chakchouka_aux_pois_chiches_et_poivrons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_14_mealPhoto.webp"
       }
     }
   },
@@ -23781,6 +24676,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_15_Burger_végétarien_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_15_mealPhoto.webp"
       }
     }
   },
@@ -23956,6 +24854,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_16_Lasagnes_mexicaines_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_16_mealPhoto.webp"
       }
     }
   },
@@ -24084,6 +24985,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_17_Dahl_de_lentilles_corail_patate_douce_épinards_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_17_mealPhoto.webp"
       }
     }
   },
@@ -24228,6 +25132,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_18_Parmentier_aux_lentilles_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_18_mealPhoto.webp"
       }
     }
   },
@@ -24356,6 +25263,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_19_Riz,_haricots_blancs_aux_carottes_et_amandes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_19_mealPhoto.webp"
       }
     }
   },
@@ -24483,6 +25393,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_20_One_pan_quinoa_mexicain_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_20_mealPhoto.webp"
       }
     }
   },
@@ -24611,6 +25524,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_21_Pain_pita,_falafels,_sauce_yaourt_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_21_mealPhoto.webp"
       }
     }
   },
@@ -24747,6 +25663,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_22_Pâtes_haricots_blancs_aux_carottes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_22_mealPhoto.webp"
       }
     }
   },
@@ -24850,6 +25769,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_23_Poêlée_de_flageolets_aux_champignons_et_quinoa_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_23_mealPhoto.webp"
       }
     }
   },
@@ -24985,6 +25907,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_24_Poêlée_de_haricots_blancs_à_la_tomate_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_24_mealPhoto.webp"
       }
     }
   },
@@ -25097,6 +26022,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_25_Riz_aux_épices_cajun_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_25_mealPhoto.webp"
       }
     }
   },
@@ -25225,6 +26153,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_26_Riz_falafels_et_brocolis_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_26_mealPhoto.webp"
       }
     }
   },
@@ -25312,6 +26243,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_27_Semoule,_falafels_et_poivrons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_27_mealPhoto.webp"
       }
     }
   },
@@ -25463,6 +26397,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_28_Dahl_protéiné_à_la_crème_de_cajou_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_28_mealPhoto.webp"
       }
     }
   },
@@ -25590,6 +26527,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_29_Purée_de_patate_douce_chou_fleur_aux_lentilles_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_29_mealPhoto.webp"
       }
     }
   },
@@ -25717,6 +26657,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_30_Salade_de_quinoa_crispy_à_la_mexicaine_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_30_mealPhoto.webp"
       }
     }
   },
@@ -25836,6 +26779,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_31_One_pot_pasta_aux_lentilles_et_légumes_d'été_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_31_mealPhoto.webp"
       }
     }
   },
@@ -25940,6 +26886,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_32_Salade_quinoa_pois_chiche_betterave_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_32_mealPhoto.webp"
       }
     }
   },
@@ -26043,6 +26992,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_33_Poêlée_aubergine_courgette_pois_chiches_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_33_mealPhoto.webp"
       }
     }
   },
@@ -26162,6 +27114,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_34_Salade_d'orzo_aux_pois_chiches_et_au_citron_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_34_mealPhoto.webp"
       }
     }
   },
@@ -26314,6 +27269,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_35_Salade_de_pois_chiches_à_la_grecque_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_35_mealPhoto.webp"
       }
     }
   },
@@ -26401,6 +27359,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_36_Riz_au_citron,_lentilles_et_poireaux_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_36_mealPhoto.webp"
       }
     }
   },
@@ -26504,6 +27465,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_37_Salade_de_quinoa_et_haricots_blancs_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_37_mealPhoto.webp"
       }
     }
   },
@@ -26623,6 +27587,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_38_Salade_de_pommes_de_terre_et_haricots_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_38_mealPhoto.webp"
       }
     }
   },
@@ -26742,6 +27709,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_39_Cassoulet_butternut_et_pain_à_l’ail_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_39_mealPhoto.webp"
       }
     }
   },
@@ -26829,6 +27799,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_40_Poêlée_de_riz_gratinée_aux_haricots_rouges_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_40_mealPhoto.webp"
       }
     }
   },
@@ -26940,6 +27913,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_41_Poêlée_au_riz,_butternut_et_noisette_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_41_mealPhoto.webp"
       }
     }
   },
@@ -27035,6 +28011,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_42_Salade_de_butternut_rôtie_pois_chiches_grillés_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_42_mealPhoto.webp"
       }
     }
   },
@@ -27155,6 +28134,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_43_One_pot_orzo_carottes_et_lentilles_corail_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_43_mealPhoto.webp"
       }
     }
   },
@@ -27315,6 +28297,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_44_Pâtes_et_lentilles_à_la_tomate_et_aux_carottes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_44_mealPhoto.webp"
       }
     }
   },
@@ -27475,6 +28460,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_45_Patate_douce_rôtie_au_chili_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_45_mealPhoto.webp"
       }
     }
   },
@@ -27602,6 +28590,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_46_One_pot_lentilles_corail_quinoa_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_46_mealPhoto.webp"
       }
     }
   },
@@ -27658,6 +28649,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_47_Spaghetti_boulettes_de_haricots_blancs_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_47_mealPhoto.webp"
       }
     }
   },
@@ -27777,6 +28771,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_48_Riz_chou_blanc_boulettes_de_haricots_blancs_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_48_mealPhoto.webp"
       }
     }
   },
@@ -27881,6 +28878,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_49_Semoule_boulettes_végétales_aux_légumes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_49_mealPhoto.webp"
       }
     }
   },
@@ -27968,8 +28968,15 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_50_Gratin_de_poireaux_et_haricots_blancs_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_50_mealPhoto.webp"
+      },
+      "bookPhoto": {
+        "url": "/artemis-foodlab/assets/books/light_pour_soir.webp"
       }
-    }
+    },
+    "bookPage": 192
   },
   "pv-051": {
     "id": "pv-051",
@@ -28079,6 +29086,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_51_Quiche_épinard_Feta_et_salade_de_lentilles_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_51_mealPhoto.webp"
       }
     }
   },
@@ -28166,6 +29176,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_52_Salade_pois_chiches_courgette_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_52_mealPhoto.webp"
       }
     }
   },
@@ -28261,6 +29274,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_53_Bowl_chou_rouge_haricots_patate_douce_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_53_mealPhoto.webp"
       }
     }
   },
@@ -28372,6 +29388,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_54_Salade_quinoa_pois_chiche_concombre_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_54_mealPhoto.webp"
       }
     }
   },
@@ -28484,6 +29503,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_55_Lentilles_au_miel_et_à_la_moutarde_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_55_mealPhoto.webp"
       }
     }
   },
@@ -28627,6 +29649,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_56_Lentilles_kung_pao_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_56_mealPhoto.webp"
       }
     }
   },
@@ -28762,6 +29787,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_57_Salade_de_lentilles_méditerranéenne_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_57_mealPhoto.webp"
       }
     }
   },
@@ -28873,6 +29901,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/plant-proteins/recipes/PV_58_Bowl_pois_chiches_champignon_œuf_mollet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/plant-proteins/meal/PV_58_mealPhoto.webp"
       }
     }
   },
@@ -28970,6 +30001,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_01_Semoule,_poulet,_patate_douce_et_brocolis_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_01_mealPhoto.webp"
       }
     }
   },
@@ -29106,6 +30140,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_02_Pommes_de_terre_rissolées_au_poulet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_02_mealPhoto.webp"
       }
     }
   },
@@ -29194,6 +30231,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_03_Quinoa,_cordon_bleu_aux_carottes_et_brocolis_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_03_mealPhoto.webp"
       }
     }
   },
@@ -29298,6 +30338,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_04_Cordon_bleu_et_petits_pois_carottes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_04_mealPhoto.webp"
       }
     }
   },
@@ -29442,6 +30485,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_05_Pâtes,_poulet,_crème_aux_champignons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_05_mealPhoto.webp"
       }
     }
   },
@@ -29563,6 +30609,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_06_Ebly_poulet_patate_douce_haricots_verts_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_06_mealPhoto.webp"
       }
     }
   },
@@ -29707,6 +30756,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_07_Enchiladas_Poulet_et_poivrons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_07_mealPhoto.webp"
       }
     }
   },
@@ -29795,6 +30847,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_08_Lasagnes_poulet-poireaux_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_08_mealPhoto.webp"
       }
     }
   },
@@ -29955,6 +31010,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_09_Burger_Méditerranéen_au_poulet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_09_mealPhoto.webp"
       }
     }
   },
@@ -30099,6 +31157,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_10_Jambalaya_au_poulet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_10_mealPhoto.webp"
       }
     }
   },
@@ -30187,6 +31248,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_11_Lasagne_poulet_champignons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_11_mealPhoto.webp"
       }
     }
   },
@@ -30307,6 +31371,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_12_Macaronis_haricots_verts_poulet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_12_mealPhoto.webp"
       }
     }
   },
@@ -30379,6 +31446,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_13_Poêlée_de_macaronis_au_poulet_et_tomates_cerise_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_13_mealPhoto.webp"
       }
     }
   },
@@ -30492,6 +31562,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_14_Nouilles_poulet_haricots_mungo_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_14_mealPhoto.webp"
       }
     }
   },
@@ -30652,6 +31725,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_15_Pizza_au_poulet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_15_mealPhoto.webp"
       }
     }
   },
@@ -30765,6 +31841,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_16_Poêlée_riz_poulet_carottes_haricots_verts_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_16_mealPhoto.webp"
       }
     }
   },
@@ -30909,6 +31988,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_17_Pomme_de_terre,_haricots_verts_poulet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_17_mealPhoto.webp"
       }
     }
   },
@@ -31077,6 +32159,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_18_Potimarron_rôti_au_poulet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_18_mealPhoto.webp"
       }
     }
   },
@@ -31220,6 +32305,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_19_Poulet_basquaise_riz_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_19_mealPhoto.webp"
       }
     }
   },
@@ -31363,6 +32451,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_20_Poulet_basquaise_pommes_de_terre_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_20_mealPhoto.webp"
       }
     }
   },
@@ -31506,6 +32597,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_21_Poulet_basquaise_semoule_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_21_mealPhoto.webp"
       }
     }
   },
@@ -31609,6 +32703,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_22_Purée_cordon_bleu_et_haricots_verts_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_22_mealPhoto.webp"
       }
     }
   },
@@ -31769,6 +32866,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_23_Salade_poulet_avocat_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_23_mealPhoto.webp"
       }
     }
   },
@@ -31913,6 +33013,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_24_Sandwich_Poulet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_24_mealPhoto.webp"
       }
     }
   },
@@ -32089,6 +33192,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_25_Taboulé_au_poulet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_25_mealPhoto.webp"
       }
     }
   },
@@ -32169,6 +33275,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_26_Vol_au_vent_brocoli_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_26_mealPhoto.webp"
       }
     }
   },
@@ -32273,6 +33382,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_27_Poulet_grenailles_petits_pois_carottes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_27_mealPhoto.webp"
       }
     }
   },
@@ -32386,6 +33498,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_28_Bowl_poulet_avocat_quinoa_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_28_mealPhoto.webp"
       }
     }
   },
@@ -32490,6 +33605,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_29_Riz_au_poulet_et_curry_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_29_mealPhoto.webp"
       }
     }
   },
@@ -32602,6 +33720,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_30_Risotto_poulet_courgette_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_30_mealPhoto.webp"
       }
     }
   },
@@ -32754,6 +33875,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_31_Salade_poulet_quinoa_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_31_mealPhoto.webp"
       }
     }
   },
@@ -32850,6 +33974,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_32_Pommes_de_terre_poulet_haricots_champignons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_32_mealPhoto.webp"
       }
     }
   },
@@ -32970,6 +34097,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_33_Pâtes_poulet_poivron_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_33_mealPhoto.webp"
       }
     }
   },
@@ -33020,7 +34150,7 @@
         "id": "005",
         "foodId": "pl-020",
         "name": "Lait demi écrémé",
-        "quantity": 125,
+        "quantity": 60,
         "unit": "g",
         "category": "Produits laitiers"
       },
@@ -33055,6 +34185,14 @@
         "quantity": null,
         "unit": null,
         "category": "Herbe aromatique"
+      },
+      {
+        "id": "010",
+        "foodId": "ha-005",
+        "name": "Eau",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Hors achat"
       }
     ],
     "assets": {
@@ -33066,6 +34204,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_34_Orzo_crémeux_au_poulet_et_brocoli_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_34_mealPhoto.webp"
       }
     }
   },
@@ -33145,6 +34286,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_35_Pâtes_cordon_bleu_haricots_verts_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_35_mealPhoto.webp"
       }
     }
   },
@@ -33266,6 +34410,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_36_Salade_poulet_maïs_tomate_cerise_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_36_mealPhoto.webp"
       }
     }
   },
@@ -33394,6 +34541,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_37_Cuisse_de_poulet_à_la_mexicaine_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_37_mealPhoto.webp"
       }
     }
   },
@@ -33490,6 +34640,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_38_Salade_de_pâtes_tomate_poulet_concombre_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_38_mealPhoto.webp"
       }
     }
   },
@@ -33586,6 +34739,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_39_Salade_de_pâtes_poulet_pesto_légumes_grillés_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_39_mealPhoto.webp"
       }
     }
   },
@@ -33698,6 +34854,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_40_Salade_de_riz_macédoine_poulet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_40_mealPhoto.webp"
       }
     }
   },
@@ -33794,6 +34953,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_41_Curry_de_poulet_au_quinoa_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_41_mealPhoto.webp"
       }
     }
   },
@@ -33881,6 +35043,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_42_Quinoa_poivrons_cordon_bleu_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_42_mealPhoto.webp"
       }
     }
   },
@@ -33937,6 +35102,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_43_Riz_ratatouille_poulet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_43_mealPhoto.webp"
       }
     }
   },
@@ -33993,6 +35161,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_44_Semoule_ratatouille_poulet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_44_mealPhoto.webp"
       }
     }
   },
@@ -34073,6 +35244,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_45_One_pot_orzo,_poulet,_brocoli_et_cheddar_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_45_mealPhoto.webp"
       }
     }
   },
@@ -34161,6 +35335,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_46_Gratin_de_pâtes_à_la_courge_et_au_poulet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_46_mealPhoto.webp"
       }
     }
   },
@@ -34233,6 +35410,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_47_Courge_Jack_Be_Little_façon_vol_au_vent_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_47_mealPhoto.webp"
       }
     }
   },
@@ -34377,6 +35557,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_48_Couscous_Poulet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_48_mealPhoto.webp"
       }
     }
   },
@@ -34505,6 +35688,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_49_Butter_Chicken_riz_brocoli_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_49_mealPhoto.webp"
       }
     }
   },
@@ -34650,6 +35836,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_50_Poulet_korma_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_50_mealPhoto.webp"
       }
     }
   },
@@ -34722,6 +35911,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_51_Gratin_de_courge_spaghetti_au_poulet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_51_mealPhoto.webp"
       }
     }
   },
@@ -34819,6 +36011,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_52_Blanquette_de_volaille_aux_champignons_et_riz_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_52_mealPhoto.webp"
       }
     }
   },
@@ -34939,6 +36134,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_53_Parmentier_au_poulet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_53_mealPhoto.webp"
       }
     }
   },
@@ -35059,6 +36257,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_54_Poulet_à_la_Coréenne_chou_blanc_et_riz_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_54_mealPhoto.webp"
       }
     }
   },
@@ -35156,6 +36357,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_55_Curry_rouge_de_poulet_aux_lentilles_corail_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_55_mealPhoto.webp"
       }
     }
   },
@@ -35227,6 +36431,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_56_Purée_chou_fleur_cordon_bleu_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_56_mealPhoto.webp"
       }
     }
   },
@@ -35314,6 +36521,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_57_Cordon_bleu_pommes_de_terre_et_chou_blanc_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_57_mealPhoto.webp"
       }
     }
   },
@@ -35450,8 +36660,15 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_58_Poulet_tikka_brocoli_Livre.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_58_mealPhoto.webp"
+      },
+      "bookPhoto": {
+        "url": "/artemis-foodlab/assets/books/nouvelles_saveurs_Azeroth.webp"
       }
-    }
+    },
+    "bookPage": 103
   },
   "vb-059": {
     "id": "vb-059",
@@ -35546,8 +36763,15 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_59_Cuisse_de_poulet_aux_légumes_et_riz_Livre.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_59_mealPhoto.webp"
+      },
+      "bookPhoto": {
+        "url": "/artemis-foodlab/assets/books/nouvelles_saveurs_Azeroth.webp"
       }
-    }
+    },
+    "bookPage": 135
   },
   "vb-060": {
     "id": "vb-060",
@@ -35650,6 +36874,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_60_Poule_au_riz_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_60_mealPhoto.webp"
       }
     }
   },
@@ -35739,8 +36966,15 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_61_Potimarron_farci_au_poulet_Livre.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_61_mealPhoto.webp"
+      },
+      "bookPhoto": {
+        "url": "/artemis-foodlab/assets/books/recettes_enchantees_disney.webp"
       }
-    }
+    },
+    "bookPage": 122
   },
   "vb-062": {
     "id": "vb-062",
@@ -35795,6 +37029,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_62_Crêpes_poulet_champignon_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_62_mealPhoto.webp"
       }
     }
   },
@@ -35876,6 +37113,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_63_Boulgour_au_poulet_et_carottes_aux_épices_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_63_mealPhoto.webp"
       }
     }
   },
@@ -35956,6 +37196,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_64_Patate_douce_rôtie_poulet_brocoli_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_64_mealPhoto.webp"
       }
     }
   },
@@ -36028,6 +37271,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_65_Riz_poulet_légumes_et_avocat_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_65_mealPhoto.webp"
       }
     }
   },
@@ -36139,6 +37385,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_66_Tenders_potatoes_salade_estivale_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_66_mealPhoto.webp"
       }
     }
   },
@@ -36226,6 +37475,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_67_Tenders_patate_douce_rôtie_et_haricots_verts_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_67_mealPhoto.webp"
       }
     }
   },
@@ -36297,6 +37549,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_68_Tenders,_riz_et_haricots_verts_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_68_mealPhoto.webp"
       }
     }
   },
@@ -36393,6 +37648,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_69_Tenders_carottes_purée_de_pommes_de_terre_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_69_mealPhoto.webp"
       }
     }
   },
@@ -36481,6 +37739,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_70_Gratin_de_pommes_de_terre_poulet_brocoli_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_70_mealPhoto.webp"
       }
     }
   },
@@ -36577,6 +37838,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_71_Semoule_poulet_haricots_verts_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_71_mealPhoto.webp"
       }
     }
   },
@@ -36641,6 +37905,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_72_Pâtes_à_la_courgette_et_poulet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_72_mealPhoto.webp"
       }
     }
   },
@@ -36721,6 +37988,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_73_Pâtes_poulet_poireaux_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_73_mealPhoto.webp"
       }
     }
   },
@@ -36794,6 +38064,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_74_Quinoa_poulet_patate_douce_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_74_mealPhoto.webp"
       }
     }
   },
@@ -36874,6 +38147,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_75_Poulet_patate_douce_et_choux_de_Bruxelles_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_75_mealPhoto.webp"
       }
     }
   },
@@ -36962,6 +38238,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_76_Poêlée_sarrasin_épinards_poulet_champignons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_76_mealPhoto.webp"
       }
     }
   },
@@ -37043,6 +38322,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_77_Risotto_poulet_chou_romanesco_et_carottes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_77_mealPhoto.webp"
       }
     }
   },
@@ -37148,6 +38430,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_78_Quinoa_filet_de_poulet_légumes_sautés_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_78_mealPhoto.webp"
       }
     }
   },
@@ -37251,6 +38536,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_79_Quiche_poulet_fenouil_petits_pois_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_79_mealPhoto.webp"
       }
     }
   },
@@ -37346,6 +38634,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_80_Sauté_de_poulet_paprika,_radis_rôtis_et_quinoa_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_80_mealPhoto.webp"
       }
     }
   },
@@ -37449,6 +38740,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/white-meat/recipes/VB_81_Salade_de_riz_au_poulet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/white-meat/meal/VB_81_mealPhoto.webp"
       }
     }
   },
@@ -37593,6 +38887,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_01_Gratin_de_macaronis_au_soja_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_01_mealPhoto.webp"
       }
     }
   },
@@ -37704,6 +39001,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_02_Pâtes_pesto_champignons_et_mâche_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_02_mealPhoto.webp"
       }
     }
   },
@@ -37767,6 +39067,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_03_Pâtes_œufs_au_plat_endives_caramélisées_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_03_mealPhoto.webp"
       }
     }
   },
@@ -37862,12 +39165,15 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_04_Frites_de_patates_douce_omelette_et_salade_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_04_mealPhoto.webp"
       }
     }
   },
   "veg-005": {
     "id": "veg-005",
-    "name": "Omelette aux champignons et épinards",
+    "name": "Omelette champignons et épinards",
     "categoryId": "veggies",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -37965,6 +39271,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_05_Omelette_aux_champignons_et_épinards_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_05_mealPhoto.webp"
       }
     }
   },
@@ -38101,6 +39410,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_06_Raclette_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_06_mealPhoto.webp"
       }
     }
   },
@@ -38205,6 +39517,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_07_Nouilles_chinoises_végétariennes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_07_mealPhoto.webp"
       }
     }
   },
@@ -38308,6 +39623,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_08_Soupe_de_Rémi_au_poireau_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_08_mealPhoto.webp"
       }
     }
   },
@@ -38428,6 +39746,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_09_Velouté_potimarron_butternut_et_carottes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_09_mealPhoto.webp"
       }
     }
   },
@@ -38515,6 +39836,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_10_Gratin_de_crozets_aux_poireaux_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_10_mealPhoto.webp"
       }
     }
   },
@@ -38618,6 +39942,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_11_Pâtes_Pesto_aux_haricots_verts_et_champignons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_11_mealPhoto.webp"
       }
     }
   },
@@ -38721,6 +40048,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_12_Pâtes_Pesto_aux_haricots_verts_et_petits_pois_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_12_mealPhoto.webp"
       }
     }
   },
@@ -38816,6 +40146,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_13_Riz_brocolis_pesto_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_13_mealPhoto.webp"
       }
     }
   },
@@ -38919,6 +40252,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_14_Sandwich_végétarien_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_14_mealPhoto.webp"
       }
     }
   },
@@ -39088,6 +40424,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_15_Cake_salé_tomates_mozzarella_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_15_mealPhoto.webp"
       }
     }
   },
@@ -39232,6 +40571,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_16_Pâtes_bolognaise_au_soja_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_16_mealPhoto.webp"
       }
     }
   },
@@ -39424,6 +40766,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_17_Lasagnes_bolognaise_au_soja_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_17_mealPhoto.webp"
       }
     }
   },
@@ -39537,6 +40882,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_18_Pâtes_à_la_betterave_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_18_mealPhoto.webp"
       }
     }
   },
@@ -39664,6 +41012,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_19_Croque_monsieur_italien_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_19_mealPhoto.webp"
       }
     }
   },
@@ -39752,6 +41103,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_20_Sandwich_Méditéranéen_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_20_mealPhoto.webp"
       }
     }
   },
@@ -39863,6 +41217,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_21_Panuozzo_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_21_mealPhoto.webp"
       }
     }
   },
@@ -39942,6 +41299,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_22_Sandwich_tomate_mozzarella_avocat_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_22_mealPhoto.webp"
       }
     }
   },
@@ -40085,6 +41445,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_23_Foccacia_tomates__et_poivrons_au_thym_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_23_mealPhoto.webp"
       }
     }
   },
@@ -40245,6 +41608,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_24_Gratin_d’Ebly_aux_légumes_du_soleil_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_24_mealPhoto.webp"
       }
     }
   },
@@ -40445,6 +41811,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_25_Parmentier_végétarien_aux_champignons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_25_mealPhoto.webp"
       }
     }
   },
@@ -40573,6 +41942,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_26_Parmentier_brocoli_carottes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_26_mealPhoto.webp"
       }
     }
   },
@@ -40733,6 +42105,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_27_Parmentier_provençal_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_27_mealPhoto.webp"
       }
     }
   },
@@ -40869,6 +42244,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_28_Lasagnes_pesto_rosso_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_28_mealPhoto.webp"
       }
     }
   },
@@ -40972,6 +42350,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_29_Lasagnes_champignons,_épinards_et_ricotta_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_29_mealPhoto.webp"
       }
     }
   },
@@ -41083,6 +42464,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_30_Oeufs_à_la_coque_d'été_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_30_mealPhoto.webp"
       }
     }
   },
@@ -41210,6 +42594,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_31_Linguines_pesto_rosso_tomates_et_mozzarella_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_31_mealPhoto.webp"
       }
     }
   },
@@ -41330,6 +42717,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_32_Oeufs_mimosa_et_crudités_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_32_mealPhoto.webp"
       }
     }
   },
@@ -41449,6 +42839,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_33_Pâtes_au_fromage_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_33_mealPhoto.webp"
       }
     }
   },
@@ -41560,6 +42953,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_34_Pâtes_champignon_aux_tomate_épicées_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_34_mealPhoto.webp"
       }
     }
   },
@@ -41648,6 +43044,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_35_Pâtes_aux_petits_pois_carottes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_35_mealPhoto.webp"
       }
     }
   },
@@ -41759,6 +43158,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_36_Salade_de_perles_pesto_tomates_et_mozzarella_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_36_mealPhoto.webp"
       }
     }
   },
@@ -41822,6 +43224,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_37_Perles_au_pesto_champignons_épinards_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_37_mealPhoto.webp"
       }
     }
   },
@@ -41973,6 +43378,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_38_Pizza_au_fromage_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_38_mealPhoto.webp"
       }
     }
   },
@@ -42084,6 +43492,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_39_Poêlée_forestière_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_39_mealPhoto.webp"
       }
     }
   },
@@ -42203,6 +43614,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_40_Pommes_de_terres_rissolées_et_œuf_au_plat_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_40_mealPhoto.webp"
       }
     }
   },
@@ -42298,6 +43712,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_41_Quiche_au_brocoli_et_champignons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_41_mealPhoto.webp"
       }
     }
   },
@@ -42409,6 +43826,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_42_Quiche_aux_poivrons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_42_mealPhoto.webp"
       }
     }
   },
@@ -42513,6 +43933,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_43_Riz_au_curry_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_43_mealPhoto.webp"
       }
     }
   },
@@ -42608,6 +44031,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_44_Riz_sauté,_épinards,_oeufs_au_plat_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_44_mealPhoto.webp"
       }
     }
   },
@@ -42712,6 +44138,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_45_Salade_betteraves_oeufs_durs_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_45_mealPhoto.webp"
       }
     }
   },
@@ -42799,6 +44228,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_46_Salade_de_pâtes_oeuf_durs_olives_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_46_mealPhoto.webp"
       }
     }
   },
@@ -42902,6 +44334,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_47_Salade_de_pomme_de_terre_oeufs_durs_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_47_mealPhoto.webp"
       }
     }
   },
@@ -42981,6 +44416,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_48_Salade_de_pates_tomates_mozza_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_48_mealPhoto.webp"
       }
     }
   },
@@ -43100,6 +44538,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_49_Salade_gnocchis_tomates_mozzarella_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_49_mealPhoto.webp"
       }
     }
   },
@@ -43196,6 +44637,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_50_Soupe_de_courgette_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_50_mealPhoto.webp"
       }
     }
   },
@@ -43356,6 +44800,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_51_Soupe_de_tomate_orientale_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_51_mealPhoto.webp"
       }
     }
   },
@@ -43459,6 +44906,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_52_Soupe_tomate_vermicelles_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_52_mealPhoto.webp"
       }
     }
   },
@@ -43586,6 +45036,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_53_Taboulé_oriental_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_53_mealPhoto.webp"
       }
     }
   },
@@ -43705,6 +45158,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_54_Tarte_aux_poireaux_et_pommes_de_terre_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_54_mealPhoto.webp"
       }
     }
   },
@@ -43825,6 +45281,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_55_Velouté_de_patate_douce_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_55_mealPhoto.webp"
       }
     }
   },
@@ -43936,6 +45395,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_56_Salade_au_chèvre_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_56_mealPhoto.webp"
       }
     }
   },
@@ -44039,6 +45501,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_57_Salade_de_pâtes_aux_œuf_durs_et_fèves_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_57_mealPhoto.webp"
       }
     }
   },
@@ -44150,6 +45615,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_58_Pizza_pesto_brocoli_et_champignons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_58_mealPhoto.webp"
       }
     }
   },
@@ -44229,6 +45697,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_59_Pâtes_omelette_et_petits_pois_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_59_mealPhoto.webp"
       }
     }
   },
@@ -44325,6 +45796,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_60_Salade_de_quinoa_à_la_betterave_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_60_mealPhoto.webp"
       }
     }
   },
@@ -44437,6 +45911,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_61_Velouté_6_légumes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_61_mealPhoto.webp"
       }
     }
   },
@@ -44524,6 +46001,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_62_Salade_pâtes,_radis,_mozzarella_et_petits_pois_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_62_mealPhoto.webp"
       }
     }
   },
@@ -44619,6 +46099,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_63_Velouté_d’asperge_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_63_mealPhoto.webp"
       }
     }
   },
@@ -44722,6 +46205,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_64_Salade_brocoli_et_quinoa_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_64_mealPhoto.webp"
       }
     }
   },
@@ -44833,6 +46319,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_65_Salade_de_quinoa_aux_légumes_grillés_et_feta_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_65_mealPhoto.webp"
       }
     }
   },
@@ -44944,6 +46433,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_66_Pâtes_œufs_au_plat_champignons_haricots_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_66_mealPhoto.webp"
       }
     }
   },
@@ -45056,6 +46548,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_67_Bowl_quinoa_œufs_brouillés_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_67_mealPhoto.webp"
       }
     }
   },
@@ -45191,6 +46686,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_68_Salade_orzo_œufs_durs_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_68_mealPhoto.webp"
       }
     }
   },
@@ -45294,6 +46792,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_69_Gratin_de_crozets_d’été_aux_aubergines_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_69_mealPhoto.webp"
       }
     }
   },
@@ -45382,6 +46883,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_70_Riz_sauté_courgettes_tomates_aux_oeufs_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_70_mealPhoto.webp"
       }
     }
   },
@@ -45526,6 +47030,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_71_Poêlée_de_légume_au_blé_œuf_au_plat_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_71_mealPhoto.webp"
       }
     }
   },
@@ -45669,6 +47176,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_72_Cake_brocoli_chèvre_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_72_mealPhoto.webp"
       }
     }
   },
@@ -45772,6 +47282,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_73_Polenta_crémeuse_champignons_petits_pois_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_73_mealPhoto.webp"
       }
     }
   },
@@ -45859,6 +47372,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_74_Lasagne_courge_butternut_champignons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_74_mealPhoto.webp"
       }
     }
   },
@@ -45954,6 +47470,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_75_Orzo_crémeux_au_potimarron_et_feta_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_75_mealPhoto.webp"
       }
     }
   },
@@ -46025,6 +47544,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_76_Bouillon_de_macaronis_et_boulettes_de_ricotta_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_76_mealPhoto.webp"
       }
     }
   },
@@ -46137,6 +47659,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_77_One_pot_orzo_aux_carottes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_77_mealPhoto.webp"
       }
     }
   },
@@ -46256,6 +47781,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_78_Aloo_Matar_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_78_mealPhoto.webp"
       }
     }
   },
@@ -46359,6 +47887,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_79_Galettes_de_blé_noir_champignons_au_comté_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_79_mealPhoto.webp"
       }
     }
   },
@@ -46518,6 +48049,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_80_Invisible_butternut_et_salade_œufs_durs_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_80_mealPhoto.webp"
       }
     }
   },
@@ -46621,6 +48155,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_81_Gratin_de_Potimarron_et_Pommes_de_Terre_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_81_mealPhoto.webp"
       }
     }
   },
@@ -46748,6 +48285,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_82_Lasagnes_courge_butternut_sauce_tomate_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_82_mealPhoto.webp"
       }
     }
   },
@@ -46803,6 +48343,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_83_Quinoa_ratatouille_Feta_et_œuf_au_plat_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_83_mealPhoto.webp"
       }
     }
   },
@@ -46858,6 +48401,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_84_Pâtes_ratatouille_et_mozzarella_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_84_mealPhoto.webp"
       }
     }
   },
@@ -46913,6 +48459,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_85_Pâtes_ratatouille_et_feta_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_85_mealPhoto.webp"
       }
     }
   },
@@ -46993,6 +48542,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_86_Gratin_de_pâtes_choux_de_Bruxelles_brocoli_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_86_mealPhoto.webp"
       }
     }
   },
@@ -47080,6 +48632,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_87_Lasagnes_de_butternut_et_épinards_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_87_mealPhoto.webp"
       }
     }
   },
@@ -47167,6 +48722,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_88_Courge_Jack_Be_Little_farcie_au_risotto_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_88_mealPhoto.webp"
       }
     }
   },
@@ -47270,6 +48828,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_89_Galettes_de_blé_noir,_brocolis_au_pesto,_feta_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_89_mealPhoto.webp"
       }
     }
   },
@@ -47382,6 +48943,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_90_Galette_de_blé_noir_au_chèvre_miel_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_90_mealPhoto.webp"
       }
     }
   },
@@ -47445,6 +49009,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_91_Gaufre_de_courge_et_salade_de_mâche_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_91_mealPhoto.webp"
       }
     }
   },
@@ -47524,6 +49091,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_92_Quinoa_d’automne_à_la_courge_et_feta_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_92_mealPhoto.webp"
       }
     }
   },
@@ -47628,6 +49198,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_93_Velouté_carotte_lentilles_corail_potiron_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_93_mealPhoto.webp"
       }
     }
   },
@@ -47715,6 +49288,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_94_Butternut_rôtie_épinard_Feta_et_œuf_mollet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_94_mealPhoto.webp"
       }
     }
   },
@@ -47819,8 +49395,15 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_95_Soupe_aux_poivrons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_95_mealPhoto.webp"
+      },
+      "bookPhoto": {
+        "url": "/artemis-foodlab/assets/books/cuisine_des_sorciers.webp"
       }
-    }
+    },
+    "bookPage": 45
   },
   "veg-096": {
     "id": "veg-096",
@@ -47914,6 +49497,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_96_Salade_pommes_de_terre_chou_fleur_œufs_durs_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_96_mealPhoto.webp"
       }
     }
   },
@@ -47977,8 +49563,15 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_97_Nouilles_petits_pois_œufs_mollets_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_97_mealPhoto.webp"
+      },
+      "bookPhoto": {
+        "url": "/artemis-foodlab/assets/books/simplissime_disney.webp"
       }
-    }
+    },
+    "bookPage": 88
   },
   "veg-098": {
     "id": "veg-098",
@@ -48056,8 +49649,15 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_98_Oeuf_cocotte_forestier_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_98_mealPhoto.webp"
+      },
+      "bookPhoto": {
+        "url": "/artemis-foodlab/assets/books/recettes_bistrot.webp"
       }
-    }
+    },
+    "bookPage": 26
   },
   "veg-099": {
     "id": "veg-099",
@@ -48184,8 +49784,15 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_99_Soupe_de_pâtes_aux_légumes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_99_mealPhoto.webp"
+      },
+      "bookPhoto": {
+        "url": "/artemis-foodlab/assets/books/light_pour_soir.webp"
       }
-    }
+    },
+    "bookPage": 72
   },
   "veg-100": {
     "id": "veg-100",
@@ -48279,8 +49886,15 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_100_Velouté_de_topinambours_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_100_mealPhoto.webp"
+      },
+      "bookPhoto": {
+        "url": "/artemis-foodlab/assets/books/recettes_enchantees_disney.webp"
       }
-    }
+    },
+    "bookPage": 57
   },
   "veg-101": {
     "id": "veg-101",
@@ -48383,6 +49997,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_101_Pizza_courge_champignons_carottes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_101_mealPhoto.webp"
       }
     }
   },
@@ -48454,6 +50071,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_102_Riz_crémeux_brocoli_œuf_au_plat_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_102_mealPhoto.webp"
       }
     }
   },
@@ -48565,6 +50185,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_103_Patate_douce_rôtie_légumes_et_œufs_au_plat_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_103_mealPhoto.webp"
       }
     }
   },
@@ -48652,6 +50275,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_104_Asperges_pommes_de_terre_œuf_mollet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_104_mealPhoto.webp"
       }
     }
   },
@@ -48732,6 +50358,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_105_Gratin_quinoa_chou_romanesco_carottes_feta_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_105_mealPhoto.webp"
       }
     }
   },
@@ -48836,6 +50465,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_106_Oeufs_à_la_coque_d’hiver_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_106_mealPhoto.webp"
       }
     }
   },
@@ -48924,6 +50556,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_107_Riz_sauté_chou_blanc_carottes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_107_mealPhoto.webp"
       }
     }
   },
@@ -49019,6 +50654,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_108_Tarte_poivrons_Feta_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_108_mealPhoto.webp"
       }
     }
   },
@@ -49090,6 +50728,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/veggies/recipes/VEG_109_Risotto_sarrasin_carotte_oeufs_au_plat_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_109_mealPhoto.webp"
       }
     }
   },
@@ -49250,6 +50891,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_01_Fajitas_au_bœuf_et_aux_carottes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_01_mealPhoto.webp"
       }
     }
   },
@@ -49409,6 +51053,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_02_Fajitas_au_bœuf_et_aux_poivrons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_02_mealPhoto.webp"
       }
     }
   },
@@ -49520,6 +51167,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_03_Filet_mignon_grenailles_et_haricots_verts_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_03_mealPhoto.webp"
       }
     }
   },
@@ -49599,6 +51249,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_04_Gnocchis_maison_steak_et_haricots_verts_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_04_mealPhoto.webp"
       }
     }
   },
@@ -49694,6 +51347,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_05_Pâtes_steak_flageolets_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_05_mealPhoto.webp"
       }
     }
   },
@@ -49773,6 +51429,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_06_Gratin_de_brocolis_au_bœuf_et_riz_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_06_mealPhoto.webp"
       }
     }
   },
@@ -49885,6 +51544,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_07_Ebly_pita_patate_douce_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_07_mealPhoto.webp"
       }
     }
   },
@@ -50004,6 +51666,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_08_Burger_cheddar_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_08_mealPhoto.webp"
       }
     }
   },
@@ -50059,6 +51724,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_09_Lasagnes_bolognaise_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_09_mealPhoto.webp"
       }
     }
   },
@@ -50186,6 +51854,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_10_Burger_Italien_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_10_mealPhoto.webp"
       }
     }
   },
@@ -50329,6 +52000,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_11_Filet_mignon_purée_et_potimarron_rôti_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_11_mealPhoto.webp"
       }
     }
   },
@@ -50368,6 +52042,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_12_Gnocchis_maison_bolognaise_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_12_mealPhoto.webp"
       }
     }
   },
@@ -50528,6 +52205,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_13_Hachis_parmentier_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_13_mealPhoto.webp"
       }
     }
   },
@@ -50631,6 +52311,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_14_Pâtes_Boulettes_et_champignons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_14_mealPhoto.webp"
       }
     }
   },
@@ -50678,6 +52361,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_15_Pâtes_à_la_bolognaise_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_15_mealPhoto.webp"
       }
     }
   },
@@ -50821,6 +52507,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_16_Pizza_bolognaise_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_16_mealPhoto.webp"
       }
     }
   },
@@ -50957,6 +52646,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_17_Purée_boulettes_brocoli_et_carottes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_17_mealPhoto.webp"
       }
     }
   },
@@ -51028,6 +52720,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_18_Purée_boulettes_ratatouille_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_18_mealPhoto.webp"
       }
     }
   },
@@ -51139,6 +52834,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_19_Purée_steak_tomates_rôties_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_19_mealPhoto.webp"
       }
     }
   },
@@ -51218,6 +52916,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_20_Quinoa_bolognaise_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_20_mealPhoto.webp"
       }
     }
   },
@@ -51265,6 +52966,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_21_Quinoa_boulettes_et_ratatouille_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_21_mealPhoto.webp"
       }
     }
   },
@@ -51385,6 +53089,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_22_Riz_au_bœuf_à_la_marocaine_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_22_mealPhoto.webp"
       }
     }
   },
@@ -51472,6 +53179,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_23_Riz_boulettes_et_champignons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_23_mealPhoto.webp"
       }
     }
   },
@@ -51607,6 +53317,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_24_Sandwich_pita_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_24_mealPhoto.webp"
       }
     }
   },
@@ -51702,6 +53415,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_25_Purée,_steak,_champignons_et_sauce_au_poivre_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_25_mealPhoto.webp"
       }
     }
   },
@@ -51773,6 +53489,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_26_Tomates_farcies_au_boeuf_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_26_mealPhoto.webp"
       }
     }
   },
@@ -51845,6 +53564,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_27_Viande_pita_au_chou_blanc_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_27_mealPhoto.webp"
       }
     }
   },
@@ -51932,6 +53654,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_28_Pâtes_steak_haché_haricots_verts_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_28_mealPhoto.webp"
       }
     }
   },
@@ -52060,6 +53785,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_29_Steak_frites_salade_jardinière_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_29_mealPhoto.webp"
       }
     }
   },
@@ -52179,6 +53907,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_30_Filet_mignon,_purée,_brocoli_et_sauce_champignons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_30_mealPhoto.webp"
       }
     }
   },
@@ -52282,6 +54013,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_31_Steak_orzo_à_la_méditerranéenne_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_31_mealPhoto.webp"
       }
     }
   },
@@ -52401,6 +54135,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_32_Wok_de_bœuf,_courgette_et_poivron_au_curry_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_32_mealPhoto.webp"
       }
     }
   },
@@ -52512,6 +54249,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_33_Gratin_de_pâtes_boeufs_poivrons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_33_mealPhoto.webp"
       }
     }
   },
@@ -52623,6 +54363,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_34_Gratin_de_choux_de_Bruxelles_et_boeuf_épicé_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_34_mealPhoto.webp"
       }
     }
   },
@@ -52678,6 +54421,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_35_Riz_filet_mignon_ratatouille_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_35_mealPhoto.webp"
       }
     }
   },
@@ -52765,6 +54511,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_36_Steak_purée_de_patate_douce_haricots_verts_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_36_mealPhoto.webp"
       }
     }
   },
@@ -52852,6 +54601,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_37_Steak_à_cheval_frites_flageolets_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_37_mealPhoto.webp"
       }
     }
   },
@@ -52947,6 +54699,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_38_Courge_Jack_Be_Little_farcie_au_bœuf_et_riz_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_38_mealPhoto.webp"
       }
     }
   },
@@ -53043,6 +54798,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_39_Potimarron_farci_au_bœuf_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_39_mealPhoto.webp"
       }
     }
   },
@@ -53187,6 +54945,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_40_Couscous_boulettes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_40_mealPhoto.webp"
       }
     }
   },
@@ -53274,6 +55035,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_41_Rösti_burger_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_41_mealPhoto.webp"
       }
     }
   },
@@ -53361,6 +55125,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_42_Pâtes_champignons_brocoli_au_filet_mignon_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_42_mealPhoto.webp"
       }
     }
   },
@@ -53489,6 +55256,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_43_Bœuf_Bourguignon_et_pommes_de_terre_vapeur_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_43_mealPhoto.webp"
       }
     }
   },
@@ -53585,8 +55355,15 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_44_Porc_rôti_aux_légumes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_44_mealPhoto.webp"
+      },
+      "bookPhoto": {
+        "url": "/artemis-foodlab/assets/books/cuisine_des_sorciers.webp"
       }
-    }
+    },
+    "bookPage": 101
   },
   "vr-045": {
     "id": "vr-045",
@@ -53744,8 +55521,15 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_45_Super_nova_burger_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_45_mealPhoto.webp"
+      },
+      "bookPhoto": {
+        "url": "/artemis-foodlab/assets/books/recettes_enchantees_disney.webp"
       }
-    }
+    },
+    "bookPage": 97
   },
   "vr-046": {
     "id": "vr-046",
@@ -53823,8 +55607,15 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_46_Porc_à_la_chinoise_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_46_mealPhoto.webp"
+      },
+      "bookPhoto": {
+        "url": "/artemis-foodlab/assets/books/recettes_enchantees_disney.webp"
       }
-    }
+    },
+    "bookPage": 118
   },
   "vr-047": {
     "id": "vr-047",
@@ -53903,8 +55694,15 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_47_Bœuf_mijoté_aux_fèves_et_carottes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_47_mealPhoto.webp"
+      },
+      "bookPhoto": {
+        "url": "/artemis-foodlab/assets/books/recettes_enchantees_disney.webp"
       }
-    }
+    },
+    "bookPage": 124
   },
   "vr-048": {
     "id": "vr-048",
@@ -53982,8 +55780,15 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_48_Moussaka_à_la_Feta_et_pain_pita_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_48_mealPhoto.webp"
+      },
+      "bookPhoto": {
+        "url": "/artemis-foodlab/assets/books/recettes_enchantees_disney.webp"
       }
-    }
+    },
+    "bookPage": 126
   },
   "vr-049": {
     "id": "vr-049",
@@ -54053,8 +55858,15 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_49_Poêlée_de_steak_au_brocoli_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_49_mealPhoto.webp"
+      },
+      "bookPhoto": {
+        "url": "/artemis-foodlab/assets/books/recettes_enchantees_disney.webp"
       }
-    }
+    },
+    "bookPage": 130
   },
   "vr-050": {
     "id": "vr-050",
@@ -54173,8 +55985,15 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_50_Ragoût_de_bœuf_à_l'italienne_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_50_mealPhoto.webp"
+      },
+      "bookPhoto": {
+        "url": "/artemis-foodlab/assets/books/recettes_enchantees_disney.webp"
       }
-    }
+    },
+    "bookPage": 118
   },
   "vr-051": {
     "id": "vr-051",
@@ -54236,6 +56055,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_51_Semoule_steak_ratatouille_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_51_mealPhoto.webp"
       }
     }
   },
@@ -54347,6 +56169,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_52_Steak_endive_braisée_pomme_de_terre_rôtie_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_52_mealPhoto.webp"
       }
     }
   },
@@ -54458,6 +56283,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_53_Purée_steak_poêlée_de_légumes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_53_mealPhoto.webp"
       }
     }
   },
@@ -54553,6 +56381,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_54_Steak_potatoes_et_poêlée_de_légumes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_54_mealPhoto.webp"
       }
     }
   },
@@ -54641,6 +56472,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_55_Pâtes_steak_carottes_et_champignons_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_55_mealPhoto.webp"
       }
     }
   },
@@ -54728,6 +56562,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_56_Pâtes_échine_de_porc_champignons_brocoli_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_56_mealPhoto.webp"
       }
     }
   },
@@ -54816,8 +56653,15 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_57_Echine_de_porc_rôtie_aux_légumes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_57_mealPhoto.webp"
+      },
+      "bookPhoto": {
+        "url": "/artemis-foodlab/assets/books/cuisine_des_sorciers.webp"
       }
-    }
+    },
+    "bookPage": 101
   },
   "vr-058": {
     "id": "vr-058",
@@ -54903,6 +56747,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_58_Riz_courgette_au_boeuf_hâché_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_58_mealPhoto.webp"
       }
     }
   },
@@ -55006,6 +56853,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_59_Roti_de_porc_purée_au_fenouil_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_59_mealPhoto.webp"
       }
     }
   },
@@ -55101,6 +56951,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_60_Orzo_boulette_courgette_petits_pois_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_60_mealPhoto.webp"
       }
     }
   },
@@ -55237,6 +57090,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/recipes/VR_61_Steak_salade_de_pomme_de_terre_jardinière_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_61_mealPhoto.webp"
       }
     }
   },
@@ -55348,6 +57204,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_01_Pain_à_burger_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_01_mealPhoto.webp"
       }
     }
   },
@@ -55444,6 +57303,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_02_Cordons_bleus_de_Poulet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_02_mealPhoto.webp"
       }
     }
   },
@@ -55507,6 +57369,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_03_Gnocchis_maison_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_03_mealPhoto.webp"
       }
     }
   },
@@ -55586,6 +57451,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_04_Tortillas_maison_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_04_mealPhoto.webp"
       }
     }
   },
@@ -55690,6 +57558,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_05_Boulette_de_lentilles_corail_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_05_mealPhoto.webp"
       }
     }
   },
@@ -55817,6 +57688,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_06_Falafels_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_06_mealPhoto.webp"
       }
     }
   },
@@ -55888,6 +57762,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_07_Naan_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_07_mealPhoto.webp"
       }
     }
   },
@@ -55935,6 +57812,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_08_Pâte_à_Lasagnes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_08_mealPhoto.webp"
       }
     }
   },
@@ -55982,6 +57862,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_09_Pâte_brisée_au_skyr_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_09_mealPhoto.webp"
       }
     }
   },
@@ -56045,6 +57928,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_10_Pâte_brisée_sans_beurre_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_10_mealPhoto.webp"
       }
     }
   },
@@ -56092,6 +57978,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_11_Pâte_à_pizza_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_11_mealPhoto.webp"
       }
     }
   },
@@ -56211,6 +58100,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_12_Granola_salé_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_12_mealPhoto.webp"
       }
     }
   },
@@ -56282,6 +58174,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_13_Pois_chiches_grillés_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_13_mealPhoto.webp"
       }
     }
   },
@@ -56369,6 +58264,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_14_Boulettes_de_boeuf_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_14_mealPhoto.webp"
       }
     }
   },
@@ -56424,6 +58322,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_15_Pain_pita_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_15_mealPhoto.webp"
       }
     }
   },
@@ -56535,6 +58436,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_16_Steak_végétarien_pois_chiche_haricots_rouges_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_16_mealPhoto.webp"
       }
     }
   },
@@ -56606,6 +58510,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_17_Pesto_verde_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_17_mealPhoto.webp"
       }
     }
   },
@@ -56677,6 +58584,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_18_Pesto_rosso_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_18_mealPhoto.webp"
       }
     }
   },
@@ -56732,6 +58642,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_19_Béchamel_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_19_mealPhoto.webp"
       }
     }
   },
@@ -56835,6 +58748,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_20_Sauce_tomate_provençale_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_20_mealPhoto.webp"
       }
     }
   },
@@ -56898,6 +58814,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_21_Crêpes_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_21_mealPhoto.webp"
       }
     }
   },
@@ -56977,6 +58896,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_22_Pain_à_hot_dog_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_22_mealPhoto.webp"
       }
     }
   },
@@ -57016,6 +58938,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_23_Crème_de_cajou_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_23_mealPhoto.webp"
       }
     }
   },
@@ -57111,6 +59036,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_24_Houmous_de_pois_chiches_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_24_mealPhoto.webp"
       }
     }
   },
@@ -57190,6 +59118,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_25_Boulettes_de_ricotta_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_25_mealPhoto.webp"
       }
     }
   },
@@ -57285,6 +59216,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_26_Ratatouille_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_26_mealPhoto.webp"
       }
     }
   },
@@ -57332,6 +59266,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_27_Galettes_de_blé_noir_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_27_mealPhoto.webp"
       }
     }
   },
@@ -57403,6 +59340,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_28_Dosas_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_28_mealPhoto.webp"
       }
     }
   },
@@ -57466,6 +59406,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_29_Sauce_au_poivre_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_29_mealPhoto.webp"
       }
     }
   },
@@ -57593,6 +59536,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_30_Sauce_bolognaise_au_bœuf_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_30_mealPhoto.webp"
       }
     }
   },
@@ -57680,6 +59626,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_31_Faluche_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_31_mealPhoto.webp"
       }
     }
   },
@@ -57759,6 +59708,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_32_Gaufre_salée_à_la_courge_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_32_mealPhoto.webp"
       }
     }
   },
@@ -57846,6 +59798,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_33_Gaufres_au_comté_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_33_mealPhoto.webp"
       }
     }
   },
@@ -57917,6 +59872,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_34_Rösti_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_34_mealPhoto.webp"
       }
     }
   },
@@ -57980,6 +59938,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_35_Sauce_bloom_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_35_mealPhoto.webp"
       }
     }
   },
@@ -58051,6 +60012,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_36_Poisson_pané_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_36_mealPhoto.webp"
       }
     }
   },
@@ -58130,6 +60094,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_37_Tenders_de_poulet_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_37_mealPhoto.webp"
       }
     }
   },
@@ -58209,6 +60176,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_38_Boulettes_de_haricots_blancs_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_38_mealPhoto.webp"
       }
     }
   },
@@ -58328,6 +60298,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_39_Taboulé_oriental_(accompagnement)_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_39_mealPhoto.webp"
       }
     }
   },
@@ -58415,6 +60388,9 @@
       },
       "instructionsPhoto": {
         "url": "/artemis-foodlab/assets/bases/recipes/BASE_40_Buns_de_lentilles_corail_vegans_Recette.webp"
+      },
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/bases/meal/BASE_40_mealPhoto.webp"
       }
     }
   },

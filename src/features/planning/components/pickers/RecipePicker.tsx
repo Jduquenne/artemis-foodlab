@@ -3,6 +3,7 @@ import { SearchBar } from '../../../../shared/components/ui/SearchBar';
 import { SearchRecipeResult, useSearchMeals } from '../../../../shared/hooks/useSearch';
 import { Check, X, TreePine } from 'lucide-react';
 import { typedOutdoorDb } from '../../../../core/typed-db/typedOutdoorDb';
+import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
 
 export interface RecipePickerProps {
     onSelect: (recipe: SearchRecipeResult) => void;
@@ -83,7 +84,7 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
                                             : 'border-slate-200 hover:border-orange-200 hover:bg-orange-50 dark:hover:bg-orange-950/20'
                                     }`}
                                 >
-                                    <img src={recipe.photoUrl} loading="lazy" decoding="async" className="w-16 h-16 rounded-xl object-cover shadow-sm" alt={recipe.name} />
+                                    <img src={typedRecipesDb[recipe.recipeId]?.assets?.mealPhoto?.url} loading="lazy" decoding="async" className="w-16 h-16 rounded-xl object-cover shadow-sm shrink-0" alt={recipe.name} />
                                     <div className="flex-1">
                                         <p className="font-black text-slate-800">{recipe.name}</p>
                                         <p className="text-xs text-slate-400 uppercase font-bold">{recipe.recipeId}</p>
@@ -119,8 +120,6 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
                                         id: entry.id,
                                         recipeId: entry.id,
                                         name: entry.name,
-                                        photoUrl: entry.assets?.photo?.url ?? '',
-                                        ingredientsUrl: '',
                                         matchedIngredients: [],
                                     };
                                     return (

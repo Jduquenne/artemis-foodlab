@@ -16,7 +16,7 @@ export const BatchTab = ({ selectedRecipeId, portions, onSelectRecipe, onPortion
   const recipes = useMemo(() => {
     const q = search.toLowerCase().trim();
     return Object.entries(typedRecipesDb)
-      .filter(([, r]) => r.assets?.photo && (!q || r.name.toLowerCase().includes(q)))
+      .filter(([, r]) => r.assets?.mealPhoto && (!q || r.name.toLowerCase().includes(q)))
       .sort(([, a], [, b]) => {
         const aBatch = isBatchCookable(a);
         const bBatch = isBatchCookable(b);

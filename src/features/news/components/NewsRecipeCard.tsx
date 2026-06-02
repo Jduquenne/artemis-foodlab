@@ -9,19 +9,15 @@ export interface NewsRecipeCardProps {
 
 export const NewsRecipeCard = ({ recipe, onClick }: NewsRecipeCardProps) => {
   const category = getCategoryById(recipe.categoryId);
-  const photoUrl = recipe.assets.photo?.url;
+  const mealPhotoUrl = recipe.assets?.mealPhoto?.url;
 
   return (
     <button
       onClick={onClick}
       className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors text-left"
     >
-      {photoUrl ? (
-        <img
-          src={photoUrl}
-          alt={recipe.name}
-          className="w-12 h-12 rounded-lg object-cover shrink-0"
-        />
+      {mealPhotoUrl ? (
+        <img src={mealPhotoUrl} loading="lazy" decoding="async" className="w-12 h-12 rounded-lg object-cover shrink-0" alt={recipe.name} />
       ) : (
         <div className="w-12 h-12 rounded-lg bg-slate-100 dark:bg-slate-200 shrink-0" />
       )}

@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { FlipCard } from '../FlipCard';
 import { ArrowLeft, X } from 'lucide-react';
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect, useRef } from 'react';
 import { CATEGORIES } from '../../../../core/domain/categories';
 import { markScrolling } from '../../../../shared/utils/scrollGuard';
 import { MacroFilterButton } from '../filter/MacroFilterButton';
@@ -9,6 +9,9 @@ import { PREDEFINED_FILTERS } from '../../../../core/domain/predefinedFilters';
 import { isPlannable } from '../../../../core/domain/recipePredicates';
 import { useMenuStore } from '../../../../shared/store/useMenuStore';
 import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
+import { RecipePhotoCard } from '../../../../shared/components/ui/RecipePhotoCard';
+import { RecipeIngredientsCard } from '../../../../shared/components/ui/RecipeIngredientsCard';
+import { LazyRender } from '../../../../shared/components/ui/LazyRender';
 
 export const CategoryDetail = () => {
     const { categoryId } = useParams();
@@ -18,13 +21,11 @@ export const CategoryDetail = () => {
     const categoryInfo = CATEGORIES.find(cat => cat.id === categoryId);
     const recipes = useMemo(() => {
         return Object.entries(typedRecipesDb)
-            .filter(([, recipe]) => recipe.categoryId === categoryId && recipe.assets?.photo)
+            .filter(([, recipe]) => recipe.categoryId === categoryId && recipe.assets?.mealPhoto)
             .map(([recipeId, recipe]) => ({
                 id: recipeId,
                 name: recipe.name,
-                photoUrl: recipe.assets.photo!.url,
-                ingredientsUrl: recipe.assets.ingredientsPhoto?.url ?? '',
-                recipeUrl: recipe.assets.instructionsPhoto?.url ?? '',
+                recipeUrl: recipe.assets.mealPhoto?.url ?? recipe.assets.instructionsPhoto?.url ?? '',
             }));
     }, [categoryId]);
 
@@ -39,6 +40,31 @@ export const CategoryDetail = () => {
     }, [recipes, activeFilterIds]);
 
     const removeFilter = (id: string) => setActiveFilterIds(activeFilterIds.filter(f => f !== id));
+
+    const BATCH_SIZE = 24;
+    const [visibleCount, setVisibleCount] = useState(BATCH_SIZE);
+    const sentinelRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        setVisibleCount(BATCH_SIZE);
+    }, [filteredRecipes]);
+
+    useEffect(() => {
+        const el = sentinelRef.current;
+        if (!el) return;
+        const observer = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+                setVisibleCount(prev => Math.min(prev + BATCH_SIZE, filteredRecipes.length));
+            }
+        }, { threshold: 0.1 });
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, [filteredRecipes.length]);
+
+    const visibleRecipes = useMemo(
+        () => filteredRecipes.slice(0, visibleCount),
+        [filteredRecipes, visibleCount],
+    );
 
     return (
         <div className="h-full flex flex-col gap-4 overflow-hidden">
@@ -86,19 +112,26 @@ export const CategoryDetail = () => {
                     className="grid gap-3 pb-2"
                     style={{ gridTemplateColumns: 'repeat(auto-fill, 5cm)', gridAutoRows: '5.5cm', justifyContent: 'center' }}
                 >
-                    {filteredRecipes.map((recipe, i) => (
-                        <div key={recipe.id} className="h-full animate-fade-in-up" style={{ animationDelay: `${i * 25}ms` }}>
+                    {visibleRecipes.map((recipe, i) => (
+                        <LazyRender key={recipe.id} className="h-full animate-fade-in-up" style={{ animationDelay: `${i * 25}ms` }}>
                             <FlipCard
                                 name={recipe.name}
-                                frontImage={recipe.photoUrl}
-                                backImage={recipe.ingredientsUrl}
+                                frontContent={<RecipePhotoCard recipeId={recipe.id} recipe={typedRecipesDb[recipe.id]} fill />}
+                                backContent={<RecipeIngredientsCard recipeId={recipe.id} recipe={typedRecipesDb[recipe.id]} fill />}
                                 recipeUrl={recipe.recipeUrl}
                                 onClick={() => navigate(`/recipes/detail/${recipe.id}?category=${categoryId}`)}
                                 onAddToPlanning={isPlannable(typedRecipesDb[recipe.id]) ? () => navigate(`/planning?addRecipe=${recipe.id}`) : undefined}
                             />
-                        </div>
+                        </LazyRender>
                     ))}
                 </div>
+                {visibleCount < filteredRecipes.length && (
+                    <div ref={sentinelRef} className="flex justify-center items-center gap-2 py-6 text-slate-400">
+                        <div className="w-4 h-4 rounded-full border-2 border-slate-300 border-t-orange-400 animate-spin" />
+                        <span className="text-xs font-semibold uppercase tracking-widest">Chargement…</span>
+                    </div>
+                )}
+                {visibleCount >= filteredRecipes.length && <div ref={sentinelRef} className="h-4" />}
             </div>
         </div>
     );

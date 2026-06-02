@@ -18,8 +18,8 @@ export interface RecipeCellProps {
 
 export const RecipeCell = ({ recipeId, onNavigate, onRemove, onCopy, hideRemove, persons, grams, onEditMeta, inFreezer }: RecipeCellProps) => {
     const recipe = plannableDb[recipeId];
-    const photoUrl = recipe?.assets?.photo?.url;
-    const hasRecipesPage = Boolean(recipe?.assets?.instructionsPhoto?.url);
+    const hasPhoto = Boolean(recipe?.assets?.mealPhoto);
+    const hasRecipesPage = Boolean(recipe?.assets?.mealPhoto || recipe?.assets?.instructionsPhoto);
     const defaultGrams = RECIPE_BASE_GRAMS[recipeId] ?? 0;
     const recipeIsDish = isDish(recipe) || isBase(recipe);
     const isCustom = persons !== undefined || (!recipeIsDish && grams !== undefined);
@@ -30,7 +30,15 @@ export const RecipeCell = ({ recipeId, onNavigate, onRemove, onCopy, hideRemove,
                 onClick={hasRecipesPage && !hideRemove ? onNavigate : undefined}
                 className={`w-full h-full rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-200 ${!hasRecipesPage || hideRemove ? 'cursor-default' : ''}`}
             >
-                {photoUrl && <img src={photoUrl} loading="lazy" decoding="async" className="w-full h-full object-cover sm:object-contain" alt={recipe.name} />}
+                {hasPhoto && recipe && (
+                    <div className="relative w-full h-full">
+                        <img src={recipe.assets.mealPhoto!.url} loading="lazy" decoding="async" className="w-full h-full object-cover" alt={recipe.name} />
+                        <div className="absolute inset-0 bg-black/20" />
+                        <div className="absolute inset-0 flex items-center justify-center p-1.5">
+                            <span className="bg-black/70 text-white text-[13px] font-bold px-1 py-0.5 rounded leading-tight line-clamp-4 text-center">{recipe.name}</span>
+                        </div>
+                    </div>
+                )}
             </button>
 
             {!hideRemove && onEditMeta && (recipeIsDish || defaultGrams > 0 || persons !== undefined) && (

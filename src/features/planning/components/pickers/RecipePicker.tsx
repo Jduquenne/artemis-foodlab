@@ -2,8 +2,8 @@ import { useState, useMemo } from 'react';
 import { SearchBar } from '../../../../shared/components/ui/SearchBar';
 import { SearchRecipeResult, useSearchMeals } from '../../../../shared/hooks/useSearch';
 import { Check, X, TreePine } from 'lucide-react';
-import { typedOutdoorDb } from '../../../../core/typed-db/typedOutdoorDb';
 import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
+import { searchOutdoorRecipes } from '../../../../core/logic/recipe/recipeLogic';
 
 export interface RecipePickerProps {
     onSelect: (recipe: SearchRecipeResult) => void;
@@ -18,10 +18,7 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
     const [isClosing, setIsClosing] = useState(false);
     const results = useSearchMeals(query);
 
-    const outdoorResults = useMemo(() => {
-        const q = query.toLowerCase();
-        return Object.values(typedOutdoorDb).filter(e => !q || e.name.toLowerCase().includes(q));
-    }, [query]);
+    const outdoorResults = useMemo(() => searchOutdoorRecipes(query), [query]);
 
     const handleClose = () => { setIsClosing(true); setTimeout(onClose, 300); };
 

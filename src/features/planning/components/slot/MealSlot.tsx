@@ -116,7 +116,7 @@ export const MealSlot = ({
             </button>
 
             {hasPhoto && !isDragging && !isAddMode && (inFreezer || (!isEditingPersons && displayPersons !== undefined)) && (
-                <div className="absolute top-1 left-1 z-20 flex items-center gap-1">
+                <div className="absolute top-1 right-1 z-20 flex items-center gap-1">
                     {inFreezer && (
                         <div className="p-1 bg-cyan-500/80 text-white rounded-lg shadow-sm pointer-events-none">
                             <Snowflake size={10} />

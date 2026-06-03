@@ -579,7 +579,7 @@ export const PlanningModule = () => {
                             const slotId = `${year}-W${weekNumber}-${pickerSlot.day}-${pickerSlot.slot}`;
                             const isMulti = MEAL_SLOTS.find(m => m.id === pickerSlot.slot)?.multi ?? false;
                             const existing = planningData.find(p => p.day === pickerSlot.day && p.slot === pickerSlot.slot);
-                            if (isMulti && existing && existing.recipeIds.length < 4 && !existing.recipeIds.includes(recipe.recipeId)) {
+                            if (isMulti && existing && !isSlotFull(existing) && !existing.recipeIds.includes(recipe.recipeId)) {
                                 await saveSlot({ ...existing, recipeIds: [...existing.recipeIds, recipe.recipeId] });
                             } else {
                                 await saveSlot({

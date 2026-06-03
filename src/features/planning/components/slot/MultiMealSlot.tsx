@@ -182,8 +182,8 @@ export const MultiMealSlot = ({
                 )}
             </div>
 
-            {hasRecipes && !isAddMode && !copyTargetState && !editingMetaId && (inFreezer || showPersonsBadge) && (
-                <div className="absolute top-1 left-1 z-20 flex items-center gap-1">
+            {hasRecipes && !isAddMode && !copyTargetState && !editingMetaId && !showSingleBadge && (inFreezer || showPersonsBadge) && (
+                <div className="absolute top-1 right-1 z-20 flex items-center gap-1">
                     {inFreezer && (
                         <div className="p-1 bg-cyan-500/80 text-white rounded-lg shadow-sm pointer-events-none">
                             <Snowflake size={10} />

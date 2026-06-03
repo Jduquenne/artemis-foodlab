@@ -1,6 +1,9 @@
+import { addDays } from 'date-fns';
+
 export interface DayTabsBarProps {
     days: readonly string[];
     selectedDay: string;
+    monday: Date;
     isSelectionMode: boolean;
     isDraft: (day: string) => boolean;
     isConfirmed: (day: string) => boolean;
@@ -11,17 +14,18 @@ export interface DayTabsBarProps {
 }
 
 export const DayTabsBar = ({
-    days, selectedDay, isSelectionMode,
+    days, selectedDay, monday, isSelectionMode,
     isDraft, isConfirmed, hasMeals,
     atMax, onSelectDay, onToggleDraft,
 }: DayTabsBarProps) => (
     <div className="sm:hidden grid grid-cols-7 gap-0.5 shrink-0 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl p-1 shadow-sm">
-        {days.map(day => {
+        {days.map((day, i) => {
             const isActive = !isSelectionMode && selectedDay === day;
             const draft = isDraft(day);
             const confirmed = !isSelectionMode && isConfirmed(day);
             const meals = hasMeals(day);
             const blocked = isSelectionMode && !draft && atMax;
+            const dayNum = addDays(monday, i).getDate();
 
             return (
                 <button
@@ -39,7 +43,7 @@ export const DayTabsBar = ({
                     ].join(' ')}
                 >
                     <span className="text-[9px] font-black uppercase tracking-tight leading-none">
-                        {day.slice(0, 3)}
+                        {day.slice(0, 3)} <span className="font-semibold normal-case tracking-normal opacity-70">{dayNum}</span>
                     </span>
                     <span className={[
                         'w-1 h-1 rounded-full mt-1',

@@ -15,6 +15,7 @@ import { PlanningHeader } from './components/PlanningHeader';
 import { PlanningSlot } from './components/slot/PlanningSlot';
 import { DayTabsBar } from './components/bars/DayTabsBar';
 import { getWeekNumber, getMonday, getWeekRange } from '../../shared/utils/weekUtils';
+import { formatDayDate } from '../../core/utils/dateUtils';
 import { useSearchParams } from 'react-router-dom';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { SlotType, ShoppingDay, MealSlot } from '../../core/domain/types';
@@ -442,6 +443,7 @@ export const PlanningModule = () => {
                 <DayTabsBar
                     days={DAYS}
                     selectedDay={selectedDay}
+                    monday={monday}
                     isSelectionMode={isSelectionMode}
                     isDraft={isDayDraft}
                     isConfirmed={isDayConfirmed}
@@ -503,7 +505,7 @@ export const PlanningModule = () => {
                     )}
 
                     <div className="hidden sm:grid grid-cols-[repeat(7,1fr)] grid-rows-[30px_repeat(4,1fr)] gap-3 h-full min-h-0 px-2 pb-2">
-                        {DAYS.map(day => {
+                        {DAYS.map((day, i) => {
                             const selected = isSelectionMode && isDayDraft(day);
                             const confirmed = !isSelectionMode && isDayConfirmed(day);
                             const blocked = isSelectionMode && !selected && atMax;
@@ -521,6 +523,9 @@ export const PlanningModule = () => {
                                     {selected && <Check className="w-3 h-3 shrink-0" />}
                                     {confirmed && !isSelectionMode && <ShoppingCart className="w-2.5 h-2.5 shrink-0" />}
                                     <span>{day.slice(0, 3)}</span>
+                                    <span className="font-semibold normal-case tracking-normal opacity-60 text-[10px]">
+                                        {formatDayDate(monday, i)}
+                                    </span>
                                 </div>
                             );
                         })}

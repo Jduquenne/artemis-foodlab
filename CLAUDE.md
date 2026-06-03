@@ -309,7 +309,8 @@ const data = useMemo(() => liveData ?? [], [liveData]);
 ### File structure for React fast-refresh (`react-refresh/only-export-components`)
 
 A `.tsx` file must **only** export React components. Hooks, contexts, constants, and utility functions must live in `.ts` files.
-- Hooks → `useXxx.ts`
+- Hooks → `src/shared/hooks/useXxx.ts` — **all** hooks live here regardless of which feature uses them
+- Utils → `src/shared/utils/` — **all** utility functions live here regardless of which feature uses them
 - Context objects (from `createContext`) → `useXxx.ts` alongside their hook
 - Component providers → `XxxContext.tsx` (imports context from the `.ts` file)
 

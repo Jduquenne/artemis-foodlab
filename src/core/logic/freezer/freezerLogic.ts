@@ -1,4 +1,45 @@
-import { FreezerBag, FreezerCategory } from '../../domain/types';
+import { FreezerBag, FreezerCategory, Food } from '../../domain/types';
+import { isBatchCookable } from '../../domain/recipePredicates';
+import { typedRecipesDb } from '../../typed-db/typedRecipesDb';
+import { typedFoodDb } from '../../typed-db/typedFoodDb';
+
+const ALL_FOODS = Object.values(typedFoodDb as Record<string, Food>);
+
+export interface BatchRecipeResult {
+  id: string;
+  name: string;
+  isBatch: boolean;
+}
+
+export function searchBatchRecipes(query: string): BatchRecipeResult[] {
+  const q = query.toLowerCase().trim();
+  return Object.entries(typedRecipesDb)
+    .filter(([, r]) => r.assets?.mealPhoto && (!q || r.name.toLowerCase().includes(q)))
+    .sort(([, a], [, b]) => {
+      const aBatch = isBatchCookable(a);
+      const bBatch = isBatchCookable(b);
+      if (aBatch && !bBatch) return -1;
+      if (!aBatch && bBatch) return 1;
+      return a.name.localeCompare(b.name);
+    })
+    .slice(0, 30)
+    .map(([id, r]) => ({ id, name: r.name, isBatch: isBatchCookable(r) }));
+}
+
+export function searchFreezerFoods(query: string): Food[] {
+  const q = query.toLowerCase().trim();
+  if (!q) return [];
+  return ALL_FOODS
+    .filter(f => f.name.toLowerCase().includes(q))
+    .sort((a, b) => {
+      const aStarts = a.name.toLowerCase().startsWith(q);
+      const bStarts = b.name.toLowerCase().startsWith(q);
+      if (aStarts && !bStarts) return -1;
+      if (!aStarts && bStarts) return 1;
+      return a.name.localeCompare(b.name);
+    })
+    .slice(0, 8);
+}
 
 export function getBatchRecipeIdsInFreezer(categories: FreezerCategory[]): Set<string> {
   const set = new Set<string>();

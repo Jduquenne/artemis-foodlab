@@ -25,6 +25,11 @@ export const getDaysOfWeek = (date: Date = new Date()) => {
   });
 };
 
+export const formatIsoDateShort = (iso: string): string => {
+  const [, m, d] = iso.split("-");
+  return `${d}/${m}`;
+};
+
 export const formatDayDate = (monday: Date, dayIndex: number): string => {
   const d = addDays(monday, dayIndex);
   return format(d, "d MMM", { locale: fr });

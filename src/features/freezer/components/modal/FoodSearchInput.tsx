@@ -1,8 +1,6 @@
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
-import { typedFoodDb } from "../../../../core/typed-db/typedFoodDb";
-
-const ALL_FOODS = Object.values(typedFoodDb);
+import { searchFreezerFoods } from "../../../../core/logic/freezer/freezerLogic";
 
 export interface FoodSearchInputProps {
   value: string;
@@ -18,20 +16,7 @@ export const FoodSearchInput = ({ value, onChange, existingNames }: FoodSearchIn
     [existingNames]
   );
 
-  const suggestions = useMemo(() => {
-    const q = value.toLowerCase().trim();
-    if (!q) return [];
-    return ALL_FOODS
-      .filter(f => f.name.toLowerCase().includes(q))
-      .sort((a, b) => {
-        const aStarts = a.name.toLowerCase().startsWith(q);
-        const bStarts = b.name.toLowerCase().startsWith(q);
-        if (aStarts && !bStarts) return -1;
-        if (!aStarts && bStarts) return 1;
-        return a.name.localeCompare(b.name);
-      })
-      .slice(0, 8);
-  }, [value]);
+  const suggestions = useMemo(() => searchFreezerFoods(value), [value]);
 
   const showList = open && suggestions.length > 0;
 

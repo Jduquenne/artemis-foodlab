@@ -1,7 +1,6 @@
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
-import { isBatchCookable } from "../../../../core/domain/recipePredicates";
-import { typedRecipesDb } from "../../../../core/typed-db/typedRecipesDb";
+import { searchBatchRecipes } from "../../../../core/logic/freezer/freezerLogic";
 
 export interface BatchTabProps {
   selectedRecipeId: string | null;
@@ -13,20 +12,7 @@ export interface BatchTabProps {
 export const BatchTab = ({ selectedRecipeId, portions, onSelectRecipe, onPortionsChange }: BatchTabProps) => {
   const [search, setSearch] = useState("");
 
-  const recipes = useMemo(() => {
-    const q = search.toLowerCase().trim();
-    return Object.entries(typedRecipesDb)
-      .filter(([, r]) => r.assets?.mealPhoto && (!q || r.name.toLowerCase().includes(q)))
-      .sort(([, a], [, b]) => {
-        const aBatch = isBatchCookable(a);
-        const bBatch = isBatchCookable(b);
-        if (aBatch && !bBatch) return -1;
-        if (!aBatch && bBatch) return 1;
-        return a.name.localeCompare(b.name);
-      })
-      .slice(0, 30)
-      .map(([id, r]) => ({ id, name: r.name, isBatch: isBatchCookable(r) }));
-  }, [search]);
+  const recipes = useMemo(() => searchBatchRecipes(search), [search]);
 
   return (
     <>

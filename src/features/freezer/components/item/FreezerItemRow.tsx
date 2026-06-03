@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Snowflake, Plus, MoreVertical, Trash2 } from "lucide-react";
 import { FreezerItem } from "../../../../core/domain/types";
 import { addBagToFoodItem } from "../../../../core/services/freezerService";
+import { formatIsoDateShort } from "../../../../shared/utils/dateUtils";
 import { BatchFreezerItemRow } from "./BatchFreezerItemRow";
 import { BagRow } from "./BagRow";
 import { AddBagForm } from "./AddBagForm";
@@ -11,11 +12,6 @@ export interface FreezerItemRowProps {
   categoryId: string;
   onDelete: () => void;
 }
-
-const formatDate = (iso: string) => {
-  const [, m, d] = iso.split("-");
-  return `${d}/${m}`;
-};
 
 export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowProps) => {
   const [addingBag, setAddingBag] = useState(false);
@@ -34,7 +30,7 @@ export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowPro
   }, [itemMenuOpen]);
 
   if (item.type === "batch") {
-    return <BatchFreezerItemRow item={item} categoryId={categoryId} onDelete={onDelete} formattedDate={formatDate(item.addedDate)} />;
+    return <BatchFreezerItemRow item={item} categoryId={categoryId} onDelete={onDelete} formattedDate={formatIsoDateShort(item.addedDate)} />;
   }
 
   const isEmpty = item.bags.length === 0;
@@ -88,7 +84,7 @@ export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowPro
             bag={bag}
             categoryId={categoryId}
             itemId={item.id}
-            formattedDate={formatDate(bag.addedDate)}
+            formattedDate={formatIsoDateShort(bag.addedDate)}
           />
         ))}
 

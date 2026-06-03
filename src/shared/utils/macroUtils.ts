@@ -114,26 +114,35 @@ export const RECIPE_BASE_GRAMS: Record<string, number> = Object.fromEntries(
   })
 );
 
+export function computeSlotMacros(
+  slot: MealSlot,
+  portionOverrides: Record<string, number>,
+  gramOverrides: Record<string, number>,
+): Macronutrients {
+  return getAllRecipeIds(slot).reduce((sum, id) => {
+    const m = RECIPE_MACROS[id];
+    if (!m) return sum;
+    const key = `${slot.id}-${id}`;
+    const recipe = plannableDb[id];
+    const baseGrams = RECIPE_BASE_GRAMS[id];
+    let factor: number;
+    if (!isDish(recipe) && !isBase(recipe) && baseGrams) {
+      const grams = gramOverrides[key] ?? baseGrams;
+      factor = grams / baseGrams;
+    } else {
+      factor = portionOverrides[key] ?? 1;
+    }
+    return addMacros(sum, scaleMacros(m, factor));
+  }, { ...ZERO });
+}
+
 export function computeDayMacros(
   slots: MealSlot[],
   portionOverrides: Record<string, number>,
   gramOverrides: Record<string, number>,
 ): Macronutrients {
-  return slots.reduce((total, slot) => {
-    return getAllRecipeIds(slot).reduce((sum, id) => {
-      const m = RECIPE_MACROS[id];
-      if (!m) return sum;
-      const key = `${slot.id}-${id}`;
-      const recipe = plannableDb[id];
-      const baseGrams = RECIPE_BASE_GRAMS[id];
-      let factor: number;
-      if (!isDish(recipe) && !isBase(recipe) && baseGrams) {
-        const grams = gramOverrides[key] ?? baseGrams;
-        factor = grams / baseGrams;
-      } else {
-        factor = portionOverrides[key] ?? 1;
-      }
-      return addMacros(sum, scaleMacros(m, factor));
-    }, total);
-  }, { ...ZERO });
+  return slots.reduce(
+    (total, slot) => addMacros(total, computeSlotMacros(slot, portionOverrides, gramOverrides)),
+    { ...ZERO },
+  );
 }

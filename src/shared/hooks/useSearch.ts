@@ -71,6 +71,7 @@ function closestWordDistance(text: string, query: string): number {
 function search(
   query: string | null,
   kinds?: RecipeKind[],
+  filter?: (recipe: RecipeDetails) => boolean,
 ): SearchRecipeResult[] {
   if (query === null) return [];
   const normalizedQuery = query.toLowerCase().trim();
@@ -78,6 +79,7 @@ function search(
   const results = Object.entries(db)
     .filter(([, recipe]) => Boolean(recipe.assets?.mealPhoto))
     .filter(([, recipe]) => !kinds || kinds.includes(recipe.kind))
+    .filter(([, recipe]) => !filter || filter(recipe))
     .filter(
       ([recipeId, recipe]) =>
         !normalizedQuery || matchesQuery(recipeId, recipe, normalizedQuery),
@@ -127,29 +129,5 @@ export const useSearchIngredients = (query: string | null): SearchRecipeResult[]
 };
 
 export const useSearchDesserts = (query: string | null): SearchRecipeResult[] => {
-  return useMemo(() => {
-    if (query === null) return [];
-    const normalizedQuery = query.toLowerCase().trim();
-    const results = Object.entries(db)
-      .filter(([, recipe]) => Boolean(recipe.assets?.mealPhoto))
-      .filter(([, recipe]) => isDessert(recipe))
-      .filter(([recipeId, recipe]) => !normalizedQuery || matchesQuery(recipeId, recipe, normalizedQuery))
-      .map(([recipeId, recipe]) => toResult(recipeId, recipe, normalizedQuery));
-
-    if (!normalizedQuery || /^\d+$/.test(normalizedQuery)) return results;
-
-    const nameOrId = results
-      .filter((r) => r.name.toLowerCase().includes(normalizedQuery) || matchesRecipeId(r.recipeId, normalizedQuery))
-      .sort((a, b) => closestWordDistance(a.name, normalizedQuery) - closestWordDistance(b.name, normalizedQuery));
-
-    const ingredientOnly = results
-      .filter((r) => !r.name.toLowerCase().includes(normalizedQuery) && !matchesRecipeId(r.recipeId, normalizedQuery))
-      .sort((a, b) => {
-        const aScore = Math.min(...a.matchedIngredients.map((i) => closestWordDistance(i, normalizedQuery)));
-        const bScore = Math.min(...b.matchedIngredients.map((i) => closestWordDistance(i, normalizedQuery)));
-        return aScore - bScore;
-      });
-
-    return [...nameOrId, ...ingredientOnly];
-  }, [query]);
+  return useMemo(() => search(query, undefined, isDessert), [query]);
 };

@@ -26,7 +26,7 @@ export const NotificationCard = ({ notification }: NotificationCardProps) => {
 
         const tick = () => {
             const pct = Math.max(0, 1 - (Date.now() - start) / duration);
-            if (barRef.current) barRef.current.style.width = `${pct * 100}%`;
+            if (barRef.current) barRef.current.style.transform = `scaleX(${pct})`;
             if (pct > 0) {
                 rafRef.current = requestAnimationFrame(tick);
             } else {
@@ -75,7 +75,7 @@ export const NotificationCard = ({ notification }: NotificationCardProps) => {
                 </div>
 
                 <div className="h-1 bg-slate-100 dark:bg-slate-200">
-                    <div ref={barRef} className="h-full bg-orange-400" style={{ width: "100%" }} />
+                    <div ref={barRef} className="h-full w-full bg-orange-400 origin-left" />
                 </div>
             </div>
         </div>

@@ -96,11 +96,10 @@ export const MealSlot = ({
                 className={`relative w-full h-full rounded-xl border-2 transition-all overflow-hidden bg-white dark:bg-slate-100 ${borderClass} ${hasPhoto && !hasRecipesPage ? 'cursor-default' : ''}`}
             >
                 {hasPhoto ? (
-                    <div className="relative w-full h-full">
-                        <img src={recipe!.assets.mealPhoto!.url} loading="lazy" decoding="async" className="w-full h-full object-cover" alt={recipe!.name} />
-                        <div className="absolute inset-0 bg-black/20" />
+                    <div className="relative w-full h-full bg-cover bg-center" style={{ backgroundImage: `url('${recipe!.assets.mealPhoto!.url}')` }}>
+                        <div className="absolute inset-0 bg-white/40 dark:bg-black/50 transition-colors" />
                         <div className="absolute inset-0 flex items-center justify-center p-2">
-                            <span className="bg-black/70 text-white text-[14px] font-bold px-1.5 py-0.5 rounded-md leading-tight line-clamp-4 text-center">{recipe!.name}</span>
+                            <span className="bg-white/90 dark:bg-black/75 text-slate-900 text-[14px] font-bold px-1.5 py-0.5 rounded-md leading-tight line-clamp-4 text-center">{recipe!.name}</span>
                         </div>
                     </div>
                 ) : (
@@ -156,23 +155,25 @@ export const MealSlot = ({
 
     if (showDessertColumn) {
         return (
-            <div ref={setRef} className="relative w-full h-full group flex gap-1">
-                <div className="relative flex-2 h-full min-w-0">
+            <div ref={setRef} className="relative w-full h-full group flex flex-col gap-1">
+                <div className="relative flex-2 min-h-0 h-full">
                     {mainContent}
                 </div>
-                <DessertColumn
-                    dessertIds={dessertIds ?? []}
-                    isAddMode={isAddMode}
-                    dessertCopyTargetState={dessertCopyTargetState}
-                    copySourceDessertId={copySourceDessertId}
-                    onAddDessert={onAddDessert}
-                    onRemoveDessert={onRemoveDessert}
-                    onCopyDessert={onCopyDessert}
-                    onSelectAsTarget={onSelectDessertAsTarget}
-                    recipePersons={recipePersons}
-                    slotPersons={displayPersons}
-                    onSetDessertPersons={onSetDessertPersons}
-                />
+                <div className="flex-1 min-h-0">
+                    <DessertColumn
+                        dessertIds={dessertIds ?? []}
+                        isAddMode={isAddMode}
+                        dessertCopyTargetState={dessertCopyTargetState}
+                        copySourceDessertId={copySourceDessertId}
+                        onAddDessert={onAddDessert}
+                        onRemoveDessert={onRemoveDessert}
+                        onCopyDessert={onCopyDessert}
+                        onSelectAsTarget={onSelectDessertAsTarget}
+                        recipePersons={recipePersons}
+                        slotPersons={displayPersons}
+                        onSetDessertPersons={onSetDessertPersons}
+                    />
+                </div>
             </div>
         );
     }

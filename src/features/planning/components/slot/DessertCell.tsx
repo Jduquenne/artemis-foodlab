@@ -41,11 +41,8 @@ export const DessertCell = ({ recipeId, onRemove, isAddMode, onCopy, isCopySourc
 
     return (
         <div className={`relative flex-1 min-h-0 rounded-lg overflow-hidden group ${isCopySource ? 'ring-2 ring-violet-500' : ''}`}>
-            <img src={recipe!.assets.mealPhoto!.url} loading="lazy" decoding="async" className="w-full h-full object-cover" alt={recipe?.name ?? ''} />
-            <div className="absolute inset-0 bg-black/20" />
-            <div className="absolute inset-0 flex items-center justify-center p-1.5">
-                <span className="bg-black/70 text-white text-[13px] font-bold px-1 py-0.5 rounded leading-tight line-clamp-4 text-center">{recipe!.name}</span>
-            </div>
+            <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${recipe!.assets.mealPhoto!.url}')` }} />
+            <div className="absolute inset-0 bg-white/40 dark:bg-black/50 transition-colors" />
 
             {!isAddMode && !hideActions && !isEditingPersons && (
                 <button

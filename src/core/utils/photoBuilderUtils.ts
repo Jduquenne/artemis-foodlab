@@ -41,6 +41,19 @@ const RECETTE_SM_THRESHOLD = 18;
 const RECETTE_MD_FONT = 7;
 const RECETTE_SM_FONT = 6;
 
+const FOOD_LABEL_BG_COMPACT_UNITS = new Set(["g", "kg", "ml", "cl", "l"]);
+
+export const FOOD_LABEL_BG_PADDING = 12;
+
+export function buildFoodLabelBg(label: string): string {
+  return "|".repeat(label.length + FOOD_LABEL_BG_PADDING);
+}
+
+export function buildFoodQuantityLabel(quantity: number, unit: string): string {
+  const sep = FOOD_LABEL_BG_COMPACT_UNITS.has(unit) ? "" : " ";
+  return `${quantity}${sep}${unit}`;
+}
+
 export function computeSmallCardFontSize(count: number): number {
   if (count > SMALL_CARD_SM_THRESHOLD) return SMALL_CARD_SM_FONT;
   if (count > SMALL_CARD_MD_THRESHOLD) return SMALL_CARD_MD_FONT;

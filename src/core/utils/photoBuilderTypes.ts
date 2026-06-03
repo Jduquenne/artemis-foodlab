@@ -32,6 +32,17 @@ export interface RecetteCardData {
   colors: CardColors;
 }
 
+export interface FoodCardData {
+  imageHref: string;
+  foodLabel: string;
+  fibres: number;
+  glucides: number;
+  lipides: number;
+  proteines: number;
+  kcal: number;
+  colors: CardColors;
+}
+
 export interface RecetteBookCardData {
   imageHref: string;
   bookImageHref: string;

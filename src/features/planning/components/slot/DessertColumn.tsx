@@ -34,7 +34,7 @@ export const DessertColumn = ({
 
     return (
         <div
-            className={`relative flex flex-col gap-1 w-[35%] shrink-0 h-full ${isTargetMode ? 'cursor-pointer' : ''}`}
+            className={`relative flex flex-row gap-1 w-full shrink-0 h-full ${isTargetMode ? 'cursor-pointer' : ''}`}
             onClick={isTargetMode ? (e) => { e.stopPropagation(); onSelectAsTarget?.(); } : undefined}
         >
             {dessertIds.map(rid => {

@@ -6,10 +6,11 @@ import { CATEGORIES } from '../../../../core/domain/categories';
 import { markScrolling } from '../../../../shared/utils/scrollGuard';
 import { MacroFilterButton } from '../filter/MacroFilterButton';
 import { PREDEFINED_FILTERS } from '../../../../core/domain/predefinedFilters';
-import { isPlannable } from '../../../../core/domain/recipePredicates';
+import { isPlannable, isIngredient } from '../../../../core/domain/recipePredicates';
 import { useMenuStore } from '../../../../shared/store/useMenuStore';
 import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
 import { RecipePhotoCard } from '../../../../shared/components/ui/RecipePhotoCard';
+import { FoodPhotoCard } from '../../../../shared/components/ui/FoodPhotoCard';
 import { RecipeIngredientsCard } from '../../../../shared/components/ui/RecipeIngredientsCard';
 import { LazyRender } from '../../../../shared/components/ui/LazyRender';
 
@@ -21,11 +22,14 @@ export const CategoryDetail = () => {
     const categoryInfo = CATEGORIES.find(cat => cat.id === categoryId);
     const recipes = useMemo(() => {
         return Object.entries(typedRecipesDb)
-            .filter(([, recipe]) => recipe.categoryId === categoryId && recipe.assets?.mealPhoto)
+            .filter(([, recipe]) => recipe.categoryId === categoryId && (recipe.assets?.mealPhoto || isIngredient(recipe)))
             .map(([recipeId, recipe]) => ({
                 id: recipeId,
                 name: recipe.name,
-                recipeUrl: recipe.assets.mealPhoto?.url ?? recipe.assets.instructionsPhoto?.url ?? '',
+                recipeUrl: isIngredient(recipe)
+                    ? recipeId
+                    : (recipe.assets.mealPhoto?.url ?? recipe.assets.instructionsPhoto?.url ?? ''),
+                isIngredientKind: isIngredient(recipe),
             }));
     }, [categoryId]);
 
@@ -116,8 +120,12 @@ export const CategoryDetail = () => {
                         <LazyRender key={recipe.id} className="h-full animate-fade-in-up" style={{ animationDelay: `${i * 25}ms` }}>
                             <FlipCard
                                 name={recipe.name}
-                                frontContent={<RecipePhotoCard recipeId={recipe.id} recipe={typedRecipesDb[recipe.id]} fill />}
-                                backContent={<RecipeIngredientsCard recipeId={recipe.id} recipe={typedRecipesDb[recipe.id]} fill />}
+                                frontContent={
+                                    recipe.isIngredientKind
+                                        ? <FoodPhotoCard recipeId={recipe.id} recipe={typedRecipesDb[recipe.id]} fill />
+                                        : <RecipePhotoCard recipeId={recipe.id} recipe={typedRecipesDb[recipe.id]} fill />
+                                }
+                                backContent={recipe.isIngredientKind ? undefined : <RecipeIngredientsCard recipeId={recipe.id} recipe={typedRecipesDb[recipe.id]} fill />}
                                 recipeUrl={recipe.recipeUrl}
                                 onClick={() => navigate(`/recipes/detail/${recipe.id}?category=${categoryId}`)}
                                 onAddToPlanning={isPlannable(typedRecipesDb[recipe.id]) ? () => navigate(`/planning?addRecipe=${recipe.id}`) : undefined}

@@ -2,12 +2,14 @@ import { RecipeDetails, Macronutrients, Unit, IngredientCategory, Preparation } 
 import { DraftIngredient } from "../domain/recipeBuilderTypes";
 import { formatIngredientsForIngredientCard } from "./recipeBuilderUtils";
 import { getCardColors } from "./photoBuilderColors";
+import { buildFoodQuantityLabel } from "./photoBuilderUtils";
 import { typedInstructionsDb } from "../typed-db/typedInstructionsDb";
 import {
   SmallCardData,
   IngredientsCardData,
   RecetteCardData,
   RecetteBookCardData,
+  FoodCardData,
 } from "./photoBuilderTypes";
 
 function extractRecipeNumber(recipeId: string): number {
@@ -38,6 +40,28 @@ export function recipeToPhotoCardData(
     imageHref: recipe.assets.mealPhoto?.url ?? "",
     recipeName: recipe.name,
     recipeNumber: extractRecipeNumber(recipeId),
+    fibres: Math.round(m.fibers),
+    glucides: Math.round(m.carbohydrates),
+    lipides: Math.round(m.lipids),
+    proteines: Math.round(m.proteins),
+    kcal: Math.round(m.kcal),
+    colors: getCardColors(recipe.categoryId),
+  };
+}
+
+export function recipeToFoodCardData(
+  recipe: RecipeDetails,
+  macros: Macronutrients | null,
+): FoodCardData {
+  const m = macros ?? { kcal: 0, proteins: 0, lipids: 0, carbohydrates: 0, fibers: 0 };
+  const ing = recipe.ingredients[0];
+  const quantitySuffix =
+    ing?.quantity != null && ing?.unit
+      ? ` - ${buildFoodQuantityLabel(ing.quantity, ing.unit)}`
+      : '';
+  return {
+    imageHref: recipe.assets.mealPhoto?.url ?? "",
+    foodLabel: recipe.name + quantitySuffix,
     fibres: Math.round(m.fibers),
     glucides: Math.round(m.carbohydrates),
     lipides: Math.round(m.lipids),

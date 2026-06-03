@@ -133,8 +133,8 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
                                                     : 'border-slate-200 hover:border-rose-200 hover:bg-rose-50 dark:hover:bg-rose-950/20'
                                             }`}
                                         >
-                                            {entry.assets?.photo?.url ? (
-                                                <img src={entry.assets.photo.url} loading="lazy" decoding="async" className="w-16 h-16 rounded-xl object-cover shadow-sm" alt={entry.name} />
+                                            {entry.assets?.mealPhoto?.url ? (
+                                                <img src={entry.assets.mealPhoto.url} loading="lazy" decoding="async" className="w-16 h-16 rounded-xl object-cover shadow-sm" alt={entry.name} />
                                             ) : (
                                                 <div className="w-16 h-16 rounded-xl bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center">
                                                     <TreePine size={24} className="text-rose-400" />

@@ -145,10 +145,10 @@ export const MultiMealSlot = ({
                     >
                         {singleHasPhoto && firstRecipe && (
                             <div className="relative w-full h-full">
-                                <img src={firstRecipe.assets.mealPhoto!.url} loading="lazy" decoding="async" className="w-full h-full object-cover" alt={firstRecipe.name} />
-                                <div className="absolute inset-0 bg-black/20" />
+                                <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${firstRecipe.assets.mealPhoto!.url}')` }} />
+                                <div className="absolute inset-0 bg-white/40 dark:bg-black/50 transition-colors" />
                                 <div className="absolute inset-0 flex items-center justify-center p-2">
-                                    <span className="bg-black/70 text-white text-[14px] font-bold px-1.5 py-0.5 rounded-md leading-tight line-clamp-4 text-center">{firstRecipe.name}</span>
+                                    <span className="bg-white/90 dark:bg-black/75 text-slate-900 text-[14px] font-bold px-1.5 py-0.5 rounded-md leading-tight line-clamp-4 text-center">{firstRecipe.name}</span>
                                 </div>
                             </div>
                         )}

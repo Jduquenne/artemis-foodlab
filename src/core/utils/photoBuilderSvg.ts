@@ -2,11 +2,13 @@ import photoTemplate from "./templates/photo-card.svg?raw";
 import ingredientsTemplate from "./templates/ingredients-card.svg?raw";
 import recetteTemplate from "./templates/recette-card.svg?raw";
 import recetteBookTemplate from "./templates/recette-book-card.svg?raw";
+import foodCardTemplate from "./templates/food-card.svg?raw";
 import {
   SmallCardData,
   IngredientsCardData,
   RecetteCardData,
   RecetteBookCardData,
+  FoodCardData,
 } from "./photoBuilderTypes";
 import {
   buildRecipeNameText,
@@ -15,6 +17,7 @@ import {
   buildRecetteIngredients,
   computeSmallCardFontSize,
   computeRecetteFontSize,
+  buildFoodLabelBg,
 } from "./photoBuilderUtils";
 
 export function buildPhotoSvg(data: SmallCardData): string {
@@ -82,6 +85,20 @@ export function buildRecetteBookSvg(data: RecetteBookCardData): string {
     .replace('fill="[[COLOR_BG]]"', `fill="${data.colors.bg}"`)
     .split('fill="[[COLOR_BAND]]"')
     .join(`fill="${data.colors.band}"`)
+    .replace('fill="[[COLOR_CIRCLE]]"', `fill="${data.colors.circle}"`);
+}
+
+export function buildFoodCardSvg(data: FoodCardData): string {
+  return foodCardTemplate
+    .replace('href="[[IMAGE_HREF]]"', `href="${data.imageHref}"`)
+    .replace("[[FOOD_LABEL_BG]]", buildFoodLabelBg(data.foodLabel))
+    .replace("[[FOOD_LABEL]]", data.foodLabel)
+    .replace("[[FIBRES]]", `${data.fibres}g`)
+    .replace("[[GLUCIDES]]", `${data.glucides}g`)
+    .replace("[[LIPIDES]]", `${data.lipides}g`)
+    .replace("[[PROTEINES]]", `${data.proteines}g`)
+    .replace("[[KCAL]]", String(data.kcal))
+    .replace('fill="[[COLOR_BG]]"', `fill="${data.colors.bg}"`)
     .replace('fill="[[COLOR_CIRCLE]]"', `fill="${data.colors.circle}"`);
 }
 

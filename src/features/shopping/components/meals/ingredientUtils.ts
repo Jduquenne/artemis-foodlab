@@ -1,4 +1,4 @@
-import { IngredientSource } from '../../../../core/utils/shoppingLogic';
+import { IngredientSource } from '../../../../core/logic/shopping/shoppingLogic';
 
 export interface RecipeCardIngredient {
     ingredientKey: string;

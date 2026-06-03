@@ -1,5 +1,5 @@
-import { RecipeDetails } from "../domain/types";
-import { typedRecipesDb } from "../typed-db/typedRecipesDb";
+import { RecipeDetails } from "../../domain/types";
+import { typedRecipesDb } from "../../typed-db/typedRecipesDb";
 
 export function getLinkedBases(
   recipe: Pick<RecipeDetails, "ingredients">,

@@ -1,10 +1,10 @@
-import { db } from "../services/databaseService";
+import { db } from "../../services/databaseService";
 import {
   FreezerCategory,
   MealSlot,
   HouseholdRecord,
   ShoppingDay,
-} from "../domain/types";
+} from "../../domain/types";
 
 export type SyncScope = "planning" | "household" | "freezer" | "shopping";
 export const ALL_SCOPES: SyncScope[] = [
@@ -61,6 +61,7 @@ function safeParseJson<T>(raw: string | null): T | null {
   try {
     return JSON.parse(raw) as T;
   } catch {
+    /* malformed JSON in localStorage — discard and return null */
     return null;
   }
 }

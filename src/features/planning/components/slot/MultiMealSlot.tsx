@@ -4,7 +4,7 @@ import { PersonsEditor } from './PersonsEditor';
 import { SlotPersonsBadge } from './SlotPersonsBadge';
 import { useDraggable, useDroppable } from '@dnd-kit/core';
 import { plannableDb } from '../../../../core/typed-db/plannableDb';
-import { RECIPE_BASE_GRAMS } from '../../../../core/utils/macroUtils';
+import { RECIPE_BASE_GRAMS } from '../../../../shared/utils/macroUtils';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 import { hasRecipes as slotHasRecipes, isSlotFull, isDish, isBase } from '../../../../core/domain/recipePredicates';
 import { MultiRecipeGrid } from './MultiRecipeGrid';

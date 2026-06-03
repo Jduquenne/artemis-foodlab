@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { RecipeDetails } from "../../../core/domain/types";
-import { recipeToBookCardData } from "../../../core/utils/photoBuilderAdapter";
-import { buildRecetteBookSvg } from "../../../core/utils/photoBuilderSvg";
+import { recipeToBookCardData } from "../../utils/cards/cardAdapter";
+import { buildRecetteBookSvg } from "../../utils/cards/cardSvg";
 import { SvgCard } from "./SvgCard";
 
 const cache = new Map<string, string>();

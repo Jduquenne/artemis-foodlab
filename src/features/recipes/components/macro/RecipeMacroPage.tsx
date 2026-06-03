@@ -5,7 +5,7 @@ import { RecipeDetails, Unit } from '../../../../core/domain/types';
 import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
 import { RecipePhotoCard } from '../../../../shared/components/ui/RecipePhotoCard';
 import { typedFoodDb } from '../../../../core/typed-db/typedFoodDb';
-import { calculateRecipeMacros } from '../../../../core/utils/macroUtils';
+import { calculateRecipeMacros } from '../../../../shared/utils/macroUtils';
 import { MacroBar } from './MacroBar';
 import { IngredientAdjustRow } from './IngredientAdjustRow';
 

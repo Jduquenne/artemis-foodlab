@@ -1,10 +1,10 @@
 import { addDays, getISOWeek, getISOWeekYear } from "date-fns";
-import { getWeekSlots } from "../services/planningService";
-import { HouseholdItem, Ingredient, IngredientCategory, MealSlot, ShoppingDay } from "../domain/types";
-import { getAllRecipeIds } from "../domain/recipePredicates";
-import { typedRecipesDb } from "../typed-db/typedRecipesDb";
-import { RECIPE_BASE_GRAMS } from "./macroUtils";
-import { pluralizeUnit } from "./unitUtils";
+import { getWeekSlots } from "../../services/planningService";
+import { HouseholdItem, Ingredient, IngredientCategory, MealSlot, ShoppingDay } from "../../domain/types";
+import { getAllRecipeIds } from "../../domain/recipePredicates";
+import { typedRecipesDb } from "../../typed-db/typedRecipesDb";
+import { RECIPE_BASE_GRAMS } from "../../../shared/utils/macroUtils";
+import { pluralizeUnit } from "../../../shared/utils/unitUtils";
 
 export interface IngredientSource {
   recipeId: string;

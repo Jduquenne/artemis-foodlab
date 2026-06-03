@@ -1,5 +1,5 @@
 import { CheckCircle2, Circle } from 'lucide-react';
-import { IngredientSource } from '../../../../core/utils/shoppingLogic';
+import { IngredientSource } from '../../../../core/logic/shopping/shoppingLogic';
 import { RecipeCardIngredient, isIngChecked } from './ingredientUtils';
 import { IngredientRow } from './IngredientRow';
 

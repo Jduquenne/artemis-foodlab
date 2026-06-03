@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { Search, X } from "lucide-react";
 import { typedRecipesDb } from "../../../core/typed-db/typedRecipesDb";
-import { recipeToBuilderState } from "../../../core/utils/recipeBuilderUtils";
+import { recipeToBuilderState } from "../../../core/logic/recipeBuilder/recipeBuilderLogic";
 import { RecipeBuilderState } from "../../../core/domain/recipeBuilderTypes";
 
 export interface LoadRecipeModalProps {

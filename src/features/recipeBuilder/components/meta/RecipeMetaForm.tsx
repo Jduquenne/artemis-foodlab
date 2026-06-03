@@ -1,7 +1,7 @@
 import { RecipeKind } from "../../../../core/domain/types";
 import { CATEGORIES } from "../../../../core/domain/categories";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
-import { CATEGORY_PREFIX, buildRecipeId } from "../../../../core/utils/recipeBuilderUtils";
+import { CATEGORY_PREFIX, buildRecipeId } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
 
 export interface RecipeMetaFormProps {
   state: RecipeBuilderState;

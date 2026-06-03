@@ -13,11 +13,6 @@ export const getWeekId = (date: Date = new Date()) => {
   return `${year}-W${week.toString().padStart(2, "0")}`;
 };
 
-export const formatDayDate = (monday: Date, dayIndex: number): string => {
-  const d = addDays(monday, dayIndex);
-  return format(d, "d MMM", { locale: fr });
-};
-
 export const getDaysOfWeek = (date: Date = new Date()) => {
   const start = startOfISOWeek(date);
   return Array.from({ length: 7 }, (_, i) => {
@@ -28,4 +23,9 @@ export const getDaysOfWeek = (date: Date = new Date()) => {
       date: day,
     };
   });
+};
+
+export const formatDayDate = (monday: Date, dayIndex: number): string => {
+  const d = addDays(monday, dayIndex);
+  return format(d, "d MMM", { locale: fr });
 };

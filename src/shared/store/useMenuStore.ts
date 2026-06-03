@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { getISOWeek, getISOWeekYear } from "date-fns";
-import { getWeekId } from "../../core/utils/dateUtils";
+import { getWeekId } from "../utils/dateUtils";
 import { ShoppingDay } from "../../core/domain/types";
 import { clearAll as clearHouseholdItems } from "../../core/services/householdService";
 

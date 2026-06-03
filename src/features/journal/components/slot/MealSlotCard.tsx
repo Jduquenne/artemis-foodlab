@@ -1,6 +1,6 @@
 import { Macronutrients, MealSlot, RecipeKind, SlotType } from "../../../../core/domain/types";
 import { getAllRecipeIds, hasDesserts } from "../../../../core/domain/recipePredicates";
-import { RECIPE_BASE_GRAMS, RECIPE_MACROS, ZERO } from "../../../../core/utils/macroUtils";
+import { RECIPE_BASE_GRAMS, RECIPE_MACROS, ZERO } from "../../../../shared/utils/macroUtils";
 import { useJournalStore } from "../../../../shared/store/useJournalStore";
 import { typedRecipesDb } from "../../../../core/typed-db/typedRecipesDb";
 import { SLOT_LABELS } from "../../../../shared/utils/slotLabels";

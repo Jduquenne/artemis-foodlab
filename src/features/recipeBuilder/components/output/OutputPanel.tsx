@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Copy, Check, X, FileCode2 } from "lucide-react";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
-import { buildImageName, generateCsvOutput, generateIngredientListOutput } from "../../../../core/utils/recipeBuilderUtils";
+import { buildImageName, generateCsvOutput, generateIngredientListOutput } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
 
 export interface OutputPanelProps {
   state: RecipeBuilderState;

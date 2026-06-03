@@ -1,6 +1,4 @@
-import { CardColors } from "./photoBuilderUtils";
-
-export type { CardColors };
+import { CardColors } from "../../../core/domain/cardTypes";
 
 const CARD_COLORS: Record<string, CardColors> = {
   charcuterie:       { bg: "#cbc2d1", band: "#8238bd", circle: "#410d6b" },

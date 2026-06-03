@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { X, CheckCircle2, Circle, Snowflake, ChevronDown, ChevronUp } from 'lucide-react';
-import { IngredientSource } from '../../../core/utils/shoppingLogic';
+import { IngredientSource } from '../../../core/logic/shopping/shoppingLogic';
 import { FreezerBag, SlotType } from '../../../core/domain/types';
-import { pluralizeUnit } from '../../../core/utils/unitUtils';
+import { pluralizeUnit } from '../../../shared/utils/unitUtils';
 import { SLOT_LABELS } from '../../../shared/utils/slotLabels';
 
 const DAY_LABELS: Record<string, string> = {

@@ -13,7 +13,7 @@ import { isPlannable } from '../../core/domain/recipePredicates';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { typedRecipesDb } from '../../core/typed-db/typedRecipesDb';
 import { typedFoodDb } from '../../core/typed-db/typedFoodDb';
-import { calculateRecipeMacros } from '../../core/utils/macroUtils';
+import { calculateRecipeMacros } from '../../shared/utils/macroUtils';
 import { RecipePhotoCard } from '../../shared/components/ui/RecipePhotoCard';
 import { RecipeIngredientsCard } from '../../shared/components/ui/RecipeIngredientsCard';
 import { LazyRender } from '../../shared/components/ui/LazyRender';

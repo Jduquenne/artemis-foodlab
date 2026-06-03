@@ -2,7 +2,7 @@ import { useState } from "react";
 import { MoreVertical, Copy, Trash2, Pencil } from "lucide-react";
 import { FreezerBag } from "../../../../core/domain/types";
 import { addBagToFoodItem, removeBagFromFoodItem, updateBagInFoodItem } from "../../../../core/services/freezerService";
-import { pluralizeUnit } from "../../../../core/utils/unitUtils";
+import { pluralizeUnit } from "../../../../shared/utils/unitUtils";
 import { EditBagForm } from "./EditBagForm";
 
 export interface BagRowProps {

@@ -15,14 +15,14 @@ import { PlanningHeader } from './components/PlanningHeader';
 import { PlanningSlot } from './components/slot/PlanningSlot';
 import { DayTabsBar } from './components/bars/DayTabsBar';
 import { getWeekNumber, getMonday, getWeekRange } from '../../shared/utils/weekUtils';
-import { formatDayDate } from '../../core/utils/dateUtils';
-import { computeDayMacros } from '../../core/utils/macroUtils';
+import { formatDayDate } from '../../shared/utils/dateUtils';
+import { computeDayMacros } from '../../shared/utils/macroUtils';
 import { useSearchParams } from 'react-router-dom';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { SlotType, ShoppingDay, MealSlot } from '../../core/domain/types';
 import { isDessert, canAddDessert, isSlotFull } from '../../core/domain/recipePredicates';
 import { MEAL_SLOTS, DAYS, CopyState } from '../../core/domain/planningConfig';
-import { computeSlotCopyProps, parseFullSlotId } from '../../core/utils/planningUtils';
+import { computeSlotCopyProps, parseFullSlotId } from '../../core/logic/planning/planningLogic';
 import {
     DndContext,
     DragEndEvent,

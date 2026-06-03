@@ -1,8 +1,9 @@
-import { Food, Macronutrients, MealSlot, RecipeDetails, Unit } from "../domain/types";
-import { getAllRecipeIds, isDish, isBase } from "../domain/recipePredicates";
-import { typedRecipesDb } from "../typed-db/typedRecipesDb";
-import { typedFoodDb } from "../typed-db/typedFoodDb";
-import { plannableDb } from "../typed-db/plannableDb";
+import { Food, Macronutrients, MealSlot, RecipeDetails, Unit } from "../../core/domain/types";
+import { getAllRecipeIds, isDish, isBase } from "../../core/domain/recipePredicates";
+import { typedRecipesDb } from "../../core/typed-db/typedRecipesDb";
+import { typedFoodDb } from "../../core/typed-db/typedFoodDb";
+import { plannableDb } from "../../core/typed-db/plannableDb";
+
 export const ZERO: Macronutrients = {
   kcal: 0,
   proteins: 0,
@@ -10,7 +11,8 @@ export const ZERO: Macronutrients = {
   carbohydrates: 0,
   fibers: 0,
 };
-function add(a: Macronutrients, b: Macronutrients): Macronutrients {
+
+export function addMacros(a: Macronutrients, b: Macronutrients): Macronutrients {
   return {
     kcal: a.kcal + b.kcal,
     proteins: a.proteins + b.proteins,
@@ -20,7 +22,7 @@ function add(a: Macronutrients, b: Macronutrients): Macronutrients {
   };
 }
 
-function scale(m: Macronutrients, factor: number): Macronutrients {
+export function scaleMacros(m: Macronutrients, factor: number): Macronutrients {
   return {
     kcal: m.kcal * factor,
     proteins: m.proteins * factor,
@@ -30,7 +32,7 @@ function scale(m: Macronutrients, factor: number): Macronutrients {
   };
 }
 
-function toGrams(
+export function toGrams(
   quantity: number,
   unit: Unit,
   unitWeight?: number,
@@ -66,26 +68,18 @@ export function calculateRecipeMacros(
     if (ingredient.foodId) {
       const food = foodDb[ingredient.foodId];
       if (!food) continue;
-      const grams = toGrams(
-        ingredient.quantity,
-        ingredient.unit,
-        food.unitWeight,
-      );
+      const grams = toGrams(ingredient.quantity, ingredient.unit, food.unitWeight);
       if (grams == null) continue;
-      total = add(total, scale(food.macros, grams / 100));
+      total = addMacros(total, scaleMacros(food.macros, grams / 100));
     } else if (ingredient.baseId) {
       const base = allRecipes[ingredient.baseId];
       if (!base) continue;
-      const baseMacrosPerPortion = calculateRecipeMacros(
-        base,
-        allRecipes,
-        foodDb,
-      );
-      total = add(total, scale(baseMacrosPerPortion, ingredient.quantity));
+      const baseMacrosPerPortion = calculateRecipeMacros(base, allRecipes, foodDb);
+      total = addMacros(total, scaleMacros(baseMacrosPerPortion, ingredient.quantity));
     }
   }
 
-  return scale(total, 1 / recipe.defaultPortions);
+  return scaleMacros(total, 1 / recipe.defaultPortions);
 }
 
 const _allRecipes = typedRecipesDb;
@@ -96,6 +90,7 @@ export const RECIPE_MACROS: Record<string, Macronutrients> = Object.fromEntries(
     try {
       return [[id, calculateRecipeMacros(recipe, _allRecipes, _allFoods)]];
     } catch {
+      /* recipe has unresolvable ingredients (missing foodId / baseId) — skip silently */
       return [];
     }
   })
@@ -138,7 +133,7 @@ export function computeDayMacros(
       } else {
         factor = portionOverrides[key] ?? 1;
       }
-      return add(sum, scale(m, factor));
+      return addMacros(sum, scaleMacros(m, factor));
     }, total);
   }, { ...ZERO });
 }

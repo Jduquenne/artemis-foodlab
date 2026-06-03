@@ -1,10 +1,4 @@
-import { IngredientLineItem } from "./recipeBuilderUtils";
-
-export interface CardColors {
-  bg: string;
-  band: string;
-  circle: string;
-}
+import { CardColors, IngredientLineItem } from "../../../core/domain/cardTypes";
 
 const MIN_CARD_SCALE = 0.05;
 

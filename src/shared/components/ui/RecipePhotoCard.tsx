@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import { RecipeDetails } from "../../../core/domain/types";
-import { calculateRecipeMacros } from "../../../core/utils/macroUtils";
-import { recipeToPhotoCardData } from "../../../core/utils/photoBuilderAdapter";
-import { buildPhotoSvg } from "../../../core/utils/photoBuilderSvg";
+import { calculateRecipeMacros } from "../../utils/macroUtils";
+import { recipeToPhotoCardData } from "../../utils/cards/cardAdapter";
+import { buildPhotoSvg } from "../../utils/cards/cardSvg";
 import { typedRecipesDb } from "../../../core/typed-db/typedRecipesDb";
 import { typedFoodDb } from "../../../core/typed-db/typedFoodDb";
 import { SvgCard } from "./SvgCard";

@@ -1,4 +1,4 @@
-import { FreezerBag, FreezerCategory } from '../domain/types';
+import { FreezerBag, FreezerCategory } from '../../domain/types';
 
 export function getBatchRecipeIdsInFreezer(categories: FreezerCategory[]): Set<string> {
   const set = new Set<string>();

@@ -3,7 +3,7 @@ import { MealSlot } from "../../../../core/domain/types";
 import { MealSlot as MealSlotComp } from "./MealSlot";
 import { MultiMealSlot } from "./MultiMealSlot";
 import { MealSlotDef } from "../../../../core/domain/planningConfig";
-import { SlotCopyProps } from "../../../../core/utils/planningUtils";
+import { SlotCopyProps } from "../../../../core/logic/planning/planningLogic";
 
 export interface PlanningSlotProps {
   mealType: MealSlotDef;

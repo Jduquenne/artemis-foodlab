@@ -9,7 +9,7 @@ import { StepInstruction } from "./components/StepInstruction";
 import { ProgressView } from "./components/ProgressView";
 import { createSenderSession, createReceiverSession, SenderSession, ReceiverSession } from "../../core/services/syncService";
 import { useNotificationStore } from "../../shared/store/useNotificationStore";
-import { SyncScope, ALL_SCOPES } from "../../core/utils/syncSerializer";
+import { SyncScope, ALL_SCOPES } from "../../core/logic/sync/syncSerializer";
 
 const compress = (sdp: string) => LZString.compressToEncodedURIComponent(sdp);
 const decompress = (data: string) => LZString.decompressFromEncodedURIComponent(data);

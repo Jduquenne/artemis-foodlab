@@ -1,13 +1,13 @@
 import { useRef, useState, useEffect, useMemo, useCallback } from "react";
 import { Upload, X, Download, Loader2 } from "lucide-react";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
-import { computeDraftTotal, formatIngredientsForIngredientCard, buildImageName } from "../../../../core/utils/recipeBuilderUtils";
+import { computeDraftTotal, formatIngredientsForIngredientCard, buildImageName } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
 import { SvgCard } from "../../../../shared/components/ui/SvgCard";
-import { SmallCardData, IngredientsCardData, RecetteCardData, RecetteBookCardData } from "../../../../core/utils/photoBuilderTypes";
-import { getCardColors } from "../../../../core/utils/photoBuilderColors";
-import { buildPhotoSvg, buildIngredientsSvg, buildRecetteSvg, buildRecetteBookSvg } from "../../../../core/utils/photoBuilderSvg";
+import { SmallCardData, IngredientsCardData, RecetteCardData, RecetteBookCardData } from "../../../../core/domain/cardTypes";
+import { getCardColors } from "../../../../shared/utils/cards/cardColors";
+import { buildPhotoSvg, buildIngredientsSvg, buildRecetteSvg, buildRecetteBookSvg } from "../../../../shared/utils/cards/cardSvg";
 import { downloadSingleCard, downloadAllCards } from "./photoBuilderExport";
-import { calculateCardScale } from "../../../../core/utils/photoBuilderUtils";
+import { calculateCardScale } from "../../../../shared/utils/cards/cardUtils";
 
 type CardId = "photo" | "ingredients" | "recette" | "livre";
 

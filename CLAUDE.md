@@ -105,8 +105,12 @@ The `<Routes>` tree is wrapped in a `<Suspense>` with no visible fallback (seaml
 - **Non-indexed Dexie fields**: adding optional fields to a stored object (e.g. `dessertIds?`) does **not** require a schema version bump as long as the field is not used as a Dexie index. Only structural changes (new stores, new indexes, fields used in `.where()`) require a new `.version(n+1)` block.
 - **Asset manifest**: `scripts/generate-manifest.cjs` generates `core/data/assets-manifest.json` listing recipe images under `public/`. Run if adding new images.
 - **`buildRecipeId(categoryId, recipeNumber)`** (`core/utils/recipeBuilderUtils.ts`): formats the recipe ID used in filenames and CSV output. `recipeNumber` is padded to a minimum of 2 digits (`"3"` → `"03"`, `"16"` → `"16"`, `"103"` → `"103"`). Used in `OutputPanel`, `AssetsPanel`, and `generateCsvOutput`.
-- **Photo-builder** (`src/features/recipeBuilder/components/photo-builder/`): generates 3 SVG cards (photo 189×208, ingredients 189×208, recette 559×397) and exports them as WebP via canvas. Key files:
-  - `photoBuilderSvg.ts` — SVG builders (all `[[PLACEHOLDER]]` substitutions, `buildRecipeNameText`, `buildInstructionText`)
+- **SVG card system** — types in `core/domain/cardTypes.ts`, rendering utilities in `core/utils/card*.ts`, export in `src/features/recipeBuilder/components/photo-builder/photoBuilderExport.ts`. Key files:
+  - `core/domain/cardTypes.ts` — `CardColors`, `IngredientLineItem`, `SmallCardData`, `FoodCardData`, etc.
+  - `core/utils/cardSvg.ts` — SVG builders (all `[[PLACEHOLDER]]` substitutions, `buildRecipeNameText`, `buildInstructionText`)
+  - `core/utils/cardUtils.ts` — pure rendering helpers (`buildRecipeNameText`, `wrapLineAtMaxChars`, `calculateCardScale`, etc.)
+  - `core/utils/cardColors.ts` — `getCardColors(categoryId)` lookup table
+  - `core/utils/cardAdapter.ts` — adapters `RecipeDetails → *CardData`
   - `photoBuilderExport.ts` — `svgToWebpBlob` (pixelRatio 3×), `buildFontStyleTag` (embeds local fonts as base64 via `new URL(url, window.location.href).href` to resolve `/assets/fonts/` paths), `downloadSingleCard`, `downloadCardPack` (JSZip)
   - `AssetsPanel.tsx` — image input supports file picker, drag-and-drop (`onDragOver`/`onDrop` on container), and clipboard paste (`onPaste` + `tabIndex={0}`; user clicks anywhere in panel then Ctrl+V). Two separate ResizeObserver refs (`thumbsRowRef`, `expandAreaRef`) drive scale calculations independently.
   - **Select null guards**: all `<select value={...}>` in recipe builder and freezer forms use `?? Unit.NONE`, `?? ""`, `?? IngredientCategory.UNKNOWN` to guard against null values from the Zustand `persist` store rehydration.
@@ -252,7 +256,7 @@ Current version: **6.31.0**. The next commit must update `package.json` accordin
 
 - **Enum variable names must be in English** — the string value can be in French, but the identifier must be English. Example: `MAINTENANCE = "Entretien"`, not `ENTRETIEN = "Entretien"`.
 - **Never use `any`** — let TypeScript infer, or use a proper type/interface. If a cast is needed on JSON data, use a typed accessor (see below).
-- **Never use `as unknown as X` in components or hooks** — JSON databases must be accessed via the typed accessors in `core/utils/`: `typedRecipesDb`, `typedFoodDb`, `plannableDb`. The `unknown` cast is confined to those 3 files only. Never introduce a new one elsewhere.
+- **Never use `as unknown as X` in components or hooks** — JSON databases must be accessed via the typed accessors in `core/typed-db/`. The `unknown` cast is confined to that folder only. Never introduce one outside of `core/typed-db/`.
 
 ## Code quality rules (lint — zero tolerance)
 

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { CheckCircle2, Circle, Snowflake } from 'lucide-react';
-import { ConsolidatedIngredient, IngredientSource } from '../../../../core/utils/shoppingLogic';
+import { ConsolidatedIngredient, IngredientSource } from '../../../../core/logic/shopping/shoppingLogic';
 import { FreezerBag } from '../../../../core/domain/types';
 import { IngredientTooltip } from './IngredientTooltip';
-import { pluralizeUnit } from '../../../../core/utils/unitUtils';
+import { pluralizeUnit } from '../../../../shared/utils/unitUtils';
 
 export interface ShoppingCategoryCardProps {
     label: string;

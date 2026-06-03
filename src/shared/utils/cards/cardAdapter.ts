@@ -1,16 +1,16 @@
-import { RecipeDetails, Macronutrients, Unit, IngredientCategory, Preparation } from "../domain/types";
-import { DraftIngredient } from "../domain/recipeBuilderTypes";
-import { formatIngredientsForIngredientCard } from "./recipeBuilderUtils";
-import { getCardColors } from "./photoBuilderColors";
-import { buildFoodQuantityLabel } from "./photoBuilderUtils";
-import { typedInstructionsDb } from "../typed-db/typedInstructionsDb";
+import { RecipeDetails, Macronutrients, Unit, IngredientCategory, Preparation } from "../../../core/domain/types";
+import { DraftIngredient } from "../../../core/domain/recipeBuilderTypes";
+import { formatIngredientsForIngredientCard } from "../../../core/logic/recipeBuilder/recipeBuilderLogic";
+import { getCardColors } from "./cardColors";
+import { buildFoodQuantityLabel } from "./cardUtils";
+import { typedInstructionsDb } from "../../../core/typed-db/typedInstructionsDb";
 import {
   SmallCardData,
   IngredientsCardData,
   RecetteCardData,
   RecetteBookCardData,
   FoodCardData,
-} from "./photoBuilderTypes";
+} from "../../../core/domain/cardTypes";
 
 function extractRecipeNumber(recipeId: string): number {
   return parseInt(recipeId.replace(/^[a-z]+-/, ""), 10);

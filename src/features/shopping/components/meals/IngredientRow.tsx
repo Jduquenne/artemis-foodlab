@@ -1,6 +1,6 @@
 import { CheckCircle2, Circle } from 'lucide-react';
-import { IngredientSource } from '../../../../core/utils/shoppingLogic';
-import { pluralizeUnit } from '../../../../core/utils/unitUtils';
+import { IngredientSource } from '../../../../core/logic/shopping/shoppingLogic';
+import { pluralizeUnit } from '../../../../shared/utils/unitUtils';
 import { RecipeCardIngredient, isIngChecked } from './ingredientUtils';
 
 export interface IngredientRowProps {

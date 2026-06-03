@@ -1,6 +1,6 @@
-import { MealSlot, SlotType } from "../domain/types";
-import { canAddDessert, isSlotFull } from "../domain/recipePredicates";
-import { CopyState, MEAL_SLOTS, MealSlotDef } from "../domain/planningConfig";
+import { MealSlot, SlotType } from "../../domain/types";
+import { canAddDessert, isSlotFull } from "../../domain/recipePredicates";
+import { CopyState, MEAL_SLOTS, MealSlotDef } from "../../domain/planningConfig";
 
 export function parseFullSlotId(fullId: string): { year: number; week: number; day: string; slot: SlotType } | null {
   const wIdx = fullId.indexOf('-W');

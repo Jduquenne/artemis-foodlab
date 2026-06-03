@@ -9,7 +9,7 @@ import {
   RecetteCardData,
   RecetteBookCardData,
   FoodCardData,
-} from "./photoBuilderTypes";
+} from "../../../core/domain/cardTypes";
 import {
   buildRecipeNameText,
   buildInstructionText,
@@ -18,21 +18,14 @@ import {
   computeSmallCardFontSize,
   computeRecetteFontSize,
   buildFoodLabelBg,
-} from "./photoBuilderUtils";
+} from "./cardUtils";
 
 export function buildPhotoSvg(data: SmallCardData): string {
   return photoTemplate
     .replace('href="[[IMAGE_HREF]]"', `href="${data.imageHref}"`)
     .replace(
       "[[RECIPE_NAME_TEXT]]",
-      buildRecipeNameText(
-        data.recipeName,
-        71.875,
-        15.5,
-        121.75,
-        11.1,
-        "#ffffff",
-      ),
+      buildRecipeNameText(data.recipeName, 71.875, 15.5, 121.75, 11.1, "#ffffff"),
     )
     .replace("[[FIBRES]]", `${data.fibres}g`)
     .replace("[[GLUCIDES]]", `${data.glucides}g`)
@@ -51,10 +44,7 @@ export function buildIngredientsSvg(data: IngredientsCardData): string {
   return ingredientsTemplate
     .replace("[[PORTIONS]]", String(data.portions))
     .replace("[[INGREDIENT_FONT_SIZE]]", String(fontSize))
-    .replace(
-      "[[INGREDIENT_TSPANS]]",
-      buildSmallIngredientTspans(data.ingredientLines, fontSize),
-    )
+    .replace("[[INGREDIENT_TSPANS]]", buildSmallIngredientTspans(data.ingredientLines, fontSize))
     .replace("[[RECIPE_NUMBER]]", String(data.recipeNumber))
     .replace('fill="[[COLOR_BG]]"', `fill="${data.colors.bg}"`)
     .replace('fill="[[COLOR_BAND]]"', `fill="${data.colors.band}"`);
@@ -62,20 +52,11 @@ export function buildIngredientsSvg(data: IngredientsCardData): string {
 
 export function buildRecetteBookSvg(data: RecetteBookCardData): string {
   const fontSize = computeRecetteFontSize(data.ingredients.length);
-  const { tspans, rects } = buildRecetteIngredients(
-    data.ingredients,
-    data.colors,
-    fontSize,
-    195.5,
-    120,
-  );
+  const { tspans, rects } = buildRecetteIngredients(data.ingredients, data.colors, fontSize, 195.5, 120);
   return recetteBookTemplate
     .replace('href="[[IMAGE_HREF]]"', `href="${data.imageHref}"`)
     .replace('href="[[BOOK_IMAGE_HREF]]"', `href="${data.bookImageHref}"`)
-    .replace(
-      "[[RECIPE_NAME_TEXT]]",
-      buildRecipeNameText(data.recipeName, 140, 23, 250, 17.9, "#ffffff"),
-    )
+    .replace("[[RECIPE_NAME_TEXT]]", buildRecipeNameText(data.recipeName, 140, 23, 250, 17.9, "#ffffff"))
     .replace("[[PORTIONS]]", String(data.portions))
     .replace("[[INGREDIENT_FONT_SIZE]]", String(fontSize))
     .replace("[[INGREDIENT_TSPANS]]", tspans)
@@ -104,25 +85,15 @@ export function buildFoodCardSvg(data: FoodCardData): string {
 
 export function buildRecetteSvg(data: RecetteCardData): string {
   const fontSize = computeRecetteFontSize(data.ingredients.length);
-  const { tspans, rects } = buildRecetteIngredients(
-    data.ingredients,
-    data.colors,
-    fontSize,
-  );
+  const { tspans, rects } = buildRecetteIngredients(data.ingredients, data.colors, fontSize);
   return recetteTemplate
     .replace('href="[[IMAGE_HREF]]"', `href="${data.imageHref}"`)
-    .replace(
-      "[[RECIPE_NAME_TEXT]]",
-      buildRecipeNameText(data.recipeName, 140, 23, 250, 17.9, "#ffffff"),
-    )
+    .replace("[[RECIPE_NAME_TEXT]]", buildRecipeNameText(data.recipeName, 140, 23, 250, 17.9, "#ffffff"))
     .replace("[[PORTIONS]]", String(data.portions))
     .replace("[[INGREDIENT_FONT_SIZE]]", String(fontSize))
     .replace("[[INGREDIENT_TSPANS]]", tspans)
     .replace("[[BASE_RECTS]]", rects)
-    .replace(
-      "[[INSTRUCTION_TEXT]]",
-      buildInstructionText(data.instructions, 160, 110, 247, 175),
-    )
+    .replace("[[INSTRUCTION_TEXT]]", buildInstructionText(data.instructions, 160, 110, 247, 175))
     .replace("[[RECIPE_NUMBER]]", String(data.recipeNumber))
     .replace('fill="[[COLOR_BG]]"', `fill="${data.colors.bg}"`)
     .split('fill="[[COLOR_BAND]]"')

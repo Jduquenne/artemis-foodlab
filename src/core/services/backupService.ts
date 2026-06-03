@@ -1,4 +1,4 @@
-import { serializeData, SyncScope, ALL_SCOPES } from "../utils/syncSerializer";
+import { serializeData, SyncScope, ALL_SCOPES } from "../logic/sync/syncSerializer";
 
 export const exportData = async (scope: SyncScope[] = ALL_SCOPES): Promise<void> => {
   const data = await serializeData(scope);

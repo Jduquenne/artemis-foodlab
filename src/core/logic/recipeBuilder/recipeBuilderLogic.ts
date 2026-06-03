@@ -7,17 +7,17 @@ import {
   RecipeDetails,
   RecipeKind,
   Unit,
-} from "../domain/types";
+} from "../../domain/types";
 import {
   DraftIngredient,
   RecipeBuilderState,
-} from "../domain/recipeBuilderTypes";
-import { ZERO } from "./macroUtils";
-import { calculateRecipeMacros } from "./macroUtils";
-import { wrapLineAtMaxChars } from "./photoBuilderUtils";
-import { typedFoodDb } from "../typed-db/typedFoodDb";
-import { typedRecipesDb } from "../typed-db/typedRecipesDb";
-import { typedInstructionsDb } from "../typed-db/typedInstructionsDb";
+} from "../../domain/recipeBuilderTypes";
+import { ZERO, calculateRecipeMacros, addMacros, scaleMacros, toGrams } from "../../../shared/utils/macroUtils";
+import { IngredientLineItem } from "../../domain/cardTypes";
+import { wrapLineAtMaxChars } from "../../../shared/utils/cards/cardUtils";
+import { typedFoodDb } from "../../typed-db/typedFoodDb";
+import { typedRecipesDb } from "../../typed-db/typedRecipesDb";
+import { typedInstructionsDb } from "../../typed-db/typedInstructionsDb";
 
 export const CATEGORY_PREFIX: Record<string, string> = {
   bases: "BASE",
@@ -54,45 +54,6 @@ export function buildImageName(
   const id = buildRecipeId(categoryId, recipeNumber);
   const namePart = recipeName.trim().replace(/ /g, "_");
   return type ? `${id}_${namePart}_${type}` : `${id}_${namePart}`;
-}
-
-function addMacros(a: Macronutrients, b: Macronutrients): Macronutrients {
-  return {
-    kcal: a.kcal + b.kcal,
-    proteins: a.proteins + b.proteins,
-    lipids: a.lipids + b.lipids,
-    carbohydrates: a.carbohydrates + b.carbohydrates,
-    fibers: a.fibers + b.fibers,
-  };
-}
-
-function scaleMacros(m: Macronutrients, factor: number): Macronutrients {
-  return {
-    kcal: m.kcal * factor,
-    proteins: m.proteins * factor,
-    lipids: m.lipids * factor,
-    carbohydrates: m.carbohydrates * factor,
-    fibers: m.fibers * factor,
-  };
-}
-
-function toGrams(qty: number, unit: Unit, unitWeight?: number): number | null {
-  switch (unit) {
-    case Unit.G:
-      return qty;
-    case Unit.KG:
-      return qty * 1000;
-    case Unit.ML:
-      return qty;
-    case Unit.PIECE:
-    case Unit.PORTION:
-    case Unit.TRANCHE:
-    case Unit.FEUILLE:
-    case Unit.SACHET:
-      return unitWeight != null ? qty * unitWeight : null;
-    default:
-      return null;
-  }
 }
 
 const foodDb: Record<string, Food> = typedFoodDb;
@@ -165,12 +126,6 @@ export function recipeToBuilderState(
   };
 }
 
-export interface IngredientLineItem {
-  text: string;
-  isNewCategory: boolean;
-  baseLabel?: string;
-}
-
 const INGREDIENT_CATEGORY_ORDER: IngredientCategory[] = [
   IngredientCategory.RECIPE,
   IngredientCategory.MEAT,
@@ -206,7 +161,6 @@ const COMMA_JOIN_CATEGORIES = new Set<IngredientCategory>([
 ]);
 
 const EPICERIE_COMMA_MAX_CHARS = 45;
-
 
 const WORD_UNITS = new Set<Unit>([
   Unit.FEUILLE,
@@ -302,10 +256,7 @@ export function formatIngredientsForIngredientCard(
           }
           firstInGroup = false;
         }
-        for (const line of wrapCommaSeparated(
-          epicerieNoQty,
-          EPICERIE_COMMA_MAX_CHARS,
-        )) {
+        for (const line of wrapCommaSeparated(epicerieNoQty, EPICERIE_COMMA_MAX_CHARS)) {
           push(line, firstInGroup);
           firstInGroup = false;
         }
@@ -424,11 +375,7 @@ export function computeDraftTotal(ingredients: DraftIngredient[]): {
         missing++;
         continue;
       }
-      const basePerPortion = calculateRecipeMacros(
-        base,
-        typedRecipesDb,
-        foodDb,
-      );
+      const basePerPortion = calculateRecipeMacros(base, typedRecipesDb, foodDb);
       total = addMacros(total, scaleMacros(basePerPortion, ing.quantity));
     } else {
       missing++;

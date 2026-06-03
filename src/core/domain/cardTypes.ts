@@ -1,7 +1,14 @@
-import { CardColors } from "./photoBuilderUtils";
-import { IngredientLineItem } from "./recipeBuilderUtils";
+export interface CardColors {
+  bg: string;
+  band: string;
+  circle: string;
+}
 
-export type { IngredientLineItem };
+export interface IngredientLineItem {
+  text: string;
+  isNewCategory: boolean;
+  baseLabel?: string;
+}
 
 export interface SmallCardData {
   imageHref: string;

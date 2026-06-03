@@ -4,6 +4,7 @@ export interface DayTabsBarProps {
     days: readonly string[];
     selectedDay: string;
     monday: Date;
+    dayKcal: Record<string, number>;
     isSelectionMode: boolean;
     isDraft: (day: string) => boolean;
     isConfirmed: (day: string) => boolean;
@@ -14,7 +15,7 @@ export interface DayTabsBarProps {
 }
 
 export const DayTabsBar = ({
-    days, selectedDay, monday, isSelectionMode,
+    days, selectedDay, monday, dayKcal, isSelectionMode,
     isDraft, isConfirmed, hasMeals,
     atMax, onSelectDay, onToggleDraft,
 }: DayTabsBarProps) => (
@@ -26,6 +27,7 @@ export const DayTabsBar = ({
             const meals = hasMeals(day);
             const blocked = isSelectionMode && !draft && atMax;
             const dayNum = addDays(monday, i).getDate();
+            const kcal = dayKcal[day] ?? 0;
 
             return (
                 <button
@@ -45,8 +47,11 @@ export const DayTabsBar = ({
                     <span className="text-[9px] font-black uppercase tracking-tight leading-none">
                         {day.slice(0, 3)} <span className="font-semibold normal-case tracking-normal opacity-70">{dayNum}</span>
                     </span>
+                    {kcal > 0 && (
+                        <span className="text-[8px] font-semibold leading-none mt-0.5 opacity-60">{kcal}</span>
+                    )}
                     <span className={[
-                        'w-1 h-1 rounded-full mt-1',
+                        'w-1 h-1 rounded-full mt-0.5',
                         !meals ? 'bg-transparent' : '',
                         meals && (isActive || draft) ? 'bg-white/60' : '',
                         meals && !isActive && !draft && confirmed ? 'bg-orange-400' : '',

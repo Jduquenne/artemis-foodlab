@@ -16,6 +16,7 @@ import { PlanningSlot } from './components/slot/PlanningSlot';
 import { DayTabsBar } from './components/bars/DayTabsBar';
 import { getWeekNumber, getMonday, getWeekRange } from '../../shared/utils/weekUtils';
 import { formatDayDate } from '../../core/utils/dateUtils';
+import { computeDayMacros } from '../../core/utils/macroUtils';
 import { useSearchParams } from 'react-router-dom';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { SlotType, ShoppingDay, MealSlot } from '../../core/domain/types';
@@ -100,6 +101,14 @@ export const PlanningModule = () => {
         [year, weekNumber]
     );
     const planningData = useMemo(() => liveData ?? [], [liveData]);
+
+    const dayKcal = useMemo(() =>
+        Object.fromEntries(DAYS.map(day => {
+            const slots = planningData.filter(p => p.day === day);
+            return [day, slots.length ? Math.round(computeDayMacros(slots, {}, {}).kcal) : 0];
+        })),
+        [planningData]
+    );
 
     const activeMeal = useMemo(
         () => {
@@ -444,6 +453,7 @@ export const PlanningModule = () => {
                     days={DAYS}
                     selectedDay={selectedDay}
                     monday={monday}
+                    dayKcal={dayKcal}
                     isSelectionMode={isSelectionMode}
                     isDraft={isDayDraft}
                     isConfirmed={isDayConfirmed}
@@ -504,7 +514,7 @@ export const PlanningModule = () => {
                         </div>
                     )}
 
-                    <div className="hidden sm:grid grid-cols-[repeat(7,1fr)] grid-rows-[30px_repeat(4,1fr)] gap-3 h-full min-h-0 px-2 pb-2">
+                    <div className="hidden sm:grid grid-cols-[repeat(7,1fr)] grid-rows-[44px_repeat(4,1fr)] gap-3 h-full min-h-0 px-2 pb-2">
                         {DAYS.map((day, i) => {
                             const selected = isSelectionMode && isDayDraft(day);
                             const confirmed = !isSelectionMode && isDayConfirmed(day);
@@ -513,19 +523,26 @@ export const PlanningModule = () => {
                                 <div key={day}
                                     onClick={isSelectionMode && !blocked ? () => toggleDraftDay(year, weekNumber, day) : undefined}
                                     className={[
-                                        'flex items-center justify-center gap-1 font-black uppercase text-xs tracking-widest rounded-lg transition-colors select-none',
+                                        'flex flex-col items-center justify-center font-black uppercase tracking-widest rounded-lg transition-colors select-none',
                                         isSelectionMode ? (blocked ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer') : '',
                                         selected ? 'text-orange-500 bg-orange-100 dark:bg-orange-900/30' : '',
                                         confirmed ? 'text-orange-400' : 'text-slate-400',
                                         isSelectionMode && !selected && !blocked ? 'hover:bg-slate-100 dark:hover:bg-slate-700/40' : '',
                                     ].join(' ')}
                                 >
-                                    {selected && <Check className="w-3 h-3 shrink-0" />}
-                                    {confirmed && !isSelectionMode && <ShoppingCart className="w-2.5 h-2.5 shrink-0" />}
-                                    <span>{day.slice(0, 3)}</span>
-                                    <span className="font-semibold normal-case tracking-normal opacity-60 text-[10px]">
-                                        {formatDayDate(monday, i)}
-                                    </span>
+                                    <div className="flex items-center gap-1 text-xs">
+                                        {selected && <Check className="w-3 h-3 shrink-0" />}
+                                        {confirmed && !isSelectionMode && <ShoppingCart className="w-2.5 h-2.5 shrink-0" />}
+                                        <span>{day.slice(0, 3)}</span>
+                                        <span className="font-semibold normal-case tracking-normal opacity-60 text-[10px]">
+                                            {formatDayDate(monday, i)}
+                                        </span>
+                                    </div>
+                                    {dayKcal[day] > 0 && (
+                                        <span className="font-semibold normal-case tracking-normal opacity-60 text-[11px]">
+                                            {dayKcal[day]} kcal
+                                        </span>
+                                    )}
                                 </div>
                             );
                         })}

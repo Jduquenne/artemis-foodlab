@@ -34,3 +34,12 @@ export const formatDayDate = (monday: Date, dayIndex: number): string => {
   const d = addDays(monday, dayIndex);
   return format(d, "d MMM", { locale: fr });
 };
+
+export function formatNewsDate(dateStr: string): string {
+  const [year, month, day] = dateStr.split("-").map(Number);
+  return new Intl.DateTimeFormat("fr-FR", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(new Date(year, month - 1, day));
+}

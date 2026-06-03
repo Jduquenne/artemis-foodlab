@@ -1,20 +1,10 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { Sparkles, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { typedChangelogDb } from "../../core/typed-db/typedChangelogDb";
 import { typedRecipesDb } from "../../core/typed-db/typedRecipesDb";
 import { NewsRecipeCard } from "./components/NewsRecipeCard";
-
-export const NEWS_LAST_SEEN_KEY = "cipe_news_last_seen";
-
-function formatDate(dateStr: string): string {
-  const [year, month, day] = dateStr.split("-").map(Number);
-  return new Intl.DateTimeFormat("fr-FR", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(new Date(year, month - 1, day));
-}
+import { formatNewsDate } from "../../shared/utils/dateUtils";
 
 export interface NewsModalProps {
   onClose: () => void;
@@ -28,12 +18,6 @@ export const NewsModal = ({ onClose }: NewsModalProps) => {
     setIsClosing(true);
     setTimeout(onClose, 300);
   }, [onClose]);
-
-  useEffect(() => {
-    if (typedChangelogDb.length > 0) {
-      localStorage.setItem(NEWS_LAST_SEEN_KEY, typedChangelogDb[0].date);
-    }
-  }, []);
 
   const handleRecipeClick = useCallback(
     (recipeId: string) => {
@@ -88,7 +72,7 @@ export const NewsModal = ({ onClose }: NewsModalProps) => {
                 <div key={entry.date} className="mb-4 last:mb-0">
                   <div className="px-3 mb-1">
                     <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                      {formatDate(entry.date)}
+                      {formatNewsDate(entry.date)}
                     </p>
                     {entry.note && (
                       <p className="text-xs text-slate-400 mt-0.5">{entry.note}</p>

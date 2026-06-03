@@ -4,26 +4,19 @@ import { SidebarLogo } from './SidebarLogo';
 import { SidebarNav } from './SidebarNav';
 import { SettingsPopover } from './SettingsPopover';
 import { NewsButton } from './NewsButton';
-import { typedChangelogDb } from '../../../core/typed-db/typedChangelogDb';
-
-const NEWS_LAST_SEEN_KEY = "cipe_news_last_seen";
+import { useNewsStore } from '../../store/useNewsStore';
 
 const NewsModal = lazy(() =>
   import('../../../features/news/NewsModal').then((m) => ({ default: m.NewsModal }))
 );
 
-function computeHasNew(): boolean {
-  if (typedChangelogDb.length === 0) return false;
-  return typedChangelogDb[0].date > (localStorage.getItem(NEWS_LAST_SEEN_KEY) ?? '');
-}
-
 export const Layout = ({ children }: { children: ReactNode }) => {
   const [newsOpen, setNewsOpen] = useState(false);
-  const [hasNew, setHasNew] = useState(computeHasNew);
+  const { hasNew, markAsSeen } = useNewsStore();
 
   const handleOpenNews = () => {
     setNewsOpen(true);
-    setHasNew(false);
+    markAsSeen();
   };
 
   return (

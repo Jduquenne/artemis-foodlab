@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, useMemo, useCallback } from "react";
+import { useRef, useState, useMemo, useCallback } from "react";
 import { Upload, X, Download, Loader2 } from "lucide-react";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
 import { computeDraftTotal, formatIngredientsForIngredientCard, buildImageName } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
@@ -7,7 +7,6 @@ import { SmallCardData, IngredientsCardData, RecetteCardData, RecetteBookCardDat
 import { getCardColors } from "../../../../shared/utils/cards/cardColors";
 import { buildPhotoSvg, buildIngredientsSvg, buildRecetteSvg, buildRecetteBookSvg } from "../../../../shared/utils/cards/cardSvg";
 import { downloadSingleCard, downloadAllCards } from "./photoBuilderExport";
-import { calculateCardScale } from "../../../../shared/utils/cards/cardUtils";
 
 type CardId = "photo" | "ingredients" | "recette" | "livre";
 
@@ -26,40 +25,14 @@ export interface AssetsPanelProps {
 }
 
 export const AssetsPanel = ({ state }: AssetsPanelProps) => {
-  const thumbsRowRef = useRef<HTMLDivElement>(null);
-  const expandAreaRef = useRef<HTMLDivElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const bookImageInputRef = useRef<HTMLInputElement>(null);
-  const [thumbH, setThumbH] = useState(140);
-  const [thumbW, setThumbW] = useState(800);
-  const [expandH, setExpandH] = useState(280);
-  const [expandW, setExpandW] = useState(800);
   const [selected, setSelected] = useState<CardId | null>(null);
   const [imageBase64, setImageBase64] = useState("");
   const [bookImageBase64, setBookImageBase64] = useState("");
   const [bookPageNumber, setBookPageNumber] = useState(0);
   const [downloading, setDownloading] = useState(false);
   const [dragging, setDragging] = useState(false);
-
-  useEffect(() => {
-    const thumbEl = thumbsRowRef.current;
-    const expandEl = expandAreaRef.current;
-    if (!thumbEl || !expandEl) return;
-    const ro = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.target === thumbEl) {
-          setThumbH(entry.contentRect.height);
-          setThumbW(entry.contentRect.width);
-        } else {
-          setExpandH(entry.contentRect.height);
-          setExpandW(entry.contentRect.width);
-        }
-      }
-    });
-    ro.observe(thumbEl);
-    ro.observe(expandEl);
-    return () => ro.disconnect();
-  }, []);
 
   const loadImageFile = useCallback((file: File, target: "main" | "book" = "main") => {
     if (!file.type.startsWith("image/")) return;
@@ -221,23 +194,6 @@ export const AssetsPanel = ({ state }: AssetsPanelProps) => {
     }
   }, [photoSvg, ingredientsSvg, recetteSvg, livreSvg, fromBook, state.categoryId, state.recipeNumber, state.name]);
 
-  const thumbCellW = (thumbW - 16) / 3;
-
-  const thumbScale = (id: CardId) => {
-    const { w, h } = CARD_DIMS[id];
-    return calculateCardScale(w, h, thumbH - 8, thumbCellW - 8);
-  };
-
-  const expandScale = (id: CardId) => {
-    const { w, h } = CARD_DIMS[id];
-    return calculateCardScale(w, h, expandH - 16, expandW - 16);
-  };
-
-  const renderCard = (id: CardId, scale: number) => {
-    const { w, h } = CARD_DIMS[id];
-    return <SvgCard svgContent={getSvgForCard(id)} width={w} height={h} scale={scale} />;
-  };
-
   return (
     <div
       className="flex-1 min-h-0 flex flex-col gap-2 overflow-hidden outline-none"
@@ -364,41 +320,50 @@ export const AssetsPanel = ({ state }: AssetsPanelProps) => {
         </button>
       </div>
 
-      <div className="flex-1 min-h-0 flex flex-col gap-2 overflow-hidden relative">
+      <div className="flex-1 min-h-0 flex gap-2 overflow-hidden relative">
         {dragging && (
           <div className="absolute inset-0 z-20 flex items-center justify-center bg-orange-50/80 dark:bg-orange-900/20 rounded-xl border-2 border-orange-400 pointer-events-none">
             <p className="text-sm font-bold text-orange-500">Déposer l'image ici</p>
           </div>
         )}
-        <div ref={thumbsRowRef} className="shrink-0 flex gap-2" style={{ height: "33%" }}>
+
+        <div className="shrink-0 w-32 sm:w-40 flex flex-col gap-2">
           {activeCardIds.map(id => (
             <button
               key={id}
               type="button"
               onClick={() => setSelected(s => (s === id ? null : id))}
-              className={`flex-1 flex items-center justify-center overflow-hidden rounded-xl border-2 transition-colors ${
+              className={`relative flex-1 overflow-hidden rounded-xl border-2 transition-colors ${
                 effectiveSelected === id
                   ? "border-orange-400 bg-orange-50 dark:bg-orange-900/10"
                   : "border-slate-200 hover:border-orange-300"
               }`}
               title={CARD_LABELS[id]}
             >
-              <div className="pointer-events-none">{renderCard(id, thumbScale(id))}</div>
+              <div className="absolute inset-0 pointer-events-none">
+                <SvgCard svgContent={getSvgForCard(id)} width={CARD_DIMS[id].w} height={CARD_DIMS[id].h} fill />
+              </div>
+              <div className="absolute bottom-0 inset-x-0 flex items-center justify-center py-0.5 bg-white/80 dark:bg-slate-100/80">
+                <span className="text-[10px] font-semibold text-slate-500">{CARD_LABELS[id]}</span>
+              </div>
             </button>
           ))}
         </div>
 
-        <div ref={expandAreaRef} className="flex-1 min-h-0 flex items-center justify-center overflow-hidden">
+        <div className="flex-1 min-h-0 relative overflow-hidden rounded-xl border-2 border-slate-100 dark:border-slate-200">
           {effectiveSelected ? (
-            renderCard(effectiveSelected, expandScale(effectiveSelected))
+            <div className="absolute inset-0">
+              <SvgCard svgContent={getSvgForCard(effectiveSelected)} width={CARD_DIMS[effectiveSelected].w} height={CARD_DIMS[effectiveSelected].h} fill />
+            </div>
           ) : (
-            <p className="text-xs text-slate-400 text-center select-none">
-              Clique sur une carte pour l'agrandir
-            </p>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <p className="text-xs text-slate-400 text-center select-none">
+                Clique sur une carte pour l'agrandir
+              </p>
+            </div>
           )}
         </div>
       </div>
     </div>
   );
 };
-

@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
 import { typedFoodDb } from "../../../../core/typed-db/typedFoodDb";
 import { Food, IngredientCategory } from "../../../../core/domain/types";
+import { searchFoods } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
 
 export interface IngredientFoodSearchProps {
   value: string;
@@ -15,17 +16,10 @@ export const IngredientFoodSearch = ({ value, linked, onChange }: IngredientFood
   const isUnlinked = value.trim().length > 0 && !linked;
   const [open, setOpen] = useState(false);
 
-  const suggestions =
-    open && value.length > 0
-      ? (() => {
-          const q = value.toLowerCase();
-          const startsWith = foods.filter(f => f.name.toLowerCase().startsWith(q));
-          const contains = foods.filter(
-            f => !f.name.toLowerCase().startsWith(q) && f.name.toLowerCase().includes(q)
-          );
-          return [...startsWith, ...contains].slice(0, 8);
-        })()
-      : [];
+  const suggestions = useMemo(
+    () => (open && value.length > 0 ? searchFoods(value, foods) : []),
+    [open, value],
+  );
 
   return (
     <div className="relative flex-1 min-w-0">

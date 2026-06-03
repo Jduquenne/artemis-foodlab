@@ -4,14 +4,13 @@ import { Unit, IngredientCategory, Preparation } from "../../../../core/domain/t
 import { IngredientFoodSearch } from "./IngredientFoodSearch";
 import { BaseRecipeSearch } from "./BaseRecipeSearch";
 import { DraftIngredient } from "../../../../core/domain/recipeBuilderTypes";
+import { BUILDER_UNITS, switchIngredientType } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
 
 export interface IngredientEditDrawerProps {
   ingredient: DraftIngredient;
   onChange: (updated: DraftIngredient) => void;
   onClose: () => void;
 }
-
-const UNITS = Object.values(Unit).filter(u => u !== Unit.NONE);
 
 const FIELD_CLASS =
   "w-full px-3 py-2.5 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400";
@@ -22,20 +21,6 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
   const [isExiting, setIsExiting] = useState(false);
 
   const update = (patch: Partial<DraftIngredient>) => onChange({ ...ingredient, ...patch });
-
-  const switchType = (type: "food" | "base") => {
-    onChange({
-      ...ingredient,
-      ingredientType: type,
-      name: "",
-      foodId: undefined,
-      baseId: undefined,
-      quantity: null,
-      unit: type === "base" ? Unit.PORTION : Unit.NONE,
-      preparation: "",
-      category: type === "base" ? IngredientCategory.RECIPE : IngredientCategory.FRUIT_VEGETABLE,
-    });
-  };
 
   const close = () => {
     setIsExiting(true);
@@ -73,7 +58,7 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
             <div className="flex rounded-xl overflow-hidden border border-slate-200">
               <button
                 type="button"
-                onClick={() => switchType("food")}
+                onClick={() => onChange(switchIngredientType(ingredient, "food"))}
                 className={`flex-1 py-2.5 text-xs font-bold transition-colors ${
                   !isBase
                     ? "bg-orange-500 text-white"
@@ -84,7 +69,7 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
               </button>
               <button
                 type="button"
-                onClick={() => switchType("base")}
+                onClick={() => onChange(switchIngredientType(ingredient, "base"))}
                 className={`flex-1 py-2.5 text-xs font-bold transition-colors border-l border-slate-200 ${
                   isBase
                     ? "bg-orange-500 text-white"
@@ -140,7 +125,7 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
                   className={FIELD_CLASS}
                 >
                   <option value={Unit.NONE}>—</option>
-                  {UNITS.map(u => (
+                  {BUILDER_UNITS.map(u => (
                     <option key={u} value={u}>{u}</option>
                   ))}
                 </select>

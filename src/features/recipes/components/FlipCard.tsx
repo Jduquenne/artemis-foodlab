@@ -28,6 +28,7 @@ export const FlipCard = ({ name, frontContent, backContent, recipeUrl, onClick, 
 
         return (
             <div
+                aria-label={name}
                 className="relative w-full h-full cursor-pointer rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-white dark:bg-slate-100"
                 onClick={handleCardClick}
                 onContextMenu={(e) => { e.preventDefault(); setBackMounted(true); }}

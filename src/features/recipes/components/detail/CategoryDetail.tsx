@@ -47,11 +47,13 @@ export const CategoryDetail = () => {
 
     const BATCH_SIZE = 24;
     const [visibleCount, setVisibleCount] = useState(BATCH_SIZE);
+    const [prevFiltered, setPrevFiltered] = useState(filteredRecipes);
     const sentinelRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
+    if (filteredRecipes !== prevFiltered) {
+        setPrevFiltered(filteredRecipes);
         setVisibleCount(BATCH_SIZE);
-    }, [filteredRecipes]);
+    }
 
     useEffect(() => {
         const el = sentinelRef.current;

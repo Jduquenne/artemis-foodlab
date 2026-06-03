@@ -3,7 +3,7 @@ import { CheckCircle2, Circle, Snowflake } from 'lucide-react';
 import { ConsolidatedIngredient, IngredientSource } from '../../../../core/logic/shopping/shoppingLogic';
 import { FreezerBag } from '../../../../core/domain/types';
 import { IngredientTooltip } from './IngredientTooltip';
-import { pluralizeUnit } from '../../../../shared/utils/unitUtils';
+import { pluralizeUnit, formatQty } from '../../../../shared/utils/unitUtils';
 
 export interface ShoppingCategoryCardProps {
     label: string;
@@ -60,9 +60,6 @@ export const ShoppingCategoryCard = ({ label, items, checked, stocks, sourceChec
                     const hasStock = effectiveTotal > 0 && stock > 0;
                     const isEditing = editingKey === item.key;
                     const canEditStock = item.totalQuantity > 0;
-
-                    const formatQty = (n: number) =>
-                        n % 1 === 0 ? String(n) : n.toFixed(1);
 
                     return (
                         <div

@@ -2,20 +2,10 @@ import { useState } from 'react';
 import { X, CheckCircle2, Circle, Snowflake, ChevronDown, ChevronUp } from 'lucide-react';
 import { IngredientSource } from '../../../core/logic/shopping/shoppingLogic';
 import { FreezerBag, SlotType } from '../../../core/domain/types';
-import { pluralizeUnit } from '../../../shared/utils/unitUtils';
+import { pluralizeUnit, formatQty } from '../../../shared/utils/unitUtils';
+import { formatBagDate } from '../../../shared/utils/dateUtils';
 import { SLOT_LABELS } from '../../../shared/utils/slotLabels';
-
-const DAY_LABELS: Record<string, string> = {
-    monday: 'Lundi', tuesday: 'Mardi', wednesday: 'Mercredi',
-    thursday: 'Jeudi', friday: 'Vendredi', saturday: 'Samedi', sunday: 'Dimanche',
-};
-
-const DAY_SHORT: Record<string, string> = {
-    monday: 'Lun', tuesday: 'Mar', wednesday: 'Mer',
-    thursday: 'Jeu', friday: 'Ven', saturday: 'Sam', sunday: 'Dim',
-};
-
-const DAY_ORDER = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+import { DAY_LABELS, DAY_SHORT, DAY_ORDER } from '../../../shared/utils/dayLabels';
 
 export interface SourcesModalProps {
     ingredientKey: string;
@@ -29,13 +19,6 @@ export interface SourcesModalProps {
 }
 
 const COLLAPSE_THRESHOLD = 3;
-
-const formatDate = (iso: string) => {
-    const d = new Date(iso);
-    return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
-};
-
-const formatQty = (n: number) => n % 1 === 0 ? String(n) : n.toFixed(1);
 
 export const SourcesModal = ({ ingredientKey, sources, sourceChecked, onToggleSource, onClose, freezerBags, selectedBagIds = [], onToggleBag }: SourcesModalProps) => {
     const [bagsExpanded, setBagsExpanded] = useState(false);
@@ -102,7 +85,7 @@ export const SourcesModal = ({ ingredientKey, sources, sourceChecked, onToggleSo
                                                 {formatQty(qty)} {pluralizeUnit(bag.unit, qty)}
                                             </p>
                                             <p className="text-xs text-slate-400">
-                                                {formatDate(bag.addedDate)}
+                                                {formatBagDate(bag.addedDate)}
                                                 {bag.preparation && <><span className="mx-1 text-slate-300">·</span>{bag.preparation}</>}
                                             </p>
                                         </div>

@@ -1,15 +1,8 @@
 import { CheckCircle2, Circle } from 'lucide-react';
-import { IngredientSource } from '../../../../core/logic/shopping/shoppingLogic';
-import { RecipeCardIngredient, isIngChecked } from './ingredientUtils';
+import { IngredientSource, RecipeCardIngredient, RecipeBaseGroup, isIngChecked } from '../../../../core/logic/shopping/shoppingLogic';
 import { IngredientRow } from './IngredientRow';
 
-export type { RecipeCardIngredient };
-
-export interface RecipeBaseGroup {
-    baseId: string;
-    baseName: string;
-    ingredients: RecipeCardIngredient[];
-}
+export type { RecipeCardIngredient, RecipeBaseGroup };
 
 export interface RecipeShoppingCardProps {
     recipeId: string;

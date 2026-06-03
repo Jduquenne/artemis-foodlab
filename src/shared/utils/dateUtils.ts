@@ -4,6 +4,7 @@ import {
   addDays,
   getISOWeek,
   getISOWeekYear,
+  parseISO,
 } from "date-fns";
 import { fr } from "date-fns/locale";
 
@@ -34,6 +35,9 @@ export const formatDayDate = (monday: Date, dayIndex: number): string => {
   const d = addDays(monday, dayIndex);
   return format(d, "d MMM", { locale: fr });
 };
+
+export const formatBagDate = (iso: string): string =>
+  format(parseISO(iso), "d MMM", { locale: fr });
 
 export function formatNewsDate(dateStr: string): string {
   const [year, month, day] = dateStr.split("-").map(Number);

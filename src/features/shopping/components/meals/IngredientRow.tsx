@@ -1,15 +1,12 @@
 import { CheckCircle2, Circle } from 'lucide-react';
-import { IngredientSource } from '../../../../core/logic/shopping/shoppingLogic';
-import { pluralizeUnit } from '../../../../shared/utils/unitUtils';
-import { RecipeCardIngredient, isIngChecked } from './ingredientUtils';
+import { IngredientSource, RecipeCardIngredient, isIngChecked } from '../../../../core/logic/shopping/shoppingLogic';
+import { pluralizeUnit, formatQty } from '../../../../shared/utils/unitUtils';
 
 export interface IngredientRowProps {
     ing: RecipeCardIngredient;
     sourceChecked: Set<string>;
     onToggleSource: (ingredientKey: string, sources: IngredientSource[], checked: boolean) => void;
 }
-
-const formatQty = (n: number) => n % 1 === 0 ? String(n) : n.toFixed(1);
 
 export const IngredientRow = ({ ing, sourceChecked, onToggleSource }: IngredientRowProps) => {
     const allChecked = isIngChecked(ing, sourceChecked);

@@ -4,7 +4,7 @@ import { ArrowLeft, Calculator, ChevronLeft, ChevronRight, Pencil } from 'lucide
 import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
 import { typedFoodDb } from '../../../../core/typed-db/typedFoodDb';
 import { calculateRecipeMacros } from '../../../../shared/utils/macroUtils';
-import { getLinkedBases } from '../../../../core/logic/recipe/recipeLogic';
+import { getLinkedBases, getCategoryRecipeIds } from '../../../../core/logic/recipe/recipeLogic';
 import { RecipePhotoCard } from '../../../../shared/components/ui/RecipePhotoCard';
 import { recipeToBuilderState } from '../../../../core/logic/recipeBuilder/recipeBuilderLogic';
 import { useRecipeBuilderStore } from '../../../../shared/store/useRecipeBuilderStore';
@@ -24,12 +24,10 @@ export const RecipeDetail = () => {
   const instructionsPhotoUrl = recipe?.assets?.instructionsPhoto?.url;
   const categoryId = searchParams.get('category');
   const loadFromRecipe = useRecipeBuilderStore(s => s.loadFromRecipe);
-  const categoryRecipeIds = useMemo(() => {
-    if (!categoryId) return [];
-    return Object.entries(typedRecipesDb)
-      .filter(([, r]) => r.categoryId === categoryId && (r.assets?.mealPhoto || r.assets?.instructionsPhoto))
-      .map(([id]) => id);
-  }, [categoryId]);
+  const categoryRecipeIds = useMemo(
+    () => (categoryId ? getCategoryRecipeIds(categoryId) : []),
+    [categoryId],
+  );
 
   const currentIndex = categoryRecipeIds.indexOf(recipeId ?? '');
   const prevId = currentIndex > 0 ? categoryRecipeIds[currentIndex - 1] : null;

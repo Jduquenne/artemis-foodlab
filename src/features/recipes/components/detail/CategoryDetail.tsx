@@ -6,9 +6,10 @@ import { CATEGORIES } from '../../../../core/domain/categories';
 import { markScrolling } from '../../../../shared/utils/scrollGuard';
 import { MacroFilterButton } from '../filter/MacroFilterButton';
 import { PREDEFINED_FILTERS } from '../../../../core/domain/predefinedFilters';
-import { isPlannable, isIngredient } from '../../../../core/domain/recipePredicates';
+import { isPlannable } from '../../../../core/domain/recipePredicates';
 import { useMenuStore } from '../../../../shared/store/useMenuStore';
 import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
+import { getCategoryRecipes, filterCategoryRecipesByMacros } from '../../../../core/logic/recipe/recipeLogic';
 import { RecipePhotoCard } from '../../../../shared/components/ui/RecipePhotoCard';
 import { FoodPhotoCard } from '../../../../shared/components/ui/FoodPhotoCard';
 import { RecipeIngredientsCard } from '../../../../shared/components/ui/RecipeIngredientsCard';
@@ -20,28 +21,12 @@ export const CategoryDetail = () => {
     const { activeFilterIds, setActiveFilterIds } = useMenuStore();
 
     const categoryInfo = CATEGORIES.find(cat => cat.id === categoryId);
-    const recipes = useMemo(() => {
-        return Object.entries(typedRecipesDb)
-            .filter(([, recipe]) => recipe.categoryId === categoryId && (recipe.assets?.mealPhoto || isIngredient(recipe)))
-            .map(([recipeId, recipe]) => ({
-                id: recipeId,
-                name: recipe.name,
-                recipeUrl: isIngredient(recipe)
-                    ? recipeId
-                    : (recipe.assets.mealPhoto?.url ?? recipe.assets.instructionsPhoto?.url ?? ''),
-                isIngredientKind: isIngredient(recipe),
-            }));
-    }, [categoryId]);
+    const recipes = useMemo(() => getCategoryRecipes(categoryId ?? ''), [categoryId]);
 
-    const filteredRecipes = useMemo(() => {
-        if (activeFilterIds.length === 0) return recipes;
-        const activeFilters = PREDEFINED_FILTERS.filter(f => activeFilterIds.includes(f.id));
-        return recipes.filter((recipe) => {
-            const macros = typedRecipesDb[recipe.id]?.macronutriment;
-            if (!macros) return false;
-            return activeFilters.every(f => f.check(macros));
-        });
-    }, [recipes, activeFilterIds]);
+    const filteredRecipes = useMemo(
+        () => filterCategoryRecipesByMacros(recipes, activeFilterIds),
+        [recipes, activeFilterIds],
+    );
 
     const removeFilter = (id: string) => setActiveFilterIds(activeFilterIds.filter(f => f !== id));
 

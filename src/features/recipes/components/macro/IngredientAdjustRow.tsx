@@ -1,7 +1,8 @@
 import { ChevronDown, RotateCcw } from 'lucide-react';
-import { Ingredient, Unit } from '../../../../core/domain/types';
+import { Ingredient } from '../../../../core/domain/types';
 import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
 import { typedFoodDb } from '../../../../core/typed-db/typedFoodDb';
+import { UNIT_WEIGHT_UNITS } from '../../../../core/logic/recipe/recipeLogic';
 
 export interface IngredientAdjustRowProps {
   ingredient: Ingredient;
@@ -14,8 +15,6 @@ export interface IngredientAdjustRowProps {
   onResetUnitWeight: () => void;
   onToggleExpand: () => void;
 }
-
-const UNIT_WEIGHT_UNITS: string[] = [Unit.PIECE, Unit.PORTION, Unit.TRANCHE, Unit.FEUILLE, Unit.SACHET];
 
 export const IngredientAdjustRow = ({
   ingredient: ing,

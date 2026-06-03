@@ -12,8 +12,7 @@ import { PREDEFINED_FILTERS } from '../../core/domain/predefinedFilters';
 import { isPlannable } from '../../core/domain/recipePredicates';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { typedRecipesDb } from '../../core/typed-db/typedRecipesDb';
-import { typedFoodDb } from '../../core/typed-db/typedFoodDb';
-import { calculateRecipeMacros } from '../../shared/utils/macroUtils';
+import { filterRecipesByMacros } from '../../core/logic/recipe/recipeLogic';
 import { RecipePhotoCard } from '../../shared/components/ui/RecipePhotoCard';
 import { RecipeIngredientsCard } from '../../shared/components/ui/RecipeIngredientsCard';
 import { LazyRender } from '../../shared/components/ui/LazyRender';
@@ -29,17 +28,10 @@ export const RecipeModule = () => {
     const showResults = searchQuery.length >= 3 || activeFilterIds.length > 0;
     const baseResults = useSearchRecipes(showResults ? searchQuery : null);
 
-    const filteredResults = useMemo(() => {
-        if (activeFilterIds.length === 0) return baseResults;
-        const activeFilters = PREDEFINED_FILTERS.filter(f => activeFilterIds.includes(f.id));
-        return baseResults.filter((recipe) => {
-            const id = recipe.recipeId || recipe.id;
-            const details = typedRecipesDb[id];
-            if (!details) return false;
-            const macros = calculateRecipeMacros(details, typedRecipesDb, typedFoodDb);
-            return activeFilters.every(f => f.check(macros));
-        });
-    }, [baseResults, activeFilterIds]);
+    const filteredResults = useMemo(
+        () => filterRecipesByMacros(baseResults, activeFilterIds),
+        [baseResults, activeFilterIds],
+    );
 
     const removeFilter = (id: string) => setActiveFilterIds(activeFilterIds.filter(f => f !== id));
 

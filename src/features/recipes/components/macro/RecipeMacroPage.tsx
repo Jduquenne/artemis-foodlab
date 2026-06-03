@@ -1,15 +1,13 @@
 import { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import { RecipeDetails, Unit } from '../../../../core/domain/types';
 import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
-import { RecipePhotoCard } from '../../../../shared/components/ui/RecipePhotoCard';
 import { typedFoodDb } from '../../../../core/typed-db/typedFoodDb';
+import { RecipePhotoCard } from '../../../../shared/components/ui/RecipePhotoCard';
 import { calculateRecipeMacros } from '../../../../shared/utils/macroUtils';
+import { buildUnitWeightOverrides, patchRecipeQuantities, applyUnitWeightOverrides } from '../../../../core/logic/recipe/recipeLogic';
 import { MacroBar } from './MacroBar';
 import { IngredientAdjustRow } from './IngredientAdjustRow';
-
-const UNIT_WEIGHT_UNITS: string[] = [Unit.PIECE, Unit.PORTION, Unit.TRANCHE, Unit.FEUILLE, Unit.SACHET];
 
 export const RecipeMacroPage = () => {
   const { recipeId } = useParams();
@@ -23,38 +21,18 @@ export const RecipeMacroPage = () => {
     return Object.fromEntries(recipe.ingredients.map(ing => [ing.id, ing.quantity ?? 0]));
   });
 
-  const [unitWeights, setUnitWeights] = useState<Record<string, number>>(() => {
-    if (!recipe) return {};
-    const map: Record<string, number> = {};
-    for (const ing of recipe.ingredients) {
-      if (ing.foodId && UNIT_WEIGHT_UNITS.includes(ing.unit)) {
-        const w = typedFoodDb[ing.foodId]?.unitWeight;
-        if (w != null) map[ing.foodId] = w;
-      }
-    }
-    return map;
-  });
+  const [unitWeights, setUnitWeights] = useState<Record<string, number>>(
+    () => (recipe ? buildUnitWeightOverrides(recipe) : {}),
+  );
 
   const [expandedBases, setExpandedBases] = useState<Set<string>>(new Set());
 
-  const patchedFoods = useMemo(() => {
-    const result = { ...typedFoodDb };
-    for (const [foodId, weight] of Object.entries(unitWeights)) {
-      if (result[foodId]) result[foodId] = { ...result[foodId], unitWeight: weight };
-    }
-    return result;
-  }, [unitWeights]);
+  const patchedFoods = useMemo(() => applyUnitWeightOverrides(unitWeights), [unitWeights]);
 
-  const patchedRecipe = useMemo<RecipeDetails | null>(() => {
-    if (!recipe) return null;
-    return {
-      ...recipe,
-      ingredients: recipe.ingredients.map(ing => ({
-        ...ing,
-        quantity: quantities[ing.id] ?? ing.quantity,
-      })),
-    };
-  }, [recipe, quantities]);
+  const patchedRecipe = useMemo(
+    () => (recipe ? patchRecipeQuantities(recipe, quantities) : null),
+    [recipe, quantities],
+  );
 
   const macros = useMemo(() => {
     if (!patchedRecipe) return null;

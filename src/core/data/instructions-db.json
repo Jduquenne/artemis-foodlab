@@ -359,6 +359,10 @@
     "id": "char-049",
     "instructions": "Faire cuire les pâtes et les petits pois dans l’eau bouillante selon les indications puis égoutter.\nCuire les œufs 10 min dans l'eau bouillante pour obtenir des œufs durs. Refroidir sous l’eau froide, écaler et laisser le tout refroidir.\nMettre les pâtes, les dés de jambon et les petits pois dans un saladier.\nMélanger le fromage blanc avec le vinaigre, l’huile d’olive, la moutarde et la menthe ciselée ou séchée puis ajouter dans le saladier et mélanger.\nSaler et poivrer, mélanger et servir avec les oeufs durs coupés en quartiers."
   },
+  "char-050": {
+    "id": "char-050",
+    "instructions": "Faire cuire les grenailles à la vapeur pendant 8 minutes. Les laisser refroidir complètement puis les couper en morceaux.\nFaire cuire les œufs 9 à 10 minutes dans l'eau bouillante. Les refroidir sous l'eau froide puis les écaler.\nCouper les œufs en morceaux, le jambon et les tomates lavées en dés et les cornichons en rondelles.\nCiseler finement la ciboulette.\nDans un saladier, mélanger le fromage blanc, la moutarde, le vinaigre balsamique, l'huile de colza, la ciboulette, du sel et du poivre.\nAjouter les pommes de terre, le jambon, les tomates, les cornichons et les œufs. Mélanger délicatement pour bien enrober l'ensemble de sauce.\nCouvrir et réserver au réfrigérateur au moins 30 minutes avant de servir."
+  },
   "pat-001": {
     "id": "pat-001",
     "instructions": "Faire griller les cacahuètes quelques minutes à la poêle puis les concasser grossièrement.\nÉcraser la banane jusqu’à texture lisse.\nAjouter la purée de cacahuètes puis les œufs et le jus de citron. Mélanger jusqu’à homogénéité.\nIncorporer le bicarbonate, les farines et les flocons d’avoine. Mélanger juste pour amalgamer.\nAjouter les pépites de chocolat et les noisettes concassées.\nPlacer la pâte au réfrigérateur 30 à 60 minutes.\nFormer des cookies sur plaque recouverte d'une feuille de cuisson.\nEnfourner 12 à 15 minutes à 180°C jusqu’à bords dorés.\nLaisser refroidir avant manipulation."
@@ -733,11 +737,11 @@
   },
   "pc-041": {
     "id": "pc-041",
-    "instructions": ""
+    "instructions": "Mélanger les flocons avec les graines de chia et le lait.\nLaisser gonfler 12h (une nuit) au réfrigérateur."
   },
   "pc-042": {
     "id": "pc-042",
-    "instructions": ""
+    "instructions": "Mélanger les flocons avec les graines de chia et le lait.\nLaisser gonfler 12h (une nuit) au réfrigérateur."
   },
   "pc-043": {
     "id": "pc-043",
@@ -750,6 +754,10 @@
   "pc-045": {
     "id": "pc-045",
     "instructions": "Dans un saladier, mélanger la compote, le petit-lait, l'œuf, le sucre de coco et l'huile d'olive.\nAjouter la farine et mélanger jusqu'à obtenir une pâte homogène.\nIncorporer le bicarbonate puis ajouter immédiatement le jus de citron. Mélanger rapidement.\nLaisser reposer la pâte 15 à 30 minutes.\nPréchauffer le gaufrier jusqu'à ce qu'il soit bien chaud.\nDéposer une portion de pâte dans le gaufrier et cuire jusqu'à ce que les gaufres soient dorées.\nLaisser tiédir quelques minutes sur une grille avant de déguster."
+  },
+  "pc-046": {
+    "id": "pc-046",
+    "instructions": "Mélanger le lait tiède avec la levure et laisser reposer 10 min.\nDans le bol du robot, mettre : la farine, l’œuf, la compote et la levure.\nPétrir 5 minutes puis ajouter le beurre mou\nPétrir environ 10 minutes.\nÉtaler la pâte puis ajouter les pépites, refermer la pâte, puis laisser reposer à couvert environ 2 h (la pâte doit au minimum doubler de volume).\nDégazer, former 10 boules puis laisser pousser 45 minutes.\nEnfourner à 170°C environ 12 minutes.\nBadigeonner de lait à la sortie du four pour garder le moelleux."
   },
   "pl-001": {
     "id": "pl-001",
@@ -1749,15 +1757,15 @@
   },
   "veg-018": {
     "id": "veg-018",
-    "instructions": "Laver et cuire les pommes de terre à la vapeur 12min.\nFaire cuire les champignons à la poêle dans de l'huile d'olive.\nPréchauffer le four ou l'Airfryer à 200℃\nEplucher, laver et couper la patate douce en dés.\nArroser d'une belle cuillère à soupe d'huile d'olive, de paprika et de\ncumin. Bien remuer pour recouvrir tous les dés.\nEtaler sur la plaque de cuisson ou dans l'Airfryer et cuire environ 20-30\nmin en surveillant et remuant régulièrement.\nNettoyer, essorer et assaisonner la mâche avec l'échalote émincée, de\nl'huile de colza, du vinaigre balsamique et la persillade. Saler et poivrer.\nPréchauffer l'appareil à raclette et déguster le tout avec des cornichons."
+    "instructions": "Préparer la crème de betterave.\nFaire cuire les pâtes selon le temps conseillé puis les égoutter et les\nremettre dans la casserole.\nAjouter la crème de betterave.\nCouper les betteraves en dès et les ajouter puis remettre à chauffer\nquelques minutes le tout.\nServir avec de la feta émiettée et la salade assaisonnée."
   },
   "veg-019": {
     "id": "veg-019",
-    "instructions": "Laver et cuire les pommes de terre à la vapeur 12min.\nFaire cuire les champignons à la poêle dans de l'huile d'olive.\nPréchauffer le four ou l'Airfryer à 200℃\nEplucher, laver et couper la patate douce en dés.\nArroser d'une belle cuillère à soupe d'huile d'olive, de paprika et de\ncumin. Bien remuer pour recouvrir tous les dés.\nEtaler sur la plaque de cuisson ou dans l'Airfryer et cuire environ 20-30\nmin en surveillant et remuant régulièrement.\nNettoyer, essorer et assaisonner la mâche avec l'échalote émincée, de\nl'huile de colza, du vinaigre balsamique et la persillade. Saler et poivrer.\nPréchauffer l'appareil à raclette et déguster le tout avec des cornichons."
+    "instructions": "Préparer le pesto et le mélanger avec la ricotta.\nLaver et couper la tomate en tranches.\nLaver et trancher la courgette dans la longueur. Huiler chaque face au\npinceau et saupoudrer de basilic séché puis les étaler sur une plaque\nde cuisson et enfourner environ 15min à 180℃.\nBien essorer la mozzarella et la couper en tranches.\nTartiner une face du pain avec du pesto.\nAjouter une couche de courgettes grillées, de tomates avec un peu de\nvinaigre balsamique, la mozzarella, une autre de tomate, un peu de\nvinaigre balsamique, une autre de courgette et refermer avec une autre\ntartine de pain.\nPlacer le tout au four pour 5 à 10 min pour griller le pain.\nServir le croque monsieur avec la salade assaisonnée de vinaigrette au\nskyr, salée et poivrée."
   },
   "veg-020": {
     "id": "veg-020",
-    "instructions": "Laver et cuire les pommes de terre à la vapeur 12min.\nFaire cuire les champignons à la poêle dans de l'huile d'olive.\nPréchauffer le four ou l'Airfryer à 200℃\nEplucher, laver et couper la patate douce en dés.\nArroser d'une belle cuillère à soupe d'huile d'olive, de paprika et de\ncumin. Bien remuer pour recouvrir tous les dés.\nEtaler sur la plaque de cuisson ou dans l'Airfryer et cuire environ 20-30\nmin en surveillant et remuant régulièrement.\nNettoyer, essorer et assaisonner la mâche avec l'échalote émincée, de\nl'huile de colza, du vinaigre balsamique et la persillade. Saler et poivrer.\nPréchauffer l'appareil à raclette et déguster le tout avec des cornichons."
+    "instructions": "Mélanger le flocons avec les graines de chia et le lait."
   },
   "veg-021": {
     "id": "veg-021",
@@ -1785,7 +1793,7 @@
   },
   "veg-027": {
     "id": "veg-027",
-    "instructions": "Laver et cuire les pommes de terre à la vapeur 12min.\nFaire cuire les champignons à la poêle dans de l'huile d'olive.\nPréchauffer le four ou l'Airfryer à 200℃\nEplucher, laver et couper la patate douce en dés.\nArroser d'une belle cuillère à soupe d'huile d'olive, de paprika et de\ncumin. Bien remuer pour recouvrir tous les dés.\nEtaler sur la plaque de cuisson ou dans l'Airfryer et cuire environ 20-30\nmin en surveillant et remuant régulièrement.\nNettoyer, essorer et assaisonner la mâche avec l'échalote émincée, de\nl'huile de colza, du vinaigre balsamique et la persillade. Saler et poivrer.\nPréchauffer l'appareil à raclette et déguster le tout avec des cornichons."
+    "instructions": "Faire tremper les pois chiches pendant 12 à 24h dans un grand volume\nd'eau avec du bicarbonate alimentaire, les égoutter et les rincer puis les\nfaire cuire dans un grand volume d'eau sous pression 30 min.\nLaver et couper les légumes en dés.\nEmincer l'oignon et le faire revenir dans l'huile d'olive avec du cumin, du\npaprika et des herbes de Provence.\nQuand l'oignon devient fondant, ajouter les poivrons et le concentré de\ntomates et laisser cuire 5 min en remuant.\nAjouter les courgettes et les tomates et laisser mijoter jusqu'à ce que les légumes soient fondants.\nAjouter les pois chiches, mélanger et laisser encore mijoter 5 à 10 min.\nEplucher et laver et couper les pommes de terre en gros dés et les faire\ncuire à l'eau 25 min ou à la vapeur 12 min.\nLes écraser et en faire une purée avec du lait, le jaune d'œuf et de la\nmuscade. Saler et poivrer.\nPlacer les légumes au fond d'un plat à gratin et étaler la purée par dessus.\nSaupoudrer de comté et parmesan râpé et gratiner au four 15 min à 180℃."
   },
   "veg-028": {
     "id": "veg-028",

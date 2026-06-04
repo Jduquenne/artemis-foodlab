@@ -119,6 +119,12 @@ Types valides : `feat`, `fix`, `refactor`, `chore`, `docs`, `style`, `test`.
 
 La version courante est dans `package.json` — c'est la seule source de vérité.
 
+When the user asks for a **commit**, respond with only the commit message text — do not run any git commands. Format: `feature: <description>` or `fix: <description>`. In English. Short, no bullet points, no technical details.When the user asks for a **commit**, respond with only the commit message text — do not run any git commands. Format: `feature: <description>` or `fix: <description>`. In English. Short, no bullet points, no technical details.
+
+### New recipes commit### New recipes commit
+
+When the user asks for a **commit and mentions new recipes**, before proposing the commit message:When the user asks for a **commit and mentions new recipes**, before proposing the commit message:
+
 ---
 
 ## Issues

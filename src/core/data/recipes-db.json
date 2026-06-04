@@ -3,10 +3,7 @@
     "id": "char-001",
     "name": "Purée Brocoli et pâté",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -80,10 +77,7 @@
     "id": "char-002",
     "name": "Croque monsieur",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -197,10 +191,7 @@
     "id": "char-003",
     "name": "Crêpes béchamel au jambon",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -289,10 +280,7 @@
     "id": "char-004",
     "name": "Purée Saucisse et épinards à l’ail",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -373,10 +361,7 @@
     "id": "char-005",
     "name": "Purée Saucisse au chou blanc",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -466,10 +451,7 @@
     "id": "char-006",
     "name": "Gratin d’endives au jambon",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -542,10 +524,7 @@
     "id": "char-007",
     "name": "Bouchée à la reine",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -658,10 +637,7 @@
     "id": "char-008",
     "name": "Cake olives et lardons",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -806,10 +782,7 @@
     "id": "char-009",
     "name": "Pommes de terres, pâté et poivrons au paprika",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -898,10 +871,7 @@
     "id": "char-010",
     "name": "Ebly, poivron, pâté",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -990,10 +960,7 @@
     "id": "char-011",
     "name": "Risotto à la saucisse et aux poireaux",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -1074,10 +1041,7 @@
     "id": "char-012",
     "name": "Choucroute",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -1126,10 +1090,7 @@
     "id": "char-013",
     "name": "Pâtes béchamel champignons",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -1227,10 +1188,7 @@
     "id": "char-014",
     "name": "Hot dog",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -1319,10 +1277,7 @@
     "id": "char-015",
     "name": "Pommes de terre haricots verts jambon",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -1403,10 +1358,7 @@
     "id": "char-016",
     "name": "Pâtes courgettes et jambon",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -1463,10 +1415,7 @@
     "id": "char-017",
     "name": "Pâtes saucisses à la provençale",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -1515,10 +1464,7 @@
     "id": "char-018",
     "name": "Paupiette ratatouille",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -1559,10 +1505,7 @@
     "id": "char-019",
     "name": "Pâtes omelette aux lardons",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -1651,10 +1594,7 @@
     "id": "char-020",
     "name": "Pizza Régina",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -1760,10 +1700,7 @@
     "id": "char-021",
     "name": "Paupiette aux champignons",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -1869,10 +1806,7 @@
     "id": "char-022",
     "name": "Plancha saucisse poulet",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": false,
@@ -2009,10 +1943,7 @@
     "id": "char-023",
     "name": "Pommes de terre saucisses endives",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -2069,10 +2000,7 @@
     "id": "char-024",
     "name": "Potatoes, pâté et salade d’endives",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -2161,10 +2089,7 @@
     "id": "char-025",
     "name": "Purée jambon petits pois",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -2253,10 +2178,7 @@
     "id": "char-026",
     "name": "Riz cantonais",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -2346,10 +2268,7 @@
     "id": "char-027",
     "name": "Riz sauté aux merguez",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -2414,10 +2333,7 @@
     "id": "char-028",
     "name": "Saucisses lentilles",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -2515,10 +2431,7 @@
     "id": "char-029",
     "name": "Grenailles saucisses choux de Bruxelles",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -2583,10 +2496,7 @@
     "id": "char-030",
     "name": "Pâtes, jambon et endives caramélisées",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -2651,10 +2561,7 @@
     "id": "char-031",
     "name": "Ebly pâté haricots blancs",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -2752,10 +2659,7 @@
     "id": "char-032",
     "name": "Gratin de chou fleur au jambon",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -2820,10 +2724,7 @@
     "id": "char-033",
     "name": "Pommes de terre haricots verts pâté",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -2896,10 +2797,7 @@
     "id": "char-034",
     "name": "Crêpes chou fleur jambon",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -2980,10 +2878,7 @@
     "id": "char-035",
     "name": "Riz saucisse ratatouille",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -3024,10 +2919,7 @@
     "id": "char-036",
     "name": "Merguez taboulé crudités",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -3197,10 +3089,7 @@
     "id": "char-037",
     "name": "Pizza oranaise",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -3297,10 +3186,7 @@
     "id": "char-038",
     "name": "Galette de blé noir jambon champignons",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -3405,10 +3291,7 @@
     "id": "char-039",
     "name": "Couscous merguez",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -3546,10 +3429,7 @@
     "id": "char-040",
     "name": "Courge spaghetti à la carbonara",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -3630,10 +3510,7 @@
     "id": "char-041",
     "name": "Barbecue",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": false,
@@ -3747,10 +3624,7 @@
     "id": "char-042",
     "name": "Frites pâté salade",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -3840,10 +3714,7 @@
     "id": "char-043",
     "name": "Salade pommes de terre chou fleur au jambon",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -3932,10 +3803,7 @@
     "id": "char-044",
     "name": "Frites pâté haricots verts",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -4016,10 +3884,7 @@
     "id": "char-045",
     "name": "Gnocchis maison à la cantonnaise",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -4088,10 +3953,7 @@
     "id": "char-046",
     "name": "Coquillettes crémeuses au jambon et courge",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -4148,10 +4010,7 @@
     "id": "char-047",
     "name": "Tomates farcies au hachis de porc",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -4272,10 +4131,7 @@
     "id": "char-048",
     "name": "Chou rouge pomme saucisse et purée",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -4364,10 +4220,7 @@
     "id": "char-049",
     "name": "Salade de pâtes jambon petits pois",
     "categoryId": "charcuterie",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -4452,16 +4305,108 @@
       }
     }
   },
+  "char-050": {
+    "id": "char-050",
+    "name": "Salade piémontaise",
+    "categoryId": "charcuterie",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "ch-003",
+        "name": "Jambon",
+        "quantity": 2,
+        "unit": "tranche",
+        "category": "Charcuterie"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-047",
+        "name": "Grenailles",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 3,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "004",
+        "foodId": "cd-008",
+        "name": "Cornichons",
+        "quantity": 120,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "fv-089",
+        "name": "Tomates",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "006",
+        "foodId": "pl-015",
+        "name": "Fromage blanc 3%",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "007",
+        "foodId": "cd-013",
+        "name": "Huile de colza",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "cd-026",
+        "name": "Vinaigre balsamique",
+        "quantity": 5,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "009",
+        "foodId": "cd-021",
+        "name": "Moutarde",
+        "quantity": 5,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "010",
+        "foodId": "ha-003",
+        "name": "Ciboulette",
+        "quantity": null,
+        "unit": null,
+        "category": "Herbe aromatique"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_50_mealPhoto.webp"
+      }
+    }
+  },
   "pat-001": {
     "id": "pat-001",
     "name": "Cookies protéinés banane chocolat",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 15,
     "batchCooking": true,
@@ -4558,12 +4503,7 @@
     "id": "pat-002",
     "name": "Cookies banane fruits secs noix de cajou",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 12,
     "batchCooking": true,
@@ -4676,12 +4616,7 @@
     "id": "pat-003",
     "name": "Cookies avoine compote chocolat",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 12,
     "batchCooking": true,
@@ -4770,12 +4705,7 @@
     "id": "pat-004",
     "name": "Cookies avoine compote fruits secs",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 12,
     "batchCooking": true,
@@ -4880,12 +4810,7 @@
     "id": "pat-005",
     "name": "Cookies cacahuètes",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 12,
     "batchCooking": true,
@@ -4942,12 +4867,7 @@
     "id": "pat-006",
     "name": "Mini cakes citron compote amande",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 8,
     "batchCooking": true,
@@ -5036,12 +4956,7 @@
     "id": "pat-007",
     "name": "Moelleux amande",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 12,
     "batchCooking": true,
@@ -5114,10 +5029,7 @@
     "id": "pat-008",
     "name": "Cheesecake fraise myrtille",
     "categoryId": "pastries",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -5230,12 +5142,7 @@
     "id": "pat-009",
     "name": "Cookies baies de goji tournesol",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 8,
     "batchCooking": true,
@@ -5340,12 +5247,7 @@
     "id": "pat-010",
     "name": "Cookies raisins secs coco",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 8,
     "batchCooking": true,
@@ -5442,12 +5344,7 @@
     "id": "pat-011",
     "name": "Gâteau Banane Coco",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 8,
     "batchCooking": true,
@@ -5512,12 +5409,7 @@
     "id": "pat-012",
     "name": "Muffins aux Pépites de Chocolat",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -5598,12 +5490,7 @@
     "id": "pat-013",
     "name": "Gâteau Banane, Avoine et Noisettes",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 12,
     "batchCooking": true,
@@ -5692,12 +5579,7 @@
     "id": "pat-014",
     "name": "Moelleux amande et framboise",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 12,
     "batchCooking": true,
@@ -5810,12 +5692,7 @@
     "id": "pat-015",
     "name": "Gâteau léger au skyr et pépites de chocolat",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 8,
     "batchCooking": true,
@@ -5880,12 +5757,7 @@
     "id": "pat-016",
     "name": "Cakes aux flocons d'avoine et chocolat",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -5950,12 +5822,7 @@
     "id": "pat-017",
     "name": "Gaufres version brownie",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 8,
     "batchCooking": true,
@@ -6044,12 +5911,7 @@
     "id": "pat-018",
     "name": "Cookies sarrasin",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -6146,12 +6008,7 @@
     "id": "pat-019",
     "name": "Gaufres briochées",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 8,
     "batchCooking": true,
@@ -6216,12 +6073,7 @@
     "id": "pat-020",
     "name": "Cake chocolat compote",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 9,
     "batchCooking": true,
@@ -6302,12 +6154,7 @@
     "id": "pat-021",
     "name": "Fondant ricotta framboises",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 8,
     "batchCooking": true,
@@ -6396,12 +6243,7 @@
     "id": "pat-022",
     "name": "Cookies coco chocolat",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 12,
     "batchCooking": true,
@@ -6490,12 +6332,7 @@
     "id": "pat-023",
     "name": "Cookies noisette",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -6592,12 +6429,7 @@
     "id": "pat-024",
     "name": "Cake Léger au Potiron",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 11,
     "batchCooking": true,
@@ -6686,12 +6518,7 @@
     "id": "pat-025",
     "name": "Moelleux chocolat courgette",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 9,
     "batchCooking": true,
@@ -6757,12 +6584,7 @@
     "id": "pat-026",
     "name": "Brownie à la compote de pomme",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 12,
     "batchCooking": true,
@@ -6827,12 +6649,7 @@
     "id": "pat-027",
     "name": "Muffins chocolat betterave",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 12,
     "batchCooking": true,
@@ -6905,12 +6722,7 @@
     "id": "pat-028",
     "name": "Brownie patate douce et beurre de cacahuètes",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -6991,12 +6803,7 @@
     "id": "pat-029",
     "name": "Fondant au chocolat et patate douce",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 8,
     "batchCooking": true,
@@ -7069,12 +6876,7 @@
     "id": "pat-030",
     "name": "Cookies à la courge butternut végan",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 8,
     "batchCooking": true,
@@ -7163,12 +6965,7 @@
     "id": "pat-031",
     "name": "Cookie butternut amande",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 14,
     "batchCooking": true,
@@ -7249,12 +7046,7 @@
     "id": "pat-032",
     "name": "Gâteau au potiron et amande",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 14,
     "batchCooking": true,
@@ -7351,12 +7143,7 @@
     "id": "pat-033",
     "name": "Cookies moelleux aux amandes et à l’okara",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -7445,12 +7232,7 @@
     "id": "pat-034",
     "name": "Brownies aux flocons d’avoine",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 9,
     "batchCooking": true,
@@ -7555,12 +7337,7 @@
     "id": "pat-035",
     "name": "Gâteau haricots blancs coco chocolat",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -7665,12 +7442,7 @@
     "id": "pat-036",
     "name": "Amaretti",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 12,
     "batchCooking": true,
@@ -7727,12 +7499,7 @@
     "id": "pat-037",
     "name": "Madeleines au skyr",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 14,
     "batchCooking": true,
@@ -7813,12 +7580,7 @@
     "id": "pat-038",
     "name": "Brownie aux noix à la compote",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -7875,12 +7637,7 @@
     "id": "pat-039",
     "name": "Muffin cacao",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -7961,12 +7718,7 @@
     "id": "pat-040",
     "name": "Cake marbré compote",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -8039,12 +7791,7 @@
     "id": "pat-041",
     "name": "Madeleine au beurre de cacahuète",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 13,
     "batchCooking": true,
@@ -8117,12 +7864,7 @@
     "id": "pat-042",
     "name": "Muffins aux framboises",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -8203,12 +7945,7 @@
     "id": "pat-043",
     "name": "Moelleux au chocolat haricots rouges",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -8289,12 +8026,7 @@
     "id": "pat-044",
     "name": "Muffins courgette chocolat",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -8376,12 +8108,7 @@
     "id": "pat-045",
     "name": "Muffin carot cake",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -8511,12 +8238,7 @@
     "id": "pat-046",
     "name": "Gâteau courgette et noix",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 8,
     "batchCooking": true,
@@ -8638,12 +8360,7 @@
     "id": "pat-047",
     "name": "Madeleine purée de cajou chocolat",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 14,
     "batchCooking": true,
@@ -8724,12 +8441,7 @@
     "id": "pat-048",
     "name": "Gâteau vegan cacao",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 12,
     "batchCooking": true,
@@ -8818,12 +8530,7 @@
     "id": "pat-049",
     "name": "Cake vegan chocolat courgette",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 12,
     "batchCooking": true,
@@ -8913,12 +8620,7 @@
     "id": "pat-050",
     "name": "Ultra moelleux vegan aux pommes",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 12,
     "batchCooking": true,
@@ -8999,12 +8701,7 @@
     "id": "pat-051",
     "name": "Tarte avoine créme citron fruits rouges",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 8,
     "batchCooking": true,
@@ -9117,12 +8814,7 @@
     "id": "pat-052",
     "name": "Mini cakes protéinés",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 8,
     "batchCooking": true,
@@ -9195,12 +8887,7 @@
     "id": "pat-053",
     "name": "Cakes café noix",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 12,
     "batchCooking": true,
@@ -9305,12 +8992,7 @@
     "id": "pat-054",
     "name": "Biscuits au café",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 25,
     "batchCooking": true,
@@ -9375,12 +9057,7 @@
     "id": "pat-055",
     "name": "Biscotti café amandes",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 30,
     "batchCooking": true,
@@ -9461,12 +9138,7 @@
     "id": "pat-056",
     "name": "Gâteau au café",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -9571,12 +9243,7 @@
     "id": "pat-057",
     "name": "Muffins fromage blanc fourrés fraise",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -9665,12 +9332,7 @@
     "id": "pat-058",
     "name": "Cake lentilles et noisette",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -9751,12 +9413,7 @@
     "id": "pat-059",
     "name": "Brownie lentilles",
     "categoryId": "pastries",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 9,
     "batchCooking": true,
@@ -9829,13 +9486,10 @@
     "id": "pat-060",
     "name": "Gâteau citron gelée de framboise",
     "categoryId": "pastries",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 12,
-    "batchCooking": false,
+    "batchCooking": true,
     "isDessert": false,
     "ingredients": [
       {
@@ -9948,12 +9602,7 @@
     "id": "pc-001",
     "name": "Pancakes de pommes à l’alsacienne",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -10050,10 +9699,7 @@
     "id": "pc-002",
     "name": "Barres céréales avoine compote fruits secs",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -10182,12 +9828,7 @@
     "id": "pc-003",
     "name": "Gaufres à la compote",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -10252,12 +9893,7 @@
     "id": "pc-004",
     "name": "Pancake compote fruits secs",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -10354,12 +9990,7 @@
     "id": "pc-005",
     "name": "Pancake compote chocolat",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -10432,12 +10063,7 @@
     "id": "pc-006",
     "name": "Pancakes aux blancs d’œufs",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 12,
     "batchCooking": true,
@@ -10510,12 +10136,7 @@
     "id": "pc-007",
     "name": "Pancakes à l’amande",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 8,
     "batchCooking": true,
@@ -10596,12 +10217,7 @@
     "id": "pc-008",
     "name": "Gaufres à la fleur d’oranger",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 8,
     "batchCooking": true,
@@ -10682,12 +10298,7 @@
     "id": "pc-009",
     "name": "Pancakes aux fraises",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -10776,12 +10387,7 @@
     "id": "pc-010",
     "name": "Pancakes skyr compote",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -10854,10 +10460,7 @@
     "id": "pc-011",
     "name": "Pain nordique",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -10946,12 +10549,7 @@
     "id": "pc-012",
     "name": "Pain semi complet",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -11024,10 +10622,7 @@
     "id": "pc-013",
     "name": "Muffin anglais aux graines de chia",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 8,
     "batchCooking": true,
@@ -11100,12 +10695,7 @@
     "id": "pc-014",
     "name": "Gaufres de Liège sans beurre",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -11186,12 +10776,7 @@
     "id": "pc-015",
     "name": "Muffins anglais végans",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 8,
     "batchCooking": true,
@@ -11248,12 +10833,7 @@
     "id": "pc-016",
     "name": "Mini brioches",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 8,
     "batchCooking": true,
@@ -11326,10 +10906,7 @@
     "id": "pc-017",
     "name": "Gaufres fromage blanc pépites de chocolat",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 8,
     "batchCooking": true,
@@ -11410,12 +10987,7 @@
     "id": "pc-018",
     "name": "Pan de Muerto",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 12,
     "batchCooking": true,
@@ -11496,12 +11068,7 @@
     "id": "pc-019",
     "name": "Coquille de Noël Vegan",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 14,
     "batchCooking": true,
@@ -11622,12 +11189,7 @@
     "id": "pc-020",
     "name": "Coquille de Noël",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 14,
     "batchCooking": true,
@@ -11724,12 +11286,7 @@
     "id": "pc-021",
     "name": "Pain de mie semi complet",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -11794,12 +11351,7 @@
     "id": "pc-022",
     "name": "Pains protéinés",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 8,
     "batchCooking": true,
@@ -11896,12 +11448,7 @@
     "id": "pc-023",
     "name": "Brioche aux pépites de chocolat Vegan",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 8,
     "batchCooking": true,
@@ -11966,12 +11513,7 @@
     "id": "pc-024",
     "name": "Biscuits sarrasin avoine",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -12084,12 +11626,7 @@
     "id": "pc-025",
     "name": "Biscuits banane aux graines",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 9,
     "batchCooking": true,
@@ -12162,12 +11699,7 @@
     "id": "pc-026",
     "name": "Galettes aux flocons de sarrasin",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -12208,10 +11740,7 @@
     "id": "pc-027",
     "name": "Crêpes légères",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 16,
     "batchCooking": true,
@@ -12284,10 +11813,7 @@
     "id": "pc-028",
     "name": "Pain sportif",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 16,
     "batchCooking": true,
@@ -12384,12 +11910,7 @@
     "id": "pc-029",
     "name": "Biscuits noisettes",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -12478,12 +11999,7 @@
     "id": "pc-030",
     "name": "Pancakes noix de coco",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 12,
     "batchCooking": true,
@@ -12556,12 +12072,7 @@
     "id": "pc-031",
     "name": "Crêpes vegan",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 18,
     "batchCooking": true,
@@ -12626,12 +12137,7 @@
     "id": "pc-032",
     "name": "Pancakes Vegan noisette",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 25,
     "batchCooking": true,
@@ -12696,12 +12202,7 @@
     "id": "pc-039",
     "name": "Pancakes aux flocons de quinoa",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 20,
     "batchCooking": true,
@@ -12790,12 +12291,7 @@
     "id": "pc-041",
     "name": "Overnight oats épeautre",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 1,
     "batchCooking": false,
@@ -12836,12 +12332,7 @@
     "id": "pc-042",
     "name": "Overnight oats avoine",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 1,
     "batchCooking": false,
@@ -12882,12 +12373,7 @@
     "id": "pc-043",
     "name": "Muffins anglais semi-complets",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 8,
     "batchCooking": true,
@@ -12944,12 +12430,7 @@
     "id": "pc-044",
     "name": "Pancakes 5 céréales au petit-lait",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -13022,12 +12503,7 @@
     "id": "pc-045",
     "name": "Gaufres petit lait compote",
     "categoryId": "cereal-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -13104,14 +12580,84 @@
       }
     }
   },
+  "pc-046": {
+    "id": "pc-046",
+    "name": "doowap",
+    "categoryId": "cereal-products",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 10,
+    "batchCooking": true,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-017",
+        "name": "Farine blanche",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "003",
+        "foodId": "pl-020",
+        "name": "Lait demi écrémé",
+        "quantity": 120,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-028",
+        "name": "Compote de pomme maison",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "foodId": "pl-001",
+        "name": "Beurre",
+        "quantity": 40,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "006",
+        "foodId": "es-033",
+        "name": "Levure boulangère fraîche",
+        "quantity": 16,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "007",
+        "foodId": "es-040",
+        "name": "Pépites de chocolat 70%",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_46_mealPhoto.webp"
+      }
+    }
+  },
   "pl-001": {
     "id": "pl-001",
     "name": "Lait végétal maison Amande",
     "categoryId": "dairy-products",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 5,
     "batchCooking": true,
@@ -13144,12 +12690,7 @@
     "id": "pl-002",
     "name": "Crème au café",
     "categoryId": "dairy-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -13198,12 +12739,7 @@
     "id": "pl-003",
     "name": "Crème dessert chocolat",
     "categoryId": "dairy-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -13252,12 +12788,7 @@
     "id": "pl-004",
     "name": "Crème à la vanille",
     "categoryId": "dairy-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -13314,12 +12845,7 @@
     "id": "pl-005",
     "name": "Crème au citron",
     "categoryId": "dairy-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -13376,10 +12902,7 @@
     "id": "pl-006",
     "name": "Yaourt nature",
     "categoryId": "dairy-products",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -13412,10 +12935,7 @@
     "id": "pl-007",
     "name": "Yaourt nature citron",
     "categoryId": "dairy-products",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -13464,12 +12984,7 @@
     "id": "pl-008",
     "name": "Flan léger vanille",
     "categoryId": "dairy-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -13526,12 +13041,7 @@
     "id": "pl-009",
     "name": "Flan léger cacao",
     "categoryId": "dairy-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
@@ -13596,12 +13106,7 @@
     "id": "pl-017",
     "name": "Lait de coco maison",
     "categoryId": "dairy-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 5,
     "batchCooking": true,
@@ -13626,12 +13131,7 @@
     "id": "pl-019",
     "name": "Lait végétal maison Noisette",
     "categoryId": "dairy-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 5,
     "batchCooking": true,
@@ -13656,12 +13156,7 @@
     "id": "pl-020",
     "name": "Lait végétal maison Cajou",
     "categoryId": "dairy-products",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "snack",
-      "dinner"
-    ],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 5,
     "batchCooking": true,
@@ -13686,10 +13181,7 @@
     "id": "poi-001",
     "name": "Nouilles sautées aux crevettes",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -13810,10 +13302,7 @@
     "id": "poi-002",
     "name": "Burger à la truite fumée",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -13934,10 +13423,7 @@
     "id": "poi-003",
     "name": "Riz au poisson et purée de petits pois",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -14018,10 +13504,7 @@
     "id": "poi-004",
     "name": "Potatoes au poisson et purée de petits pois",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -14110,10 +13593,7 @@
     "id": "poi-005",
     "name": "Riz au saumon aux poireaux",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -14202,10 +13682,7 @@
     "id": "poi-006",
     "name": "Pâtes au saumon à la courgette",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -14302,10 +13779,7 @@
     "id": "poi-007",
     "name": "Avocat au thon",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -14410,10 +13884,7 @@
     "id": "poi-008",
     "name": "Cake au saumon",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -14558,10 +14029,7 @@
     "id": "poi-009",
     "name": "Purée, saumon, haricots vert et carottes",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -14699,10 +14167,7 @@
     "id": "poi-010",
     "name": "Croque monsieur truite fumée et épinards",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -14799,10 +14264,7 @@
     "id": "poi-011",
     "name": "Fish burger",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -14883,10 +14345,7 @@
     "id": "poi-012",
     "name": "Pâtes carbonara saumon champignons",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -14983,10 +14442,7 @@
     "id": "poi-013",
     "name": "Jambalaya aux crevettes",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -15091,10 +14547,7 @@
     "id": "poi-014",
     "name": "Nouilles sautées aux crevettes et brocoli",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -15224,10 +14677,7 @@
     "id": "poi-015",
     "name": "Nouilles sautées aux crevettes et poivrons",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -15356,10 +14806,7 @@
     "id": "poi-016",
     "name": "Pizza au thon",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -15480,10 +14927,7 @@
     "id": "poi-017",
     "name": "Lasagnes saumon épinards",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -15596,10 +15040,7 @@
     "id": "poi-018",
     "name": "Poisson pommes de terre poireaux béchamel",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -15664,10 +15105,7 @@
     "id": "poi-019",
     "name": "Poisson, semoule et légumes au curry",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -15749,10 +15187,7 @@
     "id": "poi-020",
     "name": "Poisson, pommes de terre et haricots verts",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -15825,10 +15260,7 @@
     "id": "poi-021",
     "name": "Risotto champignons et noix de saint-jacques",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -15917,10 +15349,7 @@
     "id": "poi-022",
     "name": "Riz au thon",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -16025,10 +15454,7 @@
     "id": "poi-023",
     "name": "Riz sauté au thon",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -16134,10 +15560,7 @@
     "id": "poi-024",
     "name": "Riz poisson flageolets",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -16210,10 +15633,7 @@
     "id": "poi-025",
     "name": "Salade pomme de terre saumon haricots verts",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -16318,10 +15738,7 @@
     "id": "poi-026",
     "name": "Salade au saumon fumé et avocat",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -16434,10 +15851,7 @@
     "id": "poi-027",
     "name": "Salade de pâtes au thon",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -16542,10 +15956,7 @@
     "id": "poi-028",
     "name": "Salade de pâtes thon, oeufs durs, olives",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -16642,10 +16053,7 @@
     "id": "poi-029",
     "name": "Sandwich au thon",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -16734,10 +16142,7 @@
     "id": "poi-030",
     "name": "Tarte au thon à la tomate",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -16874,10 +16279,7 @@
     "id": "poi-031",
     "name": "Tomates farcies au thon",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -16974,10 +16376,7 @@
     "id": "poi-032",
     "name": "Quiche au poireau et saumon",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -17074,10 +16473,7 @@
     "id": "poi-033",
     "name": "Toast avocat sardine et salade",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -17182,10 +16578,7 @@
     "id": "poi-034",
     "name": "Salade œufs durs tomates sardines",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -17282,10 +16675,7 @@
     "id": "poi-035",
     "name": "Salade pommes de terre haricots verts sardines",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -17303,7 +16693,7 @@
         "id": "002",
         "foodId": "fv-047",
         "name": "Grenailles",
-        "quantity": 400,
+        "quantity": 300,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -17366,10 +16756,7 @@
     "id": "poi-036",
     "name": "Salade de semoule, betteraves et sardines",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -17443,10 +16830,7 @@
     "id": "poi-037",
     "name": "Salade pâtes haricots blancs sardines oeufs",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -17544,10 +16928,7 @@
     "id": "poi-038",
     "name": "Pâtes aux sardines, citron et haricots verts",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -17612,10 +16993,7 @@
     "id": "poi-039",
     "name": "Salade pâtes haricots rouges sardines brocolis",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -17696,10 +17074,7 @@
     "id": "poi-040",
     "name": "Saumon brocolis patate douce rôtie",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -17789,10 +17164,7 @@
     "id": "poi-041",
     "name": "Risotto crevettes aux asperges",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -17889,10 +17261,7 @@
     "id": "poi-042",
     "name": "Poke bowl truite fumée et avocat",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -17981,10 +17350,7 @@
     "id": "poi-043",
     "name": "Riz, piperade au poisson",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -18097,10 +17463,7 @@
     "id": "poi-044",
     "name": "Gratin pomme de terre carotte et thon",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -18222,10 +17585,7 @@
     "id": "poi-045",
     "name": "Gratin pommes de terre chou fleur saumon",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -18290,10 +17650,7 @@
     "id": "poi-046",
     "name": "Pâtes saumon petits pois ricotta",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -18398,10 +17755,7 @@
     "id": "poi-047",
     "name": "Riz poisson haricots verts",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -18498,10 +17852,7 @@
     "id": "poi-048",
     "name": "Salade de pâtes au thon poivrons mozzarella",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -18590,10 +17941,7 @@
     "id": "poi-049",
     "name": "Gratin de pâtes chou fleur saumon",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -18658,10 +18006,7 @@
     "id": "poi-050",
     "name": "Croque poireau truite fumée ricotta",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -18758,10 +18103,7 @@
     "id": "poi-051",
     "name": "Purée épinards poisson",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -18850,10 +18192,7 @@
     "id": "poi-052",
     "name": "Pâtes poisson épinards ricotta",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -18934,10 +18273,7 @@
     "id": "poi-053",
     "name": "Poisson au blé et au poivron",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -19026,10 +18362,7 @@
     "id": "poi-054",
     "name": "Concombre farcis au thon",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -19150,10 +18483,7 @@
     "id": "poi-055",
     "name": "Salade Méditerranéenne Thon Quinoa",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -19266,10 +18596,7 @@
     "id": "poi-056",
     "name": "Riz saumon courgette",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -19366,10 +18693,7 @@
     "id": "poi-057",
     "name": "Gratin d’endives au poisson fumé et curry",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -19450,10 +18774,7 @@
     "id": "poi-058",
     "name": "Poisson, ratatouille et purée",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -19542,10 +18863,7 @@
     "id": "poi-059",
     "name": "Riz, poisson, ratatouille",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -19610,10 +18928,7 @@
     "id": "poi-060",
     "name": "Pâtes courge spaghetti au saumon",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -19686,10 +19001,7 @@
     "id": "poi-061",
     "name": "Chili aux noix de saint Jacques",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -19758,10 +19070,7 @@
     "id": "poi-062",
     "name": "Sandwich aux rillettes aux deux saumon",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -19854,10 +19163,7 @@
     "id": "poi-063",
     "name": "Crevettes à la feta et à la tomate",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -19942,10 +19248,7 @@
     "id": "poi-064",
     "name": "Poisson à la tomate et au thym",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -20022,10 +19325,7 @@
     "id": "poi-065",
     "name": "Fish and chips",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -20098,10 +19398,7 @@
     "id": "poi-066",
     "name": "Parmentier de saumon aux légumes",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -20207,10 +19504,7 @@
     "id": "poi-067",
     "name": "Poisson pané riz aux légumes",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -20283,10 +19577,7 @@
     "id": "poi-068",
     "name": "Poisson pané quinoa champignons",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -20359,10 +19650,7 @@
     "id": "poi-069",
     "name": "Gratin de pommes de terre saumon brocoli",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -20427,10 +19715,7 @@
     "id": "poi-070",
     "name": "Quinoa saumon chou romanesco et carottes",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -20496,10 +19781,7 @@
     "id": "poi-071",
     "name": "Salade printanière",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -20604,10 +19886,7 @@
     "id": "poi-072",
     "name": "Ebly filets de maquereaux et carottes",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -20688,10 +19967,7 @@
     "id": "poi-073",
     "name": "Filets de maquereaux couscous légumes rôtis",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -20772,10 +20048,7 @@
     "id": "poi-074",
     "name": "Salade pommes de terre filets de maquereaux",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -20888,10 +20161,7 @@
     "id": "poi-075",
     "name": "Saumon quinoa haricots verts et tomates cerises",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -20996,10 +20266,7 @@
     "id": "poi-076",
     "name": "Cabillaud et poêlée de fenouil",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -21072,10 +20339,7 @@
     "id": "poi-077",
     "name": "Salade de riz façon Thaï",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -21189,10 +20453,7 @@
     "id": "poi-078",
     "name": "Filet de poisson blanc et quinoa au fenouil",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -21281,10 +20542,7 @@
     "id": "poi-079",
     "name": "Plancha de cabillaud aux légumes et au citron",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -21389,10 +20647,7 @@
     "id": "poi-080",
     "name": "Salade de lentilles nordique",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -21481,10 +20736,7 @@
     "id": "poi-081",
     "name": "Salade méditerranéenne aux sardines et olives",
     "categoryId": "fish",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -21581,10 +20833,7 @@
     "id": "pv-001",
     "name": "Orzo méditerranéen",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -21681,10 +20930,7 @@
     "id": "pv-002",
     "name": "Couscous végétarien",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -21814,10 +21060,7 @@
     "id": "pv-003",
     "name": "Soupe aux haricots à la tomate cèleri carottes",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -21923,10 +21166,7 @@
     "id": "pv-004",
     "name": "Riz et lentilles à la tomate et aux carottes",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -22080,10 +21320,7 @@
     "id": "pv-005",
     "name": "Omelette pâtes flageolets",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -22156,10 +21393,7 @@
     "id": "pv-006",
     "name": "Omelette frites de patate douce flageolets",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -22240,10 +21474,7 @@
     "id": "pv-007",
     "name": "Chili sin carne d’été",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -22380,10 +21611,7 @@
     "id": "pv-008",
     "name": "Chili sin carne d’automne",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -22521,10 +21749,7 @@
     "id": "pv-009",
     "name": "Cassoulet courgette",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -22629,10 +21854,7 @@
     "id": "pv-010",
     "name": "Fajitas végétariennes d’été",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -22793,10 +22015,7 @@
     "id": "pv-011",
     "name": "Fajitas végétariennes d’automne",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -22958,10 +22177,7 @@
     "id": "pv-012",
     "name": "Boulgour, carottes, pois chiches",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -23035,10 +22251,7 @@
     "id": "pv-013",
     "name": "Chakchouka pois chiches épinards",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -23168,10 +22381,7 @@
     "id": "pv-014",
     "name": "Chakchouka aux pois chiches et poivrons",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -23292,10 +22502,7 @@
     "id": "pv-015",
     "name": "Burger végétarien",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -23384,10 +22591,7 @@
     "id": "pv-016",
     "name": "Lasagnes mexicaines",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -23556,10 +22760,7 @@
     "id": "pv-017",
     "name": "Dahl de lentilles corail patate douce épinards",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -23681,10 +22882,7 @@
     "id": "pv-018",
     "name": "Parmentier aux lentilles",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -23822,10 +23020,7 @@
     "id": "pv-019",
     "name": "Riz, haricots blancs aux carottes et amandes",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -23947,10 +23142,7 @@
     "id": "pv-020",
     "name": "One pan quinoa mexicain",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -24071,10 +23263,7 @@
     "id": "pv-021",
     "name": "Pain pita, falafels, sauce yaourt",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -24196,10 +23385,7 @@
     "id": "pv-022",
     "name": "Pâtes haricots blancs aux carottes",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -24329,10 +23515,7 @@
     "id": "pv-023",
     "name": "Poêlée de flageolets aux champignons et quinoa",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -24429,10 +23612,7 @@
     "id": "pv-024",
     "name": "Poêlée de haricots blancs à la tomate",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -24561,10 +23741,7 @@
     "id": "pv-025",
     "name": "Riz aux épices cajun",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -24670,10 +23847,7 @@
     "id": "pv-026",
     "name": "Riz falafels et brocolis",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -24795,10 +23969,7 @@
     "id": "pv-027",
     "name": "Semoule, falafels et poivrons",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -24879,10 +24050,7 @@
     "id": "pv-028",
     "name": "Dahl protéiné à la crème de cajou",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -25027,10 +24195,7 @@
     "id": "pv-029",
     "name": "Purée de patate douce chou fleur aux lentilles",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -25151,10 +24316,7 @@
     "id": "pv-030",
     "name": "Salade de quinoa crispy à la mexicaine",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -25275,10 +24437,7 @@
     "id": "pv-031",
     "name": "One pot pasta aux lentilles et légumes d'été",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -25391,10 +24550,7 @@
     "id": "pv-032",
     "name": "Salade quinoa pois chiche betterave",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -25492,10 +24648,7 @@
     "id": "pv-033",
     "name": "Poêlée aubergine courgette pois chiches",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -25592,10 +24745,7 @@
     "id": "pv-034",
     "name": "Salade d'orzo aux pois chiches et au citron",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -25708,10 +24858,7 @@
     "id": "pv-035",
     "name": "Salade de pois chiches à la grecque",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -25857,10 +25004,7 @@
     "id": "pv-036",
     "name": "Riz au citron, lentilles et poireaux",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -25941,10 +25085,7 @@
     "id": "pv-037",
     "name": "Salade de quinoa et haricots blancs",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -26041,10 +25182,7 @@
     "id": "pv-038",
     "name": "Salade de pommes de terre et haricots",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -26157,10 +25295,7 @@
     "id": "pv-039",
     "name": "Cassoulet butternut et pain à l’ail",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -26273,10 +25408,7 @@
     "id": "pv-040",
     "name": "Poêlée de riz gratinée aux haricots rouges",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -26357,10 +25489,7 @@
     "id": "pv-041",
     "name": "Poêlée au riz, butternut et noisette",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -26465,10 +25594,7 @@
     "id": "pv-042",
     "name": "Salade de butternut rôtie pois chiches grillés",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -26557,10 +25683,7 @@
     "id": "pv-043",
     "name": "One pot orzo carottes et lentilles corail",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -26674,10 +25797,7 @@
     "id": "pv-044",
     "name": "Pâtes et lentilles à la tomate et aux carottes",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -26831,10 +25951,7 @@
     "id": "pv-045",
     "name": "Patate douce rôtie au chili",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -26988,10 +26105,7 @@
     "id": "pv-046",
     "name": "One pot lentilles corail quinoa",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -27112,10 +26226,7 @@
     "id": "pv-047",
     "name": "Spaghetti boulettes de haricots blancs",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -27165,10 +26276,7 @@
     "id": "pv-048",
     "name": "Riz chou blanc boulettes de haricots blancs",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -27281,10 +26389,7 @@
     "id": "pv-049",
     "name": "Semoule boulettes végétales aux légumes",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -27382,10 +26487,7 @@
     "id": "pv-050",
     "name": "Gratin de poireaux et haricots blancs",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -27470,10 +26572,7 @@
     "id": "pv-051",
     "name": "Quiche épinard Feta et salade de lentilles",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -27578,10 +26677,7 @@
     "id": "pv-052",
     "name": "Salade pois chiches courgette",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -27662,10 +26758,7 @@
     "id": "pv-053",
     "name": "Bowl chou rouge haricots patate douce",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -27754,10 +26847,7 @@
     "id": "pv-054",
     "name": "Salade quinoa pois chiche concombre",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -27862,10 +26952,7 @@
     "id": "pv-055",
     "name": "Lentilles au miel et à la moutarde",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -27971,10 +27058,7 @@
     "id": "pv-056",
     "name": "Lentilles kung pao",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -28111,10 +27195,7 @@
     "id": "pv-057",
     "name": "Salade de lentilles méditerranéenne",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -28243,10 +27324,7 @@
     "id": "pv-058",
     "name": "Bowl pois chiches champignon œuf mollet",
     "categoryId": "plant-proteins",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -28351,10 +27429,7 @@
     "id": "vb-001",
     "name": "Semoule, poulet, patate douce et brocolis",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -28445,10 +27520,7 @@
     "id": "vb-002",
     "name": "Pommes de terre rissolées au poulet",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -28578,10 +27650,7 @@
     "id": "vb-003",
     "name": "Quinoa, cordon bleu aux carottes et brocolis",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -28663,10 +27732,7 @@
     "id": "vb-004",
     "name": "Cordon bleu et petits pois carottes",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -28764,10 +27830,7 @@
     "id": "vb-005",
     "name": "Pâtes, poulet, crème aux champignons",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -28905,10 +27968,7 @@
     "id": "vb-006",
     "name": "Ebly poulet patate douce haricots verts",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -29023,10 +28083,7 @@
     "id": "vb-007",
     "name": "Enchiladas Poulet et poivrons",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": false,
@@ -29164,10 +28221,7 @@
     "id": "vb-008",
     "name": "Lasagnes poulet-poireaux",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -29249,10 +28303,7 @@
     "id": "vb-009",
     "name": "Burger Méditerranéen au poulet",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -29406,10 +28457,7 @@
     "id": "vb-010",
     "name": "Jambalaya au poulet",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -29547,10 +28595,7 @@
     "id": "vb-011",
     "name": "Lasagne poulet champignons",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -29632,10 +28677,7 @@
     "id": "vb-012",
     "name": "Macaronis haricots verts poulet",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -29749,10 +28791,7 @@
     "id": "vb-013",
     "name": "Poêlée de macaronis au poulet et tomates cerise",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -29818,10 +28857,7 @@
     "id": "vb-014",
     "name": "Nouilles poulet haricots mungo",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -29928,10 +28964,7 @@
     "id": "vb-015",
     "name": "Pizza au poulet",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -30085,10 +29118,7 @@
     "id": "vb-016",
     "name": "Poêlée riz poulet carottes haricots verts",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -30195,10 +29225,7 @@
     "id": "vb-017",
     "name": "Pomme de terre, haricots verts poulet",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -30336,10 +29363,7 @@
     "id": "vb-018",
     "name": "Potimarron rôti au poulet",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -30501,10 +29525,7 @@
     "id": "vb-019",
     "name": "Poulet basquaise riz",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -30641,10 +29662,7 @@
     "id": "vb-020",
     "name": "Poulet basquaise pommes de terre",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -30781,10 +29799,7 @@
     "id": "vb-021",
     "name": "Poulet basquaise semoule",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -30921,10 +29936,7 @@
     "id": "vb-022",
     "name": "Purée cordon bleu et haricots verts",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -31021,10 +30033,7 @@
     "id": "vb-023",
     "name": "Salade poulet avocat",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -31178,10 +30187,7 @@
     "id": "vb-024",
     "name": "Sandwich Poulet",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -31319,10 +30325,7 @@
     "id": "vb-025",
     "name": "Taboulé au poulet",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -31492,10 +30495,7 @@
     "id": "vb-026",
     "name": "Vol au vent brocoli",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -31569,10 +30569,7 @@
     "id": "vb-027",
     "name": "Poulet grenailles petits pois carottes",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -31670,10 +30667,7 @@
     "id": "vb-028",
     "name": "Bowl poulet avocat quinoa",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -31780,10 +30774,7 @@
     "id": "vb-029",
     "name": "Riz au poulet et curry",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -31881,10 +30872,7 @@
     "id": "vb-030",
     "name": "Risotto poulet courgette",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -31990,10 +30978,7 @@
     "id": "vb-031",
     "name": "Salade poulet quinoa",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -32139,10 +31124,7 @@
     "id": "vb-032",
     "name": "Pommes de terre poulet haricots champignons",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -32232,10 +31214,7 @@
     "id": "vb-033",
     "name": "Pâtes poulet poivron",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -32349,10 +31328,7 @@
     "id": "vb-034",
     "name": "Orzo crémeux au poulet et brocoli",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -32450,10 +31426,7 @@
     "id": "vb-035",
     "name": "Pâtes cordon bleu haricots verts",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -32526,10 +31499,7 @@
     "id": "vb-036",
     "name": "Salade poulet maïs tomate cerise",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -32644,10 +31614,7 @@
     "id": "vb-037",
     "name": "Cuisse de poulet à la mexicaine",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -32769,10 +31736,7 @@
     "id": "vb-038",
     "name": "Salade de pâtes tomate poulet concombre",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -32862,10 +31826,7 @@
     "id": "vb-039",
     "name": "Salade de pâtes poulet pesto légumes grillés",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -32955,10 +31916,7 @@
     "id": "vb-040",
     "name": "Salade de riz macédoine poulet",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -33064,10 +32022,7 @@
     "id": "vb-041",
     "name": "Curry de poulet au quinoa",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -33157,10 +32112,7 @@
     "id": "vb-042",
     "name": "Quinoa poivrons cordon bleu",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -33241,10 +32193,7 @@
     "id": "vb-043",
     "name": "Riz ratatouille poulet",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -33294,10 +32243,7 @@
     "id": "vb-044",
     "name": "Semoule ratatouille poulet",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -33347,10 +32293,7 @@
     "id": "vb-045",
     "name": "One pot orzo, poulet, brocoli et cheddar",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -33424,10 +32367,7 @@
     "id": "vb-046",
     "name": "Gratin de pâtes à la courge et au poulet",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -33509,10 +32449,7 @@
     "id": "vb-047",
     "name": "Courge Jack Be Little façon vol au vent",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -33578,10 +32515,7 @@
     "id": "vb-048",
     "name": "Couscous Poulet",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -33719,10 +32653,7 @@
     "id": "vb-049",
     "name": "Butter Chicken riz brocoli",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -33844,10 +32775,7 @@
     "id": "vb-050",
     "name": "Poulet korma",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -33986,10 +32914,7 @@
     "id": "vb-051",
     "name": "Gratin de courge spaghetti au poulet",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -34055,10 +32980,7 @@
     "id": "vb-052",
     "name": "Blanquette de volaille aux champignons et riz",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -34149,10 +33071,7 @@
     "id": "vb-053",
     "name": "Parmentier au poulet",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -34266,10 +33185,7 @@
     "id": "vb-054",
     "name": "Poulet à la Coréenne chou blanc et riz",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -34383,10 +33299,7 @@
     "id": "vb-055",
     "name": "Curry rouge de poulet aux lentilles corail",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -34477,10 +33390,7 @@
     "id": "vb-056",
     "name": "Purée chou fleur cordon bleu",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -34545,10 +33455,7 @@
     "id": "vb-057",
     "name": "Cordon bleu pommes de terre et chou blanc",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -34629,10 +33536,7 @@
     "id": "vb-058",
     "name": "Poulet tikka brocoli",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -34766,10 +33670,7 @@
     "id": "vb-059",
     "name": "Cuisse de poulet aux légumes et riz",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -34863,10 +33764,7 @@
     "id": "vb-060",
     "name": "Poule au riz",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -34964,10 +33862,7 @@
     "id": "vb-061",
     "name": "Potimarron farci au poulet",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -35054,10 +33949,7 @@
     "id": "vb-062",
     "name": "Crêpes poulet champignon",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -35107,10 +33999,7 @@
     "id": "vb-063",
     "name": "Boulgour au poulet et carottes aux épices",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -35185,10 +34074,7 @@
     "id": "vb-064",
     "name": "Patate douce rôtie poulet brocoli",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -35262,10 +34148,7 @@
     "id": "vb-065",
     "name": "Riz poulet légumes et avocat",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -35331,10 +34214,7 @@
     "id": "vb-066",
     "name": "Tenders potatoes salade estivale",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -35439,10 +34319,7 @@
     "id": "vb-067",
     "name": "Tenders patate douce rôtie et haricots verts",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -35523,10 +34400,7 @@
     "id": "vb-068",
     "name": "Tenders, riz et haricots verts",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -35591,10 +34465,7 @@
     "id": "vb-069",
     "name": "Tenders carottes purée de pommes de terre",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -35684,10 +34555,7 @@
     "id": "vb-070",
     "name": "Gratin de pommes de terre poulet brocoli",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -35769,10 +34637,7 @@
     "id": "vb-071",
     "name": "Semoule poulet haricots verts",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -35862,10 +34727,7 @@
     "id": "vb-072",
     "name": "Pâtes à la courgette et poulet",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -35923,10 +34785,7 @@
     "id": "vb-073",
     "name": "Pâtes poulet poireaux",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -36000,10 +34859,7 @@
     "id": "vb-074",
     "name": "Quinoa poulet patate douce",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -36070,10 +34926,7 @@
     "id": "vb-075",
     "name": "Poulet patate douce et choux de Bruxelles",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -36147,10 +35000,7 @@
     "id": "vb-076",
     "name": "Poêlée sarrasin épinards poulet champignons",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -36232,10 +35082,7 @@
     "id": "vb-077",
     "name": "Risotto poulet chou romanesco et carottes",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -36310,10 +35157,7 @@
     "id": "vb-078",
     "name": "Quinoa filet de poulet légumes sautés",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -36412,10 +35256,7 @@
     "id": "vb-079",
     "name": "Quiche poulet fenouil petits pois",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -36512,10 +35353,7 @@
     "id": "vb-080",
     "name": "Sauté de poulet paprika, radis rôtis et quinoa",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -36604,10 +35442,7 @@
     "id": "vb-081",
     "name": "Salade de riz au poulet",
     "categoryId": "white-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -36704,10 +35539,7 @@
     "id": "veg-001",
     "name": "Gratin de macaronis au soja",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -36845,10 +35677,7 @@
     "id": "veg-002",
     "name": "Pâtes pesto champignons et mâche",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -36953,10 +35782,7 @@
     "id": "veg-003",
     "name": "Pâtes œufs au plat endives caramélisées",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -37013,10 +35839,7 @@
     "id": "veg-004",
     "name": "Frites de patates douce omelette et salade",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -37105,10 +35928,7 @@
     "id": "veg-005",
     "name": "Omelette champignons et épinards",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -37205,10 +36025,7 @@
     "id": "veg-006",
     "name": "Raclette",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -37338,10 +36155,7 @@
     "id": "veg-007",
     "name": "Nouilles chinoises végétariennes",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -37439,10 +36253,7 @@
     "id": "veg-008",
     "name": "Soupe de Rémi au poireau",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -37539,10 +36350,7 @@
     "id": "veg-009",
     "name": "Velouté potimarron butternut et carottes",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 8,
     "batchCooking": true,
@@ -37656,10 +36464,7 @@
     "id": "veg-010",
     "name": "Gratin de crozets aux poireaux",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -37740,10 +36545,7 @@
     "id": "veg-011",
     "name": "Pâtes Pesto aux haricots verts et champignons",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -37840,10 +36642,7 @@
     "id": "veg-012",
     "name": "Pâtes Pesto aux haricots verts et petits pois",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -37940,10 +36739,7 @@
     "id": "veg-013",
     "name": "Riz brocolis pesto",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -38032,10 +36828,7 @@
     "id": "veg-014",
     "name": "Sandwich végétarien",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -38132,10 +36925,7 @@
     "id": "veg-015",
     "name": "Cake salé tomates mozzarella",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -38298,10 +37088,7 @@
     "id": "veg-016",
     "name": "Pâtes bolognaise au soja",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -38439,10 +37226,7 @@
     "id": "veg-017",
     "name": "Lasagnes bolognaise au soja",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -38628,10 +37412,7 @@
     "id": "veg-018",
     "name": "Pâtes à la betterave",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -38738,10 +37519,7 @@
     "id": "veg-019",
     "name": "Croque monsieur italien",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -38862,10 +37640,7 @@
     "id": "veg-020",
     "name": "Sandwich Méditéranéen",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -38947,10 +37722,7 @@
     "id": "veg-021",
     "name": "Panuozzo",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -39055,10 +37827,7 @@
     "id": "veg-022",
     "name": "Sandwich tomate mozzarella avocat",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -39131,10 +37900,7 @@
     "id": "veg-023",
     "name": "Foccacia tomates au thym",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -39271,10 +38037,7 @@
     "id": "veg-024",
     "name": "Gratin d’Ebly aux légumes du soleil",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -39428,10 +38191,7 @@
     "id": "veg-025",
     "name": "Parmentier végétarien aux champignons",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -39625,10 +38385,7 @@
     "id": "veg-026",
     "name": "Parmentier brocoli carottes",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -39750,10 +38507,7 @@
     "id": "veg-027",
     "name": "Parmentier provençal",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -39907,10 +38661,7 @@
     "id": "veg-028",
     "name": "Lasagnes pesto rosso",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -40040,10 +38791,7 @@
     "id": "veg-029",
     "name": "Lasagnes champignons, épinards et ricotta",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -40140,10 +38888,7 @@
     "id": "veg-030",
     "name": "Oeufs à la coque d'été",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "base",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -40248,10 +38993,7 @@
     "id": "veg-031",
     "name": "Linguines pesto rosso tomates et mozzarella",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -40372,10 +39114,7 @@
     "id": "veg-032",
     "name": "Oeufs mimosa et crudités",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -40489,10 +39228,7 @@
     "id": "veg-033",
     "name": "Pâtes au fromage",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -40605,10 +39341,7 @@
     "id": "veg-034",
     "name": "Pâtes champignon aux tomate épicées",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -40713,10 +39446,7 @@
     "id": "veg-035",
     "name": "Pâtes aux petits pois carottes",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -40798,10 +39528,7 @@
     "id": "veg-036",
     "name": "Salade de perles pesto tomates et mozzarella",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -40906,10 +39633,7 @@
     "id": "veg-037",
     "name": "Perles au pesto champignons épinards",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -40966,10 +39690,7 @@
     "id": "veg-038",
     "name": "Pizza au fromage",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -41114,10 +39835,7 @@
     "id": "veg-039",
     "name": "Poêlée forestière",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -41222,10 +39940,7 @@
     "id": "veg-040",
     "name": "Pommes de terres rissolées et œuf au plat",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -41338,10 +40053,7 @@
     "id": "veg-041",
     "name": "Quiche au brocoli et champignons",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -41430,10 +40142,7 @@
     "id": "veg-042",
     "name": "Quiche aux poivrons",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -41538,10 +40247,7 @@
     "id": "veg-043",
     "name": "Riz au curry",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -41639,10 +40345,7 @@
     "id": "veg-044",
     "name": "Riz sauté, épinards, oeufs au plat",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -41731,10 +40434,7 @@
     "id": "veg-045",
     "name": "Salade betteraves oeufs durs",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -41832,10 +40532,7 @@
     "id": "veg-046",
     "name": "Salade de pâtes oeuf durs olives",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -41916,10 +40613,7 @@
     "id": "veg-047",
     "name": "Salade de pomme de terre oeufs durs",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -42016,10 +40710,7 @@
     "id": "veg-048",
     "name": "Salade de pates tomates mozza",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -42092,10 +40783,7 @@
     "id": "veg-049",
     "name": "Salade gnocchis tomates mozzarella",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -42208,10 +40896,7 @@
     "id": "veg-050",
     "name": "Soupe de courgette",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -42301,10 +40986,7 @@
     "id": "veg-051",
     "name": "Soupe de tomate orientale",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -42458,10 +41140,7 @@
     "id": "veg-052",
     "name": "Soupe tomate vermicelles",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -42558,10 +41237,7 @@
     "id": "veg-053",
     "name": "Taboulé oriental",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -42682,10 +41358,7 @@
     "id": "veg-054",
     "name": "Tarte aux poireaux et pommes de terre",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -42798,10 +41471,7 @@
     "id": "veg-055",
     "name": "Velouté de patate douce",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -42915,10 +41585,7 @@
     "id": "veg-056",
     "name": "Salade au chèvre",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -43023,10 +41690,7 @@
     "id": "veg-057",
     "name": "Salade de pâtes aux œuf durs et fèves",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -43123,10 +41787,7 @@
     "id": "veg-058",
     "name": "Pizza pesto brocoli et champignons",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -43231,10 +41892,7 @@
     "id": "veg-059",
     "name": "Pâtes omelette et petits pois",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -43307,10 +41965,7 @@
     "id": "veg-060",
     "name": "Salade de quinoa à la betterave",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -43400,10 +42055,7 @@
     "id": "veg-061",
     "name": "Velouté 6 légumes",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -43509,10 +42161,7 @@
     "id": "veg-062",
     "name": "Salade pâtes, radis, mozzarella et petits pois",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -43593,10 +42242,7 @@
     "id": "veg-063",
     "name": "Velouté d’asperge",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -43685,10 +42331,7 @@
     "id": "veg-064",
     "name": "Salade brocoli et quinoa",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -43785,10 +42428,7 @@
     "id": "veg-065",
     "name": "Salade de quinoa aux légumes grillés et feta",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -43893,10 +42533,7 @@
     "id": "veg-066",
     "name": "Pâtes œufs au plat champignons haricots",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -44001,10 +42638,7 @@
     "id": "veg-067",
     "name": "Bowl quinoa œufs brouillés",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -44110,10 +42744,7 @@
     "id": "veg-068",
     "name": "Salade orzo œufs durs",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -44242,10 +42873,7 @@
     "id": "veg-069",
     "name": "Gratin de crozets d’été aux aubergines",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -44342,10 +42970,7 @@
     "id": "veg-070",
     "name": "Riz sauté courgettes tomates aux oeufs",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -44427,10 +43052,7 @@
     "id": "veg-071",
     "name": "Poêlée de légume au blé œuf au plat",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -44568,10 +43190,7 @@
     "id": "veg-072",
     "name": "Cake brocoli chèvre",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -44708,10 +43327,7 @@
     "id": "veg-073",
     "name": "Polenta crémeuse champignons petits pois",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -44808,10 +43424,7 @@
     "id": "veg-074",
     "name": "Lasagne courge butternut champignons",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -44892,10 +43505,7 @@
     "id": "veg-075",
     "name": "Orzo crémeux au potimarron et feta",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -44984,10 +43594,7 @@
     "id": "veg-076",
     "name": "Bouillon de macaronis et boulettes de ricotta",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -45052,10 +43659,7 @@
     "id": "veg-077",
     "name": "One pot orzo aux carottes",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -45161,10 +43765,7 @@
     "id": "veg-078",
     "name": "Aloo Matar",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -45277,10 +43878,7 @@
     "id": "veg-079",
     "name": "Galettes de blé noir champignons au comté",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -45377,10 +43975,7 @@
     "id": "veg-080",
     "name": "Invisible butternut et salade œufs durs",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -45533,10 +44128,7 @@
     "id": "veg-081",
     "name": "Gratin de Potimarron et Pommes de Terre",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -45633,10 +44225,7 @@
     "id": "veg-082",
     "name": "Lasagnes courge butternut sauce tomate",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -45757,10 +44346,7 @@
     "id": "veg-083",
     "name": "Quinoa ratatouille Feta et œuf au plat",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -45809,10 +44395,7 @@
     "id": "veg-084",
     "name": "Pâtes ratatouille et mozzarella",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -45861,10 +44444,7 @@
     "id": "veg-085",
     "name": "Pâtes ratatouille et feta",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -45913,10 +44493,7 @@
     "id": "veg-086",
     "name": "Gratin de pâtes choux de Bruxelles brocoli",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -45990,10 +44567,7 @@
     "id": "veg-087",
     "name": "Lasagnes de butternut et épinards",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -46074,10 +44648,7 @@
     "id": "veg-088",
     "name": "Courge Jack Be Little farcie au risotto",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -46158,10 +44729,7 @@
     "id": "veg-089",
     "name": "Galettes de blé noir, brocolis au pesto, feta",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -46258,10 +44826,7 @@
     "id": "veg-090",
     "name": "Galette de blé noir au chèvre miel",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -46367,10 +44932,7 @@
     "id": "veg-091",
     "name": "Gaufre de courge et salade de mâche",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -46427,10 +44989,7 @@
     "id": "veg-092",
     "name": "Quinoa d’automne à la courge et feta",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -46503,10 +45062,7 @@
     "id": "veg-093",
     "name": "Velouté carotte lentilles corail potiron",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -46604,10 +45160,7 @@
     "id": "veg-094",
     "name": "Butternut rôtie épinard Feta et œuf mollet",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -46688,10 +45241,7 @@
     "id": "veg-095",
     "name": "Soupe aux poivrons",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -46793,10 +45343,7 @@
     "id": "veg-096",
     "name": "Salade pommes de terre chou fleur œufs durs",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -46885,10 +45432,7 @@
     "id": "veg-097",
     "name": "Nouilles petits pois œufs mollets",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -46949,10 +45493,7 @@
     "id": "veg-098",
     "name": "Oeuf cocotte forestier",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -47029,10 +45570,7 @@
     "id": "veg-099",
     "name": "Soupe de pâtes aux légumes",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -47158,10 +45696,7 @@
     "id": "veg-100",
     "name": "Velouté de topinambours",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -47254,10 +45789,7 @@
     "id": "veg-101",
     "name": "Pizza courge champignons carottes",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -47355,10 +45887,7 @@
     "id": "veg-102",
     "name": "Riz crémeux brocoli œuf au plat",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -47423,10 +45952,7 @@
     "id": "veg-103",
     "name": "Patate douce rôtie légumes et œufs au plat",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -47531,10 +46057,7 @@
     "id": "veg-104",
     "name": "Asperges pommes de terre œuf mollet",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -47615,10 +46138,7 @@
     "id": "veg-105",
     "name": "Gratin quinoa chou romanesco carottes feta",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -47692,10 +46212,7 @@
     "id": "veg-106",
     "name": "Oeufs à la coque d’hiver",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "base",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -47793,10 +46310,7 @@
     "id": "veg-107",
     "name": "Riz sauté chou blanc carottes",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -47878,10 +46392,7 @@
     "id": "veg-108",
     "name": "Tarte poivrons Feta",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -47970,10 +46481,7 @@
     "id": "veg-109",
     "name": "Risotto sarrasin carotte oeufs au plat",
     "categoryId": "veggies",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -48038,10 +46546,7 @@
     "id": "vr-001",
     "name": "Fajitas au bœuf et aux carottes",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -48195,10 +46700,7 @@
     "id": "vr-002",
     "name": "Fajitas au bœuf et aux poivrons",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -48351,10 +46853,7 @@
     "id": "vr-003",
     "name": "Filet mignon grenailles et haricots verts",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -48459,10 +46958,7 @@
     "id": "vr-004",
     "name": "Gnocchis maison steak et haricots verts",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -48535,10 +47031,7 @@
     "id": "vr-005",
     "name": "Pâtes steak flageolets",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -48627,10 +47120,7 @@
     "id": "vr-006",
     "name": "Gratin de brocolis au bœuf et riz",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -48703,10 +47193,7 @@
     "id": "vr-007",
     "name": "Ebly pita patate douce",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -48812,10 +47299,7 @@
     "id": "vr-008",
     "name": "Burger cheddar",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -48928,10 +47412,7 @@
     "id": "vr-009",
     "name": "Lasagnes bolognaise",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -48980,10 +47461,7 @@
     "id": "vr-010",
     "name": "Burger Italien",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -49104,10 +47582,7 @@
     "id": "vr-011",
     "name": "Filet mignon purée et potimarron rôti",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -49244,10 +47719,7 @@
     "id": "vr-012",
     "name": "Gnocchis maison bolognaise",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -49280,10 +47752,7 @@
     "id": "vr-013",
     "name": "Hachis parmentier",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -49437,10 +47906,7 @@
     "id": "vr-014",
     "name": "Pâtes Boulettes et champignons",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -49537,10 +48003,7 @@
     "id": "vr-015",
     "name": "Pâtes à la bolognaise",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -49581,10 +48044,7 @@
     "id": "vr-016",
     "name": "Pizza bolognaise",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -49721,10 +48181,7 @@
     "id": "vr-017",
     "name": "Purée boulettes brocoli et carottes",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -49854,10 +48311,7 @@
     "id": "vr-018",
     "name": "Purée boulettes ratatouille",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -49922,10 +48376,7 @@
     "id": "vr-019",
     "name": "Purée steak tomates rôties",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -50030,10 +48481,7 @@
     "id": "vr-020",
     "name": "Quinoa bolognaise",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -50106,10 +48554,7 @@
     "id": "vr-021",
     "name": "Quinoa boulettes et ratatouille",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -50150,10 +48595,7 @@
     "id": "vr-022",
     "name": "Riz au bœuf à la marocaine",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -50267,10 +48709,7 @@
     "id": "vr-023",
     "name": "Riz boulettes et champignons",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -50351,10 +48790,7 @@
     "id": "vr-024",
     "name": "Sandwich pita",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -50483,10 +48919,7 @@
     "id": "vr-025",
     "name": "Purée, steak, champignons et sauce au poivre",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -50575,10 +49008,7 @@
     "id": "vr-026",
     "name": "Tomates farcies au boeuf",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -50643,10 +49073,7 @@
     "id": "vr-027",
     "name": "Viande pita au chou blanc",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -50712,10 +49139,7 @@
     "id": "vr-028",
     "name": "Pâtes steak haché haricots verts",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -50796,10 +49220,7 @@
     "id": "vr-029",
     "name": "Steak frites salade jardinière",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -50921,10 +49342,7 @@
     "id": "vr-030",
     "name": "Filet mignon, purée, brocoli et sauce champignons",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -51037,10 +49455,7 @@
     "id": "vr-031",
     "name": "Steak orzo à la méditerranéenne",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -51137,10 +49552,7 @@
     "id": "vr-032",
     "name": "Wok de bœuf, courgette et poivron au curry",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -51253,10 +49665,7 @@
     "id": "vr-033",
     "name": "Gratin de pâtes boeufs poivrons",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -51361,10 +49770,7 @@
     "id": "vr-034",
     "name": "Gratin de choux de Bruxelles et boeuf épicé",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -51469,10 +49875,7 @@
     "id": "vr-035",
     "name": "Riz filet mignon ratatouille",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -51521,10 +49924,7 @@
     "id": "vr-036",
     "name": "Steak purée de patate douce haricots verts",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -51605,10 +50005,7 @@
     "id": "vr-037",
     "name": "Steak à cheval frites flageolets",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -51689,10 +50086,7 @@
     "id": "vr-038",
     "name": "Courge Jack Be Little farcie au bœuf et riz",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -51781,10 +50175,7 @@
     "id": "vr-039",
     "name": "Potimarron farci au bœuf",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 4,
     "batchCooking": true,
@@ -51874,10 +50265,7 @@
     "id": "vr-040",
     "name": "Couscous boulettes",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -52015,10 +50403,7 @@
     "id": "vr-041",
     "name": "Rösti burger",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -52099,10 +50484,7 @@
     "id": "vr-042",
     "name": "Pâtes champignons brocoli au filet mignon",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -52183,10 +50565,7 @@
     "id": "vr-043",
     "name": "Bœuf Bourguignon et pommes de terre vapeur",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -52308,10 +50687,7 @@
     "id": "vr-044",
     "name": "Porc rôti aux légumes",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -52405,10 +50781,7 @@
     "id": "vr-045",
     "name": "Super nova burger",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -52565,10 +50938,7 @@
     "id": "vr-046",
     "name": "Porc à la chinoise",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -52645,10 +51015,7 @@
     "id": "vr-047",
     "name": "Bœuf mijoté aux fèves et carottes",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -52726,10 +51093,7 @@
     "id": "vr-048",
     "name": "Moussaka à la Feta et pain pita",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -52806,10 +51170,7 @@
     "id": "vr-049",
     "name": "Poêlée de steak au brocoli",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -52878,10 +51239,7 @@
     "id": "vr-050",
     "name": "Ragoût de bœuf à l'italienne",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": true,
@@ -52999,10 +51357,7 @@
     "id": "vr-051",
     "name": "Semoule steak ratatouille",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -53059,10 +51414,7 @@
     "id": "vr-052",
     "name": "Steak endive braisée pomme de terre rôtie",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -53167,10 +51519,7 @@
     "id": "vr-053",
     "name": "Purée steak poêlée de légumes",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -53275,10 +51624,7 @@
     "id": "vr-054",
     "name": "Steak potatoes et poêlée de légumes",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -53367,10 +51713,7 @@
     "id": "vr-055",
     "name": "Pâtes steak carottes et champignons",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -53452,10 +51795,7 @@
     "id": "vr-056",
     "name": "Pâtes échine de porc champignons brocoli",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -53536,10 +51876,7 @@
     "id": "vr-057",
     "name": "Echine de porc rôtie aux légumes",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -53625,10 +51962,7 @@
     "id": "vr-058",
     "name": "Riz courgette au boeuf hâché",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -53709,10 +52043,7 @@
     "id": "vr-059",
     "name": "Roti de porc purée au fenouil",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -53809,10 +52140,7 @@
     "id": "vr-060",
     "name": "Orzo boulette courgette petits pois",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,
@@ -53901,10 +52229,7 @@
     "id": "vr-061",
     "name": "Steak salade de pomme de terre jardinière",
     "categoryId": "red-meat",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 2,
     "batchCooking": false,

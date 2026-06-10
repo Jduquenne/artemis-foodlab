@@ -349,7 +349,7 @@
   },
   "char-047": {
     "id": "char-047",
-    "instructions": "Faire cuire les lentilles vertes selon les indications jusqu’à ce qu’elles soient fondantes.\nSortir la viande du réfrigérateur 30 min avant la préparation.\nCouper le dessus des tomates et les évider avec une cuillère puis mixer la chair au mixeur plongeant, saler et poivrer et assaisonner de paprika.\nFaire fondre l’échalote émincée dans un peu d’huile d’olive avec l’ail écrasé puis mélanger avec le hachis de porc, les lentilles écrasées, la mie du pain, un peu de chair de tomates mixées et des herbes aromatiques au choix. \nFormer des boule et les placer dans les tomates creusées puis refermer avec le chapeau.\nEplucher, laver et couper les carottes en brunoise ainsi que le céleri et l’oignon.\nPeser le riz dans un verre doseur puis le verser dans un plat à gratin avec la brunoise de légumes.\nMélanger la chair de tomates mixée avec de l’eau pour obtenir 2,5 fois le volume du riz, saler et poivrer puis verser par dessus le riz. \nVaporiser d’huile d’olive et enfourner pour 45 min à 1h à 200°C (s’il le faut ajouter un peu d’eau en court de cuisson).\nServir le tout"
+    "instructions": "Faire cuire les lentilles vertes selon les indications.\nCouper le dessus des tomates et les évider avec une cuillère puis mixer la chair au mixeur plongeant, saler et poivrer et assaisonner de paprika.\nFaire fondre l’échalote émincée dans un peu d’huile d’olive avec l’ail écrasé puis mélanger avec le hachis de porc, les lentilles écrasées, la mie du pain, 4 Cs de chair de tomates mixées et des herbes aromatiques au choix. \nFormer des boules et les placer dans les tomates creusées puis refermer avec le chapeau.\nLe placer dans un plat à gratin et verser le reste des tomates mixées dans le fond puis enfourner pour 45 min à 1h à 200°C.\nEplucher, laver et couper les carottes en brunoise ainsi que le céleri et l’oignon. Les faire fondre 10 min à feu moyen dans une casserole avec de l'huile d'olive. \nAjouter le riz et le faire nacrer quelques minutes.\nSaler et assaisonner d'herbes puis verser 400ml d'eau bouillante et laisser cuire à couvert à feu doux jusqu'à absorption (environ 11 min). Laisser reposer à couvert 5-10 min.\nServir le tout."
   },
   "char-048": {
     "id": "char-048",
@@ -602,6 +602,18 @@
   "pat-060": {
     "id": "pat-060",
     "instructions": "Préparer une crème au citron et la laisser refroidir.\nPréchauffer le four à 175℃.\nSéparer les blancs des jaunes de 4 oeufs et les battre en neige ferme.\nFouetter les jaunes avec 60g de sucre.\nAjouter 150g de lait et l'huile.\nIncorporer la farine, le bicarbonate alimentaire et le sel.\nIncorporer délicatement les blancs à la pâte puis le jus de citron. Bien\nmélanger.\nVerser dans un cercle de 22 cm graissé et fariné si besoin.\nCuire environ 40 minutes.\nVérifier la cuisson avec la pointe d'un couteau. Laisser refroidir\ncomplètement et couper le gâteau en 3 disque\nEtaler 1/3 de crème sur le premier disque puis poser le deuxième par\ndessus.\nEtaler la gelée de framboise par dessus puis fermer avec le dernier\ndisque.\nPlacer 12h minimum au frais."
+  },
+  "pat-061": {
+    "id": "pat-061",
+    "instructions": "Préchauffer le four à 160°C.\nÉplucher et râper finement les carottes.\nDans un saladier, mélanger les carottes râpées, le parmesan râpé, la farine, l’huile d’olive, 1 c. à soupe d’eau et ½ c. à café d’épices au choix.\nMélanger jusqu’à l’obtention d’une pâte homogène.\nSur un plan de travail fariné, étaler la pâte sur 0,5cm d’épaisseur.\nDétailler des biscuits d'environ 7g à l’aide d’un emporte pièce (ou en faisant des boules aplaties) et les déposer sur une plaque recouverte de papier sulfurisé.\nEnfourner pour 6 à 9 minutes de cuisson."
+  },
+  "pat-062": {
+    "id": "pat-062",
+    "instructions": "Préchauffer le four à 180°C.\nDans un saladier mélanger l'oeuf, le sucre de coco et l'huile.\nAjouter ensuite la farine, la levure chimique et le sel. Mélanger avec une\ncuillère avant d'incorporer les pépites. Terminer de mélanger a la main jusqu'à\nl'obtention d'une belle pate homogène.\nDétailler en 8 parts ou plus selon la taille des cookies souhaitées et façonner\ndes boulettes sur une feuille ou tapis de cuisson. Les aplatir avec la paume\ndes mains (épaisseur d'environ 0,5cm).\nEnfourner pendant 13 minutes. A la fin de la cuisson, laisser totalement\nrefroidir avant de déguster."
+  },
+  "pat-063": {
+    "id": "pat-063",
+    "instructions": "Tailler les olives en petits morceaux et râper le Comté.\nPréchauffer le four a 180°C.\nDans un saladier, déposer l'oeuf, l'huile d'olive et le lait. Mélanger.\nAjouter la farine, la levure chimique, le sel, les herbes de Provence, les olives et le Comté.\nMélanger à la main jusqu'à l'obtention d'une pâte homogène.\nFormer des petites boulettes sur la plaque du four recouverte d'une feuille de cuisson puis les aplatir. Enfourner pour 15 à 18 minutes.\nLaisser refroidir avant de déguster et\nconserver dans une boite hermétique\njusqu'à 3 jours."
   },
   "pc-001": {
     "id": "pc-001",
@@ -2122,6 +2134,10 @@
   "veg-109": {
     "id": "veg-109",
     "instructions": "Éplucher l'oignon jaune, retirer le germe si besoin et l'émincer finement.\nÉplucher les carottes, couper les extrémités, les laver et les couper julienne.\nFaire chauffer l’huile d’olive dans une cocotte ou une grande casserole puis y ajouter l’oignon et les carottes et faire revenir quelques minutes en remuant.\nAjouter le sarrasin et mélanger encore quelques minutes puis couvrir de bouillon.\nau fur et à mesure de d’absorption; ajouter du bouillon et remuer doucement pendant 15 à 20 min jusqu’à ce que tout soit fondant.\nFaire cuire les œufs au plat dans une poêle bien chaude légèrement huilée.\nServir le tout en rectifiant l’assaisonnement s’il le faut."
+  },
+  "veg-110": {
+    "id": "veg-110",
+    "instructions": "Préchauffer le four ou l'Airfryer à 200℃.\nEplucher, laver, essuyer et couper les pommes de terre en frites de tailles\nrégulières.\nArroser d'une belle cuillère à soupe d'huile d'olive et de paprika. Bien\nremuer pour recouvrir toutes les frites.\nEtaler sur la plaque de cuisson ou dans l'Airfryer et cuire environ 20-30\nmin en surveillant et remuant régulièrement.\nCuire les oeufs au plat dans une poêle bien chaude huilée.\nNettoyer, essorer et assaisonner la salade avec l'échalote émincée\nfinement, huile de colza, vinaigre balsamique, persillade, sel et poivre.\nServir le tout."
   },
   "vr-001": {
     "id": "vr-001",

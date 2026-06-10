@@ -2364,7 +2364,7 @@
   },
   "cd-012": {
     "id": "cd-012",
-    "name": "Huile d'olive ou colza",
+    "name": "Huile de noisette",
     "category": "Condiments",
     "macros": {
       "kcal": 900,
@@ -2377,7 +2377,7 @@
   },
   "cd-013": {
     "id": "cd-013",
-    "name": "Huile de colza",
+    "name": "Huile d'olive ou colza",
     "category": "Condiments",
     "macros": {
       "kcal": 900,
@@ -2390,7 +2390,7 @@
   },
   "cd-014": {
     "id": "cd-014",
-    "name": "Huile de sésame",
+    "name": "Huile de colza",
     "category": "Condiments",
     "macros": {
       "kcal": 900,
@@ -2403,6 +2403,19 @@
   },
   "cd-015": {
     "id": "cd-015",
+    "name": "Huile de sésame",
+    "category": "Condiments",
+    "macros": {
+      "kcal": 900,
+      "proteins": 0,
+      "lipids": 100,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "cd-016": {
+    "id": "cd-016",
     "name": "Huile de tournesol",
     "category": "Condiments",
     "macros": {
@@ -2469,22 +2482,9 @@
     },
     "unit": "g"
   },
-  "cd-016": {
-    "id": "cd-016",
-    "name": "Jus de citron",
-    "category": "Condiments",
-    "macros": {
-      "kcal": 0,
-      "proteins": 0,
-      "lipids": 0,
-      "carbohydrates": 0,
-      "fibers": 0
-    },
-    "unit": "g"
-  },
   "cd-017": {
     "id": "cd-017",
-    "name": "Jus de citron ou vinaigre de cidre",
+    "name": "Jus de citron",
     "category": "Condiments",
     "macros": {
       "kcal": 0,
@@ -2497,6 +2497,19 @@
   },
   "cd-018": {
     "id": "cd-018",
+    "name": "Jus de citron ou vinaigre de cidre",
+    "category": "Condiments",
+    "macros": {
+      "kcal": 0,
+      "proteins": 0,
+      "lipids": 0,
+      "carbohydrates": 0,
+      "fibers": 0
+    },
+    "unit": "g"
+  },
+  "cd-019": {
+    "id": "cd-019",
     "name": "Jus de citron vert",
     "category": "Condiments",
     "macros": {
@@ -2694,8 +2707,8 @@
     },
     "unit": "g"
   },
-  "cd-019": {
-    "id": "cd-019",
+  "cd-020": {
+    "id": "cd-020",
     "name": "Levure de bière",
     "category": "Condiments",
     "macros": {
@@ -2800,8 +2813,8 @@
     },
     "unit": "g"
   },
-  "cd-020": {
-    "id": "cd-020",
+  "cd-021": {
+    "id": "cd-021",
     "name": "Mayonnaise",
     "category": "Condiments",
     "macros": {
@@ -2906,8 +2919,8 @@
     },
     "unit": "g"
   },
-  "cd-021": {
-    "id": "cd-021",
+  "cd-022": {
+    "id": "cd-022",
     "name": "Moutarde",
     "category": "Condiments",
     "macros": {
@@ -3203,8 +3216,8 @@
     "unit": "g",
     "isFreezable": true
   },
-  "cd-022": {
-    "id": "cd-022",
+  "cd-023": {
+    "id": "cd-023",
     "name": "Olives verte",
     "category": "Condiments",
     "macros": {
@@ -4292,8 +4305,8 @@
     },
     "unit": "g"
   },
-  "cd-023": {
-    "id": "cd-023",
+  "cd-024": {
+    "id": "cd-024",
     "name": "Sauce soja",
     "category": "Condiments",
     "macros": {
@@ -4305,8 +4318,8 @@
     },
     "unit": "g"
   },
-  "cd-024": {
-    "id": "cd-024",
+  "cd-025": {
+    "id": "cd-025",
     "name": "Sauce tamari",
     "category": "Condiments",
     "macros": {
@@ -4388,8 +4401,8 @@
     "unit": "g",
     "isFreezable": true
   },
-  "cd-025": {
-    "id": "cd-025",
+  "cd-026": {
+    "id": "cd-026",
     "name": "Sel",
     "category": "Condiments",
     "macros": {
@@ -4776,8 +4789,8 @@
     },
     "unit": "g"
   },
-  "cd-026": {
-    "id": "cd-026",
+  "cd-027": {
+    "id": "cd-027",
     "name": "Vinaigre balsamique",
     "category": "Condiments",
     "macros": {
@@ -4789,8 +4802,8 @@
     },
     "unit": "g"
   },
-  "cd-027": {
-    "id": "cd-027",
+  "cd-028": {
+    "id": "cd-028",
     "name": "Vinaigre de cidre",
     "category": "Condiments",
     "macros": {

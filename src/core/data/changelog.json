@@ -1,5 +1,10 @@
 [
   {
+    "date": "2026-06-13",
+    "recipeIds": ["pc-047", "pl-021", "pl-022", "pat-064", "es-005", "veg-111"],
+    "note": "Nouvelles recettes ! Miam !"
+  },
+  {
     "date": "2026-06-10",
     "recipeIds": ["pat-60", "pat-61", "pat-62", "pat-63", "veg-110"],
     "note": "Nouvelles recettes ! Miam !"

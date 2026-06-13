@@ -2534,6 +2534,20 @@
     },
     "unit": "g"
   },
+  "es-033": {
+    "id": "es-033",
+    "name": "KitKat",
+    "category": "Epicerie sucrée",
+    "macros": {
+      "kcal": 509,
+      "proteins": 6.6,
+      "lipids": 26.1,
+      "carbohydrates": 60.6,
+      "fibers": 2.5
+    },
+    "unit": "pièce",
+    "unitWeight": 42
+  },
   "fv-053": {
     "id": "fv-053",
     "name": "Kiwi",
@@ -2681,8 +2695,8 @@
     "unit": "g",
     "isFreezable": true
   },
-  "es-033": {
-    "id": "es-033",
+  "es-034": {
+    "id": "es-034",
     "name": "Levure boulangère fraîche",
     "category": "Epicerie sucrée",
     "macros": {
@@ -2694,8 +2708,8 @@
     },
     "unit": "g"
   },
-  "es-034": {
-    "id": "es-034",
+  "es-035": {
+    "id": "es-035",
     "name": "Levure boulangère sèche",
     "category": "Epicerie sucrée",
     "macros": {
@@ -2773,6 +2787,36 @@
     },
     "unit": "g"
   },
+  "pl-025": {
+    "id": "pl-025",
+    "name": "Magnum Classic",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 307,
+      "proteins": 3.3,
+      "lipids": 19,
+      "carbohydrates": 30,
+      "fibers": 1.2
+    },
+    "unit": "pièce",
+    "unitWeight": 75,
+    "isFreezable": true
+  },
+  "pl-026": {
+    "id": "pl-026",
+    "name": "Magnum White",
+    "category": "Produits laitiers",
+    "macros": {
+      "kcal": 312,
+      "proteins": 4.2,
+      "lipids": 19,
+      "carbohydrates": 31,
+      "fibers": 0
+    },
+    "unit": "pièce",
+    "unitWeight": 74,
+    "isFreezable": true
+  },
   "fc-015": {
     "id": "fc-015",
     "name": "Maïs",
@@ -2800,8 +2844,8 @@
     },
     "unit": "g"
   },
-  "pl-025": {
-    "id": "pl-025",
+  "pl-027": {
+    "id": "pl-027",
     "name": "Margarine (60%MG)",
     "category": "Produits laitiers",
     "macros": {
@@ -2880,8 +2924,8 @@
     "unitWeight": 95,
     "isFreezable": true
   },
-  "es-035": {
-    "id": "es-035",
+  "es-036": {
+    "id": "es-036",
     "name": "Miel",
     "category": "Epicerie sucrée",
     "macros": {
@@ -2893,8 +2937,8 @@
     },
     "unit": "g"
   },
-  "es-036": {
-    "id": "es-036",
+  "es-037": {
+    "id": "es-037",
     "name": "Miel ou Sirop d’érable",
     "category": "Epicerie sucrée",
     "macros": {
@@ -2932,8 +2976,8 @@
     },
     "unit": "g"
   },
-  "pl-026": {
-    "id": "pl-026",
+  "pl-028": {
+    "id": "pl-028",
     "name": "Mozzarella",
     "category": "Produits laitiers",
     "macros": {
@@ -3105,8 +3149,8 @@
     },
     "unit": "g"
   },
-  "es-037": {
-    "id": "es-037",
+  "es-038": {
+    "id": "es-038",
     "name": "Noix de coco râpée",
     "category": "Epicerie sucrée",
     "macros": {
@@ -3118,8 +3162,8 @@
     },
     "unit": "g"
   },
-  "es-038": {
-    "id": "es-038",
+  "es-039": {
+    "id": "es-039",
     "name": "Noix de coco râpée (lait)",
     "category": "Epicerie sucrée",
     "macros": {
@@ -3381,8 +3425,8 @@
     },
     "unit": "g"
   },
-  "pl-027": {
-    "id": "pl-027",
+  "pl-029": {
+    "id": "pl-029",
     "name": "Parmesan",
     "category": "Produits laitiers",
     "macros": {
@@ -3436,8 +3480,8 @@
     "unit": "g",
     "isFreezable": true
   },
-  "es-039": {
-    "id": "es-039",
+  "es-040": {
+    "id": "es-040",
     "name": "Pâte à tartiner",
     "category": "Epicerie sucrée",
     "macros": {
@@ -3449,8 +3493,8 @@
     },
     "unit": "g"
   },
-  "pl-028": {
-    "id": "pl-028",
+  "pl-030": {
+    "id": "pl-030",
     "name": "Pâte feuilletée",
     "category": "Produits laitiers",
     "macros": {
@@ -3556,8 +3600,8 @@
     },
     "unit": "g"
   },
-  "es-040": {
-    "id": "es-040",
+  "es-041": {
+    "id": "es-041",
     "name": "Pépites de chocolat 70%",
     "category": "Epicerie sucrée",
     "macros": {
@@ -3569,8 +3613,8 @@
     },
     "unit": "g"
   },
-  "es-041": {
-    "id": "es-041",
+  "es-042": {
+    "id": "es-042",
     "name": "Pépites de chocolat ou raisin secs",
     "category": "Epicerie sucrée",
     "macros": {
@@ -3595,8 +3639,8 @@
     },
     "unit": "g"
   },
-  "es-042": {
-    "id": "es-042",
+  "es-043": {
+    "id": "es-043",
     "name": "Perles de sucre",
     "category": "Epicerie sucrée",
     "macros": {
@@ -3647,8 +3691,8 @@
     },
     "unit": "g"
   },
-  "pl-029": {
-    "id": "pl-029",
+  "pl-031": {
+    "id": "pl-031",
     "name": "Petit-lait",
     "category": "Produits laitiers",
     "macros": {
@@ -3919,8 +3963,8 @@
     "unit": "g",
     "isFreezable": true
   },
-  "es-043": {
-    "id": "es-043",
+  "es-044": {
+    "id": "es-044",
     "name": "Poudre d'agar-agar",
     "category": "Epicerie sucrée",
     "macros": {
@@ -3932,8 +3976,8 @@
     },
     "unit": "g"
   },
-  "es-044": {
-    "id": "es-044",
+  "es-045": {
+    "id": "es-045",
     "name": "Poudre de noisettes",
     "category": "Epicerie sucrée",
     "macros": {
@@ -4013,8 +4057,8 @@
     },
     "unit": "g"
   },
-  "es-045": {
-    "id": "es-045",
+  "es-046": {
+    "id": "es-046",
     "name": "Psyllium blond",
     "category": "Epicerie sucrée",
     "macros": {
@@ -4040,8 +4084,8 @@
     "unit": "g",
     "isFreezable": true
   },
-  "es-046": {
-    "id": "es-046",
+  "es-047": {
+    "id": "es-047",
     "name": "Purée de cacahuètes",
     "category": "Epicerie sucrée",
     "macros": {
@@ -4145,8 +4189,8 @@
     },
     "unit": "g"
   },
-  "pl-030": {
-    "id": "pl-030",
+  "pl-032": {
+    "id": "pl-032",
     "name": "Ricotta",
     "category": "Produits laitiers",
     "macros": {
@@ -4440,8 +4484,8 @@
     },
     "unit": "g"
   },
-  "es-047": {
-    "id": "es-047",
+  "es-048": {
+    "id": "es-048",
     "name": "Sirop d'agave",
     "category": "Epicerie sucrée",
     "macros": {
@@ -4453,8 +4497,8 @@
     },
     "unit": "g"
   },
-  "es-048": {
-    "id": "es-048",
+  "es-049": {
+    "id": "es-049",
     "name": "Sirop d'érable",
     "category": "Epicerie sucrée",
     "macros": {
@@ -4466,8 +4510,8 @@
     },
     "unit": "g"
   },
-  "pl-031": {
-    "id": "pl-031",
+  "pl-033": {
+    "id": "pl-033",
     "name": "Skyr",
     "category": "Produits laitiers",
     "macros": {
@@ -4479,8 +4523,8 @@
     },
     "unit": "g"
   },
-  "es-049": {
-    "id": "es-049",
+  "es-050": {
+    "id": "es-050",
     "name": "Son d’avoine",
     "category": "Epicerie sucrée",
     "macros": {
@@ -4518,8 +4562,8 @@
     },
     "unit": "g"
   },
-  "pl-032": {
-    "id": "pl-032",
+  "pl-034": {
+    "id": "pl-034",
     "name": "St Môret",
     "category": "Produits laitiers",
     "macros": {
@@ -4560,8 +4604,8 @@
     "unit": "g",
     "isFreezable": true
   },
-  "es-050": {
-    "id": "es-050",
+  "es-051": {
+    "id": "es-051",
     "name": "Sucre",
     "category": "Epicerie sucrée",
     "macros": {
@@ -4573,8 +4617,8 @@
     },
     "unit": "g"
   },
-  "es-051": {
-    "id": "es-051",
+  "es-052": {
+    "id": "es-052",
     "name": "Sucre complet",
     "category": "Epicerie sucrée",
     "macros": {
@@ -4586,8 +4630,8 @@
     },
     "unit": "g"
   },
-  "es-052": {
-    "id": "es-052",
+  "es-053": {
+    "id": "es-053",
     "name": "Sucre de coco",
     "category": "Epicerie sucrée",
     "macros": {
@@ -4599,8 +4643,8 @@
     },
     "unit": "g"
   },
-  "es-053": {
-    "id": "es-053",
+  "es-054": {
+    "id": "es-054",
     "name": "Sucre de coco ou complet",
     "category": "Epicerie sucrée",
     "macros": {
@@ -4612,8 +4656,8 @@
     },
     "unit": "g"
   },
-  "es-054": {
-    "id": "es-054",
+  "es-055": {
+    "id": "es-055",
     "name": "Sucre roux",
     "category": "Epicerie sucrée",
     "macros": {
@@ -4749,8 +4793,8 @@
     "unit": "g",
     "isFreezable": true
   },
-  "es-055": {
-    "id": "es-055",
+  "es-056": {
+    "id": "es-056",
     "name": "Vanille",
     "category": "Epicerie sucrée",
     "macros": {
@@ -4815,8 +4859,8 @@
     },
     "unit": "g"
   },
-  "pl-033": {
-    "id": "pl-033",
+  "pl-035": {
+    "id": "pl-035",
     "name": "Yaourt au lait entier",
     "category": "Produits laitiers",
     "macros": {
@@ -4828,8 +4872,8 @@
     },
     "unit": "g"
   },
-  "pl-034": {
-    "id": "pl-034",
+  "pl-036": {
+    "id": "pl-036",
     "name": "Yaourt grec authentique",
     "category": "Produits laitiers",
     "macros": {
@@ -4841,8 +4885,8 @@
     },
     "unit": "g"
   },
-  "pl-035": {
-    "id": "pl-035",
+  "pl-037": {
+    "id": "pl-037",
     "name": "Yaourt soja nature",
     "category": "Produits laitiers",
     "macros": {

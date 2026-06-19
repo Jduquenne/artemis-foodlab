@@ -525,7 +525,7 @@
   },
   "pat-041": {
     "id": "pat-041",
-    "instructions": "Préchauffer le four à 240°\nDans un saladier mélanger, les œufs, la purée de cacahuètes, le lait et le sirop d'agave.\nAjouter la farine, la levure, le sel et les pépites de chocolat.\nPlacer le saladier au frais 1h.\nAjouter le jus de citron et mélanger délicatement avec une spatule pour l’intégrer à la pâte.\nVerser la pâte dans les moules au 3/4.\nEnfourner à 240 ° pendant 3min. Baisser la température à 180° et poursuivre la cuisson pendant 7 min."
+    "instructions": "Dans un saladier mélanger, les œufs, la purée de cacahuètes, le lait et le sirop d'agave.\nAjouter la farine, le bicarbonate et le sel.\nPlacer le saladier au frais minimum 1h.\nAjouter le jus de citron et bien mélanger délicatement avec une spatule pour l’intégrer à la pâte.\nVerser la pâte dans les moules au 3/4.\nEnfourner à 240 ° pendant 3min. Baisser la température à 180° et poursuivre la cuisson pendant 5 min."
   },
   "pat-042": {
     "id": "pat-042",
@@ -609,11 +609,27 @@
   },
   "pat-062": {
     "id": "pat-062",
-    "instructions": "Préchauffer le four à 180°C.\nDans un saladier mélanger l'oeuf, le sucre de coco et l'huile.\nAjouter ensuite la farine, la levure chimique et le sel. Mélanger avec une\ncuillère avant d'incorporer les pépites. Terminer de mélanger a la main jusqu'à\nl'obtention d'une belle pate homogène.\nDétailler en 8 parts ou plus selon la taille des cookies souhaitées et façonner\ndes boulettes sur une feuille ou tapis de cuisson. Les aplatir avec la paume\ndes mains (épaisseur d'environ 0,5cm).\nEnfourner pendant 13 minutes. A la fin de la cuisson, laisser totalement\nrefroidir avant de déguster."
+    "instructions": "Mélanger l’œuf et le sucre de coco, fouetter 2 à 3 minutes, ajouter l’huile de noisette et l’eau, mélanger jusqu’à homogénéité, incorporer la farine, mélanger juste assez pour ne plus voir de farine, ajouter les pépites de chocolat, mélanger rapidement.\nFilmer la pâte, laisser reposer 1 heure au réfrigérateur, former 8 boules sans les aplatir.\nCuire à 180°C pendant 9 à 10 minutes, sortir du four quand les bords sont pris et le centre encore souple, laisser reposer 10 minutes sur la plaque chaude."
   },
   "pat-063": {
     "id": "pat-063",
     "instructions": "Tailler les olives en petits morceaux et râper le Comté.\nPréchauffer le four a 180°C.\nDans un saladier, déposer l'oeuf, l'huile d'olive et le lait. Mélanger.\nAjouter la farine, la levure chimique, le sel, les herbes de Provence, les olives et le Comté.\nMélanger à la main jusqu'à l'obtention d'une pâte homogène.\nFormer des petites boulettes sur la plaque du four recouverte d'une feuille de cuisson puis les aplatir. Enfourner pour 15 à 18 minutes.\nLaisser refroidir avant de déguster et\nconserver dans une boite hermétique\njusqu'à 3 jours."
+  },
+  "pat-064": {
+    "id": "pat-064",
+    "instructions": "Préchauffer le four à 170°C.\nMixer les noisettes jusqu’à obtenir une poudre (pas une pâte).\nDans un saladier : mélanger œufs + sucre de coco.\nAjouter fromage blanc + huile, bien homogénéiser.\nIncorporer farine + noisettes + bicarbonate.\nTerminer par le vinaigre de cidre, mélanger rapidement.\nRépartir dans les 9 empreintes.\nCuisson : 15 à 20 min, vérifier avec la pointe d’un couteau (sec = cuit).\nLaisser tiédir avant démoulage."
+  },
+  "pat-065": {
+    "id": "pat-065",
+    "instructions": "Préchauffer le four à 180° (chaleur traditionnelle).\nLaver et dénoyauter les cerises, les couper en 2.\nDans un saladier, fouetter les oeufs avec le sucre. Ajouter le skyr, l'huile, puis mélanger de nouveau.\nTerminer par la farine, le bicarbonate, le jus de citron et le sel. Mélanger jusqu'à l'obtention d'une consistance homogène avant d'ajouter les cerise. Mélanger une dernière fois.\nRépartir la pâte dans les moules à muffins. Enfourner pendant 25 à 30 minutes.\nA la fin de la cuisson, laisser refroidir dans le four entrouvert avant de les démouler."
+  },
+  "pat-066": {
+    "id": "pat-066",
+    "instructions": "Laver et couper les cerises en petits dés puis les faire réduire à feu doux avec le sucre de coco et du jus de citron pendant 8 à 10 minutes jusqu’à obtenir une compotée épaisse puis laisser refroidir complètement.\nFouetter les œufs avec le fromage blanc et le sirop d’agave.\nIncorporer la compote de pomme et le jus de citron.\nAjouter la farine d’épeautre et le bicarbonate.\nMélanger jusqu’à obtenir une pâte homogène.\nRépartir la pâte dans des moules à muffins en les remplissant aux 1/3.\nAjouter une petite cuillère de compotée de fraises au centre de chaque muffin puis couvrir de pâte pour atteindre les 3/4.\nEnfourner pour 18 à 22 minutes à 180°C.\nVérifier la cuisson avec la pointe d’un couteau (elle doit ressortir légèrement humide mais sans pâte crue).\nLaisser tiédir avant de démouler."
+  },
+  "pat-067": {
+    "id": "pat-067",
+    "instructions": "Préchauffer le four à 180°C.\nBeurrer ou huiler légèrement le moule ou utiliser un moule en silicone.\nMélanger farine, poudre d’amande, coco râpée et sel.\nAjouter les œufs, puis fouetter.\nIncorporer la boisson soja progressivement pour éviter les grumeaux.\nAjouter la vanille et le sucre de coco.\nAjouter les cerises dénoyautées et coupées en 2 et mélanger délicatement.\nVerser dans le moule et enfourner pour 35 à 45 min.\nLaisser refroidir avant de démouler et couper."
   },
   "pc-001": {
     "id": "pc-001",
@@ -657,7 +673,7 @@
   },
   "pc-011": {
     "id": "pc-011",
-    "instructions": "Faire reposer la levure 15 min dans un peu d’eau tiède avec le sirop d’érable.\nMélanger les farines, les graines et le sel et dans un grand saladier.\nAjouter le reste d’eau tiède, la levure et le vinaigre.\nMélanger à la cuillère jusqu’à obtenir une pâte collante et homogène.\nVerser la pâte dans un moule huilé ou chemisé de papier cuisson.\nLisser le dessus avec le dos d’une cuillère mouillée.\nCouvrir d’un torchon propre et laisser pousser 1 h à 1 h 30 dans un endroit tiède.\nPréchauffer le four à 200°C.\nEnfourner pour 45 à 50 minutes.\nCouvrir en cours de cuisson si le dessus colore trop vite.\nDémouler et laisser refroidir sur une grille au moins 1 heure avant de trancher."
+    "instructions": "Mélanger farines + eau (sans levure ni sel). Couvrir et laisser reposer 20 à 30 min (autolyse).\nDiluer la levure fraîche dans un peu d’eau prélevée de la recette.\nAjouter à la pâte : levure diluée + sel + sirop d’érable + vinaigre.\nPétrir jusqu’à pâte homogène. Incorporer les graines en fin de pétrissage.\nLaisser pousser 2h à 2h30 à température ambiante (20–22°C).\nDégazer légèrement et façonner.\nLaisser pousser 45 min à 1h15.\nCuire à 220°C puis 30–35 min à 200°C chaleur tournante avec vapeur (bol d’eau chaude)."
   },
   "pc-012": {
     "id": "pc-012",
@@ -771,6 +787,18 @@
     "id": "pc-046",
     "instructions": "Mélanger le lait tiède avec la levure et laisser reposer 10 min.\nDans le bol du robot, mettre : la farine, l’œuf, la compote et la levure.\nPétrir 5 minutes puis ajouter le beurre mou\nPétrir environ 10 minutes.\nÉtaler la pâte puis ajouter les pépites, refermer la pâte, puis laisser reposer à couvert environ 2 h (la pâte doit au minimum doubler de volume).\nDégazer, former 10 boules puis laisser pousser 45 minutes.\nEnfourner à 170°C environ 12 minutes.\nBadigeonner de lait à la sortie du four pour garder le moelleux."
   },
+  "pc-047": {
+    "id": "pc-047",
+    "instructions": "Diluer la levure fraîche dans le petit-lait tiède (25–30°C). Laisser reposer 5 à 10 min.\nAjouter la farine et le sel.\nPétrir 8 à 10 min jusqu’à pâte souple et homogène.\nCouvrir et laisser pousser 1h30 à 2h à température ambiante (20–22°C), jusqu’à quasi doublement.\nDégazer légèrement, diviser en 8 pâtons, façonner en petits pains.\nLaisser pousser 45 min à 1h.\nCuire à 200°C chaleur tournante pendant 16 à 18 min, avec un récipient d’eau chaude dans le four pour créer de la vapeur."
+  },
+  "pc-048": {
+    "id": "pc-048",
+    "instructions": "Mélanger tous les ingrédients secs dans un saladier.\nFouetter les ingrédients liquides dans un autre récipient.\nAjouter les ingrédients liquides aux ingrédients secs et mélanger jusqu’à obtenir une pâte homogène.\nIncorporer les cerises coupés à la pâte.\nCuire les pancakes à feu moyen avec un couvercle, environ 2 minutes 30 de chaque côté."
+  },
+  "pc-049": {
+    "id": "pc-049",
+    "instructions": "Dans un bol mélangeur, mélanger le petit-lait, les œufs et l’huile.\nAjouter la farine et l'eau de fleur d'oranger fouetter énergiquement pour obtenir un mélange homogène ou mixer avec un mixeur plongeant.\nLaisser reposer la pâte au moins 1h au frais.\nChauffer une poêle très légèrement huilé au pinceau ou avec une feuille de sopalin.\nFaire cuire une louche de 5ml en versant au centre puis en tournant rapidement la pate vers les cotés pour obtenir des crêpes fines."
+  },
   "pl-001": {
     "id": "pl-001",
     "instructions": "Faire tremper les amandes dans l’eau froide.\nEgoutter et rincer.\nRemplir le récipient du vegan milker avec l’eau minérale. \nPlacer le filtre dans le récipient et y ajouter les oléagineux.\nPlonger le mixeur plongeant dans le vase filtrant et mixer durant 2 min.\nLaisser macérer durant 5 à 10 minutes. \nRetirer le filtre et enlever la moitié de la pulpe avec une cuillère en bois.\nInsérer le mortier et écraser délicatement la pulpe pour extraire les dernières gouttes. \nLaisser reposer le lait durant au moins 2 heures (impérativement au réfrigérateur) pour en améliorer la saveur."
@@ -818,6 +846,14 @@
   "pl-020": {
     "id": "pl-020",
     "instructions": "Faire tremper les noix de cajou 2 à 4h dans l’eau froide.\nEgoutter et rincer.\nRemplir le récipient du vegan milker avec l’eau minérale. \nPlacer le filtre dans le récipient et y ajouter les oléagineux.\nPlonger le mixeur plongeant dans le vase filtrant et mixer durant 2 min.\nLaisser macérer durant 5 à 10 minutes. \nRetirer le filtre et enlever la moitié de la pulpe avec une cuillère en bois.\nInsérer le mortier et écraser délicatement la pulpe pour extraire les dernières gouttes. \nLaisser reposer le lait durant au moins 2 heures (impérativement au réfrigérateur) pour en améliorer la saveur."
+  },
+  "pl-023": {
+    "id": "pl-023",
+    "instructions": "Mixer les fraises et les passer au chinois pour enlever les grains.\nMixer la purée lisse obtenue avec le fromage blanc et le miel puis verser le tout dans des moules à batônnets glacé. \nPlacer au congélateur au moins 4h puis démouler et conserver dans des sachets individuels."
+  },
+  "pl-024": {
+    "id": "pl-024",
+    "instructions": "Mixer les cerise avec le fromage blanc et le miel puis verser le tout dans des moules à batônnets glacé. \nPlacer au congélateur au moins 4h puis démouler et conserver dans des sachets individuels."
   },
   "poi-001": {
     "id": "poi-001",
@@ -1893,7 +1929,7 @@
   },
   "veg-049": {
     "id": "veg-049",
-    "instructions": "Laver et couper les tomates cerises en 2.\nBien essorer et couper la mozzarella en dés.\nMélanger les tomates et la mozzarella ensemble et assaisonner de vinaigre balsamique et de basilic.\nNettoyer, essorer et assaisonner la salade avec la vinaigrette.\nFaire revenir les gnocchis à feu moyen à la poêle dans de l’huile d’olive, en les remuant de temps en temps, jusqu'à ce qu'ils soient dorés et croustillants.\nServir le tout."
+    "instructions": "Laver et couper les tomates cerises en 2.\nBien essorer et couper la mozzarella en dés.\nMélanger les tomates et la mozzarella ensemble et assaisonner de vinaigre balsamique et de basilic.\nNettoyer, essorer et assaisonner la salade.\nFaire revenir les gnocchis à feu moyen à la poêle dans de l’huile d’olive, en les remuant de temps en temps, jusqu'à ce qu'ils soient dorés et croustillants.\nServir le tout."
   },
   "veg-050": {
     "id": "veg-050",
@@ -2129,7 +2165,7 @@
   },
   "veg-108": {
     "id": "veg-108",
-    "instructions": "Préparer la pâte à pizza.\nÉplucher l'oignon rouge, retirer le germe si besoin et l'émincer en demi lunes.\nLaver les poivrons, les couper en deux pour retirer les graines et les membranes blanches, puis les détailler en lanières.\nFaire chauffer une poêle ou un wok avec de l’huile d’olive puis y faire fondre l’oignon avec l’ail écrasé.\nAjouter les poivrons et cuire jusqu'à ce qu'ils soient fondants.\nEtaler la pâte puis tartiner de moutarde le centre jusqu’à environ 3 cm des bords.\nVerser les légumes par dessus puis replier les bords tout autour.\nEmietter la feta par dessus et saupoudrer de thym.\nTerminer par un filet de miel puis enfourner 20 min à 190°C."
+    "instructions": "Préparer la pâte à pizza sans mettre de levure.\nÉplucher l'oignon rouge, retirer le germe si besoin et l'émincer en demi lunes.\nLaver les poivrons, les couper en deux pour retirer les graines et les membranes blanches, puis les détailler en lanières.\nFaire chauffer une poêle ou un wok avec de l’huile d’olive puis y faire fondre l’oignon avec l’ail écrasé.\nAjouter les poivrons et cuire jusqu'à ce qu'ils soient fondants.\nEtaler la pâte puis tartiner de moutarde le centre jusqu’à environ 3 cm des bords.\nVerser les légumes par dessus puis replier les bords tout autour.\nEmietter la feta par dessus et saupoudrer de thym.\nTerminer par un filet de miel puis enfourner 20 min à 190°C.\nServir avec la salade assaisonnée du mélange fromage blanc, vinaigre, persillade, échalote, sel et poivre."
   },
   "veg-109": {
     "id": "veg-109",
@@ -2138,6 +2174,10 @@
   "veg-110": {
     "id": "veg-110",
     "instructions": "Préchauffer le four ou l'Airfryer à 200℃.\nEplucher, laver, essuyer et couper les pommes de terre en frites de tailles\nrégulières.\nArroser d'une belle cuillère à soupe d'huile d'olive et de paprika. Bien\nremuer pour recouvrir toutes les frites.\nEtaler sur la plaque de cuisson ou dans l'Airfryer et cuire environ 20-30\nmin en surveillant et remuant régulièrement.\nCuire les oeufs au plat dans une poêle bien chaude huilée.\nNettoyer, essorer et assaisonner la salade avec l'échalote émincée\nfinement, huile de colza, vinaigre balsamique, persillade, sel et poivre.\nServir le tout."
+  },
+  "veg-111": {
+    "id": "veg-111",
+    "instructions": "Faire chauffer l’huile d’olive dans une grande casserole. Ajouter les oignons et les faire revenir jusqu’à ce qu’ils deviennent translucides.\nAjouter les carottes en rondelles, le laurier et le bouillon. Mélanger pour enrober les légumes.\nVerser 1 litre d’eau. Porter à frémissement puis laisser cuire à feu moyen environ 20 minutes, jusqu’à ce que les carottes soient bien tendres.\nRetirer les feuilles de laurier. Mixer finement jusqu’à obtenir une texture lisse et crémeuse.\nAjouter le Carré Frais 0% et le cumin mixer à nouveau pour homogénéiser.\nAjuster la texture si nécessaire avec un peu d’eau chaude. Rectifier l’assaisonnement en sel et poivre.\nServir avec du pain toasté tartiné de fromage frais et un morceau de fromage."
   },
   "vr-001": {
     "id": "vr-001",
@@ -2382,5 +2422,9 @@
   "vr-061": {
     "id": "vr-061",
     "instructions": "Rincer et faire cuire l’œuf dans l’eau bouillante 10 min, égoutter, sous l’eau froide et laisser refroidir.\nSortir les steaks du réfrigérateur 30 min avant leur cuisson.\nLaver les pommes de terre et les faire cuire à la vapeur 8 à 12 min selon leur taille. Retirer la peau ou non et laisser refroidir.\nSaler et poivrer les steaks et les faire cuire dans une poêle bien chaude huilée, écraser l’ail et l’ajouter en fin de cuisson puis laisser reposer à couvert quelques minutes.\nLaver les carottes, les radis et les tomates cerises, couper les tomates en 2, les radis en fines rondelles et râper les carottes.\nCouper et assaisonner la salade de pomme de terre avec la moitié de l’échalote émincée finement, huile de colza, vinaigre, persil et ciboulette. Saler et poivrer.\nNettoyer, essorer et assaisonner la salade mélangée avec les autres légumes, et le reste de l’échalote, huile d’olive, vinaigre, un peu de persillade, saler et poivrer puis servir le tout avec le steak."
+  },
+  "vr-062": {
+    "id": "vr-062",
+    "instructions": "Laver les grenailles et cuire à la vapeur 8 à 12 min selon leur taille.\nÉmincer l'oignon rouge.\nFaire chauffer un filet d'huile d'olive dans une poêle bien chaude. Saisir les filets de bœuf jusqu'à ce qu'ils soient bien cuits puis réserver.\nCouper les poivrons en petits dés. Les faire revenir dans une poêle avec de l'huile d'olive et les épices jusqu'à ce qu'ils soient bien cuits et fondants, ajouter les filets de boeuf coupés en petit morceaux à la fin et mélanger.\nLaver les tomates fraîches et les couper en dés.\nCouper les olives vertes en rondelles.\nRéunir dans un plat les rondelles de pommes de terre grenailles, les poivrons au boeuf, les oignons, les dés de tomates et les olives.\nAssaisonner d'huile de colza, vinaigre, persil, saler, poivrer et mélanger délicatement avant de servir froid ou tiède."
   }
 }

@@ -7793,7 +7793,7 @@
     "categoryId": "pastries",
     "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
-    "defaultPortions": 13,
+    "defaultPortions": 18,
     "batchCooking": true,
     "isDessert": false,
     "ingredients": [
@@ -9894,6 +9894,176 @@
     "assets": {
       "mealPhoto": {
         "url": "/artemis-foodlab/assets/pastries/meal/PAT_64_mealPhoto.webp"
+      }
+    }
+  },
+  "pat-065": {
+    "id": "pat-065",
+    "name": "Muffins aux cerises",
+    "categoryId": "pastries",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 10,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-026",
+        "name": "Farine semi complète",
+        "quantity": 170,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-016",
+        "name": "Cerises",
+        "quantity": 180,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 2,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "004",
+        "foodId": "pl-033",
+        "name": "Skyr",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "005",
+        "foodId": "es-053",
+        "name": "Sucre de coco",
+        "quantity": 30,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "006",
+        "foodId": "cd-011",
+        "name": "Huile d'olive",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "cd-002",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "cd-017",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Condiments"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_65_mealPhoto.webp"
+      }
+    }
+  },
+  "pat-066": {
+    "id": "pat-066",
+    "name": "Clafoutis cerise coco",
+    "categoryId": "pastries",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 8,
+    "batchCooking": true,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-017",
+        "name": "Farine blanche",
+        "quantity": 120,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "es-002",
+        "name": "Amandes en poudre",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "003",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 3,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "004",
+        "foodId": "es-038",
+        "name": "Noix de coco râpée",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "005",
+        "foodId": "pl-003",
+        "name": "Boisson soja nature",
+        "quantity": 220,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "006",
+        "foodId": "es-053",
+        "name": "Sucre de coco",
+        "quantity": 30,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "007",
+        "foodId": "fv-016",
+        "name": "Cerises",
+        "quantity": 250,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "008",
+        "foodId": "es-056",
+        "name": "Vanille",
+        "quantity": null,
+        "unit": null,
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "009",
+        "foodId": "cd-026",
+        "name": "Sel",
+        "quantity": null,
+        "unit": null,
+        "category": "Condiments"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_66_mealPhoto.webp"
       }
     }
   },
@@ -13009,6 +13179,152 @@
       }
     }
   },
+  "pc-048": {
+    "id": "pc-048",
+    "name": "Pancakes aux cerises",
+    "categoryId": "cereal-products",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 10,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-017",
+        "name": "Farine blanche",
+        "quantity": 95,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-016",
+        "name": "Cerises",
+        "quantity": 180,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "004",
+        "foodId": "pl-035",
+        "name": "Yaourt au lait entier",
+        "quantity": 80,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "005",
+        "foodId": "pl-020",
+        "name": "Lait demi écrémé",
+        "quantity": 40,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "006",
+        "foodId": "cd-002",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "cd-017",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "es-053",
+        "name": "Sucre de coco",
+        "quantity": 25,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "009",
+        "foodId": "cd-014",
+        "name": "Huile de colza",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Condiments"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_48_mealPhoto.webp"
+      }
+    }
+  },
+  "pc-049": {
+    "id": "pc-049",
+    "name": "Crêpes légères",
+    "categoryId": "cereal-products",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 8,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-017",
+        "name": "Farine blanche",
+        "quantity": 170,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 2,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "003",
+        "foodId": "es-015",
+        "name": "Eau de fleur d’oranger",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "004",
+        "foodId": "cd-014",
+        "name": "Huile de colza",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "pl-031",
+        "name": "Petit-lait",
+        "quantity": 350,
+        "unit": "g",
+        "category": "Produits laitiers"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_49_mealPhoto.webp"
+      }
+    }
+  },
   "pl-001": {
     "id": "pl-001",
     "name": "Lait végétal maison Amande",
@@ -13258,7 +13574,7 @@
     "id": "pl-006",
     "name": "Yaourt nature",
     "categoryId": "dairy-products",
-    "mealTypes": ["lunch", "dinner"],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -13291,7 +13607,7 @@
     "id": "pl-007",
     "name": "Yaourt nature citron",
     "categoryId": "dairy-products",
-    "mealTypes": ["lunch", "dinner"],
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
     "defaultPortions": 6,
     "batchCooking": true,
@@ -13530,6 +13846,88 @@
     "assets": {
       "mealPhoto": {
         "url": "/artemis-foodlab/assets/dairy-products/meal/PL_20_mealPhoto.webp"
+      }
+    }
+  },
+  "pl-023": {
+    "id": "pl-023",
+    "name": "Batonnets glacé à la fraise",
+    "categoryId": "dairy-products",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 6,
+    "batchCooking": true,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-044",
+        "name": "Fraises",
+        "quantity": 350,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "pl-015",
+        "name": "Fromage blanc 3%",
+        "quantity": 175,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "003",
+        "foodId": "es-036",
+        "name": "Miel",
+        "quantity": 40,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/dairy-products/meal/PL_23_mealPhoto.webp"
+      }
+    }
+  },
+  "pl-024": {
+    "id": "pl-024",
+    "name": "Batonnets glacé à la cerise",
+    "categoryId": "dairy-products",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "ingredient",
+    "defaultPortions": 6,
+    "batchCooking": false,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-016",
+        "name": "Cerises",
+        "quantity": 350,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "pl-015",
+        "name": "Fromage blanc 3%",
+        "quantity": 175,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "003",
+        "foodId": "es-036",
+        "name": "Miel",
+        "quantity": 35,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/dairy-products/meal/PL_24_mealPhoto.webp"
       }
     }
   },
@@ -17310,7 +17708,7 @@
         "id": "003",
         "foodId": "fv-049",
         "name": "Haricots verts",
-        "quantity": 400,
+        "quantity": 300,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -27375,7 +27773,7 @@
         "id": "007",
         "foodId": "cd-011",
         "name": "Huile d'olive",
-        "quantity": 38,
+        "quantity": 25,
         "unit": "g",
         "category": "Condiments"
       },
@@ -27674,7 +28072,7 @@
         "foodId": "es-036",
         "name": "Miel",
         "quantity": 7,
-        "unit": null,
+        "unit": "g",
         "category": "Epicerie sucrée"
       }
     ],
@@ -31361,7 +31759,7 @@
         "id": "002",
         "foodId": "fc-025",
         "name": "Quinoa",
-        "quantity": 90,
+        "quantity": 80,
         "unit": "g",
         "category": "Féculents"
       },
@@ -31385,7 +31783,7 @@
         "id": "005",
         "foodId": "fv-075",
         "name": "Poivrons",
-        "quantity": 250,
+        "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -40906,7 +41304,7 @@
         "id": "001",
         "foodId": "fc-003",
         "name": "Coquillettes",
-        "quantity": 80,
+        "quantity": 70,
         "unit": "g",
         "category": "Féculents"
       },
@@ -40914,7 +41312,7 @@
         "id": "002",
         "foodId": "fv-090",
         "name": "Tomates cerises",
-        "quantity": 200,
+        "quantity": 150,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -40922,7 +41320,7 @@
         "id": "003",
         "foodId": "fv-070",
         "name": "Petits pois",
-        "quantity": 80,
+        "quantity": 100,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -41195,14 +41593,6 @@
       },
       {
         "id": "006",
-        "foodId": "cd-027",
-        "name": "Vinaigre balsamique",
-        "quantity": 5,
-        "unit": "g",
-        "category": "Condiments"
-      },
-      {
-        "id": "007",
         "foodId": "ha-017",
         "name": "Persillade",
         "quantity": null,
@@ -41210,7 +41600,7 @@
         "category": "Herbe aromatique"
       },
       {
-        "id": "008",
+        "id": "007",
         "foodId": "ha-002",
         "name": "Basilic",
         "quantity": null,
@@ -41218,18 +41608,26 @@
         "category": "Herbe aromatique"
       },
       {
-        "id": "009",
-        "foodId": "pl-033",
-        "name": "Skyr",
-        "quantity": 20,
+        "id": "008",
+        "foodId": "cd-027",
+        "name": "Vinaigre balsamique",
+        "quantity": 6,
         "unit": "g",
-        "category": "Produits laitiers"
+        "category": "Condiments"
+      },
+      {
+        "id": "009",
+        "foodId": "fv-038",
+        "name": "Échalote",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Fruits et légumes"
       },
       {
         "id": "010",
-        "foodId": "cd-027",
-        "name": "Vinaigre balsamique",
-        "quantity": 10,
+        "foodId": "cd-014",
+        "name": "Huile de colza",
+        "quantity": 4,
         "unit": "g",
         "category": "Condiments"
       },
@@ -43118,7 +43516,7 @@
         "id": "001",
         "foodId": "fc-016",
         "name": "Orzo",
-        "quantity": 80,
+        "quantity": 70,
         "unit": "g",
         "category": "Féculents"
       },
@@ -43142,16 +43540,16 @@
         "id": "004",
         "foodId": "fv-090",
         "name": "Tomates cerises",
-        "quantity": 200,
+        "quantity": 150,
         "unit": "g",
         "category": "Fruits et légumes"
       },
       {
         "id": "005",
-        "foodId": "fv-086",
-        "name": "Roquette",
-        "quantity": null,
-        "unit": null,
+        "foodId": "fv-088",
+        "name": "Salade",
+        "quantity": 25,
+        "unit": "g",
         "category": "Fruits et légumes"
       },
       {
@@ -52862,6 +53260,120 @@
     "assets": {
       "mealPhoto": {
         "url": "/artemis-foodlab/assets/red-meat/meal/VR_61_mealPhoto.webp"
+      }
+    }
+  },
+  "vr-062": {
+    "id": "vr-062",
+    "name": "Salade de pommes de terre bœuf à l'italienne",
+    "categoryId": "red-meat",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "vm-005",
+        "name": "Filet de bœuf",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Viande"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-075",
+        "name": "Poivrons",
+        "preparation": "dés",
+        "quantity": 250,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-089",
+        "name": "Tomates",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-064",
+        "name": "Oignon rouge",
+        "quantity": 0.5,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "foodId": "cd-023",
+        "name": "Olives verte",
+        "quantity": 60,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "cd-011",
+        "name": "Huile d'olive",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "fv-047",
+        "name": "Grenailles",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "008",
+        "foodId": "ep-016",
+        "name": "Paprika",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices"
+      },
+      {
+        "id": "009",
+        "foodId": "ep-005",
+        "name": "Cumin",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices"
+      },
+      {
+        "id": "010",
+        "foodId": "cd-027",
+        "name": "Vinaigre balsamique",
+        "quantity": 5,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "011",
+        "foodId": "ha-015",
+        "name": "Persil",
+        "quantity": null,
+        "unit": null,
+        "category": "Herbe aromatique"
+      },
+      {
+        "id": "012",
+        "foodId": "cd-014",
+        "name": "Huile de colza",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Condiments"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/red-meat/meal/VR_62_mealPhoto.webp"
       }
     }
   },

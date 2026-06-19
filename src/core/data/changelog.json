@@ -1,5 +1,18 @@
 [
   {
+    "date": "2026-06-19",
+    "recipeIds": [
+      "pc-048",
+      "pc-049",
+      "pl-023",
+      "pl-024",
+      "pat-065",
+      "pat-067",
+      "vr-062"
+    ],
+    "note": "Nouvelles recettes ! Miam !"
+  },
+  {
     "date": "2026-06-13",
     "recipeIds": ["pc-047", "pl-021", "pl-022", "pat-064", "es-005", "veg-111"],
     "note": "Nouvelles recettes ! Miam !"
@@ -12,25 +25,6 @@
   {
     "date": "2026-06-04",
     "recipeIds": ["char-050", "pc-046"],
-    "note": "Nouvelles recettes ! Miam !"
-  },
-  {
-    "date": "2026-05-25",
-    "recipeIds": [
-      "char-049",
-      "poi-081",
-      "pv-057",
-      "pv-058",
-      "vr-061",
-      "vb-080",
-      "vb-081",
-      "pc-044",
-      "base-041"
-    ]
-  },
-  {
-    "date": "2026-05-21",
-    "recipeIds": ["pc-017", "pc-028"],
     "note": "Nouvelles recettes ! Miam !"
   }
 ]

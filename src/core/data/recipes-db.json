@@ -9980,6 +9980,95 @@
   },
   "pat-066": {
     "id": "pat-066",
+    "name": "Muffins fromage blanc fourrés cerise",
+    "categoryId": "pastries",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 10,
+    "batchCooking": true,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-020",
+        "name": "Farine d’épeautre",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-028",
+        "name": "Compote de pomme maison",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 3,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "004",
+        "foodId": "es-048",
+        "name": "Sirop d'agave",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "005",
+        "foodId": "cd-017",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "cd-002",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "pl-015",
+        "name": "Fromage blanc 3%",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "008",
+        "foodId": "fv-016",
+        "name": "Cerises",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "009",
+        "foodId": "es-053",
+        "name": "Sucre de coco",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_66_mealPhoto.webp"
+      }
+    }
+  },
+  "pat-067": {
+    "id": "pat-067",
     "name": "Clafoutis cerise coco",
     "categoryId": "pastries",
     "mealTypes": ["lunch", "dinner"],
@@ -10063,7 +10152,7 @@
     ],
     "assets": {
       "mealPhoto": {
-        "url": "/artemis-foodlab/assets/pastries/meal/PAT_66_mealPhoto.webp"
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_67_mealPhoto.webp"
       }
     }
   },

@@ -5,6 +5,7 @@ import { typedFoodDb } from "../../typed-db/typedFoodDb";
 import { OutdoorEntry, typedOutdoorDb } from "../../typed-db/typedOutdoorDb";
 import { PREDEFINED_FILTERS } from "../../domain/predefinedFilters";
 import { calculateRecipeMacros } from "../../../shared/utils/macroUtils";
+import { typedInstructionsDb } from "../../typed-db/typedInstructionsDb";
 
 export const UNIT_WEIGHT_UNITS: string[] = [
   Unit.PIECE,
@@ -52,14 +53,17 @@ export function getCategoryRecipeIds(categoryId: string): string[] {
 export function getCategoryRecipes(categoryId: string): CategoryRecipeEntry[] {
   return Object.entries(typedRecipesDb)
     .filter(([, recipe]) => recipe.categoryId === categoryId && (recipe.assets?.mealPhoto || isIngredient(recipe)))
-    .map(([recipeId, recipe]) => ({
-      id: recipeId,
-      name: recipe.name,
-      recipeUrl: isIngredient(recipe)
-        ? recipeId
-        : (recipe.assets.mealPhoto?.url ?? recipe.assets.instructionsPhoto?.url ?? ""),
-      isIngredientKind: isIngredient(recipe),
-    }));
+    .map(([recipeId, recipe]) => {
+      const hasInstructions = !!typedInstructionsDb[recipeId];
+      return {
+        id: recipeId,
+        name: recipe.name,
+        recipeUrl: hasInstructions
+          ? (isIngredient(recipe) ? recipeId : (recipe.assets.mealPhoto?.url ?? recipe.assets.instructionsPhoto?.url ?? ""))
+          : "",
+        isIngredientKind: isIngredient(recipe),
+      };
+    });
 }
 
 export function filterRecipesByMacros<T extends { recipeId?: string; id: string }>(

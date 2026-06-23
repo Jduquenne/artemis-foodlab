@@ -82,7 +82,7 @@ export const FlipCard = ({ name, frontContent, backContent, recipeUrl, onClick, 
 
     return (
         <div
-            className="group relative w-full h-full cursor-pointer perspective-1000"
+            className={`group relative w-full h-full perspective-1000 ${hasRecipe ? 'cursor-pointer' : 'cursor-default'}`}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onClick={() => { if (hasRecipe) onClick(); }}

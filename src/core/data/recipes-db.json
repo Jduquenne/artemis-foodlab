@@ -4402,6 +4402,563 @@
       }
     }
   },
+  "fr-026": {
+    "id": "fr-026",
+    "name": "Salade fraise abricot pêche",
+    "categoryId": "fruits",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 1,
+    "batchCooking": false,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-044",
+        "name": "Fraises",
+        "quantity": 75,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-069",
+        "name": "Pêche",
+        "quantity": 80,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-001",
+        "name": "Abricot",
+        "quantity": 40,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fruits/meal/FR_26_mealPhoto.webp"
+      }
+    }
+  },
+  "fr-027": {
+    "id": "fr-027",
+    "name": "Salade fraise melon",
+    "categoryId": "fruits",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 1,
+    "batchCooking": false,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-044",
+        "name": "Fraises",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-057",
+        "name": "Melon",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fruits/meal/FR_27_mealPhoto.webp"
+      }
+    }
+  },
+  "fr-028": {
+    "id": "fr-028",
+    "name": "Salade 4 couleurs",
+    "categoryId": "fruits",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-044",
+        "name": "Fraises",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-053",
+        "name": "Kiwi",
+        "quantity": 80,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-009",
+        "name": "Banane",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-060",
+        "name": "Myrtilles",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fruits/meal/FR_28_mealPhoto.webp"
+      }
+    }
+  },
+  "fr-029": {
+    "id": "fr-029",
+    "name": "Salade 4 fruits jaunes",
+    "categoryId": "fruits",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-003",
+        "name": "Ananas",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-001",
+        "name": "Abricot",
+        "quantity": 80,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-069",
+        "name": "Pêche",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-009",
+        "name": "Banane",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fruits/meal/FR_29_mealPhoto.webp"
+      }
+    }
+  },
+  "fr-030": {
+    "id": "fr-030",
+    "name": "Salade 5 fruits rouges",
+    "categoryId": "fruits",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-044",
+        "name": "Fraises",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-016",
+        "name": "Cerises",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-045",
+        "name": "Framboises",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-060",
+        "name": "Myrtilles",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "foodId": "fv-059",
+        "name": "Mûres",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fruits/meal/FR_30_mealPhoto.webp"
+      }
+    }
+  },
+  "fr-031": {
+    "id": "fr-031",
+    "name": "Salade multifruits",
+    "categoryId": "fruits",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 4,
+    "batchCooking": false,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-044",
+        "name": "Fraises",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-016",
+        "name": "Cerises",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-060",
+        "name": "Myrtilles",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-053",
+        "name": "Kiwi",
+        "quantity": 80,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "foodId": "fv-009",
+        "name": "Banane",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "006",
+        "foodId": "fv-001",
+        "name": "Abricot",
+        "quantity": 80,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "007",
+        "foodId": "fv-069",
+        "name": "Pêche",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fruits/meal/FR_31_mealPhoto.webp"
+      }
+    }
+  },
+  "fr-032": {
+    "id": "fr-032",
+    "name": "Salade fraises cerise",
+    "categoryId": "fruits",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 1,
+    "batchCooking": false,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-044",
+        "name": "Fraises",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-016",
+        "name": "Cerises",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fruits/meal/FR_32_mealPhoto.webp"
+      }
+    }
+  },
+  "fr-033": {
+    "id": "fr-033",
+    "name": "Salade fraises myrtilles",
+    "categoryId": "fruits",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 1,
+    "batchCooking": false,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-044",
+        "name": "Fraises",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-060",
+        "name": "Myrtilles",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fruits/meal/FR_33_mealPhoto.webp"
+      }
+    }
+  },
+  "fr-034": {
+    "id": "fr-034",
+    "name": "Salade pomme poire",
+    "categoryId": "fruits",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-076",
+        "name": "Pomme",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-072",
+        "name": "Poire",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fruits/meal/FR_34_mealPhoto.webp"
+      }
+    }
+  },
+  "fr-035": {
+    "id": "fr-035",
+    "name": "Salade pomme poire raisins",
+    "categoryId": "fruits",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 4,
+    "batchCooking": false,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-076",
+        "name": "Pomme",
+        "quantity": 160,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-072",
+        "name": "Poire",
+        "quantity": 160,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-084",
+        "name": "Raisins blancs",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fruits/meal/FR_35_mealPhoto.webp"
+      }
+    }
+  },
+  "fr-036": {
+    "id": "fr-036",
+    "name": "Salade pomme orange banane",
+    "categoryId": "fruits",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-076",
+        "name": "Pomme",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-065",
+        "name": "Orange non traitée",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-009",
+        "name": "Banane",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fruits/meal/FR_36_mealPhoto.webp"
+      }
+    }
+  },
+  "fr-037": {
+    "id": "fr-037",
+    "name": "Salade pêche melon",
+    "categoryId": "fruits",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-069",
+        "name": "Pêche",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-057",
+        "name": "Melon",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fruits/meal/FR_37_mealPhoto.webp"
+      }
+    }
+  },
+  "fr-038": {
+    "id": "fr-038",
+    "name": "Salade fraises framboises myrtilles",
+    "categoryId": "fruits",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 1,
+    "batchCooking": false,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-044",
+        "name": "Fraises",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-045",
+        "name": "Framboises",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-060",
+        "name": "Myrtilles",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fruits/meal/FR_38_mealPhoto.webp"
+      }
+    }
+  },
   "pat-001": {
     "id": "pat-001",
     "name": "Cookies protéinés banane chocolat",
@@ -13414,6 +13971,137 @@
       }
     }
   },
+  "pc-050": {
+    "id": "pc-050",
+    "name": "Tartine au beurre de cacahuètes, banane et oeuf",
+    "categoryId": "cereal-products",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 1,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "bo-005",
+        "name": "Pain nordique",
+        "quantity": 0.5,
+        "unit": "portion",
+        "category": "Boulangerie"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-009",
+        "name": "Banane",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "es-047",
+        "name": "Purée de cacahuètes",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "004",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Ferme"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_50_mealPhoto.webp"
+      }
+    }
+  },
+  "pc-051": {
+    "id": "pc-051",
+    "name": "Tartine au beurre de cacahuètes",
+    "categoryId": "cereal-products",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 1,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "bo-005",
+        "name": "Pain nordique",
+        "quantity": 0.5,
+        "unit": "portion",
+        "category": "Boulangerie"
+      },
+      {
+        "id": "002",
+        "foodId": "es-047",
+        "name": "Purée de cacahuètes",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "003",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Ferme"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_51_mealPhoto.webp"
+      }
+    }
+  },
+  "pc-052": {
+    "id": "pc-052",
+    "name": "Avocado toast et œufs brouillés",
+    "categoryId": "cereal-products",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "bo-005",
+        "name": "Pain nordique",
+        "quantity": 1,
+        "unit": "portion",
+        "category": "Boulangerie"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-008",
+        "name": "Avocat",
+        "quantity": 0.5,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 2,
+        "unit": "pièce",
+        "category": "Ferme"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_52_mealPhoto.webp"
+      }
+    }
+  },
   "pl-001": {
     "id": "pl-001",
     "name": "Lait végétal maison Amande",
@@ -14998,6 +15686,14 @@
         "quantity": 75,
         "unit": "g",
         "category": "Produits laitiers"
+      },
+      {
+        "id": "016",
+        "foodId": "ha-005",
+        "name": "Eau",
+        "quantity": 75,
+        "unit": "g",
+        "category": "Hors achat"
       }
     ],
     "assets": {
@@ -21669,6 +22365,192 @@
     "assets": {
       "mealPhoto": {
         "url": "/artemis-foodlab/assets/fish/meal/POI_81_mealPhoto.webp"
+      }
+    }
+  },
+  "poi-082": {
+    "id": "poi-082",
+    "name": "Taboulé à la Sardine",
+    "categoryId": "fish",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "po-007",
+        "name": "Sardines nature",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Poisson"
+      },
+      {
+        "id": "002",
+        "foodId": "fc-032",
+        "name": "Semoule semi complète",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-089",
+        "name": "Tomates",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-064",
+        "name": "Oignon rouge",
+        "quantity": 0.5,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "foodId": "cd-017",
+        "name": "Jus de citron",
+        "quantity": 6,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "cd-011",
+        "name": "Huile d'olive",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "ha-012",
+        "name": "Menthe",
+        "quantity": null,
+        "unit": null,
+        "category": "Herbe aromatique"
+      },
+      {
+        "id": "008",
+        "foodId": "ha-004",
+        "name": "Coriandre feuilles",
+        "quantity": null,
+        "unit": null,
+        "category": "Herbe aromatique"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_82_mealPhoto.webp"
+      }
+    }
+  },
+  "poi-083": {
+    "id": "poi-083",
+    "name": "Taboulé au thon",
+    "categoryId": "fish",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "po-009",
+        "name": "Thon au naturel",
+        "quantity": 90,
+        "unit": "g",
+        "category": "Poisson"
+      },
+      {
+        "id": "002",
+        "foodId": "fc-032",
+        "name": "Semoule semi complète",
+        "quantity": 75,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-089",
+        "name": "Tomates",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-075",
+        "name": "Poivrons",
+        "quantity": 75,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "foodId": "fc-023",
+        "name": "Pois chiches secs",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "006",
+        "foodId": "cd-011",
+        "name": "Huile d'olive",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "ha-015",
+        "name": "Persil",
+        "quantity": null,
+        "unit": null,
+        "category": "Herbe aromatique"
+      },
+      {
+        "id": "008",
+        "foodId": "ha-004",
+        "name": "Coriandre feuilles",
+        "quantity": null,
+        "unit": null,
+        "category": "Herbe aromatique"
+      },
+      {
+        "id": "009",
+        "foodId": "cd-027",
+        "name": "Vinaigre balsamique",
+        "quantity": 5,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "010",
+        "foodId": "cd-017",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Condiments"
+      },
+      {
+        "id": "011",
+        "foodId": "fv-029",
+        "name": "Concombre",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_83_mealPhoto.webp"
       }
     }
   },
@@ -57067,7 +57949,7 @@
         "id": "001",
         "foodId": "fv-044",
         "name": "Fraises",
-        "quantity": 100,
+        "quantity": 150,
         "unit": "g",
         "category": "Fruits et légumes"
       }
@@ -57367,7 +58249,7 @@
         "id": "001",
         "foodId": "fv-069",
         "name": "Pêche",
-        "quantity": 100,
+        "quantity": 150,
         "unit": "g",
         "category": "Fruits et légumes"
       }

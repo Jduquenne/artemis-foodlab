@@ -1,5 +1,29 @@
 [
   {
+    "date": "2026-06-23",
+    "recipeIds": [
+      "fr-026",
+      "fr-027",
+      "fr-028",
+      "fr-029",
+      "fr-030",
+      "fr-031",
+      "fr-032",
+      "fr-033",
+      "fr-034",
+      "fr-035",
+      "fr-036",
+      "fr-037",
+      "fr-038",
+      "poi-082",
+      "poi-083",
+      "pc-050",
+      "pc-051",
+      "pc-052"
+    ],
+    "note": "Salade de fruits ... jolie jolie ... jolie !"
+  },
+  {
     "date": "2026-06-19",
     "recipeIds": [
       "pc-048",
@@ -10,21 +34,6 @@
       "pat-067",
       "vr-062"
     ],
-    "note": "Nouvelles recettes ! Miam !"
-  },
-  {
-    "date": "2026-06-13",
-    "recipeIds": ["pc-047", "pl-021", "pl-022", "pat-064", "es-005", "veg-111"],
-    "note": "Nouvelles recettes ! Miam !"
-  },
-  {
-    "date": "2026-06-10",
-    "recipeIds": ["pat-60", "pat-61", "pat-62", "pat-63", "veg-110"],
-    "note": "Nouvelles recettes ! Miam !"
-  },
-  {
-    "date": "2026-06-04",
-    "recipeIds": ["char-050", "pc-046"],
     "note": "Nouvelles recettes ! Miam !"
   }
 ]

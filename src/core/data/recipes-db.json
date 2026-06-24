@@ -14102,6 +14102,193 @@
       }
     }
   },
+  "pc-053": {
+    "id": "pc-053",
+    "name": "Muesli raisins secs pécan",
+    "categoryId": "cereal-products",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 1,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-029",
+        "name": "Flocons d'avoine",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "pl-020",
+        "name": "Lait demi écrémé",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "003",
+        "foodId": "es-030",
+        "name": "Flocons d'épeautre",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "004",
+        "foodId": "fs-026",
+        "name": "Raisins secs",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "005",
+        "foodId": "fs-014",
+        "name": "Graines de tournesol",
+        "quantity": 5,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "006",
+        "foodId": "fs-022",
+        "name": "Noix de pécan",
+        "quantity": 6,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "007",
+        "foodId": "es-031",
+        "name": "Flocons de quinoa",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_53_mealPhoto.webp"
+      }
+    }
+  },
+  "pc-054": {
+    "id": "pc-054",
+    "name": "Muesli amande abricot",
+    "categoryId": "cereal-products",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 1,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-029",
+        "name": "Flocons d'avoine",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "es-032",
+        "name": "Flocons de sarrasin",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "003",
+        "foodId": "fs-001",
+        "name": "Abricots secs",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "004",
+        "foodId": "fs-002",
+        "name": "Amandes",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "005",
+        "foodId": "pl-020",
+        "name": "Lait demi écrémé",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Produits laitiers"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_54_mealPhoto.webp"
+      }
+    }
+  },
+  "pc-055": {
+    "id": "pc-055",
+    "name": "Muesli cajou baies de goji",
+    "categoryId": "cereal-products",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 1,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-029",
+        "name": "Flocons d'avoine",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "es-030",
+        "name": "Flocons d'épeautre",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "003",
+        "foodId": "fs-004",
+        "name": "Baies de goji",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "004",
+        "foodId": "fs-020",
+        "name": "Noix de cajou",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "005",
+        "foodId": "pl-020",
+        "name": "Lait demi écrémé",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Produits laitiers"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_55_mealPhoto.webp"
+      }
+    }
+  },
   "pl-001": {
     "id": "pl-001",
     "name": "Lait végétal maison Amande",
@@ -48317,7 +48504,88 @@
   },
   "veg-110": {
     "id": "veg-110",
-    "name": "Velouté potimarron butternut et carottes",
+    "name": "Frites salade oeufs au plat",
+    "categoryId": "veggies",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-077",
+        "name": "Pommes de terre",
+        "quantity": 400,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-088",
+        "name": "Salade",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-038",
+        "name": "Échalote",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 6,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "005",
+        "foodId": "cd-011",
+        "name": "Huile d'olive",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-016",
+        "name": "Paprika",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices"
+      },
+      {
+        "id": "007",
+        "foodId": "cd-014",
+        "name": "Huile de colza",
+        "quantity": 5,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "cd-027",
+        "name": "Vinaigre balsamique",
+        "quantity": 5,
+        "unit": "g",
+        "category": "Condiments"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_110_mealPhoto.webp"
+      }
+    }
+  },
+  "veg-111": {
+    "id": "veg-111",
+    "name": "Velouté de carottes",
     "categoryId": "veggies",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -48417,7 +48685,7 @@
     ],
     "assets": {
       "mealPhoto": {
-        "url": "/artemis-foodlab/assets/veggies/meal/VEG_110_mealPhoto.webp"
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_111_mealPhoto.webp"
       }
     }
   },

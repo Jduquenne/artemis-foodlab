@@ -99,12 +99,9 @@ export const CategoryDetail = () => {
             </div>
 
             <div className="flex-1 justify-center min-h-0 overflow-y-auto" onScroll={markScrolling}>
-                <div
-                    className="grid gap-3 pb-2"
-                    style={{ gridTemplateColumns: 'repeat(auto-fill, 5cm)', gridAutoRows: '5.5cm', justifyContent: 'center' }}
-                >
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-3 pb-2">
                     {visibleRecipes.map((recipe, i) => (
-                        <LazyRender key={recipe.id} className="h-full animate-fade-in-up" style={{ animationDelay: `${i * 25}ms` }}>
+                        <LazyRender key={recipe.id} className="aspect-[10/11] animate-fade-in-up" style={{ animationDelay: `${i * 25}ms` }}>
                             <FlipCard
                                 name={recipe.name}
                                 frontContent={

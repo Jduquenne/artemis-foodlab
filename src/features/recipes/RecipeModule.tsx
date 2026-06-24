@@ -121,9 +121,9 @@ export const RecipeModule = () => {
                                         : 'Aucune recette ne correspond à ces filtres'}
                             </div>
                         ) : (
-                            <div className="grid gap-3 pb-4" style={{ gridTemplateColumns: 'repeat(auto-fill, 5cm)', gridAutoRows: '5.5cm', justifyContent: 'center' }}>
+                            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-3 pb-4">
                                 {filteredResults.map((recipe) => (
-                                    <LazyRender key={recipe.id} className="h-full">
+                                    <LazyRender key={recipe.id} className="aspect-[10/11]">
                                         <FlipCard
                                             name={recipe.name}
                                             frontContent={<RecipePhotoCard recipeId={recipe.recipeId} recipe={typedRecipesDb[recipe.recipeId]} fill />}

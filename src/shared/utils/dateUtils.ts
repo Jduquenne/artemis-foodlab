@@ -8,7 +8,7 @@ import {
 } from "date-fns";
 import { fr } from "date-fns/locale";
 
-const WEEK_DAY_ORDER = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+const WEEK_DAY_ORDER = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 
 export function isoDateFromWeekDay(year: number, week: number, dayName: string): string {
   const dayIndex = WEEK_DAY_ORDER.indexOf(dayName);

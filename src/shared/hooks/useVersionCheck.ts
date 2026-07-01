@@ -1,13 +1,15 @@
 import { useEffect } from "react";
 import { useNotificationStore } from "../store/useNotificationStore";
+import { useNotificationSettingsStore } from "../store/useNotificationSettingsStore";
 
 const CHECK_INTERVAL_MS = 15 * 60 * 1000;
 
 export const useVersionCheck = () => {
   const push = useNotificationStore((s) => s.push);
+  const enabled = useNotificationSettingsStore((s) => s.versionCheckEnabled);
 
   useEffect(() => {
-    if (!import.meta.env.PROD) return;
+    if (!import.meta.env.PROD || !enabled) return;
 
     const check = async () => {
       try {
@@ -29,5 +31,5 @@ export const useVersionCheck = () => {
 
     const timer = setInterval(check, CHECK_INTERVAL_MS);
     return () => clearInterval(timer);
-  }, [push]);
+  }, [push, enabled]);
 };

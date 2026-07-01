@@ -8,6 +8,23 @@ import {
 } from "date-fns";
 import { fr } from "date-fns/locale";
 
+const WEEK_DAY_ORDER = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+
+export function isoDateFromWeekDay(year: number, week: number, dayName: string): string {
+  const dayIndex = WEEK_DAY_ORDER.indexOf(dayName);
+  const week1Monday = startOfISOWeek(new Date(year, 0, 4));
+  return format(addDays(week1Monday, (week - 1) * 7 + Math.max(0, dayIndex)), 'yyyy-MM-dd');
+}
+
+export function formatSourceDayFull(isoDate: string): string {
+  const s = format(parseISO(isoDate), "EEEE d MMMM", { locale: fr });
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+export function formatSourceDayShort(isoDate: string): string {
+  return format(parseISO(isoDate), "d MMM", { locale: fr });
+}
+
 export const getWeekId = (date: Date = new Date()) => {
   const week = getISOWeek(date);
   const year = getISOWeekYear(date);

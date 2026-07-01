@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { X, CheckCircle2, Circle, Snowflake, ChevronDown, ChevronUp } from 'lucide-react';
-import { IngredientSource } from '../../../core/logic/shopping/shoppingLogic';
+import { IngredientSource, groupAndSortSources } from '../../../core/logic/shopping/shoppingLogic';
 import { FreezerBag, SlotType } from '../../../core/domain/types';
 import { pluralizeUnit, formatQty } from '../../../shared/utils/unitUtils';
-import { formatBagDate } from '../../../shared/utils/dateUtils';
+import { formatBagDate, formatSourceDayFull, formatSourceDayShort } from '../../../shared/utils/dateUtils';
 import { SLOT_LABELS } from '../../../shared/utils/slotLabels';
-import { DAY_LABELS, DAY_SHORT, DAY_ORDER } from '../../../shared/utils/dayLabels';
 
 export interface SourcesModalProps {
     ingredientKey: string;
@@ -22,16 +21,7 @@ const COLLAPSE_THRESHOLD = 3;
 
 export const SourcesModal = ({ ingredientKey, sources, sourceChecked, onToggleSource, onClose, freezerBags, selectedBagIds = [], onToggleBag }: SourcesModalProps) => {
     const [bagsExpanded, setBagsExpanded] = useState(false);
-    const groups: IngredientSource[][] = [];
-    const seen = new Map<string, IngredientSource[]>();
-    for (const src of sources) {
-        const existing = seen.get(src.recipeId);
-        if (existing) { existing.push(src); } else {
-            const group = [src];
-            seen.set(src.recipeId, group);
-            groups.push(group);
-        }
-    }
+    const groups = groupAndSortSources(sources);
 
     return (
         <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4" onClick={onClose}>
@@ -115,7 +105,7 @@ export const SourcesModal = ({ ingredientKey, sources, sourceChecked, onToggleSo
                         );
 
                         if (group.length > 1) {
-                            const sorted = [...group].sort((a, b) => DAY_ORDER.indexOf(a.day) - DAY_ORDER.indexOf(b.day));
+                            const sorted = [...group].sort((a, b) => a.isoDate.localeCompare(b.isoDate));
                             const totalQty = group.reduce((sum, s) => sum + s.quantity, 0);
                             const unit = group[0].unit;
                             const uniqueSlots = [...new Set(group.map(s => s.slot))];
@@ -145,7 +135,7 @@ export const SourcesModal = ({ ingredientKey, sources, sourceChecked, onToggleSo
                                             </span>
                                         </div>
                                         <p className="text-xs text-slate-400 mt-0.5">
-                                            {sorted.map(s => DAY_SHORT[s.day] ?? s.day).join(',\u00a0')}
+                                            {sorted.map(s => formatSourceDayShort(s.isoDate)).join(',\u00a0')}
                                             {slotLabel && <><span className="mx-1 text-slate-300">·</span>{slotLabel}</>}
                                             <span className="mx-1 text-slate-300">·</span>
                                             <span className="font-medium text-slate-500">{group.length}×</span>
@@ -177,7 +167,7 @@ export const SourcesModal = ({ ingredientKey, sources, sourceChecked, onToggleSo
                                         {src.recipeName}
                                     </p>
                                     <p className="text-xs text-slate-400 mt-0.5">
-                                        {DAY_LABELS[src.day] ?? src.day}
+                                        {formatSourceDayFull(src.isoDate)}
                                         <span className="mx-1 text-slate-300">·</span>
                                         {SLOT_LABELS[src.slot as SlotType] ?? src.slot}
                                         <span className="mx-1 text-slate-300">·</span>

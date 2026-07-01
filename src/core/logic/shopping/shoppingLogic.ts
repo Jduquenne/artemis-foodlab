@@ -6,11 +6,13 @@ import { typedRecipesDb } from "../../typed-db/typedRecipesDb";
 import { RECIPE_BASE_GRAMS } from "../../../shared/utils/macroUtils";
 import { pluralizeUnit } from "../../../shared/utils/unitUtils";
 import { distributeToColumns } from "../../../shared/utils/columnUtils";
+import { isoDateFromWeekDay } from "../../../shared/utils/dateUtils";
 
 export interface IngredientSource {
   recipeId: string;
   recipeName: string;
   day: string;
+  isoDate: string;
   slot: string;
   quantity: number;
   unit: string;
@@ -132,6 +134,7 @@ async function aggregateSlots(
                 recipeId,
                 recipeName,
                 day: slot.day,
+                isoDate: isoDateFromWeekDay(slot.year, slot.week, slot.day),
                 slot: slot.slot,
                 quantity: qty,
                 unit: baseIng.unit,
@@ -153,6 +156,7 @@ async function aggregateSlots(
           recipeId,
           recipeName,
           day: slot.day,
+          isoDate: isoDateFromWeekDay(slot.year, slot.week, slot.day),
           slot: slot.slot,
           quantity: qty,
           unit: ing.unit,
@@ -285,6 +289,19 @@ export function isIngChecked(ing: RecipeCardIngredient, sourceChecked: Set<strin
   return ing.sources.length > 0 && ing.sources.every(
     (s) => sourceChecked.has(`${ing.ingredientKey}::${s.recipeId}::${s.day}::${s.slot}`)
   );
+}
+
+export function groupAndSortSources(sources: IngredientSource[]): IngredientSource[][] {
+  const seen = new Map<string, IngredientSource[]>();
+  for (const src of sources) {
+    const existing = seen.get(src.recipeId);
+    if (existing) { existing.push(src); } else { seen.set(src.recipeId, [src]); }
+  }
+  return [...seen.values()].sort((a, b) => {
+    const minA = a.reduce((m, s) => s.isoDate < m ? s.isoDate : m, a[0].isoDate);
+    const minB = b.reduce((m, s) => s.isoDate < m ? s.isoDate : m, b[0].isoDate);
+    return minA.localeCompare(minB);
+  });
 }
 
 export const CATEGORY_ORDER: IngredientCategory[] = [

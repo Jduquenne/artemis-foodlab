@@ -777,7 +777,7 @@
   },
   "pc-044": {
     "id": "pc-044",
-    "instructions": "Battre les oeufs avec le petit-lait et l’huile.\nMélanger les farines avec l’amande en poudre, le sucre et le bicarbonate.\nAjouter le mélange au petit lait et bien mélanger pour obtenir une pâte lisse et homogène. \nLaisser poser 1h.\nFaire chauffer bien fort une poêle puis baisser le feu et y déposer la pâte avec une cuillère à soupe pour faire cuire les pancakes quelques minutes de chaque côté jusqu’à ce qu’ils soient dorés."
+    "instructions": "Battre les oeufs avec le petit-lait et l’huile.\nMélanger les farines avec l’amande en poudre, le sucre et le bicarbonate.\nAjouter le mélange au petit lait et bien mélanger pour obtenir une pâte lisse et homogène. \nLaisser poser 1h.\nFaire chauffer bien fort une poêle puis baisser le feu et y déposer la pâte avec une mini louche pour faire cuire les pancakes quelques minutes de chaque côté jusqu’à ce qu’ils soient dorés."
   },
   "pc-045": {
     "id": "pc-045",
@@ -801,7 +801,11 @@
   },
   "pc-055": {
     "id": "pc-055",
-    "instructions": "Mixer les graines de lin et mélanger tous les ingrédients ensemble,"
+    "instructions": "Mixer les graines de lin et mélanger tous les ingrédients ensemble"
+  },
+  "pc-057": {
+    "id": "pc-057",
+    "instructions": "Battre les oeufs avec le petit-lait le lait, le beurre fondu et le jus de citron.\nMélanger la farine avec le bicarbonate et une pincée de sel.\nAjouter le mélange au petit lait et bien mélanger pour obtenir une pâte lisse et homogène. \nFaire chauffer bien fort une poêle puis baisser le feu et y déposer la pâte avec une petite louche pour faire cuire les pancakes quelques minutes de chaque côté jusqu’à ce qu’ils soient dorés."
   },
   "pl-001": {
     "id": "pl-001",

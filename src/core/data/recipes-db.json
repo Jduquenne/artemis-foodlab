@@ -12555,9 +12555,9 @@
     "id": "pc-023",
     "name": "Brioche aux pépites de chocolat Vegan",
     "categoryId": "cereal-products",
-    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
-    "defaultPortions": 8,
+    "defaultPortions": 32,
     "batchCooking": true,
     "isDessert": false,
     "ingredients": [
@@ -12565,7 +12565,7 @@
         "id": "001",
         "foodId": "es-026",
         "name": "Farine semi complète",
-        "quantity": 200,
+        "quantity": 800,
         "unit": "g",
         "category": "Epicerie sucrée"
       },
@@ -12573,15 +12573,15 @@
         "id": "002",
         "foodId": "fv-028",
         "name": "Compote de pomme maison",
-        "quantity": 50,
+        "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
       },
       {
         "id": "003",
-        "foodId": "pl-024",
-        "name": "Lait végétal maison",
-        "quantity": 50,
+        "foodId": "pl-003",
+        "name": "Boisson soja nature",
+        "quantity": 200,
         "unit": "g",
         "category": "Produits laitiers"
       },
@@ -12589,7 +12589,7 @@
         "id": "004",
         "foodId": "cd-011",
         "name": "Huile d'olive",
-        "quantity": 20,
+        "quantity": 45,
         "unit": "g",
         "category": "Condiments"
       },
@@ -12597,7 +12597,7 @@
         "id": "005",
         "foodId": "es-034",
         "name": "Levure boulangère fraîche",
-        "quantity": 4,
+        "quantity": 16,
         "unit": "g",
         "category": "Epicerie sucrée"
       },
@@ -12605,7 +12605,7 @@
         "id": "006",
         "foodId": "es-041",
         "name": "Pépites de chocolat 70%",
-        "quantity": 30,
+        "quantity": 90,
         "unit": "g",
         "category": "Epicerie sucrée"
       }
@@ -13537,9 +13537,9 @@
     "id": "pc-044",
     "name": "Pancakes 5 céréales au petit-lait",
     "categoryId": "cereal-products",
-    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
-    "defaultPortions": 6,
+    "defaultPortions": 13,
     "batchCooking": true,
     "isDessert": true,
     "ingredients": [
@@ -14045,14 +14045,6 @@
         "quantity": 10,
         "unit": "g",
         "category": "Epicerie sucrée"
-      },
-      {
-        "id": "003",
-        "foodId": "fm-003",
-        "name": "Oeuf",
-        "quantity": 1,
-        "unit": "pièce",
-        "category": "Ferme"
       }
     ],
     "assets": {
@@ -14234,6 +14226,71 @@
   },
   "pc-055": {
     "id": "pc-055",
+    "name": "Muesli figues noix",
+    "categoryId": "cereal-products",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 1,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-031",
+        "name": "Flocons de quinoa",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "es-032",
+        "name": "Flocons de sarrasin",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "003",
+        "foodId": "fs-008",
+        "name": "Figue séche",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "004",
+        "foodId": "fs-018",
+        "name": "Noix",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Fruits secs"
+      },
+      {
+        "id": "005",
+        "foodId": "pl-020",
+        "name": "Lait demi écrémé",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "006",
+        "foodId": "fs-011",
+        "name": "Graines de lin",
+        "quantity": 5,
+        "unit": "g",
+        "category": "Fruits secs"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_55_mealPhoto.webp"
+      }
+    }
+  },
+  "pc-056": {
+    "id": "pc-056",
     "name": "Muesli cajou baies de goji",
     "categoryId": "cereal-products",
     "mealTypes": ["lunch", "dinner"],
@@ -14285,7 +14342,80 @@
     ],
     "assets": {
       "mealPhoto": {
-        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_55_mealPhoto.webp"
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_56_mealPhoto.webp"
+      }
+    }
+  },
+  "pc-057": {
+    "id": "pc-057",
+    "name": "Pancakes 5 céréales petit lait",
+    "categoryId": "cereal-products",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 22,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-019",
+        "name": "Farine complète 5 céréales",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 2,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "003",
+        "foodId": "pl-031",
+        "name": "Petit-lait",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "004",
+        "foodId": "pl-020",
+        "name": "Lait demi écrémé",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "005",
+        "foodId": "cd-002",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "cd-017",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "pl-001",
+        "name": "Beurre",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Produits laitiers"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/cereal-products/meal/PC_57_mealPhoto.webp"
       }
     }
   },
@@ -41180,22 +41310,14 @@
       },
       {
         "id": "004",
-        "foodId": "fv-038",
-        "name": "Échalote",
-        "quantity": 10,
-        "unit": "g",
-        "category": "Fruits et légumes"
-      },
-      {
-        "id": "005",
         "foodId": "pl-013",
         "name": "Fromage",
-        "quantity": 100,
+        "quantity": 120,
         "unit": "g",
         "category": "Produits laitiers"
       },
       {
-        "id": "006",
+        "id": "005",
         "foodId": "cd-014",
         "name": "Huile de colza",
         "quantity": 5,
@@ -41203,15 +41325,7 @@
         "category": "Condiments"
       },
       {
-        "id": "007",
-        "foodId": "cd-027",
-        "name": "Vinaigre balsamique",
-        "quantity": 5,
-        "unit": "g",
-        "category": "Condiments"
-      },
-      {
-        "id": "008",
+        "id": "006",
         "foodId": "ha-015",
         "name": "Persil",
         "quantity": null,
@@ -41219,12 +41333,28 @@
         "category": "Herbe aromatique"
       },
       {
+        "id": "007",
+        "foodId": "cd-027",
+        "name": "Vinaigre balsamique",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "fv-038",
+        "name": "Échalote",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
         "id": "009",
-        "foodId": "pl-033",
-        "name": "Skyr",
+        "foodId": "ha-017",
+        "name": "Persillade",
         "quantity": 20,
         "unit": "g",
-        "category": "Produits laitiers"
+        "category": "Herbe aromatique"
       },
       {
         "id": "010",
@@ -43515,7 +43645,7 @@
         "id": "001",
         "foodId": "fv-088",
         "name": "Salade",
-        "quantity": 100,
+        "quantity": 60,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -43539,7 +43669,7 @@
         "id": "004",
         "foodId": "fv-090",
         "name": "Tomates cerises",
-        "quantity": 300,
+        "quantity": 200,
         "unit": "g",
         "category": "Fruits et légumes"
       },

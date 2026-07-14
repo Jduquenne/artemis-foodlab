@@ -10713,6 +10713,87 @@
       }
     }
   },
+  "pat-068": {
+    "id": "pat-068",
+    "name": "Gâteau au yaourt",
+    "categoryId": "pastries",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 10,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "pl-035",
+        "name": "Yaourt au lait entier",
+        "quantity": 125,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "002",
+        "foodId": "es-026",
+        "name": "Farine semi complète",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "003",
+        "foodId": "es-052",
+        "name": "Sucre complet",
+        "quantity": 40,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "004",
+        "foodId": "cd-014",
+        "name": "Huile de colza",
+        "quantity": 40,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 3,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "006",
+        "foodId": "cd-002",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "cd-017",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "es-056",
+        "name": "Vanille",
+        "quantity": null,
+        "unit": null,
+        "category": "Epicerie sucrée"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_68_mealPhoto.webp"
+      }
+    }
+  },
   "pc-001": {
     "id": "pc-001",
     "name": "Pancakes de pommes à l’alsacienne",
@@ -22580,6 +22661,14 @@
         "quantity": null,
         "unit": null,
         "category": "Herbe aromatique"
+      },
+      {
+        "id": "010",
+        "foodId": "fv-091",
+        "name": "Tomates cœur de bœuf",
+        "quantity": 150,
+        "unit": null,
+        "category": "Fruits et légumes"
       }
     ],
     "assets": {

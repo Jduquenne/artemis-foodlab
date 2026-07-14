@@ -1,6 +1,11 @@
 [
   {
     "date": "2026-07-07",
+    "recipeIds": ["pat-068"],
+    "note": "Miam du petit déjeuner !"
+  },
+  {
+    "date": "2026-07-07",
     "recipeIds": ["pc-057"],
     "note": "Miam du petit déjeuner !"
   },

@@ -4404,35 +4404,19 @@
   },
   "fr-026": {
     "id": "fr-026",
-    "name": "Salade fraise abricot pêche",
+    "name": "Avocat",
     "categoryId": "fruits",
-    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
-    "kind": "dish",
+    "mealTypes": [],
+    "kind": "ingredient",
     "defaultPortions": 1,
     "batchCooking": false,
     "isDessert": true,
     "ingredients": [
       {
         "id": "001",
-        "foodId": "fv-044",
-        "name": "Fraises",
-        "quantity": 75,
-        "unit": "g",
-        "category": "Fruits et légumes"
-      },
-      {
-        "id": "002",
-        "foodId": "fv-069",
-        "name": "Pêche",
-        "quantity": 80,
-        "unit": "g",
-        "category": "Fruits et légumes"
-      },
-      {
-        "id": "003",
-        "foodId": "fv-001",
-        "name": "Abricot",
-        "quantity": 40,
+        "foodId": "fv-008",
+        "name": "Avocat",
+        "quantity": 35,
         "unit": "g",
         "category": "Fruits et légumes"
       }
@@ -5426,7 +5410,7 @@
     "categoryId": "pastries",
     "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
     "kind": "dish",
-    "defaultPortions": 8,
+    "defaultPortions": 7,
     "batchCooking": true,
     "isDessert": false,
     "ingredients": [
@@ -10462,7 +10446,7 @@
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
-    "isDessert": false,
+    "isDessert": true,
     "ingredients": [
       {
         "id": "001",
@@ -10721,7 +10705,7 @@
     "kind": "dish",
     "defaultPortions": 10,
     "batchCooking": true,
-    "isDessert": false,
+    "isDessert": true,
     "ingredients": [
       {
         "id": "001",
@@ -10791,6 +10775,87 @@
     "assets": {
       "mealPhoto": {
         "url": "/artemis-foodlab/assets/pastries/meal/PAT_68_mealPhoto.webp"
+      }
+    }
+  },
+  "pat-069": {
+    "id": "pat-069",
+    "name": "Banana bread compote",
+    "categoryId": "pastries",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 10,
+    "batchCooking": true,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-009",
+        "name": "Banane",
+        "quantity": 220,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-028",
+        "name": "Compote de pomme maison",
+        "quantity": 60,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 2,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "004",
+        "foodId": "pl-020",
+        "name": "Lait demi écrémé",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "005",
+        "foodId": "es-019",
+        "name": "Farine complète 5 céréales",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "006",
+        "foodId": "cd-002",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "cd-017",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "es-041",
+        "name": "Pépites de chocolat 70%",
+        "quantity": 40,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_69_mealPhoto.webp"
       }
     }
   },

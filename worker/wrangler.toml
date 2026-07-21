@@ -1,0 +1,23 @@
+name = "artemis-foodlab-sheets-gateway"
+main = "src/index.ts"
+compatibility_date = "2026-07-18"
+
+[observability]
+enabled = true
+
+[vars]
+ALLOWED_ORIGINS = "https://jduquenne.github.io,http://localhost:5173"
+RECETTES_SHEET_NAME = "liste_recettes"
+BASES_SHEET_NAME = "liste_bases"
+INGREDIENTS_SHEET_NAME = "liste_ingrédients"
+INSTRUCTIONS_SHEET_NAME = "liste_instructions"
+ALIMENTS_SHEET_NAME = "liste_aliments"
+HOUSEHOLD_SHEET_NAME = "index hors aliments"
+PHOTOS_SHEET_NAME = "liste_photos"
+READ_CACHE_TTL_SECONDS = "60"
+
+# Secrets (never committed) — a definir avec `wrangler secret put <NAME>` :
+#   GOOGLE_CLIENT_EMAIL   email du compte de service Google
+#   GOOGLE_PRIVATE_KEY    cle privee PEM du compte de service (avec les \n litteraux)
+#   GOOGLE_SHEET_ID       id du spreadsheet (dans son URL)
+#   ADMIN_TOKEN           token partage exige pour les endpoints d'ecriture

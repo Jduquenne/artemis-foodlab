@@ -77,6 +77,21 @@ Trois couches, sans exception :
 
 ---
 
+## Google Sheets Gateway (Worker)
+
+`/worker` — Cloudflare Worker donnant à l'app un accès CRUD contrôlé au Google Sheet source de vérité (7 onglets : Recettes, Bases, Ingrédients, Instructions, Aliments, Household, Photos). Remplace à terme le pipeline Python manuel. **En développement, pas encore déployé.**
+
+- Projet TypeScript indépendant, son propre `package.json`/`tsconfig.json`/`wrangler.toml` — pas de dépendance avec le build Vite.
+- Lecture publique cachée (`GET /recipes /foods /household /instructions /photos`), écriture protégée par token (`POST/PUT/DELETE /recipes/:id /foods/:id`) — jamais l'inverse.
+- Recettes, Bases et Ingrédients sont fusionnées en un seul `Record<id, RecipeDetails>` par `worker/src/repository.ts`.
+- Deux formats d'id de recette distincts, ne pas confondre : `buildRecipeId` (`CHAR_01`, noms de fichiers image) vs `buildRecipeDbId` (`char-001`, vraie clé JSON/Sheet) — tous deux dans `recipeBuilderLogic.ts`.
+- Secrets Worker (`GOOGLE_CLIENT_EMAIL`, `GOOGLE_PRIVATE_KEY`, `GOOGLE_SHEET_ID`, `ADMIN_TOKEN`) : jamais committés. Local → `worker/.dev.vars`. Prod → `wrangler secret put`.
+- Noms d'onglet Sheet contenant espace/tiret/underscore : toujours passer par `quoteSheetName()` (`sheetsClient.ts`) pour les ranges A1.
+- Aliments et Household n'ont pas de colonne `id` dans le Sheet — généré côté Worker (préfixe catégorie + compteur d'ordre de ligne). Fragile si le Sheet est trié/réorganisé.
+- `typedRecipesDb`/`typedFoodDb` restent des objets mutables rafraîchis en place (pas de migration vers des hooks `useLiveQuery`) — voir `recipesSyncService.ts`.
+
+---
+
 ## Theming
 
 - **CSS variables uniquement** pour les couleurs `slate-*` et `white`. Ne pas utiliser `dark:text-slate-*` ni `dark:bg-slate-*` : ces valeurs sont gérées par les variables, le dark mode est automatique.

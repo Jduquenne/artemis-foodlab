@@ -9,15 +9,13 @@ export interface LoadRecipeModalProps {
   onClose: () => void;
 }
 
-const ALL_RECIPES = Object.entries(typedRecipesDb);
-
 export const LoadRecipeModal = ({ onLoad, onClose }: LoadRecipeModalProps) => {
   const [query, setQuery] = useState("");
 
   const results = useMemo(() => {
     const q = query.toLowerCase().trim();
     if (!q) return [];
-    return ALL_RECIPES
+    return Object.entries(typedRecipesDb)
       .filter(([, r]) => r.name.toLowerCase().includes(q))
       .slice(0, 20);
   }, [query]);

@@ -1,5 +1,6 @@
 import {
   Food,
+  Ingredient,
   IngredientCategory,
   Macronutrients,
   MealType,
@@ -73,6 +74,7 @@ export const CATEGORY_PREFIX: Record<string, string> = {
   "red-meat": "VR",
   veggies: "VEG",
   "white-meat": "VB",
+  "sweet-grocery": "ES",
   outdoor: "OD",
 };
 
@@ -84,6 +86,16 @@ export function buildRecipeId(
   if (!recipeNumber) return prefix;
   const num = parseInt(recipeNumber, 10);
   return `${prefix}_${isNaN(num) ? recipeNumber : String(num).padStart(2, "0")}`;
+}
+
+export function buildRecipeDbId(
+  categoryId: string,
+  recipeNumber: string,
+): string {
+  const prefix = (CATEGORY_PREFIX[categoryId] ?? categoryId).toLowerCase();
+  if (!recipeNumber) return prefix;
+  const num = parseInt(recipeNumber, 10);
+  return `${prefix}-${isNaN(num) ? recipeNumber : String(num).padStart(3, "0")}`;
 }
 
 export function buildImageName(
@@ -164,6 +176,44 @@ export function recipeToBuilderState(
     fromBook: false,
     ingredients,
     instructions: typedInstructionsDb[recipeId]?.instructions.split("\n") ?? [],
+  };
+}
+
+export function builderStateToRecipe(state: RecipeBuilderState): RecipeDetails & { id: string } {
+  const id = buildRecipeDbId(state.categoryId, state.recipeNumber);
+  const existing = typedRecipesDb[id];
+  const isBaseKind = state.kind === RecipeKind.BASE;
+  const mealTypes: MealType[] = isBaseKind
+    ? []
+    : state.mealTypes === "meal"
+      ? [MealType.LUNCH, MealType.DINNER]
+      : [MealType.BREAKFAST, MealType.SNACK];
+  const ingredients: Ingredient[] = state.ingredients
+    .filter((ing) => ing.name.trim())
+    .map((ing) => ({
+      id: ing.id,
+      name: ing.name,
+      quantity: ing.quantity,
+      unit: ing.unit,
+      category: ing.category,
+      foodId: ing.foodId,
+      baseId: ing.baseId,
+      preparation: ing.preparation || undefined,
+    }));
+
+  return {
+    id,
+    name: state.name,
+    categoryId: state.categoryId,
+    mealTypes,
+    kind: state.kind,
+    macronutriment: existing?.macronutriment ?? ZERO,
+    defaultPortions: state.defaultPortions,
+    ingredients,
+    assets: existing?.assets ?? {},
+    batchCooking: state.batchCooking || undefined,
+    isDessert: isBaseKind ? undefined : state.isDessert || undefined,
+    bookPage: existing?.bookPage,
   };
 }
 

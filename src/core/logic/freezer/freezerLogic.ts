@@ -3,8 +3,6 @@ import { isBatchCookable } from '../../domain/recipePredicates';
 import { typedRecipesDb } from '../../typed-db/typedRecipesDb';
 import { typedFoodDb } from '../../typed-db/typedFoodDb';
 
-const ALL_FOODS = Object.values(typedFoodDb as Record<string, Food>);
-
 export interface BatchRecipeResult {
   id: string;
   name: string;
@@ -29,7 +27,7 @@ export function searchBatchRecipes(query: string): BatchRecipeResult[] {
 export function searchFreezerFoods(query: string): Food[] {
   const q = query.toLowerCase().trim();
   if (!q) return [];
-  return ALL_FOODS
+  return Object.values(typedFoodDb as Record<string, Food>)
     .filter(f => f.name.toLowerCase().includes(q))
     .sort((a, b) => {
       const aStarts = a.name.toLowerCase().startsWith(q);

@@ -82,20 +82,6 @@ export function calculateRecipeMacros(
   return scaleMacros(total, 1 / recipe.defaultPortions);
 }
 
-const _allRecipes = typedRecipesDb;
-const _allFoods: Record<string, Food> = typedFoodDb;
-
-export const RECIPE_MACROS: Record<string, Macronutrients> = Object.fromEntries(
-  Object.entries(_allRecipes).flatMap(([id, recipe]) => {
-    try {
-      return [[id, calculateRecipeMacros(recipe, _allRecipes, _allFoods)]];
-    } catch {
-      /* recipe has unresolvable ingredients (missing foodId / baseId) — skip silently */
-      return [];
-    }
-  })
-);
-
 function calculateRecipeBaseGrams(recipe: RecipeDetails, foodDb: Record<string, Food>): number {
   let total = 0;
   for (const ing of recipe.ingredients) {
@@ -107,12 +93,28 @@ function calculateRecipeBaseGrams(recipe: RecipeDetails, foodDb: Record<string, 
   return total > 0 ? total / recipe.defaultPortions : 0;
 }
 
-export const RECIPE_BASE_GRAMS: Record<string, number> = Object.fromEntries(
-  Object.entries(_allRecipes).flatMap(([id, recipe]) => {
-    const grams = calculateRecipeBaseGrams(recipe, _allFoods);
-    return grams > 0 ? [[id, grams]] : [];
-  })
-);
+export const RECIPE_MACROS: Record<string, Macronutrients> = {};
+export const RECIPE_BASE_GRAMS: Record<string, number> = {};
+
+export function refreshRecipeMacros(
+  allRecipes: Record<string, RecipeDetails>,
+  foodDb: Record<string, Food>,
+): void {
+  for (const key of Object.keys(RECIPE_MACROS)) delete RECIPE_MACROS[key];
+  for (const key of Object.keys(RECIPE_BASE_GRAMS)) delete RECIPE_BASE_GRAMS[key];
+
+  for (const [id, recipe] of Object.entries(allRecipes)) {
+    try {
+      RECIPE_MACROS[id] = calculateRecipeMacros(recipe, allRecipes, foodDb);
+    } catch {
+      /* recipe has unresolvable ingredients (missing foodId / baseId) — skip silently */
+    }
+    const grams = calculateRecipeBaseGrams(recipe, foodDb);
+    if (grams > 0) RECIPE_BASE_GRAMS[id] = grams;
+  }
+}
+
+refreshRecipeMacros(typedRecipesDb, typedFoodDb);
 
 export function computeSlotMacros(
   slot: MealSlot,

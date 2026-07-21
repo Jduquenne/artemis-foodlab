@@ -1,7 +1,10 @@
 import { useState } from "react";
-import { Copy, Check, X, FileCode2 } from "lucide-react";
+import { Copy, Check, X, FileCode2, CloudUpload, Loader2 } from "lucide-react";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
-import { buildImageName, generateCsvOutput, generateIngredientListOutput } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
+import { buildImageName, builderStateToRecipe, generateCsvOutput, generateIngredientListOutput } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
+import { useAdminAuthStore } from "../../../../shared/store/useAdminAuthStore";
+import { saveRecipe } from "../../../../core/services/sheetsGatewayService";
+import { syncFromGateway } from "../../../../core/services/recipesSyncService";
 
 export interface OutputPanelProps {
   state: RecipeBuilderState;
@@ -18,6 +21,22 @@ export const OutputPanel = ({ state }: OutputPanelProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [isClosing, setIsClosing] = useState(false);
+  const adminToken = useAdminAuthStore((s) => s.adminToken);
+  const [saveState, setSaveState] = useState<"idle" | "saving" | "done" | "error">("idle");
+
+  const handleSave = async () => {
+    if (!adminToken) return;
+    setSaveState("saving");
+    try {
+      await saveRecipe(builderStateToRecipe(state), adminToken);
+      await syncFromGateway();
+      setSaveState("done");
+      setTimeout(() => setSaveState("idle"), 2000);
+    } catch {
+      setSaveState("error");
+      setTimeout(() => setSaveState("idle"), 3000);
+    }
+  };
 
   const outputs: OutputItem[] = [
     { key: "csv", label: "CSV", value: generateCsvOutput(state) },
@@ -71,6 +90,38 @@ export const OutputPanel = ({ state }: OutputPanelProps) => {
                 <X className="w-4 h-4" />
               </button>
             </div>
+
+            {adminToken && (
+              <div className="px-5 pt-4 shrink-0">
+                <button
+                  type="button"
+                  onClick={handleSave}
+                  disabled={saveState === "saving"}
+                  className={`w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-sm font-bold transition-colors ${
+                    saveState === "error"
+                      ? "bg-red-50 text-red-600 dark:bg-red-900/20"
+                      : saveState === "done"
+                        ? "bg-green-50 text-green-600 dark:bg-green-900/20"
+                        : "bg-orange-500 text-white hover:bg-orange-600 disabled:opacity-60"
+                  }`}
+                >
+                  {saveState === "saving" ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : saveState === "done" ? (
+                    <Check className="w-4 h-4" />
+                  ) : (
+                    <CloudUpload className="w-4 h-4" />
+                  )}
+                  {saveState === "saving"
+                    ? "Enregistrement…"
+                    : saveState === "done"
+                      ? "Enregistré"
+                      : saveState === "error"
+                        ? "Échec — réessayer"
+                        : "Enregistrer dans le tableur"}
+                </button>
+              </div>
+            )}
 
             <div className="px-5 py-4 flex flex-col gap-4 overflow-y-auto">
               {outputs.map(({ key, label, value }) => (

@@ -20,6 +20,10 @@ dev/
 src/core/data/recipes-ingredients_backup.json
 src/core/data/recipes-db_backup.json
 
+# Cloudflare Worker (sheets-gateway)
+worker/.wrangler
+worker/.dev.vars
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

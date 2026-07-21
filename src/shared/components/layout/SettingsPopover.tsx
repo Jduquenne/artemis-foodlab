@@ -1,5 +1,5 @@
 import { lazy, Suspense, useRef, useState } from "react";
-import { Settings, Download, Upload, RefreshCw, Bell } from "lucide-react";
+import { Settings, Download, Upload, RefreshCw, Bell, KeyRound } from "lucide-react";
 import { applyImport, detectScopes, isValidSyncPayload } from "../../../core/logic/sync/syncSerializer";
 import { exportData } from "../../../core/services/backupService";
 import { ThemeToggle } from "./ThemeToggle";
@@ -7,6 +7,7 @@ import { ThemeToggle } from "./ThemeToggle";
 const SyncModal = lazy(() => import("../../../features/sync/SyncModal").then(m => ({ default: m.SyncModal })));
 const ScopeSelectorModal = lazy(() => import("../../../features/sync/components/scope/ScopeSelectorModal").then(m => ({ default: m.ScopeSelectorModal })));
 const NotificationSettingsModal = lazy(() => import("../ui/NotificationSettingsModal").then(m => ({ default: m.NotificationSettingsModal })));
+const AdminAccessModal = lazy(() => import("../ui/AdminAccessModal").then(m => ({ default: m.AdminAccessModal })));
 
 export const SettingsPopover = () => {
   const [open, setOpen] = useState(false);
@@ -14,6 +15,7 @@ export const SettingsPopover = () => {
   const [exportModalOpen, setExportModalOpen] = useState(false);
   const [importModalData, setImportModalData] = useState<unknown>(null);
   const [notifSettingsOpen, setNotifSettingsOpen] = useState(false);
+  const [adminAccessOpen, setAdminAccessOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,6 +84,13 @@ export const SettingsPopover = () => {
                 <Bell className="w-4 h-4 text-slate-400 shrink-0" />
                 Notifications
               </button>
+              <button
+                onClick={() => { setAdminAccessOpen(true); setOpen(false); }}
+                className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors border-t border-slate-100"
+              >
+                <KeyRound className="w-4 h-4 text-slate-400 shrink-0" />
+                Accès admin
+              </button>
               <div className="flex items-center justify-between px-4 py-1.5 border-t border-slate-100">
                 <span className="text-sm text-slate-700">Thème</span>
                 <ThemeToggle />
@@ -119,6 +128,8 @@ export const SettingsPopover = () => {
         )}
 
         {notifSettingsOpen && <NotificationSettingsModal onClose={() => setNotifSettingsOpen(false)} />}
+
+        {adminAccessOpen && <AdminAccessModal onClose={() => setAdminAccessOpen(false)} />}
       </Suspense>
     </>
   );

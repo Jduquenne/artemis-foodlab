@@ -111,6 +111,14 @@ Ils vivent dans `core/logic/<feature>/` et sont réutilisés partout — jamais 
 
 ---
 
+## Backend API (projet séparé)
+
+`../meals-planning-api` (`E:\Développement\Jason\meals-planning-api`, chemin frère de ce repo, pas un sous-dossier) — API Express + PostgreSQL + Prisma destinée à remplacer à terme les JSON statiques (`src/core/data/`) et l'IndexedDB comme source de vérité. Cahier des charges complet dans ce projet séparé, pas dupliqué ici.
+
+**Statut : dossier vide, projet pas encore démarré.** Aucune connexion avec ce frontend pour l'instant — pas de `VITE_API_URL`, pas d'appel réseau vers cette API. Ne pas supposer qu'elle existe ou qu'elle répond tant que ce paragraphe n'a pas été mis à jour.
+
+---
+
 ## Git
 
 Format de commit : `type(scope): description courte`

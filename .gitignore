@@ -16,6 +16,9 @@ scripts
 # Dev-only data (local seeds, not committed)
 dev/
 
+# Cloudflare Worker (sheets-gateway) — code lives on the Dev branch only
+worker/
+
 # Backup files
 src/core/data/recipes-ingredients_backup.json
 src/core/data/recipes-db_backup.json

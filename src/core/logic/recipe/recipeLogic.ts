@@ -5,7 +5,6 @@ import { typedFoodDb } from "../../typed-db/typedFoodDb";
 import { OutdoorEntry, typedOutdoorDb } from "../../typed-db/typedOutdoorDb";
 import { PREDEFINED_FILTERS } from "../../domain/predefinedFilters";
 import { calculateRecipeMacros } from "../../../shared/utils/macroUtils";
-import { typedInstructionsDb } from "../../typed-db/typedInstructionsDb";
 
 export const UNIT_WEIGHT_UNITS: string[] = [
   Unit.PIECE,
@@ -54,7 +53,7 @@ export function getCategoryRecipes(categoryId: string): CategoryRecipeEntry[] {
   return Object.entries(typedRecipesDb)
     .filter(([, recipe]) => recipe.categoryId === categoryId && (recipe.assets?.mealPhoto || isIngredient(recipe)))
     .map(([recipeId, recipe]) => {
-      const hasInstructions = !!typedInstructionsDb[recipeId];
+      const hasInstructions = !!recipe.instructions;
       return {
         id: recipeId,
         name: recipe.name,

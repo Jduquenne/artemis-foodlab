@@ -4,7 +4,6 @@ import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
 import { buildImageName, builderStateToRecipe, generateCsvOutput, generateIngredientListOutput } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
 import { useAdminAuthStore } from "../../../../shared/store/useAdminAuthStore";
 import { saveRecipe } from "../../../../core/services/sheetsGatewayService";
-import { syncFromGateway } from "../../../../core/services/recipesSyncService";
 
 export interface OutputPanelProps {
   state: RecipeBuilderState;
@@ -29,7 +28,6 @@ export const OutputPanel = ({ state }: OutputPanelProps) => {
     setSaveState("saving");
     try {
       await saveRecipe(builderStateToRecipe(state), adminToken);
-      await syncFromGateway();
       setSaveState("done");
       setTimeout(() => setSaveState("idle"), 2000);
     } catch {

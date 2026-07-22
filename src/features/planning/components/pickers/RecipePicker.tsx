@@ -112,16 +112,16 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
                             </p>
                             <div className="space-y-2">
                                 {outdoorResults.map((entry) => {
-                                    const alreadyAdded = existingRecipeIds.includes(entry.id);
+                                    const alreadyAdded = existingRecipeIds.includes(entry.code);
                                     const result: SearchRecipeResult = {
-                                        id: entry.id,
-                                        recipeId: entry.id,
+                                        id: entry.code,
+                                        recipeId: entry.code,
                                         name: entry.name,
                                         matchedIngredients: [],
                                     };
                                     return (
                                         <button
-                                            key={entry.id}
+                                            key={entry.code}
                                             disabled={alreadyAdded}
                                             onClick={() => onSelect(result)}
                                             className={`w-full flex items-center gap-4 p-3 rounded-2xl border transition-all group text-left ${

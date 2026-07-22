@@ -36,7 +36,7 @@ export default defineConfig({
           if (id.includes("node_modules/dexie")) {
             return "vendor-db";
           }
-          if (id.includes("src/core/data/recipes-db.json") || id.includes("src/core/data/food-db.json") || id.includes("src/core/data/assets-manifest.json")) {
+          if (id.includes("src/core/data/assets-manifest.json")) {
             return "data";
           }
         },

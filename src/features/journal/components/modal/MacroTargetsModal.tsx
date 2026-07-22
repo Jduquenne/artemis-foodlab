@@ -15,7 +15,7 @@ const FIELDS = [
 ];
 
 export const MacroTargetsModal = ({ onClose }: MacroTargetsModalProps) => {
-  const { kcalTarget, macroTargets, setKcalTarget, setMacroTargets } = useJournalStore();
+  const { kcalTarget, macroTargets, setJournalSettings } = useJournalStore();
   const [isClosing, setIsClosing] = useState(false);
   const [draft, setDraft] = useState({
     kcal: String(kcalTarget),
@@ -38,8 +38,7 @@ export const MacroTargetsModal = ({ onClose }: MacroTargetsModalProps) => {
     const carbohydrates = parseInt(draft.carbohydrates, 10);
     const fibers = parseInt(draft.fibers, 10);
     if ([kcal, proteins, lipids, carbohydrates, fibers].some(isNaN)) return;
-    setKcalTarget(kcal);
-    setMacroTargets({ proteins, lipids, carbohydrates, fibers });
+    setJournalSettings(kcal, { proteins, lipids, carbohydrates, fibers });
     handleClose();
   };
 

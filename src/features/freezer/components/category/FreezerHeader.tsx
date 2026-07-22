@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Pencil } from "lucide-react";
-import { useFreezerStore } from "../../../../shared/store/useFreezerStore";
+import { useAuthStore } from "../../../../shared/store/useAuthStore";
+import { updateMe } from "../../../../core/services/authService";
 import { InlineNameEditor } from "../InlineNameEditor";
 
 export interface FreezerHeaderProps {
@@ -8,14 +9,20 @@ export interface FreezerHeaderProps {
 }
 
 export const FreezerHeader = ({ categoryCount }: FreezerHeaderProps) => {
-  const { freezerName, setFreezerName } = useFreezerStore();
+  const user = useAuthStore((s) => s.user);
+  const setUser = useAuthStore((s) => s.setUser);
+  const freezerName = user?.freezerName ?? "Mon Congélateur";
   const [editing, setEditing] = useState(false);
   const [nameInput, setNameInput] = useState(freezerName);
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     const trimmed = nameInput.trim();
-    if (trimmed) setFreezerName(trimmed);
-    else setNameInput(freezerName);
+    if (trimmed && trimmed !== freezerName) {
+      const updated = await updateMe(trimmed);
+      setUser(updated);
+    } else {
+      setNameInput(freezerName);
+    }
     setEditing(false);
   };
 

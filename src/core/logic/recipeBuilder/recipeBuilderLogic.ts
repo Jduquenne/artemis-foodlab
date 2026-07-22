@@ -18,7 +18,6 @@ import { IngredientLineItem } from "../../domain/cardTypes";
 import { wrapLineAtMaxChars } from "../../../shared/utils/cards/cardUtils";
 import { typedFoodDb } from "../../typed-db/typedFoodDb";
 import { typedRecipesDb } from "../../typed-db/typedRecipesDb";
-import { typedInstructionsDb } from "../../typed-db/typedInstructionsDb";
 
 export const BUILDER_UNITS: Unit[] = Object.values(Unit).filter((u) => u !== Unit.NONE);
 
@@ -175,7 +174,7 @@ export function recipeToBuilderState(
     batchCooking: recipe.batchCooking ?? false,
     fromBook: false,
     ingredients,
-    instructions: typedInstructionsDb[recipeId]?.instructions.split("\n") ?? [],
+    instructions: recipe.instructions?.split("\n") ?? [],
   };
 }
 
@@ -203,6 +202,8 @@ export function builderStateToRecipe(state: RecipeBuilderState): RecipeDetails &
 
   return {
     id,
+    code: id,
+    apiId: existing?.apiId ?? "",
     name: state.name,
     categoryId: state.categoryId,
     mealTypes,
@@ -210,9 +211,11 @@ export function builderStateToRecipe(state: RecipeBuilderState): RecipeDetails &
     macronutriment: existing?.macronutriment ?? ZERO,
     defaultPortions: state.defaultPortions,
     ingredients,
+    instructions: existing?.instructions ?? null,
     assets: existing?.assets ?? {},
     batchCooking: state.batchCooking || undefined,
     isDessert: isBaseKind ? undefined : state.isDessert || undefined,
+    isFromBook: existing?.isFromBook,
     bookPage: existing?.bookPage,
   };
 }

@@ -1,10 +1,11 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { addDays, subDays } from "date-fns";
 import { getWeekNumber, getMonday } from "../../shared/utils/weekUtils";
-import { getWeekSlots } from "../../core/services/planningService";
+import { getWeekSlots, syncWeekFromApi } from "../../core/services/planningService";
 import { MealSlot } from "../../core/domain/types";
 import { computeDayMacros } from "../../shared/utils/macroUtils";
 import { useJournalStore } from "../../shared/store/useJournalStore";
+import { useAuthStore } from "../../shared/store/useAuthStore";
 import { DayNav } from "./components/DayNav";
 import { MacroSummary } from "./components/MacroSummary";
 import { MealSlotCard } from "./components/slot/MealSlotCard";
@@ -19,6 +20,7 @@ function getDayKey(date: Date): string {
 
 export const JournalModule = () => {
   const { portionOverrides, gramOverrides } = useJournalStore();
+  const authStatus = useAuthStore((s) => s.status);
   const [selectedDate, setSelectedDate] = useState(() => new Date());
   const [weekSlots, setWeekSlots] = useState<MealSlot[] | null>(null);
   const monday = getMonday(selectedDate);
@@ -28,14 +30,17 @@ export const JournalModule = () => {
 
   useEffect(() => {
     let active = true;
-    getWeekSlots(year, week).then((slots) => {
+    const load = async () => {
+      if (authStatus === 'authenticated') await syncWeekFromApi(year, week);
+      const slots = await getWeekSlots(year, week);
       if (active) setWeekSlots(slots);
-    });
+    };
+    load();
     return () => {
       active = false;
       setWeekSlots(null);
     };
-  }, [year, week]);
+  }, [year, week, authStatus]);
 
   const isLoading = weekSlots === null;
 

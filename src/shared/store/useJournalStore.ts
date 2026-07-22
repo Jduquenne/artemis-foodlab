@@ -1,21 +1,17 @@
 import { create } from "zustand";
-
-export interface MacroTargets {
-  proteins: number;
-  lipids: number;
-  carbohydrates: number;
-  fibers: number;
-}
+import { saveGramOverride, saveJournalSettings, savePortionOverride } from "../../core/services/journalService";
+import { MacroTargets } from "../../core/domain/types";
 
 interface JournalState {
   kcalTarget: number;
-  setKcalTarget: (value: number) => void;
   macroTargets: MacroTargets;
-  setMacroTargets: (targets: MacroTargets) => void;
+  setJournalSettings: (kcalTarget: number, macroTargets: MacroTargets) => Promise<void>;
   portionOverrides: Record<string, number>;
-  setPortionOverride: (key: string, value: number) => void;
+  setPortionOverride: (planningSlotItemId: string, value: number) => Promise<void>;
   gramOverrides: Record<string, number>;
-  setGramOverride: (key: string, value: number) => void;
+  setGramOverride: (planningSlotItemId: string, value: number) => Promise<void>;
+  replaceSettings: (settings: { kcalTarget: number; macroTargets: MacroTargets }) => void;
+  replaceOverrides: (overrides: { portionOverrides: Record<string, number>; gramOverrides: Record<string, number> }) => void;
 }
 
 const DEFAULT_MACRO_TARGETS: MacroTargets = { proteins: 150, lipids: 65, carbohydrates: 250, fibers: 30 };
@@ -46,29 +42,39 @@ const loadGramOverrides = (): Record<string, number> => {
 
 export const useJournalStore = create<JournalState>((set) => ({
   kcalTarget: parseInt(localStorage.getItem("cipe_kcal_target") ?? "2000", 10),
-  setKcalTarget: (value) => {
-    localStorage.setItem("cipe_kcal_target", String(value));
-    set({ kcalTarget: value });
-  },
   macroTargets: loadMacroTargets(),
-  setMacroTargets: (targets) => {
-    localStorage.setItem("cipe_macro_targets", JSON.stringify(targets));
-    set({ macroTargets: targets });
+  setJournalSettings: async (kcalTarget, macroTargets) => {
+    await saveJournalSettings({ kcalTarget, macroTargets });
+    localStorage.setItem("cipe_kcal_target", String(kcalTarget));
+    localStorage.setItem("cipe_macro_targets", JSON.stringify(macroTargets));
+    set({ kcalTarget, macroTargets });
   },
   portionOverrides: loadPortionOverrides(),
-  setPortionOverride: (key, value) => {
+  setPortionOverride: async (planningSlotItemId, value) => {
+    await savePortionOverride(planningSlotItemId, value);
     set((state) => {
-      const next = { ...state.portionOverrides, [key]: value };
+      const next = { ...state.portionOverrides, [planningSlotItemId]: value };
       localStorage.setItem("cipe_portion_overrides", JSON.stringify(next));
       return { portionOverrides: next };
     });
   },
   gramOverrides: loadGramOverrides(),
-  setGramOverride: (key, value) => {
+  setGramOverride: async (planningSlotItemId, value) => {
+    await saveGramOverride(planningSlotItemId, value);
     set((state) => {
-      const next = { ...state.gramOverrides, [key]: value };
+      const next = { ...state.gramOverrides, [planningSlotItemId]: value };
       localStorage.setItem("cipe_gram_overrides", JSON.stringify(next));
       return { gramOverrides: next };
     });
+  },
+  replaceSettings: ({ kcalTarget, macroTargets }) => {
+    localStorage.setItem("cipe_kcal_target", String(kcalTarget));
+    localStorage.setItem("cipe_macro_targets", JSON.stringify(macroTargets));
+    set({ kcalTarget, macroTargets });
+  },
+  replaceOverrides: ({ portionOverrides, gramOverrides }) => {
+    localStorage.setItem("cipe_portion_overrides", JSON.stringify(portionOverrides));
+    localStorage.setItem("cipe_gram_overrides", JSON.stringify(gramOverrides));
+    set({ portionOverrides, gramOverrides });
   },
 }));

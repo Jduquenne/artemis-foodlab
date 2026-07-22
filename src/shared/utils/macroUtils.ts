@@ -124,7 +124,7 @@ export function computeSlotMacros(
   return getAllRecipeIds(slot).reduce((sum, id) => {
     const m = RECIPE_MACROS[id];
     if (!m) return sum;
-    const key = `${slot.id}-${id}`;
+    const key = slot.itemApiIds?.[id] ?? "";
     const recipe = plannableDb[id];
     const baseGrams = RECIPE_BASE_GRAMS[id];
     let factor: number;

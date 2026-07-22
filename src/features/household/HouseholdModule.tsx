@@ -1,12 +1,12 @@
 import { useMemo, useState } from 'react';
 import { RotateCcw } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { HouseholdItem, HouseholdCategory } from '../../core/domain/types';
+import { HouseholdCategory } from '../../core/domain/types';
 import { getRecords, toggleItem, clearAll } from '../../core/services/householdService';
 import { markScrolling } from '../../shared/utils/scrollGuard';
 import { useColCount } from '../../shared/hooks/useColCount';
 import { distributeToColumns } from '../../shared/utils/columnUtils';
-import householdDb from '../../core/data/household-db.json';
+import { typedHouseholdDb } from '../../core/typed-db/typedHouseholdDb';
 import { HouseholdCategoryCard } from './components/HouseholdCategoryCard';
 
 const CATEGORY_ORDER: HouseholdCategory[] = [
@@ -17,12 +17,11 @@ const CATEGORY_ORDER: HouseholdCategory[] = [
     HouseholdCategory.PETS,
 ];
 
-const allItems = householdDb as HouseholdItem[];
-
 export const HouseholdModule = () => {
     const records = useLiveQuery(() => getRecords(), []);
     const [spinning, setSpinning] = useState(false);
     const colCount = useColCount();
+    const allItems = useMemo(() => Object.values(typedHouseholdDb), []);
 
     const checkedIds = useMemo(() => {
         const set = new Set<string>();
@@ -42,7 +41,7 @@ export const HouseholdModule = () => {
         return CATEGORY_ORDER
             .map(cat => ({ label: cat, items: allItems.filter(i => i.category === cat) }))
             .filter(g => g.items.length > 0);
-    }, []);
+    }, [allItems]);
 
     const columns = useMemo(
         () => distributeToColumns(grouped, g => g.items.length, colCount),

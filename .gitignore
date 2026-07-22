@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
 scripts
 
 # Dev-only data (local seeds, not committed)

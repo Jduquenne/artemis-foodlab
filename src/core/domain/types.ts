@@ -61,6 +61,7 @@ export interface Recipe {
 
 export interface Food {
   id: string;
+  categoryId: string;
   name: string;
   category: IngredientCategory;
   macros: Macronutrients;
@@ -88,6 +89,13 @@ export interface Macronutrients {
   fibers: number;
 }
 
+export interface MacroTargets {
+  proteins: number;
+  lipids: number;
+  carbohydrates: number;
+  fibers: number;
+}
+
 export enum MealType {
   BREAKFAST = "breakfast",
   LUNCH = "lunch",
@@ -108,6 +116,8 @@ export interface RecipeAsset {
 }
 
 export interface RecipeDetails {
+  code: string;
+  apiId: string;
   name: string;
   categoryId: string;
   mealTypes: MealType[];
@@ -115,9 +125,11 @@ export interface RecipeDetails {
   macronutriment: Macronutrients;
   defaultPortions: number;
   ingredients: Ingredient[];
+  instructions: string | null;
   assets: Partial<Record<RecipeAssetKey, RecipeAsset>>;
   batchCooking?: boolean;
   isDessert?: boolean;
+  isFromBook?: boolean;
   bookPage?: number;
 }
 
@@ -137,6 +149,7 @@ export enum HouseholdCategory {
 
 export interface HouseholdItem {
   id: string;
+  categoryId?: string;
   name: string;
   category: HouseholdCategory;
 }
@@ -185,6 +198,8 @@ export type SlotType = "breakfast" | "lunch" | "snack" | "dinner";
 
 export interface MealSlot {
   id: string;
+  apiId?: string;
+  itemApiIds?: Record<string, string>;
   day: string;
   slot: SlotType;
   recipeIds: string[];
@@ -199,6 +214,17 @@ export interface MealSlot {
 export interface HouseholdRecord {
   id: string;
   lastCheckedAt: string;
+}
+
+export interface OutdoorEntry {
+  code: string;
+  apiId: string;
+  name: string;
+  categoryId: string;
+  instructions: string | null;
+  isFromBook?: boolean;
+  bookPage?: number;
+  assets: Partial<Record<RecipeAssetKey, RecipeAsset>>;
 }
 
 export interface ChangelogEntry {

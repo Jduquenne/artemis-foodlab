@@ -4404,19 +4404,35 @@
   },
   "fr-026": {
     "id": "fr-026",
-    "name": "Avocat",
+    "name": "Salade fraise abricot pêche",
     "categoryId": "fruits",
-    "mealTypes": [],
-    "kind": "ingredient",
+    "mealTypes": ["breakfast", "lunch", "snack", "dinner"],
+    "kind": "dish",
     "defaultPortions": 1,
     "batchCooking": false,
     "isDessert": true,
     "ingredients": [
       {
         "id": "001",
-        "foodId": "fv-008",
-        "name": "Avocat",
-        "quantity": 35,
+        "foodId": "fv-044",
+        "name": "Fraises",
+        "quantity": 75,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-069",
+        "name": "Pêche",
+        "quantity": 70,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-001",
+        "name": "Abricot",
+        "quantity": 40,
         "unit": "g",
         "category": "Fruits et légumes"
       }
@@ -4449,7 +4465,7 @@
         "id": "002",
         "foodId": "fv-057",
         "name": "Melon",
-        "quantity": 150,
+        "quantity": 100,
         "unit": "g",
         "category": "Fruits et légumes"
       }
@@ -10856,6 +10872,95 @@
     "assets": {
       "mealPhoto": {
         "url": "/artemis-foodlab/assets/pastries/meal/PAT_69_mealPhoto.webp"
+      }
+    }
+  },
+  "pat-070": {
+    "id": "pat-070",
+    "name": "Gâteau aux prunes et poudre d'amandes",
+    "categoryId": "pastries",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 8,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-082",
+        "name": "Prune rouge",
+        "quantity": 400,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 3,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-028",
+        "name": "Compote de pomme maison",
+        "quantity": 130,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "es-026",
+        "name": "Farine semi complète",
+        "quantity": 75,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "005",
+        "foodId": "es-002",
+        "name": "Amandes en poudre",
+        "quantity": 75,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "006",
+        "foodId": "es-052",
+        "name": "Sucre complet",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "007",
+        "foodId": "cd-002",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "cd-017",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Condiments"
+      },
+      {
+        "id": "009",
+        "foodId": "es-056",
+        "name": "Vanille",
+        "quantity": null,
+        "unit": null,
+        "category": "Epicerie sucrée"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_70_mealPhoto.webp"
       }
     }
   },
@@ -19969,7 +20074,7 @@
         "id": "003",
         "foodId": "fv-019",
         "name": "Chou fleur",
-        "quantity": 400,
+        "quantity": 300,
         "unit": "g",
         "category": "Fruits et légumes"
       },
@@ -19983,11 +20088,11 @@
       },
       {
         "id": "005",
-        "foodId": "cd-020",
-        "name": "Levure de bière",
-        "quantity": 10,
+        "foodId": "pl-010",
+        "name": "Comté",
+        "quantity": 30,
         "unit": "g",
-        "category": "Condiments"
+        "category": "Produits laitiers"
       },
       {
         "id": "006",
@@ -23022,6 +23127,354 @@
     "assets": {
       "mealPhoto": {
         "url": "/artemis-foodlab/assets/fish/meal/POI_83_mealPhoto.webp"
+      }
+    }
+  },
+  "poi-084": {
+    "id": "poi-084",
+    "name": "Salade de pâtes saumon courgette grillée",
+    "categoryId": "fish",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fc-020",
+        "name": "Pâtes complètes",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-025",
+        "name": "Citron non traité",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-036",
+        "name": "Courgette",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "po-004",
+        "name": "Pavé de saumon",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Poisson"
+      },
+      {
+        "id": "005",
+        "foodId": "fv-038",
+        "name": "Échalote",
+        "quantity": 30,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "006",
+        "foodId": "cd-011",
+        "name": "Huile d'olive",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "ha-001",
+        "name": "Aneth",
+        "quantity": null,
+        "unit": null,
+        "category": "Herbe aromatique"
+      },
+      {
+        "id": "008",
+        "foodId": "ha-021",
+        "name": "Thym",
+        "quantity": null,
+        "unit": null,
+        "category": "Herbe aromatique"
+      },
+      {
+        "id": "009",
+        "foodId": "fv-002",
+        "name": "Ail",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_84_mealPhoto.webp"
+      }
+    }
+  },
+  "poi-085": {
+    "id": "poi-085",
+    "name": "Salade de pâtes saumon concombre avocat",
+    "categoryId": "fish",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fc-017",
+        "name": "Orzo ou autres pâtes",
+        "quantity": 75,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-025",
+        "name": "Citron non traité",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-029",
+        "name": "Concombre",
+        "quantity": 250,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "po-004",
+        "name": "Pavé de saumon",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Poisson"
+      },
+      {
+        "id": "005",
+        "foodId": "fv-008",
+        "name": "Avocat",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "006",
+        "foodId": "pl-015",
+        "name": "Fromage blanc 3%",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "007",
+        "foodId": "ha-001",
+        "name": "Aneth",
+        "quantity": null,
+        "unit": null,
+        "category": "Herbe aromatique"
+      },
+      {
+        "id": "008",
+        "foodId": "fv-002",
+        "name": "Ail",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_85_mealPhoto.webp"
+      }
+    }
+  },
+  "poi-086": {
+    "id": "poi-086",
+    "name": "Salade de pâtes saumon courgette grillée",
+    "categoryId": "fish",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fc-001",
+        "name": "Blé",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "002",
+        "foodId": "po-009",
+        "name": "Thon au naturel",
+        "quantity": 112,
+        "unit": "g",
+        "category": "Poisson"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-090",
+        "name": "Tomates cerises",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-064",
+        "name": "Oignon rouge",
+        "quantity": 0.5,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "foodId": "cd-023",
+        "name": "Olives verte",
+        "quantity": 40,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "cd-011",
+        "name": "Huile d'olive",
+        "quantity": 15,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "cd-027",
+        "name": "Vinaigre balsamique",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "ha-003",
+        "name": "Ciboulette",
+        "quantity": null,
+        "unit": null,
+        "category": "Herbe aromatique"
+      },
+      {
+        "id": "009",
+        "foodId": "fv-088",
+        "name": "Salade",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_86_mealPhoto.webp"
+      }
+    }
+  },
+  "poi-087": {
+    "id": "poi-087",
+    "name": "Salade de pâtes saumon courgette grillée",
+    "categoryId": "fish",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fc-001",
+        "name": "Blé",
+        "quantity": 75,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "002",
+        "foodId": "po-009",
+        "name": "Thon au naturel",
+        "quantity": 112,
+        "unit": "g",
+        "category": "Poisson"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-090",
+        "name": "Tomates cerises",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-036",
+        "name": "Courgette",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "foodId": "fc-023",
+        "name": "Pois chiches secs",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "006",
+        "foodId": "cd-011",
+        "name": "Huile d'olive",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "cd-027",
+        "name": "Vinaigre balsamique",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "ha-015",
+        "name": "Persil",
+        "quantity": null,
+        "unit": null,
+        "category": "Herbe aromatique"
+      },
+      {
+        "id": "009",
+        "foodId": "fv-002",
+        "name": "Ail",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fish/meal/POI_87_mealPhoto.webp"
       }
     }
   },
@@ -29473,28 +29926,20 @@
         "id": "009",
         "foodId": "cd-011",
         "name": "Huile d'olive",
-        "quantity": 25,
+        "quantity": 20,
         "unit": "g",
         "category": "Condiments"
       },
       {
         "id": "010",
-        "foodId": "cd-028",
-        "name": "Vinaigre de cidre",
-        "quantity": 15,
+        "foodId": "cd-017",
+        "name": "Jus de citron",
+        "quantity": 20,
         "unit": "g",
         "category": "Condiments"
       },
       {
         "id": "011",
-        "foodId": "cd-017",
-        "name": "Jus de citron",
-        "quantity": 15,
-        "unit": "g",
-        "category": "Condiments"
-      },
-      {
-        "id": "012",
         "foodId": "cd-022",
         "name": "Moutarde",
         "quantity": 4,
@@ -29502,12 +29947,20 @@
         "category": "Condiments"
       },
       {
-        "id": "013",
+        "id": "012",
         "foodId": "fv-002",
         "name": "Ail",
         "quantity": 1,
         "unit": "pièce",
         "category": "Fruits et légumes"
+      },
+      {
+        "id": "013",
+        "foodId": "es-036",
+        "name": "Miel",
+        "quantity": 5,
+        "unit": "g",
+        "category": "Epicerie sucrée"
       },
       {
         "id": "014",
@@ -45075,7 +45528,7 @@
   },
   "veg-069": {
     "id": "veg-069",
-    "name": "Gratin de crozets d’été aux aubergines",
+    "name": "Gratin de crozets aubergines mozzarella",
     "categoryId": "veggies",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -48970,6 +49423,386 @@
     "assets": {
       "mealPhoto": {
         "url": "/artemis-foodlab/assets/veggies/meal/VEG_111_mealPhoto.webp"
+      }
+    }
+  },
+  "veg-112": {
+    "id": "veg-112",
+    "name": "Taboulé arménien",
+    "categoryId": "veggies",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fc-032",
+        "name": "Semoule semi complète",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-025",
+        "name": "Citron non traité",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-090",
+        "name": "Tomates cerises",
+        "quantity": 250,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "cd-011",
+        "name": "Huile d'olive",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "cn-001",
+        "name": "Concentré de tomates",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Conserves"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-016",
+        "name": "Paprika",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices"
+      },
+      {
+        "id": "007",
+        "foodId": "ha-004",
+        "name": "Coriandre feuilles",
+        "quantity": null,
+        "unit": null,
+        "category": "Herbe aromatique"
+      },
+      {
+        "id": "008",
+        "foodId": "ha-001",
+        "name": "Aneth",
+        "quantity": null,
+        "unit": null,
+        "category": "Herbe aromatique"
+      },
+      {
+        "id": "009",
+        "foodId": "ha-002",
+        "name": "Basilic",
+        "quantity": null,
+        "unit": null,
+        "category": "Herbe aromatique"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_112_mealPhoto.webp"
+      }
+    }
+  },
+  "veg-113": {
+    "id": "veg-113",
+    "name": "Salade de blé à la grecque",
+    "categoryId": "veggies",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fc-001",
+        "name": "Blé",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "002",
+        "foodId": "pl-011",
+        "name": "Feta",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-089",
+        "name": "Tomates",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-029",
+        "name": "Concombre",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "foodId": "fv-025",
+        "name": "Citron non traité",
+        "quantity": 0.5,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "006",
+        "foodId": "cd-011",
+        "name": "Huile d'olive",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "cd-023",
+        "name": "Olives verte",
+        "quantity": 30,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "fv-064",
+        "name": "Oignon rouge",
+        "quantity": 0.5,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "009",
+        "foodId": "ha-012",
+        "name": "Menthe",
+        "quantity": null,
+        "unit": null,
+        "category": "Herbe aromatique"
+      },
+      {
+        "id": "010",
+        "foodId": "ha-014",
+        "name": "Origan",
+        "quantity": null,
+        "unit": null,
+        "category": "Herbe aromatique"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_113_mealPhoto.webp"
+      }
+    }
+  },
+  "veg-114": {
+    "id": "veg-114",
+    "name": "Salade de pâtes légumes rôtis et feta",
+    "categoryId": "veggies",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fc-020",
+        "name": "Pâtes complètes",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-036",
+        "name": "Courgette",
+        "quantity": 250,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-075",
+        "name": "Poivrons",
+        "quantity": 250,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-064",
+        "name": "Oignon rouge",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "005",
+        "foodId": "fv-007",
+        "name": "Aubergine",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "006",
+        "foodId": "cd-011",
+        "name": "Huile d'olive",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "pl-011",
+        "name": "Feta",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "008",
+        "foodId": "ha-002",
+        "name": "Basilic",
+        "quantity": null,
+        "unit": null,
+        "category": "Herbe aromatique"
+      },
+      {
+        "id": "009",
+        "foodId": "cd-027",
+        "name": "Vinaigre balsamique",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "010",
+        "foodId": "fv-002",
+        "name": "Ail",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_114_mealPhoto.webp"
+      }
+    }
+  },
+  "veg-115": {
+    "id": "veg-115",
+    "name": "Gratin de crozets aubergines comté",
+    "categoryId": "veggies",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fc-004",
+        "name": "Crozets au sarrasin",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-007",
+        "name": "Aubergine",
+        "quantity": 400,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-002",
+        "name": "Ail",
+        "quantity": 2,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "pl-010",
+        "name": "Comté",
+        "quantity": 40,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "005",
+        "foodId": "pl-029",
+        "name": "Parmesan",
+        "quantity": 25,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "006",
+        "foodId": "cn-003",
+        "name": "Purée de tomates",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Conserves"
+      },
+      {
+        "id": "007",
+        "foodId": "cn-001",
+        "name": "Concentré de tomates",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Conserves"
+      },
+      {
+        "id": "008",
+        "foodId": "cd-011",
+        "name": "Huile d'olive",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "009",
+        "foodId": "ha-002",
+        "name": "Basilic",
+        "quantity": null,
+        "unit": null,
+        "category": "Herbe aromatique"
+      },
+      {
+        "id": "010",
+        "foodId": "ha-011",
+        "name": "Herbes de Provence",
+        "quantity": null,
+        "unit": null,
+        "category": "Herbe aromatique"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_115_mealPhoto.webp"
       }
     }
   },
@@ -56773,7 +57606,7 @@
         "id": "007",
         "foodId": "cn-001",
         "name": "Concentré de tomates",
-        "quantity": 60,
+        "quantity": 150,
         "unit": "g",
         "category": "Conserves"
       },
@@ -57861,7 +58694,7 @@
         "foodId": "fv-010",
         "name": "Betterave rouge",
         "quantity": 500,
-        "unit": null,
+        "unit": "g",
         "category": "Fruits et légumes"
       },
       {
@@ -57869,7 +58702,7 @@
         "foodId": "fs-020",
         "name": "Noix de cajou",
         "quantity": 80,
-        "unit": null,
+        "unit": "g",
         "category": "Fruits secs"
       },
       {
@@ -58962,6 +59795,31 @@
       }
     }
   },
+  "fr-039": {
+    "id": "fr-039",
+    "name": "Avocat",
+    "categoryId": "fruits",
+    "mealTypes": [],
+    "kind": "ingredient",
+    "defaultPortions": 1,
+    "batchCooking": false,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-008",
+        "name": "Avocat",
+        "quantity": 35,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fruits/meal/FR_39_mealPhoto.webp"
+      }
+    }
+  },
   "pc-033": {
     "id": "pc-033",
     "name": "Pain complet",
@@ -59476,7 +60334,7 @@
         "id": "001",
         "foodId": "es-047",
         "name": "Purée de cacahuètes",
-        "quantity": 10,
+        "quantity": 5,
         "unit": "g",
         "category": "Epicerie sucrée"
       }

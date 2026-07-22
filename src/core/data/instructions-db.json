@@ -639,6 +639,10 @@
     "id": "pat-069",
     "instructions": "Ecraser les banane avec une fourchette.\nAjouter la compote puis les oeufs, bien mélanger.\nAjouter le lait et le jus de citron, mélanger à nouveau.\nAjouter le mélange farine et bicarbonate et mélanger pour obtenir une pâte homogène.\nAjouter les pépites de chocolat puis verser dans un moule graissé et fariné ou en silicone.\nEnfourner pour environ 18 min pour des minis ou 45 min pour un grand."
   },
+  "pat-070": {
+    "id": "pat-070",
+    "instructions": "Mélanger dans un récipient les œufs avec la compote, le jus de citron, le sucre, la vanille et une pincée sel. \nUne fois la préparation homogène ajouter la farine, les amandes et le bicarbonate, mélanger.\nAjouter enfin les prunes rouges lavées, dénoyautées et coupées en morceaux. \nVerser le tout dans un moule préalablement graissé et fariné ou en silicone et enfourner 35 min à 180°C (18 pour des individuels)."
+  },
   "pc-001": {
     "id": "pc-001",
     "instructions": "Enlever le cœur des pomme et les couper en rondelles\nMélanger tous les ingrédients jusqu'à former une pâte un peu épaisse\nTremper les morceaux de pommes dedans, bien les enrober et les faire cuire dans une poêle légèrement beurrée\nSaupoudrer d'un mélange de sucre et cannelle et servir."
@@ -1065,7 +1069,7 @@
   },
   "poi-049": {
     "id": "poi-049",
-    "instructions": "Faire cuire les pâtes selon les indications.\nFaire cuire le chou fleur puis le saumon à la vapeur.\nPréparer la béchamel.\nCouper le chou fleur et le saumon en morceaux et les mélanger avec les pâtes.\nPlacer le tout dans un plat à gratin et napper de béchamel.\nSaupoudrer de levure de bière et enfourner 15 min à 180°C.\nServir."
+    "instructions": "Faire cuire les pâtes selon les indications.\nFaire cuire le chou fleur puis le saumon à la vapeur.\nPréparer la béchamel.\nCouper le chou fleur et le saumon en morceaux et les mélanger avec les pâtes.\nPlacer le tout dans un plat à gratin et napper de béchamel.\nSaupoudrer de comté et enfourner 15 min à 180°C.\nServir."
   },
   "poi-050": {
     "id": "poi-050",
@@ -1202,6 +1206,22 @@
   "poi-083": {
     "id": "poi-083",
     "instructions": "Faire tremper les pois chiches pendant 12 à 24h dans un grand volume d’eau avec du bicarbonate alimentaire, les égoutter et les rincer puis les faire cuire dans un grand volume d’eau sous pression 20 min, laisser refroidir. \nFaire gonfler la semoule dans son volume d'eau bouillante, égrainer et laisser refroidir.\nLaver et couper la tomate et le poivron en brunoise.\nEplucher ou non le concombre et le couper de la même manière.\nEgoutter et émietter le thon.\nMélanger le tout avec la semoule et les pois chiches. \nAssaisonner de jus de citron, vinaigre, huile d'olive, persil et coriandre ciselés. Saler et poivrer.\nServir avec les sardines."
+  },
+  "poi-084": {
+    "id": "poi-084",
+    "instructions": "Cuire les pâtes selon les indications. Laisser complètement refroidir.\nLaver et couper la courgette en demi rondelles puis l'étaler sur une plaque cuisson, enrober les morceaux d'1CS d'huile d'olive et d'ail écrasé et parsemer de thym. Saler, poivrer et enfourner pour 20-25 min à 180°C ou 15-18 min à l'Airfryer à 200°C.\nFaire cuire le pavé de saumon à la vapeur et laisser refroidir.\nEmincer finement l'échalote.\nPréparer la sauce dans un grand saladier en mélangeant le jus du citron, la moitié de son zeste râpé, le reste d'huile d'olive, du sel et du poivre.\nAjouter les pâtes complètes, les courgettes grillées, l'échalote et le saumon émietté dans le saladier.\nParsemer d'aneth ciselé et du reste des zestes de citron, puis mélanger délicatement avant de servir."
+  },
+  "poi-085": {
+    "id": "poi-085",
+    "instructions": "Faire cuire le saumon à la vapeur 4 min.\nFaire cuire les pâtes selon les indications.\nCouper de concombre et l'avocat en dés.\nDans un saladier mélanger le fromage blanc, le jus du citron, l’aneth et assaisonner de sel et poivre.\nAjouter les pâtes, le saumon émietté, l'avocat et le concombre, mélanger et servir."
+  },
+  "poi-086": {
+    "id": "poi-086",
+    "instructions": "Faire cuire le blé dans 2 fois son volume d'eau jusqu'à absorption.\nLaver et essorer la salade et la mettre dans un saladier.\nLaver les tomates et les couper en 4. Emincer l'oignon.\nEgoutter et émietter le thon et couper les olives en rondelles.\nAjouter tous les ingrédients froids dans le saladier.\nAssaisonner d'huile d'olive, vinaigre balsamique, ciboulette ciselée, sel et poivre et mélanger avant de servir."
+  },
+  "poi-087": {
+    "id": "poi-087",
+    "instructions": "Faire tremper les pois chiches pendant 12 à 24h dans un grand volume d’eau avec du bicarbonate alimentaire, les égoutter et les rincer puis les faire cuire dans un grand volume d’eau sous pression 20 min.\nDétailler la courgette en fines lamelles. Peler la gousse d’ail. Faire chauffer une poêle avec un peu d’huile d’olive, ajouter l’ail et les lamelles de courgettes. Les faire revenir à feu moyen. Saler et poivrer. Ajouter les pois chiches quelques minutes en fin de cuisson.\nFaire cuire le blé dans 2 fois son volume d'eau jusqu'à absorption.\nLaisser tout refroidir.\nPréparer la vinaigrette dans un saladier en mélangeant le vinaigre et l’huile. Saler et poivrer. \nDétailler les tomates cerise en deux.\nDéposer tous les ingrédients dans la vinaigrette. Mélanger.\nParsemer quelques feuilles de persil ciselé au moment du service."
   },
   "pv-001": {
     "id": "pv-001",
@@ -2202,6 +2222,22 @@
   "veg-111": {
     "id": "veg-111",
     "instructions": "Faire chauffer l’huile d’olive dans une grande casserole. Ajouter les oignons et les faire revenir jusqu’à ce qu’ils deviennent translucides.\nAjouter les carottes en rondelles, le laurier et le bouillon. Mélanger pour enrober les légumes.\nVerser 1 litre d’eau. Porter à frémissement puis laisser cuire à feu moyen environ 20 minutes, jusqu’à ce que les carottes soient bien tendres.\nRetirer les feuilles de laurier. Mixer finement jusqu’à obtenir une texture lisse et crémeuse.\nAjouter le Carré Frais 0% et le cumin mixer à nouveau pour homogénéiser.\nAjuster la texture si nécessaire avec un peu d’eau chaude. Rectifier l’assaisonnement en sel et poivre.\nServir avec du pain toasté tartiné de fromage frais et un morceau de fromage."
+  },
+  "veg-112": {
+    "id": "veg-112",
+    "instructions": "Faire gonfler la semoule dans son volume d'eau bouillante à couvert dans un saladier puis laisser refroidir.\nLaver et couper les tomates en brunoise.\nCiseler les herbes et presser le citron.\nAjouter le concentré de tomate dans la semoule et bien mélanger pour tout enrober. Ajouter l'huile et mélanger à nouveau.\nAjouter les tomates, les herbes et le paprika, saler et poivrer et mélanger une dernière fois avant de servir."
+  },
+  "veg-113": {
+    "id": "veg-113",
+    "instructions": "Cuire l'Ebly dans de l'eau bouillante salée en respectant le temps indiqué pour qu'il reste ferme. Laisser complètement refroidir.\nLaver et couper le concombre et les tomates en brunoise.\nEmincer finement l'oignon rouge et couper les olives en rondelles.\nMélanger le tout et ajouter la feta émiettée et la menthe ciselée.\nMélanger le jus de citron, du sel, du poivre et l'origan séché dans un bol.\nAjouter l'huile d'olive en filet en fouettant pour bien émulsionner et obtenir un mélange bien homogène.\nVerser sur l'Ebly refroidi et les légumes, puis mélanger délicatement pour que le blé s'imprègne bien de toutes les saveurs avant de servir."
+  },
+  "veg-114": {
+    "id": "veg-114",
+    "instructions": "Éplucher l’oignon rouge et le couper en lamelles. \nLaver et découper en morceaux les autres légumes. \nRépartir les légumes sur une plaque de cuisson, ajouter un filet d’huile d’olive et l'ail écrasé et enfourner pendant 20-25 min dans un four préchauffé à 180°C.\nSortir les légumes du four, saler et poivrer.\nFaire cuire les pâtes selon les indications, les laisser le tout refroidir.\nDans un saladier, mélanger le reste d'huile d'olive, le vinaigre balsamique du sel et du poivre puis ajouter les légumes et les pâtes.\nMélanger puis ajouter la feta émiettée et mélanger à nouveau.\nServir parsemé de basilic frais ciselé ou séché."
+  },
+  "veg-115": {
+    "id": "veg-115",
+    "instructions": "Préchauffer le four à 180°C. \nCouper l’aubergine en tranche d’environ 1cm d’épaisseur, les disposer sur une plaque de cuisson.\nLes arroser d’huile d’olive, saler et parsemer d’herbes de Provence.\nAjouter les gousse d’ail entière épluchées puis enfourner 25 à 30 minutes jusqu’à ce qu’elles soient colorées.\nPendant ce temps, porter une grande casserole d’eau à ébullition et cuire les crozets selon les indications.\nMélanger la purée de tomates avec le concentré et le basilic, saler et poivrer.\nMélanger les crozets, les aubergines, l’ail écrasé et la purée de tomate.\nVerser le tout dans un plat à gratin et parsemer de parmesan et comté râpé puis enfourner à pendant 15 min.\nServir parsemé de basilic frais ciselé."
   },
   "vr-001": {
     "id": "vr-001",

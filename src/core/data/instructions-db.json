@@ -349,7 +349,7 @@
   },
   "char-047": {
     "id": "char-047",
-    "instructions": "Faire cuire les lentilles vertes selon les indications.\nCouper le dessus des tomates et les évider avec une cuillère puis mixer la chair au mixeur plongeant, saler et poivrer et assaisonner de paprika.\nFaire fondre l’échalote émincée dans un peu d’huile d’olive avec l’ail écrasé puis mélanger avec le hachis de porc, les lentilles écrasées, la mie du pain, 4 Cs de chair de tomates mixées et des herbes aromatiques au choix. \nFormer des boules et les placer dans les tomates creusées puis refermer avec le chapeau.\nLe placer dans un plat à gratin et verser le reste des tomates mixées dans le fond puis enfourner pour 45 min à 1h à 200°C.\nEplucher, laver et couper les carottes en brunoise ainsi que le céleri et l’oignon. Les faire fondre 10 min à feu moyen dans une casserole avec de l'huile d'olive. \nAjouter le riz et le faire nacrer quelques minutes.\nSaler et assaisonner d'herbes puis verser 400ml d'eau bouillante et laisser cuire à couvert à feu doux jusqu'à absorption (environ 11 min). Laisser reposer à couvert 5-10 min.\nServir le tout."
+    "instructions": "Faire cuire les Lentilles vertes selon les indications.\nCouper le dessus des tomates et les évider avec une cuillère puis mixer la chair au mixeur plongeant, saler et poivrer et assaisonner de paprika.\nFaire fondre l’échalote émincée dans un peu d’huile d’olive avec l’ail écrasé puis mélanger avec le hachis de porc, les lentilles écrasées, la mie du pain, 4 Cs de chair de tomates mixées et des herbes aromatiques au choix. \nFormer des boules et les placer dans les tomates creusées puis refermer avec le chapeau.\nLe placer dans un plat à gratin et verser le reste des tomates mixées dans le fond puis enfourner pour 45 min à 1h à 200°C.\nEplucher, laver et couper les carottes en brunoise ainsi que le céleri et l’oignon. Les faire fondre 10 min à feu moyen dans une casserole avec de l'huile d'olive. \nAjouter le riz et le faire nacrer quelques minutes.\nSaler et assaisonner d'herbes puis verser 400ml d'eau bouillante et laisser cuire à couvert à feu doux jusqu'à absorption (environ 11 min). Laisser reposer à couvert 5-10 min.\nServir le tout."
   },
   "char-048": {
     "id": "char-048",
@@ -819,6 +819,10 @@
     "id": "pc-057",
     "instructions": "Battre les oeufs avec le petit-lait le lait, le beurre fondu et le jus de citron.\nMélanger la farine avec le bicarbonate et une pincée de sel.\nAjouter le mélange au petit lait et bien mélanger pour obtenir une pâte lisse et homogène. \nFaire chauffer bien fort une poêle puis baisser le feu et y déposer la pâte avec une petite louche pour faire cuire les pancakes quelques minutes de chaque côté jusqu’à ce qu’ils soient dorés."
   },
+  "pc-058": {
+    "id": "pc-058",
+    "instructions": "Faire tiédir le lait (pas plus de 35°C) puis diluer la levure dans 50ml et laisser poser 10-15 min avec le sucre.\nVerser la levure et le reste du lait tiède ainsi que l’huile dans un bol.\nAjouter la farine et une pincée de sel (environ 3 à 5g) puis pétrir la pâte à la main ou au robot pendant 8 min environ.\nLaisser gonfler pour qu’elle double de volume puis diviser la pâte en 8 et former des cercles de 2 cm d’épaisseur environ puis laisser de nouveau gonfler 30 min environ.\nFaire cuire à couvert à feu moyen-doux 5 à 8 minutes sur chaque face dans une poêle bien chaude. Retourner quand le dessous commence à dorer.\nCouper en deux et tartiner de purée de cacahuète."
+  },
   "pl-001": {
     "id": "pl-001",
     "instructions": "Faire tremper les amandes dans l’eau froide.\nEgoutter et rincer.\nRemplir le récipient du vegan milker avec l’eau minérale. \nPlacer le filtre dans le récipient et y ajouter les oléagineux.\nPlonger le mixeur plongeant dans le vase filtrant et mixer durant 2 min.\nLaisser macérer durant 5 à 10 minutes. \nRetirer le filtre et enlever la moitié de la pulpe avec une cuillère en bois.\nInsérer le mortier et écraser délicatement la pulpe pour extraire les dernières gouttes. \nLaisser reposer le lait durant au moins 2 heures (impérativement au réfrigérateur) pour en améliorer la saveur."
@@ -1223,6 +1227,10 @@
     "id": "poi-087",
     "instructions": "Faire tremper les pois chiches pendant 12 à 24h dans un grand volume d’eau avec du bicarbonate alimentaire, les égoutter et les rincer puis les faire cuire dans un grand volume d’eau sous pression 20 min.\nDétailler la courgette en fines lamelles. Peler la gousse d’ail. Faire chauffer une poêle avec un peu d’huile d’olive, ajouter l’ail et les lamelles de courgettes. Les faire revenir à feu moyen. Saler et poivrer. Ajouter les pois chiches quelques minutes en fin de cuisson.\nFaire cuire le blé dans 2 fois son volume d'eau jusqu'à absorption.\nLaisser tout refroidir.\nPréparer la vinaigrette dans un saladier en mélangeant le vinaigre et l’huile. Saler et poivrer. \nDétailler les tomates cerise en deux.\nDéposer tous les ingrédients dans la vinaigrette. Mélanger.\nParsemer quelques feuilles de persil ciselé au moment du service."
   },
+  "poi-088": {
+    "id": "poi-088",
+    "instructions": "Faire gonfler la semoule dans son volume d'eau bouillante à couvert dans un saladier puis laisser refroidir.\nLaver et couper les tomates en brunoise.\nCiseler les herbes et presser le citron.\nAjouter le concentré de tomate dans la semoule et bien mélanger pour tout enrober. Ajouter l'huile et mélanger à nouveau.\nAjouter les tomates, les herbes et le paprika, saler et poivrer et mélanger une dernière fois avant de servir avec les sardines."
+  },
   "pv-001": {
     "id": "pv-001",
     "instructions": "Faire tremper les pois chiches pendant 12 à 24h dans un grand volume d’eau avec du bicarbonate alimentaire, les égoutter et les rincer puis les faire cuire dans un grand volume d’eau sous pression 20 min. \nFaire cuire l’orzo selon les indications.\nÉmincer l’échalote finement et la faire fondre dans l’huile d’olive dans une grande poêle ou un wok bien chaud.\nAjouter les épinards (les rincer et les essorer avant s’ils sont frais) et laisser cuire jusqu’à ce qu’il n’y aie plus d’eau puis ajouter l’ail écrasé.\nAjouter les tomates, le concentré de tomates, les pois chiches et l’origan et laisser mijoter une dizaine de minutes.\nAjouter l’orzo cuit, laisser réchauffer 5 min et servir parsemé de feta émiettée."
@@ -1425,7 +1433,7 @@
   },
   "pv-051": {
     "id": "pv-051",
-    "instructions": "Cuire les épinard dans une poêle chaude et huilée.\nPréchauffer le four à 180°C.\nBattre les œufs avec le lait, la muscade et le poivre.\nAjouter les épinards cuits.\nVerser la préparation dans un moule huilé au pinceau.\nCouper la feta en petits dés et parsemer par dessus puis enfourner pour 30 à 35 min.\nRincer les lentilles vertes et les cuire dans une casserole d'eau bouillante selon le temps indiqué pour qu'elles soient tendres.\nCiseler l'échalote et le persil.\nMélanger les lentilles tièdes ou froides avec la salade, l'échalote et le persil et assaisonner d’huile d’olive et vinaigre balsamique. Saler et poivrer.\nServir la quiche chaude avec la salade de lentilles."
+    "instructions": "Cuire les épinard dans une poêle chaude et huilée.\nPréchauffer le four à 180°C.\nBattre les œufs avec le lait, la muscade et le poivre.\nAjouter les épinards cuits.\nVerser la préparation dans un moule huilé au pinceau.\nCouper la feta en petits dés et parsemer par dessus puis enfourner pour 30 à 35 min.\nRincer les Lentilles vertes et les cuire dans une casserole d'eau bouillante selon le temps indiqué pour qu'elles soient tendres.\nCiseler l'échalote et le persil.\nMélanger les lentilles tièdes ou froides avec la salade, l'échalote et le persil et assaisonner d’huile d’olive et vinaigre balsamique. Saler et poivrer.\nServir la quiche chaude avec la salade de lentilles."
   },
   "pv-052": {
     "id": "pv-052",
@@ -2225,7 +2233,7 @@
   },
   "veg-112": {
     "id": "veg-112",
-    "instructions": "Faire gonfler la semoule dans son volume d'eau bouillante à couvert dans un saladier puis laisser refroidir.\nLaver et couper les tomates en brunoise.\nCiseler les herbes et presser le citron.\nAjouter le concentré de tomate dans la semoule et bien mélanger pour tout enrober. Ajouter l'huile et mélanger à nouveau.\nAjouter les tomates, les herbes et le paprika, saler et poivrer et mélanger une dernière fois avant de servir."
+    "instructions": "Faire cuire les oeufs durs 5 min à la vapeur sous pression puis les laisser refroidir.\nFaire gonfler la semoule dans son volume d'eau bouillante à couvert dans un saladier puis laisser refroidir.\nLaver et couper les tomates en brunoise.\nCiseler les herbes et presser le citron.\nAjouter 60g concentré de tomate dans la semoule et bien mélanger pour tout enrober. Ajouter l'huile et mélanger à nouveau.\nAjouter les tomates, les herbes et le paprika, saler et poivrer et mélanger une dernière fois avant de servir.\nCouper les oeufs durs en deux, retirer le jaune et l'écraser avec 20g de concentré de tomate puis les remettre dans les blancs et servir le tout."
   },
   "veg-113": {
     "id": "veg-113",

@@ -1,5 +1,10 @@
 [
   {
+    "date": "2026-08-04",
+    "recipeIds": ["pc-058", "poi-088"],
+    "note": "Miam des bons gouter !"
+  },
+  {
     "date": "2026-07-22",
     "recipeIds": [
       "poi-084",

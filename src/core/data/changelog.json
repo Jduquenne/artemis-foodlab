@@ -1,6 +1,18 @@
 [
   {
     "date": "2026-08-04",
+    "recipeIds": [
+      "char-051",
+      "fr-040",
+      "fr-041",
+      "fr-042",
+      "fr-043",
+      "veg-116"
+    ],
+    "note": "Salade de fruits ... jolie jolie"
+  },
+  {
+    "date": "2026-08-04",
     "recipeIds": ["pc-058", "poi-088"],
     "note": "Miam des bons gouter !"
   },
@@ -27,16 +39,6 @@
   {
     "date": "2026-07-13",
     "recipeIds": ["pat-068"],
-    "note": "Miam du petit déjeuner !"
-  },
-  {
-    "date": "2026-07-07",
-    "recipeIds": ["pc-057"],
-    "note": "Miam du petit déjeuner !"
-  },
-  {
-    "date": "2026-06-23",
-    "recipeIds": ["pc-053", "pc-054", "pc-055", "pc-056"],
     "note": "Miam du petit déjeuner !"
   }
 ]

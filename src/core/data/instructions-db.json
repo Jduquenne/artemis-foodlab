@@ -363,6 +363,10 @@
     "id": "char-050",
     "instructions": "Faire cuire les grenailles à la vapeur pendant 8 minutes. Les laisser refroidir complètement puis les couper en morceaux.\nFaire cuire les œufs 9 à 10 minutes dans l'eau bouillante. Les refroidir sous l'eau froide puis les écaler.\nCouper les œufs en morceaux, le jambon et les tomates lavées en dés et les cornichons en rondelles.\nCiseler finement la ciboulette.\nDans un saladier, mélanger le fromage blanc, la moutarde, le vinaigre balsamique, l'huile de colza, la ciboulette, du sel et du poivre.\nAjouter les pommes de terre, le jambon, les tomates, les cornichons et les œufs. Mélanger délicatement pour bien enrober l'ensemble de sauce.\nCouvrir et réserver au réfrigérateur au moins 30 minutes avant de servir."
   },
+  "char-051": {
+    "id": "char-051",
+    "instructions": "Faire cuire les pâtes \nCouper le jambon en morceaux.\nNettoyer et couper les champignons en lamelles et les faire cuire dans une poêle bien chaude légèrement huilée.\nBien essorer et couper la mozzarella en dés.\nCouper les olives en rondelles.\nMélanger les pâtes avec le coulis de tomates, les champignons cuits et les herbes, saler et poivrer.\nServir avec la mozzarella et le jambon."
+  },
   "pat-001": {
     "id": "pat-001",
     "instructions": "Faire griller les cacahuètes quelques minutes à la poêle puis les concasser grossièrement.\nÉcraser la banane jusqu’à texture lisse.\nAjouter la purée de cacahuètes puis les œufs et le jus de citron. Mélanger jusqu’à homogénéité.\nIncorporer le bicarbonate, les farines et les flocons d’avoine. Mélanger juste pour amalgamer.\nAjouter les pépites de chocolat et les noisettes concassées.\nPlacer la pâte au réfrigérateur 30 à 60 minutes.\nFormer des cookies sur plaque recouverte d'une feuille de cuisson.\nEnfourner 12 à 15 minutes à 180°C jusqu’à bords dorés.\nLaisser refroidir avant manipulation."
@@ -1813,7 +1817,7 @@
   },
   "veg-007": {
     "id": "veg-007",
-    "instructions": "Eplucher, laver et couper les carottes en julienne et les faire cuire à la vapeur 5 min.\nEmincer les oignons et les faire fondre dans l’huile de sésame dans un wok.\nAjouter les pousses de haricots égouttées et rincées.\nAjouter les carottes cuites, le miel, le beurre de cacahuètes, la sauce soja et les épices.\nLaisser mijoter une dizaine de minutes pour bien imprégner les légumes.\nCuire les pâtes selon les indications.\nLes ajouter au wok et bien mélanger. Laisser mijoter 5 min et servir parsemé de sésame grillé."
+    "instructions": "Eplucher, laver et couper les carottes en julienne et les faire cuire à la vapeur 5 min.\nRéhydrater les protéines de soja dans le bouillon bien chaud 15 min.\nEmincer les oignons et les faire fondre dans l’huile de sésame dans un wok.\nAjouter les protéines de soja réhydratées avec leur eau s'il en reste et laisser.\nQuand il n'y a plus d'eau, ajouter les pousses de haricots égouttées et rincées.\nAjouter les carottes cuites, le miel, le beurre de cacahuètes, la sauce soja et les épices.\nLaisser mijoter une dizaine de minutes pour bien imprégner les légumes.\nCuire les pâtes selon les indications.\nLes ajouter au wok et bien mélanger. Laisser mijoter 5 min et servir parsemé de sésame grillé."
   },
   "veg-008": {
     "id": "veg-008",
@@ -2247,6 +2251,10 @@
     "id": "veg-115",
     "instructions": "Préchauffer le four à 180°C. \nCouper l’aubergine en tranche d’environ 1cm d’épaisseur, les disposer sur une plaque de cuisson.\nLes arroser d’huile d’olive, saler et parsemer d’herbes de Provence.\nAjouter les gousse d’ail entière épluchées puis enfourner 25 à 30 minutes jusqu’à ce qu’elles soient colorées.\nPendant ce temps, porter une grande casserole d’eau à ébullition et cuire les crozets selon les indications.\nMélanger la purée de tomates avec le concentré et le basilic, saler et poivrer.\nMélanger les crozets, les aubergines, l’ail écrasé et la purée de tomate.\nVerser le tout dans un plat à gratin et parsemer de parmesan et comté râpé puis enfourner à pendant 15 min.\nServir parsemé de basilic frais ciselé."
   },
+  "veg-116": {
+    "id": "veg-116",
+    "instructions": "Préchauffer le four ou l'Airfryer à 200℃.\nEplucher, laver, essuyer et couper les patates douces en frites de tailles régulières.\nArroser d'une belle cuillère à soupe d'huile d'olive et d'épices. Bien remuer pour recouvrir toutes les frites.\nEtaler sur la plaque de cuisson ou dans l'Airfryer et cuire environ 20-30 min en surveillant et remuant régulièrement.\nLaver et couper les radis en rondelles.\nCuire les oeufs au plat dans une poêle chaude huilée.\nNettoyer, essorer et assaisonner la salade avec l'échalote émincée finement, les radis, huile de colza, vinaigre balsamique, persillade, sel et poivre.\nServir le tout."
+  },
   "vr-001": {
     "id": "vr-001",
     "instructions": "Faire tremper les haricots pendant 12 à 24h dans un grand volume d’eau avec du bicarbonate alimentaire, les égoutter et les rincer puis les faire cuire dans un grand volume d’eau sous pression 20 min. Vérifier la cuisson et ajuster le temps si besoin puis égoutter et rincer à nouveau.\nEmincer les oignons et écraser l’ail.\nEplucher, laver et couper les carottes en julienne puis les faire cuire à la vapeur 4 min. Egoutter le maïs.\nDans un wok, faire revenir l’ail et l’oignon dans de l’huile d’olive avec les épices puis ajouter le bœuf haché bien émincé finement et le faire cuire en remuant régulièrement jusqu’à ce qu’il soit bien cuit.\nAjouter les haricots rouges, le maïs puis les carottes cuites et laisser cuire 10 min.\nAjouter la pulpe de tomates et le concentré de tomates dilué dans un peu d’eau, saler, poivrer et laisser mijoter à couvert 20 min.\nPlacer les tortillas ouvertes dans un plat à gratin, mettre une louche de préparation dans chaque tortilla, refermer puis saupoudrer de cheddar.\nPlacer au four préchauffé à 180°C pendant environ 15 min jusqu’à ce que le cheddar soit doré. Servir avec la Mâche assaisonnée."
@@ -2494,5 +2502,73 @@
   "vr-062": {
     "id": "vr-062",
     "instructions": "Laver les grenailles et cuire à la vapeur 8 à 12 min selon leur taille.\nÉmincer l'oignon rouge.\nFaire chauffer un filet d'huile d'olive dans une poêle bien chaude. Saisir les filets de bœuf jusqu'à ce qu'ils soient bien cuits puis réserver.\nCouper les poivrons en petits dés. Les faire revenir dans une poêle avec de l'huile d'olive et les épices jusqu'à ce qu'ils soient bien cuits et fondants, ajouter les filets de boeuf coupés en petit morceaux à la fin et mélanger.\nLaver les tomates fraîches et les couper en dés.\nCouper les olives vertes en rondelles.\nRéunir dans un plat les rondelles de pommes de terre grenailles, les poivrons au boeuf, les oignons, les dés de tomates et les olives.\nAssaisonner d'huile de colza, vinaigre, persil, saler, poivrer et mélanger délicatement avant de servir froid ou tiède."
+  },
+  "fr-026": {
+    "id": "fr-026",
+    "instructions": "Couper les fruits en dés dans un bol et mélanger."
+  },
+  "fr-027": {
+    "id": "fr-027",
+    "instructions": "Couper les fruits en dés dans un bol et mélanger."
+  },
+  "fr-028": {
+    "id": "fr-028",
+    "instructions": "Couper les fruits en dés dans un bol et mélanger."
+  },
+  "fr-029": {
+    "id": "fr-029",
+    "instructions": "Couper les fruits en dés dans un bol et mélanger."
+  },
+  "fr-030": {
+    "id": "fr-030",
+    "instructions": "Couper les fruits en dés dans un bol et mélanger."
+  },
+  "fr-031": {
+    "id": "fr-031",
+    "instructions": "Couper les fruits en dés dans un bol et mélanger."
+  },
+  "fr-032": {
+    "id": "fr-032",
+    "instructions": "Couper les fruits en dés dans un bol et mélanger."
+  },
+  "fr-033": {
+    "id": "fr-033",
+    "instructions": "Couper les fruits en dés dans un bol et mélanger."
+  },
+  "fr-034": {
+    "id": "fr-034",
+    "instructions": "Couper les fruits en dés dans un bol et mélanger."
+  },
+  "fr-035": {
+    "id": "fr-035",
+    "instructions": "Couper les fruits en dés dans un bol et mélanger."
+  },
+  "fr-036": {
+    "id": "fr-036",
+    "instructions": "Couper les fruits en dés dans un bol et mélanger."
+  },
+  "fr-037": {
+    "id": "fr-037",
+    "instructions": "Couper les fruits en dés dans un bol et mélanger."
+  },
+  "fr-038": {
+    "id": "fr-038",
+    "instructions": "Couper les fruits en dés dans un bol et mélanger."
+  },
+  "fr-040": {
+    "id": "fr-040",
+    "instructions": "Couper les fruits en dés dans un bol et mélanger."
+  },
+  "fr-041": {
+    "id": "fr-041",
+    "instructions": "Couper les fruits en dés dans un bol et mélanger."
+  },
+  "fr-042": {
+    "id": "fr-042",
+    "instructions": "Couper les fruits en dés dans un bol et mélanger."
+  },
+  "fr-043": {
+    "id": "fr-043",
+    "instructions": "Couper les fruits en dés dans un bol et mélanger."
   }
 }

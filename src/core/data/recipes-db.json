@@ -1540,7 +1540,7 @@
         "foodId": "fv-088",
         "name": "Salade",
         "quantity": 60,
-        "unit": null,
+        "unit": "g",
         "category": "Fruits et légumes"
       },
       {
@@ -1629,7 +1629,7 @@
         "foodId": "fv-088",
         "name": "Salade",
         "quantity": 60,
-        "unit": null,
+        "unit": "g",
         "category": "Fruits et légumes"
       },
       {
@@ -4402,6 +4402,95 @@
       }
     }
   },
+  "char-051": {
+    "id": "char-051",
+    "name": "Pâtes à la Régina",
+    "categoryId": "charcuterie",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": true,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "ch-003",
+        "name": "Jambon",
+        "quantity": 2,
+        "unit": "tranche",
+        "category": "Charcuterie"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-017",
+        "name": "Champignons",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "pl-028",
+        "name": "Mozzarella",
+        "quantity": 125,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "004",
+        "foodId": "cn-003",
+        "name": "Purée de tomates",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Conserves"
+      },
+      {
+        "id": "005",
+        "foodId": "cd-023",
+        "name": "Olives verte",
+        "quantity": 30,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "ha-002",
+        "name": "Basilic",
+        "quantity": null,
+        "unit": null,
+        "category": "Herbe aromatique"
+      },
+      {
+        "id": "007",
+        "foodId": "ha-014",
+        "name": "Origan",
+        "quantity": null,
+        "unit": null,
+        "category": "Herbe aromatique"
+      },
+      {
+        "id": "008",
+        "foodId": "fc-018",
+        "name": "Pâtes",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Féculents"
+      },
+      {
+        "id": "009",
+        "foodId": "cd-011",
+        "name": "Huile d'olive",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Condiments"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/charcuterie/meal/CHAR_51_mealPhoto.webp"
+      }
+    }
+  },
   "fr-026": {
     "id": "fr-026",
     "name": "Salade fraise abricot pêche",
@@ -4956,6 +5045,154 @@
     "assets": {
       "mealPhoto": {
         "url": "/artemis-foodlab/assets/fruits/meal/FR_38_mealPhoto.webp"
+      }
+    }
+  },
+  "fr-040": {
+    "id": "fr-040",
+    "name": "Salade nectarine melon",
+    "categoryId": "fruits",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-062",
+        "name": "Nectarine",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-057",
+        "name": "Melon",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fruits/meal/FR_40_mealPhoto.webp"
+      }
+    }
+  },
+  "fr-041": {
+    "id": "fr-041",
+    "name": "Salade nectarine melon mûres framboises",
+    "categoryId": "fruits",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-062",
+        "name": "Nectarine",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-057",
+        "name": "Melon",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-059",
+        "name": "Mûres",
+        "quantity": 60,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fv-045",
+        "name": "Framboises",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fruits/meal/FR_41_mealPhoto.webp"
+      }
+    }
+  },
+  "fr-042": {
+    "id": "fr-042",
+    "name": "Salade nectarine abricot",
+    "categoryId": "fruits",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-062",
+        "name": "Nectarine",
+        "quantity": 160,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-001",
+        "name": "Abricot",
+        "quantity": 160,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fruits/meal/FR_42_mealPhoto.webp"
+      }
+    }
+  },
+  "fr-043": {
+    "id": "fr-043",
+    "name": "Salade pêche abricot",
+    "categoryId": "fruits",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-069",
+        "name": "Pêche",
+        "quantity": 160,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-001",
+        "name": "Abricot",
+        "quantity": 160,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/fruits/meal/FR_43_mealPhoto.webp"
       }
     }
   },
@@ -5685,7 +5922,7 @@
         "foodId": "ha-005",
         "name": "Eau",
         "quantity": 40,
-        "unit": null,
+        "unit": "g",
         "category": "Hors achat"
       }
     ],
@@ -14367,7 +14604,7 @@
     "categoryId": "cereal-products",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
-    "defaultPortions": 1,
+    "defaultPortions": 6,
     "batchCooking": false,
     "isDessert": false,
     "ingredients": [
@@ -14375,7 +14612,7 @@
         "id": "001",
         "foodId": "es-029",
         "name": "Flocons d'avoine",
-        "quantity": 10,
+        "quantity": 50,
         "unit": "g",
         "category": "Epicerie sucrée"
       },
@@ -14383,7 +14620,7 @@
         "id": "002",
         "foodId": "es-030",
         "name": "Flocons d'épeautre",
-        "quantity": 10,
+        "quantity": 50,
         "unit": "g",
         "category": "Epicerie sucrée"
       },
@@ -14391,7 +14628,7 @@
         "id": "003",
         "foodId": "fs-026",
         "name": "Raisins secs",
-        "quantity": 8,
+        "quantity": 40,
         "unit": "g",
         "category": "Fruits secs"
       },
@@ -14399,7 +14636,7 @@
         "id": "004",
         "foodId": "fs-014",
         "name": "Graines de tournesol",
-        "quantity": 5,
+        "quantity": 25,
         "unit": "g",
         "category": "Fruits secs"
       },
@@ -14407,7 +14644,7 @@
         "id": "005",
         "foodId": "fs-022",
         "name": "Noix de pécan",
-        "quantity": 6,
+        "quantity": 30,
         "unit": "g",
         "category": "Fruits secs"
       },
@@ -14415,7 +14652,7 @@
         "id": "006",
         "foodId": "es-031",
         "name": "Flocons de quinoa",
-        "quantity": 10,
+        "quantity": 50,
         "unit": "g",
         "category": "Epicerie sucrée"
       }
@@ -22886,7 +23123,7 @@
         "foodId": "fv-091",
         "name": "Tomates cœur de bœuf",
         "quantity": 150,
-        "unit": null,
+        "unit": "g",
         "category": "Fruits et légumes"
       }
     ],
@@ -23351,7 +23588,7 @@
   },
   "poi-086": {
     "id": "poi-086",
-    "name": "Salade de pâtes saumon courgette grillée",
+    "name": "Salade de blé au thon et olives",
     "categoryId": "fish",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -23440,7 +23677,7 @@
   },
   "poi-087": {
     "id": "poi-087",
-    "name": "Salade de pâtes saumon courgette grillée",
+    "name": "Salade de blé thon courgette grillée",
     "categoryId": "fish",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
@@ -23614,7 +23851,7 @@
         "foodId": "po-007",
         "name": "Sardines nature",
         "quantity": 200,
-        "unit": null,
+        "unit": "g",
         "category": "Poisson"
       }
     ],
@@ -39014,7 +39251,7 @@
         "category": "Condiments"
       },
       {
-        "id": "008",
+        "id": "007",
         "foodId": "es-036",
         "name": "Miel",
         "quantity": 10,
@@ -39022,7 +39259,7 @@
         "category": "Epicerie sucrée"
       },
       {
-        "id": "009",
+        "id": "008",
         "foodId": "cd-024",
         "name": "Sauce soja",
         "quantity": 10,
@@ -39030,7 +39267,7 @@
         "category": "Condiments"
       },
       {
-        "id": "010",
+        "id": "009",
         "foodId": "ep-009",
         "name": "Épices asiatiques",
         "quantity": null,
@@ -39038,12 +39275,20 @@
         "category": "Epices"
       },
       {
-        "id": "011",
+        "id": "010",
         "foodId": "fs-013",
         "name": "Graines de sésame",
-        "quantity": 20,
+        "quantity": 10,
         "unit": "g",
         "category": "Fruits secs"
+      },
+      {
+        "id": "011",
+        "foodId": "vm-011",
+        "name": "Protéines de soja texturées",
+        "quantity": 40,
+        "unit": "g",
+        "category": "Viande"
       }
     ],
     "assets": {
@@ -49917,6 +50162,103 @@
     "assets": {
       "mealPhoto": {
         "url": "/artemis-foodlab/assets/veggies/meal/VEG_115_mealPhoto.webp"
+      }
+    }
+  },
+  "veg-116": {
+    "id": "veg-116",
+    "name": "Frites de patates douce omelette et salade",
+    "categoryId": "veggies",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 2,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "fv-068",
+        "name": "Patate douce",
+        "quantity": 550,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-088",
+        "name": "Salade",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "fv-038",
+        "name": "Échalote",
+        "quantity": 10,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "004",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 4,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "005",
+        "foodId": "cd-011",
+        "name": "Huile d'olive",
+        "quantity": 8,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "006",
+        "foodId": "ep-016",
+        "name": "Paprika",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices"
+      },
+      {
+        "id": "007",
+        "foodId": "ep-005",
+        "name": "Cumin",
+        "quantity": null,
+        "unit": null,
+        "category": "Epices"
+      },
+      {
+        "id": "008",
+        "foodId": "cd-014",
+        "name": "Huile de colza",
+        "quantity": 5,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "009",
+        "foodId": "cd-027",
+        "name": "Vinaigre balsamique",
+        "quantity": 5,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "010",
+        "foodId": "fv-083",
+        "name": "Radis",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/veggies/meal/VEG_116_mealPhoto.webp"
       }
     }
   },

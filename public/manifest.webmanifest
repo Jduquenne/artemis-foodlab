@@ -1,0 +1,32 @@
+{
+  "name": "Artemis Foodlab",
+  "short_name": "Artemis",
+  "description": "Planifiez vos repas, gérez vos recettes, votre congélateur et votre liste de courses.",
+  "lang": "fr",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f0ebe1",
+  "theme_color": "#f97316",
+  "icons": [
+    {
+      "src": "assets/ui/icon/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/ui/icon/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/ui/icon/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

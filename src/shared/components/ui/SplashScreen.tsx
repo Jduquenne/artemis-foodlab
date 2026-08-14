@@ -8,8 +8,13 @@ export const SplashScreen = ({ isExiting }: SplashScreenProps) => {
       className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-slate-50 ${isExiting ? "splash-exit" : ""}`}
     >
       <div className="flex flex-col items-center gap-6">
-        <div className="w-20 h-20 rounded-3xl bg-orange-500 flex items-center justify-center shadow-lg shadow-orange-200">
-          <span className="text-white font-black text-2xl tracking-tight select-none">AFL</span>
+        <div className="w-24 h-24 rounded-3xl bg-white flex items-center justify-center overflow-hidden shadow-lg shadow-orange-200 select-none">
+          <img
+            src="/artemis-foodlab/assets/logo/logo-256.png"
+            alt="Artemis Foodlab"
+            className="w-full h-full object-contain"
+            draggable={false}
+          />
         </div>
 
         <div className="flex flex-col items-center gap-1">

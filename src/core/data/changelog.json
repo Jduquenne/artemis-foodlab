@@ -1,5 +1,18 @@
 [
   {
+    "date": "2026-08-21",
+    "recipeIds": [
+      "pc-059",
+      "pl-025",
+      "pl-026",
+      "pl-027",
+      "pl-028",
+      "pl-029",
+      "pl-030"
+    ],
+    "note": "Glaces ! Chaud chaud"
+  },
+  {
     "date": "2026-08-04",
     "recipeIds": [
       "char-051",
@@ -30,15 +43,5 @@
       "veg-115"
     ],
     "note": "Recettes d'été ! Miam miam !"
-  },
-  {
-    "date": "2026-07-15",
-    "recipeIds": ["pat-069", "fr-039"],
-    "note": "Miam des bons gouter !"
-  },
-  {
-    "date": "2026-07-13",
-    "recipeIds": ["pat-068"],
-    "note": "Miam du petit déjeuner !"
   }
 ]

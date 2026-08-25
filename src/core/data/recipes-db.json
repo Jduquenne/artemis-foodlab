@@ -11119,8 +11119,8 @@
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
     "defaultPortions": 8,
-    "batchCooking": false,
-    "isDessert": false,
+    "batchCooking": true,
+    "isDessert": true,
     "ingredients": [
       {
         "id": "001",
@@ -11198,6 +11198,200 @@
     "assets": {
       "mealPhoto": {
         "url": "/artemis-foodlab/assets/pastries/meal/PAT_70_mealPhoto.webp"
+      }
+    }
+  },
+  "pat-071": {
+    "id": "pat-071",
+    "name": "Cake aux mûres",
+    "categoryId": "pastries",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 10,
+    "batchCooking": true,
+    "isDessert": true,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-051",
+        "name": "Sucre complet",
+        "quantity": 60,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "fm-003",
+        "name": "Oeuf",
+        "quantity": 4,
+        "unit": "pièce",
+        "category": "Ferme"
+      },
+      {
+        "id": "003",
+        "foodId": "pl-014",
+        "name": "Fromage blanc 3%",
+        "quantity": 120,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "004",
+        "foodId": "cd-011",
+        "name": "Huile d'olive",
+        "quantity": 20,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "es-055",
+        "name": "Vanille",
+        "quantity": null,
+        "unit": null,
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "006",
+        "foodId": "es-025",
+        "name": "Farine semi complète",
+        "quantity": 160,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "007",
+        "foodId": "cd-002",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "cd-017",
+        "name": "Jus de citron",
+        "quantity": null,
+        "unit": null,
+        "category": "Condiments"
+      },
+      {
+        "id": "009",
+        "foodId": "cd-026",
+        "name": "Sel",
+        "quantity": null,
+        "unit": null,
+        "category": "Condiments"
+      },
+      {
+        "id": "010",
+        "foodId": "fv-059",
+        "name": "Mûres",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_71_mealPhoto.webp"
+      }
+    }
+  },
+  "pat-072": {
+    "id": "pat-072",
+    "name": "Cake vegan mûres amandes",
+    "categoryId": "pastries",
+    "mealTypes": ["lunch", "dinner"],
+    "kind": "dish",
+    "defaultPortions": 10,
+    "batchCooking": false,
+    "isDessert": false,
+    "ingredients": [
+      {
+        "id": "001",
+        "foodId": "es-051",
+        "name": "Sucre complet",
+        "quantity": 60,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "002",
+        "foodId": "fv-025",
+        "name": "Citron non traité",
+        "quantity": 1,
+        "unit": "pièce",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "003",
+        "foodId": "pl-003",
+        "name": "Boisson soja nature",
+        "quantity": 160,
+        "unit": "g",
+        "category": "Produits laitiers"
+      },
+      {
+        "id": "004",
+        "foodId": "cd-011",
+        "name": "Huile d'olive",
+        "quantity": 60,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "005",
+        "foodId": "es-025",
+        "name": "Farine semi complète",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      },
+      {
+        "id": "006",
+        "foodId": "cd-002",
+        "name": "Bicarbonate alimentaire",
+        "quantity": null,
+        "unit": null,
+        "category": "Condiments"
+      },
+      {
+        "id": "007",
+        "foodId": "cd-017",
+        "name": "Jus de citron",
+        "quantity": 40,
+        "unit": "g",
+        "category": "Condiments"
+      },
+      {
+        "id": "008",
+        "foodId": "cd-026",
+        "name": "Sel",
+        "quantity": null,
+        "unit": null,
+        "category": "Condiments"
+      },
+      {
+        "id": "009",
+        "foodId": "fv-059",
+        "name": "Mûres",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fruits et légumes"
+      },
+      {
+        "id": "010",
+        "foodId": "es-002",
+        "name": "Amandes en poudre",
+        "quantity": 70,
+        "unit": "g",
+        "category": "Epicerie sucrée"
+      }
+    ],
+    "assets": {
+      "mealPhoto": {
+        "url": "/artemis-foodlab/assets/pastries/meal/PAT_72_mealPhoto.webp"
       }
     }
   },
@@ -14824,7 +15018,7 @@
     "categoryId": "cereal-products",
     "mealTypes": ["lunch", "dinner"],
     "kind": "dish",
-    "defaultPortions": 22,
+    "defaultPortions": 25,
     "batchCooking": true,
     "isDessert": false,
     "ingredients": [
@@ -22378,7 +22572,7 @@
         "id": "002",
         "foodId": "fv-014",
         "name": "Carottes",
-        "quantity": 400,
+        "quantity": 300,
         "unit": "g",
         "category": "Fruits et légumes"
       },

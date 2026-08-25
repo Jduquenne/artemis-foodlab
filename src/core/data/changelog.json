@@ -1,5 +1,10 @@
 [
   {
+    "date": "2026-08-04",
+    "recipeIds": ["pat-071", "pat-072"],
+    "note": "Miam des bons gouter !"
+  },
+  {
     "date": "2026-08-21",
     "recipeIds": [
       "pc-059",
@@ -28,20 +33,5 @@
     "date": "2026-08-04",
     "recipeIds": ["pc-058", "poi-088"],
     "note": "Miam des bons gouter !"
-  },
-  {
-    "date": "2026-07-22",
-    "recipeIds": [
-      "poi-084",
-      "poi-085",
-      "poi-086",
-      "poi-087",
-      "pat-070",
-      "veg-112",
-      "veg-113",
-      "veg-114",
-      "veg-115"
-    ],
-    "note": "Recettes d'été ! Miam miam !"
   }
 ]

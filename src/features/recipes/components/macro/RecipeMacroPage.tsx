@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
 import { typedFoodDb } from '../../../../core/typed-db/typedFoodDb';
@@ -8,11 +8,11 @@ import { calculateRecipeMacros } from '../../../../shared/utils/macroUtils';
 import { buildUnitWeightOverrides, patchRecipeQuantities, applyUnitWeightOverrides } from '../../../../core/logic/recipe/recipeLogic';
 import { MacroBar } from './MacroBar';
 import { IngredientAdjustRow } from './IngredientAdjustRow';
+import { useModalBack } from '../../../../shared/hooks/useModalBack';
 
 export const RecipeMacroPage = () => {
   const { recipeId } = useParams();
-  const navigate = useNavigate();
-  const [isLeaving, setIsLeaving] = useState(false);
+  const { isLeaving, goBack } = useModalBack(`/recipes/detail/${recipeId}`);
 
   const recipe = recipeId ? typedRecipesDb[recipeId] : undefined;
 
@@ -41,11 +41,6 @@ export const RecipeMacroPage = () => {
   }, [patchedRecipe, patchedFoods]);
 
   if (!recipe) return null;
-
-  const handleBack = () => {
-    setIsLeaving(true);
-    setTimeout(() => navigate(-1), 280);
-  };
 
   const handleQuantityChange = (id: string, value: string) => {
     const num = parseFloat(value);
@@ -81,7 +76,7 @@ export const RecipeMacroPage = () => {
         <div className="flex items-center gap-3 mb-3">
           <button
             aria-label="Retour"
-            onClick={handleBack}
+            onClick={goBack}
             className="p-2 rounded-xl text-slate-400 hover:text-orange-600 hover:bg-orange-50 transition-colors shrink-0"
           >
             <ArrowLeft className="w-5 h-5" />

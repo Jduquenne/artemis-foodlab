@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Calculator, ChevronLeft, ChevronRight, Pencil } from 'lucide-react';
 import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
@@ -12,17 +12,20 @@ import { MacroColumn } from '../macro/MacroColumn';
 import { MacroRow } from '../macro/MacroRow';
 import { RecipeRecetteCard } from '../../../../shared/components/ui/RecipeRecetteCard';
 import { RecipeBookCard } from '../../../../shared/components/ui/RecipeBookCard';
+import { useModalBack } from '../../../../shared/hooks/useModalBack';
 
 export const RecipeDetail = () => {
   const { recipeId } = useParams();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [isLeaving, setIsLeaving] = useState(false);
 
   const recipe = recipeId ? typedRecipesDb[recipeId] : undefined;
   const mealPhotoUrl = recipe?.assets?.mealPhoto?.url;
   const instructionsPhotoUrl = recipe?.assets?.instructionsPhoto?.url;
   const categoryId = searchParams.get('category');
+  const { isLeaving, goBack } = useModalBack(
+    categoryId ? `/recipes/category/${categoryId}` : '/recipes',
+  );
   const loadFromRecipe = useRecipeBuilderStore(s => s.loadFromRecipe);
   const categoryRecipeIds = useMemo(
     () => (categoryId ? getCategoryRecipeIds(categoryId) : []),
@@ -51,11 +54,6 @@ export const RecipeDetail = () => {
     navigate('/recipe-builder');
   };
 
-  const handleBack = () => {
-    setIsLeaving(true);
-    setTimeout(() => navigate(-1), 280);
-  };
-
   const navigateTo = (id: string) => {
     navigate(`/recipes/detail/${id}?category=${categoryId}`, { replace: true });
   };
@@ -66,7 +64,7 @@ export const RecipeDetail = () => {
       <div className="flex items-center gap-3 shrink-0 mb-4">
         <button
           aria-label="Retour"
-          onClick={handleBack}
+          onClick={goBack}
           className="p-2 rounded-xl text-slate-400 hover:text-orange-600 hover:bg-orange-50 transition-colors shrink-0"
         >
           <ArrowLeft className="w-5 h-5" />

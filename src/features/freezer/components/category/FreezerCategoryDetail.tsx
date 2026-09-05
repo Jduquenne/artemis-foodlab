@@ -6,7 +6,7 @@ import { FreezerItemRow } from "../item/FreezerItemRow";
 import { AddFreezerItemModal } from "../modal/AddFreezerItemModal";
 import { InlineNameEditor } from "../InlineNameEditor";
 import { markScrolling } from "../../../../shared/utils/scrollGuard";
-import { useColCount } from "../../../../shared/hooks/useColCount";
+import { useFreezerColCount } from "../../../../shared/hooks/useFreezerColCount";
 import { distributeToColumns } from "../../../../shared/utils/columnUtils";
 
 export interface FreezerCategoryDetailProps {
@@ -22,7 +22,7 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
   const [editing, setEditing] = useState(false);
   const [nameInput, setNameInput] = useState(category.name);
 
-  const colCount = Math.min(useColCount(), 3);
+  const colCount = useFreezerColCount();
 
   const columns = useMemo(
     () => distributeToColumns(category.items, itemHeight, colCount),

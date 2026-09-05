@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { ShoppingCart, CalendarDays, Clipboard, Check } from 'lucide-react';
+import { ShoppingCart, CalendarDays, Clipboard, Check, Scale } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useNavigate } from 'react-router-dom';
 import { FreezerBag, HouseholdItem } from '../../core/domain/types';
@@ -26,6 +26,7 @@ import { computeFreezerBagSelection } from '../../core/logic/freezer/freezerLogi
 import { ShoppingCategoryCard } from './components/ingredients/ShoppingCategoryCard';
 import { RecipeShoppingCard } from './components/meals/RecipeShoppingCard';
 import { SourcesModal } from './components/SourcesModal';
+import { PricePerKgModal } from './components/PricePerKgModal';
 import { HouseholdShoppingCard } from './components/HouseholdShoppingCard';
 import householdDb from '../../core/data/household-db.json';
 
@@ -41,6 +42,7 @@ export const ShoppingModule = () => {
     const [viewMode, setViewMode] = useState<'meals' | 'ingredients'>('ingredients');
     const [ingredientFilter, setIngredientFilter] = useState<'all' | 'missing'>('all');
     const [copied, setCopied] = useState(false);
+    const [showPriceCalc, setShowPriceCalc] = useState(false);
     const [activeSources, setActiveSources] = useState<{ key: string; sources: IngredientSource[]; freezerBags: FreezerBag[] } | null>(null);
 
     const [freezerSelection, setFreezerSelectionState] = useState<Record<string, string[]>>(() => {
@@ -230,18 +232,27 @@ export const ShoppingModule = () => {
                                 )}
                             </p>
                         </div>
-                        {ingredients && shoppingDays.length > 0 && (
+                        <div className="flex gap-2 shrink-0">
                             <button
-                                onClick={handleCopy}
-                                title={copied ? 'Copié !' : 'Copier la liste'}
-                                className={`shrink-0 p-2 rounded-xl border transition-colors ${copied
-                                        ? 'bg-green-50 dark:bg-green-900/20 border-green-300 text-green-600'
-                                        : 'bg-white dark:bg-slate-100 border-slate-200 text-slate-400 hover:text-orange-600 hover:border-orange-300'
-                                    }`}
+                                onClick={() => setShowPriceCalc(true)}
+                                title="Prix au kilo"
+                                className="shrink-0 p-2 rounded-xl border bg-white dark:bg-slate-100 border-slate-200 text-slate-400 hover:text-orange-600 hover:border-orange-300 transition-colors"
                             >
-                                {copied ? <Check className="w-4 h-4" /> : <Clipboard className="w-4 h-4" />}
+                                <Scale className="w-4 h-4" />
                             </button>
-                        )}
+                            {ingredients && shoppingDays.length > 0 && (
+                                <button
+                                    onClick={handleCopy}
+                                    title={copied ? 'Copié !' : 'Copier la liste'}
+                                    className={`shrink-0 p-2 rounded-xl border transition-colors ${copied
+                                            ? 'bg-green-50 dark:bg-green-900/20 border-green-300 text-green-600'
+                                            : 'bg-white dark:bg-slate-100 border-slate-200 text-slate-400 hover:text-orange-600 hover:border-orange-300'
+                                        }`}
+                                >
+                                    {copied ? <Check className="w-4 h-4" /> : <Clipboard className="w-4 h-4" />}
+                                </button>
+                            )}
+                        </div>
                     </div>
 
                     <div className="flex items-center justify-between mt-3 bg-slate-100 dark:bg-slate-200/60 rounded-2xl p-1">
@@ -407,6 +418,10 @@ export const ShoppingModule = () => {
                     selectedBagIds={freezerSelection[activeSources.key] ?? []}
                     onToggleBag={toggleFreezerBag}
                 />
+            )}
+
+            {showPriceCalc && (
+                <PricePerKgModal onClose={() => setShowPriceCalc(false)} />
             )}
         </>
     );

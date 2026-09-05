@@ -7,15 +7,12 @@ import { AddFreezerItemModal } from "../modal/AddFreezerItemModal";
 import { InlineNameEditor } from "../InlineNameEditor";
 import { markScrolling } from "../../../../shared/utils/scrollGuard";
 import { useFreezerColCount } from "../../../../shared/hooks/useFreezerColCount";
-import { distributeToColumns } from "../../../../shared/utils/columnUtils";
+import { distributeFreezerItemsToColumns } from "../../../../core/logic/freezer/freezerLogic";
 
 export interface FreezerCategoryDetailProps {
   category: FreezerCategory;
   onBack: () => void;
 }
-
-const itemHeight = (item: FreezerCategory["items"][number]) =>
-  item.type === "batch" ? 1 : 1 + item.bags.length;
 
 export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetailProps) => {
   const [addOpen, setAddOpen] = useState(false);
@@ -25,7 +22,7 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
   const colCount = useFreezerColCount();
 
   const columns = useMemo(
-    () => distributeToColumns(category.items, itemHeight, colCount),
+    () => distributeFreezerItemsToColumns(category.items, colCount),
     [category.items, colCount]
   );
 

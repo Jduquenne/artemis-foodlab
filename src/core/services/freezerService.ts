@@ -13,8 +13,10 @@ async function withCategory(
   await db.freezerCategories.update(categoryId, fn(category));
 }
 
-export const getCategories = () =>
-  db.freezerCategories.orderBy("position").toArray();
+export const getCategories = async (): Promise<FreezerCategory[]> => {
+  const categories = await db.freezerCategories.toArray();
+  return categories.sort((a, b) => a.name.localeCompare(b.name, "fr"));
+};
 
 export const createCategory = async (name: string): Promise<void> => {
   const count = await db.freezerCategories.count();
@@ -25,17 +27,6 @@ export const updateCategoryName = (id: string, name: string) =>
   db.freezerCategories.update(id, { name });
 
 export const deleteCategory = (id: string) => db.freezerCategories.delete(id);
-
-export const moveCategory = async (id: string, direction: "up" | "down"): Promise<void> => {
-  const categories = await db.freezerCategories.orderBy("position").toArray();
-  const idx = categories.findIndex(c => c.id === id);
-  const swapIdx = direction === "up" ? idx - 1 : idx + 1;
-  if (swapIdx < 0 || swapIdx >= categories.length) return;
-  await db.transaction("rw", db.freezerCategories, async () => {
-    await db.freezerCategories.update(categories[idx].id, { position: swapIdx });
-    await db.freezerCategories.update(categories[swapIdx].id, { position: idx });
-  });
-};
 
 export const addItemToCategory = async (
   categoryId: string,

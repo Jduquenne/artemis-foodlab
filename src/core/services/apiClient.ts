@@ -82,20 +82,28 @@ async function refreshAccessToken(): Promise<string | null> {
   return refreshPromise;
 }
 
-export async function apiFetch(path: string, init: RequestInit = {}, retried = false): Promise<Response> {
-  const headers = new Headers(init.headers);
+export interface ApiFetchInit extends RequestInit {
+  suppressGlobalError?: boolean;
+}
+
+export async function apiFetch(path: string, init: ApiFetchInit = {}, retried = false): Promise<Response> {
+  const { suppressGlobalError, ...fetchInit } = init;
+  const notify = (error: ApiError) => {
+    if (!suppressGlobalError) onApiError?.(error);
+  };
+  const headers = new Headers(fetchInit.headers);
   if (accessToken) headers.set("Authorization", `Bearer ${accessToken}`);
 
   let res: Response;
   try {
     res = await fetch(`${API_URL}${path}`, {
-      ...init,
+      ...fetchInit,
       headers,
       credentials: "include",
     });
   } catch {
     const error = new ApiError("NETWORK_ERROR", FALLBACK_MESSAGES.NETWORK_ERROR, 0);
-    onApiError?.(error);
+    notify(error);
     throw error;
   }
 
@@ -108,14 +116,14 @@ export async function apiFetch(path: string, init: RequestInit = {}, retried = f
 
   if (!res.ok) {
     const error = await parseApiError(res);
-    onApiError?.(error);
+    notify(error);
     throw error;
   }
 
   return res;
 }
 
-interface ApiFetchJsonOptions extends Omit<RequestInit, "body"> {
+interface ApiFetchJsonOptions extends Omit<ApiFetchInit, "body"> {
   body?: unknown;
 }
 

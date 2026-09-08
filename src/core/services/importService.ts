@@ -10,8 +10,12 @@ export interface ImportResult {
   anomalies: string[];
 }
 
-export function importToApi(payload: SyncPayload, scopes: SyncScope[]): Promise<ImportResult> {
-  const body: SyncPayload = {
+export function importToApi(
+  payload: SyncPayload,
+  scopes: SyncScope[],
+  overwrite = false,
+): Promise<ImportResult> {
+  const body: SyncPayload & { overwrite?: boolean } = {
     version: 3,
     timestamp: payload.timestamp,
     planning: scopes.includes("planning") ? payload.planning : null,
@@ -19,5 +23,6 @@ export function importToApi(payload: SyncPayload, scopes: SyncScope[]): Promise<
     freezerCategories: scopes.includes("freezer") ? payload.freezerCategories : null,
     freezerName: scopes.includes("freezer") ? payload.freezerName : null,
   };
-  return apiFetchJson<ImportResult>("/import", { method: "POST", body });
+  if (overwrite) body.overwrite = true;
+  return apiFetchJson<ImportResult>("/import", { method: "POST", body, suppressGlobalError: true });
 }

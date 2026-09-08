@@ -31,19 +31,17 @@ export const useMenuStore = create<MenuState>((set, get) => ({
   currentWeekId: getWeekId(),
   currentWeek: getISOWeek(new Date()),
   currentYear: getISOWeekYear(new Date()),
-  shoppingDays: safeParseJson<ShoppingDay[]>("cipe_shopping_days", []),
+  shoppingDays: [],
   currentPeriodId: null,
   activeFilterIds: safeParseJson<string[]>("cipe_active_filters", []),
 
   setShoppingDays: async (days) => {
     const newPeriodId = await replacePeriod(get().currentPeriodId, days);
     await clearHouseholdItems();
-    localStorage.setItem("cipe_shopping_days", JSON.stringify(days));
     set({ shoppingDays: days, currentPeriodId: newPeriodId });
   },
 
   replaceShoppingPeriod: ({ id, days }) => {
-    localStorage.setItem("cipe_shopping_days", JSON.stringify(days));
     set({ currentPeriodId: id, shoppingDays: days });
   },
 

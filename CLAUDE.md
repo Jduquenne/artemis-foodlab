@@ -3,11 +3,10 @@
 ## Commands
 
 ```bash
-npm run dev          # serveur de développement
-npm run build        # build production
+npm run dev          # serveur de développement (Vite, port 5173)
+npm run build        # ⚠️ INTERDIT — ne jamais lancer. Vérifier avec `npx tsc -b` + `npm run lint`
 npm run lint         # eslint
 npm run preview      # preview du build
-npm run gen:json     # régénération des fichiers JSON de référence
 ```
 
 ---
@@ -64,31 +63,30 @@ Trois couches, sans exception :
 
 ## DB — IndexedDB migrations
 
-- Version courante : voir `src/db/` directement.
+- Schéma et version courante : `src/core/services/databaseService.ts` (version 13).
 - **Règle absolue** : ne jamais modifier un bloc `.version(n)` existant. Toute évolution de schéma = nouveau `.version(n+1)`.
 - Les types de la DB sont isolés dans `core/typed-db/`.
+- Depuis le raccordement API, IndexedDB n'est **qu'un cache de lecture** : la source de vérité est `meals-planning-api`.
 
 ---
 
 ## Routing
 
 - Toutes les routes utilisent `React.lazy` — pas d'import statique de page.
-- Le tableau des routes fait référence : voir `src/router/`.
+- Le tableau des routes est inline dans `src/App.tsx` (`HashRouter`, base `/artemis-foodlab/`).
+- `/recipe-builder` n'est monté que pour `user.role === "admin"` (`useIsAdmin`) ; une route inconnue redirige vers `/journal`.
 
 ---
 
-## Google Sheets Gateway (Worker)
+## Identifiants de recette — deux formats à ne pas confondre
 
-`/worker` — Cloudflare Worker donnant à l'app un accès CRUD contrôlé au Google Sheet source de vérité (7 onglets : Recettes, Bases, Ingrédients, Instructions, Aliments, Household, Photos). Remplace à terme le pipeline Python manuel. **En développement, pas encore déployé.**
+- `buildRecipeId` → `CHAR_01` : sert aux **noms de fichiers image** uniquement.
+- `buildRecipeDbId` → `char-001` : **vraie clé interne** (clé de `typedRecipesDb`, `MealSlot.recipeIds`, etc.).
+- Les deux sont dans `core/logic/recipeBuilder/recipeBuilderLogic.ts`.
+- L'`id` uuid de l'API est stocké à part dans `RecipeDetails.apiId` ; la traduction code ↔ uuid passe par `core/typed-db/recipeIdMap.ts` (`getIdByCode` / `getCodeById`), reconstruit à chaque hydratation du catalogue.
+- `typedRecipesDb` / `typedFoodDb` / `typedOutdoorDb` restent des objets mutables rafraîchis en place (`replaceRecipesDb` etc.), pas de `useLiveQuery`.
 
-- Projet TypeScript indépendant, son propre `package.json`/`tsconfig.json`/`wrangler.toml` — pas de dépendance avec le build Vite.
-- Lecture publique cachée (`GET /recipes /foods /household /instructions /photos`), écriture protégée par token (`POST/PUT/DELETE /recipes/:id /foods/:id`) — jamais l'inverse.
-- Recettes, Bases et Ingrédients sont fusionnées en un seul `Record<id, RecipeDetails>` par `worker/src/repository.ts`.
-- Deux formats d'id de recette distincts, ne pas confondre : `buildRecipeId` (`CHAR_01`, noms de fichiers image) vs `buildRecipeDbId` (`char-001`, vraie clé JSON/Sheet) — tous deux dans `recipeBuilderLogic.ts`.
-- Secrets Worker (`GOOGLE_CLIENT_EMAIL`, `GOOGLE_PRIVATE_KEY`, `GOOGLE_SHEET_ID`, `ADMIN_TOKEN`) : jamais committés. Local → `worker/.dev.vars`. Prod → `wrangler secret put`.
-- Noms d'onglet Sheet contenant espace/tiret/underscore : toujours passer par `quoteSheetName()` (`sheetsClient.ts`) pour les ranges A1.
-- Aliments et Household n'ont pas de colonne `id` dans le Sheet — généré côté Worker (préfixe catégorie + compteur d'ordre de ligne). Fragile si le Sheet est trié/réorganisé.
-- `typedRecipesDb`/`typedFoodDb` restent des objets mutables rafraîchis en place (pas de migration vers des hooks `useLiveQuery`) — voir `recipesSyncService.ts`.
+> La Google Sheets Gateway (dossier `/worker`) a été **abandonnée** (2026-07-21) et tout son code supprimé. Ne pas la ressusciter.
 
 ---
 
@@ -130,23 +128,23 @@ Ils vivent dans `core/logic/<feature>/` et sont réutilisés partout — jamais 
 
 `../meals-planning-api` (`E:\Développement\Jason\meals-planning-api`, chemin frère de ce repo, pas un sous-dossier) — API Express + PostgreSQL + Prisma qui remplace les JSON statiques (`src/core/data/`) et l'IndexedDB comme source de vérité. Cahier des charges complet dans ce projet séparé, pas dupliqué ici.
 
-**Statut : déployée (Render + Supabase) et branchée au frontend.** Source de vérité pour recettes, aliments, activités extérieures, articles ménagers, catégories, ainsi que les données utilisateur (planning, congélateur, coches ménagères, journal, courses) et l'authentification par token. IndexedDB sert de cache de lecture uniquement. Config : `VITE_API_URL` dans `.env` (URL nue, sans slash final ni préfixe `/api`). Les photos de recettes sont servies via l'API (`assets.*.url`), plus depuis les assets bundlés.
+**Statut : déployée (Render + Supabase) et branchée au frontend.** Source de vérité pour recettes, aliments, activités extérieures, articles ménagers, catégories, ainsi que les données utilisateur (planning, congélateur, coches ménagères, journal, courses) et l'authentification par token JWT (`role: "admin" | "guest"`). IndexedDB sert de cache de lecture uniquement. Config : `VITE_API_URL` dans `.env` (URL nue, sans slash final ni préfixe `/api` ; `apiClient` concatène `` `${API_URL}${path}` ``).
+
+- **Écritures** : toujours l'API d'abord, cache mis à jour seulement après succès. Pas d'écriture optimiste, pas de file d'attente hors-ligne (hors-ligne = lecture seule).
+- **Erreurs** : `apiClient` appelle `onApiError` → notification globale (`useAuthInit`). Un composant ne catche en local que pour piloter l'état de son formulaire, jamais pour ré-afficher le message. Opt-out du handler global : `apiFetch(path, { suppressGlobalError: true })` (utilisé par l'import).
+- **Photos de recettes** : servies par l'API (`assets.mealPhoto.url` / `assets.bookPhoto.url`, URL absolue à mettre directement dans `<img src>`). Les webp encore présents dans `public/assets/*/meal/` et `public/assets/books/` sont un filet de sécurité temporaire, plus référencés par le code.
+- **Import de sauvegarde** : `POST /import` (un seul appel, `SyncPayload` v3) via `core/services/importService.ts` + `features/sync/ImportModal.tsx`. Remplacement par scope, garde anti-écrasement (409 → confirmer avec `overwrite: true`).
+- Détail des contrats et de l'historique d'intégration : mémoire `project_frontend_api_integration.md` + `reference_api_write_endpoints.md`.
 
 ---
 
 ## Git
 
-Format de commit : `type(scope): description courte`
+Format de commit : `feature: <description>` ou `fix: <description>` (aussi `refactor:`, `chore:`, `docs:` pour le reste). En anglais, court, pas de bullet points ni de détails techniques.
 
-Types valides : `feat`, `fix`, `refactor`, `chore`, `docs`, `style`, `test`.
+La version courante est dans `package.json` (+ `public/version.json` en miroir) — c'est la seule source de vérité. À incrémenter à chaque commit : patch pour fix/refactor/chore, minor pour feature.
 
-La version courante est dans `package.json` — c'est la seule source de vérité.
-
-When the user asks for a **commit**, respond with only the commit message text — do not run any git commands. Format: `feature: <description>` or `fix: <description>`. In English. Short, no bullet points, no technical details.When the user asks for a **commit**, respond with only the commit message text — do not run any git commands. Format: `feature: <description>` or `fix: <description>`. In English. Short, no bullet points, no technical details.
-
-### New recipes commit### New recipes commit
-
-When the user asks for a **commit and mentions new recipes**, before proposing the commit message:When the user asks for a **commit and mentions new recipes**, before proposing the commit message:
+When the user asks for a **commit**, respond with only the commit message text — do not run any git commands. Format: `feature: <description>` or `fix: <description>`. In English. Short, no bullet points, no technical details. Bump the version in `package.json` (+ `public/version.json`) first — patch for fix/refactor/chore, minor for feature.
 
 ---
 
@@ -154,24 +152,12 @@ When the user asks for a **commit and mentions new recipes**, before proposing t
 
 Les issues sont stockées dans `dev/issues.json`.
 
+Le schéma exact est dans le `_schema` en tête du fichier (`id` numérique, `title`, `description`, `labels[]`, `status: open|in-progress|closed`, `priority`, `createdAt`, `closedAt`).
+
 **Commandes disponibles :**
 
-- `nouvelle issue` → ajoute une entrée dans `dev/issues.json` avec `id`, `title`, `status: open`, `created_at`.
-- `analyse nos issues` → lit `dev/issues.json` et produit un résumé par statut avec recommandations de priorisation.
-- `clore issue <id>` → passe `status` à `closed` et ajoute `closed_at`.
+- `nouvelle issue` → ajoute une entrée (`status: open`, `createdAt` = aujourd'hui, id auto-incrémenté).
+- `analyse nos issues` → résumé par statut + recommandations de priorisation.
+- `clore issue <id>` → `status: closed` + `closedAt`. On complète aussi la `description` avec ce qui a été fait.
 
-**Structure d'une entrée :**
-
-```json
-{
-  "id": "ISS-001",
-  "title": "Description courte du problème",
-  "status": "open",
-  "priority": "high | medium | low",
-  "created_at": "YYYY-MM-DD",
-  "closed_at": null,
-  "notes": ""
-}
-```
-
-`dev/issue.json` n'est pas chargé automatiquement dans le contexte — à fournir explicitement quand une commande issue est utilisée.
+`dev/issues.json` n'est pas chargé automatiquement — le lire au début d'une session qui travaille sur le backlog.

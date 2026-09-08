@@ -49,15 +49,15 @@ export function useAuthInit(): AuthStatus {
 
     syncJournalSettingsFromApi()
       .then((settings) => useJournalStore.getState().replaceSettings(settings))
-      .catch(() => { /* réseau indisponible, on garde le cache existant */ });
+      .catch(() => undefined);
 
     syncJournalOverridesFromApi()
       .then((overrides) => useJournalStore.getState().replaceOverrides(overrides))
-      .catch(() => { /* réseau indisponible, on garde le cache existant */ });
+      .catch(() => undefined);
 
     fetchCurrentPeriod()
       .then((period) => useMenuStore.getState().replaceShoppingPeriod({ id: period?.id ?? null, days: period?.days ?? [] }))
-      .catch(() => { /* réseau indisponible, on garde le cache existant */ });
+      .catch(() => undefined);
   }, [status]);
 
   return status;

@@ -8,7 +8,7 @@ import {
   updateRecipe,
   uploadRecipePhoto,
 } from "../../core/services/catalogueWriteService";
-import { syncCatalogueFromApi } from "../../core/services/catalogueSyncService";
+import { removeRecipeFromCatalogue, syncRecipeFromApi } from "../../core/services/catalogueSyncService";
 
 export type RecipeBuilderSaveStatus = "idle" | "saving" | "done" | "error";
 
@@ -41,7 +41,7 @@ export function useRecipeBuilderSave() {
       const saved = existing?.apiId ? await updateRecipe(existing.apiId, body) : await createRecipe(body);
       if (photos.mealPhoto) await uploadRecipePhoto(saved.id, photos.mealPhoto, "mealPhoto");
       if (photos.bookPhoto) await uploadRecipePhoto(saved.id, photos.bookPhoto, "bookPhoto");
-      await syncCatalogueFromApi();
+      await syncRecipeFromApi(saved.id);
       setStatus("done");
       return true;
     } catch {
@@ -56,7 +56,7 @@ export function useRecipeBuilderSave() {
     setStatus("saving");
     try {
       await deleteRecipe(existing.apiId);
-      await syncCatalogueFromApi();
+      await removeRecipeFromCatalogue(code);
       setStatus("done");
       return true;
     } catch {

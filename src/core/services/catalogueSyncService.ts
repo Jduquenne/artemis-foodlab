@@ -3,7 +3,7 @@ import { Category, replaceCategories } from "../domain/categories";
 import { refreshRecipeMacros } from "../../shared/utils/macroUtils";
 import { refreshPlannableDb } from "../typed-db/plannableDb";
 import { replaceFoodDb, typedFoodDb } from "../typed-db/typedFoodDb";
-import { replaceRecipesDb, typedRecipesDb } from "../typed-db/typedRecipesDb";
+import { putRecipeInDb, removeRecipeFromDb, replaceRecipesDb, typedRecipesDb } from "../typed-db/typedRecipesDb";
 import { replaceOutdoorDb, typedOutdoorDb } from "../typed-db/typedOutdoorDb";
 import { replaceHouseholdDb } from "../typed-db/typedHouseholdDb";
 import { setRecipeIdMap } from "../typed-db/recipeIdMap";
@@ -12,6 +12,7 @@ import {
   ApiOutdoorActivity,
   ApiRecipe,
   mapApiOutdoorActivities,
+  mapApiRecipe,
   mapApiRecipes,
 } from "../logic/recipe/recipeApiMapper";
 import { apiFetchJson } from "./apiClient";
@@ -84,4 +85,38 @@ export async function syncCatalogueFromApi(): Promise<void> {
   } catch {
     /* réseau indisponible ou API injoignable, on garde le cache existant */
   }
+}
+
+function codeByApiIdFromCache(): Map<string, string> {
+  const map = new Map<string, string>();
+  for (const recipe of Object.values(typedRecipesDb)) {
+    if (recipe.apiId) map.set(recipe.apiId, recipe.code);
+  }
+  return map;
+}
+
+export async function syncRecipeFromApi(uuid: string): Promise<void> {
+  try {
+    const api = await apiFetchJson<ApiRecipe>(`/recipes/${uuid}`);
+    const codeByApiId = codeByApiIdFromCache();
+    codeByApiId.set(api.id, api.code);
+    const recipe = mapApiRecipe(api, codeByApiId);
+    await recipesService.put(recipe.code, recipe);
+    putRecipeInDb(recipe.code, recipe);
+    applyRecipeIdMap();
+    refreshDerivedData();
+  } catch {
+    /* réseau indisponible ou API injoignable, on garde le cache existant */
+  }
+}
+
+export async function removeRecipeFromCatalogue(code: string): Promise<void> {
+  try {
+    await recipesService.remove(code);
+  } catch {
+    /* échec de suppression du cache local, non bloquant */
+  }
+  removeRecipeFromDb(code);
+  applyRecipeIdMap();
+  refreshDerivedData();
 }

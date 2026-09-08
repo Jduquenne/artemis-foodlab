@@ -8,6 +8,7 @@ import { fetchCurrentPeriod } from "../../core/services/shoppingPeriodService";
 import { useAuthStore, AuthStatus } from "../store/useAuthStore";
 import { useJournalStore } from "../store/useJournalStore";
 import { useMenuStore } from "../store/useMenuStore";
+import { useNewsStore } from "../store/useNewsStore";
 import { useNotificationStore } from "../store/useNotificationStore";
 
 export function useAuthInit(): AuthStatus {
@@ -44,7 +45,7 @@ export function useAuthInit(): AuthStatus {
 
   useEffect(() => {
     if (status !== "authenticated") return;
-    syncCatalogueFromApi();
+    syncCatalogueFromApi().then(() => useNewsStore.getState().syncHasNew());
     syncHouseholdFlagsFromApi();
 
     syncJournalSettingsFromApi()

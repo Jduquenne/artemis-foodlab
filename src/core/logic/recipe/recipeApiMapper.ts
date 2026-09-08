@@ -37,6 +37,7 @@ export interface ApiRecipe {
   isFromBook: boolean;
   bookPage: number | null;
   instructions: string | null;
+  announcedAt: string | null;
   ingredients: ApiIngredient[];
   assets: Partial<Record<RecipeAssetKey, RecipeAsset>>;
 }
@@ -108,6 +109,7 @@ export function mapApiRecipe(api: ApiRecipe, codeByApiId: Map<string, string>): 
     defaultPortions: api.defaultPortions,
     ingredients: api.ingredients.map((ing) => mapApiIngredient(ing, codeByApiId)),
     instructions: api.instructions,
+    announcedAt: api.announcedAt,
     assets: api.assets,
     batchCooking: api.batchCooking || undefined,
     isDessert: api.isDessert || undefined,

@@ -1,8 +1,8 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { Sparkles, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { typedChangelogDb } from "../../core/typed-db/typedChangelogDb";
 import { typedRecipesDb } from "../../core/typed-db/typedRecipesDb";
+import { getNewsGroups } from "../../core/logic/news/newsLogic";
 import { NewsRecipeCard } from "./components/NewsRecipeCard";
 import { formatNewsDate } from "../../shared/utils/dateUtils";
 
@@ -13,6 +13,7 @@ export interface NewsModalProps {
 export const NewsModal = ({ onClose }: NewsModalProps) => {
   const [isClosing, setIsClosing] = useState(false);
   const navigate = useNavigate();
+  const groups = useMemo(() => getNewsGroups(typedRecipesDb), []);
 
   const handleClose = useCallback(() => {
     setIsClosing(true);
@@ -20,11 +21,11 @@ export const NewsModal = ({ onClose }: NewsModalProps) => {
   }, [onClose]);
 
   const handleRecipeClick = useCallback(
-    (recipeId: string) => {
+    (code: string) => {
       setIsClosing(true);
       setTimeout(() => {
         onClose();
-        navigate(`/recipes/detail/${recipeId}`);
+        navigate(`/recipes/detail/${code}`);
       }, 300);
     },
     [onClose, navigate]
@@ -56,40 +57,29 @@ export const NewsModal = ({ onClose }: NewsModalProps) => {
         </div>
 
         <div className="overflow-y-auto flex-1 px-3 py-3">
-          {typedChangelogDb.length === 0 ? (
+          {groups.length === 0 ? (
             <p className="text-sm text-slate-400 text-center py-8">
               Aucune nouveauté pour l'instant.
             </p>
           ) : (
-            typedChangelogDb.map((entry) => {
-              const recipes = entry.recipeIds
-                .map((id) => ({ id, recipe: typedRecipesDb[id] }))
-                .filter(({ recipe }) => recipe != null);
-
-              if (recipes.length === 0) return null;
-
-              return (
-                <div key={entry.date} className="mb-4 last:mb-0">
-                  <div className="px-3 mb-1">
-                    <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                      {formatNewsDate(entry.date)}
-                    </p>
-                    {entry.note && (
-                      <p className="text-xs text-slate-400 mt-0.5">{entry.note}</p>
-                    )}
-                  </div>
-                  <div>
-                    {recipes.map(({ id, recipe }) => (
-                      <NewsRecipeCard
-                        key={id}
-                        recipe={recipe}
-                        onClick={() => handleRecipeClick(id)}
-                      />
-                    ))}
-                  </div>
+            groups.map((group) => (
+              <div key={group.date} className="mb-4 last:mb-0">
+                <div className="px-3 mb-1">
+                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                    {formatNewsDate(group.date)}
+                  </p>
                 </div>
-              );
-            })
+                <div>
+                  {group.recipes.map((recipe) => (
+                    <NewsRecipeCard
+                      key={recipe.code}
+                      recipe={recipe}
+                      onClick={() => handleRecipeClick(recipe.code)}
+                    />
+                  ))}
+                </div>
+              </div>
+            ))
           )}
         </div>
       </div>

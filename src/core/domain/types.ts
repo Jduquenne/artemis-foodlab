@@ -131,6 +131,7 @@ export interface RecipeDetails {
   isDessert?: boolean;
   isFromBook?: boolean;
   bookPage?: number;
+  announcedAt?: string | null;
 }
 
 export interface ShoppingDay {
@@ -225,10 +226,4 @@ export interface OutdoorEntry {
   isFromBook?: boolean;
   bookPage?: number;
   assets: Partial<Record<RecipeAssetKey, RecipeAsset>>;
-}
-
-export interface ChangelogEntry {
-  date: string;
-  recipeIds: string[];
-  note?: string;
 }

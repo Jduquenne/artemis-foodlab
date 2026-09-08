@@ -1,4 +1,4 @@
-import { RecipeKind } from "../../../../core/domain/types";
+import { MealType, RecipeKind } from "../../../../core/domain/types";
 import { CATEGORIES } from "../../../../core/domain/categories";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
 import { CATEGORY_PREFIX, buildRecipeId } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
@@ -14,11 +14,26 @@ const KIND_LABELS: Record<RecipeKind, string> = {
   [RecipeKind.BASE]: "Base",
 };
 
+const MEAL_TYPE_LABELS: Record<MealType, string> = {
+  [MealType.BREAKFAST]: "Petit-déj",
+  [MealType.LUNCH]: "Déjeuner",
+  [MealType.DINNER]: "Dîner",
+  [MealType.SNACK]: "Collation",
+};
+
 
 export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
 
   const prefix = CATEGORY_PREFIX[state.categoryId] ?? state.categoryId.toUpperCase();
   const computedId = buildRecipeId(state.categoryId, state.recipeNumber);
+  const isBase = state.kind === RecipeKind.BASE;
+
+  const toggleMealType = (type: MealType) => {
+    const next = state.mealTypes.includes(type)
+      ? state.mealTypes.filter(t => t !== type)
+      : [...state.mealTypes, type];
+    onChange({ mealTypes: next });
+  };
 
   const labelClass = "block text-[10px] sm:text-xs font-black text-slate-500 uppercase tracking-wide mb-1";
   const inputClass = "w-full px-3 py-1.5 sm:py-2.5 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400";
@@ -148,25 +163,41 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
         </div>
       </div>
 
-      <div>
-        <label className={labelClass}>Repas</label>
-        <div className="flex gap-2">
-          {(["meal", "side"] as const).map(v => (
-            <button
-              key={v}
-              type="button"
-              onClick={() => onChange({ mealTypes: v })}
-              className={`flex-1 py-1.5 sm:py-2 rounded-xl text-xs font-bold transition-colors ${
-                state.mealTypes === v
-                  ? "bg-orange-500 text-white"
-                  : "bg-slate-100 dark:bg-slate-200 text-slate-600 hover:bg-slate-200 dark:hover:bg-slate-300"
-              }`}
-            >
-              {v === "meal" ? "Repas" : "À côté"}
-            </button>
-          ))}
+      {!isBase && (
+        <div>
+          <label className={labelClass}>Types de repas</label>
+          <div className="grid grid-cols-2 gap-2">
+            {Object.values(MealType).map(type => (
+              <button
+                key={type}
+                type="button"
+                onClick={() => toggleMealType(type)}
+                className={`py-1.5 sm:py-2 rounded-xl text-xs font-bold transition-colors ${
+                  state.mealTypes.includes(type)
+                    ? "bg-orange-500 text-white"
+                    : "bg-slate-100 dark:bg-slate-200 text-slate-600 hover:bg-slate-200 dark:hover:bg-slate-300"
+                }`}
+              >
+                {MEAL_TYPE_LABELS[type]}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
+
+      {state.fromBook && (
+        <div>
+          <label className={labelClass}>Page du livre</label>
+          <input
+            type="number"
+            min={1}
+            value={state.bookPage ?? ""}
+            onChange={e => onChange({ bookPage: e.target.value === "" ? null : Math.max(1, Number(e.target.value)) })}
+            placeholder="ex. 42"
+            className={inputClass}
+          />
+        </div>
+      )}
 
       {!state.fromBook && (
         <div>

@@ -1,9 +1,7 @@
 import {
   Food,
-  Ingredient,
   IngredientCategory,
   Macronutrients,
-  MealType,
   Preparation,
   RecipeDetails,
   RecipeKind,
@@ -18,6 +16,9 @@ import { IngredientLineItem } from "../../domain/cardTypes";
 import { wrapLineAtMaxChars } from "../../../shared/utils/cards/cardUtils";
 import { typedFoodDb } from "../../typed-db/typedFoodDb";
 import { typedRecipesDb } from "../../typed-db/typedRecipesDb";
+import { getIdByCode } from "../../typed-db/recipeIdMap";
+import { getIngredientCategoryId } from "../../typed-db/ingredientCategoryMap";
+import { ApiIngredientInput, ApiRecipeInput } from "../recipe/recipeApiMapper";
 
 export const BUILDER_UNITS: Unit[] = Object.values(Unit).filter((u) => u !== Unit.NONE);
 
@@ -147,11 +148,6 @@ export function recipeToBuilderState(
   recipe: RecipeDetails,
 ): RecipeBuilderState {
   const recipeNumber = recipeId.replace(/^[a-z]+-/, "");
-  const mealTypes: "meal" | "side" = (recipe.mealTypes ?? []).some(
-    (t: MealType) => t === MealType.LUNCH || t === MealType.DINNER,
-  )
-    ? "meal"
-    : "side";
   const ingredients: DraftIngredient[] = recipe.ingredients.map((ing) => ({
     id: crypto.randomUUID(),
     ingredientType: ing.baseId ? "base" : "food",
@@ -168,55 +164,71 @@ export function recipeToBuilderState(
     name: recipe.name,
     categoryId: recipe.categoryId,
     kind: recipe.kind,
-    mealTypes,
+    mealTypes: recipe.mealTypes ?? [],
     defaultPortions: recipe.defaultPortions,
     isDessert: recipe.isDessert ?? false,
     batchCooking: recipe.batchCooking ?? false,
-    fromBook: false,
+    fromBook: recipe.isFromBook ?? false,
+    bookPage: recipe.bookPage ?? null,
     ingredients,
     instructions: recipe.instructions?.split("\n") ?? [],
   };
 }
 
-export function builderStateToRecipe(state: RecipeBuilderState): RecipeDetails & { id: string } {
-  const id = buildRecipeDbId(state.categoryId, state.recipeNumber);
-  const existing = typedRecipesDb[id];
+export function getBuilderRecipeCode(state: RecipeBuilderState): string {
+  return buildRecipeDbId(state.categoryId, state.recipeNumber);
+}
+
+export function validateBuilderState(state: RecipeBuilderState): string[] {
+  const errors: string[] = [];
+  if (!state.name.trim()) errors.push("Le nom est obligatoire.");
+  if (!state.recipeNumber.trim()) errors.push("Le numéro de recette est obligatoire.");
+  if (!state.categoryId) errors.push("La catégorie est obligatoire.");
+  if (state.defaultPortions <= 0) errors.push("Le nombre de portions doit être supérieur à 0.");
+  if (state.kind !== RecipeKind.BASE && state.mealTypes.length === 0) {
+    errors.push("Sélectionne au moins un type de repas.");
+  }
+  const named = state.ingredients.filter((ing) => ing.name.trim());
+  if (named.some((ing) => !getIngredientCategoryId(ing.category))) {
+    errors.push("Un ingrédient a une catégorie inconnue de l'API — resynchronise le catalogue.");
+  }
+  if (named.some((ing) => ing.ingredientType === "base" && ing.baseId && !getIdByCode(ing.baseId))) {
+    errors.push("Une sous-recette (base) est introuvable dans le catalogue.");
+  }
+  return errors;
+}
+
+export function builderStateToApiBody(state: RecipeBuilderState): ApiRecipeInput {
   const isBaseKind = state.kind === RecipeKind.BASE;
-  const mealTypes: MealType[] = isBaseKind
-    ? []
-    : state.mealTypes === "meal"
-      ? [MealType.LUNCH, MealType.DINNER]
-      : [MealType.BREAKFAST, MealType.SNACK];
-  const ingredients: Ingredient[] = state.ingredients
+  const ingredients: ApiIngredientInput[] = state.ingredients
     .filter((ing) => ing.name.trim())
-    .map((ing) => ({
-      id: ing.id,
-      name: ing.name,
-      quantity: ing.quantity,
-      unit: ing.unit,
-      category: ing.category,
-      foodId: ing.foodId,
-      baseId: ing.baseId,
-      preparation: ing.preparation || undefined,
-    }));
+    .map((ing) => {
+      const isBaseIngredient = ing.ingredientType === "base";
+      return {
+        name: ing.name.trim(),
+        categoryId: getIngredientCategoryId(ing.category) ?? "",
+        foodId: !isBaseIngredient ? (ing.foodId ?? null) : null,
+        baseId: isBaseIngredient && ing.baseId ? (getIdByCode(ing.baseId) ?? null) : null,
+        quantity: ing.quantity,
+        unit: ing.unit === Unit.NONE ? null : ing.unit,
+        preparation: ing.preparation || null,
+      };
+    });
 
   return {
-    id,
-    code: id,
-    apiId: existing?.apiId ?? "",
-    name: state.name,
+    code: getBuilderRecipeCode(state),
+    name: state.name.trim(),
     categoryId: state.categoryId,
-    mealTypes,
     kind: state.kind,
-    macronutriment: existing?.macronutriment ?? ZERO,
+    mealTypes: isBaseKind ? [] : state.mealTypes,
     defaultPortions: state.defaultPortions,
+    batchCooking: state.batchCooking,
+    isDessert: isBaseKind ? false : state.isDessert,
+    isFromBook: state.fromBook,
+    bookPage: state.fromBook ? state.bookPage : null,
+    instructions:
+      state.instructions.map((line) => line.trim()).filter(Boolean).join("\n") || null,
     ingredients,
-    instructions: existing?.instructions ?? null,
-    assets: existing?.assets ?? {},
-    batchCooking: state.batchCooking || undefined,
-    isDessert: isBaseKind ? undefined : state.isDessert || undefined,
-    isFromBook: existing?.isFromBook,
-    bookPage: existing?.bookPage,
   };
 }
 
@@ -401,7 +413,7 @@ export function generateCsvOutput(state: RecipeBuilderState): string {
     buildRecipeId(state.categoryId, state.recipeNumber),
     state.name,
     String(state.defaultPortions),
-    ...(isBase ? [] : [state.mealTypes]),
+    ...(isBase ? [] : [state.mealTypes.join("/")]),
     state.kind,
     ...(isBase ? [] : [state.isDessert ? "TRUE" : "FALSE"]),
     state.batchCooking ? "TRUE" : "FALSE",

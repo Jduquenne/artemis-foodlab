@@ -4,6 +4,7 @@ import { useRecipeBuilderStore } from "../../shared/store/useRecipeBuilderStore"
 import { RecipeMetaForm } from "./components/meta/RecipeMetaForm";
 import { IngredientBuilderList } from "./components/ingredients/IngredientBuilderList";
 import { OutputPanel } from "./components/output/OutputPanel";
+import { SaveRecipePanel } from "./components/output/SaveRecipePanel";
 import { MacroPreview } from "./components/output/MacroPreview";
 import { LoadRecipeModal } from "./components/LoadRecipeModal";
 import { AssetsPanel } from "./components/photo-builder/AssetsPanel";
@@ -27,6 +28,7 @@ export const RecipeBuilderModule = () => {
         </div>
         <div className="flex items-center gap-1">
           <OutputPanel state={draft} />
+          <SaveRecipePanel state={draft} />
           <button
             type="button"
             onClick={() => setAssetsOpen(v => !v)}

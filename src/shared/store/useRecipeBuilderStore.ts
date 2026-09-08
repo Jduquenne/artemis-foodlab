@@ -19,6 +19,10 @@ export const useRecipeBuilderStore = create<RecipeBuilderStore>()(
       reset: () => set({ draft: initialRecipeBuilderState() }),
       loadFromRecipe: (state) => set({ draft: state }),
     }),
-    { name: "cipe_recipe_builder" }
+    {
+      name: "cipe_recipe_builder",
+      version: 2,
+      migrate: () => ({ draft: initialRecipeBuilderState() }),
+    }
   )
 );

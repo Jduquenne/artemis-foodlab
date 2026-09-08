@@ -41,6 +41,31 @@ export interface ApiRecipe {
   assets: Partial<Record<RecipeAssetKey, RecipeAsset>>;
 }
 
+export interface ApiIngredientInput {
+  name: string;
+  categoryId: string;
+  foodId: string | null;
+  baseId: string | null;
+  quantity: number | null;
+  unit: string | null;
+  preparation: string | null;
+}
+
+export interface ApiRecipeInput {
+  code: string;
+  name: string;
+  categoryId: string;
+  kind: string;
+  mealTypes: string[];
+  defaultPortions: number;
+  batchCooking: boolean;
+  isDessert: boolean;
+  isFromBook: boolean;
+  bookPage: number | null;
+  instructions: string | null;
+  ingredients: ApiIngredientInput[];
+}
+
 export interface ApiOutdoorActivity {
   id: string;
   code: string;

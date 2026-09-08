@@ -1,4 +1,4 @@
-import { RecipeKind, Unit, IngredientCategory, Preparation } from "./types";
+import { RecipeKind, Unit, IngredientCategory, Preparation, MealType } from "./types";
 import { CATEGORIES } from "./categories";
 
 export interface DraftIngredient {
@@ -18,11 +18,12 @@ export interface RecipeBuilderState {
   name: string;
   categoryId: string;
   kind: RecipeKind;
-  mealTypes: "meal" | "side";
+  mealTypes: MealType[];
   defaultPortions: number;
   isDessert: boolean;
   batchCooking: boolean;
   fromBook: boolean;
+  bookPage: number | null;
   ingredients: DraftIngredient[];
   instructions: string[];
 }
@@ -30,13 +31,14 @@ export interface RecipeBuilderState {
 export const initialRecipeBuilderState = (): RecipeBuilderState => ({
   recipeNumber: "",
   name: "",
-  categoryId: CATEGORIES[0].id,
+  categoryId: CATEGORIES[0]?.id ?? "",
   kind: RecipeKind.DISH,
-  mealTypes: "meal",
+  mealTypes: [MealType.LUNCH, MealType.DINNER],
   defaultPortions: 4,
   isDessert: false,
   batchCooking: false,
   fromBook: false,
+  bookPage: null,
   ingredients: [],
   instructions: [],
 });

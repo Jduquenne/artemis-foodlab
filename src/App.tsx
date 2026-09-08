@@ -8,6 +8,7 @@ import { useBackupReminder } from './shared/hooks/useBackupReminder';
 import { useVersionCheck } from './shared/hooks/useVersionCheck';
 import { useAppInit } from './shared/hooks/useAppInit';
 import { useAuthInit } from './shared/hooks/useAuthInit';
+import { useIsAdmin } from './shared/hooks/useIsAdmin';
 
 const JournalModule = lazy(() => import('./features/journal/JournalModule').then(({ JournalModule: m }) => ({ default: m })));
 const RecipeModule = lazy(() => import('./features/recipes/RecipeModule').then(({ RecipeModule: m }) => ({ default: m })));
@@ -23,6 +24,7 @@ const RecipeBuilderModule = lazy(() => import('./features/recipeBuilder/RecipeBu
 function App() {
   const isReady = useAppInit();
   const authStatus = useAuthInit();
+  const isAdmin = useIsAdmin();
   const [splashDone, setSplashDone] = useState(false);
   const allReady = isReady && authStatus !== 'checking';
   const splashExiting = allReady && !splashDone;
@@ -60,7 +62,8 @@ function App() {
                 <Route path="/shopping" element={<ShoppingModule />} />
                 <Route path="/household" element={<HouseholdModule />} />
                 <Route path="/freezer" element={<FreezerModule />} />
-                <Route path="/recipe-builder" element={<RecipeBuilderModule />} />
+                {isAdmin && <Route path="/recipe-builder" element={<RecipeBuilderModule />} />}
+                <Route path="*" element={<Navigate to="/journal" replace />} />
               </Routes>
             </Suspense>
           </Layout>

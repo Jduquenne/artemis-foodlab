@@ -1,5 +1,6 @@
 import { LayoutDashboard, UtensilsCrossed, CalendarDays, ShoppingCart, Package, Snowflake, ChefHat } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { useIsAdmin } from "../../hooks/useIsAdmin";
 
 const navItems = [
   { icon: <LayoutDashboard />, path: "/journal", label: "Journal" },
@@ -8,15 +9,20 @@ const navItems = [
   { icon: <ShoppingCart />, path: "/shopping", label: "Courses" },
   { icon: <Package />, path: "/household", label: "Quotidien" },
   { icon: <Snowflake />, path: "/freezer", label: "Congélateur" },
+];
+
+const adminNavItems = [
   { icon: <ChefHat />, path: "/recipe-builder", label: "Créateur" },
 ];
 
 export const SidebarNav = () => {
   const location = useLocation();
+  const isAdmin = useIsAdmin();
+  const items = isAdmin ? [...navItems, ...adminNavItems] : navItems;
 
   return (
     <nav className="flex flex-col gap-3 tablet:gap-5">
-      {navItems.map((item) => (
+      {items.map((item) => (
         <Link
           key={item.path}
           to={item.path}

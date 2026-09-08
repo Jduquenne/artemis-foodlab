@@ -22,6 +22,18 @@ export class ApiError extends Error {
 
 const API_URL = import.meta.env.VITE_API_URL as string;
 
+const FALLBACK_MESSAGES: Record<ApiErrorCode, string> = {
+  VALIDATION_ERROR: "Données invalides — vérifie le formulaire.",
+  UNAUTHENTICATED: "Session expirée — reconnecte-toi.",
+  FORBIDDEN: "Action non autorisée.",
+  NOT_FOUND: "Ressource introuvable.",
+  CONFLICT: "Cette action entre en conflit avec des données existantes.",
+  PAYLOAD_TOO_LARGE: "Fichier trop volumineux.",
+  RATE_LIMITED: "Trop de requêtes — réessaie dans un instant.",
+  INTERNAL_ERROR: "Erreur serveur — réessaie plus tard.",
+  NETWORK_ERROR: "Connexion impossible — vérifie ta connexion réseau.",
+};
+
 let accessToken: string | null = null;
 let refreshPromise: Promise<string | null> | null = null;
 let onAuthExpired: (() => void) | null = null;
@@ -46,7 +58,7 @@ export function registerApiErrorHandler(handler: (error: ApiError) => void): voi
 async function parseApiError(res: Response): Promise<ApiError> {
   const body = await res.json().catch(() => null) as { error?: { code?: ApiErrorCode; message?: string } } | null;
   const code = body?.error?.code ?? "INTERNAL_ERROR";
-  const message = body?.error?.message ?? `Erreur inattendue (${res.status})`;
+  const message = body?.error?.message ?? FALLBACK_MESSAGES[code] ?? FALLBACK_MESSAGES.INTERNAL_ERROR;
   return new ApiError(code, message, res.status);
 }
 
@@ -82,7 +94,7 @@ export async function apiFetch(path: string, init: RequestInit = {}, retried = f
       credentials: "include",
     });
   } catch {
-    const error = new ApiError("NETWORK_ERROR", "Connexion impossible — vérifie ta connexion réseau.", 0);
+    const error = new ApiError("NETWORK_ERROR", FALLBACK_MESSAGES.NETWORK_ERROR, 0);
     onApiError?.(error);
     throw error;
   }

@@ -25,11 +25,8 @@ export function useAuthInit(): AuthStatus {
     registerApiErrorHandler((error) => {
       push({
         message: error.message,
-        duration: 6000,
-        actions: [
-          { label: "OK", onClick: () => {} },
-          { label: "Fermer", onClick: () => {} },
-        ],
+        variant: "error",
+        duration: 8000,
       });
     });
   }, [setUser, setStatus, push]);

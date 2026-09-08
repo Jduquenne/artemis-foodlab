@@ -19,6 +19,7 @@ const ShoppingModule = lazy(() => import('./features/shopping/ShoppingModule').t
 const HouseholdModule = lazy(() => import('./features/household/HouseholdModule').then(({ HouseholdModule: m }) => ({ default: m })));
 const FreezerModule = lazy(() => import('./features/freezer/FreezerModule').then(({ FreezerModule: m }) => ({ default: m })));
 const RecipeBuilderModule = lazy(() => import('./features/recipeBuilder/RecipeBuilderModule').then(({ RecipeBuilderModule: m }) => ({ default: m })));
+const DashboardModule = lazy(() => import('./features/dashboard/DashboardModule').then(({ DashboardModule: m }) => ({ default: m })));
 
 function App() {
   const isReady = useAppInit();
@@ -61,6 +62,7 @@ function App() {
                 <Route path="/household" element={<HouseholdModule />} />
                 <Route path="/freezer" element={<FreezerModule />} />
                 {isAdmin && <Route path="/recipe-builder" element={<RecipeBuilderModule />} />}
+                {isAdmin && <Route path="/dashboard" element={<DashboardModule />} />}
                 <Route path="*" element={<Navigate to="/journal" replace />} />
               </Routes>
             </Suspense>

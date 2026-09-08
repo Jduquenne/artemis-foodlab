@@ -1,4 +1,4 @@
-import { LayoutDashboard, UtensilsCrossed, CalendarDays, ShoppingCart, Package, Snowflake, ChefHat } from "lucide-react";
+import { LayoutDashboard, UtensilsCrossed, CalendarDays, ShoppingCart, Package, Snowflake, ChefHat, BarChart3 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useIsAdmin } from "../../hooks/useIsAdmin";
 
@@ -13,6 +13,7 @@ const navItems = [
 
 const adminNavItems = [
   { icon: <ChefHat />, path: "/recipe-builder", label: "Créateur" },
+  { icon: <BarChart3 />, path: "/dashboard", label: "Dashboard" },
 ];
 
 export const SidebarNav = () => {

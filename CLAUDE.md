@@ -74,7 +74,7 @@ Trois couches, sans exception :
 
 - Toutes les routes utilisent `React.lazy` — pas d'import statique de page.
 - Le tableau des routes est inline dans `src/App.tsx` (`HashRouter`, base `/artemis-foodlab/`).
-- `/recipe-builder` n'est monté que pour `user.role === "admin"` (`useIsAdmin`) ; une route inconnue redirige vers `/journal`.
+- `/recipe-builder` et `/dashboard` ne sont montés que pour `user.role === "admin"` (`useIsAdmin`) ; une route inconnue redirige vers `/journal`.
 
 ---
 

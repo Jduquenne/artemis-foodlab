@@ -3,6 +3,7 @@ import { plannableDb } from '../../../../core/typed-db/plannableDb';
 import { RECIPE_BASE_GRAMS } from '../../../../shared/utils/macroUtils';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 import { isDish, isBase } from '../../../../core/domain/recipePredicates';
+import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
 
 export interface RecipeCellProps {
     recipeId: string;
@@ -31,7 +32,8 @@ export const RecipeCell = ({ recipeId, onNavigate, onRemove, onCopy, hideRemove,
                 className={`w-full h-full rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-200 ${!hasRecipesPage || hideRemove ? 'cursor-default' : ''}`}
             >
                 {hasPhoto && recipe && (
-                    <div className="relative w-full h-full bg-cover bg-center" style={{ backgroundImage: `url('${recipe.assets.mealPhoto!.url}')` }}>
+                    <div className="relative w-full h-full">
+                        <AsyncImage src={recipe.assets.mealPhoto!.url} alt={recipe.name} className="object-cover" fill />
                         <div className="absolute inset-0 bg-white/40 dark:bg-black/50 transition-colors" />
                         <div className="absolute inset-0 flex items-center justify-center p-1.5">
                             <span className="bg-white/90 dark:bg-black/75 text-slate-900 text-[13px] font-bold px-1 py-0.5 rounded leading-tight line-clamp-4 text-center">{recipe.name}</span>

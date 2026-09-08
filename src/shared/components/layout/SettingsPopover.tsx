@@ -1,17 +1,13 @@
 import { lazy, Suspense, useRef, useState } from "react";
-import { Settings, Download, Upload, RefreshCw, Bell } from "lucide-react";
-import { applyImport, detectScopes, isValidSyncPayload } from "../../../core/logic/sync/syncSerializer";
-import { exportData } from "../../../core/services/backupService";
+import { Settings, Upload, Bell } from "lucide-react";
+import { isValidSyncPayload, SyncPayload } from "../../../core/logic/sync/syncPayload";
 import { ThemeToggle } from "./ThemeToggle";
 
-const SyncModal = lazy(() => import("../../../features/sync/SyncModal").then(m => ({ default: m.SyncModal })));
-const ScopeSelectorModal = lazy(() => import("../../../features/sync/components/scope/ScopeSelectorModal").then(m => ({ default: m.ScopeSelectorModal })));
+const ImportModal = lazy(() => import("../../../features/sync/ImportModal").then(m => ({ default: m.ImportModal })));
 const NotificationSettingsModal = lazy(() => import("../ui/NotificationSettingsModal").then(m => ({ default: m.NotificationSettingsModal })));
 
 export const SettingsPopover = () => {
   const [open, setOpen] = useState(false);
-  const [syncOpen, setSyncOpen] = useState(false);
-  const [exportModalOpen, setExportModalOpen] = useState(false);
   const [importModalData, setImportModalData] = useState<unknown>(null);
   const [notifSettingsOpen, setNotifSettingsOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -20,12 +16,17 @@ export const SettingsPopover = () => {
     const file = e.target.files?.[0];
     if (!file) return;
     try {
-      const text = await file.text();
-      setImportModalData(JSON.parse(text));
+      const parsed = JSON.parse(await file.text());
+      if (!isValidSyncPayload(parsed)) {
+        alert("Ce fichier n'est pas une sauvegarde Artemis Foodlab valide.");
+        return;
+      }
+      setImportModalData(parsed);
     } catch {
       alert("Impossible de lire ce fichier de sauvegarde.");
+    } finally {
+      e.target.value = "";
     }
-    e.target.value = "";
   };
 
   return (
@@ -55,25 +56,11 @@ export const SettingsPopover = () => {
             <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
             <div className="absolute bottom-0 left-full ml-3 z-50 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl shadow-xl overflow-hidden w-52">
               <button
-                onClick={() => { setExportModalOpen(true); setOpen(false); }}
+                onClick={() => { fileInputRef.current?.click(); setOpen(false); }}
                 className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors"
               >
-                <Download className="w-4 h-4 text-slate-400 shrink-0" />
-                Sauvegarder
-              </button>
-              <button
-                onClick={() => { fileInputRef.current?.click(); setOpen(false); }}
-                className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors border-t border-slate-100"
-              >
                 <Upload className="w-4 h-4 text-slate-400 shrink-0" />
-                Importer
-              </button>
-              <button
-                onClick={() => { setSyncOpen(true); setOpen(false); }}
-                className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors border-t border-slate-100"
-              >
-                <RefreshCw className="w-4 h-4 text-slate-400 shrink-0" />
-                Synchroniser
+                Importer des données
               </button>
               <button
                 onClick={() => { setNotifSettingsOpen(true); setOpen(false); }}
@@ -96,24 +83,9 @@ export const SettingsPopover = () => {
       </div>
 
       <Suspense>
-        {syncOpen && <SyncModal onClose={() => setSyncOpen(false)} />}
-
-        {exportModalOpen && (
-          <ScopeSelectorModal
-            mode="export"
-            onConfirm={async (scope) => { await exportData(scope); setExportModalOpen(false); }}
-            onClose={() => setExportModalOpen(false)}
-          />
-        )}
-
         {!!importModalData && isValidSyncPayload(importModalData) && (
-          <ScopeSelectorModal
-            mode="import"
-            availableScopes={detectScopes(importModalData)}
-            onConfirm={async (scope) => {
-              await applyImport(importModalData, scope);
-              window.location.reload();
-            }}
+          <ImportModal
+            payload={importModalData as SyncPayload}
             onClose={() => setImportModalData(null)}
           />
         )}

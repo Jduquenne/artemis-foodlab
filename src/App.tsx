@@ -4,7 +4,6 @@ import { Layout } from './shared/components/layout/Layout';
 import { NotificationBanner } from './shared/components/ui/NotificationBanner';
 import { SplashScreen } from './shared/components/ui/SplashScreen';
 import { LoginScreen } from './shared/components/ui/LoginScreen';
-import { useBackupReminder } from './shared/hooks/useBackupReminder';
 import { useVersionCheck } from './shared/hooks/useVersionCheck';
 import { useAppInit } from './shared/hooks/useAppInit';
 import { useAuthInit } from './shared/hooks/useAuthInit';
@@ -29,7 +28,6 @@ function App() {
   const allReady = isReady && authStatus !== 'checking';
   const splashExiting = allReady && !splashDone;
 
-  useBackupReminder();
   useVersionCheck();
 
   useEffect(() => {

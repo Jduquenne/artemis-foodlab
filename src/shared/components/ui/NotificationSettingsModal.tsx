@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X, Bell, HardDrive, RefreshCw } from "lucide-react";
+import { X, Bell, RefreshCw } from "lucide-react";
 import { useNotificationSettingsStore } from "../../store/useNotificationSettingsStore";
 
 export interface NotificationSettingsModalProps {
@@ -37,8 +37,7 @@ const ToggleRow = ({ icon, label, description, enabled, onChange }: ToggleRowPro
 
 export const NotificationSettingsModal = ({ onClose }: NotificationSettingsModalProps) => {
   const [isClosing, setIsClosing] = useState(false);
-  const { backupReminderEnabled, versionCheckEnabled, setBackupReminderEnabled, setVersionCheckEnabled } =
-    useNotificationSettingsStore();
+  const { versionCheckEnabled, setVersionCheckEnabled } = useNotificationSettingsStore();
 
   const handleClose = () => {
     setIsClosing(true);
@@ -63,13 +62,6 @@ export const NotificationSettingsModal = ({ onClose }: NotificationSettingsModal
         </div>
 
         <div className="px-5 divide-y divide-slate-100">
-          <ToggleRow
-            icon={<HardDrive size={18} />}
-            label="Rappel de sauvegarde"
-            description="Toutes les 30 minutes"
-            enabled={backupReminderEnabled}
-            onChange={setBackupReminderEnabled}
-          />
           <ToggleRow
             icon={<RefreshCw size={18} />}
             label="Mise à jour disponible"

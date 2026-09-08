@@ -7,7 +7,6 @@ import { putRecipeInDb, removeRecipeFromDb, replaceRecipesDb, typedRecipesDb } f
 import { replaceOutdoorDb, typedOutdoorDb } from "../typed-db/typedOutdoorDb";
 import { replaceHouseholdDb } from "../typed-db/typedHouseholdDb";
 import { setRecipeIdMap } from "../typed-db/recipeIdMap";
-import { ApiIngredientCategory, setIngredientCategoryMap } from "../typed-db/ingredientCategoryMap";
 import {
   ApiOutdoorActivity,
   ApiRecipe,
@@ -52,13 +51,12 @@ export async function hydrateFromCache(): Promise<void> {
 
 export async function syncCatalogueFromApi(): Promise<void> {
   try {
-    const [apiRecipes, apiOutdoor, apiFoods, apiHouseholdItems, apiCategories, apiIngredientCategories] = await Promise.all([
+    const [apiRecipes, apiOutdoor, apiFoods, apiHouseholdItems, apiCategories] = await Promise.all([
       apiFetchJson<ApiRecipe[]>("/recipes"),
       apiFetchJson<ApiOutdoorActivity[]>("/outdoor-activities"),
       apiFetchJson<Food[]>("/foods"),
       apiFetchJson<HouseholdItem[]>("/household-items"),
       apiFetchJson<Category[]>("/recipe-categories"),
-      apiFetchJson<ApiIngredientCategory[]>("/ingredient-categories"),
     ]);
 
     const recipes = mapApiRecipes(apiRecipes);
@@ -79,7 +77,6 @@ export async function syncCatalogueFromApi(): Promise<void> {
     replaceFoodDb(foods);
     replaceHouseholdDb(householdItems);
     replaceCategories(apiCategories);
-    setIngredientCategoryMap(apiIngredientCategories);
     applyRecipeIdMap();
     refreshDerivedData();
   } catch {

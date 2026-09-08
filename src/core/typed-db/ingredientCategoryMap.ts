@@ -1,21 +1,27 @@
 import { IngredientCategory } from "../domain/types";
 
-export interface ApiIngredientCategory {
-  id: string;
-  name: string;
-}
-
-const idByName = new Map<string, string>();
-
-export function setIngredientCategoryMap(entries: ApiIngredientCategory[]): void {
-  idByName.clear();
-  for (const { id, name } of entries) idByName.set(name, id);
-}
+const INGREDIENT_CATEGORY_ID: Record<IngredientCategory, string> = {
+  [IngredientCategory.FRUIT_VEGETABLE]: "fruit-vegetable",
+  [IngredientCategory.DRIED_FRUIT]: "dried-fruit",
+  [IngredientCategory.MEAT]: "meat",
+  [IngredientCategory.CONDIMENT]: "condiment",
+  [IngredientCategory.SPICE]: "spice",
+  [IngredientCategory.AROMATIC_HERB]: "aromatic-herb",
+  [IngredientCategory.SWEET_GROCERY]: "sweet-grocery",
+  [IngredientCategory.BAKERY]: "bakery",
+  [IngredientCategory.RECIPE]: "recipe",
+  [IngredientCategory.DAIRY]: "dairy",
+  [IngredientCategory.FARM]: "farm",
+  [IngredientCategory.STARCH]: "starch",
+  [IngredientCategory.DELI]: "deli",
+  [IngredientCategory.CANNED]: "canned",
+  [IngredientCategory.FISH]: "fish",
+  [IngredientCategory.NON_PURCHASE]: "non-purchase",
+  [IngredientCategory.FROZEN]: "frozen",
+  [IngredientCategory.INTERNET]: "internet",
+  [IngredientCategory.UNKNOWN]: "unknown",
+};
 
 export function getIngredientCategoryId(category: IngredientCategory): string | undefined {
-  return idByName.get(category);
-}
-
-export function hasIngredientCategoryMap(): boolean {
-  return idByName.size > 0;
+  return INGREDIENT_CATEGORY_ID[category];
 }

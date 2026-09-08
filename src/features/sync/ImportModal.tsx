@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { X, Upload, Loader2, RotateCw, AlertTriangle } from "lucide-react";
 import { SyncScope, SyncPayload, detectScopes, SCOPE_LABELS } from "../../core/logic/sync/syncPayload";
-import { importToApi, ImportSummary } from "../../core/services/importService";
+import { importToApi, ImportResult } from "../../core/services/importService";
 import { ScopeSelector } from "./components/scope/ScopeSelector";
 
 export interface ImportModalProps {
@@ -9,11 +9,11 @@ export interface ImportModalProps {
   onClose: () => void;
 }
 
-const summaryLine = (result: ImportSummary): string => {
+const summaryLine = ({ summary }: ImportResult): string => {
   const parts: string[] = [];
-  if (result.planning) parts.push(`${result.planning.slots} créneaux (${result.planning.items} plats)`);
-  if (result.freezer) parts.push(`${result.freezer.categories} catégories congélateur (${result.freezer.items} items)`);
-  if (result.household) parts.push(`${result.household.flags} articles ménagers`);
+  if (summary.planning) parts.push(`${summary.planning.slots} créneaux (${summary.planning.items} plats)`);
+  if (summary.freezer) parts.push(`${summary.freezer.categories} catégories congélateur (${summary.freezer.items} items)`);
+  if (summary.household) parts.push(`${summary.household.flags} articles ménagers`);
   return parts.length > 0 ? parts.join(" · ") : "Aucune donnée importée.";
 };
 
@@ -22,7 +22,7 @@ export const ImportModal = ({ payload, onClose }: ImportModalProps) => {
   const [selected, setSelected] = useState<SyncScope[]>(available);
   const [isClosing, setIsClosing] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [result, setResult] = useState<ImportSummary | null>(null);
+  const [result, setResult] = useState<ImportResult | null>(null);
 
   const handleClose = () => {
     if (submitting) return;

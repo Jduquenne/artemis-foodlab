@@ -1,59 +1,37 @@
 [
   {
-    "date": "2026-07-15",
-    "recipeIds": ["pat-069", "fr-039"],
+    "date": "2026-08-04",
+    "recipeIds": ["pat-071", "pat-072"],
     "note": "Miam des bons gouter !"
   },
   {
-    "date": "2026-07-13",
-    "recipeIds": ["pat-068"],
-    "note": "Miam du petit déjeuner !"
-  },
-  {
-    "date": "2026-07-07",
-    "recipeIds": ["pc-057"],
-    "note": "Miam du petit déjeuner !"
-  },
-  {
-    "date": "2026-06-23",
-    "recipeIds": ["pc-053", "pc-054", "pc-055", "pc-056"],
-    "note": "Miam du petit déjeuner !"
-  },
-  {
-    "date": "2026-06-23",
+    "date": "2026-08-21",
     "recipeIds": [
-      "fr-026",
-      "fr-027",
-      "fr-028",
-      "fr-029",
-      "fr-030",
-      "fr-031",
-      "fr-032",
-      "fr-033",
-      "fr-034",
-      "fr-035",
-      "fr-036",
-      "fr-037",
-      "fr-038",
-      "poi-082",
-      "poi-083",
-      "pc-050",
-      "pc-051",
-      "pc-052"
+      "pc-059",
+      "pl-025",
+      "pl-026",
+      "pl-027",
+      "pl-028",
+      "pl-029",
+      "pl-030"
     ],
-    "note": "Salade de fruits ... jolie jolie ... jolie !"
+    "note": "Glaces ! Chaud chaud"
   },
   {
-    "date": "2026-06-19",
+    "date": "2026-08-04",
     "recipeIds": [
-      "pc-048",
-      "pc-049",
-      "pl-023",
-      "pl-024",
-      "pat-065",
-      "pat-067",
-      "vr-062"
+      "char-051",
+      "fr-040",
+      "fr-041",
+      "fr-042",
+      "fr-043",
+      "veg-116"
     ],
-    "note": "Nouvelles recettes ! Miam !"
+    "note": "Salade de fruits ... jolie jolie"
+  },
+  {
+    "date": "2026-08-04",
+    "recipeIds": ["pc-058", "poi-088"],
+    "note": "Miam des bons gouter !"
   }
 ]

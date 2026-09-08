@@ -1,8 +1,9 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { Snowflake, Plus, MoreVertical, Trash2 } from "lucide-react";
 import { FreezerItem } from "../../../../core/domain/types";
 import { addBagToFoodItem } from "../../../../core/services/freezerService";
 import { formatIsoDateShort } from "../../../../shared/utils/dateUtils";
+import { FloatingMenu } from "../../../../shared/components/ui/FloatingMenu";
 import { BatchFreezerItemRow } from "./BatchFreezerItemRow";
 import { BagRow } from "./BagRow";
 import { AddBagForm } from "./AddBagForm";
@@ -16,18 +17,7 @@ export interface FreezerItemRowProps {
 export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowProps) => {
   const [addingBag, setAddingBag] = useState(false);
   const [itemMenuOpen, setItemMenuOpen] = useState(false);
-  const itemMenuRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!itemMenuOpen) return;
-    const handler = (e: MouseEvent) => {
-      if (itemMenuRef.current && !itemMenuRef.current.contains(e.target as Node)) {
-        setItemMenuOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, [itemMenuOpen]);
+  const itemMenuButtonRef = useRef<HTMLButtonElement>(null);
 
   if (item.type === "batch") {
     return <BatchFreezerItemRow item={item} categoryId={categoryId} onDelete={onDelete} formattedDate={formatIsoDateShort(item.addedDate)} />;
@@ -54,26 +44,23 @@ export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowPro
           >
             <Plus className="w-3.5 h-3.5" />
           </button>
-          <div className="relative" ref={itemMenuRef}>
+          <button
+            ref={itemMenuButtonRef}
+            aria-label="Options"
+            onClick={() => setItemMenuOpen(o => !o)}
+            className="p-2 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
+          >
+            <MoreVertical className="w-3.5 h-3.5" />
+          </button>
+          <FloatingMenu open={itemMenuOpen} anchorRef={itemMenuButtonRef} onClose={() => setItemMenuOpen(false)}>
             <button
-              aria-label="Options"
-              onClick={() => setItemMenuOpen(o => !o)}
-              className="p-2 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
+              onClick={() => { setItemMenuOpen(false); onDelete(); }}
+              className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-500 hover:bg-red-50 transition-colors"
             >
-              <MoreVertical className="w-3.5 h-3.5" />
+              <Trash2 className="w-4 h-4 shrink-0" />
+              Supprimer l'aliment
             </button>
-            {itemMenuOpen && (
-              <div className="absolute right-0 top-9 z-20 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl shadow-lg overflow-hidden min-w-44">
-                <button
-                  onClick={() => { setItemMenuOpen(false); onDelete(); }}
-                  className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-500 hover:bg-red-50 transition-colors"
-                >
-                  <Trash2 className="w-4 h-4 shrink-0" />
-                  Supprimer l'aliment
-                </button>
-              </div>
-            )}
-          </div>
+          </FloatingMenu>
         </div>
       </div>
 

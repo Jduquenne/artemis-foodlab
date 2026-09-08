@@ -1,17 +1,16 @@
 import { useState, useRef, useEffect } from "react";
-import { MoreVertical, Pencil, Trash2, ChevronUp, ChevronDown } from "lucide-react";
+import { MoreVertical, Pencil, Trash2 } from "lucide-react";
 import { FreezerCategory } from "../../../../core/domain/types";
-import { updateCategoryName, deleteCategory, moveCategory } from "../../../../core/services/freezerService";
+import { updateCategoryName, deleteCategory } from "../../../../core/services/freezerService";
+import { sortFreezerItemsAlphabetically } from "../../../../core/logic/freezer/freezerLogic";
 import { InlineNameEditor } from "../InlineNameEditor";
 
 export interface FreezerCategoryCardProps {
   category: FreezerCategory;
-  isFirst: boolean;
-  isLast: boolean;
   onClick: () => void;
 }
 
-export const FreezerCategoryCard = ({ category, isFirst, isLast, onClick }: FreezerCategoryCardProps) => {
+export const FreezerCategoryCard = ({ category, onClick }: FreezerCategoryCardProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [renaming, setRenaming] = useState(false);
   const [nameInput, setNameInput] = useState(category.name);
@@ -45,7 +44,7 @@ export const FreezerCategoryCard = ({ category, isFirst, isLast, onClick }: Free
     await deleteCategory(category.id);
   };
 
-  const preview = category.items.slice(0, 7).map(i =>
+  const preview = sortFreezerItemsAlphabetically(category.items).slice(0, 7).map(i =>
     i.type === "food" ? i.name : i.recipeName
   );
   const extra = category.items.length - preview.length;
@@ -91,22 +90,6 @@ export const FreezerCategoryCard = ({ category, isFirst, isLast, onClick }: Free
                 >
                   <Pencil className="w-3.5 h-3.5" /> Renommer
                 </button>
-                {!isFirst && (
-                  <button
-                    onClick={e => { e.stopPropagation(); setMenuOpen(false); moveCategory(category.id, "up"); }}
-                    className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors"
-                  >
-                    <ChevronUp className="w-3.5 h-3.5" /> Monter
-                  </button>
-                )}
-                {!isLast && (
-                  <button
-                    onClick={e => { e.stopPropagation(); setMenuOpen(false); moveCategory(category.id, "down"); }}
-                    className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors"
-                  >
-                    <ChevronDown className="w-3.5 h-3.5" /> Descendre
-                  </button>
-                )}
                 <button
                   onClick={e => { e.stopPropagation(); handleDelete(); }}
                   className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors border-t border-slate-100"

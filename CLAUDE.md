@@ -126,6 +126,14 @@ Ils vivent dans `core/logic/<feature>/` et sont réutilisés partout — jamais 
 
 ---
 
+## Backend API (projet séparé)
+
+`../meals-planning-api` (`E:\Développement\Jason\meals-planning-api`, chemin frère de ce repo, pas un sous-dossier) — API Express + PostgreSQL + Prisma qui remplace les JSON statiques (`src/core/data/`) et l'IndexedDB comme source de vérité. Cahier des charges complet dans ce projet séparé, pas dupliqué ici.
+
+**Statut : déployée (Render + Supabase) et branchée au frontend.** Source de vérité pour recettes, aliments, activités extérieures, articles ménagers, catégories, ainsi que les données utilisateur (planning, congélateur, coches ménagères, journal, courses) et l'authentification par token. IndexedDB sert de cache de lecture uniquement. Config : `VITE_API_URL` dans `.env` (URL nue, sans slash final ni préfixe `/api`). Les photos de recettes sont servies via l'API (`assets.*.url`), plus depuis les assets bundlés.
+
+---
+
 ## Git
 
 Format de commit : `type(scope): description courte`

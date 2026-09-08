@@ -1,73 +1,42 @@
-# React + TypeScript + Vite
+# 🥗 Artemis FoodLab
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> **Local-first meal planner — weekly menus, daily macros, live recipe builder and linked shopping lists. No backend: all data in IndexedDB, import/export included.**
 
-Currently, two official plugins are available:
+Artemis FoodLab est une application web moderne pensée pour simplifier la planification des repas de la semaine, le suivi nutritionnel et l'organisation des courses, le tout en garantissant une confidentialité totale grâce à une architecture 100% locale.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## ✨ Fonctionnalités Principales
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 🗓️ **Planificateur de menus hebdomadaire** : Organisez vos déjeuners et dîners pour toute la semaine en un clin d'œil.
+- 🧮 **Suivi des macros journalières** : Calculez et suivez vos apports nutritionnels (calories, protéines, glucides, lipides) en temps réel.
+- 🍳 **Créateur de recettes interactif** : Construisez vos propres recettes, ajustez les portions et observez l'impact nutritionnel instantanément.
+- 🛒 **Listes de courses dynamiques** : Générez automatiquement vos listes d'achats à partir de vos menus planifiés.
+- 🔒 **100% Local-First** : Aucune base de données distante ; toutes vos données sont stockées dans votre navigateur via IndexedDB.
+- 📦 **Import & Export** : Sauvegardez ou restaurez vos données et recettes à tout moment via un simple fichier JSON.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠️ Stack Technique
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Bibliothèque principal** : [React](https://react.dev/)
+- **Tooling / Bundler** : [Vite](https://vitejs.dev/)
+- **Langage** : TypeScript
+- **Styles** : [Tailwind CSS](https://tailwindcss.com/)
+- **Stockage local** : IndexedDB
+- **Icônes** : Lucide React
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🚀 Prise en main
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Prérequis
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Assurez-vous d'avoir installé [Node.js](https://nodejs.org/) (version 18 ou supérieure) et `npm` (ou `pnpm` / `yarn`).
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Installation
+
+1. **Cloner le projet**
+   ```bash
+   git clone [https://github.com/Jduquenne/artemis-foodlab.git](https://github.com/Jduquenne/artemis-foodlab.git)
+   cd artemis-foodlab

@@ -21,8 +21,10 @@ async function withCategory(
   await db.freezerCategories.update(categoryId, fn(category));
 }
 
-export const getCategories = () =>
-  db.freezerCategories.orderBy("position").toArray();
+export const getCategories = async (): Promise<FreezerCategory[]> => {
+  const categories = await db.freezerCategories.toArray();
+  return categories.sort((a, b) => a.name.localeCompare(b.name, "fr"));
+};
 
 export async function syncFreezerFromApi(): Promise<void> {
   try {
@@ -53,23 +55,6 @@ export const updateCategoryName = async (id: string, name: string): Promise<void
 export const deleteCategory = async (id: string): Promise<void> => {
   await apiFetch(`/freezer-categories/${id}`, { method: "DELETE" });
   await db.freezerCategories.delete(id);
-};
-
-export const moveCategory = async (id: string, direction: "up" | "down"): Promise<void> => {
-  const categories = await db.freezerCategories.orderBy("position").toArray();
-  const idx = categories.findIndex(c => c.id === id);
-  const swapIdx = direction === "up" ? idx - 1 : idx + 1;
-  if (swapIdx < 0 || swapIdx >= categories.length) return;
-  const a = categories[idx];
-  const b = categories[swapIdx];
-  await Promise.all([
-    apiFetchJson(`/freezer-categories/${a.id}`, { method: "PUT", body: { position: b.position } }),
-    apiFetchJson(`/freezer-categories/${b.id}`, { method: "PUT", body: { position: a.position } }),
-  ]);
-  await db.transaction("rw", db.freezerCategories, async () => {
-    await db.freezerCategories.update(a.id, { position: b.position });
-    await db.freezerCategories.update(b.id, { position: a.position });
-  });
 };
 
 export const addItemToCategory = async (

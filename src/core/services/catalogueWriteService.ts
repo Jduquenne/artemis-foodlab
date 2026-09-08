@@ -1,6 +1,24 @@
 import { apiFetch, apiFetchJson } from "./apiClient";
 import { ApiRecipe, ApiRecipeInput } from "../logic/recipe/recipeApiMapper";
-import { RecipeAssetKey } from "../domain/types";
+import { Food, RecipeAssetKey } from "../domain/types";
+
+export interface FoodInput {
+  id: string;
+  name: string;
+  categoryId: string;
+  unit: string | null;
+  unitWeight: number | null;
+  isFreezable: boolean;
+  macros: { kcal: number; proteins: number; lipids: number; carbohydrates: number; fibers: number };
+}
+
+export function updateFood(id: string, body: FoodInput): Promise<Food> {
+  return apiFetchJson<Food>(`/foods/${id}`, { method: "PUT", body });
+}
+
+export async function deleteFood(id: string): Promise<void> {
+  await apiFetch(`/foods/${id}`, { method: "DELETE" });
+}
 
 export function createRecipe(body: ApiRecipeInput): Promise<ApiRecipe> {
   return apiFetchJson<ApiRecipe>("/recipes", { method: "POST", body });

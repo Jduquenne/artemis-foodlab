@@ -4,6 +4,7 @@ import { Food, IngredientCategory, Macronutrients, Unit } from "../../../../core
 import { FoodInput } from "../../../../core/services/catalogueWriteService";
 import {
   FoodFormDraft,
+  atwaterKcal,
   buildFoodRecap,
   emptyFoodDraft,
   foodFormToBody,
@@ -22,7 +23,6 @@ export interface FoodFormModalProps {
 }
 
 const MACRO_FIELDS: { key: keyof Macronutrients; label: string }[] = [
-  { key: "kcal", label: "Kcal" },
   { key: "proteins", label: "Protéines" },
   { key: "lipids", label: "Lipides" },
   { key: "carbohydrates", label: "Glucides" },
@@ -49,6 +49,17 @@ export const FoodFormModal = ({ food, foods, onClose, onSubmit }: FoodFormModalP
   const patch = (update: Partial<FoodFormDraft>) => setDraft((prev) => ({ ...prev, ...update }));
   const patchMacro = (key: keyof Macronutrients, value: string) =>
     setDraft((prev) => ({ ...prev, macros: { ...prev.macros, [key]: value } }));
+
+  const computedKcal = useMemo(
+    () =>
+      atwaterKcal({
+        proteins: Number(draft.macros.proteins) || 0,
+        lipids: Number(draft.macros.lipids) || 0,
+        carbohydrates: Number(draft.macros.carbohydrates) || 0,
+        fibers: Number(draft.macros.fibers) || 0,
+      }),
+    [draft.macros],
+  );
 
   const review = () => {
     const found = validateFoodForm(draft);
@@ -172,7 +183,16 @@ export const FoodFormModal = ({ food, foods, onClose, onSubmit }: FoodFormModalP
                   />
                 </label>
               ))}
+              <div className="flex flex-col gap-1">
+                <span className="text-[10px] text-slate-400 text-center">Kcal</span>
+                <div className="rounded-lg border border-slate-200 bg-slate-100 dark:bg-slate-200 px-1 py-1.5 text-sm font-bold text-slate-500 text-center tabular-nums">
+                  {computedKcal}
+                </div>
+              </div>
             </div>
+            <span className="text-[10px] text-slate-400">
+              Kcal calculées automatiquement (4·protéines + 9·lipides + 4·glucides + 2·fibres).
+            </span>
           </div>
 
           {errors.length > 0 && (

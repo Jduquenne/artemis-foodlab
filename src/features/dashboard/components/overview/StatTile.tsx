@@ -14,7 +14,7 @@ export const StatTile = ({ label, value, breakdown }: StatTileProps) => (
     <span className="text-3xl font-black text-slate-800 tabular-nums leading-none">{value}</span>
     <span className="mt-1.5 text-sm text-slate-500">{label}</span>
     {breakdown && breakdown.length > 0 && (
-      <ul className="mt-auto pt-3 flex flex-col gap-0.5">
+      <ul className="mt-3 flex flex-col gap-0.5">
         {breakdown.map((row) => (
           <li key={row.label} className="flex items-baseline justify-between text-xs text-slate-400">
             <span>{row.label}</span>

@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { ShoppingCart, CalendarDays, Clipboard, Check, Scale } from 'lucide-react';
+import { ShoppingCart, CalendarDays, Clipboard, Check, Scale, Plus } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useNavigate } from 'react-router-dom';
 import { FreezerBag } from '../../core/domain/types';
@@ -14,6 +14,7 @@ import {
     filterGroupedIngredients,
     computeUncheckedCount,
     assignIngredientColumns,
+    extrasToIngredients,
 } from '../../core/logic/shopping/shoppingLogic';
 import { getRecords as getHouseholdRecords } from '../../core/services/householdService';
 import { syncWeekFromApi } from '../../core/services/planningService';
@@ -22,8 +23,13 @@ import {
     fetchSourceChecks,
     upsertItemCheck,
     upsertSourceCheck,
+    fetchExtras,
+    createExtra,
+    updateExtra,
+    deleteExtra,
+    ExtraInput,
 } from '../../core/services/shoppingPeriodService';
-import { ApiItemCheck, ApiSourceCheck } from '../../core/logic/shopping/shoppingApiMapper';
+import { ApiItemCheck, ApiShoppingExtra, ApiSourceCheck } from '../../core/logic/shopping/shoppingApiMapper';
 import { getCodeById, getIdByCode } from '../../core/typed-db/recipeIdMap';
 import { markScrolling } from '../../shared/utils/scrollGuard';
 import { distributeToColumns } from '../../shared/utils/columnUtils';
@@ -37,6 +43,7 @@ import { RecipeShoppingCard } from './components/meals/RecipeShoppingCard';
 import { SourcesModal } from './components/SourcesModal';
 import { PricePerKgModal } from './components/PricePerKgModal';
 import { HouseholdShoppingCard } from './components/HouseholdShoppingCard';
+import { AddExtraModal } from './components/AddExtraModal';
 import { typedHouseholdDb } from '../../core/typed-db/typedHouseholdDb';
 
 export const ShoppingModule = () => {
@@ -56,6 +63,8 @@ export const ShoppingModule = () => {
 
     const [itemChecksRaw, setItemChecksRaw] = useState<ApiItemCheck[]>([]);
     const [sourceChecksRaw, setSourceChecksRaw] = useState<ApiSourceCheck[]>([]);
+    const [extrasRaw, setExtrasRaw] = useState<ApiShoppingExtra[]>([]);
+    const [extraModal, setExtraModal] = useState<{ open: boolean; extra: ApiShoppingExtra | null }>({ open: false, extra: null });
 
     useEffect(() => {
         let active = true;
@@ -64,13 +73,19 @@ export const ShoppingModule = () => {
                 if (active) {
                     setItemChecksRaw([]);
                     setSourceChecksRaw([]);
+                    setExtrasRaw([]);
                 }
                 return;
             }
-            const [ic, sc] = await Promise.all([fetchItemChecks(currentPeriodId), fetchSourceChecks(currentPeriodId)]);
+            const [ic, sc, ex] = await Promise.all([
+                fetchItemChecks(currentPeriodId),
+                fetchSourceChecks(currentPeriodId),
+                fetchExtras(currentPeriodId),
+            ]);
             if (active) {
                 setItemChecksRaw(ic);
                 setSourceChecksRaw(sc);
+                setExtrasRaw(ex);
             }
         };
         load();
@@ -99,6 +114,16 @@ export const ShoppingModule = () => {
     const patchSourceCheck = (updated: ApiSourceCheck) => {
         setSourceChecksRaw(prev => {
             const idx = prev.findIndex(sc => sc.id === updated.id);
+            if (idx === -1) return [...prev, updated];
+            const next = [...prev];
+            next[idx] = updated;
+            return next;
+        });
+    };
+
+    const patchExtra = (updated: ApiShoppingExtra) => {
+        setExtrasRaw(prev => {
+            const idx = prev.findIndex(e => e.id === updated.id);
             if (idx === -1) return [...prev, updated];
             const next = [...prev];
             next[idx] = updated;
@@ -174,8 +199,17 @@ export const ShoppingModule = () => {
         for (const item of allHouseholdItems) {
             if (itemCheckByHouseholdId.get(item.id)?.isChecked) set.add(`household::${item.id}`);
         }
+        for (const extra of extrasRaw) {
+            if (extra.isChecked) set.add(`extra::${extra.id}`);
+        }
         return set;
-    }, [keyToFoodId, itemCheckByFoodId, itemCheckByHouseholdId, allHouseholdItems]);
+    }, [keyToFoodId, itemCheckByFoodId, itemCheckByHouseholdId, allHouseholdItems, extrasRaw]);
+
+    const extraIngredients = useMemo(() => extrasToIngredients(extrasRaw), [extrasRaw]);
+    const displayIngredients = useMemo(
+        () => (ingredients ? [...ingredients, ...extraIngredients] : undefined),
+        [ingredients, extraIngredients],
+    );
 
     const stocks = useMemo(() => {
         const rec: Record<string, number> = {};
@@ -209,6 +243,13 @@ export const ShoppingModule = () => {
 
     const toggleItem = async (key: string) => {
         if (!currentPeriodId) return;
+        if (key.startsWith('extra::')) {
+            const id = key.slice('extra::'.length);
+            const current = extrasRaw.find(e => e.id === id);
+            const updated = await updateExtra(currentPeriodId, id, { isChecked: !current?.isChecked });
+            patchExtra(updated);
+            return;
+        }
         if (key.startsWith('household::')) {
             const householdItemId = key.slice('household::'.length);
             const existing = itemCheckByHouseholdId.get(householdItemId);
@@ -263,14 +304,48 @@ export const ShoppingModule = () => {
         patchItemCheck(updated);
     };
 
+    const plannedRecipes = useMemo(
+        () => recipeCards.map(c => ({ code: c.recipeId, name: c.recipeName })),
+        [recipeCards]
+    );
+
+    const submitExtra = async (body: ExtraInput): Promise<boolean> => {
+        if (!currentPeriodId) return false;
+        try {
+            if (extraModal.extra) {
+                patchExtra(await updateExtra(currentPeriodId, extraModal.extra.id, body));
+            } else {
+                const created = await createExtra(currentPeriodId, body);
+                setExtrasRaw(prev => [...prev, created]);
+            }
+            return true;
+        } catch {
+            return false;
+        }
+    };
+
+    const handleDeleteExtra = async (extraId: string) => {
+        if (!currentPeriodId) return;
+        try {
+            await deleteExtra(currentPeriodId, extraId);
+            setExtrasRaw(prev => prev.filter(e => e.id !== extraId));
+        } catch {
+            // erreur affichée par le handler global
+        }
+    };
+
+    const handleEditExtra = (extraId: string) => {
+        setExtraModal({ open: true, extra: extrasRaw.find(e => e.id === extraId) ?? null });
+    };
+
     const allGroupedItems = useMemo(
-        () => ingredients ? groupIngredients(ingredients) : [],
-        [ingredients]
+        () => displayIngredients ? groupIngredients(displayIngredients) : [],
+        [displayIngredients]
     );
 
     const groupedItems = useMemo(
-        () => ingredients ? filterGroupedIngredients(ingredients, ingredientFilter, checked, stocks, sourceChecked) : [],
-        [ingredients, ingredientFilter, checked, stocks, sourceChecked]
+        () => displayIngredients ? filterGroupedIngredients(displayIngredients, ingredientFilter, checked, stocks, sourceChecked) : [],
+        [displayIngredients, ingredientFilter, checked, stocks, sourceChecked]
     );
 
     const visibleHouseholdItems = useMemo(() => {
@@ -279,8 +354,8 @@ export const ShoppingModule = () => {
     }, [householdItems, ingredientFilter, checked]);
 
     const uncheckedCount = useMemo(
-        () => computeUncheckedCount(ingredients ?? [], checked, stocks, sourceChecked, householdItems),
-        [ingredients, checked, stocks, sourceChecked, householdItems]
+        () => computeUncheckedCount(displayIngredients ?? [], checked, stocks, sourceChecked, householdItems),
+        [displayIngredients, checked, stocks, sourceChecked, householdItems]
     );
 
     const ingredientColumns = useMemo(
@@ -324,6 +399,16 @@ export const ShoppingModule = () => {
                             </p>
                         </div>
                         <div className="flex gap-2 shrink-0">
+                            {currentPeriodId && (
+                                <button
+                                    onClick={() => setExtraModal({ open: true, extra: null })}
+                                    title="Ajouter un article"
+                                    className="shrink-0 flex items-center gap-1.5 px-2.5 py-2 rounded-xl bg-orange-500 text-white text-sm font-bold hover:bg-orange-600 transition-colors"
+                                >
+                                    <Plus className="w-4 h-4" />
+                                    <span className="hidden sm:inline">Article</span>
+                                </button>
+                            )}
                             <button
                                 onClick={() => setShowPriceCalc(true)}
                                 title="Prix au kilo"
@@ -440,11 +525,11 @@ export const ShoppingModule = () => {
                                     </div>
                                 ))}
                             </div>
-                    ) : ingredients.length === 0 && visibleHouseholdItems.length === 0 ? (
+                    ) : (displayIngredients?.length ?? 0) === 0 && visibleHouseholdItems.length === 0 ? (
                         <div className="h-full flex flex-col items-center justify-center gap-3 text-slate-400">
                             <ShoppingCart className="w-12 h-12 opacity-30" />
                             <p className="font-medium">Aucun repas planifié sur cette période</p>
-                            <p className="text-sm">Planifie des repas pour générer la liste</p>
+                            <p className="text-sm">Planifie des repas ou ajoute un article</p>
                         </div>
                     ) : groupedItems.length === 0 && visibleHouseholdItems.length === 0 ? (
                         <div className="h-full flex flex-col items-center justify-center gap-3 text-slate-400">
@@ -469,6 +554,8 @@ export const ShoppingModule = () => {
                                                         onToggle={toggleItem}
                                                         onSetStock={setStock}
                                                         onShowSources={(key, sources, bags) => setActiveSources({ key, sources, freezerBags: bags })}
+                                                        onEditExtra={handleEditExtra}
+                                                        onDeleteExtra={handleDeleteExtra}
                                                         foodBags={foodBags}
                                                     />
                                                 </div>
@@ -513,6 +600,15 @@ export const ShoppingModule = () => {
 
             {showPriceCalc && (
                 <PricePerKgModal onClose={() => setShowPriceCalc(false)} />
+            )}
+
+            {extraModal.open && (
+                <AddExtraModal
+                    extra={extraModal.extra}
+                    plannedRecipes={plannedRecipes}
+                    onClose={() => setExtraModal({ open: false, extra: null })}
+                    onSubmit={submitExtra}
+                />
             )}
         </>
     );

@@ -28,3 +28,15 @@ export interface ApiSourceCheck {
   slot: string;
   isChecked: boolean;
 }
+
+export interface ApiShoppingExtra {
+  id: string;
+  name: string;
+  quantity: number | null;
+  unit: string | null;
+  categoryId: string | null;
+  foodId: string | null;
+  recipeId: string | null;
+  isChecked: boolean;
+  createdAt: string;
+}

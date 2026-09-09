@@ -25,3 +25,11 @@ const INGREDIENT_CATEGORY_ID: Record<IngredientCategory, string> = {
 export function getIngredientCategoryId(category: IngredientCategory): string | undefined {
   return INGREDIENT_CATEGORY_ID[category];
 }
+
+const CATEGORY_BY_SLUG: Record<string, IngredientCategory> = Object.fromEntries(
+  Object.entries(INGREDIENT_CATEGORY_ID).map(([category, slug]) => [slug, category as IngredientCategory]),
+);
+
+export function getIngredientCategoryFromSlug(slug: string): IngredientCategory | undefined {
+  return CATEGORY_BY_SLUG[slug];
+}

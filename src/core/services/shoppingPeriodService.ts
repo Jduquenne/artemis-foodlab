@@ -1,6 +1,12 @@
 import { apiFetch, apiFetchJson } from "./apiClient";
 import { ShoppingDay } from "../domain/types";
-import { ApiItemCheck, ApiShoppingDay, ApiShoppingPeriod, ApiSourceCheck } from "../logic/shopping/shoppingApiMapper";
+import {
+  ApiItemCheck,
+  ApiShoppingDay,
+  ApiShoppingExtra,
+  ApiShoppingPeriod,
+  ApiSourceCheck,
+} from "../logic/shopping/shoppingApiMapper";
 
 export interface CurrentPeriod {
   id: string;
@@ -31,6 +37,29 @@ export async function replacePeriod(currentPeriodId: string | null, days: Shoppi
     });
   }
   return created.id;
+}
+
+export interface ExtraInput {
+  name?: string;
+  quantity?: number | null;
+  unit?: string | null;
+  categoryId?: string | null;
+  foodId?: string | null;
+  recipeId?: string | null;
+  isChecked?: boolean;
+}
+
+export const fetchExtras = (periodId: string) =>
+  apiFetchJson<ApiShoppingExtra[]>(`/shopping-periods/${periodId}/extras`);
+
+export const createExtra = (periodId: string, body: ExtraInput) =>
+  apiFetchJson<ApiShoppingExtra>(`/shopping-periods/${periodId}/extras`, { method: "POST", body });
+
+export const updateExtra = (periodId: string, id: string, body: ExtraInput) =>
+  apiFetchJson<ApiShoppingExtra>(`/shopping-periods/${periodId}/extras/${id}`, { method: "PUT", body });
+
+export async function deleteExtra(periodId: string, id: string): Promise<void> {
+  await apiFetch(`/shopping-periods/${periodId}/extras/${id}`, { method: "DELETE" });
 }
 
 export const fetchItemChecks = (periodId: string) =>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CheckCircle2, Circle, Snowflake } from 'lucide-react';
+import { CheckCircle2, Circle, Pencil, Snowflake, Trash2 } from 'lucide-react';
 import { ConsolidatedIngredient, IngredientSource } from '../../../../core/logic/shopping/shoppingLogic';
 import { FreezerBag } from '../../../../core/domain/types';
 import { IngredientTooltip } from './IngredientTooltip';
@@ -14,10 +14,12 @@ export interface ShoppingCategoryCardProps {
     onToggle: (key: string) => void;
     onSetStock: (key: string, value: number) => void;
     onShowSources: (key: string, sources: IngredientSource[], freezerBags: FreezerBag[]) => void;
+    onEditExtra: (extraId: string) => void;
+    onDeleteExtra: (extraId: string) => void;
     foodBags?: Map<string, FreezerBag[]>;
 }
 
-export const ShoppingCategoryCard = ({ label, items, checked, stocks, sourceChecked, onToggle, onSetStock, onShowSources, foodBags }: ShoppingCategoryCardProps) => {
+export const ShoppingCategoryCard = ({ label, items, checked, stocks, sourceChecked, onToggle, onSetStock, onShowSources, onEditExtra, onDeleteExtra, foodBags }: ShoppingCategoryCardProps) => {
     const checkedCount = items.filter(i => checked.has(i.key)).length;
     const [editingKey, setEditingKey] = useState<string | null>(null);
     const [editValue, setEditValue] = useState('');
@@ -48,6 +50,49 @@ export const ShoppingCategoryCard = ({ label, items, checked, stocks, sourceChec
             <div className="space-y-0.5">
                 {items.map(item => {
                     const isChecked = checked.has(item.key);
+
+                    if (item.isExtra) {
+                        return (
+                            <div
+                                key={item.key}
+                                onClick={() => onToggle(item.key)}
+                                className={`flex items-center justify-between gap-1.5 px-1.5 py-1 rounded-lg transition-all cursor-pointer select-none
+                                    ${isChecked ? 'opacity-40 bg-slate-50 dark:bg-slate-200/40' : 'hover:bg-slate-50 dark:hover:bg-slate-200/40'}`}
+                            >
+                                <div className="flex items-center gap-1.5 min-w-0 flex-1">
+                                    {isChecked
+                                        ? <CheckCircle2 className="w-3.5 h-3.5 text-green-500 shrink-0" />
+                                        : <Circle className="w-3.5 h-3.5 text-slate-300 shrink-0" />}
+                                    <span className={`text-xs font-medium text-slate-800 truncate ${isChecked ? 'line-through' : ''}`}>
+                                        {item.name}
+                                        {item.totalQuantity > 0 && (
+                                            <span className="font-normal text-slate-400 ml-1">
+                                                {formatQty(item.totalQuantity)} {pluralizeUnit(item.unit, item.totalQuantity)}
+                                            </span>
+                                        )}
+                                    </span>
+                                    <span className="shrink-0 text-[10px] font-bold text-orange-400 uppercase">ajouté</span>
+                                </div>
+                                <div className="flex items-center gap-0.5 shrink-0" onClick={e => e.stopPropagation()}>
+                                    <button
+                                        onClick={() => item.extraId && onEditExtra(item.extraId)}
+                                        aria-label={`Modifier ${item.name}`}
+                                        className="p-1 rounded text-slate-300 hover:text-orange-500 transition-colors"
+                                    >
+                                        <Pencil size={13} />
+                                    </button>
+                                    <button
+                                        onClick={() => item.extraId && onDeleteExtra(item.extraId)}
+                                        aria-label={`Retirer ${item.name}`}
+                                        className="p-1 rounded text-slate-300 hover:text-red-500 transition-colors"
+                                    >
+                                        <Trash2 size={13} />
+                                    </button>
+                                </div>
+                            </div>
+                        );
+                    }
+
                     const stock = stocks[item.key] ?? 0;
                     const allFreezerBags = item.foodId ? foodBags?.get(item.foodId) : undefined;
                     const inFreezer = (allFreezerBags?.length ?? 0) > 0;

@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { login } from "../../../core/services/authService";
 import { useAuthStore } from "../../store/useAuthStore";
 import { useDelayedFlag } from "../../hooks/useDelayedFlag";
+
+const LegalModal = lazy(() => import("./LegalModal").then((m) => ({ default: m.LegalModal })));
 
 export const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [legalOpen, setLegalOpen] = useState(false);
   const setUser = useAuthStore((s) => s.setUser);
   const setStatus = useAuthStore((s) => s.setStatus);
   const slowLogin = useDelayedFlag(isSubmitting, 5000);
@@ -72,7 +75,19 @@ export const LoginScreen = () => {
             </p>
           )}
         </form>
+
+        <button
+          type="button"
+          onClick={() => setLegalOpen(true)}
+          className="text-xs text-slate-400 hover:text-slate-600 underline underline-offset-2 transition-colors"
+        >
+          Informations légales
+        </button>
       </div>
+
+      <Suspense>
+        {legalOpen && <LegalModal onClose={() => setLegalOpen(false)} />}
+      </Suspense>
     </div>
   );
 };

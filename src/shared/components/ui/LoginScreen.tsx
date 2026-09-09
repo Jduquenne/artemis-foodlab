@@ -26,8 +26,13 @@ export const LoginScreen = () => {
   return (
     <div className="fixed inset-0 z-90 flex flex-col items-center justify-center bg-slate-50 px-4">
       <div className="w-full max-w-sm flex flex-col items-center gap-6">
-        <div className="w-16 h-16 rounded-3xl bg-orange-500 flex items-center justify-center shadow-lg shadow-orange-200">
-          <span className="text-white font-black text-xl tracking-tight select-none">AFL</span>
+        <div className="w-16 h-16 rounded-3xl bg-white flex items-center justify-center overflow-hidden shadow-lg shadow-orange-200 select-none">
+          <img
+            src="/artemis-foodlab/assets/logo/logo-256.png"
+            alt="Artemis Foodlab"
+            className="w-full h-full object-contain"
+            draggable={false}
+          />
         </div>
 
         <div className="flex flex-col items-center gap-1">

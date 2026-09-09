@@ -64,6 +64,16 @@ export const UserFormModal = ({ onClose, onSubmit }: UserFormModalProps) => {
           </label>
 
           <label className="flex flex-col gap-1">
+            <span className="text-xs font-bold text-slate-500">Nom affiché (optionnel)</span>
+            <input
+              autoComplete="off"
+              value={draft.displayName}
+              onChange={(e) => patch({ displayName: e.target.value })}
+              className="rounded-xl border border-slate-200 bg-white dark:bg-slate-100 px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
+            />
+          </label>
+
+          <label className="flex flex-col gap-1">
             <span className="text-xs font-bold text-slate-500">Mot de passe (au moins 12 caractères)</span>
             <div className="flex gap-2">
               <input

@@ -1,15 +1,17 @@
 import { lazy, Suspense, useRef, useState } from "react";
-import { Settings, Upload, Bell } from "lucide-react";
+import { Settings, Upload, Bell, UserCircle } from "lucide-react";
 import { isValidSyncPayload, SyncPayload } from "../../../core/logic/sync/syncPayload";
 import { ThemeToggle } from "./ThemeToggle";
 
 const ImportModal = lazy(() => import("../../../features/sync/ImportModal").then(m => ({ default: m.ImportModal })));
 const NotificationSettingsModal = lazy(() => import("../ui/NotificationSettingsModal").then(m => ({ default: m.NotificationSettingsModal })));
+const AccountModal = lazy(() => import("../ui/AccountModal").then(m => ({ default: m.AccountModal })));
 
 export const SettingsPopover = () => {
   const [open, setOpen] = useState(false);
   const [importModalData, setImportModalData] = useState<unknown>(null);
   const [notifSettingsOpen, setNotifSettingsOpen] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,8 +58,15 @@ export const SettingsPopover = () => {
             <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
             <div className="absolute bottom-0 left-full ml-3 z-50 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl shadow-xl overflow-hidden w-52">
               <button
-                onClick={() => { fileInputRef.current?.click(); setOpen(false); }}
+                onClick={() => { setAccountOpen(true); setOpen(false); }}
                 className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors"
+              >
+                <UserCircle className="w-4 h-4 text-slate-400 shrink-0" />
+                Compte
+              </button>
+              <button
+                onClick={() => { fileInputRef.current?.click(); setOpen(false); }}
+                className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors border-t border-slate-100"
               >
                 <Upload className="w-4 h-4 text-slate-400 shrink-0" />
                 Importer des données
@@ -91,6 +100,8 @@ export const SettingsPopover = () => {
         )}
 
         {notifSettingsOpen && <NotificationSettingsModal onClose={() => setNotifSettingsOpen(false)} />}
+
+        {accountOpen && <AccountModal onClose={() => setAccountOpen(false)} />}
       </Suspense>
     </>
   );

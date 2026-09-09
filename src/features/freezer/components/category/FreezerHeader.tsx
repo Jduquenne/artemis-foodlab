@@ -18,7 +18,7 @@ export const FreezerHeader = ({ categoryCount }: FreezerHeaderProps) => {
   const handleConfirm = async () => {
     const trimmed = nameInput.trim();
     if (trimmed && trimmed !== freezerName) {
-      const updated = await updateMe(trimmed);
+      const updated = await updateMe({ freezerName: trimmed });
       setUser(updated);
     } else {
       setNameInput(freezerName);

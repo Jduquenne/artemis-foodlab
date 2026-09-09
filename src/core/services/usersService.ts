@@ -6,6 +6,7 @@ export interface AdminUser {
   email: string;
   role: UserRole;
   freezerName: string;
+  displayName: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -14,6 +15,7 @@ export interface CreateUserInput {
   email: string;
   password: string;
   role: UserRole;
+  displayName?: string | null;
 }
 
 export const PASSWORD_MIN_LENGTH = 12;

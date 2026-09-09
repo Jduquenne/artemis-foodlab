@@ -16,10 +16,12 @@ export const UserRow = ({ user, isSelf, isLastAdmin, onAskRole, onAskDelete }: U
   <div className="flex items-center gap-3 px-4 py-3">
     <div className="flex-1 min-w-0">
       <p className="text-sm font-semibold text-slate-800 truncate">
-        {user.email}
+        {user.displayName || user.email}
         {isSelf && <span className="ml-2 text-xs font-normal text-slate-400">vous</span>}
       </p>
-      <p className="text-xs text-slate-400">Créé le {formatDateMedium(user.createdAt)}</p>
+      <p className="text-xs text-slate-400 truncate">
+        {user.displayName ? user.email : `Créé le ${formatDateMedium(user.createdAt)}`}
+      </p>
     </div>
 
     <RoleToggle

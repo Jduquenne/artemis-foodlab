@@ -11,9 +11,10 @@ export interface UserFormDraft {
   email: string;
   password: string;
   role: UserRole | "";
+  displayName: string;
 }
 
-export const EMPTY_USER_FORM: UserFormDraft = { email: "", password: "", role: "guest" };
+export const EMPTY_USER_FORM: UserFormDraft = { email: "", password: "", role: "guest", displayName: "" };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -28,15 +29,22 @@ export function validateUserForm(draft: UserFormDraft): string[] {
 }
 
 export function userFormToInput(draft: UserFormDraft): CreateUserInput {
-  return { email: draft.email.trim(), password: draft.password, role: draft.role as UserRole };
+  return {
+    email: draft.email.trim(),
+    password: draft.password,
+    role: draft.role as UserRole,
+    displayName: draft.displayName.trim() || null,
+  };
 }
 
 export function buildUserCreateRecap(draft: UserFormDraft): RecapEntry[] {
-  return [
+  const recap: RecapEntry[] = [
     { label: "Adresse e-mail", value: draft.email.trim() },
     { label: "Rôle", value: draft.role === "admin" ? ROLE_LABELS.admin : ROLE_LABELS.guest },
     { label: "Mot de passe", value: draft.password },
   ];
+  if (draft.displayName.trim()) recap.splice(1, 0, { label: "Nom affiché", value: draft.displayName.trim() });
+  return recap;
 }
 
 export function buildRoleChangeRecap(email: string, from: UserRole, to: UserRole): RecapEntry[] {

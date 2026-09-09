@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { login } from "../../../core/services/authService";
 import { useAuthStore } from "../../store/useAuthStore";
+import { useDelayedFlag } from "../../hooks/useDelayedFlag";
 
 export const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -8,6 +9,7 @@ export const LoginScreen = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const setUser = useAuthStore((s) => s.setUser);
   const setStatus = useAuthStore((s) => s.setStatus);
+  const slowLogin = useDelayedFlag(isSubmitting, 5000);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,6 +60,12 @@ export const LoginScreen = () => {
           >
             {isSubmitting ? "Connexion…" : "Se connecter"}
           </button>
+          {slowLogin && (
+            <p className="text-xs text-slate-400 text-center leading-relaxed">
+              Le serveur se réveille après une mise en veille. Ça peut prendre jusqu'à une minute — inutile
+              de réessayer.
+            </p>
+          )}
         </form>
       </div>
     </div>

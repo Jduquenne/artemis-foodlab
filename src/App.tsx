@@ -8,6 +8,7 @@ import { useVersionCheck } from './shared/hooks/useVersionCheck';
 import { useAppInit } from './shared/hooks/useAppInit';
 import { useAuthInit } from './shared/hooks/useAuthInit';
 import { useIsAdmin } from './shared/hooks/useIsAdmin';
+import { useDelayedFlag } from './shared/hooks/useDelayedFlag';
 
 const JournalModule = lazy(() => import('./features/journal/JournalModule').then(({ JournalModule: m }) => ({ default: m })));
 const RecipeModule = lazy(() => import('./features/recipes/RecipeModule').then(({ RecipeModule: m }) => ({ default: m })));
@@ -27,6 +28,7 @@ function App() {
   const [splashDone, setSplashDone] = useState(false);
   const allReady = isReady && authStatus !== 'checking';
   const splashExiting = allReady && !splashDone;
+  const bootSlow = useDelayedFlag(!allReady, 5000);
 
   useVersionCheck();
 
@@ -38,7 +40,7 @@ function App() {
 
   return (
     <>
-      {!splashDone && <SplashScreen isExiting={splashExiting} />}
+      {!splashDone && <SplashScreen isExiting={splashExiting} slow={bootSlow} />}
       <NotificationBanner />
       {splashDone && (authStatus === 'unauthenticated' ? (
         <LoginScreen />

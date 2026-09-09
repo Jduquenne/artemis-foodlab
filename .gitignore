@@ -13,8 +13,10 @@ dist-ssr
 *.local
 scripts
 
+
 # Dev-only data (local seeds, not committed)
 dev/
+.env
 
 # Cloudflare Worker (sheets-gateway) — code lives on the Dev branch only
 worker/

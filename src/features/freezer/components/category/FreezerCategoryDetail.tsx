@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { ArrowLeft, Plus, Pencil } from "lucide-react";
+import { ArrowLeft, Plus, Pencil, Snowflake } from "lucide-react";
 import { FreezerCategory } from "../../../../core/domain/types";
 import { removeItemFromCategory, updateCategoryName } from "../../../../core/services/freezerService";
 import { FreezerItemRow } from "../item/FreezerItemRow";
@@ -7,7 +7,7 @@ import { AddFreezerItemModal } from "../modal/AddFreezerItemModal";
 import { InlineNameEditor } from "../InlineNameEditor";
 import { markScrolling } from "../../../../shared/utils/scrollGuard";
 import { useFreezerColCount } from "../../../../shared/hooks/useFreezerColCount";
-import { distributeFreezerItemsToColumns } from "../../../../core/logic/freezer/freezerLogic";
+import { distributeFreezerItemsToColumns, getFreezerCategoryAccent } from "../../../../core/logic/freezer/freezerLogic";
 
 export interface FreezerCategoryDetailProps {
   category: FreezerCategory;
@@ -20,6 +20,7 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
   const [nameInput, setNameInput] = useState(category.name);
 
   const colCount = useFreezerColCount();
+  const accent = getFreezerCategoryAccent(category);
 
   const columns = useMemo(
     () => distributeFreezerItemsToColumns(category.items, colCount),
@@ -66,6 +67,9 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
           />
         ) : (
           <div className="flex-1 flex items-center gap-2 min-w-0">
+            <div className={`shrink-0 w-8 h-8 rounded-xl flex items-center justify-center ${accent.badge}`}>
+              <Snowflake className="w-4 h-4" />
+            </div>
             <h1 className="text-xl font-black text-slate-900 truncate">{category.name}</h1>
             <button
               aria-label="Renommer"
@@ -85,6 +89,7 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
       <div className="flex-1 min-h-0 overflow-y-auto" onScroll={markScrolling}>
         {category.items.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full gap-3 text-slate-400 pb-16">
+            <Snowflake className="w-12 h-12 text-slate-300" />
             <p className="text-sm font-medium">Cette catégorie est vide</p>
             <p className="text-xs">Ajoute un aliment ou un batch cooking</p>
           </div>

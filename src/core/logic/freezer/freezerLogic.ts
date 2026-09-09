@@ -1,7 +1,39 @@
-import { FreezerBag, FreezerCategory, FreezerItem, Food } from '../../domain/types';
+import { FoodFreezerItem, FreezerBag, FreezerCategory, FreezerItem, Food } from '../../domain/types';
 import { isBatchCookable } from '../../domain/recipePredicates';
 import { typedRecipesDb } from '../../typed-db/typedRecipesDb';
 import { typedFoodDb } from '../../typed-db/typedFoodDb';
+import { formatQty, pluralizeUnit } from '../../../shared/utils/unitUtils';
+
+export function getFoodBagsSummary(item: FoodFreezerItem): string {
+  const count = item.bags.length;
+  if (count === 0) return 'Vide';
+  const bagsLabel = `${count} sac${count > 1 ? 's' : ''}`;
+  const units = new Set(item.bags.map(b => b.unit));
+  if (units.size === 1) {
+    const unit = item.bags[0].unit;
+    const total = item.bags.reduce((s, b) => s + (Number(b.quantity) || 0), 0);
+    return `${bagsLabel} · ${formatQty(total)}${unit ? ' ' + pluralizeUnit(unit, total) : ''}`;
+  }
+  return bagsLabel;
+}
+
+export interface FreezerItemAge {
+  label: string;
+  stale: boolean;
+}
+
+export function freezerItemAge(iso: string, now: Date = new Date()): FreezerItemAge {
+  const then = new Date(`${iso}T00:00:00`);
+  const days = Math.max(0, Math.floor((now.getTime() - then.getTime()) / 86_400_000));
+  let label: string;
+  if (days === 0) label = "aujourd'hui";
+  else if (days === 1) label = 'hier';
+  else if (days < 7) label = `il y a ${days} j`;
+  else if (days < 60) label = `il y a ${Math.floor(days / 7)} sem.`;
+  else if (days < 365) label = `il y a ${Math.floor(days / 30)} mois`;
+  else label = `il y a ${Math.floor(days / 365)} an${days >= 730 ? 's' : ''}`;
+  return { label, stale: days >= 90 };
+}
 
 export interface BatchRecipeResult {
   id: string;

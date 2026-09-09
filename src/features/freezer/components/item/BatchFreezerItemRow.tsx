@@ -1,20 +1,21 @@
 import { useRef, useState } from "react";
-import { ChefHat, MoreVertical, Trash2 } from "lucide-react";
+import { ChefHat, MoreVertical, Trash2, AlertTriangle } from "lucide-react";
 import { BatchFreezerItem } from "../../../../core/domain/types";
 import { updateBatchPortions } from "../../../../core/services/freezerService";
+import { freezerItemAge } from "../../../../core/logic/freezer/freezerLogic";
 import { FloatingMenu } from "../../../../shared/components/ui/FloatingMenu";
 
 export interface BatchFreezerItemRowProps {
     item: BatchFreezerItem;
     categoryId: string;
     onDelete: () => void;
-    formattedDate: string;
 }
 
-export const BatchFreezerItemRow = ({ item, categoryId, onDelete, formattedDate }: BatchFreezerItemRowProps) => {
+export const BatchFreezerItemRow = ({ item, categoryId, onDelete }: BatchFreezerItemRowProps) => {
     const isEmpty = item.portions === 0;
     const [menuOpen, setMenuOpen] = useState(false);
     const menuButtonRef = useRef<HTMLButtonElement>(null);
+    const age = freezerItemAge(item.addedDate);
 
     const handleDecrement = () => {
         if (isEmpty) return;
@@ -26,22 +27,22 @@ export const BatchFreezerItemRow = ({ item, categoryId, onDelete, formattedDate 
     };
 
     return (
-        <div className={`px-3 py-2.5 bg-white dark:bg-slate-100 rounded-2xl transition-opacity ${isEmpty ? 'opacity-60' : ''}`}>
-            <div className="flex items-center gap-2">
-                <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${isEmpty ? 'bg-slate-100 dark:bg-slate-200' : 'bg-orange-100'}`}>
-                    <ChefHat className={`w-3.5 h-3.5 ${isEmpty ? 'text-slate-400' : 'text-orange-500'}`} />
+        <div className={`px-3 py-2.5 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl transition ${isEmpty ? 'opacity-60' : ''}`}>
+            <div className="flex items-center gap-2.5">
+                <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${isEmpty ? 'bg-slate-100 dark:bg-slate-200' : 'bg-orange-100 dark:bg-orange-900/30'}`}>
+                    <ChefHat className={`w-4 h-4 ${isEmpty ? 'text-slate-400' : 'text-orange-500'}`} />
                 </div>
                 <p className="flex-1 min-w-0 text-sm font-semibold text-slate-800 truncate">{item.recipeName}</p>
-                <span className={`shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full ${isEmpty ? 'bg-slate-100 dark:bg-slate-200 text-slate-400' : 'bg-orange-100 text-orange-600'}`}>
+                <span className={`shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full ${isEmpty ? 'bg-slate-100 dark:bg-slate-200 text-slate-400' : 'bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-300'}`}>
                     BATCH
                 </span>
                 <button
                     ref={menuButtonRef}
                     aria-label="Options"
                     onClick={() => setMenuOpen(o => !o)}
-                    className="shrink-0 p-2.5 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
+                    className="shrink-0 p-2 rounded-xl text-slate-300 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
                 >
-                    <MoreVertical className="w-3.5 h-3.5" />
+                    <MoreVertical className="w-4 h-4" />
                 </button>
                 <FloatingMenu open={menuOpen} anchorRef={menuButtonRef} onClose={() => setMenuOpen(false)}>
                     <button
@@ -54,11 +55,12 @@ export const BatchFreezerItemRow = ({ item, categoryId, onDelete, formattedDate 
                 </FloatingMenu>
             </div>
 
-            <div className="mt-1.5 pl-9 flex items-center justify-between gap-2">
-                <p className="text-xs text-slate-400 truncate">
-                    {isEmpty ? 'Épuisé' : `${item.portions} portion${item.portions > 1 ? 's' : ''}`}
-                    <span className="mx-1 text-slate-300">·</span>
-                    {formattedDate}
+            <div className="mt-2 pl-[2.75rem] flex items-center justify-between gap-2">
+                <p className={`flex items-center gap-1 text-[11px] truncate ${age.stale && !isEmpty ? 'text-amber-600 font-medium' : 'text-slate-400'}`}>
+                    {age.stale && !isEmpty && <AlertTriangle className="w-3 h-3 shrink-0" />}
+                    <span>{isEmpty ? 'Épuisé' : `${item.portions} portion${item.portions > 1 ? 's' : ''}`}</span>
+                    <span className="text-slate-300">·</span>
+                    <span>{age.label}</span>
                 </p>
                 <div className="flex items-center gap-1.5 shrink-0">
                     <button

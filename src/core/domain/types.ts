@@ -185,6 +185,7 @@ export type FreezerItem = FoodFreezerItem | BatchFreezerItem;
 export interface FreezerCategory {
   id: string;
   name: string;
+  color: string | null;
   position: number;
   items: FreezerItem[];
 }

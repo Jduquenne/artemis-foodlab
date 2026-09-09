@@ -39,10 +39,10 @@ export async function syncFreezerFromApi(): Promise<void> {
   }
 }
 
-export const createCategory = async (name: string): Promise<void> => {
+export const createCategory = async (name: string, color: string | null = null): Promise<void> => {
   const created = await apiFetchJson<ApiFreezerCategory>("/freezer-categories", {
     method: "POST",
-    body: { name },
+    body: color ? { name, color } : { name },
   });
   await db.freezerCategories.add(mapApiFreezerCategory(created));
 };
@@ -50,6 +50,11 @@ export const createCategory = async (name: string): Promise<void> => {
 export const updateCategoryName = async (id: string, name: string): Promise<void> => {
   await apiFetchJson(`/freezer-categories/${id}`, { method: "PUT", body: { name } });
   await db.freezerCategories.update(id, { name });
+};
+
+export const updateCategoryColor = async (id: string, color: string | null): Promise<void> => {
+  await apiFetchJson(`/freezer-categories/${id}`, { method: "PUT", body: { color } });
+  await db.freezerCategories.update(id, { color });
 };
 
 export const deleteCategory = async (id: string): Promise<void> => {

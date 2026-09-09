@@ -33,6 +33,7 @@ export interface ApiFreezerItem {
 export interface ApiFreezerCategory {
   id: string;
   name: string;
+  color: string | null;
   position: number;
   items: ApiFreezerItem[];
 }
@@ -73,6 +74,7 @@ export function mapApiFreezerCategory(api: ApiFreezerCategory): FreezerCategory 
   return {
     id: api.id,
     name: api.name,
+    color: api.color ?? null,
     position: api.position,
     items: [...api.items].sort((a, b) => a.position - b.position).map(mapApiItem),
   };

@@ -10,6 +10,7 @@ import { hasRecipes as slotHasRecipes, isSlotFull, isDish, isBase } from '../../
 import { MultiRecipeGrid } from './MultiRecipeGrid';
 import { MultiSlotActions } from './MultiSlotActions';
 import { RecipeMetaEditor } from './RecipeMetaEditor';
+import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
 
 export interface MultiMealSlotProps {
     label: string;
@@ -145,7 +146,7 @@ export const MultiMealSlot = ({
                     >
                         {singleHasPhoto && firstRecipe && (
                             <div className="relative w-full h-full">
-                                <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${firstRecipe.assets.mealPhoto!.url}')` }} />
+                                <AsyncImage src={firstRecipe.assets.mealPhoto!.url} alt={firstRecipe.name} className="object-cover" fill />
                                 <div className="absolute inset-0 bg-white/40 dark:bg-black/50 transition-colors" />
                                 <div className="absolute inset-0 flex items-center justify-center p-2">
                                     <span className="bg-white/90 dark:bg-black/75 text-slate-900 text-[14px] font-bold px-1.5 py-0.5 rounded-md leading-tight line-clamp-4 text-center">{firstRecipe.name}</span>

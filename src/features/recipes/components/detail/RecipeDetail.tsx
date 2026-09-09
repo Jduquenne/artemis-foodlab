@@ -7,6 +7,7 @@ import { calculateRecipeMacros } from '../../../../shared/utils/macroUtils';
 import { getLinkedBases, getCategoryRecipeIds } from '../../../../core/logic/recipe/recipeLogic';
 import { RecipePhotoCard } from '../../../../shared/components/ui/RecipePhotoCard';
 import { recipeToBuilderState } from '../../../../core/logic/recipeBuilder/recipeBuilderLogic';
+import { useIsAdmin } from '../../../../shared/hooks/useIsAdmin';
 import { useRecipeBuilderStore } from '../../../../shared/store/useRecipeBuilderStore';
 import { MacroColumn } from '../macro/MacroColumn';
 import { MacroRow } from '../macro/MacroRow';
@@ -27,6 +28,7 @@ export const RecipeDetail = () => {
     categoryId ? `/recipes/category/${categoryId}` : '/recipes',
   );
   const loadFromRecipe = useRecipeBuilderStore(s => s.loadFromRecipe);
+  const isAdmin = useIsAdmin();
   const categoryRecipeIds = useMemo(
     () => (categoryId ? getCategoryRecipeIds(categoryId) : []),
     [categoryId],
@@ -72,20 +74,24 @@ export const RecipeDetail = () => {
         <h1 className="text-base sm:text-xl tablet:text-2xl font-black text-slate-900 leading-snug">
           {recipe.name}
         </h1>
-        <button
-          aria-label="Modifier dans le créateur"
-          onClick={handleEditInBuilder}
-          className="ml-auto p-2 rounded-xl text-slate-400 hover:text-orange-600 hover:bg-orange-50 transition-colors shrink-0"
-        >
-          <Pencil className="w-5 h-5" />
-        </button>
-        <button
-          aria-label="Calculateur nutritionnel"
-          onClick={() => navigate(`/recipes/detail/${recipeId}/macros`)}
-          className="p-2 rounded-xl text-slate-400 hover:text-orange-600 hover:bg-orange-50 transition-colors shrink-0"
-        >
-          <Calculator className="w-5 h-5" />
-        </button>
+        <div className="ml-auto flex items-center gap-1 shrink-0">
+          {isAdmin && (
+            <button
+              aria-label="Modifier dans le créateur"
+              onClick={handleEditInBuilder}
+              className="p-2 rounded-xl text-slate-400 hover:text-orange-600 hover:bg-orange-50 transition-colors shrink-0"
+            >
+              <Pencil className="w-5 h-5" />
+            </button>
+          )}
+          <button
+            aria-label="Calculateur nutritionnel"
+            onClick={() => navigate(`/recipes/detail/${recipeId}/macros`)}
+            className="p-2 rounded-xl text-slate-400 hover:text-orange-600 hover:bg-orange-50 transition-colors shrink-0"
+          >
+            <Calculator className="w-5 h-5" />
+          </button>
+        </div>
       </div>
 
       <div className="flex-1 min-h-0 flex items-center gap-2">

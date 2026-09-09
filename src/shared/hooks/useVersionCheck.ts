@@ -13,7 +13,7 @@ export const useVersionCheck = () => {
 
     const check = async () => {
       try {
-        const res = await fetch(`/artemis-foodlab/version.json?t=${Date.now()}`);
+        const res = await fetch(`${import.meta.env.BASE_URL}version.json?t=${Date.now()}`);
         if (!res.ok) return;
         const { version } = await res.json() as { version: string };
         if (version !== __APP_VERSION__) {

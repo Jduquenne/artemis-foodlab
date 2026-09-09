@@ -7,6 +7,8 @@ import { RECIPE_BASE_GRAMS } from "../../../shared/utils/macroUtils";
 import { pluralizeUnit } from "../../../shared/utils/unitUtils";
 import { distributeToColumns } from "../../../shared/utils/columnUtils";
 import { isoDateFromWeekDay } from "../../../shared/utils/dateUtils";
+import { getIngredientCategoryFromSlug } from "../../typed-db/ingredientCategoryMap";
+import { ApiShoppingExtra } from "./shoppingApiMapper";
 
 export interface IngredientSource {
   recipeId: string;
@@ -30,6 +32,22 @@ export interface ConsolidatedIngredient {
   category: IngredientCategory | undefined;
   preparation?: string;
   sources: IngredientSource[];
+  isExtra?: boolean;
+  extraId?: string;
+}
+
+export function extrasToIngredients(extras: ApiShoppingExtra[]): ConsolidatedIngredient[] {
+  return extras.map((extra) => ({
+    key: `extra::${extra.id}`,
+    name: extra.name,
+    foodId: extra.foodId ?? undefined,
+    totalQuantity: extra.quantity ?? 0,
+    unit: extra.unit ?? "",
+    category: extra.categoryId ? getIngredientCategoryFromSlug(extra.categoryId) : undefined,
+    sources: [],
+    isExtra: true,
+    extraId: extra.id,
+  }));
 }
 
 export interface BaseEntry {

@@ -1,13 +1,14 @@
 export interface SplashScreenProps {
   isExiting: boolean;
+  slow?: boolean;
 }
 
-export const SplashScreen = ({ isExiting }: SplashScreenProps) => {
+export const SplashScreen = ({ isExiting, slow = false }: SplashScreenProps) => {
   return (
     <div
       className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-slate-50 ${isExiting ? "splash-exit" : ""}`}
     >
-      <div className="flex flex-col items-center gap-6">
+      <div className="flex flex-col items-center gap-6 px-6">
         <div className="w-24 h-24 rounded-3xl bg-white flex items-center justify-center overflow-hidden shadow-lg shadow-orange-200 select-none">
           <img
             src="/artemis-foodlab/assets/logo/logo-256.png"
@@ -17,9 +18,19 @@ export const SplashScreen = ({ isExiting }: SplashScreenProps) => {
           />
         </div>
 
-        <div className="flex flex-col items-center gap-1">
+        <div className="flex flex-col items-center gap-1.5 text-center">
           <h1 className="text-2xl font-black text-slate-900 tracking-tight">Artemis Foodlab</h1>
-          <p className="text-sm text-slate-400 font-medium">Chargement en cours…</p>
+          {slow ? (
+            <div className="flex flex-col items-center gap-1 max-w-[17rem]">
+              <p className="text-sm text-slate-500 font-semibold">Réveil du serveur…</p>
+              <p className="text-xs text-slate-400 font-medium leading-relaxed">
+                Il s'était mis en veille après une période d'inactivité. Le premier chargement peut prendre
+                jusqu'à une minute.
+              </p>
+            </div>
+          ) : (
+            <p className="text-sm text-slate-400 font-medium">Chargement en cours…</p>
+          )}
         </div>
 
         <div className="flex gap-1.5">

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { X, Copy, Users, Minus, Plus, Check } from 'lucide-react';
 import { plannableDb } from '../../../../core/typed-db/plannableDb';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
+import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
 
 export interface DessertCellProps {
     recipeId: string;
@@ -41,7 +42,7 @@ export const DessertCell = ({ recipeId, onRemove, isAddMode, onCopy, isCopySourc
 
     return (
         <div className={`relative flex-1 min-h-0 rounded-lg overflow-hidden group ${isCopySource ? 'ring-2 ring-violet-500' : ''}`}>
-            <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${recipe!.assets.mealPhoto!.url}')` }} />
+            <AsyncImage src={recipe!.assets.mealPhoto!.url} alt={recipe!.name} className="object-cover" fill />
             <div className="absolute inset-0 bg-white/40 dark:bg-black/50 transition-colors" />
 
             {!isAddMode && !hideActions && !isEditingPersons && (

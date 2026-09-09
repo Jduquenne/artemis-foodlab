@@ -5,11 +5,14 @@ export interface NotificationAction {
   onClick: () => void;
 }
 
+export type NotificationVariant = "info" | "error";
+
 export interface AppNotification {
   id: string;
   message: string;
-  actions: [NotificationAction, NotificationAction];
+  actions?: NotificationAction[];
   duration: number;
+  variant?: NotificationVariant;
 }
 
 interface NotificationState {

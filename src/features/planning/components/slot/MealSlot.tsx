@@ -7,6 +7,7 @@ import { isOutdoor } from '../../../../core/domain/recipePredicates';
 import { SlotPersonsBadge } from './SlotPersonsBadge';
 import { SlotActions } from './SlotActions';
 import { DessertColumn } from './DessertColumn';
+import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
 
 export interface MealSlotProps {
     label: string;
@@ -96,7 +97,8 @@ export const MealSlot = ({
                 className={`relative w-full h-full rounded-xl border-2 transition-all overflow-hidden bg-white dark:bg-slate-100 ${borderClass} ${hasPhoto && !hasRecipesPage ? 'cursor-default' : ''}`}
             >
                 {hasPhoto ? (
-                    <div className="relative w-full h-full bg-cover bg-center" style={{ backgroundImage: `url('${recipe!.assets.mealPhoto!.url}')` }}>
+                    <div className="relative w-full h-full">
+                        <AsyncImage src={recipe!.assets.mealPhoto!.url} alt={recipe!.name} className="object-cover" fill />
                         <div className="absolute inset-0 bg-white/40 dark:bg-black/50 transition-colors" />
                         <div className="absolute inset-0 flex items-center justify-center p-2">
                             <span className="bg-white/90 dark:bg-black/75 text-slate-900 text-[14px] font-bold px-1.5 py-0.5 rounded-md leading-tight line-clamp-4 text-center">{recipe!.name}</span>

@@ -1,12 +1,11 @@
 import { type ReactNode } from "react";
-import { Calendar, Home, Snowflake, ShoppingCart } from "lucide-react";
-import { SyncScope, ALL_SCOPES, SCOPE_LABELS } from "../../../../core/logic/sync/syncSerializer";
+import { Calendar, Home, Snowflake } from "lucide-react";
+import { SyncScope, ALL_SCOPES, SCOPE_LABELS } from "../../../../core/logic/sync/syncPayload";
 
 const SCOPE_ICONS: Record<SyncScope, ReactNode> = {
     planning: <Calendar size={18} />,
     household: <Home size={18} />,
     freezer: <Snowflake size={18} />,
-    shopping: <ShoppingCart size={18} />,
 };
 
 export interface ScopeSelectorProps {

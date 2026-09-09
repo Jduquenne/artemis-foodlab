@@ -1,74 +1,39 @@
 import { create } from "zustand";
-
-export interface MacroTargets {
-  proteins: number;
-  lipids: number;
-  carbohydrates: number;
-  fibers: number;
-}
+import { saveGramOverride, saveJournalSettings, savePortionOverride } from "../../core/services/journalService";
+import { MacroTargets } from "../../core/domain/types";
 
 interface JournalState {
   kcalTarget: number;
-  setKcalTarget: (value: number) => void;
   macroTargets: MacroTargets;
-  setMacroTargets: (targets: MacroTargets) => void;
+  setJournalSettings: (kcalTarget: number, macroTargets: MacroTargets) => Promise<void>;
   portionOverrides: Record<string, number>;
-  setPortionOverride: (key: string, value: number) => void;
+  setPortionOverride: (planningSlotItemId: string, value: number) => Promise<void>;
   gramOverrides: Record<string, number>;
-  setGramOverride: (key: string, value: number) => void;
+  setGramOverride: (planningSlotItemId: string, value: number) => Promise<void>;
+  replaceSettings: (settings: { kcalTarget: number; macroTargets: MacroTargets }) => void;
+  replaceOverrides: (overrides: { portionOverrides: Record<string, number>; gramOverrides: Record<string, number> }) => void;
 }
 
+const DEFAULT_KCAL_TARGET = 2000;
 const DEFAULT_MACRO_TARGETS: MacroTargets = { proteins: 150, lipids: 65, carbohydrates: 250, fibers: 30 };
 
-const loadMacroTargets = (): MacroTargets => {
-  try {
-    return JSON.parse(localStorage.getItem("cipe_macro_targets") ?? "null") ?? DEFAULT_MACRO_TARGETS;
-  } catch {
-    return DEFAULT_MACRO_TARGETS;
-  }
-};
-
-const loadPortionOverrides = (): Record<string, number> => {
-  try {
-    return JSON.parse(localStorage.getItem("cipe_portion_overrides") ?? "{}");
-  } catch {
-    return {};
-  }
-};
-
-const loadGramOverrides = (): Record<string, number> => {
-  try {
-    return JSON.parse(localStorage.getItem("cipe_gram_overrides") ?? "{}");
-  } catch {
-    return {};
-  }
-};
-
 export const useJournalStore = create<JournalState>((set) => ({
-  kcalTarget: parseInt(localStorage.getItem("cipe_kcal_target") ?? "2000", 10),
-  setKcalTarget: (value) => {
-    localStorage.setItem("cipe_kcal_target", String(value));
-    set({ kcalTarget: value });
+  kcalTarget: DEFAULT_KCAL_TARGET,
+  macroTargets: DEFAULT_MACRO_TARGETS,
+  setJournalSettings: async (kcalTarget, macroTargets) => {
+    await saveJournalSettings({ kcalTarget, macroTargets });
+    set({ kcalTarget, macroTargets });
   },
-  macroTargets: loadMacroTargets(),
-  setMacroTargets: (targets) => {
-    localStorage.setItem("cipe_macro_targets", JSON.stringify(targets));
-    set({ macroTargets: targets });
+  portionOverrides: {},
+  setPortionOverride: async (planningSlotItemId, value) => {
+    await savePortionOverride(planningSlotItemId, value);
+    set((state) => ({ portionOverrides: { ...state.portionOverrides, [planningSlotItemId]: value } }));
   },
-  portionOverrides: loadPortionOverrides(),
-  setPortionOverride: (key, value) => {
-    set((state) => {
-      const next = { ...state.portionOverrides, [key]: value };
-      localStorage.setItem("cipe_portion_overrides", JSON.stringify(next));
-      return { portionOverrides: next };
-    });
+  gramOverrides: {},
+  setGramOverride: async (planningSlotItemId, value) => {
+    await saveGramOverride(planningSlotItemId, value);
+    set((state) => ({ gramOverrides: { ...state.gramOverrides, [planningSlotItemId]: value } }));
   },
-  gramOverrides: loadGramOverrides(),
-  setGramOverride: (key, value) => {
-    set((state) => {
-      const next = { ...state.gramOverrides, [key]: value };
-      localStorage.setItem("cipe_gram_overrides", JSON.stringify(next));
-      return { gramOverrides: next };
-    });
-  },
+  replaceSettings: ({ kcalTarget, macroTargets }) => set({ kcalTarget, macroTargets }),
+  replaceOverrides: ({ portionOverrides, gramOverrides }) => set({ portionOverrides, gramOverrides }),
 }));

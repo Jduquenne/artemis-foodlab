@@ -3,7 +3,6 @@ import { DraftIngredient } from "../../../core/domain/recipeBuilderTypes";
 import { formatIngredientsForIngredientCard } from "../../../core/logic/recipeBuilder/recipeBuilderLogic";
 import { getCardColors } from "./cardColors";
 import { buildFoodQuantityLabel } from "./cardUtils";
-import { typedInstructionsDb } from "../../../core/typed-db/typedInstructionsDb";
 import {
   SmallCardData,
   IngredientsCardData,
@@ -93,7 +92,7 @@ export function recipeToRecetteCardData(
     recipeNumber: extractRecipeNumber(recipeId),
     portions: recipe.defaultPortions,
     ingredients: formatIngredientsForIngredientCard(ingredientsToDraft(recipe)),
-    instructions: typedInstructionsDb[recipeId]?.instructions.split("\n") ?? [],
+    instructions: recipe.instructions?.split("\n") ?? [],
     colors: getCardColors(recipe.categoryId),
   };
 }

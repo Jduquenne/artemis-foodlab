@@ -1,9 +1,39 @@
-import { FreezerBag, FreezerCategory, FreezerItem, Food } from '../../domain/types';
+import { FoodFreezerItem, FreezerBag, FreezerCategory, FreezerItem, Food } from '../../domain/types';
 import { isBatchCookable } from '../../domain/recipePredicates';
 import { typedRecipesDb } from '../../typed-db/typedRecipesDb';
 import { typedFoodDb } from '../../typed-db/typedFoodDb';
+import { formatQty, pluralizeUnit } from '../../../shared/utils/unitUtils';
 
-const ALL_FOODS = Object.values(typedFoodDb as Record<string, Food>);
+export function getFoodBagsSummary(item: FoodFreezerItem): string {
+  const count = item.bags.length;
+  if (count === 0) return 'Vide';
+  const bagsLabel = `${count} sac${count > 1 ? 's' : ''}`;
+  const units = new Set(item.bags.map(b => b.unit));
+  if (units.size === 1) {
+    const unit = item.bags[0].unit;
+    const total = item.bags.reduce((s, b) => s + (Number(b.quantity) || 0), 0);
+    return `${bagsLabel} · ${formatQty(total)}${unit ? ' ' + pluralizeUnit(unit, total) : ''}`;
+  }
+  return bagsLabel;
+}
+
+export interface FreezerItemAge {
+  label: string;
+  stale: boolean;
+}
+
+export function freezerItemAge(iso: string, now: Date = new Date()): FreezerItemAge {
+  const then = new Date(`${iso}T00:00:00`);
+  const days = Math.max(0, Math.floor((now.getTime() - then.getTime()) / 86_400_000));
+  let label: string;
+  if (days === 0) label = "aujourd'hui";
+  else if (days === 1) label = 'hier';
+  else if (days < 7) label = `il y a ${days} j`;
+  else if (days < 60) label = `il y a ${Math.floor(days / 7)} sem.`;
+  else if (days < 365) label = `il y a ${Math.floor(days / 30)} mois`;
+  else label = `il y a ${Math.floor(days / 365)} an${days >= 730 ? 's' : ''}`;
+  return { label, stale: days >= 90 };
+}
 
 export interface BatchRecipeResult {
   id: string;
@@ -29,7 +59,7 @@ export function searchBatchRecipes(query: string): BatchRecipeResult[] {
 export function searchFreezerFoods(query: string): Food[] {
   const q = query.toLowerCase().trim();
   if (!q) return [];
-  return ALL_FOODS
+  return Object.values(typedFoodDb as Record<string, Food>)
     .filter(f => f.name.toLowerCase().includes(q))
     .sort((a, b) => {
       const aStarts = a.name.toLowerCase().startsWith(q);
@@ -109,6 +139,56 @@ export function computeFreezerBagSelection(
     return sum + (Number(bag?.quantity) || 0);
   }, 0);
   return { next, total };
+}
+
+export interface FreezerCategorySummary {
+  total: number;
+  foodCount: number;
+  batchCount: number;
+  portions: number;
+}
+
+export function summarizeFreezerCategory(category: FreezerCategory): FreezerCategorySummary {
+  let foodCount = 0;
+  let batchCount = 0;
+  let portions = 0;
+  for (const item of category.items) {
+    if (item.type === 'batch') {
+      batchCount++;
+      portions += Number(item.portions) || 0;
+    } else {
+      foodCount++;
+    }
+  }
+  return { total: category.items.length, foodCount, batchCount, portions };
+}
+
+export interface FreezerAccent {
+  bar: string;
+  badge: string;
+  swatch: string;
+}
+
+export const FREEZER_ACCENTS: Record<string, FreezerAccent> = {
+  rose: { bar: 'bg-rose-400', badge: 'bg-rose-100 text-rose-600 dark:bg-rose-900/40 dark:text-rose-300', swatch: 'bg-rose-400' },
+  orange: { bar: 'bg-orange-400', badge: 'bg-orange-100 text-orange-600 dark:bg-orange-900/40 dark:text-orange-300', swatch: 'bg-orange-400' },
+  amber: { bar: 'bg-amber-400', badge: 'bg-amber-100 text-amber-600 dark:bg-amber-900/40 dark:text-amber-300', swatch: 'bg-amber-400' },
+  lime: { bar: 'bg-lime-400', badge: 'bg-lime-100 text-lime-700 dark:bg-lime-900/40 dark:text-lime-300', swatch: 'bg-lime-400' },
+  emerald: { bar: 'bg-emerald-400', badge: 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-300', swatch: 'bg-emerald-400' },
+  teal: { bar: 'bg-teal-400', badge: 'bg-teal-100 text-teal-600 dark:bg-teal-900/40 dark:text-teal-300', swatch: 'bg-teal-400' },
+  sky: { bar: 'bg-sky-400', badge: 'bg-sky-100 text-sky-600 dark:bg-sky-900/40 dark:text-sky-300', swatch: 'bg-sky-400' },
+  blue: { bar: 'bg-blue-400', badge: 'bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-300', swatch: 'bg-blue-400' },
+  violet: { bar: 'bg-violet-400', badge: 'bg-violet-100 text-violet-600 dark:bg-violet-900/40 dark:text-violet-300', swatch: 'bg-violet-400' },
+  fuchsia: { bar: 'bg-fuchsia-400', badge: 'bg-fuchsia-100 text-fuchsia-600 dark:bg-fuchsia-900/40 dark:text-fuchsia-300', swatch: 'bg-fuchsia-400' },
+};
+
+export const FREEZER_COLOR_KEYS = Object.keys(FREEZER_ACCENTS);
+
+export function getFreezerCategoryAccent(category: Pick<FreezerCategory, 'id' | 'color'>): FreezerAccent {
+  if (category.color && FREEZER_ACCENTS[category.color]) return FREEZER_ACCENTS[category.color];
+  let hash = 0;
+  for (let i = 0; i < category.id.length; i++) hash = (hash * 31 + category.id.charCodeAt(i)) | 0;
+  return FREEZER_ACCENTS[FREEZER_COLOR_KEYS[Math.abs(hash) % FREEZER_COLOR_KEYS.length]];
 }
 
 export function getFoodQuantitiesInFreezer(categories: FreezerCategory[]): Map<string, Map<string, number>> {

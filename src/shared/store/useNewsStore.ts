@@ -1,30 +1,32 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { typedChangelogDb } from "../../core/typed-db/typedChangelogDb";
+import { typedRecipesDb } from "../../core/typed-db/typedRecipesDb";
+import { getNewsGroups, latestNewsDate } from "../../core/logic/news/newsLogic";
 
 interface NewsStore {
   lastSeenDate: string;
   hasNew: boolean;
+  syncHasNew: () => void;
   markAsSeen: () => void;
 }
 
 export const useNewsStore = create<NewsStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       lastSeenDate: "",
-      hasNew: typedChangelogDb.length > 0 && typedChangelogDb[0].date > "",
+      hasNew: false,
+      syncHasNew: () => {
+        const latest = latestNewsDate(getNewsGroups(typedRecipesDb));
+        set({ hasNew: latest !== "" && latest > get().lastSeenDate });
+      },
       markAsSeen: () => {
-        const date = typedChangelogDb[0]?.date ?? "";
-        set({ lastSeenDate: date, hasNew: false });
+        const latest = latestNewsDate(getNewsGroups(typedRecipesDb));
+        set({ lastSeenDate: latest || get().lastSeenDate, hasNew: false });
       },
     }),
     {
       name: "cipe_news_last_seen",
-      onRehydrateStorage: () => (state) => {
-        if (!state) return;
-        const latest = typedChangelogDb[0]?.date ?? "";
-        state.hasNew = latest > state.lastSeenDate;
-      },
+      partialize: (state) => ({ lastSeenDate: state.lastSeenDate }),
     }
   )
 );

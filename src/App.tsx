@@ -3,9 +3,12 @@ import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { Layout } from './shared/components/layout/Layout';
 import { NotificationBanner } from './shared/components/ui/NotificationBanner';
 import { SplashScreen } from './shared/components/ui/SplashScreen';
-import { useBackupReminder } from './shared/hooks/useBackupReminder';
+import { LoginScreen } from './shared/components/ui/LoginScreen';
 import { useVersionCheck } from './shared/hooks/useVersionCheck';
 import { useAppInit } from './shared/hooks/useAppInit';
+import { useAuthInit } from './shared/hooks/useAuthInit';
+import { useIsAdmin } from './shared/hooks/useIsAdmin';
+import { useDelayedFlag } from './shared/hooks/useDelayedFlag';
 
 const JournalModule = lazy(() => import('./features/journal/JournalModule').then(({ JournalModule: m }) => ({ default: m })));
 const RecipeModule = lazy(() => import('./features/recipes/RecipeModule').then(({ RecipeModule: m }) => ({ default: m })));
@@ -14,50 +17,59 @@ const RecipeDetail = lazy(() => import('./features/recipes/components/detail/Rec
 const RecipeMacroPage = lazy(() => import('./features/recipes/components/macro/RecipeMacroPage').then(({ RecipeMacroPage: m }) => ({ default: m })));
 const PlanningModule = lazy(() => import('./features/planning/PlanningModule').then(({ PlanningModule: m }) => ({ default: m })));
 const ShoppingModule = lazy(() => import('./features/shopping/ShoppingModule').then(({ ShoppingModule: m }) => ({ default: m })));
-const HouseholdModule = lazy(() => import('./features/household/HouseholdModule').then(({ HouseholdModule: m }) => ({ default: m })));
 const FreezerModule = lazy(() => import('./features/freezer/FreezerModule').then(({ FreezerModule: m }) => ({ default: m })));
 const RecipeBuilderModule = lazy(() => import('./features/recipeBuilder/RecipeBuilderModule').then(({ RecipeBuilderModule: m }) => ({ default: m })));
+const DashboardModule = lazy(() => import('./features/dashboard/DashboardModule').then(({ DashboardModule: m }) => ({ default: m })));
 
 function App() {
   const isReady = useAppInit();
+  const authStatus = useAuthInit();
+  const isAdmin = useIsAdmin();
   const [splashDone, setSplashDone] = useState(false);
-  const splashExiting = isReady && !splashDone;
+  const allReady = isReady && authStatus !== 'checking';
+  const splashExiting = allReady && !splashDone;
+  const bootSlow = useDelayedFlag(!allReady, 5000);
 
-  useBackupReminder();
   useVersionCheck();
 
   useEffect(() => {
-    if (!isReady) return;
+    if (!allReady) return;
     const t = setTimeout(() => setSplashDone(true), 450);
     return () => clearTimeout(t);
-  }, [isReady]);
+  }, [allReady]);
 
   return (
     <>
-      {!splashDone && <SplashScreen isExiting={splashExiting} />}
+      {!splashDone && <SplashScreen isExiting={splashExiting} slow={bootSlow} />}
       <NotificationBanner />
-      <Router>
-        <Layout>
-          <Suspense>
-            <Routes>
-              <Route path="/" element={<Navigate to="/journal" replace />} />
+      {splashDone && (authStatus === 'unauthenticated' ? (
+        <LoginScreen />
+      ) : (
+        <Router>
+          <Layout>
+            <Suspense>
+              <Routes>
+                <Route path="/" element={<Navigate to="/journal" replace />} />
 
-              <Route path="/journal" element={<JournalModule />} />
+                <Route path="/journal" element={<JournalModule />} />
 
-              <Route path="/recipes" element={<RecipeModule />} />
-              <Route path="/recipes/category/:categoryId" element={<CategoryDetail />} />
-              <Route path="/recipes/detail/:recipeId" element={<RecipeDetail />} />
-              <Route path="/recipes/detail/:recipeId/macros" element={<RecipeMacroPage />} />
+                <Route path="/recipes" element={<RecipeModule />} />
+                <Route path="/recipes/category/:categoryId" element={<CategoryDetail />} />
+                <Route path="/recipes/detail/:recipeId" element={<RecipeDetail />} />
+                <Route path="/recipes/detail/:recipeId/macros" element={<RecipeMacroPage />} />
 
-              <Route path="/planning" element={<PlanningModule />} />
-              <Route path="/shopping" element={<ShoppingModule />} />
-              <Route path="/household" element={<HouseholdModule />} />
-              <Route path="/freezer" element={<FreezerModule />} />
-              <Route path="/recipe-builder" element={<RecipeBuilderModule />} />
-            </Routes>
-          </Suspense>
-        </Layout>
-      </Router>
+                <Route path="/planning" element={<PlanningModule />} />
+                <Route path="/shopping" element={<ShoppingModule />} />
+                <Route path="/household" element={<Navigate to="/shopping" replace />} />
+                <Route path="/freezer" element={<FreezerModule />} />
+                {isAdmin && <Route path="/recipe-builder" element={<RecipeBuilderModule />} />}
+                {isAdmin && <Route path="/dashboard" element={<DashboardModule />} />}
+                <Route path="*" element={<Navigate to="/journal" replace />} />
+              </Routes>
+            </Suspense>
+          </Layout>
+        </Router>
+      ))}
     </>
   );
 }

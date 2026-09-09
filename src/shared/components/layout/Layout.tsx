@@ -1,10 +1,13 @@
 import { lazy, Suspense, useState } from 'react';
 import { ReactNode } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { BarChart3 } from 'lucide-react';
 import { SidebarLogo } from './SidebarLogo';
 import { SidebarNav } from './SidebarNav';
 import { SettingsPopover } from './SettingsPopover';
 import { NewsButton } from './NewsButton';
 import { useNewsStore } from '../../store/useNewsStore';
+import { useIsAdmin } from '../../hooks/useIsAdmin';
 
 const NewsModal = lazy(() =>
   import('../../../features/news/NewsModal').then((m) => ({ default: m.NewsModal }))
@@ -13,6 +16,8 @@ const NewsModal = lazy(() =>
 export const Layout = ({ children }: { children: ReactNode }) => {
   const [newsOpen, setNewsOpen] = useState(false);
   const { hasNew, markAsSeen } = useNewsStore();
+  const isAdmin = useIsAdmin();
+  const location = useLocation();
 
   const handleOpenNews = () => {
     setNewsOpen(true);
@@ -27,6 +32,19 @@ export const Layout = ({ children }: { children: ReactNode }) => {
         <SidebarNav />
 
         <div className="flex flex-col items-center gap-1">
+          {isAdmin && (
+            <Link
+              to="/dashboard"
+              title="Dashboard"
+              className={`p-2.5 tablet:p-3 rounded-xl transition-colors ${
+                location.pathname.startsWith('/dashboard')
+                  ? 'bg-orange-100 dark:bg-orange-900/40 text-orange-600 dark:text-orange-400'
+                  : 'text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200'
+              }`}
+            >
+              <BarChart3 className="w-5 h-5" />
+            </Link>
+          )}
           <NewsButton hasNew={hasNew} onOpen={handleOpenNews} />
           <SettingsPopover />
         </div>

@@ -57,14 +57,14 @@ export const MealSlotCard = ({ slotType, slot }: MealSlotCardProps) => {
         {hasContent ? (
           <div className="flex flex-col">
             {slot?.recipeIds.map((id) => (
-              <RecipePortionRow key={id} recipeId={id} slotId={slot.id} />
+              <RecipePortionRow key={id} recipeId={id} planningSlotItemId={slot.itemApiIds?.[id]} />
             ))}
 
             {slot && hasDesserts(slot) && (
               <>
                 <div className="my-1 border-t border-dashed border-slate-100" />
                 {(slot.dessertIds ?? []).map((id) => (
-                  <RecipePortionRow key={id} recipeId={id} slotId={slot.id} />
+                  <RecipePortionRow key={id} recipeId={id} planningSlotItemId={slot.itemApiIds?.[id]} />
                 ))}
               </>
             )}

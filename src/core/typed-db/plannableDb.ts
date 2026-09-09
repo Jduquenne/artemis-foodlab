@@ -1,8 +1,12 @@
 import { typedRecipesDb } from "./typedRecipesDb";
-import outdoorDb from "../data/outdoor-db.json";
+import { typedOutdoorDb } from "./typedOutdoorDb";
 import { RecipeDetails } from "../domain/types";
 
-export const plannableDb = {
-  ...typedRecipesDb,
-  ...(outdoorDb as unknown as Record<string, RecipeDetails>),
-};
+const outdoor = typedOutdoorDb as unknown as Record<string, RecipeDetails>;
+
+export const plannableDb: Record<string, RecipeDetails> = { ...typedRecipesDb, ...outdoor };
+
+export function refreshPlannableDb(): void {
+  for (const key of Object.keys(plannableDb)) delete plannableDb[key];
+  Object.assign(plannableDb, typedRecipesDb, outdoor);
+}

@@ -40,7 +40,7 @@ export const IngredientBuilderList = ({ ingredients, onChange }: IngredientBuild
 
   return (
     <>
-      <div className="flex flex-col h-full min-h-0">
+      <div className="flex flex-col lg:h-full lg:min-h-0">
         <div className="flex items-center justify-between mb-2 shrink-0">
           <div className="flex items-center gap-2">
             <h2 className="text-sm font-black text-slate-700 uppercase tracking-wide">
@@ -65,7 +65,7 @@ export const IngredientBuilderList = ({ ingredients, onChange }: IngredientBuild
         </div>
 
         <div
-          className="flex-1 min-h-0 overflow-y-auto divide-y divide-slate-100"
+          className="divide-y divide-slate-100 lg:flex-1 lg:min-h-0 lg:overflow-y-auto"
           onScroll={markScrolling}
         >
           {ingredients.length === 0 && (

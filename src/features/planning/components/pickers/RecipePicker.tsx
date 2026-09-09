@@ -4,6 +4,7 @@ import { SearchRecipeResult, useSearchMeals } from '../../../../shared/hooks/use
 import { Check, X, TreePine } from 'lucide-react';
 import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
 import { searchOutdoorRecipes } from '../../../../core/logic/recipe/recipeLogic';
+import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
 
 export interface RecipePickerProps {
     onSelect: (recipe: SearchRecipeResult) => void;
@@ -81,7 +82,7 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
                                             : 'border-slate-200 hover:border-orange-200 hover:bg-orange-50 dark:hover:bg-orange-950/20'
                                     }`}
                                 >
-                                    <img src={typedRecipesDb[recipe.recipeId]?.assets?.mealPhoto?.url} loading="lazy" decoding="async" className="w-16 h-16 rounded-xl object-cover shadow-sm shrink-0" alt={recipe.name} />
+                                    <AsyncImage src={typedRecipesDb[recipe.recipeId]?.assets?.mealPhoto?.url} alt={recipe.name} wrapperClassName="w-16 h-16 rounded-xl shadow-sm shrink-0" className="object-cover" />
                                     <div className="flex-1">
                                         <p className="font-black text-slate-800">{recipe.name}</p>
                                         <p className="text-xs text-slate-400 uppercase font-bold">{recipe.recipeId}</p>
@@ -112,16 +113,16 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
                             </p>
                             <div className="space-y-2">
                                 {outdoorResults.map((entry) => {
-                                    const alreadyAdded = existingRecipeIds.includes(entry.id);
+                                    const alreadyAdded = existingRecipeIds.includes(entry.code);
                                     const result: SearchRecipeResult = {
-                                        id: entry.id,
-                                        recipeId: entry.id,
+                                        id: entry.code,
+                                        recipeId: entry.code,
                                         name: entry.name,
                                         matchedIngredients: [],
                                     };
                                     return (
                                         <button
-                                            key={entry.id}
+                                            key={entry.code}
                                             disabled={alreadyAdded}
                                             onClick={() => onSelect(result)}
                                             className={`w-full flex items-center gap-4 p-3 rounded-2xl border transition-all group text-left ${
@@ -131,7 +132,7 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
                                             }`}
                                         >
                                             {entry.assets?.mealPhoto?.url ? (
-                                                <img src={entry.assets.mealPhoto.url} loading="lazy" decoding="async" className="w-16 h-16 rounded-xl object-cover shadow-sm" alt={entry.name} />
+                                                <AsyncImage src={entry.assets.mealPhoto.url} alt={entry.name} wrapperClassName="w-16 h-16 rounded-xl shadow-sm shrink-0" className="object-cover" />
                                             ) : (
                                                 <div className="w-16 h-16 rounded-xl bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center">
                                                     <TreePine size={24} className="text-rose-400" />

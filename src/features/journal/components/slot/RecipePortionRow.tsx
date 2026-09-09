@@ -6,12 +6,12 @@ import { typedRecipesDb } from "../../../../core/typed-db/typedRecipesDb";
 
 export interface RecipePortionRowProps {
   recipeId: string;
-  slotId: string;
+  planningSlotItemId?: string;
 }
 
-export const RecipePortionRow = ({ recipeId, slotId }: RecipePortionRowProps) => {
+export const RecipePortionRow = ({ recipeId, planningSlotItemId }: RecipePortionRowProps) => {
   const { portionOverrides, setPortionOverride, gramOverrides, setGramOverride } = useJournalStore();
-  const key = `${slotId}-${recipeId}`;
+  const key = planningSlotItemId ?? "";
   const recipe = typedRecipesDb[recipeId];
   const name = recipe?.name ?? recipeId;
   const isIngredient = recipe?.kind === RecipeKind.INGREDIENT;
@@ -34,9 +34,10 @@ export const RecipePortionRow = ({ recipeId, slotId }: RecipePortionRowProps) =>
               min={1}
               defaultValue={grams}
               aria-label={`Quantité en grammes — ${name}`}
+              disabled={!planningSlotItemId}
               onChange={(e) => {
                 const v = parseInt(e.target.value, 10);
-                if (!isNaN(v) && v > 0) setGramOverride(key, v);
+                if (!isNaN(v) && v > 0 && planningSlotItemId) setGramOverride(planningSlotItemId, v);
               }}
               className="w-12 text-[11px] font-bold text-center bg-slate-50 dark:bg-slate-200 rounded px-1 py-0.5 outline-none focus:ring-1 focus:ring-orange-400 text-orange-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             />
@@ -61,7 +62,8 @@ export const RecipePortionRow = ({ recipeId, slotId }: RecipePortionRowProps) =>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-0.5">
           <button
-            onClick={() => setPortionOverride(key, Math.max(1, portions - 1))}
+            onClick={() => planningSlotItemId && setPortionOverride(planningSlotItemId, Math.max(1, portions - 1))}
+            disabled={!planningSlotItemId}
             aria-label={`Réduire les portions — ${name}`}
             className="w-5 h-5 flex items-center justify-center rounded text-slate-400 hover:text-orange-500 transition-colors"
           >
@@ -71,7 +73,8 @@ export const RecipePortionRow = ({ recipeId, slotId }: RecipePortionRowProps) =>
             {portions}×
           </span>
           <button
-            onClick={() => setPortionOverride(key, Math.min(10, portions + 1))}
+            onClick={() => planningSlotItemId && setPortionOverride(planningSlotItemId, Math.min(10, portions + 1))}
+            disabled={!planningSlotItemId}
             aria-label={`Augmenter les portions — ${name}`}
             className="w-5 h-5 flex items-center justify-center rounded text-slate-400 hover:text-orange-500 transition-colors"
           >

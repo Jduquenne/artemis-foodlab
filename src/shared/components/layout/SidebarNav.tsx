@@ -1,4 +1,4 @@
-import { LayoutDashboard, UtensilsCrossed, CalendarDays, ShoppingCart, Package, Snowflake, ChefHat } from "lucide-react";
+import { LayoutDashboard, UtensilsCrossed, CalendarDays, ShoppingCart, Snowflake } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const navItems = [
@@ -6,9 +6,7 @@ const navItems = [
   { icon: <CalendarDays />, path: "/planning", label: "Menu" },
   { icon: <UtensilsCrossed />, path: "/recipes", label: "Recettes" },
   { icon: <ShoppingCart />, path: "/shopping", label: "Courses" },
-  { icon: <Package />, path: "/household", label: "Quotidien" },
   { icon: <Snowflake />, path: "/freezer", label: "Congélateur" },
-  { icon: <ChefHat />, path: "/recipe-builder", label: "Créateur" },
 ];
 
 export const SidebarNav = () => {

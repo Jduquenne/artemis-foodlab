@@ -9,17 +9,16 @@ export interface BaseRecipeSearchProps {
   onChange: (name: string, baseId: string) => void;
 }
 
-const bases = Object.entries(typedRecipesDb)
-  .filter(([, r]) => isBase(r))
-  .map(([id, r]) => ({ id, name: r.name }));
-
 export const BaseRecipeSearch = ({ value, onChange }: BaseRecipeSearchProps) => {
   const [open, setOpen] = useState(false);
 
-  const suggestions = useMemo(
-    () => (open ? searchBases(value, bases) : []),
-    [open, value],
-  );
+  const suggestions = useMemo(() => {
+    if (!open) return [];
+    const bases = Object.entries(typedRecipesDb)
+      .filter(([, r]) => isBase(r))
+      .map(([id, r]) => ({ id, name: r.name }));
+    return searchBases(value, bases);
+  }, [open, value]);
 
   return (
     <div className="relative flex-1 min-w-0">

@@ -1,25 +1,40 @@
 import { useState, useMemo, useEffect } from 'react';
-import { ShoppingCart, CalendarDays, Clipboard, Check, Scale } from 'lucide-react';
+import { ShoppingCart, CalendarDays, Clipboard, Check, Scale, Plus } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useNavigate } from 'react-router-dom';
-import { FreezerBag, HouseholdItem } from '../../core/domain/types';
+import { FreezerBag } from '../../core/domain/types';
 import {
     getShoppingListForDays,
     getBasesForDays,
     buildShoppingClipboardText,
     IngredientSource,
     RecipeCard,
-    getPeriodKey,
     buildRecipeCards,
     groupIngredients,
     filterGroupedIngredients,
     computeUncheckedCount,
     assignIngredientColumns,
+    extrasToIngredients,
 } from '../../core/logic/shopping/shoppingLogic';
 import { getRecords as getHouseholdRecords } from '../../core/services/householdService';
+import { syncWeekFromApi } from '../../core/services/planningService';
+import {
+    fetchItemChecks,
+    fetchSourceChecks,
+    upsertItemCheck,
+    upsertSourceCheck,
+    fetchExtras,
+    createExtra,
+    updateExtra,
+    deleteExtra,
+    ExtraInput,
+} from '../../core/services/shoppingPeriodService';
+import { ApiItemCheck, ApiShoppingExtra, ApiSourceCheck } from '../../core/logic/shopping/shoppingApiMapper';
+import { getCodeById, getIdByCode } from '../../core/typed-db/recipeIdMap';
 import { markScrolling } from '../../shared/utils/scrollGuard';
 import { distributeToColumns } from '../../shared/utils/columnUtils';
 import { useMenuStore } from '../../shared/store/useMenuStore';
+import { useAuthStore } from '../../shared/store/useAuthStore';
 import { useColCount } from '../../shared/hooks/useColCount';
 import { useFreezerStock } from '../../shared/hooks/useFreezerStock';
 import { computeFreezerBagSelection } from '../../core/logic/freezer/freezerLogic';
@@ -28,76 +43,94 @@ import { RecipeShoppingCard } from './components/meals/RecipeShoppingCard';
 import { SourcesModal } from './components/SourcesModal';
 import { PricePerKgModal } from './components/PricePerKgModal';
 import { HouseholdShoppingCard } from './components/HouseholdShoppingCard';
-import householdDb from '../../core/data/household-db.json';
-
-const allHouseholdItems = householdDb as HouseholdItem[];
+import { HouseholdPanel } from '../household/components/HouseholdPanel';
+import { AddExtraModal } from './components/AddExtraModal';
+import { typedHouseholdDb } from '../../core/typed-db/typedHouseholdDb';
 
 export const ShoppingModule = () => {
     const navigate = useNavigate();
     const shoppingDays = useMenuStore((s) => s.shoppingDays);
-    const periodKey = useMemo(() => getPeriodKey(shoppingDays), [shoppingDays]);
+    const currentPeriodId = useMenuStore((s) => s.currentPeriodId);
+    const authStatus = useAuthStore((s) => s.status);
+    const allHouseholdItems = useMemo(() => Object.values(typedHouseholdDb), []);
 
     const colCount = Math.min(useColCount(), 3);
     const { foodBags } = useFreezerStock();
-    const [viewMode, setViewMode] = useState<'meals' | 'ingredients'>('ingredients');
+    const [viewMode, setViewMode] = useState<'meals' | 'ingredients' | 'household'>('ingredients');
     const [ingredientFilter, setIngredientFilter] = useState<'all' | 'missing'>('all');
     const [copied, setCopied] = useState(false);
     const [showPriceCalc, setShowPriceCalc] = useState(false);
     const [activeSources, setActiveSources] = useState<{ key: string; sources: IngredientSource[]; freezerBags: FreezerBag[] } | null>(null);
 
-    const [freezerSelection, setFreezerSelectionState] = useState<Record<string, string[]>>(() => {
-        try {
-            const s = JSON.parse(localStorage.getItem('cipe_shopping_freezer') ?? 'null');
-            if (s?.periodKey === getPeriodKey(useMenuStore.getState().shoppingDays)) return s.data ?? {};
-        } catch { /* localStorage indisponible */ }
-        return {};
-    });
+    const [itemChecksRaw, setItemChecksRaw] = useState<ApiItemCheck[]>([]);
+    const [sourceChecksRaw, setSourceChecksRaw] = useState<ApiSourceCheck[]>([]);
+    const [extrasRaw, setExtrasRaw] = useState<ApiShoppingExtra[]>([]);
+    const [extraModal, setExtraModal] = useState<{ open: boolean; extra: ApiShoppingExtra | null }>({ open: false, extra: null });
 
-    const [checked, setChecked] = useState<Set<string>>(() => {
-        try {
-            const s = JSON.parse(localStorage.getItem('cipe_shopping_checked') ?? 'null');
-            if (s?.periodKey === getPeriodKey(useMenuStore.getState().shoppingDays)) {
-                return new Set<string>(s.keys);
+    useEffect(() => {
+        let active = true;
+        const load = async () => {
+            if (!currentPeriodId) {
+                if (active) {
+                    setItemChecksRaw([]);
+                    setSourceChecksRaw([]);
+                    setExtrasRaw([]);
+                }
+                return;
             }
-        } catch { /* localStorage indisponible */ }
-        return new Set<string>();
-    });
-
-    const [stocks, setStocksState] = useState<Record<string, number>>(() => {
-        try {
-            const s = JSON.parse(localStorage.getItem('cipe_shopping_stocks') ?? 'null');
-            if (s?.periodKey === getPeriodKey(useMenuStore.getState().shoppingDays)) {
-                return s.data ?? {};
+            const [ic, sc, ex] = await Promise.all([
+                fetchItemChecks(currentPeriodId),
+                fetchSourceChecks(currentPeriodId),
+                fetchExtras(currentPeriodId),
+            ]);
+            if (active) {
+                setItemChecksRaw(ic);
+                setSourceChecksRaw(sc);
+                setExtrasRaw(ex);
             }
-        } catch { /* localStorage indisponible */ }
-        return {};
-    });
-
-    const [sourceChecked, setSourceCheckedState] = useState<Set<string>>(() => {
-        try {
-            const s = JSON.parse(localStorage.getItem('cipe_shopping_source_checked') ?? 'null');
-            if (s?.periodKey === getPeriodKey(useMenuStore.getState().shoppingDays)) {
-                return new Set<string>(s.keys);
-            }
-        } catch { /* localStorage indisponible */ }
-        return new Set<string>();
-    });
+        };
+        load();
+        return () => { active = false; };
+    }, [currentPeriodId]);
 
     useEffect(() => {
-        localStorage.setItem('cipe_shopping_checked', JSON.stringify({ periodKey, keys: [...checked] }));
-    }, [periodKey, checked]);
+        if (authStatus !== 'authenticated') return;
+        const weekKeys = new Set(shoppingDays.map(d => `${d.year}-${d.week}`));
+        for (const key of weekKeys) {
+            const [year, week] = key.split('-').map(Number);
+            syncWeekFromApi(year, week);
+        }
+    }, [authStatus, shoppingDays]);
 
-    useEffect(() => {
-        localStorage.setItem('cipe_shopping_stocks', JSON.stringify({ periodKey, data: stocks }));
-    }, [periodKey, stocks]);
+    const patchItemCheck = (updated: ApiItemCheck) => {
+        setItemChecksRaw(prev => {
+            const idx = prev.findIndex(ic => ic.id === updated.id);
+            if (idx === -1) return [...prev, updated];
+            const next = [...prev];
+            next[idx] = updated;
+            return next;
+        });
+    };
 
-    useEffect(() => {
-        localStorage.setItem('cipe_shopping_source_checked', JSON.stringify({ periodKey, keys: [...sourceChecked] }));
-    }, [periodKey, sourceChecked]);
+    const patchSourceCheck = (updated: ApiSourceCheck) => {
+        setSourceChecksRaw(prev => {
+            const idx = prev.findIndex(sc => sc.id === updated.id);
+            if (idx === -1) return [...prev, updated];
+            const next = [...prev];
+            next[idx] = updated;
+            return next;
+        });
+    };
 
-    useEffect(() => {
-        localStorage.setItem('cipe_shopping_freezer', JSON.stringify({ periodKey, data: freezerSelection }));
-    }, [periodKey, freezerSelection]);
+    const patchExtra = (updated: ApiShoppingExtra) => {
+        setExtrasRaw(prev => {
+            const idx = prev.findIndex(e => e.id === updated.id);
+            if (idx === -1) return [...prev, updated];
+            const next = [...prev];
+            next[idx] = updated;
+            return next;
+        });
+    };
 
     const ingredients = useLiveQuery(
         () => getShoppingListForDays(shoppingDays),
@@ -115,71 +148,205 @@ export const ShoppingModule = () => {
         if (!householdRecords) return [];
         const checkedIds = new Set(householdRecords.map(r => r.id));
         return allHouseholdItems.filter(i => checkedIds.has(i.id));
-    }, [householdRecords]);
+    }, [householdRecords, allHouseholdItems]);
 
     const recipeCards = useMemo<RecipeCard[]>(
         () => ingredients ? buildRecipeCards(ingredients, bases) : [],
         [ingredients, bases]
     );
 
-    const toggleItem = (key: string) => {
-        setChecked(prev => {
-            const next = new Set(prev);
-            if (next.has(key)) { next.delete(key); } else { next.add(key); }
-            return next;
-        });
+    const keyToFoodId = useMemo(() => {
+        const map = new Map<string, string>();
+        for (const ing of ingredients ?? []) {
+            if (ing.foodId) map.set(ing.key, ing.foodId);
+        }
+        return map;
+    }, [ingredients]);
+
+    const foodIdToKey = useMemo(() => {
+        const map = new Map<string, string>();
+        for (const [key, foodId] of keyToFoodId) map.set(foodId, key);
+        return map;
+    }, [keyToFoodId]);
+
+    const itemCheckByFoodId = useMemo(() => {
+        const map = new Map<string, ApiItemCheck>();
+        for (const ic of itemChecksRaw) if (ic.foodId) map.set(ic.foodId, ic);
+        return map;
+    }, [itemChecksRaw]);
+
+    const itemCheckByHouseholdId = useMemo(() => {
+        const map = new Map<string, ApiItemCheck>();
+        for (const ic of itemChecksRaw) if (ic.householdItemId) map.set(ic.householdItemId, ic);
+        return map;
+    }, [itemChecksRaw]);
+
+    const sourceCheckIdByKey = useMemo(() => {
+        const map = new Map<string, string>();
+        for (const sc of sourceChecksRaw) {
+            const key = foodIdToKey.get(sc.foodId);
+            if (!key) continue;
+            const code = getCodeById(sc.recipeId) ?? sc.recipeId;
+            map.set(`${key}::${code}::${sc.day}::${sc.slot}`, sc.id);
+        }
+        return map;
+    }, [sourceChecksRaw, foodIdToKey]);
+
+    const checked = useMemo(() => {
+        const set = new Set<string>();
+        for (const [key, foodId] of keyToFoodId) {
+            if (itemCheckByFoodId.get(foodId)?.isChecked) set.add(key);
+        }
+        for (const item of allHouseholdItems) {
+            if (itemCheckByHouseholdId.get(item.id)?.isChecked) set.add(`household::${item.id}`);
+        }
+        for (const extra of extrasRaw) {
+            if (extra.isChecked) set.add(`extra::${extra.id}`);
+        }
+        return set;
+    }, [keyToFoodId, itemCheckByFoodId, itemCheckByHouseholdId, allHouseholdItems, extrasRaw]);
+
+    const extraIngredients = useMemo(() => extrasToIngredients(extrasRaw), [extrasRaw]);
+    const displayIngredients = useMemo(
+        () => (ingredients ? [...ingredients, ...extraIngredients] : undefined),
+        [ingredients, extraIngredients],
+    );
+
+    const stocks = useMemo(() => {
+        const rec: Record<string, number> = {};
+        for (const [key, foodId] of keyToFoodId) {
+            const ic = itemCheckByFoodId.get(foodId);
+            if (ic && ic.stock > 0) rec[key] = ic.stock;
+        }
+        return rec;
+    }, [keyToFoodId, itemCheckByFoodId]);
+
+    const freezerSelection = useMemo(() => {
+        const rec: Record<string, string[]> = {};
+        for (const [key, foodId] of keyToFoodId) {
+            const ic = itemCheckByFoodId.get(foodId);
+            if (ic && ic.freezerBagIds.length > 0) rec[key] = ic.freezerBagIds;
+        }
+        return rec;
+    }, [keyToFoodId, itemCheckByFoodId]);
+
+    const sourceChecked = useMemo(() => {
+        const set = new Set<string>();
+        for (const sc of sourceChecksRaw) {
+            if (!sc.isChecked) continue;
+            const key = foodIdToKey.get(sc.foodId);
+            if (!key) continue;
+            const code = getCodeById(sc.recipeId) ?? sc.recipeId;
+            set.add(`${key}::${code}::${sc.day}::${sc.slot}`);
+        }
+        return set;
+    }, [sourceChecksRaw, foodIdToKey]);
+
+    const toggleItem = async (key: string) => {
+        if (!currentPeriodId) return;
+        if (key.startsWith('extra::')) {
+            const id = key.slice('extra::'.length);
+            const current = extrasRaw.find(e => e.id === id);
+            const updated = await updateExtra(currentPeriodId, id, { isChecked: !current?.isChecked });
+            patchExtra(updated);
+            return;
+        }
+        if (key.startsWith('household::')) {
+            const householdItemId = key.slice('household::'.length);
+            const existing = itemCheckByHouseholdId.get(householdItemId);
+            const updated = await upsertItemCheck(currentPeriodId, existing?.id, { householdItemId }, { isChecked: !existing?.isChecked });
+            patchItemCheck(updated);
+        } else {
+            const foodId = keyToFoodId.get(key);
+            if (!foodId) return;
+            const existing = itemCheckByFoodId.get(foodId);
+            const updated = await upsertItemCheck(currentPeriodId, existing?.id, { foodId }, { isChecked: !existing?.isChecked });
+            patchItemCheck(updated);
+        }
     };
 
-    const setStock = (key: string, value: number) => {
-        setStocksState(prev => {
-            const next = { ...prev };
-            if (value <= 0) delete next[key];
-            else next[key] = value;
-            return next;
-        });
+    const setStock = async (key: string, value: number) => {
+        if (!currentPeriodId) return;
+        const foodId = keyToFoodId.get(key);
+        if (!foodId) return;
+        const existing = itemCheckByFoodId.get(foodId);
+        const updated = await upsertItemCheck(currentPeriodId, existing?.id, { foodId }, { stockOverride: value > 0 ? value : null });
+        patchItemCheck(updated);
     };
 
-    const toggleSourceCheck = (ingredientKey: string, sources: IngredientSource[], isChecked: boolean) => {
-        setSourceCheckedState(prev => {
-            const next = new Set(prev);
-            for (const source of sources) {
-                const k = `${ingredientKey}::${source.recipeId}::${source.day}::${source.slot}`;
-                if (isChecked) { next.add(k); } else { next.delete(k); }
-            }
-            return next;
-        });
+    const toggleSourceCheck = async (ingredientKey: string, sources: IngredientSource[], isChecked: boolean) => {
+        if (!currentPeriodId) return;
+        const foodId = keyToFoodId.get(ingredientKey);
+        if (!foodId) return;
+        for (const source of sources) {
+            const recipeId = getIdByCode(source.recipeId) ?? source.recipeId;
+            const localKey = `${ingredientKey}::${source.recipeId}::${source.day}::${source.slot}`;
+            const existingId = sourceCheckIdByKey.get(localKey);
+            const updated = await upsertSourceCheck(currentPeriodId, existingId, { foodId, recipeId, day: source.day, slot: source.slot }, isChecked);
+            patchSourceCheck(updated);
+        }
     };
 
-    const toggleSourceBatch = (batch: Array<{ ingredientKey: string; sources: IngredientSource[] }>, isChecked: boolean) => {
-        setSourceCheckedState(prev => {
-            const next = new Set(prev);
-            for (const { ingredientKey, sources } of batch) {
-                for (const source of sources) {
-                    const k = `${ingredientKey}::${source.recipeId}::${source.day}::${source.slot}`;
-                    if (isChecked) { next.add(k); } else { next.delete(k); }
-                }
-            }
-            return next;
-        });
+    const toggleSourceBatch = async (batch: Array<{ ingredientKey: string; sources: IngredientSource[] }>, isChecked: boolean) => {
+        for (const { ingredientKey, sources } of batch) {
+            await toggleSourceCheck(ingredientKey, sources, isChecked);
+        }
     };
 
-    const toggleFreezerBag = (bagId: string) => {
-        if (!activeSources) return;
+    const toggleFreezerBag = async (bagId: string) => {
+        if (!activeSources || !currentPeriodId) return;
         const { key: ingredientKey, freezerBags } = activeSources;
         const current = freezerSelection[ingredientKey] ?? [];
-        const { next, total } = computeFreezerBagSelection(current, bagId, freezerBags);
-        setFreezerSelectionState(prev => ({ ...prev, [ingredientKey]: next }));
-        setStock(ingredientKey, total);
+        const { next } = computeFreezerBagSelection(current, bagId, freezerBags);
+        const foodId = keyToFoodId.get(ingredientKey);
+        if (!foodId) return;
+        const existing = itemCheckByFoodId.get(foodId);
+        const updated = await upsertItemCheck(currentPeriodId, existing?.id, { foodId }, { freezerBagIds: next });
+        patchItemCheck(updated);
+    };
+
+    const plannedRecipes = useMemo(
+        () => recipeCards.map(c => ({ code: c.recipeId, name: c.recipeName })),
+        [recipeCards]
+    );
+
+    const submitExtra = async (body: ExtraInput): Promise<boolean> => {
+        if (!currentPeriodId) return false;
+        try {
+            if (extraModal.extra) {
+                patchExtra(await updateExtra(currentPeriodId, extraModal.extra.id, body));
+            } else {
+                const created = await createExtra(currentPeriodId, body);
+                setExtrasRaw(prev => [...prev, created]);
+            }
+            return true;
+        } catch {
+            return false;
+        }
+    };
+
+    const handleDeleteExtra = async (extraId: string) => {
+        if (!currentPeriodId) return;
+        try {
+            await deleteExtra(currentPeriodId, extraId);
+            setExtrasRaw(prev => prev.filter(e => e.id !== extraId));
+        } catch {
+            // erreur affichée par le handler global
+        }
+    };
+
+    const handleEditExtra = (extraId: string) => {
+        setExtraModal({ open: true, extra: extrasRaw.find(e => e.id === extraId) ?? null });
     };
 
     const allGroupedItems = useMemo(
-        () => ingredients ? groupIngredients(ingredients) : [],
-        [ingredients]
+        () => displayIngredients ? groupIngredients(displayIngredients) : [],
+        [displayIngredients]
     );
 
     const groupedItems = useMemo(
-        () => ingredients ? filterGroupedIngredients(ingredients, ingredientFilter, checked, stocks, sourceChecked) : [],
-        [ingredients, ingredientFilter, checked, stocks, sourceChecked]
+        () => displayIngredients ? filterGroupedIngredients(displayIngredients, ingredientFilter, checked, stocks, sourceChecked) : [],
+        [displayIngredients, ingredientFilter, checked, stocks, sourceChecked]
     );
 
     const visibleHouseholdItems = useMemo(() => {
@@ -188,8 +355,8 @@ export const ShoppingModule = () => {
     }, [householdItems, ingredientFilter, checked]);
 
     const uncheckedCount = useMemo(
-        () => computeUncheckedCount(ingredients ?? [], checked, stocks, sourceChecked, householdItems),
-        [ingredients, checked, stocks, sourceChecked, householdItems]
+        () => computeUncheckedCount(displayIngredients ?? [], checked, stocks, sourceChecked, householdItems),
+        [displayIngredients, checked, stocks, sourceChecked, householdItems]
     );
 
     const ingredientColumns = useMemo(
@@ -233,6 +400,16 @@ export const ShoppingModule = () => {
                             </p>
                         </div>
                         <div className="flex gap-2 shrink-0">
+                            {currentPeriodId && (
+                                <button
+                                    onClick={() => setExtraModal({ open: true, extra: null })}
+                                    title="Ajouter un article"
+                                    className="shrink-0 flex items-center gap-1.5 px-2.5 py-2 rounded-xl bg-orange-500 text-white text-sm font-bold hover:bg-orange-600 transition-colors"
+                                >
+                                    <Plus className="w-4 h-4" />
+                                    <span className="hidden sm:inline">Article</span>
+                                </button>
+                            )}
                             <button
                                 onClick={() => setShowPriceCalc(true)}
                                 title="Prix au kilo"
@@ -275,6 +452,15 @@ export const ShoppingModule = () => {
                             >
                                 Ingrédients
                             </button>
+                            <button
+                                onClick={() => setViewMode('household')}
+                                className={`px-3.5 py-1.5 rounded-xl text-sm font-bold transition-all ${viewMode === 'household'
+                                        ? 'bg-white dark:bg-slate-100 text-slate-900 shadow-sm'
+                                        : 'text-slate-500 hover:text-slate-700'
+                                    }`}
+                            >
+                                Articles
+                            </button>
                         </div>
                         <div className={`flex gap-0.5 transition-opacity duration-200 ${viewMode === 'ingredients' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
                             <button
@@ -303,7 +489,9 @@ export const ShoppingModule = () => {
                     className="flex-1 min-h-0 overflow-y-auto pr-1"
                     onScroll={markScrolling}
                 >
-                    {shoppingDays.length === 0 ? (
+                    {viewMode === 'household' ? (
+                        <HouseholdPanel colCount={colCount} />
+                    ) : shoppingDays.length === 0 ? (
                         <div className="h-full flex flex-col items-center justify-center gap-4 text-slate-400">
                             <CalendarDays className="w-12 h-12 opacity-30" />
                             <div className="text-center">
@@ -349,11 +537,11 @@ export const ShoppingModule = () => {
                                     </div>
                                 ))}
                             </div>
-                    ) : ingredients.length === 0 && visibleHouseholdItems.length === 0 ? (
+                    ) : (displayIngredients?.length ?? 0) === 0 && visibleHouseholdItems.length === 0 ? (
                         <div className="h-full flex flex-col items-center justify-center gap-3 text-slate-400">
                             <ShoppingCart className="w-12 h-12 opacity-30" />
                             <p className="font-medium">Aucun repas planifié sur cette période</p>
-                            <p className="text-sm">Planifie des repas pour générer la liste</p>
+                            <p className="text-sm">Planifie des repas ou ajoute un article</p>
                         </div>
                     ) : groupedItems.length === 0 && visibleHouseholdItems.length === 0 ? (
                         <div className="h-full flex flex-col items-center justify-center gap-3 text-slate-400">
@@ -378,6 +566,8 @@ export const ShoppingModule = () => {
                                                         onToggle={toggleItem}
                                                         onSetStock={setStock}
                                                         onShowSources={(key, sources, bags) => setActiveSources({ key, sources, freezerBags: bags })}
+                                                        onEditExtra={handleEditExtra}
+                                                        onDeleteExtra={handleDeleteExtra}
                                                         foodBags={foodBags}
                                                     />
                                                 </div>
@@ -422,6 +612,15 @@ export const ShoppingModule = () => {
 
             {showPriceCalc && (
                 <PricePerKgModal onClose={() => setShowPriceCalc(false)} />
+            )}
+
+            {extraModal.open && (
+                <AddExtraModal
+                    extra={extraModal.extra}
+                    plannedRecipes={plannedRecipes}
+                    onClose={() => setExtraModal({ open: false, extra: null })}
+                    onSubmit={submitExtra}
+                />
             )}
         </>
     );

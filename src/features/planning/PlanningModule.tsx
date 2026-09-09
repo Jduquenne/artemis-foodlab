@@ -5,7 +5,8 @@ import { typedRecipesDb as recipesDb } from '../../core/typed-db/typedRecipesDb'
 import { plannableDb } from '../../core/typed-db/plannableDb';
 import { CopyModeBar } from './components/bars/CopyModeBar';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { getWeekSlots, saveSlot, deleteSlot, bulkSaveSlots, addDessertToSlot, removeDessertFromSlot, setRecipePersonsOnSlot } from '../../core/services/planningService';
+import { getWeekSlots, saveSlot, deleteSlot, bulkSaveSlots, addDessertToSlot, removeDessertFromSlot, setRecipePersonsOnSlot, syncWeekFromApi } from '../../core/services/planningService';
+import { useAuthStore } from '../../shared/store/useAuthStore';
 import { MealDragOverlay } from './components/MealDragOverlay';
 import { WeekNavZone } from './components/WeekNavZone';
 import { RecipePicker } from './components/pickers/RecipePicker';
@@ -101,6 +102,11 @@ export const PlanningModule = () => {
         [year, weekNumber]
     );
     const planningData = useMemo(() => liveData ?? [], [liveData]);
+
+    const authStatus = useAuthStore((s) => s.status);
+    useEffect(() => {
+        if (authStatus === 'authenticated') syncWeekFromApi(year, weekNumber);
+    }, [authStatus, year, weekNumber]);
 
     const dayKcal = useMemo(() =>
         Object.fromEntries(DAYS.map(day => {

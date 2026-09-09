@@ -1,6 +1,8 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { X, Search } from 'lucide-react';
+import { X, Search, Plus } from 'lucide-react';
+import { useIsAdmin } from '../../shared/hooks/useIsAdmin';
+import { useRecipeBuilderStore } from '../../shared/store/useRecipeBuilderStore';
 import { SearchBar } from '../../shared/components/ui/SearchBar';
 import { CategoryCard } from '../../shared/components/ui/CategoryCard';
 import { FlipCard } from './components/FlipCard';
@@ -19,6 +21,8 @@ import { LazyRender } from '../../shared/components/ui/LazyRender';
 
 export const RecipeModule = () => {
     const navigate = useNavigate();
+    const isAdmin = useIsAdmin();
+    const resetBuilder = useRecipeBuilderStore((s) => s.reset);
     const { activeFilterIds, setActiveFilterIds } = useMenuStore();
     const [searchQuery, setSearchQuery] = useState(() => sessionStorage.getItem('last_recipe_search') || '');
     const [isSearchOpen, setIsSearchOpen] = useState(() => (sessionStorage.getItem('last_recipe_search') || '').length > 0);
@@ -88,6 +92,16 @@ export const RecipeModule = () => {
                                 </span>
                             ) : null;
                         })}
+                        {isAdmin && (
+                            <button
+                                onClick={() => { resetBuilder(); navigate('/recipe-builder'); }}
+                                title="Nouvelle recette"
+                                className="shrink-0 flex items-center gap-1.5 px-2.5 py-2 rounded-xl bg-orange-500 text-white text-sm font-bold hover:bg-orange-600 transition-colors"
+                            >
+                                <Plus className="w-4 h-4" />
+                                <span className="hidden sm:inline">Recette</span>
+                            </button>
+                        )}
                         <MacroFilterButton activeFilterIds={activeFilterIds} onApply={setActiveFilterIds} />
                         <button
                             onClick={openSearch}

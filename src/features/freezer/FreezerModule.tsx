@@ -1,17 +1,23 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Snowflake } from "lucide-react";
 import { useLiveQuery } from "dexie-react-hooks";
-import { getCategories } from "../../core/services/freezerService";
+import { getCategories, syncFreezerFromApi } from "../../core/services/freezerService";
 import { FreezerCategoryCard } from "./components/category/FreezerCategoryCard";
 import { FreezerCategoryDetail } from "./components/category/FreezerCategoryDetail";
 import { FreezerHeader } from "./components/category/FreezerHeader";
 import { AddCategoryForm } from "./components/category/AddCategoryForm";
 import { markScrolling } from "../../shared/utils/scrollGuard";
+import { useAuthStore } from "../../shared/store/useAuthStore";
 
 export const FreezerModule = () => {
   const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
   const liveCategories = useLiveQuery(() => getCategories(), []);
   const categories = useMemo(() => liveCategories ?? [], [liveCategories]);
+
+  const authStatus = useAuthStore((s) => s.status);
+  useEffect(() => {
+    if (authStatus === 'authenticated') syncFreezerFromApi();
+  }, [authStatus]);
 
   const activeCategory = categories.find(c => c.id === activeCategoryId) ?? null;
 

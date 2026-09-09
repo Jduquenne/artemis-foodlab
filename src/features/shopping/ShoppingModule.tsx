@@ -43,6 +43,7 @@ import { RecipeShoppingCard } from './components/meals/RecipeShoppingCard';
 import { SourcesModal } from './components/SourcesModal';
 import { PricePerKgModal } from './components/PricePerKgModal';
 import { HouseholdShoppingCard } from './components/HouseholdShoppingCard';
+import { HouseholdPanel } from '../household/components/HouseholdPanel';
 import { AddExtraModal } from './components/AddExtraModal';
 import { typedHouseholdDb } from '../../core/typed-db/typedHouseholdDb';
 
@@ -55,7 +56,7 @@ export const ShoppingModule = () => {
 
     const colCount = Math.min(useColCount(), 3);
     const { foodBags } = useFreezerStock();
-    const [viewMode, setViewMode] = useState<'meals' | 'ingredients'>('ingredients');
+    const [viewMode, setViewMode] = useState<'meals' | 'ingredients' | 'household'>('ingredients');
     const [ingredientFilter, setIngredientFilter] = useState<'all' | 'missing'>('all');
     const [copied, setCopied] = useState(false);
     const [showPriceCalc, setShowPriceCalc] = useState(false);
@@ -451,6 +452,15 @@ export const ShoppingModule = () => {
                             >
                                 Ingrédients
                             </button>
+                            <button
+                                onClick={() => setViewMode('household')}
+                                className={`px-3.5 py-1.5 rounded-xl text-sm font-bold transition-all ${viewMode === 'household'
+                                        ? 'bg-white dark:bg-slate-100 text-slate-900 shadow-sm'
+                                        : 'text-slate-500 hover:text-slate-700'
+                                    }`}
+                            >
+                                Articles
+                            </button>
                         </div>
                         <div className={`flex gap-0.5 transition-opacity duration-200 ${viewMode === 'ingredients' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
                             <button
@@ -479,7 +489,9 @@ export const ShoppingModule = () => {
                     className="flex-1 min-h-0 overflow-y-auto pr-1"
                     onScroll={markScrolling}
                 >
-                    {shoppingDays.length === 0 ? (
+                    {viewMode === 'household' ? (
+                        <HouseholdPanel colCount={colCount} />
+                    ) : shoppingDays.length === 0 ? (
                         <div className="h-full flex flex-col items-center justify-center gap-4 text-slate-400">
                             <CalendarDays className="w-12 h-12 opacity-30" />
                             <div className="text-center">

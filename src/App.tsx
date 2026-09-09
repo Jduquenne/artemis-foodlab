@@ -16,7 +16,6 @@ const RecipeDetail = lazy(() => import('./features/recipes/components/detail/Rec
 const RecipeMacroPage = lazy(() => import('./features/recipes/components/macro/RecipeMacroPage').then(({ RecipeMacroPage: m }) => ({ default: m })));
 const PlanningModule = lazy(() => import('./features/planning/PlanningModule').then(({ PlanningModule: m }) => ({ default: m })));
 const ShoppingModule = lazy(() => import('./features/shopping/ShoppingModule').then(({ ShoppingModule: m }) => ({ default: m })));
-const HouseholdModule = lazy(() => import('./features/household/HouseholdModule').then(({ HouseholdModule: m }) => ({ default: m })));
 const FreezerModule = lazy(() => import('./features/freezer/FreezerModule').then(({ FreezerModule: m }) => ({ default: m })));
 const RecipeBuilderModule = lazy(() => import('./features/recipeBuilder/RecipeBuilderModule').then(({ RecipeBuilderModule: m }) => ({ default: m })));
 const DashboardModule = lazy(() => import('./features/dashboard/DashboardModule').then(({ DashboardModule: m }) => ({ default: m })));
@@ -59,7 +58,7 @@ function App() {
 
                 <Route path="/planning" element={<PlanningModule />} />
                 <Route path="/shopping" element={<ShoppingModule />} />
-                <Route path="/household" element={<HouseholdModule />} />
+                <Route path="/household" element={<Navigate to="/shopping" replace />} />
                 <Route path="/freezer" element={<FreezerModule />} />
                 {isAdmin && <Route path="/recipe-builder" element={<RecipeBuilderModule />} />}
                 {isAdmin && <Route path="/dashboard" element={<DashboardModule />} />}

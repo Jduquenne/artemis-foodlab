@@ -1,8 +1,8 @@
 import { RecipeDetails, RecipeKind } from "../../domain/types";
 import { getCategoryById } from "../../domain/categories";
-import { isBase, isDish, isIngredient } from "../../domain/recipePredicates";
+import { isBase, isDessert, isDish, isIngredient } from "../../domain/recipePredicates";
 
-export type RecipeKindFilter = RecipeKind | "all";
+export type RecipeKindFilter = RecipeKind | "all" | "dessert";
 
 export const RECIPE_KIND_LABELS: Record<RecipeKind, string> = {
   [RecipeKind.DISH]: "Plat",
@@ -15,6 +15,7 @@ export const RECIPE_KIND_FILTERS: { id: RecipeKindFilter; label: string }[] = [
   { id: RecipeKind.DISH, label: "Plats" },
   { id: RecipeKind.INGREDIENT, label: "Ingrédients" },
   { id: RecipeKind.BASE, label: "Bases" },
+  { id: "dessert", label: "Desserts" },
 ];
 
 export function sortRecipes(recipes: RecipeDetails[]): RecipeDetails[] {
@@ -23,6 +24,7 @@ export function sortRecipes(recipes: RecipeDetails[]): RecipeDetails[] {
 
 function matchesKind(recipe: RecipeDetails, kind: RecipeKindFilter): boolean {
   if (kind === "all") return true;
+  if (kind === "dessert") return isDessert(recipe);
   if (kind === RecipeKind.DISH) return isDish(recipe);
   if (kind === RecipeKind.INGREDIENT) return isIngredient(recipe);
   return isBase(recipe);

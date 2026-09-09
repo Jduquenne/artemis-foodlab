@@ -2,6 +2,7 @@ import { useState } from "react";
 import { DATA_SECTIONS, DataSectionId } from "../../data/dataSections";
 import { FoodsTable } from "./FoodsTable";
 import { RecipesTable } from "./RecipesTable";
+import { OutdoorActivitiesTable } from "./OutdoorActivitiesTable";
 
 export const DataPanel = () => {
   const [section, setSection] = useState<DataSectionId>("foods");
@@ -28,6 +29,7 @@ export const DataPanel = () => {
       <div className="flex-1 min-h-0">
         {section === "foods" && <FoodsTable />}
         {section === "recipes" && <RecipesTable />}
+        {section === "outdoor" && <OutdoorActivitiesTable />}
       </div>
     </div>
   );

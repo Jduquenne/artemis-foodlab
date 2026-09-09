@@ -36,7 +36,8 @@ export const RecipesTable = () => {
 
   const createInBuilder = () => {
     reset();
-    if (kind !== "all") patch({ kind });
+    if (kind === "dessert") patch({ isDessert: true });
+    else if (kind !== "all") patch({ kind });
     navigate("/recipe-builder");
   };
 

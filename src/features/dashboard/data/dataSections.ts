@@ -1,4 +1,4 @@
-export type DataSectionId = "foods" | "recipes";
+export type DataSectionId = "foods" | "recipes" | "outdoor";
 
 export interface DataSection {
   id: DataSectionId;
@@ -8,4 +8,5 @@ export interface DataSection {
 export const DATA_SECTIONS: DataSection[] = [
   { id: "foods", label: "Aliments" },
   { id: "recipes", label: "Recettes" },
+  { id: "outdoor", label: "Activités" },
 ];

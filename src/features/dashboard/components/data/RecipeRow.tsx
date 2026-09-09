@@ -19,8 +19,7 @@ export const RecipeRow = ({ recipe, onEdit, onAskDelete }: RecipeRowProps) => {
         <p className="text-sm text-slate-800 truncate">{recipe.name}</p>
         <p className="text-xs text-slate-400 truncate flex items-center gap-1.5">
           <span
-            className="inline-block w-2 h-2 rounded-full shrink-0"
-            style={{ backgroundColor: category?.color ?? "#cbd5e1" }}
+            className={`inline-block w-2 h-2 rounded-full shrink-0 ${category?.color ?? "bg-slate-300"}`}
           />
           {category?.name ?? recipe.categoryId}
           <span className="text-slate-300">·</span>

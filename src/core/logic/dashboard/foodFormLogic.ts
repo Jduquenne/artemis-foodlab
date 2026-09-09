@@ -1,6 +1,7 @@
 import { Food, IngredientCategory, Macronutrients } from "../../domain/types";
 import { FoodInput } from "../../services/catalogueWriteService";
 import { getIngredientCategoryId } from "../../typed-db/ingredientCategoryMap";
+import { RecapEntry, diffEntry, recapBool, recapText } from "./recap";
 
 export interface FoodFormDraft {
   name: string;
@@ -78,6 +79,40 @@ export function validateFoodForm(draft: FoodFormDraft): string[] {
     }
   }
   return errors;
+}
+
+const MACRO_LABELS: Record<keyof Macronutrients, string> = {
+  kcal: "Kcal",
+  proteins: "Protéines",
+  lipids: "Lipides",
+  carbohydrates: "Glucides",
+  fibers: "Fibres",
+};
+
+export function buildFoodRecap(original: Food | null, id: string, draft: FoodFormDraft): RecapEntry[] {
+  if (original === null) {
+    return [
+      { label: "Identifiant", value: id.trim() },
+      { label: "Nom", value: draft.name.trim() },
+      { label: "Catégorie", value: draft.category },
+      { label: "Unité", value: recapText(draft.unit) },
+      { label: "Poids unitaire (g)", value: recapText(draft.unitWeight) },
+      { label: "Congelable", value: recapBool(draft.isFreezable) },
+      ...MACRO_KEYS.map((key) => ({ label: MACRO_LABELS[key], value: recapText(draft.macros[key]) })),
+    ];
+  }
+  const before = foodToDraft(original);
+  const changes: RecapEntry[] = [];
+  const add = (entry: RecapEntry | null) => { if (entry) changes.push(entry); };
+  add(diffEntry("Nom", before.name.trim(), draft.name.trim()));
+  add(diffEntry("Catégorie", before.category, draft.category));
+  add(diffEntry("Unité", recapText(before.unit), recapText(draft.unit)));
+  add(diffEntry("Poids unitaire (g)", recapText(before.unitWeight), recapText(draft.unitWeight)));
+  add(diffEntry("Congelable", recapBool(before.isFreezable), recapBool(draft.isFreezable)));
+  for (const key of MACRO_KEYS) {
+    add(diffEntry(MACRO_LABELS[key], recapText(before.macros[key]), recapText(draft.macros[key])));
+  }
+  return changes;
 }
 
 export function foodFormToBody(id: string, draft: FoodFormDraft): FoodInput {

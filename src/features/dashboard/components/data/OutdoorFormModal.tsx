@@ -5,6 +5,7 @@ import { CATEGORIES } from "../../../../core/domain/categories";
 import { OutdoorActivityInput } from "../../../../core/services/catalogueWriteService";
 import {
   OutdoorFormDraft,
+  buildOutdoorRecap,
   emptyOutdoorDraft,
   outdoorFormToBody,
   outdoorToDraft,
@@ -12,6 +13,7 @@ import {
   validateNewOutdoorCode,
   validateOutdoorForm,
 } from "../../../../core/logic/dashboard/outdoorFormLogic";
+import { ConfirmActionModal } from "./ConfirmActionModal";
 
 export interface OutdoorFormModalProps {
   activity: OutdoorEntry | null;
@@ -31,7 +33,7 @@ export const OutdoorFormModal = ({ activity, activities, onClose, onSubmit }: Ou
   const [code, setCode] = useState("");
   const [codeTouched, setCodeTouched] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
-  const [submitting, setSubmitting] = useState(false);
+  const [confirming, setConfirming] = useState(false);
 
   const suggestedCode = useMemo(
     () => (isCreate ? suggestOutdoorCode(activities) : ""),
@@ -41,7 +43,7 @@ export const OutdoorFormModal = ({ activity, activities, onClose, onSubmit }: Ou
 
   const patch = (update: Partial<OutdoorFormDraft>) => setDraft((prev) => ({ ...prev, ...update }));
 
-  const submit = async () => {
+  const review = () => {
     const found = validateOutdoorForm(draft);
     if (isCreate) {
       const codeError = validateNewOutdoorCode(effectiveCode, activities);
@@ -51,11 +53,18 @@ export const OutdoorFormModal = ({ activity, activities, onClose, onSubmit }: Ou
       setErrors(found);
       return;
     }
+    if (!isCreate && buildOutdoorRecap(activity, effectiveCode, draft).length === 0) {
+      setErrors(["Aucune modification à enregistrer."]);
+      return;
+    }
     setErrors([]);
-    setSubmitting(true);
+    setConfirming(true);
+  };
+
+  const confirmed = async () => {
     const ok = await onSubmit(outdoorFormToBody(effectiveCode, draft));
-    setSubmitting(false);
     if (ok) onClose();
+    return ok;
   };
 
   return (
@@ -68,7 +77,7 @@ export const OutdoorFormModal = ({ activity, activities, onClose, onSubmit }: Ou
             </h2>
             {!isCreate && <p className="text-xs text-slate-400">{activity.code}</p>}
           </div>
-          <button aria-label="Fermer" onClick={onClose} disabled={submitting} className="p-2 hover:bg-black/5 rounded-full transition-colors disabled:opacity-40">
+          <button aria-label="Fermer" onClick={onClose} className="p-2 hover:bg-black/5 rounded-full transition-colors">
             <X size={20} className="text-slate-400" />
           </button>
         </div>
@@ -120,21 +129,30 @@ export const OutdoorFormModal = ({ activity, activities, onClose, onSubmit }: Ou
           <button
             type="button"
             onClick={onClose}
-            disabled={submitting}
-            className="flex-1 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-200 text-slate-600 text-sm font-bold hover:bg-slate-200 transition-colors disabled:opacity-40"
+            className="flex-1 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-200 text-slate-600 text-sm font-bold hover:bg-slate-200 transition-colors"
           >
             Annuler
           </button>
           <button
             type="button"
-            onClick={submit}
-            disabled={submitting}
-            className="flex-1 py-2.5 rounded-xl bg-orange-500 text-white text-sm font-bold hover:bg-orange-600 transition-colors disabled:opacity-40"
+            onClick={review}
+            className="flex-1 py-2.5 rounded-xl bg-orange-500 text-white text-sm font-bold hover:bg-orange-600 transition-colors"
           >
-            {submitting ? "Enregistrement…" : "Enregistrer"}
+            Continuer
           </button>
         </div>
       </div>
+
+      {confirming && (
+        <ConfirmActionModal
+          title={isCreate ? "Confirmer l'ajout de l'activité" : "Confirmer la modification"}
+          intro={isCreate ? undefined : "Modifications à appliquer :"}
+          recap={buildOutdoorRecap(activity, effectiveCode, draft)}
+          confirmLabel={isCreate ? "Ajouter" : "Enregistrer"}
+          onConfirm={confirmed}
+          onCancel={() => setConfirming(false)}
+        />
+      )}
     </div>
   );
 };

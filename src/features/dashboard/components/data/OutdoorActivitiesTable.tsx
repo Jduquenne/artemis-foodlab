@@ -5,7 +5,7 @@ import { getCategoryById } from "../../../../core/domain/categories";
 import { useCatalogueOutdoor } from "../../../../shared/hooks/useCatalogueOutdoor";
 import { OutdoorRow } from "./OutdoorRow";
 import { OutdoorFormModal } from "./OutdoorFormModal";
-import { ConfirmDeleteOutdoorModal } from "./ConfirmDeleteOutdoorModal";
+import { ConfirmActionModal } from "./ConfirmActionModal";
 
 export const OutdoorActivitiesTable = () => {
   const { activities, create, save, remove } = useCatalogueOutdoor();
@@ -84,10 +84,22 @@ export const OutdoorActivitiesTable = () => {
         />
       )}
       {pendingDelete && (
-        <ConfirmDeleteOutdoorModal
-          activity={pendingDelete}
+        <ConfirmActionModal
+          title="Confirmer la suppression de l'activité"
+          recap={[
+            { label: "Activité", value: pendingDelete.name },
+            { label: "Identifiant", value: pendingDelete.code },
+            { label: "Catégorie", value: getCategoryById(pendingDelete.categoryId)?.name ?? pendingDelete.categoryId },
+          ]}
+          consequence="L'activité sera retirée du catalogue. Si un planning l'utilise encore, l'API refusera la suppression."
+          confirmLabel="Supprimer"
+          danger
+          onConfirm={async () => {
+            const ok = await remove(pendingDelete.code);
+            if (ok) setPendingDelete(null);
+            return ok;
+          }}
           onCancel={() => setPendingDelete(null)}
-          onConfirm={remove}
         />
       )}
     </div>

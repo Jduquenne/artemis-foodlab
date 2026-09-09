@@ -2,6 +2,7 @@ import { OutdoorEntry } from "../../domain/types";
 import { getCategoryById } from "../../domain/categories";
 import { OutdoorActivityInput } from "../../services/catalogueWriteService";
 import { buildRecipeDbId } from "../recipeBuilder/recipeBuilderLogic";
+import { RecapEntry, diffEntry } from "./recap";
 
 export interface OutdoorFormDraft {
   name: string;
@@ -46,4 +47,27 @@ export function validateNewOutdoorCode(code: string, entries: OutdoorEntry[]): s
 
 export function outdoorFormToBody(code: string, draft: OutdoorFormDraft): OutdoorActivityInput {
   return { code: code.trim(), name: draft.name.trim(), categoryId: draft.categoryId };
+}
+
+function categoryLabel(id: string): string {
+  return getCategoryById(id)?.name ?? id;
+}
+
+export function buildOutdoorRecap(
+  original: OutdoorEntry | null,
+  code: string,
+  draft: OutdoorFormDraft,
+): RecapEntry[] {
+  if (original === null) {
+    return [
+      { label: "Identifiant", value: code.trim() },
+      { label: "Nom", value: draft.name.trim() },
+      { label: "Catégorie", value: categoryLabel(draft.categoryId) },
+    ];
+  }
+  const changes: RecapEntry[] = [];
+  const add = (entry: RecapEntry | null) => { if (entry) changes.push(entry); };
+  add(diffEntry("Nom", original.name.trim(), draft.name.trim()));
+  add(diffEntry("Catégorie", categoryLabel(original.categoryId), categoryLabel(draft.categoryId)));
+  return changes;
 }

@@ -8,11 +8,11 @@ export interface UserRowProps {
   user: AdminUser;
   isSelf: boolean;
   isLastAdmin: boolean;
-  onSetRole: (id: string, role: UserRole) => void;
+  onAskRole: (user: AdminUser, role: UserRole) => void;
   onAskDelete: (user: AdminUser) => void;
 }
 
-export const UserRow = ({ user, isSelf, isLastAdmin, onSetRole, onAskDelete }: UserRowProps) => (
+export const UserRow = ({ user, isSelf, isLastAdmin, onAskRole, onAskDelete }: UserRowProps) => (
   <div className="flex items-center gap-3 px-4 py-3">
     <div className="flex-1 min-w-0">
       <p className="text-sm font-semibold text-slate-800 truncate">
@@ -24,7 +24,7 @@ export const UserRow = ({ user, isSelf, isLastAdmin, onSetRole, onAskDelete }: U
 
     <RoleToggle
       value={user.role}
-      onChange={(role) => onSetRole(user.id, role)}
+      onChange={(role) => onAskRole(user, role)}
       disabled={isSelf}
       guestDisabled={isLastAdmin}
     />

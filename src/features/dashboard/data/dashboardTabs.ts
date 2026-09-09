@@ -1,4 +1,4 @@
-export type DashboardTabId = "overview" | "users" | "data";
+export type DashboardTabId = "overview" | "data";
 
 export interface DashboardTab {
   id: DashboardTabId;
@@ -7,6 +7,5 @@ export interface DashboardTab {
 
 export const DASHBOARD_TABS: DashboardTab[] = [
   { id: "overview", label: "Vue d'ensemble" },
-  { id: "users", label: "Utilisateurs" },
   { id: "data", label: "Données" },
 ];

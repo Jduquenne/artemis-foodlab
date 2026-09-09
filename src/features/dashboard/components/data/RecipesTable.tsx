@@ -4,14 +4,16 @@ import { Plus, Search } from "lucide-react";
 import { RecipeDetails } from "../../../../core/domain/types";
 import {
   RECIPE_KIND_FILTERS,
+  RECIPE_KIND_LABELS,
   RecipeKindFilter,
   filterRecipes,
 } from "../../../../core/logic/dashboard/recipeTableLogic";
 import { recipeToBuilderState } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
+import { getCategoryById } from "../../../../core/domain/categories";
 import { useRecipeBuilderStore } from "../../../../shared/store/useRecipeBuilderStore";
 import { useCatalogueRecipes } from "../../../../shared/hooks/useCatalogueRecipes";
 import { RecipeRow } from "./RecipeRow";
-import { ConfirmDeleteRecipeModal } from "./ConfirmDeleteRecipeModal";
+import { ConfirmActionModal } from "./ConfirmActionModal";
 
 export const RecipesTable = () => {
   const { recipes, remove } = useCatalogueRecipes();
@@ -103,10 +105,22 @@ export const RecipesTable = () => {
       )}
 
       {pendingDelete && (
-        <ConfirmDeleteRecipeModal
-          recipe={pendingDelete}
+        <ConfirmActionModal
+          title="Confirmer la suppression de la recette"
+          recap={[
+            { label: "Recette", value: pendingDelete.name },
+            { label: "Catégorie", value: getCategoryById(pendingDelete.categoryId)?.name ?? pendingDelete.categoryId },
+            { label: "Type", value: RECIPE_KIND_LABELS[pendingDelete.kind] },
+          ]}
+          consequence="La recette sera retirée du catalogue. Si un planning l'utilise encore, l'API refusera la suppression."
+          confirmLabel="Supprimer"
+          danger
+          onConfirm={async () => {
+            const ok = await remove(pendingDelete.code);
+            if (ok) setPendingDelete(null);
+            return ok;
+          }}
           onCancel={() => setPendingDelete(null)}
-          onConfirm={remove}
         />
       )}
     </div>

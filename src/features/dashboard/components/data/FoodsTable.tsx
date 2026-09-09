@@ -4,7 +4,7 @@ import { Food } from "../../../../core/domain/types";
 import { useCatalogueFoods } from "../../../../shared/hooks/useCatalogueFoods";
 import { FoodRow } from "./FoodRow";
 import { FoodFormModal } from "./FoodFormModal";
-import { ConfirmDeleteFoodModal } from "./ConfirmDeleteFoodModal";
+import { ConfirmActionModal } from "./ConfirmActionModal";
 
 export const FoodsTable = () => {
   const { foods, create, save, remove } = useCatalogueFoods();
@@ -76,10 +76,22 @@ export const FoodsTable = () => {
         />
       )}
       {pendingDelete && (
-        <ConfirmDeleteFoodModal
-          food={pendingDelete}
+        <ConfirmActionModal
+          title="Confirmer la suppression de l'aliment"
+          recap={[
+            { label: "Aliment", value: pendingDelete.name },
+            { label: "Identifiant", value: pendingDelete.id },
+            { label: "Catégorie", value: pendingDelete.category },
+          ]}
+          consequence="L'aliment sera retiré du catalogue. Si une recette l'utilise encore, l'API refusera la suppression."
+          confirmLabel="Supprimer"
+          danger
+          onConfirm={async () => {
+            const ok = await remove(pendingDelete.id);
+            if (ok) setPendingDelete(null);
+            return ok;
+          }}
           onCancel={() => setPendingDelete(null)}
-          onConfirm={remove}
         />
       )}
     </div>

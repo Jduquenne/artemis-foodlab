@@ -22,7 +22,7 @@ export const RoleToggle = ({ value, onChange, disabled, guestDisabled }: RoleTog
           key={option.role}
           type="button"
           disabled={optionDisabled}
-          onClick={() => onChange(option.role)}
+          onClick={() => { if (!active) onChange(option.role); }}
           className={`px-2.5 py-1 text-xs font-bold rounded-md transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
             active ? "bg-orange-100 dark:bg-orange-900/30 text-orange-600" : "text-slate-500 hover:text-slate-700"
           }`}

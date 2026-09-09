@@ -3,6 +3,7 @@ import { DATA_SECTIONS, DataSectionId } from "../../data/dataSections";
 import { FoodsTable } from "./FoodsTable";
 import { RecipesTable } from "./RecipesTable";
 import { OutdoorActivitiesTable } from "./OutdoorActivitiesTable";
+import { UsersPanel } from "../users/UsersPanel";
 
 export const DataPanel = () => {
   const [section, setSection] = useState<DataSectionId>("foods");
@@ -30,6 +31,7 @@ export const DataPanel = () => {
         {section === "foods" && <FoodsTable />}
         {section === "recipes" && <RecipesTable />}
         {section === "outdoor" && <OutdoorActivitiesTable />}
+        {section === "users" && <UsersPanel />}
       </div>
     </div>
   );

@@ -5,11 +5,13 @@ import { UserRole } from "../../../../core/services/authService";
 import {
   EMPTY_USER_FORM,
   UserFormDraft,
+  buildUserCreateRecap,
   generatePassword,
   userFormToInput,
   validateUserForm,
 } from "../../../../core/logic/dashboard/userFormLogic";
 import { RoleToggle } from "./RoleToggle";
+import { ConfirmActionModal } from "../data/ConfirmActionModal";
 
 export interface UserFormModalProps {
   onClose: () => void;
@@ -19,21 +21,24 @@ export interface UserFormModalProps {
 export const UserFormModal = ({ onClose, onSubmit }: UserFormModalProps) => {
   const [draft, setDraft] = useState<UserFormDraft>(EMPTY_USER_FORM);
   const [errors, setErrors] = useState<string[]>([]);
-  const [submitting, setSubmitting] = useState(false);
+  const [confirming, setConfirming] = useState(false);
 
   const patch = (update: Partial<UserFormDraft>) => setDraft((prev) => ({ ...prev, ...update }));
 
-  const submit = async () => {
+  const review = () => {
     const found = validateUserForm(draft);
     if (found.length > 0) {
       setErrors(found);
       return;
     }
     setErrors([]);
-    setSubmitting(true);
+    setConfirming(true);
+  };
+
+  const confirmed = async () => {
     const ok = await onSubmit(userFormToInput(draft));
-    setSubmitting(false);
     if (ok) onClose();
+    return ok;
   };
 
   return (
@@ -41,7 +46,7 @@ export const UserFormModal = ({ onClose, onSubmit }: UserFormModalProps) => {
       <div className="bg-white dark:bg-slate-100 w-full max-w-sm rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden">
         <div className="p-5 border-b border-slate-200 flex justify-between items-center shrink-0">
           <h2 className="text-lg font-black text-slate-900">Nouveau compte</h2>
-          <button aria-label="Fermer" onClick={onClose} disabled={submitting} className="p-2 hover:bg-black/5 rounded-full transition-colors disabled:opacity-40">
+          <button aria-label="Fermer" onClick={onClose} className="p-2 hover:bg-black/5 rounded-full transition-colors">
             <X size={20} className="text-slate-400" />
           </button>
         </div>
@@ -98,21 +103,35 @@ export const UserFormModal = ({ onClose, onSubmit }: UserFormModalProps) => {
           <button
             type="button"
             onClick={onClose}
-            disabled={submitting}
-            className="flex-1 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-200 text-slate-600 text-sm font-bold hover:bg-slate-200 transition-colors disabled:opacity-40"
+            className="flex-1 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-200 text-slate-600 text-sm font-bold hover:bg-slate-200 transition-colors"
           >
             Annuler
           </button>
           <button
             type="button"
-            onClick={submit}
-            disabled={submitting}
-            className="flex-1 py-2.5 rounded-xl bg-orange-500 text-white text-sm font-bold hover:bg-orange-600 transition-colors disabled:opacity-40"
+            onClick={review}
+            className="flex-1 py-2.5 rounded-xl bg-orange-500 text-white text-sm font-bold hover:bg-orange-600 transition-colors"
           >
-            {submitting ? "Création…" : "Créer le compte"}
+            Continuer
           </button>
         </div>
       </div>
+
+      {confirming && (
+        <ConfirmActionModal
+          title="Confirmer la création du compte"
+          intro="Un nouveau compte va être créé avec ces informations :"
+          recap={buildUserCreateRecap(draft)}
+          consequence={
+            draft.role === "admin"
+              ? "Ce compte aura les droits administrateur : accès au dashboard, modification du catalogue et gestion des autres comptes."
+              : undefined
+          }
+          confirmLabel="Créer le compte"
+          onConfirm={confirmed}
+          onCancel={() => setConfirming(false)}
+        />
+      )}
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { Food, IngredientCategory, Macronutrients, Unit } from "../../../../core
 import { FoodInput } from "../../../../core/services/catalogueWriteService";
 import {
   FoodFormDraft,
+  buildFoodRecap,
   emptyFoodDraft,
   foodFormToBody,
   foodToDraft,
@@ -11,6 +12,7 @@ import {
   validateFoodForm,
   validateNewFoodId,
 } from "../../../../core/logic/dashboard/foodFormLogic";
+import { ConfirmActionModal } from "./ConfirmActionModal";
 
 export interface FoodFormModalProps {
   food: Food | null;
@@ -36,7 +38,7 @@ export const FoodFormModal = ({ food, foods, onClose, onSubmit }: FoodFormModalP
   const [id, setId] = useState("");
   const [idTouched, setIdTouched] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
-  const [submitting, setSubmitting] = useState(false);
+  const [confirming, setConfirming] = useState(false);
 
   const suggestedId = useMemo(
     () => (isCreate ? suggestFoodId(draft.category, foods) : ""),
@@ -48,7 +50,7 @@ export const FoodFormModal = ({ food, foods, onClose, onSubmit }: FoodFormModalP
   const patchMacro = (key: keyof Macronutrients, value: string) =>
     setDraft((prev) => ({ ...prev, macros: { ...prev.macros, [key]: value } }));
 
-  const submit = async () => {
+  const review = () => {
     const found = validateFoodForm(draft);
     if (isCreate) {
       const idError = validateNewFoodId(effectiveId, foods);
@@ -58,11 +60,18 @@ export const FoodFormModal = ({ food, foods, onClose, onSubmit }: FoodFormModalP
       setErrors(found);
       return;
     }
+    if (!isCreate && buildFoodRecap(food, effectiveId, draft).length === 0) {
+      setErrors(["Aucune modification à enregistrer."]);
+      return;
+    }
     setErrors([]);
-    setSubmitting(true);
+    setConfirming(true);
+  };
+
+  const confirmed = async () => {
     const ok = await onSubmit(foodFormToBody(effectiveId.trim(), draft));
-    setSubmitting(false);
     if (ok) onClose();
+    return ok;
   };
 
   return (
@@ -75,7 +84,7 @@ export const FoodFormModal = ({ food, foods, onClose, onSubmit }: FoodFormModalP
             </h2>
             {!isCreate && <p className="text-xs text-slate-400">{food.id}</p>}
           </div>
-          <button aria-label="Fermer" onClick={onClose} disabled={submitting} className="p-2 hover:bg-black/5 rounded-full transition-colors disabled:opacity-40">
+          <button aria-label="Fermer" onClick={onClose} className="p-2 hover:bg-black/5 rounded-full transition-colors">
             <X size={20} className="text-slate-400" />
           </button>
         </div>
@@ -179,21 +188,30 @@ export const FoodFormModal = ({ food, foods, onClose, onSubmit }: FoodFormModalP
           <button
             type="button"
             onClick={onClose}
-            disabled={submitting}
-            className="flex-1 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-200 text-slate-600 text-sm font-bold hover:bg-slate-200 transition-colors disabled:opacity-40"
+            className="flex-1 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-200 text-slate-600 text-sm font-bold hover:bg-slate-200 transition-colors"
           >
             Annuler
           </button>
           <button
             type="button"
-            onClick={submit}
-            disabled={submitting}
-            className="flex-1 py-2.5 rounded-xl bg-orange-500 text-white text-sm font-bold hover:bg-orange-600 transition-colors disabled:opacity-40"
+            onClick={review}
+            className="flex-1 py-2.5 rounded-xl bg-orange-500 text-white text-sm font-bold hover:bg-orange-600 transition-colors"
           >
-            {submitting ? "Enregistrement…" : "Enregistrer"}
+            Continuer
           </button>
         </div>
       </div>
+
+      {confirming && (
+        <ConfirmActionModal
+          title={isCreate ? "Confirmer l'ajout de l'aliment" : "Confirmer la modification"}
+          intro={isCreate ? undefined : "Modifications à appliquer :"}
+          recap={buildFoodRecap(food, effectiveId, draft)}
+          confirmLabel={isCreate ? "Ajouter" : "Enregistrer"}
+          onConfirm={confirmed}
+          onCancel={() => setConfirming(false)}
+        />
+      )}
     </div>
   );
 };

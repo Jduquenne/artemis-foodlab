@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { DASHBOARD_TABS, DashboardTabId } from "./data/dashboardTabs";
 import { OverviewPanel } from "./components/overview/OverviewPanel";
-import { UsersPanel } from "./components/users/UsersPanel";
 import { DataPanel } from "./components/data/DataPanel";
 
 export const DashboardModule = () => {
@@ -32,7 +31,6 @@ export const DashboardModule = () => {
 
       <div className="flex-1 min-h-0">
         {tab === "overview" && <OverviewPanel />}
-        {tab === "users" && <UsersPanel />}
         {tab === "data" && <DataPanel />}
       </div>
     </div>

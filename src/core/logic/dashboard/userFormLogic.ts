@@ -1,5 +1,11 @@
 import { CreateUserInput, PASSWORD_MIN_LENGTH } from "../../services/usersService";
 import { UserRole } from "../../services/authService";
+import { RecapEntry } from "./recap";
+
+export const ROLE_LABELS: Record<UserRole, string> = {
+  admin: "Administrateur",
+  guest: "Invité",
+};
 
 export interface UserFormDraft {
   email: string;
@@ -23,6 +29,21 @@ export function validateUserForm(draft: UserFormDraft): string[] {
 
 export function userFormToInput(draft: UserFormDraft): CreateUserInput {
   return { email: draft.email.trim(), password: draft.password, role: draft.role as UserRole };
+}
+
+export function buildUserCreateRecap(draft: UserFormDraft): RecapEntry[] {
+  return [
+    { label: "Adresse e-mail", value: draft.email.trim() },
+    { label: "Rôle", value: draft.role === "admin" ? ROLE_LABELS.admin : ROLE_LABELS.guest },
+    { label: "Mot de passe", value: draft.password },
+  ];
+}
+
+export function buildRoleChangeRecap(email: string, from: UserRole, to: UserRole): RecapEntry[] {
+  return [
+    { label: "Compte", value: email },
+    { label: "Rôle", from: ROLE_LABELS[from], to: ROLE_LABELS[to] },
+  ];
 }
 
 const PASSWORD_ALPHABET = "abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789";

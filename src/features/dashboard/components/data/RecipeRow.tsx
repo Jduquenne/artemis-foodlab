@@ -1,6 +1,7 @@
 import { Image, ImageOff, Pencil, Trash2, Utensils } from "lucide-react";
 import { RecipeDetails } from "../../../../core/domain/types";
 import { getCategoryById } from "../../../../core/domain/categories";
+import { getCardColors } from "../../../../shared/utils/cards/cardColors";
 import { RECIPE_KIND_LABELS } from "../../../../core/logic/dashboard/recipeTableLogic";
 
 export interface RecipeRowProps {
@@ -19,7 +20,8 @@ export const RecipeRow = ({ recipe, onEdit, onAskDelete }: RecipeRowProps) => {
         <p className="text-sm text-slate-800 truncate">{recipe.name}</p>
         <p className="text-xs text-slate-400 truncate flex items-center gap-1.5">
           <span
-            className={`inline-block w-2 h-2 rounded-full shrink-0 ${category?.color ?? "bg-slate-300"}`}
+            className="inline-block w-2 h-2 rounded-full shrink-0"
+            style={{ backgroundColor: getCardColors(recipe.categoryId).band }}
           />
           {category?.name ?? recipe.categoryId}
           <span className="text-slate-300">·</span>

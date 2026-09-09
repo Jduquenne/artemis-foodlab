@@ -1,11 +1,12 @@
 import { useCallback, useState } from "react";
 import { Food } from "../../core/domain/types";
 import { typedFoodDb } from "../../core/typed-db/typedFoodDb";
-import { FoodInput, deleteFood, updateFood } from "../../core/services/catalogueWriteService";
+import { FoodInput, createFood, deleteFood, updateFood } from "../../core/services/catalogueWriteService";
 import { syncCatalogueFromApi } from "../../core/services/catalogueSyncService";
 
 export interface UseCatalogueFoodsResult {
   foods: Food[];
+  create: (body: FoodInput) => Promise<boolean>;
   save: (id: string, body: FoodInput) => Promise<boolean>;
   remove: (id: string) => Promise<boolean>;
 }
@@ -16,6 +17,17 @@ function snapshot(): Food[] {
 
 export function useCatalogueFoods(): UseCatalogueFoodsResult {
   const [foods, setFoods] = useState<Food[]>(snapshot);
+
+  const create = useCallback(async (body: FoodInput) => {
+    try {
+      await createFood(body);
+      await syncCatalogueFromApi();
+      setFoods(snapshot());
+      return true;
+    } catch {
+      return false;
+    }
+  }, []);
 
   const save = useCallback(async (id: string, body: FoodInput) => {
     try {
@@ -39,5 +51,5 @@ export function useCatalogueFoods(): UseCatalogueFoodsResult {
     }
   }, []);
 
-  return { foods, save, remove };
+  return { foods, create, save, remove };
 }

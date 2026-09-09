@@ -12,6 +12,10 @@ export interface FoodInput {
   macros: { kcal: number; proteins: number; lipids: number; carbohydrates: number; fibers: number };
 }
 
+export function createFood(body: FoodInput): Promise<Food> {
+  return apiFetchJson<Food>("/foods", { method: "POST", body });
+}
+
 export function updateFood(id: string, body: FoodInput): Promise<Food> {
   return apiFetchJson<Food>(`/foods/${id}`, { method: "PUT", body });
 }

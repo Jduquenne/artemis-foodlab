@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Search } from "lucide-react";
+import { Plus, Search } from "lucide-react";
 import { Food } from "../../../../core/domain/types";
 import { useCatalogueFoods } from "../../../../shared/hooks/useCatalogueFoods";
 import { FoodRow } from "./FoodRow";
@@ -7,8 +7,9 @@ import { FoodFormModal } from "./FoodFormModal";
 import { ConfirmDeleteFoodModal } from "./ConfirmDeleteFoodModal";
 
 export const FoodsTable = () => {
-  const { foods, save, remove } = useCatalogueFoods();
+  const { foods, create, save, remove } = useCatalogueFoods();
   const [query, setQuery] = useState("");
+  const [creating, setCreating] = useState(false);
   const [editing, setEditing] = useState<Food | null>(null);
   const [pendingDelete, setPendingDelete] = useState<Food | null>(null);
 
@@ -35,6 +36,15 @@ export const FoodsTable = () => {
             className="w-full pl-8 pr-3 py-1.5 rounded-lg border border-slate-200 bg-white dark:bg-slate-100 text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
           />
         </div>
+
+        <button
+          type="button"
+          onClick={() => setCreating(true)}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-500 text-white text-xs font-bold hover:bg-orange-600 transition-colors shrink-0"
+        >
+          <Plus size={14} />
+          Ajouter
+        </button>
       </header>
 
       {filtered.length === 0 ? (
@@ -49,7 +59,22 @@ export const FoodsTable = () => {
         </div>
       )}
 
-      {editing && <FoodFormModal food={editing} onClose={() => setEditing(null)} onSubmit={save} />}
+      {creating && (
+        <FoodFormModal
+          food={null}
+          foods={foods}
+          onClose={() => setCreating(false)}
+          onSubmit={(body) => create(body)}
+        />
+      )}
+      {editing && (
+        <FoodFormModal
+          food={editing}
+          foods={foods}
+          onClose={() => setEditing(null)}
+          onSubmit={(body) => save(editing.id, body)}
+        />
+      )}
       {pendingDelete && (
         <ConfirmDeleteFoodModal
           food={pendingDelete}

@@ -13,6 +13,39 @@ export interface FoodFormDraft {
 
 const MACRO_KEYS: (keyof Macronutrients)[] = ["kcal", "proteins", "lipids", "carbohydrates", "fibers"];
 
+export function emptyFoodDraft(): FoodFormDraft {
+  return {
+    name: "",
+    category: IngredientCategory.UNKNOWN,
+    unit: "",
+    unitWeight: "",
+    isFreezable: false,
+    macros: { kcal: "", proteins: "", lipids: "", carbohydrates: "", fibers: "" },
+  };
+}
+
+export function suggestFoodId(category: IngredientCategory, foods: Food[]): string {
+  const siblings = foods.filter((food) => food.category === category && /^[a-z]+-\d+$/.test(food.id));
+  if (siblings.length === 0) return "";
+  const prefix = siblings[0].id.split("-")[0];
+  let max = 0;
+  let width = 3;
+  for (const food of siblings) {
+    const [, digits] = food.id.split("-");
+    width = Math.max(width, digits.length);
+    max = Math.max(max, Number(digits));
+  }
+  return `${prefix}-${String(max + 1).padStart(width, "0")}`;
+}
+
+export function validateNewFoodId(id: string, foods: Food[]): string | null {
+  const trimmed = id.trim();
+  if (!trimmed) return "L'identifiant est requis.";
+  if (!/^[a-z]+-\d+$/.test(trimmed)) return "L'identifiant doit être au format « fv-014 ».";
+  if (foods.some((food) => food.id === trimmed)) return "Cet identifiant est déjà utilisé.";
+  return null;
+}
+
 export function foodToDraft(food: Food): FoodFormDraft {
   return {
     name: food.name,

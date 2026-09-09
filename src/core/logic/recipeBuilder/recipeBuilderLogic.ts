@@ -2,11 +2,13 @@ import {
   Food,
   IngredientCategory,
   Macronutrients,
+  MealType,
   Preparation,
   RecipeDetails,
   RecipeKind,
   Unit,
 } from "../../domain/types";
+import { getCategoryById } from "../../domain/categories";
 import {
   DraftIngredient,
   RecipeBuilderState,
@@ -111,38 +113,6 @@ export function buildImageName(
 
 const foodDb: Record<string, Food> = typedFoodDb;
 
-const INGREDIENT_LIST_CATEGORY_ORDER: IngredientCategory[][] = [
-  [
-    IngredientCategory.INTERNET,
-    IngredientCategory.DELI,
-    IngredientCategory.MEAT,
-    IngredientCategory.FISH,
-  ],
-  [
-    IngredientCategory.RECIPE,
-    IngredientCategory.BAKERY,
-    IngredientCategory.STARCH,
-  ],
-  [IngredientCategory.FRUIT_VEGETABLE, IngredientCategory.FROZEN],
-  [IngredientCategory.DAIRY, IngredientCategory.FARM],
-  [
-    IngredientCategory.CANNED,
-    IngredientCategory.DRIED_FRUIT,
-    IngredientCategory.SWEET_GROCERY,
-    IngredientCategory.CONDIMENT,
-    IngredientCategory.SPICE,
-    IngredientCategory.AROMATIC_HERB,
-    IngredientCategory.NON_PURCHASE,
-    IngredientCategory.UNKNOWN,
-  ],
-];
-
-function formatIngredientQty(quantity: number | null, unit: Unit): string {
-  if (quantity == null) return "";
-  if (unit === Unit.NONE) return ` - ${quantity}`;
-  return ` - ${quantity}${formatUnitSuffix(quantity, unit)}`;
-}
-
 export function recipeToBuilderState(
   recipeId: string,
   recipe: RecipeDetails,
@@ -179,6 +149,58 @@ export function getBuilderRecipeCode(state: RecipeBuilderState): string {
   return buildRecipeDbId(state.categoryId, state.recipeNumber);
 }
 
+export function suggestNextRecipeNumber(categoryId: string): string {
+  const prefix = (CATEGORY_PREFIX[categoryId] ?? categoryId).toLowerCase();
+  const pattern = new RegExp(`^${prefix}-0*(\\d+)$`);
+  let max = 0;
+  for (const code of Object.keys(typedRecipesDb)) {
+    const match = pattern.exec(code);
+    if (match) max = Math.max(max, Number(match[1]));
+  }
+  return String(max + 1);
+}
+
+export const RECIPE_KIND_LABELS: Record<RecipeKind, string> = {
+  [RecipeKind.DISH]: "Plat",
+  [RecipeKind.INGREDIENT]: "Ingrédient",
+  [RecipeKind.BASE]: "Base",
+};
+
+export const MEAL_TYPE_LABELS: Record<MealType, string> = {
+  [MealType.BREAKFAST]: "Matin",
+  [MealType.LUNCH]: "Midi",
+  [MealType.DINNER]: "Soir",
+  [MealType.SNACK]: "En-cas",
+};
+
+export function summarizeBuilderState(state: RecipeBuilderState): { label: string; value: string }[] {
+  const isBase = state.kind === RecipeKind.BASE;
+  const rows: { label: string; value: string }[] = [
+    { label: "Identifiant", value: buildRecipeDbId(state.categoryId, state.recipeNumber) },
+    { label: "Nom", value: state.name.trim() || "—" },
+    { label: "Catégorie", value: getCategoryById(state.categoryId)?.name ?? state.categoryId },
+    { label: "Type", value: RECIPE_KIND_LABELS[state.kind] },
+    { label: "Portions", value: String(state.defaultPortions) },
+  ];
+  if (!isBase) {
+    rows.push({
+      label: "Repas",
+      value: state.mealTypes.map((t) => MEAL_TYPE_LABELS[t]).join(", ") || "—",
+    });
+  }
+  const options = [
+    !isBase && state.isDessert ? "Dessert" : null,
+    state.batchCooking ? "Batch cooking" : null,
+    state.fromBook ? `Livre${state.bookPage ? ` p.${state.bookPage}` : ""}` : null,
+  ].filter(Boolean) as string[];
+  if (options.length) rows.push({ label: "Options", value: options.join(", ") });
+  rows.push({
+    label: "Ingrédients",
+    value: String(state.ingredients.filter((ing) => ing.name.trim()).length),
+  });
+  return rows;
+}
+
 export function validateBuilderState(state: RecipeBuilderState): string[] {
   const errors: string[] = [];
   if (!state.name.trim()) errors.push("Le nom est obligatoire.");
@@ -188,7 +210,11 @@ export function validateBuilderState(state: RecipeBuilderState): string[] {
   if (state.kind !== RecipeKind.BASE && state.mealTypes.length === 0) {
     errors.push("Sélectionne au moins un type de repas.");
   }
+  if (state.fromBook && (state.bookPage == null || state.bookPage <= 0)) {
+    errors.push("Indique la page du livre.");
+  }
   const named = state.ingredients.filter((ing) => ing.name.trim());
+  if (named.length === 0) errors.push("Ajoute au moins un ingrédient.");
   if (named.some((ing) => !getIngredientCategoryId(ing.category))) {
     errors.push("Un ingrédient a une catégorie inconnue de l'API — resynchronise le catalogue.");
   }
@@ -405,52 +431,6 @@ export function formatIngredientsForIngredientCard(
   }
 
   return result;
-}
-
-export function generateCsvOutput(state: RecipeBuilderState): string {
-  const isBase = state.kind === RecipeKind.BASE;
-  const cells: string[] = [
-    buildRecipeId(state.categoryId, state.recipeNumber),
-    state.name,
-    String(state.defaultPortions),
-    ...(isBase ? [] : [state.mealTypes.join("/")]),
-    state.kind,
-    ...(isBase ? [] : [state.isDessert ? "TRUE" : "FALSE"]),
-    state.batchCooking ? "TRUE" : "FALSE",
-  ];
-  for (const ing of state.ingredients) {
-    cells.push(ing.name);
-    cells.push(ing.preparation ?? "");
-    const qtyUnit =
-      ing.quantity != null
-        ? `${ing.quantity}${ing.unit && ing.unit !== Unit.G ? " " + ing.unit : ""}`.trim()
-        : "";
-    cells.push(qtyUnit);
-  }
-  return cells.join("\t");
-}
-
-export function generateIngredientListOutput(
-  state: RecipeBuilderState,
-): string {
-  const groups = new Map<IngredientCategory, string[]>();
-  for (const ing of state.ingredients) {
-    const label = ing.preparation
-      ? `${ing.name} (${ing.preparation})`
-      : ing.name;
-    const qty = formatIngredientQty(ing.quantity, ing.unit);
-    const line = `${label}${qty}`;
-    if (!groups.has(ing.category)) groups.set(ing.category, []);
-    groups.get(ing.category)!.push(line);
-  }
-  return INGREDIENT_LIST_CATEGORY_ORDER.map((superGroup) =>
-    superGroup
-      .filter((cat) => groups.has(cat))
-      .map((cat) => groups.get(cat)!.join("\n"))
-      .join("\n"),
-  )
-    .filter((block) => block.length > 0)
-    .join("\n\n");
 }
 
 export function computeDraftTotal(ingredients: DraftIngredient[]): {

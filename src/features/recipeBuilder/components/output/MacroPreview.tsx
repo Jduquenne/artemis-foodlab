@@ -35,43 +35,39 @@ export const MacroPreview = ({ ingredients, defaultPortions }: MacroPreviewProps
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex items-center justify-between">
-        <h2 className="text-xs font-black text-slate-500 uppercase tracking-wide">Macros estimées</h2>
-        <div className="flex rounded-xl overflow-hidden border border-slate-200">
-          <button
-            type="button"
-            onClick={() => setMode("portion")}
-            className={`px-2.5 py-1 text-xs font-bold transition-colors ${
-              mode === "portion"
-                ? "bg-orange-500 text-white"
-                : "bg-white dark:bg-slate-100 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-200"
-            }`}
-          >
-            Par portion
-          </button>
-          <button
-            type="button"
-            onClick={() => setMode("total")}
-            className={`px-2.5 py-1 text-xs font-bold border-l border-slate-200 transition-colors ${
-              mode === "total"
-                ? "bg-orange-500 text-white"
-                : "bg-white dark:bg-slate-100 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-200"
-            }`}
-          >
-            Total ({portions})
-          </button>
+      <div className="flex items-center justify-between gap-2">
+        <span className="text-[10px] font-black text-slate-400 uppercase tracking-wide">Macros estimées</span>
+        <div className="flex rounded-lg overflow-hidden border border-slate-200 shrink-0">
+          {(["portion", "total"] as const).map((m) => (
+            <button
+              key={m}
+              type="button"
+              onClick={() => setMode(m)}
+              className={`px-2 py-0.5 text-[10px] font-bold transition-colors ${
+                mode === m
+                  ? "bg-orange-500 text-white"
+                  : "bg-white dark:bg-slate-100 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-200"
+              }`}
+            >
+              {m === "portion" ? "Portion" : `Total ×${portions}`}
+            </button>
+          ))}
         </div>
       </div>
 
       {!hasIngredients ? (
-        <p className="text-xs text-slate-400 text-center py-1">Aucun ingrédient ajouté</p>
+        <p className="text-xs text-slate-400 py-1.5">Aucun ingrédient ajouté</p>
       ) : (
-        <div className="flex gap-1.5 sm:gap-2">
+        <div className="flex justify-between gap-2">
           {MACRO_LABELS.map(({ key, label, unit }) => (
-            <div key={key} className="flex-1 flex flex-col items-center bg-slate-100 dark:bg-slate-200 rounded-xl px-1 sm:px-2 py-1 sm:py-1.5">
-              <span className="text-[8px] sm:text-[10px] font-medium text-slate-400 uppercase tracking-wide leading-none mb-0.5">{label}</span>
-              <span className="text-xs sm:text-sm font-bold text-slate-800 leading-none tabular-nums">
-                {Math.round(displayed[key])}{unit}
+            <div
+              key={key}
+              className="flex-1 flex flex-col items-center gap-0.5 bg-slate-100 dark:bg-slate-200 rounded-xl px-1 py-1.5"
+            >
+              <span className="text-[9px] font-medium text-slate-400 uppercase tracking-wide leading-none">{label}</span>
+              <span className="text-base font-bold text-slate-800 leading-none tabular-nums">
+                {Math.round(displayed[key])}
+                {unit}
               </span>
             </div>
           ))}
@@ -80,7 +76,7 @@ export const MacroPreview = ({ ingredients, defaultPortions }: MacroPreviewProps
 
       {missing > 0 && hasIngredients && (
         <p className="text-[10px] text-slate-400">
-          {missing} ingrédient{missing > 1 ? "s" : ""} sans données (foodId manquant ou unité non convertible)
+          {missing} ingrédient{missing > 1 ? "s" : ""} sans données
         </p>
       )}
     </div>

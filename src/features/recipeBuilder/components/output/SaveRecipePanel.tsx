@@ -1,21 +1,21 @@
 import { useMemo, useState } from "react";
 import { Save, X, Check, Loader2, Trash2, AlertTriangle } from "lucide-react";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
-import { getBuilderRecipeCode, validateBuilderState } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
+import { getBuilderRecipeCode, summarizeBuilderState, validateBuilderState } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
 import { typedRecipesDb } from "../../../../core/typed-db/typedRecipesDb";
 import { useRecipeBuilderSave } from "../../../../shared/hooks/useRecipeBuilderSave";
 import { useRecipeBuilderStore } from "../../../../shared/store/useRecipeBuilderStore";
-import { PhotoField } from "./PhotoField";
 
 export interface SaveRecipePanelProps {
   state: RecipeBuilderState;
+  mealPhoto: File | null;
+  bookPhoto: File | null;
+  onSaved: () => void;
 }
 
-export const SaveRecipePanel = ({ state }: SaveRecipePanelProps) => {
+export const SaveRecipePanel = ({ state, mealPhoto, bookPhoto, onSaved }: SaveRecipePanelProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
-  const [mealPhoto, setMealPhoto] = useState<File | null>(null);
-  const [bookPhoto, setBookPhoto] = useState<File | null>(null);
   const { status, validationErrors, save, remove, reset } = useRecipeBuilderSave();
   const resetBuilder = useRecipeBuilderStore((s) => s.reset);
 
@@ -23,21 +23,17 @@ export const SaveRecipePanel = ({ state }: SaveRecipePanelProps) => {
   const existing = typedRecipesDb[code];
   const isExisting = Boolean(existing?.apiId);
   const liveErrors = useMemo(() => validateBuilderState(state), [state]);
+  const recap = useMemo(() => summarizeBuilderState(state), [state]);
 
   const close = () => {
     setIsOpen(false);
     setConfirmDelete(false);
-    setMealPhoto(null);
-    setBookPhoto(null);
     reset();
   };
 
   const handleSave = async () => {
     const ok = await save(state, { mealPhoto, bookPhoto });
-    if (ok) {
-      setMealPhoto(null);
-      setBookPhoto(null);
-    }
+    if (ok) onSaved();
   };
 
   const handleDelete = async () => {
@@ -93,19 +89,20 @@ export const SaveRecipePanel = ({ state }: SaveRecipePanelProps) => {
                 </div>
               )}
 
-              <PhotoField
-                label="Photo du plat"
-                file={mealPhoto}
-                hasExisting={Boolean(existing?.assets?.mealPhoto)}
-                onPick={setMealPhoto}
-              />
-              {state.fromBook && (
-                <PhotoField
-                  label="Photo du livre"
-                  file={bookPhoto}
-                  hasExisting={Boolean(existing?.assets?.bookPhoto)}
-                  onPick={setBookPhoto}
-                />
+              <dl className="flex flex-col divide-y divide-slate-100 rounded-xl border border-slate-200 overflow-hidden">
+                {recap.map(({ label, value }) => (
+                  <div key={label} className="flex gap-3 px-3 py-1.5 text-xs">
+                    <dt className="w-24 shrink-0 text-slate-400">{label}</dt>
+                    <dd className="flex-1 min-w-0 font-medium text-slate-700 break-words">{value}</dd>
+                  </div>
+                ))}
+              </dl>
+
+              {(mealPhoto || bookPhoto) && (
+                <div className="flex flex-col gap-1 px-3 py-2.5 bg-slate-50 dark:bg-slate-200 rounded-xl text-xs text-slate-500">
+                  {mealPhoto && <span>Nouvelle photo du plat : {mealPhoto.name}</span>}
+                  {bookPhoto && <span>Nouvelle photo du livre : {bookPhoto.name}</span>}
+                </div>
               )}
 
               {status === "error" && validationErrors.length === 0 && (

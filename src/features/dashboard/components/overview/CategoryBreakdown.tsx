@@ -1,4 +1,5 @@
 import { CategoryBreakdownRow } from "../../../../core/logic/dashboard/dashboardStats";
+import { getCardColors } from "../../../../shared/utils/cards/cardColors";
 
 export interface CategoryBreakdownProps {
   rows: CategoryBreakdownRow[];
@@ -16,8 +17,11 @@ export const CategoryBreakdown = ({ rows }: CategoryBreakdownProps) => {
             <span className="w-28 shrink-0 truncate text-xs text-slate-600">{row.name}</span>
             <div className="flex-1 h-1.5 rounded-full bg-slate-100 overflow-hidden">
               <div
-                className={`h-full rounded-full origin-left ${row.color}`}
-                style={{ transform: `scaleX(${row.recipes / max})` }}
+                className="h-full rounded-full origin-left"
+                style={{
+                  backgroundColor: getCardColors(row.id).band,
+                  transform: `scaleX(${row.recipes / max})`,
+                }}
               />
             </div>
             <span className="w-6 shrink-0 text-right text-xs tabular-nums text-slate-500">{row.recipes}</span>

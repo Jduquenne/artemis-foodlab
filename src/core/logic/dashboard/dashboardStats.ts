@@ -34,7 +34,6 @@ export function getCatalogueHealth(issues: CatalogueIssue[]): CatalogueHealth {
 export interface CategoryBreakdownRow {
   id: string;
   name: string;
-  color: string;
   recipes: number;
 }
 
@@ -69,7 +68,6 @@ export function getCategoryBreakdown(
     .map((category) => ({
       id: category.id,
       name: category.name,
-      color: category.color,
       recipes: perCategory.get(category.id) ?? 0,
     }))
     .sort((a, b) => b.recipes - a.recipes);

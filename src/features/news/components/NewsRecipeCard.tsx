@@ -1,6 +1,7 @@
 import { ChevronRight } from "lucide-react";
 import { RecipeDetails } from "../../../core/domain/types";
 import { getCategoryById } from "../../../core/domain/categories";
+import { getCardColors } from "../../../shared/utils/cards/cardColors";
 import { AsyncImage } from "../../../shared/components/ui/AsyncImage";
 
 export interface NewsRecipeCardProps {
@@ -20,7 +21,10 @@ export const NewsRecipeCard = ({ recipe, onClick }: NewsRecipeCardProps) => {
       <div className="flex-1 min-w-0">
         <p className="text-sm font-medium text-slate-800 truncate">{recipe.name}</p>
         {category && (
-          <span className={`inline-block mt-0.5 px-2 py-0.5 rounded-full text-xs text-white font-medium ${category.color}`}>
+          <span
+            className="inline-block mt-0.5 px-2 py-0.5 rounded-full text-xs text-white font-medium"
+            style={{ backgroundColor: getCardColors(recipe.categoryId).band }}
+          >
             {category.name}
           </span>
         )}

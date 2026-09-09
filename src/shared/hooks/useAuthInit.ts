@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { registerApiErrorHandler, registerAuthExpiredHandler } from "../../core/services/apiClient";
 import { silentRefresh } from "../../core/services/authService";
 import { syncCatalogueFromApi } from "../../core/services/catalogueSyncService";
+import { syncFreezerFromApi } from "../../core/services/freezerService";
 import { syncHouseholdFlagsFromApi } from "../../core/services/householdService";
 import { syncJournalOverridesFromApi, syncJournalSettingsFromApi } from "../../core/services/journalService";
 import { fetchCurrentPeriod } from "../../core/services/shoppingPeriodService";
@@ -47,6 +48,7 @@ export function useAuthInit(): AuthStatus {
     if (status !== "authenticated") return;
     syncCatalogueFromApi().then(() => useNewsStore.getState().syncHasNew());
     syncHouseholdFlagsFromApi();
+    syncFreezerFromApi();
 
     syncJournalSettingsFromApi()
       .then((settings) => useJournalStore.getState().replaceSettings(settings))

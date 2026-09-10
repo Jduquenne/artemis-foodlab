@@ -20,6 +20,8 @@ export class ApiError extends Error {
   }
 }
 
+import { getStoredRefreshToken, setStoredRefreshToken } from "./refreshTokenStore";
+
 const API_URL = import.meta.env.VITE_API_URL as string;
 
 const FALLBACK_MESSAGES: Record<ApiErrorCode, string> = {
@@ -34,8 +36,14 @@ const FALLBACK_MESSAGES: Record<ApiErrorCode, string> = {
   NETWORK_ERROR: "Connexion impossible — vérifie ta connexion réseau.",
 };
 
+export interface TokenRefreshResult {
+  accessToken: string;
+  refreshToken: string;
+  user: unknown;
+}
+
 let accessToken: string | null = null;
-let refreshPromise: Promise<string | null> | null = null;
+let refreshPromise: Promise<TokenRefreshResult | null> | null = null;
 let onAuthExpired: (() => void) | null = null;
 let onApiError: ((error: ApiError) => void) | null = null;
 
@@ -62,22 +70,30 @@ async function parseApiError(res: Response): Promise<ApiError> {
   return new ApiError(code, message, res.status);
 }
 
-async function refreshAccessToken(): Promise<string | null> {
+export function performTokenRefresh(): Promise<TokenRefreshResult | null> {
   if (!refreshPromise) {
-    refreshPromise = fetch(`${API_URL}/auth/refresh`, {
-      method: "POST",
-      credentials: "include",
-    })
-      .then(async (res) => {
-        if (!res.ok) return null;
-        const data = await res.json() as { accessToken: string };
-        accessToken = data.accessToken;
-        return accessToken;
-      })
-      .catch(() => null)
-      .finally(() => {
-        refreshPromise = null;
-      });
+    refreshPromise = (async () => {
+      const stored = getStoredRefreshToken();
+      const res = await fetch(`${API_URL}/auth/refresh`, {
+        method: "POST",
+        credentials: "include",
+        headers: stored ? { "Content-Type": "application/json" } : undefined,
+        body: stored ? JSON.stringify({ refreshToken: stored }) : undefined,
+      }).catch(() => null);
+
+      if (!res || !res.ok) {
+        accessToken = null;
+        setStoredRefreshToken(null);
+        return null;
+      }
+
+      const data = await res.json() as TokenRefreshResult;
+      accessToken = data.accessToken;
+      setStoredRefreshToken(data.refreshToken ?? null);
+      return data;
+    })().finally(() => {
+      refreshPromise = null;
+    });
   }
   return refreshPromise;
 }
@@ -108,9 +124,8 @@ export async function apiFetch(path: string, init: ApiFetchInit = {}, retried = 
   }
 
   if (res.status === 401 && !retried && !path.startsWith("/auth/")) {
-    const newToken = await refreshAccessToken();
-    if (newToken) return apiFetch(path, init, true);
-    accessToken = null;
+    const refreshed = await performTokenRefresh();
+    if (refreshed) return apiFetch(path, init, true);
     onAuthExpired?.();
   }
 

@@ -1,4 +1,5 @@
-import { apiFetch, apiFetchJson, setAccessToken } from "./apiClient";
+import { apiFetchJson, performTokenRefresh, setAccessToken } from "./apiClient";
+import { getStoredRefreshToken, setStoredRefreshToken } from "./refreshTokenStore";
 
 export type UserRole = "admin" | "guest";
 
@@ -12,6 +13,7 @@ export interface AuthUser {
 
 interface LoginResponse {
   accessToken: string;
+  refreshToken?: string;
   user: AuthUser;
 }
 
@@ -21,13 +23,18 @@ export interface UpdateMeInput {
   email?: string;
 }
 
+function adoptSession(data: LoginResponse): AuthUser {
+  setAccessToken(data.accessToken);
+  setStoredRefreshToken(data.refreshToken ?? null);
+  return data.user;
+}
+
 export async function login(email: string, password: string): Promise<AuthUser> {
   const data = await apiFetchJson<LoginResponse>("/auth/login", {
     method: "POST",
     body: { email, password },
   });
-  setAccessToken(data.accessToken);
-  return data.user;
+  return adoptSession(data);
 }
 
 export async function updateMe(
@@ -43,31 +50,23 @@ export async function changePassword(currentPassword: string, newPassword: strin
     body: { currentPassword, newPassword },
     suppressGlobalError: true,
   });
-  setAccessToken(data.accessToken);
-  return data.user;
+  return adoptSession(data);
 }
 
 export async function logout(): Promise<void> {
+  const stored = getStoredRefreshToken();
   try {
-    await apiFetch("/auth/logout", { method: "POST", suppressGlobalError: true });
+    await apiFetchJson<void>("/auth/logout", {
+      method: "POST",
+      body: stored ? { refreshToken: stored } : undefined,
+      suppressGlobalError: true,
+    });
   } finally {
     setAccessToken(null);
+    setStoredRefreshToken(null);
   }
 }
 
-let silentRefreshPromise: Promise<AuthUser | null> | null = null;
-
 export function silentRefresh(): Promise<AuthUser | null> {
-  if (!silentRefreshPromise) {
-    silentRefreshPromise = apiFetchJson<LoginResponse>("/auth/refresh", { method: "POST" })
-      .then((data) => {
-        setAccessToken(data.accessToken);
-        return data.user;
-      })
-      .catch(() => null)
-      .finally(() => {
-        silentRefreshPromise = null;
-      });
-  }
-  return silentRefreshPromise;
+  return performTokenRefresh().then((data) => (data ? (data.user as AuthUser) : null));
 }

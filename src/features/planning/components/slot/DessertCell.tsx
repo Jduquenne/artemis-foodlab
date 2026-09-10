@@ -42,7 +42,7 @@ export const DessertCell = ({ recipeId, onRemove, isAddMode, onCopy, isCopySourc
 
     return (
         <div className={`relative flex-1 min-h-0 rounded-lg overflow-hidden group ${isCopySource ? 'ring-2 ring-violet-500' : ''}`}>
-            <AsyncImage src={recipe!.assets.mealPhoto!.url} alt={recipe!.name} className="object-cover" fill />
+            <AsyncImage asset={recipe!.assets.mealPhoto} alt={recipe!.name} className="object-cover" fill />
             <div className="absolute inset-0 bg-white/40 dark:bg-black/50 transition-colors" />
 
             {!isAddMode && !hideActions && !isEditingPersons && (

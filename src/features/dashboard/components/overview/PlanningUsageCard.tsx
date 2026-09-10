@@ -67,7 +67,7 @@ export const PlanningUsageCard = () => {
                   {insights.mostPlanned.map((dish) => (
                     <li key={dish.code} className="flex items-center gap-2.5">
                       <AsyncImage
-                        src={dish.photoUrl}
+                        asset={dish.photo}
                         alt={dish.name}
                         wrapperClassName="w-9 h-9 rounded-lg shrink-0"
                         className="object-cover"

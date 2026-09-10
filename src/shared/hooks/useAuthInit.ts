@@ -8,6 +8,7 @@ import { syncJournalOverridesFromApi, syncJournalSettingsFromApi } from "../../c
 import { fetchCurrentPeriod } from "../../core/services/shoppingPeriodService";
 import { useAuthStore, AuthStatus } from "../store/useAuthStore";
 import { useJournalStore } from "../store/useJournalStore";
+import { useMediaStore } from "../store/useMediaStore";
 import { useMenuStore } from "../store/useMenuStore";
 import { useNewsStore } from "../store/useNewsStore";
 import { useNotificationStore } from "../store/useNotificationStore";
@@ -46,7 +47,11 @@ export function useAuthInit(): AuthStatus {
 
   useEffect(() => {
     if (status !== "authenticated") return;
-    syncCatalogueFromApi().then(() => useNewsStore.getState().syncHasNew());
+    useMediaStore.getState().resolveCatalogue();
+    syncCatalogueFromApi().then(() => {
+      useNewsStore.getState().syncHasNew();
+      useMediaStore.getState().resolveCatalogue();
+    });
     syncHouseholdFlagsFromApi();
     syncFreezerFromApi();
 

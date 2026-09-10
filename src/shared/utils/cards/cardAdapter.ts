@@ -33,10 +33,11 @@ export function recipeToPhotoCardData(
   recipeId: string,
   recipe: RecipeDetails,
   macros: Macronutrients | null,
+  imageHref: string = recipe.assets.mealPhoto?.url ?? "",
 ): SmallCardData {
   const m = macros ?? { kcal: 0, proteins: 0, lipids: 0, carbohydrates: 0, fibers: 0 };
   return {
-    imageHref: recipe.assets.mealPhoto?.url ?? "",
+    imageHref,
     recipeName: recipe.name,
     recipeNumber: extractRecipeNumber(recipeId),
     fibres: Math.round(m.fibers),
@@ -51,6 +52,7 @@ export function recipeToPhotoCardData(
 export function recipeToFoodCardData(
   recipe: RecipeDetails,
   macros: Macronutrients | null,
+  imageHref: string = recipe.assets.mealPhoto?.url ?? "",
 ): FoodCardData {
   const m = macros ?? { kcal: 0, proteins: 0, lipids: 0, carbohydrates: 0, fibers: 0 };
   const ing = recipe.ingredients[0];
@@ -59,7 +61,7 @@ export function recipeToFoodCardData(
       ? ` - ${buildFoodQuantityLabel(ing.quantity, ing.unit)}`
       : '';
   return {
-    imageHref: recipe.assets.mealPhoto?.url ?? "",
+    imageHref,
     foodLabel: recipe.name + quantitySuffix,
     fibres: Math.round(m.fibers),
     glucides: Math.round(m.carbohydrates),
@@ -85,9 +87,10 @@ export function recipeToIngredientsCardData(
 export function recipeToRecetteCardData(
   recipeId: string,
   recipe: RecipeDetails,
+  imageHref: string = recipe.assets.mealPhoto?.url ?? "",
 ): RecetteCardData {
   return {
-    imageHref: recipe.assets.mealPhoto?.url ?? "",
+    imageHref,
     recipeName: recipe.name,
     recipeNumber: extractRecipeNumber(recipeId),
     portions: recipe.defaultPortions,
@@ -100,10 +103,12 @@ export function recipeToRecetteCardData(
 export function recipeToBookCardData(
   recipeId: string,
   recipe: RecipeDetails,
+  imageHref: string = recipe.assets.mealPhoto?.url ?? "",
+  bookImageHref: string = recipe.assets.bookPhoto?.url ?? "",
 ): RecetteBookCardData {
   return {
-    imageHref: recipe.assets.mealPhoto?.url ?? "",
-    bookImageHref: recipe.assets.bookPhoto?.url ?? "",
+    imageHref,
+    bookImageHref,
     recipeName: recipe.name,
     recipeNumber: extractRecipeNumber(recipeId),
     portions: recipe.defaultPortions,

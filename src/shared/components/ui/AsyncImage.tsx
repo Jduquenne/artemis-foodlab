@@ -1,8 +1,12 @@
 import { useCallback, useState } from "react";
 import { ImageOff } from "lucide-react";
+import { RecipeAsset } from "../../../core/domain/types";
+import { useMediaSrc } from "../../hooks/useMediaSrc";
+import { useMediaStore } from "../../store/useMediaStore";
 
 export interface AsyncImageProps {
-  src: string | undefined;
+  src?: string | undefined;
+  asset?: RecipeAsset;
   alt: string;
   className?: string;
   wrapperClassName?: string;
@@ -10,20 +14,27 @@ export interface AsyncImageProps {
   fill?: boolean;
 }
 
-export const AsyncImage = ({ src, alt, className = "", wrapperClassName = "", eager = false, fill = false }: AsyncImageProps) => {
+export const AsyncImage = ({ src, asset, alt, className = "", wrapperClassName = "", eager = false, fill = false }: AsyncImageProps) => {
   const [loadedSrc, setLoadedSrc] = useState<string>();
   const [erroredSrc, setErroredSrc] = useState<string>();
 
+  const resolvedSrc = useMediaSrc(asset) ?? src;
+
   const measure = useCallback(
     (node: HTMLImageElement | null) => {
-      if (!node?.complete || !src) return;
-      if (node.naturalWidth > 0) setLoadedSrc(src);
-      else setErroredSrc(src);
+      if (!node?.complete || !resolvedSrc) return;
+      if (node.naturalWidth > 0) setLoadedSrc(resolvedSrc);
+      else setErroredSrc(resolvedSrc);
     },
-    [src],
+    [resolvedSrc],
   );
 
-  const status = !src ? "error" : loadedSrc === src ? "loaded" : erroredSrc === src ? "error" : "loading";
+  const handleError = useCallback(() => {
+    setErroredSrc(resolvedSrc);
+    useMediaStore.getState().reportFailure(asset?.key);
+  }, [resolvedSrc, asset?.key]);
+
+  const status = !resolvedSrc ? "error" : loadedSrc === resolvedSrc ? "loaded" : erroredSrc === resolvedSrc ? "error" : "loading";
   const position = fill ? "absolute inset-0" : "relative";
 
   return (
@@ -36,12 +47,12 @@ export const AsyncImage = ({ src, alt, className = "", wrapperClassName = "", ea
       ) : (
         <img
           ref={measure}
-          src={src}
+          src={resolvedSrc}
           alt={alt}
           loading={eager ? "eager" : "lazy"}
           decoding="async"
-          onLoad={() => setLoadedSrc(src)}
-          onError={() => setErroredSrc(src)}
+          onLoad={() => setLoadedSrc(resolvedSrc)}
+          onError={handleError}
           className={`absolute inset-0 h-full w-full transition-opacity duration-500 ${status === "loaded" ? "opacity-100" : "opacity-0"} ${className}`}
         />
       )}

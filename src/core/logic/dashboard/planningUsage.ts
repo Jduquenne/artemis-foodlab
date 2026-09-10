@@ -1,4 +1,4 @@
-import { Food, RecipeDetails } from "../../domain/types";
+import { Food, RecipeAsset, RecipeDetails } from "../../domain/types";
 import { Category } from "../../domain/categories";
 import { isDessert, isDish } from "../../domain/recipePredicates";
 import { RecipeUsageItem } from "../../services/planningUsageService";
@@ -7,7 +7,7 @@ export interface DishUsage {
   code: string;
   name: string;
   categoryId: string;
-  photoUrl?: string;
+  photo?: RecipeAsset;
   plannedCount: number;
   lastWeek: string | null;
   foodIds: string[];
@@ -62,7 +62,7 @@ export function buildPlanningUsageInsights(
         code: recipe.code,
         name: recipe.name,
         categoryId: recipe.categoryId,
-        photoUrl: recipe.assets?.mealPhoto?.url,
+        photo: recipe.assets?.mealPhoto,
         plannedCount: item?.plannedCount ?? 0,
         lastWeek: item?.lastWeek ?? null,
         foodIds: [

@@ -63,8 +63,9 @@ Trois couches, sans exception :
 
 ## DB — IndexedDB migrations
 
-- Schéma et version courante : `src/core/services/databaseService.ts` (version 13).
+- Schéma et version courante : `src/core/services/databaseService.ts` (version 13). Une v14 (catégories enum → slug) a été **tentée puis abandonnée** — ne pas la ressusciter sans nouveau cadrage.
 - **Règle absolue** : ne jamais modifier un bloc `.version(n)` existant. Toute évolution de schéma = nouveau `.version(n+1)`.
+- Ajouter un champ non indexé à une table existante ne demande **pas** de nouvelle `.version()` (Dexie ne versionne que les index).
 - Les types de la DB sont isolés dans `core/typed-db/`.
 - Depuis le raccordement API, IndexedDB n'est **qu'un cache de lecture** : la source de vérité est `meals-planning-api`.
 
@@ -75,6 +76,7 @@ Trois couches, sans exception :
 - Toutes les routes utilisent `React.lazy` — pas d'import statique de page.
 - Le tableau des routes est inline dans `src/App.tsx` (`HashRouter`, base `/artemis-foodlab/`).
 - `/recipe-builder` et `/dashboard` ne sont montés que pour `user.role === "admin"` (`useIsAdmin`) ; une route inconnue redirige vers `/journal`.
+- Barre latérale = 5 entrées (Journal · Menu · Recettes · Courses · Congélateur) + icône Dashboard en bas pour l'admin. `/recipe-builder` n'y est **pas** : accès par le bouton « Recette » de `RecipeModule` (admin) ou le crayon d'une recette. `/household` redirige vers `/shopping` (le ménager est un onglet de la vue Courses).
 
 ---
 
@@ -128,12 +130,14 @@ Ils vivent dans `core/logic/<feature>/` et sont réutilisés partout — jamais 
 
 `../meals-planning-api` (`E:\Développement\Jason\meals-planning-api`, chemin frère de ce repo, pas un sous-dossier) — API Express + PostgreSQL + Prisma qui remplace les JSON statiques (`src/core/data/`) et l'IndexedDB comme source de vérité. Cahier des charges complet dans ce projet séparé, pas dupliqué ici.
 
-**Statut : déployée (Render + Supabase) et branchée au frontend.** Source de vérité pour recettes, aliments, activités extérieures, articles ménagers, catégories, ainsi que les données utilisateur (planning, congélateur, coches ménagères, journal, courses) et l'authentification par token JWT (`role: "admin" | "guest"`). IndexedDB sert de cache de lecture uniquement. Config : `VITE_API_URL` dans `.env` (URL nue, sans slash final ni préfixe `/api` ; `apiClient` concatène `` `${API_URL}${path}` ``).
+**Statut : EN PRODUCTION depuis le 2026-09-09.** `master` est déployé sur GitHub Pages via `.github/workflows/deploy.yml` (sur push `master`) et sert le bundle branché API ; **`Dev` = branche de travail, `master` = prod**. Source de vérité pour recettes, aliments, activités extérieures, articles ménagers, catégories, ainsi que les données utilisateur (planning, congélateur, coches ménagères, journal, courses) et l'authentification par token JWT (`role: "admin" | "guest"`). IndexedDB sert de cache de lecture uniquement. Config : `VITE_API_URL` — dans `.env` en local, dans **`.env.production` (committé)** pour le build CI (l'URL de l'API n'est pas un secret, elle est dans le bundle) ; aucun secret GitHub. `apiClient` concatène `` `${API_URL}${path}` `` (URL nue, sans slash final ni `/api`).
 
 - **Écritures** : toujours l'API d'abord, cache mis à jour seulement après succès. Pas d'écriture optimiste, pas de file d'attente hors-ligne (hors-ligne = lecture seule).
 - **Erreurs** : `apiClient` appelle `onApiError` → notification globale (`useAuthInit`). Un composant ne catche en local que pour piloter l'état de son formulaire, jamais pour ré-afficher le message. Opt-out du handler global : `apiFetch(path, { suppressGlobalError: true })` (utilisé par l'import).
-- **Photos de recettes** : servies par l'API (`assets.mealPhoto.url` / `assets.bookPhoto.url`, URL absolue à mettre directement dans `<img src>`). Les webp encore présents dans `public/assets/*/meal/` et `public/assets/books/` sont un filet de sécurité temporaire, plus référencés par le code.
+- **Photos de recettes** : servies par l'API (`assets.mealPhoto.url` / `assets.bookPhoto.url`, URL absolue directement dans `<img src>` ; route `/media/…` → 302 vers URL signée courte, **ne pas stocker la cible**). Les webp bundlés ont été purgés.
+- **Cold start Render (free tier)** : 1re requête après ~15 min d'inactivité peut prendre 30-60 s. `useDelayedFlag` affiche un message « Réveil du serveur… » après 5 s (splash + login). Pas de timeout `fetch`.
 - **Import de sauvegarde** : `POST /import` (un seul appel, `SyncPayload` v3) via `core/services/importService.ts` + `features/sync/ImportModal.tsx`. Remplacement par scope, garde anti-écrasement (409 → confirmer avec `overwrite: true`).
+- **Collaboration front/back** : une session Claude Code séparée gère `meals-planning-api`. Ne pas deviner un contrat d'endpoint complexe — écrire un prompt autonome que l'utilisateur relaie, et attendre les payloads réels capturés en prod.
 - Détail des contrats et de l'historique d'intégration : mémoire `project_frontend_api_integration.md` + `reference_api_write_endpoints.md`.
 
 ---

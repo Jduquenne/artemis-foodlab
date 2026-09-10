@@ -113,6 +113,7 @@ export type RecipeAssetKey = "photo" | "ingredientsPhoto" | "instructionsPhoto" 
 
 export interface RecipeAsset {
   url: string;
+  key?: string;
 }
 
 export interface RecipeDetails {

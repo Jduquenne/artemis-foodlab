@@ -87,7 +87,7 @@ export const PlanningDiscoverList = ({ dishes }: PlanningDiscoverListProps) => {
               {visible.map((dish) => (
                 <li key={dish.code} className="flex items-center gap-2.5">
                   <AsyncImage
-                    src={dish.photoUrl}
+                    asset={dish.photo}
                     alt={dish.name}
                     wrapperClassName="w-9 h-9 rounded-lg shrink-0"
                     className="object-cover"
@@ -100,7 +100,7 @@ export const PlanningDiscoverList = ({ dishes }: PlanningDiscoverListProps) => {
                   >
                     {badge(dish)}
                   </span>
-                  {dish.photoUrl && (
+                  {dish.photo && (
                     <a
                       href={`#/recipes/detail/${dish.code}`}
                       target="_blank"

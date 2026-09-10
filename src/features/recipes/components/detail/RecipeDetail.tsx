@@ -14,6 +14,8 @@ import { MacroRow } from '../macro/MacroRow';
 import { RecipeRecetteCard } from '../../../../shared/components/ui/RecipeRecetteCard';
 import { RecipeBookCard } from '../../../../shared/components/ui/RecipeBookCard';
 import { useModalBack } from '../../../../shared/hooks/useModalBack';
+import { useMediaSrc } from '../../../../shared/hooks/useMediaSrc';
+import { useMediaStore } from '../../../../shared/store/useMediaStore';
 
 export const RecipeDetail = () => {
   const { recipeId } = useParams();
@@ -22,7 +24,7 @@ export const RecipeDetail = () => {
 
   const recipe = recipeId ? typedRecipesDb[recipeId] : undefined;
   const mealPhotoUrl = recipe?.assets?.mealPhoto?.url;
-  const instructionsPhotoUrl = recipe?.assets?.instructionsPhoto?.url;
+  const instructionsPhotoUrl = useMediaSrc(recipe?.assets?.instructionsPhoto);
   const categoryId = searchParams.get('category');
   const { isLeaving, goBack } = useModalBack(
     categoryId ? `/recipes/category/${categoryId}` : '/recipes',
@@ -139,6 +141,7 @@ export const RecipeDetail = () => {
           <img
             src={instructionsPhotoUrl}
             alt={recipe.name}
+            onError={() => useMediaStore.getState().reportFailure(recipe.assets.instructionsPhoto?.key)}
             className="flex-[3] min-w-0 max-h-full object-contain rounded-2xl shadow-sm"
           />
         )}

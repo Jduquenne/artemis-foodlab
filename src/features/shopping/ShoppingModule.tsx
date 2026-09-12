@@ -432,11 +432,11 @@ export const ShoppingModule = () => {
                         </div>
                     </div>
 
-                    <div className="flex items-center justify-between mt-3 bg-slate-100 dark:bg-slate-200/60 rounded-2xl p-1">
-                        <div className="flex gap-0.5">
+                    <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between mt-3 bg-slate-100 dark:bg-slate-200/60 rounded-2xl p-1">
+                        <div className="grid grid-cols-3 gap-0.5 sm:flex">
                             <button
                                 onClick={() => setViewMode('meals')}
-                                className={`px-3.5 py-1.5 rounded-xl text-sm font-bold transition-all ${viewMode === 'meals'
+                                className={`px-3.5 py-1.5 rounded-xl text-sm font-bold text-center transition-all ${viewMode === 'meals'
                                         ? 'bg-white dark:bg-slate-100 text-slate-900 shadow-sm'
                                         : 'text-slate-500 hover:text-slate-700'
                                     }`}
@@ -445,7 +445,7 @@ export const ShoppingModule = () => {
                             </button>
                             <button
                                 onClick={() => setViewMode('ingredients')}
-                                className={`px-3.5 py-1.5 rounded-xl text-sm font-bold transition-all ${viewMode === 'ingredients'
+                                className={`px-3.5 py-1.5 rounded-xl text-sm font-bold text-center transition-all ${viewMode === 'ingredients'
                                         ? 'bg-white dark:bg-slate-100 text-slate-900 shadow-sm'
                                         : 'text-slate-500 hover:text-slate-700'
                                     }`}
@@ -454,7 +454,7 @@ export const ShoppingModule = () => {
                             </button>
                             <button
                                 onClick={() => setViewMode('household')}
-                                className={`px-3.5 py-1.5 rounded-xl text-sm font-bold transition-all ${viewMode === 'household'
+                                className={`px-3.5 py-1.5 rounded-xl text-sm font-bold text-center transition-all ${viewMode === 'household'
                                         ? 'bg-white dark:bg-slate-100 text-slate-900 shadow-sm'
                                         : 'text-slate-500 hover:text-slate-700'
                                     }`}
@@ -462,26 +462,28 @@ export const ShoppingModule = () => {
                                 Articles
                             </button>
                         </div>
-                        <div className={`flex gap-0.5 transition-opacity duration-200 ${viewMode === 'ingredients' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                            <button
-                                onClick={() => setIngredientFilter('all')}
-                                className={`px-3.5 py-1.5 rounded-xl text-sm font-bold transition-all ${ingredientFilter === 'all'
-                                        ? 'bg-white dark:bg-slate-100 text-slate-900 shadow-sm'
-                                        : 'text-slate-500 hover:text-slate-700'
-                                    }`}
-                            >
-                                Complète
-                            </button>
-                            <button
-                                onClick={() => setIngredientFilter('missing')}
-                                className={`px-3.5 py-1.5 rounded-xl text-sm font-bold transition-all ${ingredientFilter === 'missing'
-                                        ? 'bg-white dark:bg-slate-100 text-slate-900 shadow-sm'
-                                        : 'text-slate-500 hover:text-slate-700'
-                                    }`}
-                            >
-                                Manquants
-                            </button>
-                        </div>
+                        {viewMode === 'ingredients' && (
+                            <div className="grid grid-cols-2 gap-0.5 sm:flex">
+                                <button
+                                    onClick={() => setIngredientFilter('all')}
+                                    className={`px-3.5 py-1.5 rounded-xl text-sm font-bold text-center transition-all ${ingredientFilter === 'all'
+                                            ? 'bg-white dark:bg-slate-100 text-slate-900 shadow-sm'
+                                            : 'text-slate-500 hover:text-slate-700'
+                                        }`}
+                                >
+                                    Complète
+                                </button>
+                                <button
+                                    onClick={() => setIngredientFilter('missing')}
+                                    className={`px-3.5 py-1.5 rounded-xl text-sm font-bold text-center transition-all ${ingredientFilter === 'missing'
+                                            ? 'bg-white dark:bg-slate-100 text-slate-900 shadow-sm'
+                                            : 'text-slate-500 hover:text-slate-700'
+                                        }`}
+                                >
+                                    Manquants
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
 

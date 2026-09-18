@@ -45,7 +45,9 @@ export function computeDragMoveSlots(
   to: ParsedSlot,
   moveDesserts: boolean,
 ): DragMoveResult {
-  if (toMeal) {
+  const toHasRecipe = (toMeal?.recipeIds.length ?? 0) > 0;
+
+  if (toMeal && toHasRecipe) {
     return {
       toSave: [
         {
@@ -64,17 +66,35 @@ export function computeDragMoveSlots(
     };
   }
 
+  // Destination has no recipe of its own (either no row at all, or a dessert-only slot left
+  // behind by an earlier "leave desserts" choice) — its own desserts, if any, never belong to
+  // the meal being dragged and must stay put, only the incoming recipe (and optionally the
+  // dragged meal's desserts) get merged in.
+  const destinationDessertIds = toMeal?.dessertIds ?? [];
+  const incomingDessertIds = moveDesserts ? (fromMeal.dessertIds ?? []) : [];
+  const mergedDessertIds = [...new Set([...destinationDessertIds, ...incomingDessertIds])].slice(0, 3);
+
+  const destinationSlot: MealSlot = toMeal
+    ? {
+        ...toMeal, id: toId, day: to.day, slot: to.slot, year: to.year, week: to.week,
+        recipeIds: fromMeal.recipeIds,
+        dessertIds: mergedDessertIds.length > 0 ? mergedDessertIds : undefined,
+        persons: undefined, recipePersons: undefined, recipeQuantities: undefined,
+      }
+    : {
+        id: toId, day: to.day, slot: to.slot, year: to.year, week: to.week,
+        recipeIds: fromMeal.recipeIds,
+        dessertIds: mergedDessertIds.length > 0 ? mergedDessertIds : undefined,
+      };
+
   if (moveDesserts) {
-    return {
-      toSave: [{ id: toId, day: to.day, slot: to.slot, recipeIds: fromMeal.recipeIds, dessertIds: fromMeal.dessertIds, year: to.year, week: to.week }],
-      toDelete: fromMeal.id,
-    };
+    return { toSave: [destinationSlot], toDelete: fromMeal.id };
   }
 
   return {
     toSave: [
       { ...fromMeal, recipeIds: [] },
-      { id: toId, day: to.day, slot: to.slot, recipeIds: fromMeal.recipeIds, year: to.year, week: to.week },
+      destinationSlot,
     ],
   };
 }

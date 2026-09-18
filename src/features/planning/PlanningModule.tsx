@@ -5,7 +5,7 @@ import { typedRecipesDb as recipesDb } from '../../core/typed-db/typedRecipesDb'
 import { plannableDb } from '../../core/typed-db/plannableDb';
 import { CopyModeBar } from './components/bars/CopyModeBar';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { getWeekSlots, saveSlot, deleteSlot, bulkSaveSlots, addDessertToSlot, removeDessertFromSlot, setRecipePersonsOnSlot, syncWeekFromApi } from '../../core/services/planningService';
+import { getWeekSlots, saveSlot, deleteSlot, addDessertToSlot, removeDessertFromSlot, setRecipePersonsOnSlot, syncWeekFromApi } from '../../core/services/planningService';
 import { useAuthStore } from '../../shared/store/useAuthStore';
 import { MealDragOverlay } from './components/MealDragOverlay';
 import { WeekNavZone } from './components/WeekNavZone';
@@ -23,8 +23,9 @@ import { useMenuStore } from '../../shared/store/useMenuStore';
 import { SlotType, ShoppingDay, MealSlot } from '../../core/domain/types';
 import { isDessert, canAddDessert, isSlotFull } from '../../core/domain/recipePredicates';
 import { MEAL_SLOTS, DAYS, CopyState } from '../../core/domain/planningConfig';
-import { computeSlotCopyProps, parseFullSlotId } from '../../core/logic/planning/planningLogic';
+import { computeSlotCopyProps, parseFullSlotId, computeDragMoveSlots, ParsedSlot } from '../../core/logic/planning/planningLogic';
 import { withPending } from '../../shared/utils/withPending';
+import { MoveDessertsPrompt } from './components/MoveDessertsPrompt';
 import {
     DndContext,
     DragEndEvent,
@@ -80,6 +81,10 @@ export const PlanningModule = () => {
     const [copyState, setCopyState] = useState<CopyState | null>(null);
     const [copyTargets, setCopyTargets] = useState<Set<string>>(new Set());
     const [isCopying, setIsCopying] = useState(false);
+    const [pendingDragMove, setPendingDragMove] = useState<{
+        fromMeal: MealSlot; toMeal: MealSlot | undefined; fromId: string; toId: string; from: ParsedSlot; to: ParsedSlot;
+    } | null>(null);
+    const [dragMoveChoice, setDragMoveChoice] = useState<'move' | 'keep' | null>(null);
 
     const isAnyEditing = editingPersonsSlotId !== null;
     const isCopyMode = !!copyState;
@@ -212,8 +217,9 @@ export const PlanningModule = () => {
     };
 
     const handleAddDessert = async (day: string, slot: SlotType, recipeId: string) => {
-        const savedSlot = planningData.find(p => p.day === day && p.slot === slot);
-        if (!savedSlot) return;
+        const slotId = `${year}-W${weekNumber}-${day}-${slot}`;
+        const savedSlot = planningData.find(p => p.day === day && p.slot === slot)
+            ?? { id: slotId, day, slot, recipeIds: [], year, week: weekNumber };
         await addDessertToSlot(savedSlot, recipeId);
     };
 
@@ -268,16 +274,38 @@ export const PlanningModule = () => {
         const fromId = `${from.year}-W${from.week}-${from.day}-${from.slot}`;
         const toId = `${to.year}-W${to.week}-${to.day}-${to.slot}`;
 
-        if (toMeal) {
-            await bulkSaveSlots([
-                { ...fromMeal, id: fromId, day: from.day, slot: from.slot, year: from.year, week: from.week, recipeIds: toMeal.recipeIds, persons: undefined, recipePersons: undefined, recipeQuantities: undefined },
-                { ...toMeal, id: toId, day: to.day, slot: to.slot, year: to.year, week: to.week, recipeIds: fromMeal.recipeIds, persons: undefined, recipePersons: undefined, recipeQuantities: undefined },
-            ]);
-        } else {
-            await deleteSlot(fromMeal.id);
-            await saveSlot({ id: toId, day: to.day, slot: to.slot, recipeIds: fromMeal.recipeIds, year: to.year, week: to.week });
+        if ((fromMeal.dessertIds?.length ?? 0) > 0) {
+            setPendingDragMove({ fromMeal, toMeal, fromId, toId, from, to });
+            return;
+        }
+
+        await executeDragMove(fromMeal, toMeal, fromId, toId, from, to, true);
+    };
+
+    const executeDragMove = async (
+        fromMeal: MealSlot, toMeal: MealSlot | undefined, fromId: string, toId: string,
+        from: ParsedSlot, to: ParsedSlot, moveDesserts: boolean,
+    ) => {
+        const { toSave, toDelete } = computeDragMoveSlots(fromMeal, toMeal, fromId, toId, from, to, moveDesserts);
+        await Promise.all([
+            ...(toDelete ? [deleteSlot(toDelete)] : []),
+            ...toSave.map(saveSlot),
+        ]);
+    };
+
+    const resolveDragMove = async (moveDesserts: boolean) => {
+        if (!pendingDragMove) return;
+        setDragMoveChoice(moveDesserts ? 'move' : 'keep');
+        try {
+            const { fromMeal, toMeal, fromId, toId, from, to } = pendingDragMove;
+            await executeDragMove(fromMeal, toMeal, fromId, toId, from, to, moveDesserts);
+            setPendingDragMove(null);
+        } finally {
+            setDragMoveChoice(null);
         }
     };
+
+    const cancelDragMove = () => setPendingDragMove(null);
 
     const handleStartCopy = (recipeId: string, slotType: SlotType, sourceDay: string, isDessertCopy: boolean) => {
         const recipeName = plannableDb[recipeId]?.name ?? '';
@@ -318,8 +346,9 @@ export const PlanningModule = () => {
                     ? { recipePersons: { ...existing?.recipePersons, [recipeId]: sourcePersons } }
                     : {};
                 if (copyState.isDessert) {
-                    if (existing && canAddDessert(existing) && !existing.dessertIds?.includes(recipeId)) {
-                        await saveSlot({ ...existing, dessertIds: [...(existing.dessertIds ?? []), recipeId], ...personsUpdate });
+                    const base = existing ?? { id: slotId, day: targetDay, slot: targetSlot, recipeIds: [], year, week: weekNumber };
+                    if (canAddDessert(base) && !base.dessertIds?.includes(recipeId)) {
+                        await saveSlot({ ...base, dessertIds: [...(base.dessertIds ?? []), recipeId], ...personsUpdate });
                     }
                 } else {
                     if (!existing) {
@@ -623,6 +652,16 @@ export const PlanningModule = () => {
                             setDessertPickerSlot(null);
                         }}
                         onClose={() => setDessertPickerSlot(null)}
+                    />
+                )}
+
+                {pendingDragMove && (
+                    <MoveDessertsPrompt
+                        dessertCount={pendingDragMove.fromMeal.dessertIds?.length ?? 0}
+                        pendingChoice={dragMoveChoice}
+                        onMove={() => resolveDragMove(true)}
+                        onKeep={() => resolveDragMove(false)}
+                        onCancel={cancelDragMove}
                     />
                 )}
             </div>

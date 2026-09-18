@@ -91,7 +91,7 @@ export const MealSlot = ({
 
     const displayPersons = persons ?? defaultPortion;
     const isCustom = persons !== undefined;
-    const showDessertColumn = hasDessert && !isOutdoor(recipe) && !!hasPhoto;
+    const showDessertColumn = hasDessert && !isOutdoor(recipe);
 
     const mainContent = (
         <>

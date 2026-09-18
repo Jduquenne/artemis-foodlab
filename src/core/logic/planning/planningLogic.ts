@@ -2,7 +2,7 @@ import { MealSlot, SlotType } from "../../domain/types";
 import { canAddDessert, isSlotFull } from "../../domain/recipePredicates";
 import { CopyState, MEAL_SLOTS, MealSlotDef } from "../../domain/planningConfig";
 
-export function parseFullSlotId(fullId: string): { year: number; week: number; day: string; slot: SlotType } | null {
+export function parseFullSlotId(fullId: string): ParsedSlot | null {
   const wIdx = fullId.indexOf('-W');
   if (wIdx === -1) return null;
   const yearStr = fullId.slice(0, wIdx);
@@ -22,6 +22,61 @@ export function parseFullSlotId(fullId: string): { year: number; week: number; d
     }
   }
   return null;
+}
+
+export interface ParsedSlot {
+  year: number;
+  week: number;
+  day: string;
+  slot: SlotType;
+}
+
+export interface DragMoveResult {
+  toSave: MealSlot[];
+  toDelete?: string;
+}
+
+export function computeDragMoveSlots(
+  fromMeal: MealSlot,
+  toMeal: MealSlot | undefined,
+  fromId: string,
+  toId: string,
+  from: ParsedSlot,
+  to: ParsedSlot,
+  moveDesserts: boolean,
+): DragMoveResult {
+  if (toMeal) {
+    return {
+      toSave: [
+        {
+          ...fromMeal, id: fromId, day: from.day, slot: from.slot, year: from.year, week: from.week,
+          recipeIds: toMeal.recipeIds,
+          dessertIds: moveDesserts ? toMeal.dessertIds : fromMeal.dessertIds,
+          persons: undefined, recipePersons: undefined, recipeQuantities: undefined,
+        },
+        {
+          ...toMeal, id: toId, day: to.day, slot: to.slot, year: to.year, week: to.week,
+          recipeIds: fromMeal.recipeIds,
+          dessertIds: moveDesserts ? fromMeal.dessertIds : toMeal.dessertIds,
+          persons: undefined, recipePersons: undefined, recipeQuantities: undefined,
+        },
+      ],
+    };
+  }
+
+  if (moveDesserts) {
+    return {
+      toSave: [{ id: toId, day: to.day, slot: to.slot, recipeIds: fromMeal.recipeIds, dessertIds: fromMeal.dessertIds, year: to.year, week: to.week }],
+      toDelete: fromMeal.id,
+    };
+  }
+
+  return {
+    toSave: [
+      { ...fromMeal, recipeIds: [] },
+      { id: toId, day: to.day, slot: to.slot, recipeIds: fromMeal.recipeIds, year: to.year, week: to.week },
+    ],
+  };
 }
 
 export interface SlotCopyProps {
@@ -64,9 +119,8 @@ export function computeSlotCopyProps(
     if (isSource) {
       copySourceDessertId = copyState.recipeId;
     } else {
-      const hasMainMeal = (savedMeal?.recipeIds.length ?? 0) > 0;
       const alreadyHas = savedMeal?.dessertIds?.includes(copyState.recipeId) ?? false;
-      if (hasMainMeal && !alreadyHas && canAddDessert({ dessertIds: savedMeal?.dessertIds })) {
+      if (!alreadyHas && canAddDessert({ dessertIds: savedMeal?.dessertIds })) {
         dessertCopyTargetState = copyTargets.has(`${day}|${mealType.id}`) ? "selected" : "selectable";
       }
     }

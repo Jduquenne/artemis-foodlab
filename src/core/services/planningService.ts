@@ -69,10 +69,6 @@ export async function deleteSlot(id: string): Promise<void> {
   await db.planning.delete(id);
 }
 
-export async function bulkSaveSlots(slots: MealSlot[]): Promise<void> {
-  await Promise.all(slots.map((slot) => saveSlot(slot)));
-}
-
 export async function syncWeekFromApi(year: number, week: number): Promise<void> {
   try {
     const apiSlots = await apiFetchJson<ApiPlanningSlot[]>(`/planning-slots?year=${year}&week=${week}`);

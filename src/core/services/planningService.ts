@@ -2,11 +2,12 @@ import { db } from "./databaseService";
 import { MealSlot } from "../domain/types";
 import { canAddDessert } from "../domain/recipePredicates";
 import { apiFetch, apiFetchJson } from "./apiClient";
-import { getIdByCode } from "../typed-db/recipeIdMap";
 import {
   ApiPlanningSlot,
   ApiPlanningSlotItem,
+  buildSlotItemsBatchPayload,
   diffSlotItems,
+  mapApiItemsToSlotFields,
   mapApiSlotToMealSlot,
 } from "../logic/planning/planningApiMapper";
 
@@ -29,36 +30,19 @@ export async function saveSlot(slot: MealSlot): Promise<void> {
     apiId = apiSlot.id;
   }
 
-  const itemApiIds: Record<string, string> = { ...diff.carryOverItemApiIds };
+  const batchPayload = buildSlotItemsBatchPayload(diff);
 
-  for (const item of diff.itemsToAdd) {
-    const itemId = getIdByCode(item.code);
-    if (!itemId) continue;
-    const created = await apiFetchJson<ApiPlanningSlotItem>(`/planning-slots/${apiId}/items`, {
-      method: "POST",
-      body: {
-        itemId,
-        isDessert: item.isDessert,
-        personsOverride: item.personsOverride,
-        gramsOverride: item.gramsOverride,
-        position: item.position,
-      },
-    });
-    itemApiIds[item.code] = created.id;
+  if (!batchPayload) {
+    await db.planning.put({ ...slot, apiId, itemApiIds: diff.carryOverItemApiIds });
+    return;
   }
 
-  for (const itemApiId of diff.itemsToRemoveApiIds) {
-    await apiFetch(`/planning-slots/${apiId}/items/${itemApiId}`, { method: "DELETE" });
-  }
+  const { items } = await apiFetchJson<{ items: ApiPlanningSlotItem[] }>(`/planning-slots/${apiId}/items/batch`, {
+    method: "PUT",
+    body: batchPayload,
+  });
 
-  for (const update of diff.itemsToUpdate) {
-    await apiFetchJson(`/planning-slots/${apiId}/items/${update.itemApiId}`, {
-      method: "PUT",
-      body: { personsOverride: update.personsOverride, gramsOverride: update.gramsOverride },
-    });
-  }
-
-  await db.planning.put({ ...slot, apiId, itemApiIds });
+  await db.planning.put({ ...slot, apiId, ...mapApiItemsToSlotFields(items) });
 }
 
 export async function deleteSlot(id: string): Promise<void> {

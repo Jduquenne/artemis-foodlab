@@ -1,5 +1,5 @@
 import { MealSlot, SlotType } from "../../domain/types";
-import { getCodeById } from "../../typed-db/recipeIdMap";
+import { getCodeById, getIdByCode } from "../../typed-db/recipeIdMap";
 
 export interface ApiPlanningSlotItem {
   id: string;
@@ -20,14 +20,22 @@ export interface ApiPlanningSlot {
   items: ApiPlanningSlotItem[];
 }
 
-export function mapApiSlotToMealSlot(api: ApiPlanningSlot): MealSlot {
+export interface SlotItemFields {
+  recipeIds: string[];
+  dessertIds?: string[];
+  recipePersons?: Record<string, number>;
+  recipeQuantities?: Record<string, number>;
+  itemApiIds: Record<string, string>;
+}
+
+export function mapApiItemsToSlotFields(items: ApiPlanningSlotItem[]): SlotItemFields {
   const recipeIds: string[] = [];
   const dessertIds: string[] = [];
   const recipePersons: Record<string, number> = {};
   const recipeQuantities: Record<string, number> = {};
   const itemApiIds: Record<string, string> = {};
 
-  const sorted = [...api.items].sort((a, b) => a.position - b.position);
+  const sorted = [...items].sort((a, b) => a.position - b.position);
   for (const item of sorted) {
     const code = getCodeById(item.itemId) ?? item.itemId;
     itemApiIds[code] = item.id;
@@ -38,25 +46,30 @@ export function mapApiSlotToMealSlot(api: ApiPlanningSlot): MealSlot {
   }
 
   return {
-    id: `${api.year}-W${api.week}-${api.day}-${api.slot}`,
-    apiId: api.id,
-    itemApiIds,
-    day: api.day,
-    slot: api.slot as SlotType,
     recipeIds,
     dessertIds: dessertIds.length > 0 ? dessertIds : undefined,
+    recipePersons: Object.keys(recipePersons).length > 0 ? recipePersons : undefined,
+    recipeQuantities: Object.keys(recipeQuantities).length > 0 ? recipeQuantities : undefined,
+    itemApiIds,
+  };
+}
+
+export function mapApiSlotToMealSlot(api: ApiPlanningSlot): MealSlot {
+  return {
+    id: `${api.year}-W${api.week}-${api.day}-${api.slot}`,
+    apiId: api.id,
+    day: api.day,
+    slot: api.slot as SlotType,
     year: api.year,
     week: api.week,
     persons: api.persons ?? undefined,
-    recipePersons: Object.keys(recipePersons).length > 0 ? recipePersons : undefined,
-    recipeQuantities: Object.keys(recipeQuantities).length > 0 ? recipeQuantities : undefined,
+    ...mapApiItemsToSlotFields(api.items),
   };
 }
 
 export interface ItemToAdd {
   code: string;
   isDessert: boolean;
-  position: number;
   personsOverride: number | null;
   gramsOverride: number | null;
 }
@@ -86,12 +99,12 @@ export function diffSlotItems(previous: MealSlot | undefined, next: MealSlot): S
   const carryOverItemApiIds: Record<string, string> = {};
   const itemsToUpdate: ItemToUpdate[] = [];
 
-  nextCombined.forEach((code, position) => {
+  for (const code of nextCombined) {
     const personsOverride = next.recipePersons?.[code] ?? null;
     const gramsOverride = next.recipeQuantities?.[code] ?? null;
     if (!previousSet.has(code)) {
-      itemsToAdd.push({ code, isDessert: nextDessertSet.has(code), position, personsOverride, gramsOverride });
-      return;
+      itemsToAdd.push({ code, isDessert: nextDessertSet.has(code), personsOverride, gramsOverride });
+      continue;
     }
     const itemApiId = previous?.itemApiIds?.[code];
     if (itemApiId) carryOverItemApiIds[code] = itemApiId;
@@ -100,7 +113,7 @@ export function diffSlotItems(previous: MealSlot | undefined, next: MealSlot): S
     if (itemApiId && (prevPersons !== personsOverride || prevGrams !== gramsOverride)) {
       itemsToUpdate.push({ itemApiId, personsOverride, gramsOverride });
     }
-  });
+  }
 
   const itemsToRemoveApiIds: string[] = [];
   for (const code of previousCombined) {
@@ -116,5 +129,43 @@ export function diffSlotItems(previous: MealSlot | undefined, next: MealSlot): S
     itemsToRemoveApiIds,
     itemsToUpdate,
     carryOverItemApiIds,
+  };
+}
+
+export interface SlotItemAddPayload {
+  itemId: string;
+  isDessert: boolean;
+  personsOverride: number | null;
+  gramsOverride: number | null;
+}
+
+export interface SlotItemUpdatePayload {
+  id: string;
+  personsOverride: number | null;
+  gramsOverride: number | null;
+}
+
+export interface SlotItemsBatchPayload {
+  add?: SlotItemAddPayload[];
+  remove?: string[];
+  update?: SlotItemUpdatePayload[];
+}
+
+export function buildSlotItemsBatchPayload(diff: SlotDiff): SlotItemsBatchPayload | null {
+  const add: SlotItemAddPayload[] = [];
+  for (const item of diff.itemsToAdd) {
+    const itemId = getIdByCode(item.code);
+    if (!itemId) continue;
+    add.push({ itemId, isDessert: item.isDessert, personsOverride: item.personsOverride, gramsOverride: item.gramsOverride });
+  }
+  const update = diff.itemsToUpdate.map(u => ({ id: u.itemApiId, personsOverride: u.personsOverride, gramsOverride: u.gramsOverride }));
+  const remove = diff.itemsToRemoveApiIds;
+
+  if (add.length === 0 && remove.length === 0 && update.length === 0) return null;
+
+  return {
+    ...(add.length > 0 ? { add } : {}),
+    ...(remove.length > 0 ? { remove } : {}),
+    ...(update.length > 0 ? { update } : {}),
   };
 }

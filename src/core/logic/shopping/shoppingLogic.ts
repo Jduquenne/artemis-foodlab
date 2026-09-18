@@ -303,9 +303,16 @@ export interface RecipeCard {
   baseGroups: RecipeBaseGroup[];
 }
 
+export function buildSourceCheckKey(
+  ingredientKey: string,
+  source: Pick<IngredientSource, "recipeId" | "day" | "slot">
+): string {
+  return `${ingredientKey}::${source.recipeId}::${source.day}::${source.slot}`;
+}
+
 export function isIngChecked(ing: RecipeCardIngredient, sourceChecked: Set<string>): boolean {
   return ing.sources.length > 0 && ing.sources.every(
-    (s) => sourceChecked.has(`${ing.ingredientKey}::${s.recipeId}::${s.day}::${s.slot}`)
+    (s) => sourceChecked.has(buildSourceCheckKey(ing.ingredientKey, s))
   );
 }
 

@@ -14,12 +14,18 @@ export const FreezerHeader = ({ categoryCount }: FreezerHeaderProps) => {
   const freezerName = user?.freezerName ?? "Mon Congélateur";
   const [editing, setEditing] = useState(false);
   const [nameInput, setNameInput] = useState(freezerName);
+  const [saving, setSaving] = useState(false);
 
   const handleConfirm = async () => {
     const trimmed = nameInput.trim();
     if (trimmed && trimmed !== freezerName) {
-      const updated = await updateMe({ freezerName: trimmed });
-      setUser(updated);
+      setSaving(true);
+      try {
+        const updated = await updateMe({ freezerName: trimmed });
+        setUser(updated);
+      } finally {
+        setSaving(false);
+      }
     } else {
       setNameInput(freezerName);
     }
@@ -40,6 +46,7 @@ export const FreezerHeader = ({ categoryCount }: FreezerHeaderProps) => {
           onConfirm={handleConfirm}
           onCancel={handleCancel}
           inputClassName="text-xl font-black"
+          pending={saving}
         />
       ) : (
         <div className="flex-1 flex items-center gap-2 min-w-0">

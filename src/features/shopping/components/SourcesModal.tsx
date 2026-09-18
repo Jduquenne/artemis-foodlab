@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { X, CheckCircle2, Circle, Snowflake, ChevronDown, ChevronUp } from 'lucide-react';
+import { X, Snowflake, ChevronDown, ChevronUp } from 'lucide-react';
 import { IngredientSource, groupAndSortSources } from '../../../core/logic/shopping/shoppingLogic';
-import { FreezerBag, SlotType } from '../../../core/domain/types';
+import { FreezerBag } from '../../../core/domain/types';
 import { pluralizeUnit, formatQty } from '../../../shared/utils/unitUtils';
-import { formatBagDate, formatSourceDayFull, formatSourceDayShort } from '../../../shared/utils/dateUtils';
-import { SLOT_LABELS } from '../../../shared/utils/slotLabels';
+import { FreezerBagRow } from './FreezerBagRow';
+import { SourceGroupRow } from './SourceGroupRow';
 
 export interface SourcesModalProps {
     ingredientKey: string;
@@ -53,35 +53,14 @@ export const SourcesModal = ({ ingredientKey, sources, sourceChecked, onToggleSo
                             {(freezerBags.length <= COLLAPSE_THRESHOLD || bagsExpanded
                                 ? freezerBags
                                 : freezerBags.filter(b => selectedBagIds.includes(b.id))
-                            ).map(bag => {
-                                const isSelected = selectedBagIds.includes(bag.id);
-                                const qty = Number(bag.quantity) || 0;
-                                return (
-                                    <div
-                                        key={bag.id}
-                                        onClick={() => onToggleBag?.(bag.id)}
-                                        className={`flex items-center gap-2.5 px-3 py-2 rounded-xl cursor-pointer select-none transition-all ${
-                                            isSelected ? 'bg-cyan-50 dark:bg-cyan-900/20' : 'hover:bg-cyan-50 dark:hover:bg-cyan-900/20'
-                                        }`}
-                                    >
-                                        <div className="shrink-0">
-                                            {isSelected
-                                                ? <CheckCircle2 className="w-4 h-4 text-cyan-500" />
-                                                : <Circle className="w-4 h-4 text-slate-300" />
-                                            }
-                                        </div>
-                                        <div className="min-w-0 flex-1">
-                                            <p className="text-sm font-semibold text-slate-800">
-                                                {formatQty(qty)} {pluralizeUnit(bag.unit, qty)}
-                                            </p>
-                                            <p className="text-xs text-slate-400">
-                                                {formatBagDate(bag.addedDate)}
-                                                {bag.preparation && <><span className="mx-1 text-slate-300">·</span>{bag.preparation}</>}
-                                            </p>
-                                        </div>
-                                    </div>
-                                );
-                            })}
+                            ).map(bag => (
+                                <FreezerBagRow
+                                    key={bag.id}
+                                    bag={bag}
+                                    isSelected={selectedBagIds.includes(bag.id)}
+                                    onToggleBag={onToggleBag}
+                                />
+                            ))}
                             {freezerBags.length > COLLAPSE_THRESHOLD && !bagsExpanded && freezerBags.filter(b => !selectedBagIds.includes(b.id)).length > 0 && (
                                 <button
                                     onClick={() => setBagsExpanded(true)}
@@ -99,96 +78,15 @@ export const SourcesModal = ({ ingredientKey, sources, sourceChecked, onToggleSo
                     </div>
                 )}
                 <div className="px-5 pb-5 space-y-1">
-                    {groups.map((group, i) => {
-                        const allChecked = group.every(s =>
-                            sourceChecked.has(`${ingredientKey}::${s.recipeId}::${s.day}::${s.slot}`)
-                        );
-
-                        if (group.length > 1) {
-                            const sorted = [...group].sort((a, b) => a.isoDate.localeCompare(b.isoDate));
-                            const totalQty = group.reduce((sum, s) => sum + s.quantity, 0);
-                            const unit = group[0].unit;
-                            const uniqueSlots = [...new Set(group.map(s => s.slot))];
-                            const slotLabel = uniqueSlots.length === 1 ? (SLOT_LABELS[uniqueSlots[0] as SlotType] ?? uniqueSlots[0]) : null;
-
-                            return (
-                                <div
-                                    key={i}
-                                    onClick={() => onToggleSource(ingredientKey, group, !allChecked)}
-                                    className={`flex items-start gap-2.5 px-3 py-2.5 rounded-xl cursor-pointer select-none transition-all ${
-                                        allChecked ? 'opacity-40 bg-slate-50 dark:bg-slate-200/40' : 'hover:bg-slate-50 dark:hover:bg-slate-200/40'
-                                    }`}
-                                >
-                                    <div className="mt-0.5 shrink-0">
-                                        {allChecked
-                                            ? <CheckCircle2 className="w-4 h-4 text-green-500" />
-                                            : <Circle className="w-4 h-4 text-slate-300" />
-                                        }
-                                    </div>
-                                    <div className="min-w-0 flex-1">
-                                        <div className="flex items-center justify-between gap-2">
-                                            <p className={`text-sm font-semibold text-slate-800 leading-tight ${allChecked ? 'line-through' : ''}`}>
-                                                {group[0].recipeName}
-                                            </p>
-                                            <span className="text-xs font-medium text-orange-500 shrink-0">
-                                                {totalQty === 0 ? '—' : `${parseFloat(totalQty.toFixed(2))}\u00a0${pluralizeUnit(unit, totalQty)}`}
-                                            </span>
-                                        </div>
-                                        <p className="text-xs text-slate-400 mt-0.5">
-                                            {sorted.map(s => formatSourceDayShort(s.isoDate)).join(',\u00a0')}
-                                            {slotLabel && <><span className="mx-1 text-slate-300">·</span>{slotLabel}</>}
-                                            <span className="mx-1 text-slate-300">·</span>
-                                            <span className="font-medium text-slate-500">{group.length}×</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            );
-                        }
-
-                        const src = group[0];
-                        const isChecked = sourceChecked.has(`${ingredientKey}::${src.recipeId}::${src.day}::${src.slot}`);
-
-                        return (
-                            <div
-                                key={i}
-                                onClick={() => onToggleSource(ingredientKey, group, !isChecked)}
-                                className={`flex items-start gap-2.5 px-3 py-2.5 rounded-xl cursor-pointer select-none transition-all ${
-                                    isChecked ? 'opacity-40 bg-slate-50 dark:bg-slate-200/40' : 'hover:bg-slate-50 dark:hover:bg-slate-200/40'
-                                }`}
-                            >
-                                <div className="mt-0.5 shrink-0">
-                                    {isChecked
-                                        ? <CheckCircle2 className="w-4 h-4 text-green-500" />
-                                        : <Circle className="w-4 h-4 text-slate-300" />
-                                    }
-                                </div>
-                                <div className="min-w-0">
-                                    <p className={`text-sm font-semibold text-slate-800 leading-tight ${isChecked ? 'line-through' : ''}`}>
-                                        {src.recipeName}
-                                    </p>
-                                    <p className="text-xs text-slate-400 mt-0.5">
-                                        {formatSourceDayFull(src.isoDate)}
-                                        <span className="mx-1 text-slate-300">·</span>
-                                        {SLOT_LABELS[src.slot as SlotType] ?? src.slot}
-                                        <span className="mx-1 text-slate-300">·</span>
-                                        <span className="text-orange-500 font-medium">
-                                            {src.quantity === 0 ? '—' : `${parseFloat(src.quantity.toFixed(2))}\u00a0${pluralizeUnit(src.unit, src.quantity)}`}
-                                        </span>
-                                        {src.persons !== undefined && src.baseQuantity !== undefined && (
-                                            <>
-                                                <span className="mx-1 text-slate-300">·</span>
-                                                <span className="text-slate-500 font-semibold">×{src.persons}</span>
-                                                <span className="mx-1 text-slate-300">·</span>
-                                                <span className="text-slate-400">
-                                                    base&nbsp;{src.baseQuantity === 0 ? '—' : `${parseFloat(src.baseQuantity.toFixed(2))}\u00a0${pluralizeUnit(src.unit, src.baseQuantity)}`}
-                                                </span>
-                                            </>
-                                        )}
-                                    </p>
-                                </div>
-                            </div>
-                        );
-                    })}
+                    {groups.map((group, i) => (
+                        <SourceGroupRow
+                            key={i}
+                            ingredientKey={ingredientKey}
+                            group={group}
+                            sourceChecked={sourceChecked}
+                            onToggleSource={onToggleSource}
+                        />
+                    ))}
                 </div>
             </div>
         </div>

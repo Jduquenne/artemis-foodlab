@@ -2,6 +2,7 @@ import { Plus, Check } from 'lucide-react';
 import { DessertCell } from './DessertCell';
 
 export interface DessertColumnProps {
+    slotId: string;
     dessertIds: string[];
     isAddMode?: boolean;
     dessertCopyTargetState?: 'selectable' | 'selected';
@@ -16,6 +17,7 @@ export interface DessertColumnProps {
 }
 
 export const DessertColumn = ({
+    slotId,
     dessertIds,
     isAddMode,
     dessertCopyTargetState,
@@ -43,6 +45,7 @@ export const DessertColumn = ({
                 return (
                     <DessertCell
                         key={rid}
+                        slotId={slotId}
                         recipeId={rid}
                         onRemove={() => onRemoveDessert?.(rid)}
                         isAddMode={isAddMode}

@@ -1,8 +1,10 @@
-import { FoodFreezerItem, FreezerBag, FreezerCategory, FreezerItem, Food } from '../../domain/types';
+import { FoodFreezerItem, FreezerBag, FreezerCategory, FreezerItem, Food, Unit } from '../../domain/types';
 import { isBatchCookable } from '../../domain/recipePredicates';
 import { typedRecipesDb } from '../../typed-db/typedRecipesDb';
 import { typedFoodDb } from '../../typed-db/typedFoodDb';
 import { formatQty, pluralizeUnit } from '../../../shared/utils/unitUtils';
+
+export const FREEZER_BAG_UNITS = Object.values(Unit).filter(u => u !== Unit.NONE);
 
 export function getFoodBagsSummary(item: FoodFreezerItem): string {
   const count = item.bags.length;

@@ -1,9 +1,10 @@
 import { useState, useRef } from "react";
-import { Snowflake, Plus, MoreVertical, Trash2 } from "lucide-react";
+import { Snowflake, Plus, MoreVertical, Trash2, Loader2 } from "lucide-react";
 import { FreezerItem } from "../../../../core/domain/types";
 import { addBagToFoodItem } from "../../../../core/services/freezerService";
 import { getFoodBagsSummary } from "../../../../core/logic/freezer/freezerLogic";
 import { FloatingMenu } from "../../../../shared/components/ui/FloatingMenu";
+import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
 import { BatchFreezerItemRow } from "./BatchFreezerItemRow";
 import { BagRow } from "./BagRow";
 import { AddBagForm } from "./AddBagForm";
@@ -16,8 +17,10 @@ export interface FreezerItemRowProps {
 
 export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowProps) => {
   const [addingBag, setAddingBag] = useState(false);
+  const [savingBag, setSavingBag] = useState(false);
   const [itemMenuOpen, setItemMenuOpen] = useState(false);
   const itemMenuButtonRef = useRef<HTMLButtonElement>(null);
+  const deletePending = usePendingKey(`freezer-item-delete:${item.id}`);
 
   if (item.type === "batch") {
     return <BatchFreezerItemRow item={item} categoryId={categoryId} onDelete={onDelete} />;
@@ -26,7 +29,7 @@ export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowPro
   const isEmpty = item.bags.length === 0;
 
   return (
-    <div className={`bg-white dark:bg-slate-100 rounded-2xl border border-slate-200 px-3 py-2.5 transition ${isEmpty ? "opacity-60" : ""}`}>
+    <div className={`bg-white dark:bg-slate-100 rounded-2xl border border-slate-200 px-3 py-2.5 transition ${isEmpty ? "opacity-60" : ""} ${deletePending ? "opacity-50 pointer-events-none" : ""}`}>
       <div className="flex items-center gap-2.5">
         <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 bg-slate-100 dark:bg-slate-200">
           <Snowflake className={`w-4 h-4 ${isEmpty ? "text-slate-300" : "text-slate-500"}`} />
@@ -51,7 +54,7 @@ export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowPro
             onClick={() => setItemMenuOpen(o => !o)}
             className="p-2 rounded-xl text-slate-300 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
           >
-            <MoreVertical className="w-4 h-4" />
+            {deletePending ? <Loader2 className="w-4 h-4 animate-spin text-orange-400" /> : <MoreVertical className="w-4 h-4" />}
           </button>
           <FloatingMenu open={itemMenuOpen} anchorRef={itemMenuButtonRef} onClose={() => setItemMenuOpen(false)}>
             <button
@@ -79,9 +82,15 @@ export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowPro
           {addingBag && (
             <AddBagForm
               initialUnit={item.bags[0]?.unit}
+              saving={savingBag}
               onSave={async bag => {
-                await addBagToFoodItem(categoryId, item.id, bag);
-                setAddingBag(false);
+                setSavingBag(true);
+                try {
+                  await addBagToFoodItem(categoryId, item.id, bag);
+                  setAddingBag(false);
+                } finally {
+                  setSavingBag(false);
+                }
               }}
               onCancel={() => setAddingBag(false)}
             />

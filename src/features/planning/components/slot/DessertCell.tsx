@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { X, Copy, Users, Minus, Plus, Check } from 'lucide-react';
+import { X, Copy, Users, Minus, Plus, Check, Loader2 } from 'lucide-react';
 import { plannableDb } from '../../../../core/typed-db/plannableDb';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
+import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 
 export interface DessertCellProps {
+    slotId: string;
     recipeId: string;
     onRemove: () => void;
     isAddMode?: boolean;
@@ -13,13 +15,15 @@ export interface DessertCellProps {
     hideActions?: boolean;
     persons?: number;
     isPersonsCustom?: boolean;
-    onSetPersons?: (n: number) => void;
+    onSetPersons?: (n: number) => void | Promise<void>;
 }
 
-export const DessertCell = ({ recipeId, onRemove, isAddMode, onCopy, isCopySource, hideActions, persons, isPersonsCustom, onSetPersons }: DessertCellProps) => {
+export const DessertCell = ({ slotId, recipeId, onRemove, isAddMode, onCopy, isCopySource, hideActions, persons, isPersonsCustom, onSetPersons }: DessertCellProps) => {
     const recipe = plannableDb[recipeId];
     const [isEditingPersons, setIsEditingPersons] = useState(false);
     const [draft, setDraft] = useState(persons ?? 1);
+    const [savingPersons, setSavingPersons] = useState(false);
+    const removePending = usePendingKey(`planning-dessert-remove:${slotId}:${recipeId}`);
 
     if (!recipe?.assets?.mealPhoto) return null;
 
@@ -29,10 +33,16 @@ export const DessertCell = ({ recipeId, onRemove, isAddMode, onCopy, isCopySourc
         setIsEditingPersons(true);
     };
 
-    const confirmPersons = (e: React.MouseEvent) => {
+    const confirmPersons = async (e: React.MouseEvent) => {
         e.stopPropagation();
-        onSetPersons?.(draft);
-        setIsEditingPersons(false);
+        if (savingPersons) return;
+        setSavingPersons(true);
+        try {
+            await onSetPersons?.(draft);
+            setIsEditingPersons(false);
+        } finally {
+            setSavingPersons(false);
+        }
     };
 
     const cancelPersons = (e: React.MouseEvent) => {
@@ -49,10 +59,11 @@ export const DessertCell = ({ recipeId, onRemove, isAddMode, onCopy, isCopySourc
                 <button
                     aria-label="Retirer le dessert"
                     onPointerDown={(e) => e.stopPropagation()}
-                    onClick={(e) => { e.stopPropagation(); onRemove(); }}
-                    className={`absolute top-0.5 right-0.5 p-0.5 bg-black/50 text-white rounded-md z-10 transition-opacity ${IS_TOUCH ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+                    onClick={(e) => { e.stopPropagation(); if (!removePending) onRemove(); }}
+                    disabled={removePending}
+                    className={`absolute top-0.5 right-0.5 p-0.5 bg-black/50 text-white rounded-md z-10 transition-opacity ${IS_TOUCH || removePending ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
                 >
-                    <X size={10} />
+                    {removePending ? <Loader2 size={10} className="animate-spin" /> : <X size={10} />}
                 </button>
             )}
 
@@ -88,23 +99,25 @@ export const DessertCell = ({ recipeId, onRemove, isAddMode, onCopy, isCopySourc
                     <div className="flex items-center gap-0.5">
                         <button
                             onClick={(e) => { e.stopPropagation(); setDraft(v => Math.max(1, v - 1)); }}
-                            className="w-5 h-5 flex items-center justify-center rounded bg-slate-100 dark:bg-slate-200 text-slate-600 hover:bg-slate-200"
+                            disabled={savingPersons}
+                            className="w-5 h-5 flex items-center justify-center rounded bg-slate-100 dark:bg-slate-200 text-slate-600 hover:bg-slate-200 disabled:opacity-50"
                         >
                             <Minus size={10} />
                         </button>
                         <span className="text-base font-black text-slate-900 w-6 text-center">{draft}</span>
                         <button
                             onClick={(e) => { e.stopPropagation(); setDraft(v => Math.min(10, v + 1)); }}
-                            className="w-5 h-5 flex items-center justify-center rounded bg-slate-100 dark:bg-slate-200 text-slate-600 hover:bg-slate-200"
+                            disabled={savingPersons}
+                            className="w-5 h-5 flex items-center justify-center rounded bg-slate-100 dark:bg-slate-200 text-slate-600 hover:bg-slate-200 disabled:opacity-50"
                         >
                             <Plus size={10} />
                         </button>
                     </div>
                     <div className="flex gap-1">
-                        <button onClick={confirmPersons} className="p-1 bg-orange-500 text-white rounded-md">
-                            <Check size={10} />
+                        <button onClick={confirmPersons} disabled={savingPersons} className="p-1 bg-orange-500 text-white rounded-md disabled:opacity-60">
+                            {savingPersons ? <Loader2 size={10} className="animate-spin" /> : <Check size={10} />}
                         </button>
-                        <button onClick={cancelPersons} className="p-1 bg-slate-200 dark:bg-slate-300 text-slate-600 rounded-md">
+                        <button onClick={cancelPersons} disabled={savingPersons} className="p-1 bg-slate-200 dark:bg-slate-300 text-slate-600 rounded-md disabled:opacity-60">
                             <X size={10} />
                         </button>
                     </div>

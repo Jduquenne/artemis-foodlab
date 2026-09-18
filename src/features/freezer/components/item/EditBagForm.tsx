@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { Check, X } from "lucide-react";
+import { Check, Loader2, X } from "lucide-react";
 import { Unit, FreezerBag, Preparation } from "../../../../core/domain/types";
+import { FREEZER_BAG_UNITS } from "../../../../core/logic/freezer/freezerLogic";
 
 export interface EditBagFormProps {
     bag: FreezerBag;
     onSave: (updates: Omit<FreezerBag, "id">) => void;
     onCancel: () => void;
+    saving?: boolean;
 }
 
-export const EditBagForm = ({ bag, onSave, onCancel }: EditBagFormProps) => {
+export const EditBagForm = ({ bag, onSave, onCancel, saving }: EditBagFormProps) => {
     const [quantity, setQuantity] = useState(String(bag.quantity));
     const [unit, setUnit] = useState<Unit>(bag.unit ?? Unit.G);
     const [preparation, setPreparation] = useState<Preparation | "">(bag.preparation ?? "");
@@ -18,7 +20,7 @@ export const EditBagForm = ({ bag, onSave, onCancel }: EditBagFormProps) => {
     const canSave = !isNaN(parsedQty) && parsedQty > 0 && addedDate.length > 0;
 
     const handleSave = () => {
-        if (!canSave) return;
+        if (!canSave || saving) return;
         onSave({
             quantity: parsedQty,
             unit,
@@ -38,21 +40,24 @@ export const EditBagForm = ({ bag, onSave, onCancel }: EditBagFormProps) => {
                     onChange={e => setQuantity(e.target.value)}
                     onKeyDown={e => { if (e.key === "Enter") handleSave(); if (e.key === "Escape") onCancel(); }}
                     placeholder="Qté"
-                    className="w-14 px-2 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 text-center"
+                    disabled={saving}
+                    className="w-14 px-2 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 text-center disabled:opacity-50"
                 />
                 <select
                     value={unit}
                     onChange={e => setUnit(e.target.value as Unit)}
-                    className="w-20 px-1.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 focus:outline-none focus:border-orange-400"
+                    disabled={saving}
+                    className="w-20 px-1.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 focus:outline-none focus:border-orange-400 disabled:opacity-50"
                 >
-                    {Object.values(Unit).map(u => (
-                        <option key={u} value={u}>{u || "unité"}</option>
+                    {FREEZER_BAG_UNITS.map(u => (
+                        <option key={u} value={u}>{u}</option>
                     ))}
                 </select>
                 <select
                     value={preparation}
                     onChange={e => setPreparation(e.target.value as Preparation | "")}
-                    className="flex-1 min-w-0 px-1.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 focus:outline-none focus:border-orange-400"
+                    disabled={saving}
+                    className="flex-1 min-w-0 px-1.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 focus:outline-none focus:border-orange-400 disabled:opacity-50"
                 >
                     <option value="">—</option>
                     {Object.values(Preparation).map(p => (
@@ -62,15 +67,16 @@ export const EditBagForm = ({ bag, onSave, onCancel }: EditBagFormProps) => {
                 <button
                     aria-label="Confirmer"
                     onClick={handleSave}
-                    disabled={!canSave}
+                    disabled={!canSave || saving}
                     className="p-1.5 rounded-lg text-orange-500 hover:bg-orange-50 disabled:opacity-40 transition-colors shrink-0"
                 >
-                    <Check className="w-3.5 h-3.5" />
+                    {saving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Check className="w-3.5 h-3.5" />}
                 </button>
                 <button
                     aria-label="Annuler"
                     onClick={onCancel}
-                    className="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors shrink-0"
+                    disabled={saving}
+                    className="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors shrink-0 disabled:opacity-40"
                 >
                     <X className="w-3.5 h-3.5" />
                 </button>
@@ -81,7 +87,8 @@ export const EditBagForm = ({ bag, onSave, onCancel }: EditBagFormProps) => {
                     type="date"
                     value={addedDate}
                     onChange={e => setAddedDate(e.target.value)}
-                    className="flex-1 min-w-0 px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 focus:outline-none focus:border-orange-400"
+                    disabled={saving}
+                    className="flex-1 min-w-0 px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 focus:outline-none focus:border-orange-400 disabled:opacity-50"
                 />
             </div>
         </div>

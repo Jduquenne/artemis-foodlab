@@ -8,6 +8,7 @@ import { InlineNameEditor } from "../InlineNameEditor";
 import { markScrolling } from "../../../../shared/utils/scrollGuard";
 import { useFreezerColCount } from "../../../../shared/hooks/useFreezerColCount";
 import { distributeFreezerItemsToColumns, getFreezerCategoryAccent } from "../../../../core/logic/freezer/freezerLogic";
+import { withPending } from "../../../../shared/utils/withPending";
 
 export interface FreezerCategoryDetailProps {
   category: FreezerCategory;
@@ -18,6 +19,7 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
   const [addOpen, setAddOpen] = useState(false);
   const [editing, setEditing] = useState(false);
   const [nameInput, setNameInput] = useState(category.name);
+  const [renaming, setRenaming] = useState(false);
 
   const colCount = useFreezerColCount();
   const accent = getFreezerCategoryAccent(category);
@@ -35,7 +37,12 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
   const handleRename = async () => {
     const trimmed = nameInput.trim();
     if (trimmed && trimmed !== category.name) {
-      await updateCategoryName(category.id, trimmed);
+      setRenaming(true);
+      try {
+        await updateCategoryName(category.id, trimmed);
+      } finally {
+        setRenaming(false);
+      }
     }
     setEditing(false);
   };
@@ -64,6 +71,7 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
             onCancel={handleCancelRename}
             inputClassName="text-xl font-black"
             className="animate-fade-in-up"
+            pending={renaming}
           />
         ) : (
           <div className="flex-1 flex items-center gap-2 min-w-0">
@@ -102,7 +110,7 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
                     key={item.id}
                     item={item}
                     categoryId={category.id}
-                    onDelete={() => removeItemFromCategory(category.id, item.id)}
+                    onDelete={() => withPending(`freezer-item-delete:${item.id}`, () => removeItemFromCategory(category.id, item.id))}
                   />
                 ))}
               </div>

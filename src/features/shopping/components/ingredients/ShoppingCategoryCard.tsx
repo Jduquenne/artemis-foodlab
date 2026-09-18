@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { CheckCircle2, Circle, Pencil, Snowflake, Trash2 } from 'lucide-react';
 import { ConsolidatedIngredient, IngredientSource } from '../../../../core/logic/shopping/shoppingLogic';
 import { FreezerBag } from '../../../../core/domain/types';
-import { IngredientTooltip } from './IngredientTooltip';
-import { pluralizeUnit, formatQty } from '../../../../shared/utils/unitUtils';
+import { ExtraCheckRow } from './ExtraCheckRow';
+import { IngredientCheckRow } from './IngredientCheckRow';
 
 export interface ShoppingCategoryCardProps {
     label: string;
@@ -53,43 +52,14 @@ export const ShoppingCategoryCard = ({ label, items, checked, stocks, sourceChec
 
                     if (item.isExtra) {
                         return (
-                            <div
+                            <ExtraCheckRow
                                 key={item.key}
-                                onClick={() => onToggle(item.key)}
-                                className={`flex items-center justify-between gap-1.5 px-1.5 py-1 rounded-lg transition-all cursor-pointer select-none
-                                    ${isChecked ? 'opacity-40 bg-slate-50 dark:bg-slate-200/40' : 'hover:bg-slate-50 dark:hover:bg-slate-200/40'}`}
-                            >
-                                <div className="flex items-center gap-1.5 min-w-0 flex-1">
-                                    {isChecked
-                                        ? <CheckCircle2 className="w-3.5 h-3.5 text-green-500 shrink-0" />
-                                        : <Circle className="w-3.5 h-3.5 text-slate-300 shrink-0" />}
-                                    <span className={`text-xs font-medium text-slate-800 truncate ${isChecked ? 'line-through' : ''}`}>
-                                        {item.name}
-                                        {item.totalQuantity > 0 && (
-                                            <span className="font-normal text-slate-400 ml-1">
-                                                {formatQty(item.totalQuantity)} {pluralizeUnit(item.unit, item.totalQuantity)}
-                                            </span>
-                                        )}
-                                    </span>
-                                    <span className="shrink-0 text-[10px] font-bold text-orange-400 uppercase">ajouté</span>
-                                </div>
-                                <div className="flex items-center gap-0.5 shrink-0" onClick={e => e.stopPropagation()}>
-                                    <button
-                                        onClick={() => item.extraId && onEditExtra(item.extraId)}
-                                        aria-label={`Modifier ${item.name}`}
-                                        className="p-1 rounded text-slate-300 hover:text-orange-500 transition-colors"
-                                    >
-                                        <Pencil size={13} />
-                                    </button>
-                                    <button
-                                        onClick={() => item.extraId && onDeleteExtra(item.extraId)}
-                                        aria-label={`Retirer ${item.name}`}
-                                        className="p-1 rounded text-slate-300 hover:text-red-500 transition-colors"
-                                    >
-                                        <Trash2 size={13} />
-                                    </button>
-                                </div>
-                            </div>
+                                item={item}
+                                isChecked={isChecked}
+                                onToggle={onToggle}
+                                onEditExtra={onEditExtra}
+                                onDeleteExtra={onDeleteExtra}
+                            />
                         );
                     }
 
@@ -97,88 +67,25 @@ export const ShoppingCategoryCard = ({ label, items, checked, stocks, sourceChec
                     const allFreezerBags = item.foodId ? foodBags?.get(item.foodId) : undefined;
                     const inFreezer = (allFreezerBags?.length ?? 0) > 0;
                     const matchingBags = allFreezerBags?.filter(b => b.unit === item.unit) ?? [];
-                    const checkedSourceQty = item.sources
-                        .filter(s => sourceChecked.has(`${item.key}::${s.recipeId}::${s.day}::${s.slot}`))
-                        .reduce((sum, s) => sum + s.quantity, 0);
-                    const effectiveTotal = Math.max(0, item.totalQuantity - checkedSourceQty);
-                    const needed = effectiveTotal === 0 ? 0 : Math.max(0, effectiveTotal - stock);
-                    const hasStock = effectiveTotal > 0 && stock > 0;
-                    const isEditing = editingKey === item.key;
-                    const canEditStock = item.totalQuantity > 0;
 
                     return (
-                        <div
+                        <IngredientCheckRow
                             key={item.key}
-                            onClick={() => { if (!isEditing) onToggle(item.key); }}
-                            className={`flex items-center justify-between gap-1.5 px-1.5 py-1 rounded-lg transition-all cursor-pointer select-none
-                                ${isChecked
-                                    ? 'opacity-40 bg-slate-50 dark:bg-slate-200/40'
-                                    : 'hover:bg-slate-50 dark:hover:bg-slate-200/40'}`}
-                        >
-                            <div className="flex items-center gap-1.5 min-w-0 flex-1">
-                                {isChecked
-                                    ? <CheckCircle2 className="w-3.5 h-3.5 text-green-500 shrink-0" />
-                                    : <Circle className="w-3.5 h-3.5 text-slate-300 shrink-0" />
-                                }
-                                {!isChecked && inFreezer && (
-                                    <Snowflake className="w-3 h-3 text-cyan-500 shrink-0" />
-                                )}
-                                <span className={`text-xs font-medium text-slate-800 truncate ${isChecked ? 'line-through' : ''}`}>
-                                    {item.name}
-                                    {item.preparation && (
-                                        <span className="font-normal text-slate-400 ml-1">· {item.preparation}</span>
-                                    )}
-                                </span>
-                            </div>
-
-                            <div className="flex items-center gap-1 shrink-0" onClick={e => e.stopPropagation()}>
-                                {isEditing ? (
-                                    <div className="flex items-center gap-1">
-                                        <span className="text-xs text-slate-400">j'en ai :</span>
-                                        <input
-                                            type="number"
-                                            min="0"
-                                            step="any"
-                                            value={editValue}
-                                            onChange={e => setEditValue(e.target.value)}
-                                            onBlur={() => commitEdit(item.key)}
-                                            onKeyDown={e => {
-                                                if (e.key === 'Enter') e.currentTarget.blur();
-                                                if (e.key === 'Escape') setEditingKey(null);
-                                            }}
-                                            className="w-14 text-xs text-center bg-slate-100 dark:bg-slate-200 border border-orange-300 focus:outline-none focus:border-orange-500 rounded-md px-1 py-0.5"
-                                            autoFocus
-                                        />
-                                        <span className="text-xs text-slate-400">{pluralizeUnit(item.unit, parseFloat(editValue) || 0)}</span>
-                                    </div>
-                                ) : (
-                                    <>
-                                        {hasStock && (
-                                            <span className="text-xs font-semibold text-green-600 bg-green-50 dark:bg-green-900/20 px-1.5 py-0.5 rounded">
-                                                {formatQty(stock)} dispo
-                                            </span>
-                                        )}
-                                        <button
-                                            onClick={() => canEditStock && startEditing(item.key, stock)}
-                                            className={`font-bold text-xs px-1.5 py-0.5 rounded-md transition-colors ${
-                                                !canEditStock
-                                                    ? 'bg-slate-100 dark:bg-slate-200 text-slate-400 cursor-default'
-                                                    : needed === 0
-                                                        ? 'bg-green-50 dark:bg-green-900/20 text-green-600 hover:bg-green-100 cursor-pointer'
-                                                        : 'bg-slate-100 dark:bg-slate-200 text-slate-500 hover:bg-orange-50 hover:text-orange-600 cursor-pointer'
-                                            }`}
-                                        >
-                                            {item.totalQuantity === 0
-                                                ? '—'
-                                                : needed === 0
-                                                    ? '✓'
-                                                    : `${formatQty(needed)} ${pluralizeUnit(item.unit, needed)}`}
-                                        </button>
-                                    </>
-                                )}
-                                <IngredientTooltip sources={item.sources} onOpen={(srcs) => onShowSources(item.key, srcs, matchingBags)} />
-                            </div>
-                        </div>
+                            item={item}
+                            isChecked={isChecked}
+                            stock={stock}
+                            sourceChecked={sourceChecked}
+                            matchingBags={matchingBags}
+                            inFreezer={inFreezer}
+                            isEditing={editingKey === item.key}
+                            editValue={editValue}
+                            onToggle={onToggle}
+                            onStartEditing={startEditing}
+                            onEditValueChange={setEditValue}
+                            onCommitEdit={commitEdit}
+                            onCancelEdit={() => setEditingKey(null)}
+                            onShowSources={onShowSources}
+                        />
                     );
                 })}
             </div>

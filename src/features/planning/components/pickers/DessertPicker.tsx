@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, Check } from 'lucide-react';
+import { X, Check, Loader2 } from 'lucide-react';
 import { SearchBar } from '../../../../shared/components/ui/SearchBar';
 import { useSearchDesserts } from '../../../../shared/hooks/useSearch';
 import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
@@ -7,16 +7,27 @@ import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
 
 export interface DessertPickerProps {
     existingIds: string[];
-    onSelect: (recipeId: string) => void;
+    onSelect: (recipeId: string) => void | Promise<void>;
     onClose: () => void;
 }
 
 export const DessertPicker = ({ existingIds, onSelect, onClose }: DessertPickerProps) => {
     const [query, setQuery] = useState('');
     const [isClosing, setIsClosing] = useState(false);
+    const [savingId, setSavingId] = useState<string | null>(null);
     const results = useSearchDesserts(query);
 
     const handleClose = () => { setIsClosing(true); setTimeout(onClose, 300); };
+
+    const pick = async (recipeId: string) => {
+        if (savingId) return;
+        setSavingId(recipeId);
+        try {
+            await onSelect(recipeId);
+        } finally {
+            setSavingId(null);
+        }
+    };
 
     return (
         <div className="fixed inset-0 z-100 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4">
@@ -39,13 +50,14 @@ export const DessertPicker = ({ existingIds, onSelect, onClose }: DessertPickerP
                     {results.length > 0 ? (
                         results.map((recipe) => {
                             const alreadyAdded = existingIds.includes(recipe.recipeId);
+                            const isSaving = savingId === recipe.recipeId;
                             return (
                                 <button
                                     key={recipe.recipeId}
-                                    disabled={alreadyAdded}
-                                    onClick={() => onSelect(recipe.recipeId)}
+                                    disabled={alreadyAdded || !!savingId}
+                                    onClick={() => pick(recipe.recipeId)}
                                     className={`w-full flex items-center gap-4 p-3 rounded-2xl border transition-all group text-left ${
-                                        alreadyAdded
+                                        alreadyAdded || (savingId && !isSaving)
                                             ? 'opacity-40 cursor-not-allowed border-slate-200'
                                             : 'border-slate-200 hover:border-orange-200 hover:bg-orange-50 dark:hover:bg-orange-950/20'
                                     }`}
@@ -55,7 +67,11 @@ export const DessertPicker = ({ existingIds, onSelect, onClose }: DessertPickerP
                                         <p className="font-black text-slate-800">{recipe.name}</p>
                                         <p className="text-xs text-slate-400 uppercase font-bold">{recipe.recipeId}</p>
                                     </div>
-                                    {alreadyAdded ? (
+                                    {isSaving ? (
+                                        <div className="bg-orange-500 text-white p-2 rounded-full">
+                                            <Loader2 size={20} className="animate-spin" />
+                                        </div>
+                                    ) : alreadyAdded ? (
                                         <div className="bg-slate-200 dark:bg-slate-300 text-slate-500 p-2 rounded-full">
                                             <Check size={20} />
                                         </div>

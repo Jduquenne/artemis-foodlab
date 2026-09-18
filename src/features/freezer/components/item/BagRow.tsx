@@ -1,10 +1,12 @@
 import { useRef, useState } from "react";
-import { MoreVertical, Copy, Trash2, Pencil, AlertTriangle } from "lucide-react";
+import { MoreVertical, Copy, Trash2, Pencil, AlertTriangle, Loader2 } from "lucide-react";
 import { FreezerBag } from "../../../../core/domain/types";
 import { addBagToFoodItem, removeBagFromFoodItem, updateBagInFoodItem } from "../../../../core/services/freezerService";
 import { pluralizeUnit } from "../../../../shared/utils/unitUtils";
 import { freezerItemAge } from "../../../../core/logic/freezer/freezerLogic";
 import { FloatingMenu } from "../../../../shared/components/ui/FloatingMenu";
+import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
+import { withPending } from "../../../../shared/utils/withPending";
 import { EditBagForm } from "./EditBagForm";
 
 export interface BagRowProps {
@@ -16,7 +18,11 @@ export interface BagRowProps {
 export const BagRow = ({ bag, categoryId, itemId }: BagRowProps) => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
+    const [savingEdit, setSavingEdit] = useState(false);
     const menuButtonRef = useRef<HTMLButtonElement>(null);
+    const duplicatePending = usePendingKey(`freezer-bag-duplicate:${bag.id}`);
+    const deletePending = usePendingKey(`freezer-bag-delete:${bag.id}`);
+    const rowPending = duplicatePending || deletePending;
 
     const displayUnit = bag.unit ? " " + pluralizeUnit(bag.unit, bag.quantity) : "";
     const age = freezerItemAge(bag.addedDate);
@@ -25,9 +31,15 @@ export const BagRow = ({ bag, categoryId, itemId }: BagRowProps) => {
         return (
             <EditBagForm
                 bag={bag}
-                onSave={({ addedDate, ...rest }) => {
-                    updateBagInFoodItem(categoryId, itemId, bag.id, { ...rest, addedDate });
-                    setIsEditing(false);
+                saving={savingEdit}
+                onSave={async ({ addedDate, ...rest }) => {
+                    setSavingEdit(true);
+                    try {
+                        await updateBagInFoodItem(categoryId, itemId, bag.id, { ...rest, addedDate });
+                        setIsEditing(false);
+                    } finally {
+                        setSavingEdit(false);
+                    }
                 }}
                 onCancel={() => setIsEditing(false)}
             />
@@ -35,7 +47,7 @@ export const BagRow = ({ bag, categoryId, itemId }: BagRowProps) => {
     }
 
     return (
-        <div className="flex items-center gap-2 py-0.5">
+        <div className={`flex items-center gap-2 py-0.5 transition ${rowPending ? "opacity-50 pointer-events-none" : ""}`}>
             <span className="shrink-0 text-xs font-bold text-slate-700 tabular-nums">
                 {bag.quantity}{displayUnit}
             </span>
@@ -55,7 +67,7 @@ export const BagRow = ({ bag, categoryId, itemId }: BagRowProps) => {
                 onClick={() => setMenuOpen(o => !o)}
                 className="shrink-0 p-1.5 rounded-lg text-slate-300 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
             >
-                <MoreVertical className="w-3.5 h-3.5" />
+                {rowPending ? <Loader2 className="w-3.5 h-3.5 animate-spin text-orange-400" /> : <MoreVertical className="w-3.5 h-3.5" />}
             </button>
 
             <FloatingMenu open={menuOpen} anchorRef={menuButtonRef} onClose={() => setMenuOpen(false)}>
@@ -68,12 +80,14 @@ export const BagRow = ({ bag, categoryId, itemId }: BagRowProps) => {
                 </button>
                 <button
                     onClick={() => {
-                        addBagToFoodItem(categoryId, itemId, {
-                            quantity: bag.quantity,
-                            unit: bag.unit,
-                            preparation: bag.preparation,
-                        });
                         setMenuOpen(false);
+                        withPending(`freezer-bag-duplicate:${bag.id}`, () =>
+                            addBagToFoodItem(categoryId, itemId, {
+                                quantity: bag.quantity,
+                                unit: bag.unit,
+                                preparation: bag.preparation,
+                            })
+                        );
                     }}
                     className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors border-t border-slate-100"
                 >
@@ -82,8 +96,8 @@ export const BagRow = ({ bag, categoryId, itemId }: BagRowProps) => {
                 </button>
                 <button
                     onClick={() => {
-                        removeBagFromFoodItem(categoryId, itemId, bag.id);
                         setMenuOpen(false);
+                        withPending(`freezer-bag-delete:${bag.id}`, () => removeBagFromFoodItem(categoryId, itemId, bag.id));
                     }}
                     className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-500 hover:bg-red-50 transition-colors border-t border-slate-100"
                 >

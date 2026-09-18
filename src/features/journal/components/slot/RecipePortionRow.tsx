@@ -3,6 +3,8 @@ import { RecipeKind } from "../../../../core/domain/types";
 import { RECIPE_BASE_GRAMS, RECIPE_MACROS } from "../../../../shared/utils/macroUtils";
 import { useJournalStore } from "../../../../shared/store/useJournalStore";
 import { typedRecipesDb } from "../../../../core/typed-db/typedRecipesDb";
+import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
+import { withPending } from "../../../../shared/utils/withPending";
 
 export interface RecipePortionRowProps {
   recipeId: string;
@@ -12,6 +14,7 @@ export interface RecipePortionRowProps {
 export const RecipePortionRow = ({ recipeId, planningSlotItemId }: RecipePortionRowProps) => {
   const { portionOverrides, setPortionOverride, gramOverrides, setGramOverride } = useJournalStore();
   const key = planningSlotItemId ?? "";
+  const pending = usePendingKey(`journal-override:${key}`);
   const recipe = typedRecipesDb[recipeId];
   const name = recipe?.name ?? recipeId;
   const isIngredient = recipe?.kind === RecipeKind.INGREDIENT;
@@ -62,21 +65,21 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId }: RecipePortion
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-0.5">
           <button
-            onClick={() => planningSlotItemId && setPortionOverride(planningSlotItemId, Math.max(1, portions - 1))}
-            disabled={!planningSlotItemId}
+            onClick={() => planningSlotItemId && withPending(`journal-override:${key}`, () => setPortionOverride(planningSlotItemId, Math.max(1, portions - 1)))}
+            disabled={!planningSlotItemId || pending}
             aria-label={`Réduire les portions — ${name}`}
-            className="w-5 h-5 flex items-center justify-center rounded text-slate-400 hover:text-orange-500 transition-colors"
+            className="w-5 h-5 flex items-center justify-center rounded text-slate-400 hover:text-orange-500 transition-colors disabled:opacity-40"
           >
             <Minus className="w-3 h-3" />
           </button>
-          <span className={`text-[11px] font-bold w-5 text-center leading-none ${portions > 1 ? "text-orange-500" : "text-slate-400"}`}>
+          <span className={`text-[11px] font-bold w-5 text-center leading-none ${portions > 1 ? "text-orange-500" : "text-slate-400"} ${pending ? "animate-pulse" : ""}`}>
             {portions}×
           </span>
           <button
-            onClick={() => planningSlotItemId && setPortionOverride(planningSlotItemId, Math.min(10, portions + 1))}
-            disabled={!planningSlotItemId}
+            onClick={() => planningSlotItemId && withPending(`journal-override:${key}`, () => setPortionOverride(planningSlotItemId, Math.min(10, portions + 1)))}
+            disabled={!planningSlotItemId || pending}
             aria-label={`Augmenter les portions — ${name}`}
-            className="w-5 h-5 flex items-center justify-center rounded text-slate-400 hover:text-orange-500 transition-colors"
+            className="w-5 h-5 flex items-center justify-center rounded text-slate-400 hover:text-orange-500 transition-colors disabled:opacity-40"
           >
             <Plus className="w-3 h-3" />
           </button>

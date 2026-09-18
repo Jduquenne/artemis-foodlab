@@ -11,6 +11,7 @@ import { MultiRecipeGrid } from './MultiRecipeGrid';
 import { MultiSlotActions } from './MultiSlotActions';
 import { RecipeMetaEditor } from './RecipeMetaEditor';
 import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
+import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 
 export interface MultiMealSlotProps {
     label: string;
@@ -27,7 +28,7 @@ export interface MultiMealSlotProps {
     onSelectAsTarget?: () => void;
     recipePersons?: Record<string, number>;
     recipeQuantities?: Record<string, number>;
-    onSaveRecipeMeta?: (recipeId: string, persons: number, grams: number) => void;
+    onSaveRecipeMeta?: (recipeId: string, persons: number, grams: number) => void | Promise<void>;
     batchRecipeIds?: Set<string>;
     persons?: number;
     isEditingPersons?: boolean;
@@ -60,6 +61,9 @@ export const MultiMealSlot = ({
     onCancelPersons,
 }: MultiMealSlotProps) => {
     const [editingMetaId, setEditingMetaId] = useState<string | null>(null);
+    const [savingMeta, setSavingMeta] = useState(false);
+    const isPersonsPending = usePendingKey(`planning-persons:${slotId}`);
+    const isSingleRemovePending = usePendingKey(`planning-recipe-remove:${slotId}:${recipeIds[0] ?? ''}`);
 
     const firstRecipe = recipeIds.length === 1 ? plannableDb[recipeIds[0]] : undefined;
     const singleHasPhoto = Boolean(firstRecipe?.assets?.mealPhoto);
@@ -158,6 +162,7 @@ export const MultiMealSlot = ({
 
                 {recipeIds.length >= 2 && (
                     <MultiRecipeGrid
+                        slotId={slotId}
                         recipeIds={recipeIds}
                         canAddMore={canAddMore}
                         isTargetMode={isTargetMode}
@@ -229,6 +234,7 @@ export const MultiMealSlot = ({
                     onCopyRecipe={onCopyRecipe}
                     onRemoveRecipe={onRemoveRecipe}
                     onAdd={onAdd}
+                    removePending={isSingleRemovePending}
                 />
             )}
 
@@ -238,6 +244,7 @@ export const MultiMealSlot = ({
                     defaultPortion={recipeIds.length === 1 ? firstRecipe?.defaultPortions : undefined}
                     onConfirm={onConfirmPersons}
                     onCancel={onCancelPersons}
+                    pending={isPersonsPending}
                 />
             )}
 
@@ -248,7 +255,16 @@ export const MultiMealSlot = ({
                     initialGrams={recipeQuantities?.[editingMetaId] ?? Math.round(RECIPE_BASE_GRAMS[editingMetaId] ?? 0)}
                     defaultGrams={Math.round(RECIPE_BASE_GRAMS[editingMetaId] ?? 0)}
                     isDish={isDish(plannableDb[editingMetaId]) || isBase(plannableDb[editingMetaId])}
-                    onConfirm={(persons, grams) => { onSaveRecipeMeta(editingMetaId, persons, grams); setEditingMetaId(null); }}
+                    pending={savingMeta}
+                    onConfirm={async (persons, grams) => {
+                        setSavingMeta(true);
+                        try {
+                            await onSaveRecipeMeta(editingMetaId, persons, grams);
+                            setEditingMetaId(null);
+                        } finally {
+                            setSavingMeta(false);
+                        }
+                    }}
                     onCancel={() => setEditingMetaId(null)}
                 />
             )}

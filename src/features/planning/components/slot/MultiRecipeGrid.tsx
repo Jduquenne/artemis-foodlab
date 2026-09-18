@@ -2,6 +2,7 @@ import { Plus } from 'lucide-react';
 import { RecipeCell } from './RecipeCell';
 
 export interface MultiRecipeGridProps {
+    slotId: string;
     recipeIds: string[];
     canAddMore: boolean;
     isTargetMode: boolean;
@@ -18,6 +19,7 @@ export interface MultiRecipeGridProps {
 }
 
 export const MultiRecipeGrid = ({
+    slotId,
     recipeIds,
     canAddMore,
     isTargetMode,
@@ -39,6 +41,7 @@ export const MultiRecipeGrid = ({
                 return (
                     <RecipeCell
                         key={rid}
+                        slotId={slotId}
                         recipeId={rid}
                         onNavigate={() => onNavigateToRecipe(rid)}
                         onRemove={() => onRemoveRecipe(rid)}

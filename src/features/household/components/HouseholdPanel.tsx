@@ -5,6 +5,7 @@ import { HouseholdCategory } from '../../../core/domain/types';
 import { getRecords, toggleItem, clearAll } from '../../../core/services/householdService';
 import { distributeToColumns } from '../../../shared/utils/columnUtils';
 import { typedHouseholdDb } from '../../../core/typed-db/typedHouseholdDb';
+import { withPending } from '../../../shared/utils/withPending';
 import { HouseholdCategoryCard } from './HouseholdCategoryCard';
 
 const CATEGORY_ORDER: HouseholdCategory[] = [
@@ -35,6 +36,8 @@ export const HouseholdPanel = ({ colCount }: HouseholdPanelProps) => {
     await clearAll();
     setTimeout(() => setSpinning(false), 600);
   };
+
+  const handleToggle = (id: string) => withPending(`household-check:${id}`, () => toggleItem(id));
 
   const grouped = useMemo(
     () =>
@@ -82,7 +85,7 @@ export const HouseholdPanel = ({ colCount }: HouseholdPanelProps) => {
                 label={group.label}
                 items={group.items}
                 checkedIds={checkedIds}
-                onToggle={toggleItem}
+                onToggle={handleToggle}
               />
             ))}
           </div>

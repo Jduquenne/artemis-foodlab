@@ -1,4 +1,4 @@
-import { GripVertical, RefreshCw, Trash2 } from 'lucide-react';
+import { GripVertical, Loader2, RefreshCw, Trash2 } from 'lucide-react';
 import { useDraggable } from '@dnd-kit/core';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 
@@ -10,6 +10,7 @@ export interface SlotActionsProps {
     attributes: DndAttributes;
     onModify?: () => void;
     onDelete?: () => void;
+    pending?: boolean;
 }
 
 export const SlotActions = ({
@@ -17,6 +18,7 @@ export const SlotActions = ({
     attributes,
     onModify,
     onDelete,
+    pending,
 }: SlotActionsProps) => (
     <>
         {!IS_TOUCH && (
@@ -41,10 +43,11 @@ export const SlotActions = ({
         <button
             aria-label="Supprimer le repas"
             onPointerDown={(e) => e.stopPropagation()}
-            onClick={(e) => { e.stopPropagation(); onDelete?.(); }}
-            className={`absolute bottom-1 right-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-red-500 rounded-lg shadow-md border border-slate-200 hover:bg-red-50 dark:hover:bg-red-950/40 z-20 transition-opacity ${IS_TOUCH ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+            onClick={(e) => { e.stopPropagation(); if (!pending) onDelete?.(); }}
+            disabled={pending}
+            className={`absolute bottom-1 right-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-red-500 rounded-lg shadow-md border border-slate-200 hover:bg-red-50 dark:hover:bg-red-950/40 z-20 transition-opacity disabled:opacity-60 ${IS_TOUCH || pending ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
         >
-            <Trash2 size={14} />
+            {pending ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
         </button>
     </>
 );

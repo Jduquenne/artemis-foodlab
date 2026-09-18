@@ -1,13 +1,13 @@
 import { useState, useMemo } from 'react';
 import { SearchBar } from '../../../../shared/components/ui/SearchBar';
 import { SearchRecipeResult, useSearchMeals } from '../../../../shared/hooks/useSearch';
-import { Check, X, TreePine } from 'lucide-react';
+import { Check, Loader2, X, TreePine } from 'lucide-react';
 import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
 import { searchOutdoorRecipes } from '../../../../core/logic/recipe/recipeLogic';
 import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
 
 export interface RecipePickerProps {
-    onSelect: (recipe: SearchRecipeResult) => void;
+    onSelect: (recipe: SearchRecipeResult) => void | Promise<void>;
     onClose: () => void;
     slotName: string;
     existingRecipeIds?: string[];
@@ -17,11 +17,22 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
     const [query, setQuery] = useState('');
     const [pendingSelection, setPendingSelection] = useState<SearchRecipeResult | null>(null);
     const [isClosing, setIsClosing] = useState(false);
+    const [saving, setSaving] = useState(false);
     const results = useSearchMeals(query);
 
     const outdoorResults = useMemo(() => searchOutdoorRecipes(query), [query]);
 
     const handleClose = () => { setIsClosing(true); setTimeout(onClose, 300); };
+
+    const confirmSelection = async () => {
+        if (!pendingSelection || saving) return;
+        setSaving(true);
+        try {
+            await onSelect(pendingSelection);
+        } finally {
+            setSaving(false);
+        }
+    };
 
     return (
         <div className="fixed inset-0 z-100 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4">
@@ -38,14 +49,17 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
                             <div className="flex gap-3">
                                 <button
                                     onClick={() => setPendingSelection(null)}
-                                    className="flex-1 py-4 bg-slate-100 dark:bg-slate-300 text-slate-600 font-bold rounded-2xl hover:bg-slate-200 dark:hover:bg-slate-400 transition-colors"
+                                    disabled={saving}
+                                    className="flex-1 py-4 bg-slate-100 dark:bg-slate-300 text-slate-600 font-bold rounded-2xl hover:bg-slate-200 dark:hover:bg-slate-400 transition-colors disabled:opacity-50"
                                 >
                                     Annuler
                                 </button>
                                 <button
-                                    onClick={() => onSelect(pendingSelection)}
-                                    className="flex-1 py-4 bg-orange-500 text-white font-bold rounded-2xl shadow-lg shadow-orange-200/50 hover:bg-orange-600 transition-colors"
+                                    onClick={confirmSelection}
+                                    disabled={saving}
+                                    className="flex-1 py-4 bg-orange-500 text-white font-bold rounded-2xl shadow-lg shadow-orange-200/50 hover:bg-orange-600 transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
                                 >
+                                    {saving && <Loader2 size={18} className="animate-spin" />}
                                     Confirmer
                                 </button>
                             </div>

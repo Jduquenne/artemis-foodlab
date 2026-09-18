@@ -1,9 +1,11 @@
 import { useRef, useState } from "react";
-import { ChefHat, MoreVertical, Trash2, AlertTriangle } from "lucide-react";
+import { ChefHat, MoreVertical, Trash2, AlertTriangle, Loader2 } from "lucide-react";
 import { BatchFreezerItem } from "../../../../core/domain/types";
 import { updateBatchPortions } from "../../../../core/services/freezerService";
 import { freezerItemAge } from "../../../../core/logic/freezer/freezerLogic";
 import { FloatingMenu } from "../../../../shared/components/ui/FloatingMenu";
+import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
+import { withPending } from "../../../../shared/utils/withPending";
 
 export interface BatchFreezerItemRowProps {
     item: BatchFreezerItem;
@@ -16,18 +18,21 @@ export const BatchFreezerItemRow = ({ item, categoryId, onDelete }: BatchFreezer
     const [menuOpen, setMenuOpen] = useState(false);
     const menuButtonRef = useRef<HTMLButtonElement>(null);
     const age = freezerItemAge(item.addedDate);
+    const deletePending = usePendingKey(`freezer-item-delete:${item.id}`);
+    const portionsPending = usePendingKey(`freezer-portions:${item.id}`);
 
     const handleDecrement = () => {
-        if (isEmpty) return;
-        updateBatchPortions(categoryId, item.id, item.portions - 1);
+        if (isEmpty || portionsPending) return;
+        withPending(`freezer-portions:${item.id}`, () => updateBatchPortions(categoryId, item.id, item.portions - 1));
     };
 
     const handleIncrement = () => {
-        updateBatchPortions(categoryId, item.id, item.portions + 1);
+        if (portionsPending) return;
+        withPending(`freezer-portions:${item.id}`, () => updateBatchPortions(categoryId, item.id, item.portions + 1));
     };
 
     return (
-        <div className={`px-3 py-2.5 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl transition ${isEmpty ? 'opacity-60' : ''}`}>
+        <div className={`px-3 py-2.5 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl transition ${isEmpty ? 'opacity-60' : ''} ${deletePending ? 'opacity-50 pointer-events-none' : ''}`}>
             <div className="flex items-center gap-2.5">
                 <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${isEmpty ? 'bg-slate-100 dark:bg-slate-200' : 'bg-orange-100 dark:bg-orange-900/30'}`}>
                     <ChefHat className={`w-4 h-4 ${isEmpty ? 'text-slate-400' : 'text-orange-500'}`} />
@@ -42,7 +47,7 @@ export const BatchFreezerItemRow = ({ item, categoryId, onDelete }: BatchFreezer
                     onClick={() => setMenuOpen(o => !o)}
                     className="shrink-0 p-2 rounded-xl text-slate-300 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
                 >
-                    <MoreVertical className="w-4 h-4" />
+                    {deletePending ? <Loader2 className="w-4 h-4 animate-spin text-orange-400" /> : <MoreVertical className="w-4 h-4" />}
                 </button>
                 <FloatingMenu open={menuOpen} anchorRef={menuButtonRef} onClose={() => setMenuOpen(false)}>
                     <button
@@ -66,18 +71,19 @@ export const BatchFreezerItemRow = ({ item, categoryId, onDelete }: BatchFreezer
                     <button
                         aria-label="Consommer une portion"
                         onClick={handleDecrement}
-                        disabled={isEmpty}
+                        disabled={isEmpty || portionsPending}
                         className="w-7 h-7 rounded-lg bg-slate-100 dark:bg-slate-200 text-slate-600 font-bold text-base flex items-center justify-center hover:bg-orange-100 hover:text-orange-600 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                     >
                         −
                     </button>
-                    <span className={`text-sm font-black w-5 text-center ${isEmpty ? 'text-slate-400' : 'text-slate-900'}`}>
+                    <span className={`text-sm font-black w-5 text-center ${isEmpty ? 'text-slate-400' : 'text-slate-900'} ${portionsPending ? 'animate-pulse' : ''}`}>
                         {item.portions}
                     </span>
                     <button
                         aria-label="Ajouter une portion"
                         onClick={handleIncrement}
-                        className="w-7 h-7 rounded-lg bg-slate-100 dark:bg-slate-200 text-slate-600 font-bold text-base flex items-center justify-center hover:bg-orange-100 hover:text-orange-600 transition-colors"
+                        disabled={portionsPending}
+                        className="w-7 h-7 rounded-lg bg-slate-100 dark:bg-slate-200 text-slate-600 font-bold text-base flex items-center justify-center hover:bg-orange-100 hover:text-orange-600 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                     >
                         +
                     </button>

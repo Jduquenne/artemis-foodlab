@@ -1,5 +1,5 @@
-import { CheckCircle2, Circle } from 'lucide-react';
 import { HouseholdItem } from '../../../core/domain/types';
+import { HouseholdCheckRow } from './HouseholdCheckRow';
 
 export interface HouseholdShoppingCardProps {
   items: HouseholdItem[];
@@ -19,25 +19,14 @@ export const HouseholdShoppingCard = ({ items, checked, onToggle }: HouseholdSho
         )}
       </div>
       <div className="space-y-0.5">
-        {items.map(item => {
-          const isChecked = checked.has(`household::${item.id}`);
-          return (
-            <div
-              key={item.id}
-              onClick={() => onToggle(`household::${item.id}`)}
-              className={`flex items-center gap-1.5 px-1.5 py-1 rounded-lg transition-all cursor-pointer select-none
-                ${isChecked ? 'opacity-40 bg-slate-50 dark:bg-slate-200/40' : 'hover:bg-slate-50 dark:hover:bg-slate-200/40'}`}
-            >
-              {isChecked
-                ? <CheckCircle2 className="w-3.5 h-3.5 text-green-500 shrink-0" />
-                : <Circle className="w-3.5 h-3.5 text-slate-300 shrink-0" />
-              }
-              <span className={`text-xs font-medium text-slate-800 truncate ${isChecked ? 'line-through' : ''}`}>
-                {item.name}
-              </span>
-            </div>
-          );
-        })}
+        {items.map(item => (
+          <HouseholdCheckRow
+            key={item.id}
+            item={item}
+            isChecked={checked.has(`household::${item.id}`)}
+            onToggle={onToggle}
+          />
+        ))}
       </div>
     </div>
   );

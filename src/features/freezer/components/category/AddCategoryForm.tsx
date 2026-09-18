@@ -7,18 +7,25 @@ export const AddCategoryForm = () => {
   const [adding, setAdding] = useState(false);
   const [name, setName] = useState("");
   const [color, setColor] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
   const reset = () => {
     setAdding(false);
     setName("");
     setColor(null);
+    setSubmitting(false);
   };
 
   const handleConfirm = async () => {
     const trimmed = name.trim();
-    if (!trimmed) return;
-    await createCategory(trimmed, color);
-    reset();
+    if (!trimmed || submitting) return;
+    setSubmitting(true);
+    try {
+      await createCategory(trimmed, color);
+      reset();
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (adding) {
@@ -38,15 +45,16 @@ export const AddCategoryForm = () => {
           />
           <button
             onClick={handleConfirm}
-            disabled={!name.trim()}
+            disabled={!name.trim() || submitting}
             className="px-4 py-2.5 bg-orange-500 hover:bg-orange-600 disabled:opacity-40 text-white font-bold rounded-xl transition-colors text-sm"
           >
-            Créer
+            {submitting ? "Création…" : "Créer"}
           </button>
           <button
             aria-label="Annuler"
             onClick={reset}
-            className="p-2.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 rounded-xl transition-colors"
+            disabled={submitting}
+            className="p-2.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 rounded-xl transition-colors disabled:opacity-40"
           >
             <X className="w-4 h-4" />
           </button>

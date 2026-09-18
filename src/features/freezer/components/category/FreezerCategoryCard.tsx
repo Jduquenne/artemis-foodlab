@@ -9,6 +9,8 @@ import {
 } from "../../../../core/logic/freezer/freezerLogic";
 import { InlineNameEditor } from "../InlineNameEditor";
 import { FreezerColorPicker } from "./FreezerColorPicker";
+import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
+import { withPending } from "../../../../shared/utils/withPending";
 
 export interface FreezerCategoryCardProps {
   category: FreezerCategory;
@@ -19,8 +21,10 @@ export const FreezerCategoryCard = ({ category, onClick }: FreezerCategoryCardPr
   const [menuOpen, setMenuOpen] = useState(false);
   const [picking, setPicking] = useState(false);
   const [renaming, setRenaming] = useState(false);
+  const [savingRename, setSavingRename] = useState(false);
   const [nameInput, setNameInput] = useState(category.name);
   const menuRef = useRef<HTMLDivElement>(null);
+  const deletePending = usePendingKey(`freezer-category-delete:${category.id}`);
 
   const closeMenu = () => {
     setMenuOpen(false);
@@ -40,7 +44,14 @@ export const FreezerCategoryCard = ({ category, onClick }: FreezerCategoryCardPr
 
   const handleRename = async () => {
     const trimmed = nameInput.trim();
-    if (trimmed && trimmed !== category.name) await updateCategoryName(category.id, trimmed);
+    if (trimmed && trimmed !== category.name) {
+      setSavingRename(true);
+      try {
+        await updateCategoryName(category.id, trimmed);
+      } finally {
+        setSavingRename(false);
+      }
+    }
     setRenaming(false);
     closeMenu();
   };
@@ -52,12 +63,14 @@ export const FreezerCategoryCard = ({ category, onClick }: FreezerCategoryCardPr
 
   const handleDelete = async () => {
     closeMenu();
-    await deleteCategory(category.id);
+    await withPending(`freezer-category-delete:${category.id}`, () => deleteCategory(category.id));
   };
 
   const handlePickColor = async (color: string | null) => {
     closeMenu();
-    if (color !== category.color) await updateCategoryColor(category.id, color);
+    if (color !== category.color) {
+      await withPending(`freezer-category-color:${category.id}`, () => updateCategoryColor(category.id, color));
+    }
   };
 
   const accent = getFreezerCategoryAccent(category);
@@ -77,7 +90,7 @@ export const FreezerCategoryCard = ({ category, onClick }: FreezerCategoryCardPr
       tabIndex={0}
       onClick={onClick}
       onKeyDown={e => { if (e.key === "Enter" || e.key === " ") onClick(); }}
-      className={`group relative bg-white dark:bg-slate-100 rounded-2xl border border-slate-200 shadow-sm flex flex-col cursor-pointer transition duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-orange-300 md:min-h-[8.5rem] ${menuOpen ? "z-30" : ""}`}
+      className={`group relative bg-white dark:bg-slate-100 rounded-2xl border border-slate-200 shadow-sm flex flex-col cursor-pointer transition duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-orange-300 md:min-h-[8.5rem] ${menuOpen ? "z-30" : ""} ${deletePending ? "opacity-50 pointer-events-none" : ""}`}
     >
       <div className="flex-1 flex flex-col gap-2 px-4 py-3 md:py-4">
         <div className={`h-1 w-10 rounded-full ${accent.bar}`} />
@@ -95,6 +108,7 @@ export const FreezerCategoryCard = ({ category, onClick }: FreezerCategoryCardPr
                 onConfirm={handleRename}
                 onCancel={handleCancelRename}
                 inputClassName="text-sm font-bold"
+                pending={savingRename}
               />
             ) : (
               <span className="block text-sm font-bold text-slate-800 truncate">{category.name}</span>

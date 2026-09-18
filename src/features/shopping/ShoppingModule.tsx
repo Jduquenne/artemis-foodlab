@@ -15,6 +15,7 @@ import {
     computeUncheckedCount,
     assignIngredientColumns,
     extrasToIngredients,
+    buildSourceCheckKey,
 } from '../../core/logic/shopping/shoppingLogic';
 import { getRecords as getHouseholdRecords } from '../../core/services/householdService';
 import { syncWeekFromApi } from '../../core/services/planningService';
@@ -37,6 +38,7 @@ import { useMenuStore } from '../../shared/store/useMenuStore';
 import { useAuthStore } from '../../shared/store/useAuthStore';
 import { useColCount } from '../../shared/hooks/useColCount';
 import { useFreezerStock } from '../../shared/hooks/useFreezerStock';
+import { withPending } from '../../shared/utils/withPending';
 import { computeFreezerBagSelection } from '../../core/logic/freezer/freezerLogic';
 import { ShoppingCategoryCard } from './components/ingredients/ShoppingCategoryCard';
 import { RecipeShoppingCard } from './components/meals/RecipeShoppingCard';
@@ -187,7 +189,7 @@ export const ShoppingModule = () => {
             const key = foodIdToKey.get(sc.foodId);
             if (!key) continue;
             const code = getCodeById(sc.recipeId) ?? sc.recipeId;
-            map.set(`${key}::${code}::${sc.day}::${sc.slot}`, sc.id);
+            map.set(buildSourceCheckKey(key, { recipeId: code, day: sc.day, slot: sc.slot }), sc.id);
         }
         return map;
     }, [sourceChecksRaw, foodIdToKey]);
@@ -237,31 +239,36 @@ export const ShoppingModule = () => {
             const key = foodIdToKey.get(sc.foodId);
             if (!key) continue;
             const code = getCodeById(sc.recipeId) ?? sc.recipeId;
-            set.add(`${key}::${code}::${sc.day}::${sc.slot}`);
+            set.add(buildSourceCheckKey(key, { recipeId: code, day: sc.day, slot: sc.slot }));
         }
         return set;
     }, [sourceChecksRaw, foodIdToKey]);
 
     const toggleItem = async (key: string) => {
         if (!currentPeriodId) return;
+        const pendingKey = `shopping-check:${key}`;
         if (key.startsWith('extra::')) {
             const id = key.slice('extra::'.length);
             const current = extrasRaw.find(e => e.id === id);
-            const updated = await updateExtra(currentPeriodId, id, { isChecked: !current?.isChecked });
-            patchExtra(updated);
+            const updated = await withPending(pendingKey, () => updateExtra(currentPeriodId, id, { isChecked: !current?.isChecked }));
+            if (updated) patchExtra(updated);
             return;
         }
         if (key.startsWith('household::')) {
             const householdItemId = key.slice('household::'.length);
             const existing = itemCheckByHouseholdId.get(householdItemId);
-            const updated = await upsertItemCheck(currentPeriodId, existing?.id, { householdItemId }, { isChecked: !existing?.isChecked });
-            patchItemCheck(updated);
+            const updated = await withPending(pendingKey, () =>
+                upsertItemCheck(currentPeriodId, existing?.id, { householdItemId }, { isChecked: !existing?.isChecked })
+            );
+            if (updated) patchItemCheck(updated);
         } else {
             const foodId = keyToFoodId.get(key);
             if (!foodId) return;
             const existing = itemCheckByFoodId.get(foodId);
-            const updated = await upsertItemCheck(currentPeriodId, existing?.id, { foodId }, { isChecked: !existing?.isChecked });
-            patchItemCheck(updated);
+            const updated = await withPending(pendingKey, () =>
+                upsertItemCheck(currentPeriodId, existing?.id, { foodId }, { isChecked: !existing?.isChecked })
+            );
+            if (updated) patchItemCheck(updated);
         }
     };
 
@@ -280,10 +287,12 @@ export const ShoppingModule = () => {
         if (!foodId) return;
         for (const source of sources) {
             const recipeId = getIdByCode(source.recipeId) ?? source.recipeId;
-            const localKey = `${ingredientKey}::${source.recipeId}::${source.day}::${source.slot}`;
+            const localKey = buildSourceCheckKey(ingredientKey, source);
             const existingId = sourceCheckIdByKey.get(localKey);
-            const updated = await upsertSourceCheck(currentPeriodId, existingId, { foodId, recipeId, day: source.day, slot: source.slot }, isChecked);
-            patchSourceCheck(updated);
+            const updated = await withPending(`shopping-source:${localKey}`, () =>
+                upsertSourceCheck(currentPeriodId, existingId, { foodId, recipeId, day: source.day, slot: source.slot }, isChecked)
+            );
+            if (updated) patchSourceCheck(updated);
         }
     };
 
@@ -301,8 +310,10 @@ export const ShoppingModule = () => {
         const foodId = keyToFoodId.get(ingredientKey);
         if (!foodId) return;
         const existing = itemCheckByFoodId.get(foodId);
-        const updated = await upsertItemCheck(currentPeriodId, existing?.id, { foodId }, { freezerBagIds: next });
-        patchItemCheck(updated);
+        const updated = await withPending(`shopping-bag:${bagId}`, () =>
+            upsertItemCheck(currentPeriodId, existing?.id, { foodId }, { freezerBagIds: next })
+        );
+        if (updated) patchItemCheck(updated);
     };
 
     const plannedRecipes = useMemo(
@@ -328,8 +339,10 @@ export const ShoppingModule = () => {
     const handleDeleteExtra = async (extraId: string) => {
         if (!currentPeriodId) return;
         try {
-            await deleteExtra(currentPeriodId, extraId);
-            setExtrasRaw(prev => prev.filter(e => e.id !== extraId));
+            await withPending(`shopping-extra-delete:${extraId}`, async () => {
+                await deleteExtra(currentPeriodId, extraId);
+                setExtrasRaw(prev => prev.filter(e => e.id !== extraId));
+            });
         } catch {
             // erreur affichée par le handler global
         }

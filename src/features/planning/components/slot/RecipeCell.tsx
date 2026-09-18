@@ -1,11 +1,13 @@
-import { X, Copy, Users, Snowflake } from 'lucide-react';
+import { X, Copy, Users, Snowflake, Loader2 } from 'lucide-react';
 import { plannableDb } from '../../../../core/typed-db/plannableDb';
 import { RECIPE_BASE_GRAMS } from '../../../../shared/utils/macroUtils';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 import { isDish, isBase } from '../../../../core/domain/recipePredicates';
 import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
+import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 
 export interface RecipeCellProps {
+    slotId: string;
     recipeId: string;
     onNavigate: () => void;
     onRemove: () => void;
@@ -17,13 +19,14 @@ export interface RecipeCellProps {
     inFreezer?: boolean;
 }
 
-export const RecipeCell = ({ recipeId, onNavigate, onRemove, onCopy, hideRemove, persons, grams, onEditMeta, inFreezer }: RecipeCellProps) => {
+export const RecipeCell = ({ slotId, recipeId, onNavigate, onRemove, onCopy, hideRemove, persons, grams, onEditMeta, inFreezer }: RecipeCellProps) => {
     const recipe = plannableDb[recipeId];
     const hasPhoto = Boolean(recipe?.assets?.mealPhoto);
     const hasRecipesPage = Boolean(recipe?.assets?.mealPhoto || recipe?.assets?.instructionsPhoto);
     const defaultGrams = RECIPE_BASE_GRAMS[recipeId] ?? 0;
     const recipeIsDish = isDish(recipe) || isBase(recipe);
     const isCustom = persons !== undefined || (!recipeIsDish && grams !== undefined);
+    const removePending = usePendingKey(`planning-recipe-remove:${slotId}:${recipeId}`);
 
     return (
         <div className="relative group/cell w-full h-full min-h-0 flex-1 min-w-0">
@@ -64,10 +67,11 @@ export const RecipeCell = ({ recipeId, onNavigate, onRemove, onCopy, hideRemove,
                 <button
                     aria-label="Retirer ce repas"
                     onPointerDown={(e) => e.stopPropagation()}
-                    onClick={(e) => { e.stopPropagation(); onRemove(); }}
-                    className={`absolute top-0.5 right-0.5 p-0.5 bg-white/90 dark:bg-slate-100/90 text-red-400 rounded transition-opacity z-10 shadow-sm ${IS_TOUCH ? 'opacity-100' : 'opacity-0 group-hover/cell:opacity-100'}`}
+                    onClick={(e) => { e.stopPropagation(); if (!removePending) onRemove(); }}
+                    disabled={removePending}
+                    className={`absolute top-0.5 right-0.5 p-0.5 bg-white/90 dark:bg-slate-100/90 text-red-400 rounded transition-opacity z-10 shadow-sm disabled:opacity-60 ${IS_TOUCH || removePending ? 'opacity-100' : 'opacity-0 group-hover/cell:opacity-100'}`}
                 >
-                    <X size={9} />
+                    {removePending ? <Loader2 size={9} className="animate-spin" /> : <X size={9} />}
                 </button>
             )}
             {inFreezer && (

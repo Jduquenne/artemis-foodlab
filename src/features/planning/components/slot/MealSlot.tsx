@@ -8,6 +8,7 @@ import { SlotPersonsBadge } from './SlotPersonsBadge';
 import { SlotActions } from './SlotActions';
 import { DessertColumn } from './DessertColumn';
 import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
+import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 
 export interface MealSlotProps {
     label: string;
@@ -54,6 +55,8 @@ export const MealSlot = ({
     const hasPhoto = Boolean(recipe?.assets?.mealPhoto);
     const hasRecipesPage = Boolean(recipe?.assets?.mealPhoto || recipe?.assets?.instructionsPhoto);
     const defaultPortion = recipe?.defaultPortions;
+    const isDeletePending = usePendingKey(`planning-slot-delete:${slotId}`);
+    const isPersonsPending = usePendingKey(`planning-persons:${slotId}`);
 
     const { setNodeRef: setDropRef, isOver } = useDroppable({ id: slotId });
     const { setNodeRef: setDragRef, listeners, attributes, isDragging } = useDraggable({
@@ -141,6 +144,7 @@ export const MealSlot = ({
                     attributes={attributes}
                     onModify={onModify}
                     onDelete={onDelete}
+                    pending={isDeletePending}
                 />
             )}
 
@@ -150,6 +154,7 @@ export const MealSlot = ({
                     defaultPortion={defaultPortion}
                     onConfirm={onConfirmPersons}
                     onCancel={onCancelPersons}
+                    pending={isPersonsPending}
                 />
             )}
         </>
@@ -163,6 +168,7 @@ export const MealSlot = ({
                 </div>
                 <div className="flex-1 min-h-0">
                     <DessertColumn
+                        slotId={slotId}
                         dessertIds={dessertIds ?? []}
                         isAddMode={isAddMode}
                         dessertCopyTargetState={dessertCopyTargetState}

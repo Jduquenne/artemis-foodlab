@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Check, RotateCcw, X, Users } from 'lucide-react';
+import { Check, Loader2, RotateCcw, X, Users } from 'lucide-react';
 
 export interface RecipeMetaEditorProps {
     initialPersons: number;
@@ -7,6 +7,7 @@ export interface RecipeMetaEditorProps {
     initialGrams: number;
     defaultGrams: number;
     isDish?: boolean;
+    pending?: boolean;
     onConfirm: (persons: number, grams: number) => void;
     onCancel: () => void;
 }
@@ -17,6 +18,7 @@ export const RecipeMetaEditor = ({
     initialGrams,
     defaultGrams,
     isDish,
+    pending,
     onConfirm,
     onCancel,
 }: RecipeMetaEditorProps) => {
@@ -30,10 +32,13 @@ export const RecipeMetaEditor = ({
         firstInputRef.current?.select();
     }, []);
 
-    const confirm = () => onConfirm(
-        Math.max(1, draftPersons || 1),
-        showGrams ? Math.max(1, draftGrams || 1) : initialGrams,
-    );
+    const confirm = () => {
+        if (pending) return;
+        onConfirm(
+            Math.max(1, draftPersons || 1),
+            showGrams ? Math.max(1, draftGrams || 1) : initialGrams,
+        );
+    };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter') confirm();
@@ -52,9 +57,10 @@ export const RecipeMetaEditor = ({
                         type="number"
                         min="1"
                         value={draftPersons}
+                        disabled={pending}
                         onChange={(e) => setDraftPersons(Number(e.target.value) || 0)}
                         onKeyDown={handleKeyDown}
-                        className="w-14 text-center text-xl font-black text-slate-900 bg-slate-100 dark:bg-slate-200 rounded-xl py-1.5 border-0 outline-none focus:ring-2 focus:ring-orange-400"
+                        className="w-14 text-center text-xl font-black text-slate-900 bg-slate-100 dark:bg-slate-200 rounded-xl py-1.5 border-0 outline-none focus:ring-2 focus:ring-orange-400 disabled:opacity-50"
                     />
                 </div>
                 {showGrams && (
@@ -65,9 +71,10 @@ export const RecipeMetaEditor = ({
                                 type="number"
                                 min="1"
                                 value={draftGrams}
+                                disabled={pending}
                                 onChange={(e) => setDraftGrams(Number(e.target.value) || 0)}
                                 onKeyDown={handleKeyDown}
-                                className="w-14 text-center text-xl font-black text-slate-900 bg-slate-100 dark:bg-slate-200 rounded-xl py-1.5 border-0 outline-none focus:ring-2 focus:ring-orange-400"
+                                className="w-14 text-center text-xl font-black text-slate-900 bg-slate-100 dark:bg-slate-200 rounded-xl py-1.5 border-0 outline-none focus:ring-2 focus:ring-orange-400 disabled:opacity-50"
                             />
                             <span className="text-xs font-bold text-slate-400">g</span>
                         </div>
@@ -79,15 +86,17 @@ export const RecipeMetaEditor = ({
                     aria-label="Confirmer"
                     onPointerDown={(e) => e.stopPropagation()}
                     onClick={confirm}
-                    className="p-2 bg-orange-500 text-white rounded-xl hover:bg-orange-600 transition-colors"
+                    disabled={pending}
+                    className="p-2 bg-orange-500 text-white rounded-xl hover:bg-orange-600 transition-colors disabled:opacity-60"
                 >
-                    <Check size={15} />
+                    {pending ? <Loader2 size={15} className="animate-spin" /> : <Check size={15} />}
                 </button>
                 <button
                     onPointerDown={(e) => e.stopPropagation()}
                     onClick={() => { setDraftPersons(defaultPersons); setDraftGrams(defaultGrams); }}
+                    disabled={pending}
                     title="Remettre par défaut"
-                    className="p-2 bg-slate-200 dark:bg-slate-300 text-slate-500 rounded-xl hover:bg-slate-300 transition-colors"
+                    className="p-2 bg-slate-200 dark:bg-slate-300 text-slate-500 rounded-xl hover:bg-slate-300 transition-colors disabled:opacity-60"
                 >
                     <RotateCcw size={15} />
                 </button>
@@ -95,7 +104,8 @@ export const RecipeMetaEditor = ({
                     aria-label="Annuler"
                     onPointerDown={(e) => e.stopPropagation()}
                     onClick={onCancel}
-                    className="p-2 bg-slate-200 dark:bg-slate-300 text-slate-600 rounded-xl hover:bg-slate-300 transition-colors"
+                    disabled={pending}
+                    className="p-2 bg-slate-200 dark:bg-slate-300 text-slate-600 rounded-xl hover:bg-slate-300 transition-colors disabled:opacity-60"
                 >
                     <X size={15} />
                 </button>

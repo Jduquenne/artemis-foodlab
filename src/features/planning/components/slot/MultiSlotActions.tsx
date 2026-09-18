@@ -1,4 +1,4 @@
-import { GripVertical, X, Copy, Plus } from 'lucide-react';
+import { GripVertical, X, Copy, Loader2, Plus } from 'lucide-react';
 import { useDraggable } from '@dnd-kit/core';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 
@@ -13,6 +13,7 @@ export interface MultiSlotActionsProps {
     onCopyRecipe?: (id: string) => void;
     onRemoveRecipe: (id: string) => void;
     onAdd: () => void;
+    removePending?: boolean;
 }
 
 export const MultiSlotActions = ({
@@ -23,6 +24,7 @@ export const MultiSlotActions = ({
     onCopyRecipe,
     onRemoveRecipe,
     onAdd,
+    removePending,
 }: MultiSlotActionsProps) => (
     <>
         {!IS_TOUCH && (
@@ -39,10 +41,11 @@ export const MultiSlotActions = ({
             <button
                 aria-label="Retirer le repas"
                 onPointerDown={(e) => e.stopPropagation()}
-                onClick={(e) => { e.stopPropagation(); onRemoveRecipe(recipeIds[0]); }}
-                className={`absolute bottom-1 left-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-red-500 rounded-lg shadow-md border border-slate-200 hover:bg-red-50 dark:hover:bg-red-950/40 z-20 transition-opacity ${IS_TOUCH ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+                onClick={(e) => { e.stopPropagation(); if (!removePending) onRemoveRecipe(recipeIds[0]); }}
+                disabled={removePending}
+                className={`absolute bottom-1 left-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-red-500 rounded-lg shadow-md border border-slate-200 hover:bg-red-50 dark:hover:bg-red-950/40 z-20 transition-opacity disabled:opacity-60 ${IS_TOUCH || removePending ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
             >
-                <X size={14} />
+                {removePending ? <Loader2 size={14} className="animate-spin" /> : <X size={14} />}
             </button>
         )}
 

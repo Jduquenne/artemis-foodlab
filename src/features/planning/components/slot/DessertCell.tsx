@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { X, Copy, Users, Minus, Plus, Check, Loader2 } from 'lucide-react';
 import { plannableDb } from '../../../../core/typed-db/plannableDb';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
@@ -20,12 +21,20 @@ export interface DessertCellProps {
 
 export const DessertCell = ({ slotId, recipeId, onRemove, isAddMode, onCopy, isCopySource, hideActions, persons, isPersonsCustom, onSetPersons }: DessertCellProps) => {
     const recipe = plannableDb[recipeId];
+    const navigate = useNavigate();
     const [isEditingPersons, setIsEditingPersons] = useState(false);
     const [draft, setDraft] = useState(persons ?? 1);
     const [savingPersons, setSavingPersons] = useState(false);
     const removePending = usePendingKey(`planning-dessert-remove:${slotId}:${recipeId}`);
 
     if (!recipe?.assets?.mealPhoto) return null;
+
+    const hasRecipePage = Boolean(recipe.assets.mealPhoto || recipe.assets.instructionsPhoto);
+    const canNavigate = hasRecipePage && !isAddMode && !hideActions && !isEditingPersons;
+
+    const handleClick = () => {
+        if (canNavigate) navigate(`/recipes/detail/${recipeId}`);
+    };
 
     const openEditor = (e: React.MouseEvent | React.PointerEvent) => {
         e.stopPropagation();
@@ -51,7 +60,10 @@ export const DessertCell = ({ slotId, recipeId, onRemove, isAddMode, onCopy, isC
     };
 
     return (
-        <div className={`relative flex-1 min-h-0 rounded-lg overflow-hidden group ${isCopySource ? 'ring-2 ring-violet-500' : ''}`}>
+        <div
+            onClick={handleClick}
+            className={`relative flex-1 min-h-0 rounded-lg overflow-hidden group ${isCopySource ? 'ring-2 ring-violet-500' : ''} ${canNavigate ? 'cursor-pointer' : ''}`}
+        >
             <AsyncImage asset={recipe!.assets.mealPhoto} alt={recipe!.name} className="object-cover" fill />
             <div className="absolute inset-0 bg-white/40 dark:bg-black/50 transition-colors" />
 

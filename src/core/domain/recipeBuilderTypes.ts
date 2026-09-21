@@ -34,7 +34,7 @@ export const initialRecipeBuilderState = (): RecipeBuilderState => ({
   categoryId: CATEGORIES[0]?.id ?? "",
   kind: RecipeKind.DISH,
   mealTypes: [MealType.LUNCH, MealType.DINNER],
-  defaultPortions: 4,
+  defaultPortions: 2,
   isDessert: false,
   batchCooking: false,
   fromBook: false,

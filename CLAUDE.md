@@ -103,7 +103,7 @@ Trois couches, sans exception :
 - Toutes les routes utilisent `React.lazy` — pas d'import statique de page.
 - Le tableau des routes est inline dans `src/App.tsx` (`HashRouter`, base `/artemis-foodlab/`).
 - `/recipe-builder` et `/dashboard` ne sont montés que pour `user.role === "admin"` (`useIsAdmin`) ; une route inconnue redirige vers `/journal`.
-- Barre latérale = 5 entrées (Journal · Menu · Recettes · Courses · Congélateur) + icône Dashboard en bas pour l'admin. `/recipe-builder` n'y est **pas** : accès par le bouton « Recette » de `RecipeModule` (admin) ou le crayon d'une recette. `/household` redirige vers `/shopping` (le ménager est un onglet de la vue Courses).
+- Barre latérale = 5 entrées (Journal · Menu · Recettes · Courses · Congélateur) + icônes Créateur de recette et Dashboard en bas pour l'admin (`Layout.tsx`, pas `SidebarNav.tsx`). `/household` redirige vers `/shopping` (le ménager est un onglet de la vue Courses).
 
 ---
 

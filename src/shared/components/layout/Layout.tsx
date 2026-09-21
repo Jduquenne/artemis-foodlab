@@ -1,7 +1,7 @@
 import { lazy, Suspense, useState } from 'react';
 import { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { BarChart3 } from 'lucide-react';
+import { BarChart3, ChefHat } from 'lucide-react';
 import { SidebarLogo } from './SidebarLogo';
 import { SidebarNav } from './SidebarNav';
 import { SettingsPopover } from './SettingsPopover';
@@ -32,6 +32,19 @@ export const Layout = ({ children }: { children: ReactNode }) => {
         <SidebarNav />
 
         <div className="flex flex-col items-center gap-1">
+          {isAdmin && (
+            <Link
+              to="/recipe-builder"
+              title="Créateur de recette"
+              className={`p-2.5 tablet:p-3 rounded-xl transition-colors ${
+                location.pathname.startsWith('/recipe-builder')
+                  ? 'bg-orange-100 dark:bg-orange-900/40 text-orange-600 dark:text-orange-400'
+                  : 'text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200'
+              }`}
+            >
+              <ChefHat className="w-5 h-5" />
+            </Link>
+          )}
           {isAdmin && (
             <Link
               to="/dashboard"

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { X, Plus, ChevronUp, ChevronDown } from "lucide-react";
+import { splitPastedInstructionLines, spliceInstructionPaste } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
 
 export interface InstructionsModalProps {
   instructions: string[];
@@ -59,6 +60,17 @@ export const InstructionsModal = ({ instructions, onChange, onClose }: Instructi
     }
   };
 
+  const handlePaste = (e: React.ClipboardEvent<HTMLTextAreaElement>, i: number) => {
+    const lines = splitPastedInstructionLines(e.clipboardData.getData("text"));
+    if (lines.length <= 1) return;
+    e.preventDefault();
+    const el = e.currentTarget;
+    const before = steps[i].slice(0, el.selectionStart);
+    const after = steps[i].slice(el.selectionEnd);
+    focusIndexRef.current = i + lines.length - 1;
+    onChange(spliceInstructionPaste(steps, i, before, after, lines));
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 px-0 sm:px-4">
       <div className="w-full sm:max-w-2xl bg-slate-50 rounded-t-3xl sm:rounded-3xl overflow-hidden flex flex-col max-h-[85dvh] modal-enter sm:modal-center-enter">
@@ -90,6 +102,7 @@ export const InstructionsModal = ({ instructions, onChange, onClose }: Instructi
                   autoResize(e.target);
                 }}
                 onKeyDown={(e) => handleKeyDown(e, i)}
+                onPaste={(e) => handlePaste(e, i)}
                 placeholder="Décris cette étape…"
                 rows={1}
                 className="flex-1 min-w-0 resize-none px-3 py-2 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 leading-relaxed"

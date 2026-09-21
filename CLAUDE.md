@@ -28,6 +28,33 @@ UI en français.
 
 ---
 
+## Feedback de chargement
+
+Toute mutation déclenchée par un clic (hors formulaire avec son propre état `submitting` local) doit donner un retour visuel instantané, pas seulement après le round-trip réseau — pas d'écriture optimiste (cf. Backend API), donc le seul signal possible est un état "pending" explicite.
+
+- `shared/store/usePendingStore.ts` — `Set<string>` global de clés en cours.
+- `shared/hooks/usePendingKey.ts` / `useAnyPendingKey.ts` — lecture d'une clé, ou du OU logique de plusieurs clés.
+- `shared/utils/withPending.ts` — `withPending(key, () => apiCall())` : marque la clé pendant l'appel, et ignore silencieusement un second appel avec la même clé tant que le premier n'est pas résolu (anti double-clic). Renvoie `undefined` dans ce cas — toujours vérifier le retour avant de l'utiliser.
+- `shared/components/ui/CheckToggleIcon.tsx` — remplace une paire `CheckCircle2`/`Circle` par un `Loader2` animé quand `pending`.
+
+Clé au niveau de l'**action métier**, pas de la requête HTTP : une action qui déclenche plusieurs appels (ex. cocher tous les ingrédients d'une recette) utilise une seule clé par élément affecté, jamais une clé par requête — sinon le spinner clignote entre chaque appel.
+
+**Piège** : ne jamais wrapper un `onChange` de saisie libre (texte tapé au clavier) avec `withPending` — le garde anti-doublon peut faire perdre la dernière frappe si elle tombe pendant qu'une requête précédente est encore en vol, sans qu'aucun événement ultérieur ne vienne la renvoyer. Réservé aux interactions discrètes (clic, blur, confirmation explicite).
+
+Les hooks ne pouvant pas être appelés dans un `.map()`, toute ligne de liste ayant besoin de `usePendingKey`/`useAnyPendingKey` doit être son propre composant (voir `IngredientCheckRow`, `HouseholdCheckRow`, `FreezerBagRow`, `SourceGroupRow`, `RecipeBaseGroupSection` comme exemples).
+
+Déjà branché sur : courses, ménager, journal (stepper portions), congélateur, planning (suppression, personnes/grammes, copie, sélecteurs, choix desserts au drag & drop). Dashboard/Compte/Import/Recipe Builder gardent leur propre état `submitting` local dans leurs modales — ne pas les migrer sans raison.
+
+---
+
+## Planning — desserts indépendants du plat principal
+
+`MealSlot.dessertIds` n'a **aucune dépendance** envers `recipeIds` — un créneau déjeuner/dîner (`hasDessert: true` dans `MEAL_SLOTS`) peut avoir des desserts sans plat principal (`recipeIds: []`). Toute UI/logique touchant les créneaux doit respecter cet invariant, ne jamais gater l'affichage ou l'ajout d'un dessert sur la présence d'une recette (piège déjà rencontré dans `MealSlot.tsx` — `showDessertColumn` était gaté sur `hasPhoto`, corrigé).
+
+Déplacement (drag & drop) d'un repas ayant des desserts → l'utilisateur choisit de les faire suivre ou non (`MoveDessertsPrompt`), calcul dans `computeDragMoveSlots` (`core/logic/planning/planningLogic.ts`). Seul le cas où la destination a déjà une **vraie recette** déclenche un échange complet (recette + dessert des deux côtés) ; une destination « dessert seul » ne doit jamais céder son propre dessert au créneau de départ — piège déjà rencontré et corrigé (un dessert non lié au repas déplacé partait avec lui).
+
+---
+
 ## Architecture
 
 Trois couches, sans exception :
@@ -137,6 +164,7 @@ Ils vivent dans `core/logic/<feature>/` et sont réutilisés partout — jamais 
 - **Photos de recettes** : servies par l'API (`assets.mealPhoto.url` / `assets.bookPhoto.url`, URL absolue directement dans `<img src>` ; route `/media/…` → 302 vers URL signée courte, **ne pas stocker la cible**). Les webp bundlés ont été purgés.
 - **Cold start Render (free tier)** : 1re requête après ~15 min d'inactivité peut prendre 30-60 s. `useDelayedFlag` affiche un message « Réveil du serveur… » après 5 s (splash + login). Pas de timeout `fetch`.
 - **Import de sauvegarde** : `POST /import` (un seul appel, `SyncPayload` v3) via `core/services/importService.ts` + `features/sync/ImportModal.tsx`. Remplacement par scope, garde anti-écrasement (409 → confirmer avec `overwrite: true`).
+- **Planning — écritures d'items en batch** : `PUT /planning-slots/:id/items/batch` (`{add?, remove?, update?}`, au moins un tableau non vide) remplace les appels un par un. Réponse = état **complet et à jour** du créneau (`{items:[...]}`, triés par `position`) — reconstruire le cache local depuis ce tableau entier, jamais en corrélant par index avec l'`add` envoyé. Tout-ou-rien : un `itemId`/`id` invalide → 400/404, rien n'est appliqué. `core/services/planningService.ts` (`saveSlot`) + `core/logic/planning/planningApiMapper.ts` (`buildSlotItemsBatchPayload`, `mapApiItemsToSlotFields`).
 - **Collaboration front/back** : une session Claude Code séparée gère `meals-planning-api`. Ne pas deviner un contrat d'endpoint complexe — écrire un prompt autonome que l'utilisateur relaie, et attendre les payloads réels capturés en prod.
 - Détail des contrats et de l'historique d'intégration : mémoire `project_frontend_api_integration.md` + `reference_api_write_endpoints.md`.
 

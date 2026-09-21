@@ -1,5 +1,5 @@
 import { RecipeDetails, Macronutrients, Unit, IngredientCategory, Preparation } from "../../../core/domain/types";
-import { DraftIngredient } from "../../../core/domain/recipeBuilderTypes";
+import { DraftIngredient, RecipeBuilderState } from "../../../core/domain/recipeBuilderTypes";
 import { formatIngredientsForIngredientCard } from "../../../core/logic/recipeBuilder/recipeBuilderLogic";
 import { getCardColors } from "./cardColors";
 import { buildFoodQuantityLabel } from "./cardUtils";
@@ -97,6 +97,38 @@ export function recipeToRecetteCardData(
     ingredients: formatIngredientsForIngredientCard(ingredientsToDraft(recipe)),
     instructions: recipe.instructions?.split("\n") ?? [],
     colors: getCardColors(recipe.categoryId),
+  };
+}
+
+export function builderStateToRecetteCardData(
+  state: RecipeBuilderState,
+  imageHref: string,
+): RecetteCardData {
+  return {
+    imageHref,
+    recipeName: state.name,
+    recipeNumber: parseInt(state.recipeNumber, 10) || 0,
+    portions: state.defaultPortions,
+    ingredients: formatIngredientsForIngredientCard(state.ingredients),
+    instructions: state.instructions,
+    colors: getCardColors(state.categoryId),
+  };
+}
+
+export function builderStateToBookCardData(
+  state: RecipeBuilderState,
+  imageHref: string,
+  bookImageHref: string,
+): RecetteBookCardData {
+  return {
+    imageHref,
+    bookImageHref,
+    recipeName: state.name,
+    recipeNumber: parseInt(state.recipeNumber, 10) || 0,
+    portions: state.defaultPortions,
+    ingredients: formatIngredientsForIngredientCard(state.ingredients),
+    pageNumber: state.bookPage ?? 0,
+    colors: getCardColors(state.categoryId),
   };
 }
 

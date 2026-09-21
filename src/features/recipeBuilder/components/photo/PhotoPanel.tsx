@@ -4,7 +4,8 @@ import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
 import { buildImageName, getBuilderRecipeCode } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
 import { typedRecipesDb } from "../../../../core/typed-db/typedRecipesDb";
 import { AsyncImage } from "../../../../shared/components/ui/AsyncImage";
-import { downloadImageAsWebp } from "../../../../shared/utils/imageExport";
+import { builderStateToRecetteCardData, builderStateToBookCardData } from "../../../../shared/utils/cards/cardAdapter";
+import { downloadRecetteCard, downloadRecetteBookCard } from "../../../../shared/utils/cards/cardExport";
 import { PhotoField } from "../output/PhotoField";
 
 const MAX_PHOTO_SIZE = 10 * 1024 * 1024;
@@ -30,6 +31,8 @@ export const PhotoPanel = ({ state, mealPhoto, onPickMeal, bookPhoto, onPickBook
   useEffect(() => () => { if (localUrl) URL.revokeObjectURL(localUrl); }, [localUrl]);
 
   const source: File | string | null = mealPhoto ?? existingUrl ?? null;
+  const existingBookUrl = existing?.assets?.bookPhoto?.url;
+  const bookSource: File | string | null = bookPhoto ?? existingBookUrl ?? null;
 
   const pickMeal = (e: React.ChangeEvent<HTMLInputElement>) => {
     const picked = e.target.files?.[0] ?? null;
@@ -45,7 +48,12 @@ export const PhotoPanel = ({ state, mealPhoto, onPickMeal, bookPhoto, onPickBook
     if (!source) return;
     setDownloading(true);
     try {
-      await downloadImageAsWebp(source, buildImageName(state.categoryId, state.recipeNumber, state.name || "recette"));
+      const filename = buildImageName(state.categoryId, state.recipeNumber, state.name || "recette");
+      if (state.fromBook && bookSource) {
+        await downloadRecetteBookCard(builderStateToBookCardData(state, "", ""), source, bookSource, filename);
+      } else {
+        await downloadRecetteCard(builderStateToRecetteCardData(state, ""), source, filename);
+      }
     } finally {
       setDownloading(false);
     }

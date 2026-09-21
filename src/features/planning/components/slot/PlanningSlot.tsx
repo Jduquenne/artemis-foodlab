@@ -4,6 +4,7 @@ import { MealSlot as MealSlotComp } from "./MealSlot";
 import { MultiMealSlot } from "./MultiMealSlot";
 import { MealSlotDef } from "../../../../core/domain/planningConfig";
 import { SlotCopyProps } from "../../../../core/logic/planning/planningLogic";
+import { buildRecipeDetailUrl } from "../../../../core/logic/recipe/recipeLogic";
 
 export interface PlanningSlotProps {
   mealType: MealSlotDef;
@@ -58,7 +59,7 @@ export const PlanningSlot = ({
           recipeIds={recipeIds}
           onAdd={blocked ? () => {} : onOpenPicker}
           onRemoveRecipe={blocked ? () => {} : onRemoveRecipe}
-          onNavigateToRecipe={isAddMode || isCopyMode ? () => {} : (rid) => navigate(`/recipes/detail/${rid}`)}
+          onNavigateToRecipe={isAddMode || isCopyMode ? () => {} : (rid) => navigate(buildRecipeDetailUrl(rid, savedMeal?.recipePersons?.[rid] ?? savedMeal?.persons))}
           isAddMode={isAddMode}
           onAddToSlot={isAddMode ? onAddToSlot : undefined}
           onCopyRecipe={!blocked ? onCopyRecipe : undefined}
@@ -87,7 +88,7 @@ export const PlanningSlot = ({
           persons={savedMeal?.persons}
           isEditingPersons={isEditingPersons}
           isAnyEditing={isAnyEditing || isCopyMode}
-          onNavigate={() => navigate(`/recipes/detail/${savedMeal!.recipeIds[0]}`)}
+          onNavigate={() => navigate(buildRecipeDetailUrl(savedMeal!.recipeIds[0], savedMeal?.persons))}
           onOpenPicker={blocked ? () => {} : onOpenPicker}
           onModify={blocked ? () => {} : onOpenPicker}
           onDelete={blocked ? () => {} : onDelete}

@@ -5,6 +5,7 @@ import { plannableDb } from '../../../../core/typed-db/plannableDb';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
+import { buildRecipeDetailUrl } from '../../../../core/logic/recipe/recipeLogic';
 
 export interface DessertCellProps {
     slotId: string;
@@ -33,7 +34,7 @@ export const DessertCell = ({ slotId, recipeId, onRemove, isAddMode, onCopy, isC
     const canNavigate = hasRecipePage && !isAddMode && !hideActions && !isEditingPersons;
 
     const handleClick = () => {
-        if (canNavigate) navigate(`/recipes/detail/${recipeId}`);
+        if (canNavigate) navigate(buildRecipeDetailUrl(recipeId, persons));
     };
 
     const openEditor = (e: React.MouseEvent | React.PointerEvent) => {

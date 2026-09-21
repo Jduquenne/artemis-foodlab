@@ -17,7 +17,7 @@ export interface RecipeRecetteCardProps {
 export const RecipeRecetteCard = ({ recipeId, recipe, scale, fill }: RecipeRecetteCardProps) => {
   const imageHref = useMediaSrc(recipe.assets.mealPhoto) ?? "";
   const svgContent = useMemo(() => {
-    const cacheKey = `${recipeId}|${imageHref}`;
+    const cacheKey = `${recipeId}|${imageHref}|${recipe.defaultPortions}`;
     const cached = cache.get(cacheKey);
     if (cached) return cached;
     const svg = buildRecetteSvg(recipeToRecetteCardData(recipeId, recipe, imageHref));

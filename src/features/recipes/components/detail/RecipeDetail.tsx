@@ -1,11 +1,17 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Calculator, ChevronLeft, ChevronRight, Pencil } from 'lucide-react';
 import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
 import { typedFoodDb } from '../../../../core/typed-db/typedFoodDb';
 import { calculateRecipeMacros } from '../../../../shared/utils/macroUtils';
-import { getLinkedBases, getCategoryRecipeIds } from '../../../../core/logic/recipe/recipeLogic';
+import {
+  getLinkedBases,
+  getCategoryRecipeIds,
+  resolveInitialPortions,
+  scaleRecipeToPortions,
+} from '../../../../core/logic/recipe/recipeLogic';
 import { RecipePhotoCard } from '../../../../shared/components/ui/RecipePhotoCard';
+import { PortionsStepper } from './PortionsStepper';
 import { recipeToBuilderState } from '../../../../core/logic/recipeBuilder/recipeBuilderLogic';
 import { useIsAdmin } from '../../../../shared/hooks/useIsAdmin';
 import { useRecipeBuilderStore } from '../../../../shared/store/useRecipeBuilderStore';
@@ -26,6 +32,7 @@ export const RecipeDetail = () => {
   const mealPhotoUrl = recipe?.assets?.mealPhoto?.url;
   const instructionsPhotoUrl = useMediaSrc(recipe?.assets?.instructionsPhoto);
   const categoryId = searchParams.get('category');
+  const portionsParam = searchParams.get('portions');
   const { isLeaving, goBack } = useModalBack(
     categoryId ? `/recipes/category/${categoryId}` : '/recipes',
   );
@@ -40,6 +47,21 @@ export const RecipeDetail = () => {
   const prevId = currentIndex > 0 ? categoryRecipeIds[currentIndex - 1] : null;
   const nextId = currentIndex !== -1 && currentIndex < categoryRecipeIds.length - 1 ? categoryRecipeIds[currentIndex + 1] : null;
 
+  const [lastRecipeId, setLastRecipeId] = useState(recipeId);
+  const [portions, setPortions] = useState(() =>
+    resolveInitialPortions(recipe?.defaultPortions ?? 1, portionsParam),
+  );
+
+  if (recipeId !== lastRecipeId) {
+    setLastRecipeId(recipeId);
+    setPortions(resolveInitialPortions(recipe?.defaultPortions ?? 1, portionsParam));
+  }
+
+  const scaledRecipe = useMemo(
+    () => (recipe ? scaleRecipeToPortions(recipe, portions) : null),
+    [recipe, portions],
+  );
+
   const macros = useMemo(() => {
     if (!recipe) return null;
     try {
@@ -51,7 +73,7 @@ export const RecipeDetail = () => {
 
   const linkedBases = useMemo(() => (recipe ? getLinkedBases(recipe) : []), [recipe]);
 
-  if (!recipe || (!mealPhotoUrl && !instructionsPhotoUrl)) return null;
+  if (!recipe || !scaledRecipe || (!mealPhotoUrl && !instructionsPhotoUrl)) return null;
 
   const handleEditInBuilder = () => {
     loadFromRecipe(recipeToBuilderState(recipeId!, recipe));
@@ -76,7 +98,8 @@ export const RecipeDetail = () => {
         <h1 className="text-base sm:text-xl tablet:text-2xl font-black text-slate-900 leading-snug">
           {recipe.name}
         </h1>
-        <div className="ml-auto flex items-center gap-1 shrink-0">
+        <div className="ml-auto flex items-center gap-1.5 shrink-0">
+          <PortionsStepper value={portions} onChange={setPortions} />
           {isAdmin && (
             <button
               aria-label="Modifier dans le créateur"
@@ -133,8 +156,8 @@ export const RecipeDetail = () => {
         {mealPhotoUrl ? (
           <div className="flex-[3] min-w-0 self-stretch overflow-hidden">
             {recipe.assets.bookPhoto
-              ? <RecipeBookCard recipeId={recipeId!} recipe={recipe} fill />
-              : <RecipeRecetteCard recipeId={recipeId!} recipe={recipe} fill />
+              ? <RecipeBookCard recipeId={recipeId!} recipe={scaledRecipe} fill />
+              : <RecipeRecetteCard recipeId={recipeId!} recipe={scaledRecipe} fill />
             }
           </div>
         ) : (

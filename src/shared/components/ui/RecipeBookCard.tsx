@@ -18,7 +18,7 @@ export const RecipeBookCard = ({ recipeId, recipe, scale, fill }: RecipeBookCard
   const imageHref = useMediaSrc(recipe.assets.mealPhoto) ?? "";
   const bookImageHref = useMediaSrc(recipe.assets.bookPhoto) ?? "";
   const svgContent = useMemo(() => {
-    const cacheKey = `${recipeId}|${imageHref}|${bookImageHref}`;
+    const cacheKey = `${recipeId}|${imageHref}|${bookImageHref}|${recipe.defaultPortions}`;
     const cached = cache.get(cacheKey);
     if (cached) return cached;
     const svg = buildRecetteBookSvg(recipeToBookCardData(recipeId, recipe, imageHref, bookImageHref));

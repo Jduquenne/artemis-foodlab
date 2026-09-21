@@ -103,6 +103,28 @@ export function patchRecipeQuantities(recipe: RecipeDetails, quantities: Record<
   };
 }
 
+export function resolveInitialPortions(defaultPortions: number, portionsParam: string | null): number {
+  const parsed = portionsParam ? parseInt(portionsParam, 10) : NaN;
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : defaultPortions;
+}
+
+export function scaleRecipeToPortions(recipe: RecipeDetails, portions: number): RecipeDetails {
+  if (portions <= 0 || recipe.defaultPortions <= 0 || portions === recipe.defaultPortions) return recipe;
+  const factor = portions / recipe.defaultPortions;
+  return {
+    ...recipe,
+    defaultPortions: portions,
+    ingredients: recipe.ingredients.map(ing => ({
+      ...ing,
+      quantity: ing.quantity == null ? null : Math.round(ing.quantity * factor * 100) / 100,
+    })),
+  };
+}
+
+export function buildRecipeDetailUrl(recipeId: string, portions: number | undefined): string {
+  return portions ? `/recipes/detail/${recipeId}?portions=${portions}` : `/recipes/detail/${recipeId}`;
+}
+
 export function buildUnitWeightOverrides(recipe: RecipeDetails): Record<string, number> {
   const map: Record<string, number> = {};
   for (const ing of recipe.ingredients) {

@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { Maximize2 } from "lucide-react";
 import { MealType, RecipeKind } from "../../../../core/domain/types";
 import { CATEGORIES } from "../../../../core/domain/categories";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
@@ -10,6 +12,7 @@ import {
   buildRecipeId,
   suggestNextRecipeNumber,
 } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
+import { InstructionsModal } from "./InstructionsModal";
 
 export interface RecipeMetaFormProps {
   state: RecipeBuilderState;
@@ -28,6 +31,8 @@ const chipClass = (active: boolean) =>
   }`;
 
 export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
+  const [instructionsOpen, setInstructionsOpen] = useState(false);
+  const instructions = state.instructions ?? [];
   const prefix = CATEGORY_PREFIX[state.categoryId] ?? state.categoryId.toUpperCase();
   const computedId = buildRecipeId(state.categoryId, state.recipeNumber);
   const isBase = state.kind === RecipeKind.BASE;
@@ -184,14 +189,30 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
 
       {!state.fromBook && (
         <div>
-          <label className={labelClass}>Instructions</label>
-          <textarea
-            value={(state.instructions ?? []).join("\n")}
-            onChange={(e) => onChange({ instructions: e.target.value === "" ? [] : e.target.value.split("\n") })}
-            placeholder={"Étape 1\nÉtape 2\n..."}
-            rows={4}
-            className={`${inputClass} resize-none font-mono text-xs leading-relaxed`}
-          />
+          <div className="flex items-center justify-between mb-1">
+            <label className={`${labelClass} mb-0`}>Instructions</label>
+            <span className="text-[10px] text-slate-400 font-semibold">
+              {instructions.length > 0 ? `${instructions.length} étape${instructions.length > 1 ? "s" : ""}` : "Aucune étape"}
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setInstructionsOpen(true)}
+            className={`${inputClass} flex items-center justify-between gap-2 text-left hover:border-orange-300 transition-colors`}
+          >
+            <span className="flex-1 min-w-0 truncate">
+              {instructions[0] || <span className="text-slate-400 italic">Aucune instruction renseignée</span>}
+            </span>
+            <Maximize2 className="w-3.5 h-3.5 shrink-0 text-slate-400" />
+          </button>
+
+          {instructionsOpen && (
+            <InstructionsModal
+              instructions={instructions}
+              onChange={(next) => onChange({ instructions: next })}
+              onClose={() => setInstructionsOpen(false)}
+            />
+          )}
         </div>
       )}
     </div>

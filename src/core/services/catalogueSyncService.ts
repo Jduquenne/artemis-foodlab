@@ -49,6 +49,35 @@ export async function hydrateFromCache(): Promise<void> {
   refreshDerivedData();
 }
 
+export async function applyCatalogueData(
+  apiRecipes: ApiRecipe[],
+  apiOutdoor: ApiOutdoorActivity[],
+  apiFoods: Food[],
+  apiHouseholdItems: HouseholdItem[],
+  apiCategories: Category[],
+): Promise<void> {
+  const recipes = mapApiRecipes(apiRecipes);
+  const outdoor = mapApiOutdoorActivities(apiOutdoor);
+  const foods = Object.fromEntries(apiFoods.map((f) => [f.id, f]));
+  const householdItems = Object.fromEntries(apiHouseholdItems.map((h) => [h.id, h]));
+
+  await Promise.all([
+    recipesService.bulkPut(recipes),
+    outdoorService.bulkPut(outdoor),
+    foodService.bulkPut(foods),
+    householdItemsService.bulkPut(householdItems),
+    recipeCategoriesService.bulkPut(apiCategories),
+  ]);
+
+  replaceRecipesDb(recipes);
+  replaceOutdoorDb(outdoor);
+  replaceFoodDb(foods);
+  replaceHouseholdDb(householdItems);
+  replaceCategories(apiCategories);
+  applyRecipeIdMap();
+  refreshDerivedData();
+}
+
 export async function syncCatalogueFromApi(): Promise<void> {
   try {
     const [apiRecipes, apiOutdoor, apiFoods, apiHouseholdItems, apiCategories] = await Promise.all([
@@ -59,26 +88,7 @@ export async function syncCatalogueFromApi(): Promise<void> {
       apiFetchJson<Category[]>("/recipe-categories"),
     ]);
 
-    const recipes = mapApiRecipes(apiRecipes);
-    const outdoor = mapApiOutdoorActivities(apiOutdoor);
-    const foods = Object.fromEntries(apiFoods.map((f) => [f.id, f]));
-    const householdItems = Object.fromEntries(apiHouseholdItems.map((h) => [h.id, h]));
-
-    await Promise.all([
-      recipesService.bulkPut(recipes),
-      outdoorService.bulkPut(outdoor),
-      foodService.bulkPut(foods),
-      householdItemsService.bulkPut(householdItems),
-      recipeCategoriesService.bulkPut(apiCategories),
-    ]);
-
-    replaceRecipesDb(recipes);
-    replaceOutdoorDb(outdoor);
-    replaceFoodDb(foods);
-    replaceHouseholdDb(householdItems);
-    replaceCategories(apiCategories);
-    applyRecipeIdMap();
-    refreshDerivedData();
+    await applyCatalogueData(apiRecipes, apiOutdoor, apiFoods, apiHouseholdItems, apiCategories);
   } catch {
     /* réseau indisponible ou API injoignable, on garde le cache existant */
   }

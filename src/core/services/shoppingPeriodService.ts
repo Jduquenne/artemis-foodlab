@@ -16,8 +16,7 @@ export interface CurrentPeriod {
 export const fetchDays = (periodId: string) =>
   apiFetchJson<ApiShoppingDay[]>(`/shopping-periods/${periodId}/days`);
 
-export async function fetchCurrentPeriod(): Promise<CurrentPeriod | null> {
-  const period = await apiFetchJson<ApiShoppingPeriod | null>("/shopping-periods/current");
+export async function mapApiPeriod(period: ApiShoppingPeriod | null): Promise<CurrentPeriod | null> {
   if (!period) return null;
   const apiDays = period.days ?? (await fetchDays(period.id));
   const days = apiDays.map(d => ({ year: d.year, week: d.week, day: d.day }));

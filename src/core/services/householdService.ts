@@ -1,10 +1,5 @@
 import { db } from "./databaseService";
-import { apiFetch, apiFetchJson } from "./apiClient";
-
-interface ApiHouseholdShoppingFlag {
-  itemId: string;
-  createdAt: string;
-}
+import { apiFetch } from "./apiClient";
 
 export const getRecords = () => db.household.toArray();
 
@@ -25,15 +20,9 @@ export const clearAll = async () => {
   await db.household.clear();
 };
 
-export async function syncHouseholdFlagsFromApi(): Promise<void> {
-  try {
-    const flags = await apiFetchJson<ApiHouseholdShoppingFlag[]>("/household-shopping-flags");
-    const mapped = flags.map(f => ({ id: f.itemId, lastCheckedAt: f.createdAt }));
-    await db.transaction("rw", db.household, async () => {
-      await db.household.clear();
-      await db.household.bulkPut(mapped);
-    });
-  } catch {
-    /* réseau indisponible ou API injoignable, on garde le cache existant */
-  }
+export async function applyHouseholdFlags(mapped: { id: string; lastCheckedAt: string }[]): Promise<void> {
+  await db.transaction("rw", db.household, async () => {
+    await db.household.clear();
+    await db.household.bulkPut(mapped);
+  });
 }

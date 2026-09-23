@@ -1,7 +1,7 @@
 import { apiFetchJson } from "./apiClient";
 import { MacroTargets } from "../domain/types";
 
-interface ApiJournalSettings {
+export interface ApiJournalSettings {
   kcalTarget: number;
   proteinsTarget: number;
   lipidsTarget: number;
@@ -14,7 +14,7 @@ export interface JournalSettings {
   macroTargets: MacroTargets;
 }
 
-interface ApiJournalOverride {
+export interface ApiJournalOverride {
   planningSlotItemId: string;
   portionsOverride: number | null;
   gramsOverride: number | null;
@@ -25,8 +25,7 @@ export interface JournalOverrides {
   gramOverrides: Record<string, number>;
 }
 
-export async function syncJournalSettingsFromApi(): Promise<JournalSettings> {
-  const api = await apiFetchJson<ApiJournalSettings>("/journal-settings");
+export function mapJournalSettings(api: ApiJournalSettings): JournalSettings {
   return {
     kcalTarget: api.kcalTarget,
     macroTargets: {
@@ -36,6 +35,16 @@ export async function syncJournalSettingsFromApi(): Promise<JournalSettings> {
       fibers: api.fibersTarget,
     },
   };
+}
+
+export function mapJournalOverrides(overrides: ApiJournalOverride[]): JournalOverrides {
+  const portionOverrides: Record<string, number> = {};
+  const gramOverrides: Record<string, number> = {};
+  for (const o of overrides) {
+    if (o.portionsOverride != null) portionOverrides[o.planningSlotItemId] = o.portionsOverride;
+    if (o.gramsOverride != null) gramOverrides[o.planningSlotItemId] = o.gramsOverride;
+  }
+  return { portionOverrides, gramOverrides };
 }
 
 export async function saveJournalSettings(settings: JournalSettings): Promise<void> {
@@ -49,17 +58,6 @@ export async function saveJournalSettings(settings: JournalSettings): Promise<vo
       fibersTarget: settings.macroTargets.fibers,
     },
   });
-}
-
-export async function syncJournalOverridesFromApi(): Promise<JournalOverrides> {
-  const portionOverrides: Record<string, number> = {};
-  const gramOverrides: Record<string, number> = {};
-  const overrides = await apiFetchJson<ApiJournalOverride[]>("/journal-overrides");
-  for (const o of overrides) {
-    if (o.portionsOverride != null) portionOverrides[o.planningSlotItemId] = o.portionsOverride;
-    if (o.gramsOverride != null) gramOverrides[o.planningSlotItemId] = o.gramsOverride;
-  }
-  return { portionOverrides, gramOverrides };
 }
 
 export async function savePortionOverride(planningSlotItemId: string, portions: number): Promise<void> {

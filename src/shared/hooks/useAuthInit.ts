@@ -1,11 +1,8 @@
 import { useEffect } from "react";
 import { registerApiErrorHandler, registerAuthExpiredHandler } from "../../core/services/apiClient";
 import { silentRefresh } from "../../core/services/authService";
-import { syncCatalogueFromApi } from "../../core/services/catalogueSyncService";
+import { syncBootstrapFromApi } from "../../core/services/bootstrapService";
 import { syncFreezerFromApi } from "../../core/services/freezerService";
-import { syncHouseholdFlagsFromApi } from "../../core/services/householdService";
-import { syncJournalOverridesFromApi, syncJournalSettingsFromApi } from "../../core/services/journalService";
-import { fetchCurrentPeriod } from "../../core/services/shoppingPeriodService";
 import { useAuthStore, AuthStatus } from "../store/useAuthStore";
 import { useJournalStore } from "../store/useJournalStore";
 import { useMediaStore } from "../store/useMediaStore";
@@ -48,24 +45,18 @@ export function useAuthInit(): AuthStatus {
   useEffect(() => {
     if (status !== "authenticated") return;
     useMediaStore.getState().resolveCatalogue();
-    syncCatalogueFromApi().then(() => {
+    syncBootstrapFromApi().then((result) => {
       useNewsStore.getState().syncHasNew();
       useMediaStore.getState().resolveCatalogue();
+      if (!result) return;
+      useJournalStore.getState().replaceSettings(result.journalSettings);
+      useJournalStore.getState().replaceOverrides(result.journalOverrides);
+      useMenuStore.getState().replaceShoppingPeriod({
+        id: result.shoppingPeriod?.id ?? null,
+        days: result.shoppingPeriod?.days ?? [],
+      });
     });
-    syncHouseholdFlagsFromApi();
     syncFreezerFromApi();
-
-    syncJournalSettingsFromApi()
-      .then((settings) => useJournalStore.getState().replaceSettings(settings))
-      .catch(() => undefined);
-
-    syncJournalOverridesFromApi()
-      .then((overrides) => useJournalStore.getState().replaceOverrides(overrides))
-      .catch(() => undefined);
-
-    fetchCurrentPeriod()
-      .then((period) => useMenuStore.getState().replaceShoppingPeriod({ id: period?.id ?? null, days: period?.days ?? [] }))
-      .catch(() => undefined);
   }, [status]);
 
   return status;

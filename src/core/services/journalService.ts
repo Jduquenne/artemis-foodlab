@@ -14,15 +14,29 @@ export interface JournalSettings {
   macroTargets: MacroTargets;
 }
 
+export interface ApiIngredientOverride {
+  recipeIngredientId: string;
+  gramsOverride: number;
+}
+
 export interface ApiJournalOverride {
+  id: string;
   planningSlotItemId: string;
   portionsOverride: number | null;
   gramsOverride: number | null;
+  ingredientOverrides: ApiIngredientOverride[];
 }
 
 export interface JournalOverrides {
   portionOverrides: Record<string, number>;
   gramOverrides: Record<string, number>;
+  ingredientOverrides: Record<string, Record<string, number>>;
+}
+
+export interface JournalOverrideInput {
+  portionsOverride: number | null;
+  gramsOverride: number | null;
+  ingredientOverrides: Record<string, number>;
 }
 
 export function mapJournalSettings(api: ApiJournalSettings): JournalSettings {
@@ -40,11 +54,17 @@ export function mapJournalSettings(api: ApiJournalSettings): JournalSettings {
 export function mapJournalOverrides(overrides: ApiJournalOverride[]): JournalOverrides {
   const portionOverrides: Record<string, number> = {};
   const gramOverrides: Record<string, number> = {};
+  const ingredientOverrides: Record<string, Record<string, number>> = {};
   for (const o of overrides) {
     if (o.portionsOverride != null) portionOverrides[o.planningSlotItemId] = o.portionsOverride;
     if (o.gramsOverride != null) gramOverrides[o.planningSlotItemId] = o.gramsOverride;
+    if (o.ingredientOverrides.length > 0) {
+      ingredientOverrides[o.planningSlotItemId] = Object.fromEntries(
+        o.ingredientOverrides.map((i) => [i.recipeIngredientId, i.gramsOverride]),
+      );
+    }
   }
-  return { portionOverrides, gramOverrides };
+  return { portionOverrides, gramOverrides, ingredientOverrides };
 }
 
 export async function saveJournalSettings(settings: JournalSettings): Promise<void> {
@@ -60,16 +80,20 @@ export async function saveJournalSettings(settings: JournalSettings): Promise<vo
   });
 }
 
-export async function savePortionOverride(planningSlotItemId: string, portions: number): Promise<void> {
-  await apiFetchJson("/journal-overrides", {
+export async function saveJournalOverride(
+  planningSlotItemId: string,
+  input: JournalOverrideInput,
+): Promise<ApiJournalOverride> {
+  return apiFetchJson<ApiJournalOverride>("/journal-overrides", {
     method: "POST",
-    body: { planningSlotItemId, portionsOverride: portions },
-  });
-}
-
-export async function saveGramOverride(planningSlotItemId: string, grams: number): Promise<void> {
-  await apiFetchJson("/journal-overrides", {
-    method: "POST",
-    body: { planningSlotItemId, gramsOverride: grams },
+    body: {
+      planningSlotItemId,
+      portionsOverride: input.portionsOverride,
+      gramsOverride: input.gramsOverride,
+      ingredientOverrides: Object.entries(input.ingredientOverrides).map(([recipeIngredientId, gramsOverride]) => ({
+        recipeIngredientId,
+        gramsOverride,
+      })),
+    },
   });
 }

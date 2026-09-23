@@ -4,6 +4,7 @@ import { getAllRecipeIds, hasDesserts } from "../../../../core/domain/recipePred
 import { computeSlotMacros, ZERO } from "../../../../shared/utils/macroUtils";
 import { useJournalStore } from "../../../../shared/store/useJournalStore";
 import { SLOT_LABELS } from "../../../../shared/utils/slotLabels";
+import { markScrolling } from "../../../../shared/utils/scrollGuard";
 import { RecipePortionRow } from "./RecipePortionRow";
 
 export interface MealSlotCardProps {
@@ -19,18 +20,18 @@ const MACRO_ITEMS: { key: keyof Omit<Macronutrients, "kcal">; label: string }[] 
 ];
 
 export const MealSlotCard = ({ slotType, slot }: MealSlotCardProps) => {
-  const { portionOverrides, gramOverrides } = useJournalStore();
+  const { portionOverrides, gramOverrides, ingredientOverrides } = useJournalStore();
 
   const allIds = slot ? getAllRecipeIds(slot) : [];
   const totalMacros = useMemo(
-    () => (slot ? computeSlotMacros(slot, portionOverrides, gramOverrides) : { ...ZERO }),
-    [slot, portionOverrides, gramOverrides],
+    () => (slot ? computeSlotMacros(slot, portionOverrides, gramOverrides, ingredientOverrides) : { ...ZERO }),
+    [slot, portionOverrides, gramOverrides, ingredientOverrides],
   );
 
   const hasContent = allIds.length > 0;
 
   return (
-    <div className="bg-white dark:bg-slate-100 rounded-2xl p-3 flex flex-col gap-1.5 min-h-0">
+    <div className="bg-white dark:bg-slate-100 rounded-2xl p-3 flex flex-col gap-1.5 h-full min-h-0">
       <div className="flex items-center justify-between shrink-0">
         <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-slate-400">
           {SLOT_LABELS[slotType]}
@@ -53,7 +54,7 @@ export const MealSlotCard = ({ slotType, slot }: MealSlotCardProps) => {
         </div>
       )}
 
-      <div className="flex-1 min-h-0 overflow-hidden">
+      <div className="flex-1 min-h-0 overflow-y-auto" onScroll={markScrolling}>
         {hasContent ? (
           <div className="flex flex-col">
             {slot?.recipeIds.map((id) => (

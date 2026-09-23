@@ -82,6 +82,18 @@ export function calculateRecipeMacros(
   return scaleMacros(total, 1 / recipe.defaultPortions);
 }
 
+export function calculateOverriddenRecipeMacros(
+  recipe: RecipeDetails,
+  ingredientOverrides: Record<string, number>,
+  allRecipes: Record<string, RecipeDetails>,
+  foodDb: Record<string, Food>,
+): Macronutrients {
+  const ingredients = recipe.ingredients.map((ing) =>
+    ing.id in ingredientOverrides ? { ...ing, quantity: ingredientOverrides[ing.id] } : ing,
+  );
+  return calculateRecipeMacros({ ...recipe, ingredients, defaultPortions: 1 }, allRecipes, foodDb);
+}
+
 function calculateRecipeBaseGrams(recipe: RecipeDetails, foodDb: Record<string, Food>): number {
   let total = 0;
   for (const ing of recipe.ingredients) {
@@ -120,12 +132,17 @@ export function computeSlotMacros(
   slot: MealSlot,
   portionOverrides: Record<string, number>,
   gramOverrides: Record<string, number>,
+  ingredientOverrides: Record<string, Record<string, number>> = {},
 ): Macronutrients {
   return getAllRecipeIds(slot).reduce((sum, id) => {
-    const m = RECIPE_MACROS[id];
-    if (!m) return sum;
     const key = slot.itemApiIds?.[id] ?? "";
     const recipe = plannableDb[id];
+    const itemIngredientOverrides = ingredientOverrides[key];
+    if (recipe && itemIngredientOverrides && Object.keys(itemIngredientOverrides).length > 0) {
+      return addMacros(sum, calculateOverriddenRecipeMacros(recipe, itemIngredientOverrides, typedRecipesDb, typedFoodDb));
+    }
+    const m = RECIPE_MACROS[id];
+    if (!m) return sum;
     const baseGrams = RECIPE_BASE_GRAMS[id];
     let factor: number;
     if (!isDish(recipe) && !isBase(recipe) && baseGrams) {
@@ -142,9 +159,10 @@ export function computeDayMacros(
   slots: MealSlot[],
   portionOverrides: Record<string, number>,
   gramOverrides: Record<string, number>,
+  ingredientOverrides: Record<string, Record<string, number>> = {},
 ): Macronutrients {
   return slots.reduce(
-    (total, slot) => addMacros(total, computeSlotMacros(slot, portionOverrides, gramOverrides)),
+    (total, slot) => addMacros(total, computeSlotMacros(slot, portionOverrides, gramOverrides, ingredientOverrides)),
     { ...ZERO },
   );
 }

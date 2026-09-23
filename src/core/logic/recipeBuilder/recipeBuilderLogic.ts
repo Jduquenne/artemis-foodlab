@@ -119,7 +119,8 @@ export function recipeToBuilderState(
 ): RecipeBuilderState {
   const recipeNumber = recipeId.replace(/^[a-z]+-/, "");
   const ingredients: DraftIngredient[] = recipe.ingredients.map((ing) => ({
-    id: crypto.randomUUID(),
+    id: ing.id,
+    apiId: ing.id,
     ingredientType: ing.baseId ? "base" : "food",
     name: ing.name,
     foodId: ing.foodId,
@@ -231,6 +232,7 @@ export function builderStateToApiBody(state: RecipeBuilderState): ApiRecipeInput
     .map((ing) => {
       const isBaseIngredient = ing.ingredientType === "base";
       return {
+        ...(ing.apiId ? { id: ing.apiId } : {}),
         name: ing.name.trim(),
         categoryId: getIngredientCategoryId(ing.category) ?? "",
         foodId: !isBaseIngredient ? (ing.foodId ?? null) : null,

@@ -3,6 +3,7 @@ import { CATEGORIES } from "./categories";
 
 export interface DraftIngredient {
   id: string;
+  apiId?: string;
   ingredientType: "food" | "base";
   name: string;
   foodId?: string;

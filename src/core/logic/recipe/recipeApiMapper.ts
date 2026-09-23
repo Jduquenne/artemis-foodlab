@@ -43,6 +43,7 @@ export interface ApiRecipe {
 }
 
 export interface ApiIngredientInput {
+  id?: string;
   name: string;
   categoryId: string;
   foodId: string | null;

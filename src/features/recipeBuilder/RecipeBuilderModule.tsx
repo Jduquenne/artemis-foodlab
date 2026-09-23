@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { RotateCcw, FolderOpen } from "lucide-react";
 import { useRecipeBuilderStore } from "../../shared/store/useRecipeBuilderStore";
-import { suggestNextRecipeNumber } from "../../core/logic/recipeBuilder/recipeBuilderLogic";
 import { RecipeMetaForm } from "./components/meta/RecipeMetaForm";
 import { IngredientBuilderList } from "./components/ingredients/IngredientBuilderList";
 import { SaveRecipePanel } from "./components/output/SaveRecipePanel";
@@ -24,8 +23,6 @@ export const RecipeBuilderModule = () => {
     if (!draft.name && draft.ingredients.length === 0) return;
     reset();
     clearPhotos();
-    const cat = useRecipeBuilderStore.getState().draft.categoryId;
-    patch({ recipeNumber: suggestNextRecipeNumber(cat) });
   };
 
   const cardClass = "bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl";

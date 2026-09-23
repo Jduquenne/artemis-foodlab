@@ -107,6 +107,26 @@ Trois couches, sans exception :
 
 ---
 
+## Recette — quantités selon le nombre de parts
+
+`RecipeDetail` affiche la carte SVG « recette » (`RecipeRecetteCard`, ou `RecipeBookCard` si photo livre) avec des quantités mises à l'échelle : `scaleRecipeToPortions(recipe, portions)` (`core/logic/recipe/recipeLogic.ts`, linéaire `portions / defaultPortions`, arrondi 2 décimales, inclut les ingrédients `baseId`). Les parts viennent de `?portions=N` (`resolveInitialPortions`) ou du `PortionsStepper` du header ; state **local**, non persisté, remis au défaut quand `recipeId` change (chevrons précédent/suivant).
+
+- **Ouverture depuis le planning** : toujours `navigate(buildRecipeDetailUrl(recipeId, portions))` — créneau simple = `savedMeal.persons`, multi = `recipePersons?.[rid] ?? persons`, dessert = `persons` effectif de `DessertColumn`. `persons` planning ≡ « parts » (`persons / defaultPortions`). Les overrides en grammes (`recipeQuantities`) ne sont pas des parts → ignorés ici.
+- **Macros = par portion, donc invariantes au scaling** : `macros` et `handleEditInBuilder` utilisent la recette **non** scalée ; seule la carte reçoit `scaledRecipe`.
+- **Piège cache** : `RecipeRecetteCard`/`RecipeBookCard` mémoïsent leur SVG dans un `Map` module-level. Toute donnée qui change le rendu doit être dans la clé (aujourd'hui `defaultPortions` y est). Ne pas alimenter une autre carte (`RecipePhotoCard`, `RecipeIngredientsCard`) avec des données scalées sans vérifier sa clé.
+- `RecipeMacroPage` (calculateur, route séparée) n'est pas portion-aware et ne reçoit pas `?portions`.
+
+---
+
+## Recipe Builder — points d'attention
+
+- **Téléchargement** : « Télécharger la recette » (`PhotoPanel`) génère la carte SVG recette depuis l'**état courant du builder** (`builderStateToRecetteCardData` / `builderStateToBookCardData` dans `shared/utils/cards/cardAdapter.ts`) puis la rasterise en PNG ×3 (`shared/utils/cards/cardExport.ts`, images converties en `data:` URL pour éviter un canvas tainted). Ce n'est **pas** la photo brute du plat.
+- **Instructions** : `RecipeMetaForm` n'a qu'un bouton ; l'édition se fait dans `InstructionsModal` (une ligne = une étape, `state.instructions: string[]`, `Entrée` = étape suivante, `Maj+Entrée` = saut de ligne). Un collage multi-lignes est éclaté en étapes (`splitPastedInstructionLines` / `spliceInstructionPaste`, `recipeBuilderLogic.ts`).
+- Portions par défaut d'une nouvelle recette : **2** (`initialRecipeBuilderState`).
+- Accès : icône `ChefHat` dans `Layout.tsx` (admin), bouton « Nouvelle recette » de `RecipeModule`, crayon de `RecipeDetail`.
+
+---
+
 ## Identifiants de recette — deux formats à ne pas confondre
 
 - `buildRecipeId` → `CHAR_01` : sert aux **noms de fichiers image** uniquement.
@@ -139,7 +159,7 @@ Trois couches, sans exception :
 
 ## Code quality
 
-- Pas de logique dans `setState` appelé depuis `useEffect`.
+- Pas de logique dans `setState` appelé depuis `useEffect`. Le lint (`react-hooks/set-state-in-effect`) **refuse tout `setState` synchrone dans un effet** : pour réinitialiser un state quand une prop/param change, utiliser le reset pendant le rendu (`if (id !== lastId) { setLastId(id); setX(...) }`) + lazy `useState` pour l'init (exemple : `RecipeDetail`, parts).
 - `exhaustive-deps` respecté — pas de suppression du warning.
 - `eslint-disable` interdit.
 - `react-refresh` : pas d'export mixte (composant + constante non-composant dans le même fichier).

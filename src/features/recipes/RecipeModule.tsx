@@ -5,19 +5,13 @@ import { useIsAdmin } from '../../shared/hooks/useIsAdmin';
 import { useRecipeBuilderStore } from '../../shared/store/useRecipeBuilderStore';
 import { SearchBar } from '../../shared/components/ui/SearchBar';
 import { CategoryCard } from '../../shared/components/ui/CategoryCard';
-import { FlipCard } from './components/FlipCard';
 import { useSearchRecipes } from '../../shared/hooks/useSearch';
 import { CATEGORIES } from '../../core/domain/categories';
-import { markScrolling } from '../../shared/utils/scrollGuard';
 import { MacroFilterButton } from './components/filter/MacroFilterButton';
 import { PREDEFINED_FILTERS } from '../../core/domain/predefinedFilters';
-import { isPlannable } from '../../core/domain/recipePredicates';
 import { useMenuStore } from '../../shared/store/useMenuStore';
-import { typedRecipesDb } from '../../core/typed-db/typedRecipesDb';
 import { filterRecipesByMacros } from '../../core/logic/recipe/recipeLogic';
-import { RecipePhotoCard } from '../../shared/components/ui/RecipePhotoCard';
-import { RecipeIngredientsCard } from '../../shared/components/ui/RecipeIngredientsCard';
-import { LazyRender } from '../../shared/components/ui/LazyRender';
+import { RecipeSearchResults } from './components/RecipeSearchResults';
 
 export const RecipeModule = () => {
     const navigate = useNavigate();
@@ -122,35 +116,11 @@ export const RecipeModule = () => {
 
             <div className="flex-1 min-h-0 overflow-hidden">
                 {showResults ? (
-                    <div className="h-full overflow-y-auto space-y-4 pr-1" onScroll={markScrolling}>
-                        <h2 className="text-base sm:text-xl font-bold text-slate-700">
-                            Résultats ({filteredResults.length})
-                        </h2>
-                        {filteredResults.length === 0 ? (
-                            <div className="text-center py-10 text-slate-400">
-                                {searchQuery.length >= 3
-                                    ? `Aucune recette trouvée pour "${searchQuery}"`
-                                    : searchQuery.length > 0
-                                        ? `Encore ${3 - searchQuery.length} caractère${3 - searchQuery.length > 1 ? 's' : ''}…`
-                                        : 'Aucune recette ne correspond à ces filtres'}
-                            </div>
-                        ) : (
-                            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-3 pb-4">
-                                {filteredResults.map((recipe) => (
-                                    <LazyRender key={recipe.id} className="aspect-[10/11]">
-                                        <FlipCard
-                                            name={recipe.name}
-                                            frontContent={<RecipePhotoCard recipeId={recipe.recipeId} recipe={typedRecipesDb[recipe.recipeId]} fill />}
-                                            backContent={<RecipeIngredientsCard recipeId={recipe.recipeId} recipe={typedRecipesDb[recipe.recipeId]} fill />}
-                                            recipeUrl={recipe.recipeUrl}
-                                            onClick={() => navigate(`/recipes/detail/${recipe.recipeId || recipe.id}`)}
-                                            onAddToPlanning={isPlannable(typedRecipesDb[recipe.recipeId || recipe.id]) ? () => navigate(`/planning?addRecipe=${recipe.recipeId || recipe.id}`) : undefined}
-                                        />
-                                    </LazyRender>
-                                ))}
-                            </div>
-                        )}
-                    </div>
+                    <RecipeSearchResults
+                        results={filteredResults}
+                        searchQuery={searchQuery}
+                        scrollKey={`search:${searchQuery}:${activeFilterIds.join(',')}`}
+                    />
                 ) : (
                     <div className="h-full grid grid-cols-2 tablet:grid-cols-3 lg:grid-cols-6 auto-rows-fr gap-3">
                         {CATEGORIES

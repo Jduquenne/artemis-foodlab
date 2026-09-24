@@ -25,6 +25,7 @@ UI en français.
 - **No-scroll layout** : tout tient dans le viewport sur desktop (`md:` et supérieur). Le scroll est toléré sur mobile.
 - Tailwind par défaut. CSS custom autorisé pour les cas que Tailwind ne couvre pas.
 - Zéro commentaire dans le code.
+- **Tablette portrait** : variante Tailwind custom `tablet:` (`src/index.css`, `@custom-variant`) = largeur 744-1023 px **ET** hauteur ≥ 960 px **ET** `orientation: portrait` (cible : iPad Air 820×1180). Ne s'active donc jamais sur une fenêtre desktop étroite/basse ni en paysage. Elle vient **après** `sm:` dans la cascade et le surcharge. Avant le 2026-09-24 elle n'était définie nulle part (classes `tablet:` mortes). Déjà traités : Layout, Journal (blocs macros agrandis, repas en carrousel **2 par 2**, `snap-start` une carte sur deux), Planning (grille **transposée** : jours en lignes, repas en colonnes `2fr/3fr/2fr/3fr`, même DOM que desktop via `grid-flow-col` — pas de second rendu, sinon ids dnd-kit en double ; débord `tablet:-mx-8` + `overflow-visible` pour annuler le padding du `main`). Hauteurs en `dvh`, pas `vh` (barre Safari iPad). **Reste à passer : Courses, Recettes, Congélateur, Recipe Builder, Dashboard.**
 
 ---
 
@@ -52,6 +53,13 @@ Déjà branché sur : courses, ménager, journal (stepper portions), congélateu
 `MealSlot.dessertIds` n'a **aucune dépendance** envers `recipeIds` — un créneau déjeuner/dîner (`hasDessert: true` dans `MEAL_SLOTS`) peut avoir des desserts sans plat principal (`recipeIds: []`). Toute UI/logique touchant les créneaux doit respecter cet invariant, ne jamais gater l'affichage ou l'ajout d'un dessert sur la présence d'une recette (piège déjà rencontré dans `MealSlot.tsx` — `showDessertColumn` était gaté sur `hasPhoto`, corrigé).
 
 Déplacement (drag & drop) d'un repas ayant des desserts → l'utilisateur choisit de les faire suivre ou non (`MoveDessertsPrompt`), calcul dans `computeDragMoveSlots` (`core/logic/planning/planningLogic.ts`). Seul le cas où la destination a déjà une **vraie recette** déclenche un échange complet (recette + dessert des deux côtés) ; une destination « dessert seul » ne doit jamais céder son propre dessert au créneau de départ — piège déjà rencontré et corrigé (un dessert non lié au repas déplacé partait avec lui).
+
+---
+
+## Journal — moyenne de semaine et objectifs
+
+- `WeekAverageModal` (bouton « Moyenne », à gauche de « Objectifs ») : moyenne par jour des macros sur les jours choisis (défaut lun→ven) de la semaine affichée. Calcul pur `core/logic/journal/weekAverageLogic.ts` ; les jours cochés **sans aucun repas planifié sont exclus** du dénominateur (le modal affiche le nombre de jours comptés).
+- Objectifs : les **calories ne sont plus éditables**, elles sont calculées (Atwater `atwaterKcal`, `core/logic/dashboard/foodFormLogic.ts` : `4P + 9L + 4G + 2·fibres`) à partir des 4 macros et enregistrées à la validation. Un objectif kcal enregistré avant ce changement peut être incohérent jusqu'à la prochaine validation.
 
 ---
 

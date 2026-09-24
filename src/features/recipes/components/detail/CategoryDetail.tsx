@@ -10,6 +10,8 @@ import { isPlannable } from '../../../../core/domain/recipePredicates';
 import { useMenuStore } from '../../../../shared/store/useMenuStore';
 import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
 import { getCategoryRecipes, filterCategoryRecipesByMacros } from '../../../../core/logic/recipe/recipeLogic';
+import { resolveRestoredCount } from '../../../../core/logic/recipe/scrollRestoreLogic';
+import { useScrollRestore } from '../../../../shared/hooks/useScrollRestore';
 import { RecipePhotoCard } from '../../../../shared/components/ui/RecipePhotoCard';
 import { FoodPhotoCard } from '../../../../shared/components/ui/FoodPhotoCard';
 import { RecipeIngredientsCard } from '../../../../shared/components/ui/RecipeIngredientsCard';
@@ -31,7 +33,8 @@ export const CategoryDetail = () => {
     const removeFilter = (id: string) => setActiveFilterIds(activeFilterIds.filter(f => f !== id));
 
     const BATCH_SIZE = 24;
-    const [visibleCount, setVisibleCount] = useState(BATCH_SIZE);
+    const { ref: scrollRef, initial, onScroll, saveVisibleCount } = useScrollRestore(`category:${categoryId}`);
+    const [visibleCount, setVisibleCount] = useState(() => resolveRestoredCount(initial?.visibleCount, BATCH_SIZE, filteredRecipes.length));
     const [prevFiltered, setPrevFiltered] = useState(filteredRecipes);
     const sentinelRef = useRef<HTMLDivElement>(null);
 
@@ -51,6 +54,10 @@ export const CategoryDetail = () => {
         observer.observe(el);
         return () => observer.disconnect();
     }, [filteredRecipes.length]);
+
+    useEffect(() => {
+        saveVisibleCount(visibleCount);
+    }, [visibleCount, saveVisibleCount]);
 
     const visibleRecipes = useMemo(
         () => filteredRecipes.slice(0, visibleCount),
@@ -98,10 +105,10 @@ export const CategoryDetail = () => {
                 </div>
             </div>
 
-            <div className="flex-1 justify-center min-h-0 overflow-y-auto" onScroll={markScrolling}>
+            <div ref={scrollRef} className="flex-1 justify-center min-h-0 overflow-y-auto" onScroll={() => { markScrolling(); onScroll(); }}>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-3 pb-2">
                     {visibleRecipes.map((recipe, i) => (
-                        <LazyRender key={recipe.id} className="aspect-[10/11] animate-fade-in-up" style={{ animationDelay: `${i * 25}ms` }}>
+                        <LazyRender key={recipe.id} className={`aspect-[10/11] ${initial ? '' : 'animate-fade-in-up'}`} style={initial ? undefined : { animationDelay: `${i * 25}ms` }}>
                             <FlipCard
                                 name={recipe.name}
                                 frontContent={

@@ -4,6 +4,8 @@ import { RecipeKind } from "../../../../core/domain/types";
 import { RECIPE_BASE_GRAMS, RECIPE_MACROS, calculateOverriddenRecipeMacros } from "../../../../shared/utils/macroUtils";
 import { defaultIngredientOverridesForPortions, isOverridableIngredient } from "../../../../core/logic/journal/journalOverrideLogic";
 import { useJournalStore } from "../../../../shared/store/useJournalStore";
+import { useActiveJournalOverrides } from "../../../../shared/hooks/useActiveJournalOverrides";
+import { useProfileStore } from "../../../../shared/store/useProfileStore";
 import { typedRecipesDb } from "../../../../core/typed-db/typedRecipesDb";
 import { typedFoodDb } from "../../../../core/typed-db/typedFoodDb";
 import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
@@ -16,15 +18,9 @@ export interface RecipePortionRowProps {
 }
 
 export const RecipePortionRow = ({ recipeId, planningSlotItemId }: RecipePortionRowProps) => {
-  const {
-    portionOverrides,
-    setPortionOverride,
-    gramOverrides,
-    setGramOverride,
-    ingredientOverrides,
-    setIngredientOverride,
-    resetIngredientOverride,
-  } = useJournalStore();
+  const { portionOverrides, gramOverrides, ingredientOverrides } = useActiveJournalOverrides();
+  const { setPortionOverride, setGramOverride, setIngredientOverride, resetIngredientOverride } = useJournalStore();
+  const activeProfileId = useProfileStore((s) => s.activeProfileId);
   const [expanded, setExpanded] = useState(false);
   const key = planningSlotItemId ?? "";
   const pending = usePendingKey(`journal-override:${key}`);
@@ -47,7 +43,7 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId }: RecipePortion
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1">
             <input
-              key={key}
+              key={`${activeProfileId}:${key}`}
               type="number"
               min={1}
               defaultValue={grams}

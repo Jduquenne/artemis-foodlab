@@ -1,11 +1,12 @@
 import { lazy, Suspense, useRef, useState } from "react";
-import { Settings, Upload, Bell, UserCircle, ScrollText } from "lucide-react";
+import { Settings, Upload, Bell, UserCircle, ScrollText, Users } from "lucide-react";
 import { isValidSyncPayload, SyncPayload } from "../../../core/logic/sync/syncPayload";
 import { ThemeToggle } from "./ThemeToggle";
 
 const ImportModal = lazy(() => import("../../../features/sync/ImportModal").then(m => ({ default: m.ImportModal })));
 const NotificationSettingsModal = lazy(() => import("../ui/NotificationSettingsModal").then(m => ({ default: m.NotificationSettingsModal })));
 const AccountModal = lazy(() => import("../ui/AccountModal").then(m => ({ default: m.AccountModal })));
+const ProfilesModal = lazy(() => import("../ui/profiles/ProfilesModal").then(m => ({ default: m.ProfilesModal })));
 const LegalModal = lazy(() => import("../ui/LegalModal").then(m => ({ default: m.LegalModal })));
 
 export const SettingsPopover = () => {
@@ -13,6 +14,7 @@ export const SettingsPopover = () => {
   const [importModalData, setImportModalData] = useState<unknown>(null);
   const [notifSettingsOpen, setNotifSettingsOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
+  const [profilesOpen, setProfilesOpen] = useState(false);
   const [legalOpen, setLegalOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -67,6 +69,13 @@ export const SettingsPopover = () => {
                 Compte
               </button>
               <button
+                onClick={() => { setProfilesOpen(true); setOpen(false); }}
+                className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors border-t border-slate-100"
+              >
+                <Users className="w-4 h-4 text-slate-400 shrink-0" />
+                Profils
+              </button>
+              <button
                 onClick={() => { fileInputRef.current?.click(); setOpen(false); }}
                 className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors border-t border-slate-100"
               >
@@ -111,6 +120,8 @@ export const SettingsPopover = () => {
         {notifSettingsOpen && <NotificationSettingsModal onClose={() => setNotifSettingsOpen(false)} />}
 
         {accountOpen && <AccountModal onClose={() => setAccountOpen(false)} />}
+
+        {profilesOpen && <ProfilesModal onClose={() => setProfilesOpen(false)} />}
 
         {legalOpen && <LegalModal onClose={() => setLegalOpen(false)} />}
       </Suspense>

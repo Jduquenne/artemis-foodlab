@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { SlidersHorizontal, CalendarRange } from "lucide-react";
 import { Macronutrients, MealSlot } from "../../../core/domain/types";
-import { useJournalStore } from "../../../shared/store/useJournalStore";
+import { useActiveTargets } from "../../../shared/hooks/useActiveProfile";
 import { MacroTargetsModal } from "./modal/MacroTargetsModal";
+import { ProfileSwitcher } from "./ProfileSwitcher";
 import { WeekAverageModal } from "./modal/WeekAverageModal";
 
 export interface MacroSummaryProps {
@@ -18,7 +19,7 @@ const ITEMS: { key: keyof Omit<Macronutrients, "kcal">; label: string }[] = [
 ];
 
 export const MacroSummary = ({ macros, weekSlots }: MacroSummaryProps) => {
-  const { kcalTarget, macroTargets } = useJournalStore();
+  const { kcalTarget, macroTargets } = useActiveTargets();
   const [showModal, setShowModal] = useState(false);
   const [showAverage, setShowAverage] = useState(false);
 
@@ -30,10 +31,8 @@ export const MacroSummary = ({ macros, weekSlots }: MacroSummaryProps) => {
     <>
       <div className="bg-white dark:bg-slate-100 rounded-2xl px-4 py-3 tablet:px-6 tablet:py-5 flex flex-col gap-3 tablet:gap-5 shrink-0">
         <div className="flex items-center justify-between">
-          <span className="text-[10px] tablet:text-xs font-black uppercase tracking-widest text-slate-500">
-            Macronutriments
-          </span>
-          <div className="flex items-center gap-1">
+          <ProfileSwitcher />
+          <div className="flex items-center gap-1 shrink-0">
           <button
             onClick={() => setShowAverage(true)}
             className="flex items-center gap-1 px-2 py-1 rounded-lg text-slate-500 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors"

@@ -1,18 +1,4 @@
 import { apiFetchJson } from "./apiClient";
-import { MacroTargets } from "../domain/types";
-
-export interface ApiJournalSettings {
-  kcalTarget: number;
-  proteinsTarget: number;
-  lipidsTarget: number;
-  carbohydratesTarget: number;
-  fibersTarget: number;
-}
-
-export interface JournalSettings {
-  kcalTarget: number;
-  macroTargets: MacroTargets;
-}
 
 export interface ApiIngredientOverride {
   recipeIngredientId: string;
@@ -21,6 +7,7 @@ export interface ApiIngredientOverride {
 
 export interface ApiJournalOverride {
   id: string;
+  profileId: string;
   planningSlotItemId: string;
   portionsOverride: number | null;
   gramsOverride: number | null;
@@ -33,61 +20,39 @@ export interface JournalOverrides {
   ingredientOverrides: Record<string, Record<string, number>>;
 }
 
+export type JournalOverridesByProfile = Record<string, JournalOverrides>;
+
 export interface JournalOverrideInput {
   portionsOverride: number | null;
   gramsOverride: number | null;
   ingredientOverrides: Record<string, number>;
 }
 
-export function mapJournalSettings(api: ApiJournalSettings): JournalSettings {
-  return {
-    kcalTarget: api.kcalTarget,
-    macroTargets: {
-      proteins: api.proteinsTarget,
-      lipids: api.lipidsTarget,
-      carbohydrates: api.carbohydratesTarget,
-      fibers: api.fibersTarget,
-    },
-  };
-}
-
-export function mapJournalOverrides(overrides: ApiJournalOverride[]): JournalOverrides {
-  const portionOverrides: Record<string, number> = {};
-  const gramOverrides: Record<string, number> = {};
-  const ingredientOverrides: Record<string, Record<string, number>> = {};
+export function mapJournalOverrides(overrides: ApiJournalOverride[]): JournalOverridesByProfile {
+  const byProfile: JournalOverridesByProfile = {};
   for (const o of overrides) {
-    if (o.portionsOverride != null) portionOverrides[o.planningSlotItemId] = o.portionsOverride;
-    if (o.gramsOverride != null) gramOverrides[o.planningSlotItemId] = o.gramsOverride;
+    const target = (byProfile[o.profileId] ??= { portionOverrides: {}, gramOverrides: {}, ingredientOverrides: {} });
+    if (o.portionsOverride != null) target.portionOverrides[o.planningSlotItemId] = o.portionsOverride;
+    if (o.gramsOverride != null) target.gramOverrides[o.planningSlotItemId] = o.gramsOverride;
     if (o.ingredientOverrides.length > 0) {
-      ingredientOverrides[o.planningSlotItemId] = Object.fromEntries(
+      target.ingredientOverrides[o.planningSlotItemId] = Object.fromEntries(
         o.ingredientOverrides.map((i) => [i.recipeIngredientId, i.gramsOverride]),
       );
     }
   }
-  return { portionOverrides, gramOverrides, ingredientOverrides };
-}
-
-export async function saveJournalSettings(settings: JournalSettings): Promise<void> {
-  await apiFetchJson("/journal-settings", {
-    method: "PUT",
-    body: {
-      kcalTarget: settings.kcalTarget,
-      proteinsTarget: settings.macroTargets.proteins,
-      lipidsTarget: settings.macroTargets.lipids,
-      carbohydratesTarget: settings.macroTargets.carbohydrates,
-      fibersTarget: settings.macroTargets.fibers,
-    },
-  });
+  return byProfile;
 }
 
 export async function saveJournalOverride(
   planningSlotItemId: string,
+  profileId: string,
   input: JournalOverrideInput,
 ): Promise<ApiJournalOverride> {
   return apiFetchJson<ApiJournalOverride>("/journal-overrides", {
     method: "POST",
     body: {
       planningSlotItemId,
+      profileId,
       portionsOverride: input.portionsOverride,
       gramsOverride: input.gramsOverride,
       ingredientOverrides: Object.entries(input.ingredientOverrides).map(([recipeIngredientId, gramsOverride]) => ({

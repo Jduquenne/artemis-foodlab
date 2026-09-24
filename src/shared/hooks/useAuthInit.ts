@@ -5,6 +5,7 @@ import { syncBootstrapFromApi } from "../../core/services/bootstrapService";
 import { syncFreezerFromApi } from "../../core/services/freezerService";
 import { useAuthStore, AuthStatus } from "../store/useAuthStore";
 import { useJournalStore } from "../store/useJournalStore";
+import { useProfileStore } from "../store/useProfileStore";
 import { useMediaStore } from "../store/useMediaStore";
 import { useMenuStore } from "../store/useMenuStore";
 import { useNewsStore } from "../store/useNewsStore";
@@ -49,7 +50,7 @@ export function useAuthInit(): AuthStatus {
       useNewsStore.getState().syncHasNew();
       useMediaStore.getState().resolveCatalogue();
       if (!result) return;
-      useJournalStore.getState().replaceSettings(result.journalSettings);
+      useProfileStore.getState().replaceProfiles(result.profiles);
       useJournalStore.getState().replaceOverrides(result.journalOverrides);
       useMenuStore.getState().replaceShoppingPeriod({
         id: result.shoppingPeriod?.id ?? null,

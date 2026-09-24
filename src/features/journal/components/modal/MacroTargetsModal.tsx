@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { X, Check } from "lucide-react";
-import { useJournalStore } from "../../../../shared/store/useJournalStore";
+import { useProfileStore } from "../../../../shared/store/useProfileStore";
+import { useActiveProfile, useActiveTargets } from "../../../../shared/hooks/useActiveProfile";
 import { atwaterKcal } from "../../../../core/logic/dashboard/foodFormLogic";
 
 export interface MacroTargetsModalProps {
@@ -15,7 +16,10 @@ const FIELDS = [
 ];
 
 export const MacroTargetsModal = ({ onClose }: MacroTargetsModalProps) => {
-  const { macroTargets, setJournalSettings } = useJournalStore();
+  const profile = useActiveProfile();
+  const { macroTargets } = useActiveTargets();
+  const updateProfile = useProfileStore((s) => s.updateProfile);
+  const [submitting, setSubmitting] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [draft, setDraft] = useState({
     proteins: String(macroTargets.proteins),
@@ -40,14 +44,20 @@ export const MacroTargetsModal = ({ onClose }: MacroTargetsModalProps) => {
     setDraft((prev) => ({ ...prev, [key]: value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    if (!profile || submitting) return;
     const proteins = parseInt(draft.proteins, 10);
     const lipids = parseInt(draft.lipids, 10);
     const carbohydrates = parseInt(draft.carbohydrates, 10);
     const fibers = parseInt(draft.fibers, 10);
     if ([proteins, lipids, carbohydrates, fibers].some(isNaN)) return;
-    setJournalSettings(computedKcal, { proteins, lipids, carbohydrates, fibers });
-    handleClose();
+    setSubmitting(true);
+    try {
+      await updateProfile(profile.id, { kcalTarget: computedKcal, macroTargets: { proteins, lipids, carbohydrates, fibers } });
+      handleClose();
+    } catch {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -62,7 +72,7 @@ export const MacroTargetsModal = ({ onClose }: MacroTargetsModalProps) => {
       >
         <div className="flex items-center justify-between px-5 pt-5 pb-4 border-b border-slate-100">
           <p className="text-xs font-black text-orange-600 uppercase tracking-widest">
-            Objectifs nutritionnels
+            Objectifs{profile ? ` · ${profile.name}` : ""}
           </p>
           <button
             onClick={handleClose}
@@ -110,7 +120,8 @@ export const MacroTargetsModal = ({ onClose }: MacroTargetsModalProps) => {
           </button>
           <button
             onClick={handleSubmit}
-            className="flex items-center gap-1.5 px-5 py-2 rounded-xl text-sm font-bold bg-orange-500 hover:bg-orange-600 text-white transition-colors"
+            disabled={submitting}
+            className="flex items-center gap-1.5 px-5 py-2 rounded-xl text-sm font-bold bg-orange-500 hover:bg-orange-600 disabled:opacity-60 text-white transition-colors"
           >
             <Check className="w-4 h-4" />
             Valider

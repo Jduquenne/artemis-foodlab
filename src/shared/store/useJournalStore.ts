@@ -1,89 +1,78 @@
 import { create } from "zustand";
-import { JournalOverrideInput, saveJournalOverride, saveJournalSettings } from "../../core/services/journalService";
-import { MacroTargets } from "../../core/domain/types";
+import {
+  JournalOverrideInput,
+  JournalOverrides,
+  JournalOverridesByProfile,
+  saveJournalOverride,
+} from "../../core/services/journalService";
 import { typedRecipesDb } from "../../core/typed-db/typedRecipesDb";
-import { defaultIngredientOverridesForPortions, omitKey, scaleIngredientsByRatio } from "../../core/logic/journal/journalOverrideLogic";
+import {
+  EMPTY_JOURNAL_OVERRIDES,
+  applyOverrideResult,
+  defaultIngredientOverridesForPortions,
+  scaleIngredientsByRatio,
+} from "../../core/logic/journal/journalOverrideLogic";
 import { RECIPE_BASE_GRAMS } from "../utils/macroUtils";
+import { useProfileStore } from "./useProfileStore";
 
-export interface JournalOverridesState {
-  portionOverrides: Record<string, number>;
-  gramOverrides: Record<string, number>;
-  ingredientOverrides: Record<string, Record<string, number>>;
-}
-
-interface JournalState extends JournalOverridesState {
-  kcalTarget: number;
-  macroTargets: MacroTargets;
-  setJournalSettings: (kcalTarget: number, macroTargets: MacroTargets) => Promise<void>;
+interface JournalState {
+  overridesByProfile: JournalOverridesByProfile;
   setPortionOverride: (planningSlotItemId: string, recipeId: string, value: number) => Promise<void>;
   setGramOverride: (planningSlotItemId: string, recipeId: string, value: number) => Promise<void>;
   setIngredientOverride: (planningSlotItemId: string, recipeId: string, ingredientId: string, grams: number) => Promise<void>;
   resetIngredientOverride: (planningSlotItemId: string, recipeId: string, ingredientId: string) => Promise<void>;
-  replaceSettings: (settings: { kcalTarget: number; macroTargets: MacroTargets }) => void;
-  replaceOverrides: (overrides: JournalOverridesState) => void;
+  replaceOverrides: (overridesByProfile: JournalOverridesByProfile) => void;
 }
 
-const DEFAULT_KCAL_TARGET = 2000;
-const DEFAULT_MACRO_TARGETS: MacroTargets = { proteins: 150, lipids: 65, carbohydrates: 250, fibers: 30 };
+const activeProfileId = (): string | null => useProfileStore.getState().activeProfileId;
+
+const overridesOf = (state: JournalState, profileId: string): JournalOverrides =>
+  state.overridesByProfile[profileId] ?? EMPTY_JOURNAL_OVERRIDES;
 
 export const useJournalStore = create<JournalState>((set, get) => {
   const persistOverride = async (
     planningSlotItemId: string,
     patch: Partial<JournalOverrideInput>,
   ): Promise<void> => {
-    const state = get();
+    const profileId = activeProfileId();
+    if (!profileId) return;
+    const current = overridesOf(get(), profileId);
     const input: JournalOverrideInput = {
       portionsOverride:
-        patch.portionsOverride !== undefined ? patch.portionsOverride : state.portionOverrides[planningSlotItemId] ?? null,
+        patch.portionsOverride !== undefined ? patch.portionsOverride : current.portionOverrides[planningSlotItemId] ?? null,
       gramsOverride:
-        patch.gramsOverride !== undefined ? patch.gramsOverride : state.gramOverrides[planningSlotItemId] ?? null,
+        patch.gramsOverride !== undefined ? patch.gramsOverride : current.gramOverrides[planningSlotItemId] ?? null,
       ingredientOverrides:
         patch.ingredientOverrides !== undefined
           ? patch.ingredientOverrides
-          : state.ingredientOverrides[planningSlotItemId] ?? {},
+          : current.ingredientOverrides[planningSlotItemId] ?? {},
     };
-    const result = await saveJournalOverride(planningSlotItemId, input);
+    const result = await saveJournalOverride(planningSlotItemId, profileId, input);
     set((s) => ({
-      portionOverrides:
-        result.portionsOverride != null
-          ? { ...s.portionOverrides, [planningSlotItemId]: result.portionsOverride }
-          : omitKey(s.portionOverrides, planningSlotItemId),
-      gramOverrides:
-        result.gramsOverride != null
-          ? { ...s.gramOverrides, [planningSlotItemId]: result.gramsOverride }
-          : omitKey(s.gramOverrides, planningSlotItemId),
-      ingredientOverrides:
-        result.ingredientOverrides.length > 0
-          ? {
-              ...s.ingredientOverrides,
-              [planningSlotItemId]: Object.fromEntries(
-                result.ingredientOverrides.map((i) => [i.recipeIngredientId, i.gramsOverride]),
-              ),
-            }
-          : omitKey(s.ingredientOverrides, planningSlotItemId),
+      overridesByProfile: {
+        ...s.overridesByProfile,
+        [profileId]: applyOverrideResult(overridesOf(s, profileId), planningSlotItemId, result),
+      },
     }));
   };
 
   const defaultIngredientQuantities = (
-    state: JournalState,
+    current: JournalOverrides,
     recipeId: string,
     planningSlotItemId: string,
   ): Record<string, number> => {
     const recipe = typedRecipesDb[recipeId];
-    const portions = state.portionOverrides[planningSlotItemId] ?? 1;
+    const portions = current.portionOverrides[planningSlotItemId] ?? 1;
     return defaultIngredientOverridesForPortions(recipe, portions);
   };
 
+  const currentOverrides = (): JournalOverrides => {
+    const profileId = activeProfileId();
+    return profileId ? overridesOf(get(), profileId) : EMPTY_JOURNAL_OVERRIDES;
+  };
+
   return {
-    kcalTarget: DEFAULT_KCAL_TARGET,
-    macroTargets: DEFAULT_MACRO_TARGETS,
-    setJournalSettings: async (kcalTarget, macroTargets) => {
-      await saveJournalSettings({ kcalTarget, macroTargets });
-      set({ kcalTarget, macroTargets });
-    },
-    portionOverrides: {},
-    gramOverrides: {},
-    ingredientOverrides: {},
+    overridesByProfile: {},
     setPortionOverride: async (planningSlotItemId, recipeId, value) => {
       const recipe = typedRecipesDb[recipeId];
       const ratio = recipe && recipe.defaultPortions > 0 ? value / recipe.defaultPortions : 1;
@@ -98,23 +87,21 @@ export const useJournalStore = create<JournalState>((set, get) => {
       await persistOverride(planningSlotItemId, { portionsOverride: null, gramsOverride: value, ingredientOverrides });
     },
     setIngredientOverride: async (planningSlotItemId, recipeId, ingredientId, grams) => {
-      const state = get();
-      const existing = state.ingredientOverrides[planningSlotItemId];
+      const current = currentOverrides();
+      const existing = current.ingredientOverrides[planningSlotItemId];
       const baseline =
-        existing && Object.keys(existing).length > 0 ? existing : defaultIngredientQuantities(state, recipeId, planningSlotItemId);
+        existing && Object.keys(existing).length > 0 ? existing : defaultIngredientQuantities(current, recipeId, planningSlotItemId);
       await persistOverride(planningSlotItemId, { ingredientOverrides: { ...baseline, [ingredientId]: grams } });
     },
     resetIngredientOverride: async (planningSlotItemId, recipeId, ingredientId) => {
-      const state = get();
-      const existing = state.ingredientOverrides[planningSlotItemId];
+      const current = currentOverrides();
+      const existing = current.ingredientOverrides[planningSlotItemId];
       if (!existing) return;
-      const defaults = defaultIngredientQuantities(state, recipeId, planningSlotItemId);
+      const defaults = defaultIngredientQuantities(current, recipeId, planningSlotItemId);
       await persistOverride(planningSlotItemId, {
         ingredientOverrides: { ...existing, [ingredientId]: defaults[ingredientId] ?? 0 },
       });
     },
-    replaceSettings: ({ kcalTarget, macroTargets }) => set({ kcalTarget, macroTargets }),
-    replaceOverrides: ({ portionOverrides, gramOverrides, ingredientOverrides }) =>
-      set({ portionOverrides, gramOverrides, ingredientOverrides }),
+    replaceOverrides: (overridesByProfile) => set({ overridesByProfile }),
   };
 });

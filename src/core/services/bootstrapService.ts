@@ -1,4 +1,4 @@
-import { Food, HouseholdItem } from "../domain/types";
+import { Food, HouseholdItem, Profile } from "../domain/types";
 import { Category } from "../domain/categories";
 import { ApiOutdoorActivity, ApiRecipe } from "../logic/recipe/recipeApiMapper";
 import { ApiShoppingPeriod } from "../logic/shopping/shoppingApiMapper";
@@ -7,12 +7,10 @@ import { applyCatalogueData } from "./catalogueSyncService";
 import { applyHouseholdFlags } from "./householdService";
 import {
   ApiJournalOverride,
-  ApiJournalSettings,
-  JournalOverrides,
-  JournalSettings,
+  JournalOverridesByProfile,
   mapJournalOverrides,
-  mapJournalSettings,
 } from "./journalService";
+import { ApiProfile, mapProfiles } from "./profileService";
 import { CurrentPeriod, mapApiPeriod } from "./shoppingPeriodService";
 
 interface ApiBootstrapHouseholdFlag {
@@ -27,14 +25,14 @@ interface ApiBootstrap {
   householdItems: HouseholdItem[];
   recipeCategories: Category[];
   householdShoppingFlags: ApiBootstrapHouseholdFlag[];
-  journalSettings: ApiJournalSettings;
+  profiles: ApiProfile[];
   journalOverrides: ApiJournalOverride[];
   currentShoppingPeriod: ApiShoppingPeriod | null;
 }
 
 export interface BootstrapResult {
-  journalSettings: JournalSettings;
-  journalOverrides: JournalOverrides;
+  profiles: Profile[];
+  journalOverrides: JournalOverridesByProfile;
   shoppingPeriod: CurrentPeriod | null;
 }
 
@@ -55,7 +53,7 @@ export async function syncBootstrapFromApi(): Promise<BootstrapResult | null> {
     );
 
     return {
-      journalSettings: mapJournalSettings(data.journalSettings),
+      profiles: mapProfiles(data.profiles),
       journalOverrides: mapJournalOverrides(data.journalOverrides),
       shoppingPeriod: await mapApiPeriod(data.currentShoppingPeriod),
     };

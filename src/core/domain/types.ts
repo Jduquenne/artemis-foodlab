@@ -96,6 +96,15 @@ export interface MacroTargets {
   fibers: number;
 }
 
+export interface Profile {
+  id: string;
+  name: string;
+  color: string;
+  position: number;
+  kcalTarget: number;
+  macroTargets: MacroTargets;
+}
+
 export enum MealType {
   BREAKFAST = "breakfast",
   LUNCH = "lunch",

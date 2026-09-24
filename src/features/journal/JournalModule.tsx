@@ -4,7 +4,7 @@ import { getWeekNumber, getMonday } from "../../shared/utils/weekUtils";
 import { getWeekSlots, syncWeekFromApi } from "../../core/services/planningService";
 import { MealSlot } from "../../core/domain/types";
 import { computeDayMacros } from "../../shared/utils/macroUtils";
-import { useJournalStore } from "../../shared/store/useJournalStore";
+import { useActiveJournalOverrides } from "../../shared/hooks/useActiveJournalOverrides";
 import { useAuthStore } from "../../shared/store/useAuthStore";
 import { markScrolling } from "../../shared/utils/scrollGuard";
 import { DayNav } from "./components/DayNav";
@@ -20,7 +20,7 @@ function getDayKey(date: Date): string {
 }
 
 export const JournalModule = () => {
-  const { portionOverrides, gramOverrides, ingredientOverrides } = useJournalStore();
+  const { portionOverrides, gramOverrides, ingredientOverrides } = useActiveJournalOverrides();
   const authStatus = useAuthStore((s) => s.status);
   const [selectedDate, setSelectedDate] = useState(() => new Date());
   const [weekSlots, setWeekSlots] = useState<MealSlot[] | null>(null);

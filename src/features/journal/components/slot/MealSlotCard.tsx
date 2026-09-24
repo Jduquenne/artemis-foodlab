@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { Macronutrients, MealSlot, SlotType } from "../../../../core/domain/types";
 import { getAllRecipeIds, hasDesserts } from "../../../../core/domain/recipePredicates";
 import { computeSlotMacros, ZERO } from "../../../../shared/utils/macroUtils";
-import { useJournalStore } from "../../../../shared/store/useJournalStore";
+import { useActiveJournalOverrides } from "../../../../shared/hooks/useActiveJournalOverrides";
 import { SLOT_LABELS } from "../../../../shared/utils/slotLabels";
 import { markScrolling } from "../../../../shared/utils/scrollGuard";
 import { RecipePortionRow } from "./RecipePortionRow";
@@ -20,7 +20,7 @@ const MACRO_ITEMS: { key: keyof Omit<Macronutrients, "kcal">; label: string }[] 
 ];
 
 export const MealSlotCard = ({ slotType, slot }: MealSlotCardProps) => {
-  const { portionOverrides, gramOverrides, ingredientOverrides } = useJournalStore();
+  const { portionOverrides, gramOverrides, ingredientOverrides } = useActiveJournalOverrides();
 
   const allIds = slot ? getAllRecipeIds(slot) : [];
   const totalMacros = useMemo(

@@ -2,7 +2,8 @@ import { useMemo, useState } from "react";
 import { X } from "lucide-react";
 import { DAYS } from "../../../../core/domain/planningConfig";
 import { MealSlot } from "../../../../core/domain/types";
-import { useJournalStore } from "../../../../shared/store/useJournalStore";
+import { useActiveJournalOverrides } from "../../../../shared/hooks/useActiveJournalOverrides";
+import { useActiveTargets } from "../../../../shared/hooks/useActiveProfile";
 import {
   DEFAULT_AVERAGE_DAYS,
   computeWeekAverage,
@@ -23,7 +24,8 @@ const ROWS = [
 ];
 
 export const WeekAverageModal = ({ weekSlots, onClose }: WeekAverageModalProps) => {
-  const { kcalTarget, macroTargets, portionOverrides, gramOverrides, ingredientOverrides } = useJournalStore();
+  const { kcalTarget, macroTargets } = useActiveTargets();
+  const { portionOverrides, gramOverrides, ingredientOverrides } = useActiveJournalOverrides();
   const [isClosing, setIsClosing] = useState(false);
   const [days, setDays] = useState<string[]>([...DEFAULT_AVERAGE_DAYS]);
 

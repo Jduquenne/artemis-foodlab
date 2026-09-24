@@ -69,6 +69,19 @@ Au-delà de l'override portions/grammes existant (par repas entier), le Journal 
 
 ---
 
+## Profils — personnes d'un foyer
+
+Un compte = un foyer ; un **profil** = une personne (sans identifiants), max **3** par compte (`MAX_PROFILES`, `core/domain/profileConfig.ts`, imposé aussi par l'API : 409). Chaque profil porte ses objectifs kcal/macros et **ses propres overrides du journal** ; planning, courses, ménager et congélateur restent partagés. V1 = Journal uniquement.
+
+- `useProfileStore` (`shared/store/`) : `profiles` + `activeProfileId` (seul persisté, `localStorage`, par appareil). `replaceProfiles` (boot) résout un id actif valide, sinon le premier. Les écritures passent par l'API d'abord (`profileService`), pas d'optimiste.
+- `useJournalStore.overridesByProfile` : `Record<profileId, JournalOverrides>`. Les composants lisent le profil actif via `useActiveJournalOverrides` ; objectifs via `useActiveProfile`/`useActiveTargets` (fallback `DEFAULT_PROFILE_TARGETS` avant le boot). `persistOverride` capture le `profileId` au lancement (un changement de profil en vol ne mélange rien) et l'envoie dans `POST /journal-overrides`.
+- Les objectifs se modifient via `updateProfile` (plus de `/journal-settings`, déprécié côté API). `journalSettings` n'est plus lu depuis `/bootstrap` ; il fournit `profiles` + `journalOverrides` de tous les profils.
+- UI : `ProfileSwitcher` (Journal, en-tête de `MacroSummary`) + `ProfilesModal` (`shared/components/ui/profiles/`, aussi dans `SettingsPopover`). Couleurs : slug API → hex inline (`PROFILE_COLORS`), jamais de classe Tailwind runtime.
+- **Déploiement** : l'API doit être en prod avant le front (le boot lit `profiles`).
+- Nommage : `displayName` = nom du compte (AccountModal), « Profils » = personnes du foyer.
+
+---
+
 ## Architecture
 
 Trois couches, sans exception :

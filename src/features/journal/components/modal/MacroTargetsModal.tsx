@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { X, Check } from "lucide-react";
 import { useJournalStore } from "../../../../shared/store/useJournalStore";
+import { atwaterKcal } from "../../../../core/logic/dashboard/foodFormLogic";
 
 export interface MacroTargetsModalProps {
   onClose: () => void;
 }
 
 const FIELDS = [
-  { key: "kcal" as const, label: "Calories", unit: "kcal", min: 500, max: 5000, step: 50 },
   { key: "proteins" as const, label: "Protéines", unit: "g", min: 10, max: 500, step: 5 },
   { key: "lipids" as const, label: "Lipides", unit: "g", min: 10, max: 300, step: 5 },
   { key: "carbohydrates" as const, label: "Glucides", unit: "g", min: 10, max: 600, step: 5 },
@@ -15,15 +15,24 @@ const FIELDS = [
 ];
 
 export const MacroTargetsModal = ({ onClose }: MacroTargetsModalProps) => {
-  const { kcalTarget, macroTargets, setJournalSettings } = useJournalStore();
+  const { macroTargets, setJournalSettings } = useJournalStore();
   const [isClosing, setIsClosing] = useState(false);
   const [draft, setDraft] = useState({
-    kcal: String(kcalTarget),
     proteins: String(macroTargets.proteins),
     lipids: String(macroTargets.lipids),
     carbohydrates: String(macroTargets.carbohydrates),
     fibers: String(macroTargets.fibers),
   });
+
+  const computedKcal = useMemo(() => {
+    const toNumber = (v: string) => parseInt(v, 10) || 0;
+    return atwaterKcal({
+      proteins: toNumber(draft.proteins),
+      lipids: toNumber(draft.lipids),
+      carbohydrates: toNumber(draft.carbohydrates),
+      fibers: toNumber(draft.fibers),
+    });
+  }, [draft]);
 
   const handleClose = () => { setIsClosing(true); setTimeout(onClose, 220); };
 
@@ -32,13 +41,12 @@ export const MacroTargetsModal = ({ onClose }: MacroTargetsModalProps) => {
   };
 
   const handleSubmit = () => {
-    const kcal = parseInt(draft.kcal, 10);
     const proteins = parseInt(draft.proteins, 10);
     const lipids = parseInt(draft.lipids, 10);
     const carbohydrates = parseInt(draft.carbohydrates, 10);
     const fibers = parseInt(draft.fibers, 10);
-    if ([kcal, proteins, lipids, carbohydrates, fibers].some(isNaN)) return;
-    setJournalSettings(kcal, { proteins, lipids, carbohydrates, fibers });
+    if ([proteins, lipids, carbohydrates, fibers].some(isNaN)) return;
+    setJournalSettings(computedKcal, { proteins, lipids, carbohydrates, fibers });
     handleClose();
   };
 
@@ -66,6 +74,13 @@ export const MacroTargetsModal = ({ onClose }: MacroTargetsModalProps) => {
         </div>
 
         <div className="px-5 py-3 flex flex-col gap-3">
+          <div className="flex items-center justify-between gap-3">
+            <span className="text-sm font-semibold text-slate-600 shrink-0">Calories</span>
+            <div className="flex items-center gap-1.5">
+              <span className="w-20 text-right text-sm font-bold px-2 py-1.5 text-slate-800">{computedKcal}</span>
+              <span className="text-xs text-slate-400 w-6">kcal</span>
+            </div>
+          </div>
           {FIELDS.map(({ key, label, unit, min, max, step }) => (
             <div key={key} className="flex items-center justify-between gap-3">
               <label htmlFor={`macro-input-${key}`} className="text-sm font-semibold text-slate-600 shrink-0">{label}</label>

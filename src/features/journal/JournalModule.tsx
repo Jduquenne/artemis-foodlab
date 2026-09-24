@@ -85,7 +85,7 @@ export const JournalModule = () => {
         </div>
       ) : (
         <>
-          <MacroSummary macros={totalMacros} />
+          <MacroSummary macros={totalMacros} weekSlots={weekSlots} />
 
           <div className="flex sm:hidden justify-center gap-1.5 shrink-0">
             {SLOT_ORDER.map((slotType, i) => (

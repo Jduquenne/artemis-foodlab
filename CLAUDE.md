@@ -55,6 +55,20 @@ Déplacement (drag & drop) d'un repas ayant des desserts → l'utilisateur chois
 
 ---
 
+## Journal — quantités par ingrédient et par jour
+
+Au-delà de l'override portions/grammes existant (par repas entier), le Journal permet de déplier un repas (chevron sur `RecipePortionRow`, uniquement pour un plat/base ayant des ingrédients) et d'ajuster la quantité de chaque ingrédient pour ce jour précis, sans jamais modifier la recette — 0 = ingrédient non utilisé ce jour-là.
+
+- **Modèle unifié** : `useJournalStore.setPortionOverride`/`setGramOverride` calculent un ratio (`portions/defaultPortions` ou `grammes/baseGrams`) et l'appliquent à tous les ingrédients via `scaleIngredientsByRatio` (`core/logic/journal/journalOverrideLogic.ts`) pour peupler `ingredientOverrides`, en plus d'écrire `portionsOverride`/`gramsOverride` comme avant. L'édition fine d'un ingrédient (`setIngredientOverride`) corrige ensuite une entrée précise par-dessus — un seul mécanisme de « modifié aujourd'hui », pas deux systèmes parallèles.
+- **`POST /journal-overrides` fait un remplacement total des 3 champs** (`portionsOverride`, `gramsOverride`, `ingredientOverrides`) à chaque appel — un champ omis du body est effacé, pas laissé tel quel. Le `persistOverride` interne du store lit toujours l'état courant des 3 champs avant d'envoyer ; ne jamais poster un patch partiel isolé sur cet endpoint.
+- **Piège déjà rencontré et corrigé** : la quantité « par défaut » affichée pour un ingrédient (et utilisée en fallback pour un ingrédient non explicitement modifié) doit toujours être mise à l'échelle par le ratio de portions **courant** (`defaultIngredientOverridesForPortions`), jamais la quantité brute de la recette pour son `defaultPortions` — sinon éditer un seul ingrédient fait retomber tous les autres sur l'échelle de la recette entière au lieu de la portion réellement consommée.
+- **Bases imbriquées** : dépliage à un seul niveau — un ingrédient `baseId` reste une ligne unique ajustable, jamais de récursion dans sa propre composition.
+- **Ingrédients sans unité** (`Unit.NONE`, typiquement épices ajoutées « à vue ») exclus de la liste dépliable et de toute mise à l'échelle (`isOverridableIngredient`) — ils ne contribuent de toute façon jamais aux macros (`calculateRecipeMacros` les ignore déjà).
+- Calcul : `calculateOverriddenRecipeMacros` (`shared/utils/macroUtils.ts`) patche `recipe.ingredients` avec les overrides puis force `defaultPortions: 1` pour obtenir un total absolu (pas une moyenne par portion). `computeSlotMacros`/`computeDayMacros` privilégient ce chemin quand `ingredientOverrides` existe pour un item, sinon retombent sur le calcul historique (facteur unique × macro précalculée) — rétrocompatible avec les overrides déjà en base avant ce chantier.
+- Mobile : carrousel de repas (`JournalModule.tsx`, scroll-snap horizontal `< sm:`, indicateur à points) et scroll interne de la liste d'ingrédients dépliée (`MealSlotCard.tsx`, `overflow-y-auto`) sont deux axes distincts, pas de conflit de geste.
+
+---
+
 ## Architecture
 
 Trois couches, sans exception :
@@ -134,6 +148,7 @@ Trois couches, sans exception :
 - Les deux sont dans `core/logic/recipeBuilder/recipeBuilderLogic.ts`.
 - L'`id` uuid de l'API est stocké à part dans `RecipeDetails.apiId` ; la traduction code ↔ uuid passe par `core/typed-db/recipeIdMap.ts` (`getIdByCode` / `getCodeById`), reconstruit à chaque hydratation du catalogue.
 - `typedRecipesDb` / `typedFoodDb` / `typedOutdoorDb` restent des objets mutables rafraîchis en place (`replaceRecipesDb` etc.), pas de `useLiveQuery`.
+- **`Ingredient.id` est stable** d'un enregistrement à l'autre : `PUT /recipes/:id` fait un upsert par id (connu → update en place, absent → nouvelle ligne, disparu du tableau envoyé → supprimé ; id étranger à la recette → `400`). `recipeToBuilderState` préserve `ing.id` dans `DraftIngredient.apiId` (distinct de `DraftIngredient.id`, la clé locale/React) ; `builderStateToApiBody` le renvoie quand présent, l'omet pour un ingrédient ajouté dans le builder.
 
 > La Google Sheets Gateway (dossier `/worker`) a été **abandonnée** (2026-07-21) et tout son code supprimé. Ne pas la ressusciter.
 

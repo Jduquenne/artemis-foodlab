@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { SlidersHorizontal } from "lucide-react";
-import { Macronutrients } from "../../../core/domain/types";
+import { SlidersHorizontal, CalendarRange } from "lucide-react";
+import { Macronutrients, MealSlot } from "../../../core/domain/types";
 import { useJournalStore } from "../../../shared/store/useJournalStore";
 import { MacroTargetsModal } from "./modal/MacroTargetsModal";
+import { WeekAverageModal } from "./modal/WeekAverageModal";
 
 export interface MacroSummaryProps {
   macros: Macronutrients;
+  weekSlots: MealSlot[];
 }
 
 const ITEMS: { key: keyof Omit<Macronutrients, "kcal">; label: string }[] = [
@@ -15,9 +17,10 @@ const ITEMS: { key: keyof Omit<Macronutrients, "kcal">; label: string }[] = [
   { key: "fibers", label: "Fibres" },
 ];
 
-export const MacroSummary = ({ macros }: MacroSummaryProps) => {
+export const MacroSummary = ({ macros, weekSlots }: MacroSummaryProps) => {
   const { kcalTarget, macroTargets } = useJournalStore();
   const [showModal, setShowModal] = useState(false);
+  const [showAverage, setShowAverage] = useState(false);
 
   const kcalPct = Math.min(100, Math.round((macros.kcal / kcalTarget) * 100));
   const kcalRemaining = Math.max(0, kcalTarget - macros.kcal);
@@ -30,6 +33,14 @@ export const MacroSummary = ({ macros }: MacroSummaryProps) => {
           <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">
             Macronutriments
           </span>
+          <div className="flex items-center gap-1">
+          <button
+            onClick={() => setShowAverage(true)}
+            className="flex items-center gap-1 px-2 py-1 rounded-lg text-slate-500 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors"
+          >
+            <CalendarRange className="w-3.5 h-3.5" />
+            <span className="text-[10px] font-semibold">Moyenne</span>
+          </button>
           <button
             onClick={() => setShowModal(true)}
             className="flex items-center gap-1 px-2 py-1 rounded-lg text-slate-500 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors"
@@ -37,6 +48,7 @@ export const MacroSummary = ({ macros }: MacroSummaryProps) => {
             <SlidersHorizontal className="w-3.5 h-3.5" />
             <span className="text-[10px] font-semibold">Objectifs</span>
           </button>
+          </div>
         </div>
 
         <div className="flex flex-col gap-1.5">
@@ -97,6 +109,7 @@ export const MacroSummary = ({ macros }: MacroSummaryProps) => {
       </div>
 
       {showModal && <MacroTargetsModal onClose={() => setShowModal(false)} />}
+      {showAverage && <WeekAverageModal weekSlots={weekSlots} onClose={() => setShowAverage(false)} />}
     </>
   );
 };

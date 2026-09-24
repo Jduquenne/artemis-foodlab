@@ -87,11 +87,11 @@ export const JournalModule = () => {
         <>
           <MacroSummary macros={totalMacros} weekSlots={weekSlots} />
 
-          <div className="flex sm:hidden justify-center gap-1.5 shrink-0">
+          <div className="flex sm:hidden tablet:flex justify-center gap-1.5 shrink-0">
             {SLOT_ORDER.map((slotType, i) => (
               <span
                 key={slotType}
-                className={`w-1.5 h-1.5 rounded-full transition-colors ${i === activeSlot ? "bg-orange-500" : "bg-slate-200"}`}
+                className={`w-1.5 h-1.5 rounded-full transition-colors ${i >= 2 ? "tablet:hidden" : ""} ${i === activeSlot ? "bg-orange-500" : "bg-slate-200"}`}
               />
             ))}
           </div>
@@ -99,10 +99,13 @@ export const JournalModule = () => {
           <div
             ref={carouselRef}
             onScroll={handleCarouselScroll}
-            className="flex-1 min-h-0 flex overflow-x-auto snap-x snap-mandatory sm:grid sm:grid-cols-4 sm:overflow-visible sm:snap-none gap-3"
+            className="flex-1 min-h-0 flex overflow-x-auto snap-x snap-mandatory sm:grid sm:grid-cols-4 sm:overflow-visible sm:snap-none tablet:flex tablet:overflow-x-auto tablet:snap-x tablet:snap-mandatory gap-3"
           >
-            {SLOT_ORDER.map((slotType) => (
-              <div key={slotType} className="w-full h-full min-h-0 shrink-0 snap-center sm:w-auto sm:h-auto sm:shrink">
+            {SLOT_ORDER.map((slotType, i) => (
+              <div
+                key={slotType}
+                className={`w-full h-full min-h-0 shrink-0 snap-center sm:w-auto sm:h-auto sm:shrink tablet:w-[calc(50%-0.375rem)] tablet:h-full tablet:shrink-0 ${i % 2 === 0 ? "tablet:snap-start" : "tablet:snap-align-none"}`}
+              >
                 <MealSlotCard slotType={slotType} slot={slotMap[slotType]} />
               </div>
             ))}

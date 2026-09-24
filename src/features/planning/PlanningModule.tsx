@@ -26,6 +26,7 @@ import { MEAL_SLOTS, DAYS, CopyState } from '../../core/domain/planningConfig';
 import { computeSlotCopyProps, parseFullSlotId, computeDragMoveSlots, ParsedSlot } from '../../core/logic/planning/planningLogic';
 import { withPending } from '../../shared/utils/withPending';
 import { MoveDessertsPrompt } from './components/MoveDessertsPrompt';
+import { TABLET_WEEK_GRID_COLS } from './planningLayout';
 import {
     DndContext,
     DragEndEvent,
@@ -473,7 +474,7 @@ export const PlanningModule = () => {
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
         >
-            <div className="w-full h-[calc(100vh-2rem)] tablet:h-[calc(100vh-4rem)] flex flex-col gap-2 overflow-hidden">
+            <div className="w-full h-[calc(100vh-2rem)] tablet:h-[calc(100dvh-4rem)] flex flex-col gap-2 overflow-hidden tablet:overflow-visible">
 
                 <PlanningHeader
                     weekNumber={weekNumber}
@@ -512,7 +513,7 @@ export const PlanningModule = () => {
                     onToggleDraft={(day) => toggleDraftDay(year, weekNumber, day)}
                 />
 
-                <div className="flex-1 min-h-0 overflow-hidden">
+                <div className="flex-1 min-h-0 overflow-hidden tablet:overflow-visible tablet:flex tablet:flex-col tablet:gap-2">
 
                     {isSelectionMode && (
                         <div className="sm:hidden h-full flex flex-col justify-center gap-5 px-1">
@@ -563,7 +564,16 @@ export const PlanningModule = () => {
                         </div>
                     )}
 
-                    <div className="hidden sm:grid grid-cols-[repeat(7,1fr)] grid-rows-[44px_repeat(4,1fr)] gap-3 h-full min-h-0 px-2 pb-2">
+                    <div className={`hidden tablet:grid ${TABLET_WEEK_GRID_COLS} px-2 gap-2 shrink-0 tablet:-mx-8`}>
+                        <span />
+                        {MEAL_SLOTS.map(mealType => (
+                            <span key={mealType.id} className="text-center text-xs font-black uppercase tracking-widest text-slate-400 truncate">
+                                {mealType.icon} {mealType.label}
+                            </span>
+                        ))}
+                    </div>
+
+                    <div className={`hidden sm:grid grid-cols-[repeat(7,1fr)] grid-rows-[44px_repeat(4,1fr)] gap-3 h-full min-h-0 px-2 pb-2 tablet:h-auto tablet:flex-1 tablet:-mx-8 tablet:gap-2 tablet:grid-flow-col tablet:grid-rows-[repeat(7,minmax(0,1fr))] ${TABLET_WEEK_GRID_COLS}`}>
                         {DAYS.map((day, i) => {
                             const selected = isSelectionMode && isDayDraft(day);
                             const confirmed = !isSelectionMode && isDayConfirmed(day);
@@ -579,7 +589,7 @@ export const PlanningModule = () => {
                                         isSelectionMode && !selected && !blocked ? 'hover:bg-slate-100 dark:hover:bg-slate-700/40' : '',
                                     ].join(' ')}
                                 >
-                                    <div className="flex items-center gap-1 text-xs">
+                                    <div className="flex items-center gap-1 text-xs tablet:flex-col tablet:gap-0">
                                         {selected && <Check className="w-3 h-3 shrink-0" />}
                                         {confirmed && !isSelectionMode && <ShoppingCart className="w-2.5 h-2.5 shrink-0" />}
                                         <span>{day.slice(0, 3)}</span>

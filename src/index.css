@@ -52,6 +52,7 @@
    DARK MODE — class-based via .dark on <html>
    ========================================================= */
 @custom-variant dark (&:where(.dark, .dark *));
+@custom-variant tablet (@media (min-width: 744px) and (max-width: 1023px) and (min-height: 960px) and (orientation: portrait));
 
 /* =========================================================
    THEME VARIABLES

@@ -1,42 +1,56 @@
-# 🥗 Artemis FoodLab
+# Artemis Foodlab
 
-> **Local-first meal planner — weekly menus, daily macros, live recipe builder and linked shopping lists. No backend: all data in IndexedDB, import/export included.**
+Application web (PWA) de planification de repas : menu de la semaine, journal nutritionnel, recettes, courses, congélateur et articles ménagers. Interface en français, responsive (mobile, tablette, desktop).
 
-Artemis FoodLab est une application web moderne pensée pour simplifier la planification des repas de la semaine, le suivi nutritionnel et l'organisation des courses, le tout en garantissant une confidentialité totale grâce à une architecture 100% locale.
+Production : https://jduquenne.github.io/artemis-foodlab/
 
----
+## Fonctionnalités
 
-## ✨ Fonctionnalités Principales
+- **Journal** : macros du jour par profil, objectifs personnalisés, quantités ajustables par repas et par ingrédient, moyenne de semaine.
+- **Menu (planning)** : déjeuners, dîners, petits-déjeuners et goûters par semaine, desserts, glisser-déposer, copie de repas.
+- **Recettes** : catalogue par catégorie, recherche, filtres par macros, quantités selon le nombre de parts.
+- **Courses** : liste générée depuis le planning, par repas ou par ingrédient, articles ménagers.
+- **Congélateur** : catégories, sachets et batch cooking.
+- **Profils** : jusqu'à 3 personnes par compte, chacune avec ses objectifs et ses ajustements de journal.
+- **Administration** (rôle `admin`) : créateur de recettes et tableau de bord du catalogue.
 
-- 🗓️ **Planificateur de menus hebdomadaire** : Organisez vos déjeuners et dîners pour toute la semaine en un clin d'œil.
-- 🧮 **Suivi des macros journalières** : Calculez et suivez vos apports nutritionnels (calories, protéines, glucides, lipides) en temps réel.
-- 🍳 **Créateur de recettes interactif** : Construisez vos propres recettes, ajustez les portions et observez l'impact nutritionnel instantanément.
-- 🛒 **Listes de courses dynamiques** : Générez automatiquement vos listes d'achats à partir de vos menus planifiés.
-- 🔒 **100% Local-First** : Aucune base de données distante ; toutes vos données sont stockées dans votre navigateur via IndexedDB.
-- 📦 **Import & Export** : Sauvegardez ou restaurez vos données et recettes à tout moment via un simple fichier JSON.
+## Architecture
 
----
+Le front consomme l'API `meals-planning-api` (projet séparé : Express, PostgreSQL, Prisma), qui est la source de vérité. IndexedDB ne sert que de cache de lecture. Une connexion est requise.
 
-## 🛠️ Stack Technique
+```
+src/
+  core/      logique métier pure, services API, types, cache IndexedDB
+  features/  composants et hooks propres à chaque feature
+  shared/    composants, hooks, stores et utilitaires partagés
+```
 
-- **Bibliothèque principal** : [React](https://react.dev/)
-- **Tooling / Bundler** : [Vite](https://vitejs.dev/)
-- **Langage** : TypeScript
-- **Styles** : [Tailwind CSS](https://tailwindcss.com/)
-- **Stockage local** : IndexedDB
-- **Icônes** : Lucide React
+## Stack
 
----
+React 19, TypeScript, Vite, Tailwind CSS 4, Zustand, Dexie (IndexedDB), React Router, dnd-kit, date-fns, Lucide.
 
-## 🚀 Prise en main
+## Développement
 
-### Prérequis
+Prérequis : Node.js 24 ou plus.
 
-Assurez-vous d'avoir installé [Node.js](https://nodejs.org/) (version 18 ou supérieure) et `npm` (ou `pnpm` / `yarn`).
+```bash
+npm install
+npm run dev
+```
 
-### Installation
+Créer un fichier `.env` à la racine :
 
-1. **Cloner le projet**
-   ```bash
-   git clone [https://github.com/Jduquenne/artemis-foodlab.git](https://github.com/Jduquenne/artemis-foodlab.git)
-   cd artemis-foodlab
+```
+VITE_API_URL=<url de l'API, sans slash final>
+```
+
+| Commande | Rôle |
+| --- | --- |
+| `npm run dev` | Serveur de développement (port 5173) |
+| `npx tsc -b` | Vérification des types |
+| `npm run lint` | ESLint |
+| `npm run preview` | Prévisualisation d'un build |
+
+## Déploiement
+
+Un push sur `master` déclenche `.github/workflows/deploy.yml` : lint, build, puis publication sur GitHub Pages. `Dev` est la branche de travail.

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { FlipCard } from './FlipCard';
 import { isPlannable } from '../../../core/domain/recipePredicates';
-import { typedRecipesDb } from '../../../core/typed-db/typedRecipesDb';
+import { useRecipesSnapshot } from '../../../shared/hooks/useCatalogueSnapshot';
 import { markScrolling } from '../../../shared/utils/scrollGuard';
 import { useScrollRestore } from '../../../shared/hooks/useScrollRestore';
 import { SearchRecipeResult } from '../../../shared/hooks/useSearch';
@@ -16,6 +16,7 @@ interface RecipeSearchResultsProps {
 }
 
 export const RecipeSearchResults = ({ results, searchQuery, scrollKey }: RecipeSearchResultsProps) => {
+    const recipesDb = useRecipesSnapshot();
     const navigate = useNavigate();
     const { ref, onScroll } = useScrollRestore(scrollKey);
 
@@ -38,11 +39,11 @@ export const RecipeSearchResults = ({ results, searchQuery, scrollKey }: RecipeS
                         <LazyRender key={recipe.id} className="aspect-[10/11]">
                             <FlipCard
                                 name={recipe.name}
-                                frontContent={<RecipePhotoCard recipeId={recipe.recipeId} recipe={typedRecipesDb[recipe.recipeId]} fill />}
-                                backContent={<RecipeIngredientsCard recipeId={recipe.recipeId} recipe={typedRecipesDb[recipe.recipeId]} fill />}
+                                frontContent={<RecipePhotoCard recipeId={recipe.recipeId} recipe={recipesDb[recipe.recipeId]} fill />}
+                                backContent={<RecipeIngredientsCard recipeId={recipe.recipeId} recipe={recipesDb[recipe.recipeId]} fill />}
                                 recipeUrl={recipe.recipeUrl}
                                 onClick={() => navigate(`/recipes/detail/${recipe.recipeId || recipe.id}`)}
-                                onAddToPlanning={isPlannable(typedRecipesDb[recipe.recipeId || recipe.id]) ? () => navigate(`/planning?addRecipe=${recipe.recipeId || recipe.id}`) : undefined}
+                                onAddToPlanning={isPlannable(recipesDb[recipe.recipeId || recipe.id]) ? () => navigate(`/planning?addRecipe=${recipe.recipeId || recipe.id}`) : undefined}
                             />
                         </LazyRender>
                     ))}

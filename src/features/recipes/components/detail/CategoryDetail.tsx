@@ -2,13 +2,12 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { FlipCard } from '../FlipCard';
 import { ArrowLeft, X } from 'lucide-react';
 import { useMemo, useState, useEffect, useRef } from 'react';
-import { typedCategoriesDb } from '../../../../core/typed-db/typedCategoriesDb';
+import { useCategoriesSnapshot, useFoodsSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 import { markScrolling } from '../../../../shared/utils/scrollGuard';
 import { MacroFilterButton } from '../filter/MacroFilterButton';
 import { PREDEFINED_FILTERS } from '../../../../core/logic/recipe/predefinedFilterLogic';
 import { isPlannable } from '../../../../core/domain/recipePredicates';
 import { useMenuStore } from '../../../../shared/store/useMenuStore';
-import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
 import { getCategoryRecipes, filterRecipesByMacros } from '../../../../core/logic/recipe/recipeLogic';
 import { resolveRestoredCount } from '../../../../core/logic/recipe/scrollRestoreLogic';
 import { useScrollRestore } from '../../../../shared/hooks/useScrollRestore';
@@ -22,12 +21,16 @@ export const CategoryDetail = () => {
     const navigate = useNavigate();
     const { activeFilterIds, setActiveFilterIds } = useMenuStore();
 
-    const categoryInfo = typedCategoriesDb.find(cat => cat.id === categoryId);
-    const recipes = useMemo(() => getCategoryRecipes(categoryId ?? ''), [categoryId]);
+    const recipesDb = useRecipesSnapshot();
+    const foods = useFoodsSnapshot();
+    const categories = useCategoriesSnapshot();
+
+    const categoryInfo = categories.find(cat => cat.id === categoryId);
+    const recipes = useMemo(() => getCategoryRecipes(recipesDb, categoryId ?? ''), [recipesDb, categoryId]);
 
     const filteredRecipes = useMemo(
-        () => filterRecipesByMacros(recipes, activeFilterIds),
-        [recipes, activeFilterIds],
+        () => filterRecipesByMacros(recipesDb, foods, recipes, activeFilterIds),
+        [recipesDb, foods, recipes, activeFilterIds],
     );
 
     const removeFilter = (id: string) => setActiveFilterIds(activeFilterIds.filter(f => f !== id));
@@ -113,13 +116,13 @@ export const CategoryDetail = () => {
                                 name={recipe.name}
                                 frontContent={
                                     recipe.isIngredientKind
-                                        ? <FoodPhotoCard recipeId={recipe.id} recipe={typedRecipesDb[recipe.id]} fill />
-                                        : <RecipePhotoCard recipeId={recipe.id} recipe={typedRecipesDb[recipe.id]} fill />
+                                        ? <FoodPhotoCard recipeId={recipe.id} recipe={recipesDb[recipe.id]} fill />
+                                        : <RecipePhotoCard recipeId={recipe.id} recipe={recipesDb[recipe.id]} fill />
                                 }
-                                backContent={recipe.isIngredientKind ? undefined : <RecipeIngredientsCard recipeId={recipe.id} recipe={typedRecipesDb[recipe.id]} fill />}
+                                backContent={recipe.isIngredientKind ? undefined : <RecipeIngredientsCard recipeId={recipe.id} recipe={recipesDb[recipe.id]} fill />}
                                 recipeUrl={recipe.recipeUrl}
                                 onClick={() => navigate(`/recipes/detail/${recipe.id}?category=${categoryId}`)}
-                                onAddToPlanning={isPlannable(typedRecipesDb[recipe.id]) ? () => navigate(`/planning?addRecipe=${recipe.id}`) : undefined}
+                                onAddToPlanning={isPlannable(recipesDb[recipe.id]) ? () => navigate(`/planning?addRecipe=${recipe.id}`) : undefined}
                             />
                         </LazyRender>
                     ))}

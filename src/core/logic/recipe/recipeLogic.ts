@@ -50,8 +50,8 @@ export function getCategoryRecipeIds(categoryId: string): string[] {
     .map(([id]) => id);
 }
 
-export function getCategoryRecipes(categoryId: string): CategoryRecipeEntry[] {
-  return Object.entries(typedRecipesDb)
+export function getCategoryRecipes(recipes: Record<string, RecipeDetails>, categoryId: string): CategoryRecipeEntry[] {
+  return Object.entries(recipes)
     .filter(([, recipe]) => recipe.categoryId === categoryId && (recipe.assets?.mealPhoto || isIngredient(recipe)))
     .map(([recipeId, recipe]) => {
       const hasInstructions = !!recipe.instructions;
@@ -67,6 +67,8 @@ export function getCategoryRecipes(categoryId: string): CategoryRecipeEntry[] {
 }
 
 export function filterRecipesByMacros<T extends { recipeId?: string; id: string }>(
+  recipes: Record<string, RecipeDetails>,
+  foods: Record<string, Food>,
   items: T[],
   activeFilterIds: string[],
 ): T[] {
@@ -74,9 +76,9 @@ export function filterRecipesByMacros<T extends { recipeId?: string; id: string 
   const activeFilters = PREDEFINED_FILTERS.filter(f => activeFilterIds.includes(f.id));
   return items.filter(item => {
     const id = item.recipeId ?? item.id;
-    const details = typedRecipesDb[id];
+    const details = recipes[id];
     if (!details) return false;
-    const macros = calculateRecipeMacros(details, typedRecipesDb, typedFoodDb);
+    const macros = calculateRecipeMacros(details, recipes, foods);
     return activeFilters.every(f => f.check(macros));
   });
 }

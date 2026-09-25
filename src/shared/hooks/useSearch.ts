@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { RecipeDetails, RecipeKind } from "../../core/domain/recipe";
 import { isDessert } from "../../core/domain/recipePredicates";
-import { typedRecipesDb } from "../../core/typed-db/typedRecipesDb";
+import { useRecipesSnapshot } from "./useCatalogueSnapshot";
 
 export interface SearchRecipeResult {
   id: string;
@@ -10,8 +10,6 @@ export interface SearchRecipeResult {
   recipeUrl?: string;
   matchedIngredients: string[];
 }
-
-const db = typedRecipesDb;
 
 function matchesRecipeId(recipeId: string, query: string): boolean {
   const numPart = recipeId.split("-")[1];
@@ -69,6 +67,7 @@ function closestWordDistance(text: string, query: string): number {
 }
 
 function search(
+  db: Record<string, RecipeDetails>,
   query: string | null,
   kinds?: RecipeKind[],
   filter?: (recipe: RecipeDetails) => boolean,
@@ -114,20 +113,24 @@ function search(
 export const useSearchRecipes = (
   query: string | null,
 ): SearchRecipeResult[] => {
-  return useMemo(() => search(query), [query]);
+  const recipes = useRecipesSnapshot();
+  return useMemo(() => search(recipes, query), [recipes, query]);
 };
 
 export const useSearchMeals = (query: string | null): SearchRecipeResult[] => {
+  const recipes = useRecipesSnapshot();
   return useMemo(
-    () => search(query, [RecipeKind.DISH, RecipeKind.INGREDIENT]),
-    [query],
+    () => search(recipes, query, [RecipeKind.DISH, RecipeKind.INGREDIENT]),
+    [recipes, query],
   );
 };
 
 export const useSearchIngredients = (query: string | null): SearchRecipeResult[] => {
-  return useMemo(() => search(query, [RecipeKind.INGREDIENT]), [query]);
+  const recipes = useRecipesSnapshot();
+  return useMemo(() => search(recipes, query, [RecipeKind.INGREDIENT]), [recipes, query]);
 };
 
 export const useSearchDesserts = (query: string | null): SearchRecipeResult[] => {
-  return useMemo(() => search(query, undefined, isDessert), [query]);
+  const recipes = useRecipesSnapshot();
+  return useMemo(() => search(recipes, query, undefined, isDessert), [recipes, query]);
 };

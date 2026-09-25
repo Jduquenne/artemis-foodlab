@@ -6,7 +6,7 @@ import { useRecipeBuilderStore } from '../../shared/store/useRecipeBuilderStore'
 import { SearchBar } from '../../shared/components/ui/SearchBar';
 import { CategoryCard } from '../../shared/components/ui/CategoryCard';
 import { useSearchRecipes } from '../../shared/hooks/useSearch';
-import { typedCategoriesDb } from '../../core/typed-db/typedCategoriesDb';
+import { useCategoriesSnapshot, useFoodsSnapshot, useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
 import { isBrowsableCategory } from '../../core/domain/recipePredicates';
 import { MacroFilterButton } from './components/filter/MacroFilterButton';
 import { PREDEFINED_FILTERS } from '../../core/logic/recipe/predefinedFilterLogic';
@@ -25,10 +25,13 @@ export const RecipeModule = () => {
     const isSearchActive = isSearchOpen || searchQuery.length > 0;
     const showResults = searchQuery.length >= 3 || activeFilterIds.length > 0;
     const baseResults = useSearchRecipes(showResults ? searchQuery : null);
+    const recipes = useRecipesSnapshot();
+    const foods = useFoodsSnapshot();
+    const categories = useCategoriesSnapshot();
 
     const filteredResults = useMemo(
-        () => filterRecipesByMacros(baseResults, activeFilterIds),
-        [baseResults, activeFilterIds],
+        () => filterRecipesByMacros(recipes, foods, baseResults, activeFilterIds),
+        [recipes, foods, baseResults, activeFilterIds],
     );
 
     const removeFilter = (id: string) => setActiveFilterIds(activeFilterIds.filter(f => f !== id));
@@ -123,7 +126,7 @@ export const RecipeModule = () => {
                     />
                 ) : (
                     <div className="h-full grid grid-cols-2 tablet:grid-cols-3 lg:grid-cols-6 auto-rows-fr gap-3">
-                        {typedCategoriesDb
+                        {categories
                             .filter(isBrowsableCategory)
                             .map((cat) => (
                                 <CategoryCard

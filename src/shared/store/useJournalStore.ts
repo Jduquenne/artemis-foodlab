@@ -5,7 +5,7 @@ import {
   JournalOverridesByProfile,
   saveJournalOverride,
 } from "../../core/services/journalService";
-import { typedRecipesDb } from "../../core/typed-db/typedRecipesDb";
+import { typedRecipesDb } from "../../core/catalogue/typedRecipesDb";
 import {
   EMPTY_JOURNAL_OVERRIDES,
   applyOverrideResult,

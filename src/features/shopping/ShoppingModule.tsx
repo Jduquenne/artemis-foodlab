@@ -31,7 +31,7 @@ import {
     ExtraInput,
 } from '../../core/services/shoppingPeriodService';
 import { ApiItemCheck, ApiShoppingExtra, ApiSourceCheck } from '../../core/logic/shopping/shoppingApiMapper';
-import { getCodeById, getIdByCode } from '../../core/typed-db/recipeIdMap';
+import { getCodeById, getIdByCode } from '../../core/catalogue/recipeIdMap';
 import { markScrolling } from '../../shared/utils/scrollGuard';
 import { distributeToColumns } from '../../shared/utils/columnUtils';
 import { useMenuStore } from '../../shared/store/useMenuStore';

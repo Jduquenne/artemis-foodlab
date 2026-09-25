@@ -1,14 +1,14 @@
 import { HouseholdItem } from "../domain/household";
 import { Food } from "../domain/ingredient";
 import { Category } from "../domain/recipe";
-import { replaceCategoriesDb } from "../typed-db/typedCategoriesDb";
+import { replaceCategoriesDb } from "../catalogue/typedCategoriesDb";
 import { refreshRecipeMacros } from "../../shared/utils/macroUtils";
-import { replaceFoodDb, typedFoodDb } from "../typed-db/typedFoodDb";
-import { putRecipeInDb, removeRecipeFromDb, replaceRecipesDb, typedRecipesDb } from "../typed-db/typedRecipesDb";
-import { replaceOutdoorDb, typedOutdoorDb } from "../typed-db/typedOutdoorDb";
-import { replaceHouseholdDb } from "../typed-db/typedHouseholdDb";
-import { setRecipeIdMap } from "../typed-db/recipeIdMap";
-import { CatalogueScope, notifyCatalogueChange } from "../typed-db/catalogueEvents";
+import { replaceFoodDb, typedFoodDb } from "../catalogue/typedFoodDb";
+import { putRecipeInDb, removeRecipeFromDb, replaceRecipesDb, typedRecipesDb } from "../catalogue/typedRecipesDb";
+import { replaceOutdoorDb, typedOutdoorDb } from "../catalogue/typedOutdoorDb";
+import { replaceHouseholdDb } from "../catalogue/typedHouseholdDb";
+import { setRecipeIdMap } from "../catalogue/recipeIdMap";
+import { CatalogueScope, notifyCatalogueChange } from "../catalogue/catalogueEvents";
 import { CatalogueSignatures, changedScopes } from "../logic/sync/catalogueRefreshLogic";
 import {
   ApiOutdoorActivity,

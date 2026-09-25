@@ -6,7 +6,7 @@ import {
   FreezerItem,
 } from "../../domain/freezer";
 import { parseUnit } from "../unit/unitLogic";
-import { getCodeById } from "../../typed-db/recipeIdMap";
+import { getCodeById } from "../../catalogue/recipeIdMap";
 
 export interface ApiFreezerBag {
   id: string;

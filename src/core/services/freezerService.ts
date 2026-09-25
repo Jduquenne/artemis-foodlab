@@ -1,6 +1,6 @@
 import { db } from "./databaseService";
 import { apiFetch, apiFetchJson } from "./apiClient";
-import { getIdByCode } from "../typed-db/recipeIdMap";
+import { getIdByCode } from "../catalogue/recipeIdMap";
 import {
   ApiFreezerBag,
   ApiFreezerCategory,

@@ -1,7 +1,7 @@
 import { Food, IngredientCategory } from "../../domain/ingredient";
 import { Macronutrients } from "../../domain/nutrition";
 import { FoodInput } from "../../services/catalogueWriteService";
-import { getIngredientCategoryId } from "../../typed-db/ingredientCategoryMap";
+import { getIngredientCategoryId } from "../../catalogue/ingredientCategoryMap";
 import { RecapEntry, diffEntry, recapBool, recapText } from "./recap";
 
 export interface FoodFormDraft {

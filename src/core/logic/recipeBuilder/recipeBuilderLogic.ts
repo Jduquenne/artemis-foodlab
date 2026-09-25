@@ -8,9 +8,9 @@ import {
 import { ZERO, calculateRecipeMacros, addMacros, scaleMacros, toGrams } from "../../../shared/utils/macroUtils";
 import { IngredientLineItem } from "../../../shared/utils/cards/cardTypes";
 import { wrapLineAtMaxChars } from "../../../shared/utils/cards/cardUtils";
-import { typedRecipesDb } from "../../typed-db/typedRecipesDb";
-import { getIdByCode } from "../../typed-db/recipeIdMap";
-import { getIngredientCategoryId } from "../../typed-db/ingredientCategoryMap";
+import { typedRecipesDb } from "../../catalogue/typedRecipesDb";
+import { getIdByCode } from "../../catalogue/recipeIdMap";
+import { getIngredientCategoryId } from "../../catalogue/ingredientCategoryMap";
 import { ApiIngredientInput, ApiRecipeInput } from "../recipe/recipeApiMapper";
 
 export const BUILDER_UNITS: Unit[] = Object.values(Unit).filter((u) => u !== Unit.NONE);

@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { subscribeCatalogue } from "../../core/typed-db/catalogueEvents";
-import { typedRecipesDb } from "../../core/typed-db/typedRecipesDb";
-import { typedOutdoorDb } from "../../core/typed-db/typedOutdoorDb";
+import { subscribeCatalogue } from "../../core/catalogue/catalogueEvents";
+import { typedRecipesDb } from "../../core/catalogue/typedRecipesDb";
+import { typedOutdoorDb } from "../../core/catalogue/typedOutdoorDb";
 import { collectAssetKeys, refreshDelayMs } from "../../core/logic/media/mediaLogic";
 import { resolveMediaKeys } from "../../core/services/mediaService";
 import { useAuthStore } from "./useAuthStore";

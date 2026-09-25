@@ -3,8 +3,8 @@ import { Macronutrients } from "../../core/domain/nutrition";
 import { MealSlot } from "../../core/domain/planning";
 import { PlannableItem, RecipeDetails } from "../../core/domain/recipe";
 import { getAllRecipeIds, isDish, isBase } from "../../core/domain/recipePredicates";
-import { typedRecipesDb } from "../../core/typed-db/typedRecipesDb";
-import { typedFoodDb } from "../../core/typed-db/typedFoodDb";
+import { typedRecipesDb } from "../../core/catalogue/typedRecipesDb";
+import { typedFoodDb } from "../../core/catalogue/typedFoodDb";
 
 export const ZERO: Macronutrients = {
   kcal: 0,

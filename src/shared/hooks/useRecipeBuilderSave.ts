@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { RecipeBuilderState } from "../../core/domain/recipeBuilderTypes";
 import { builderStateToApiBody, validateBuilderState } from "../../core/logic/recipeBuilder/recipeBuilderLogic";
-import { typedRecipesDb } from "../../core/typed-db/typedRecipesDb";
+import { typedRecipesDb } from "../../core/catalogue/typedRecipesDb";
 import {
   createRecipe,
   deleteRecipe,

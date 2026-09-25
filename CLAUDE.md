@@ -128,7 +128,7 @@ Trois couches, sans exception :
 - Schéma et version courante : `src/core/services/databaseService.ts` (version 13). Une v14 (catégories enum → slug) a été **tentée puis abandonnée** — ne pas la ressusciter sans nouveau cadrage.
 - **Règle absolue** : ne jamais modifier un bloc `.version(n)` existant. Toute évolution de schéma = nouveau `.version(n+1)`.
 - Ajouter un champ non indexé à une table existante ne demande **pas** de nouvelle `.version()` (Dexie ne versionne que les index).
-- Les types de la DB sont isolés dans `core/typed-db/`.
+- Le catalogue en mémoire (recettes, aliments, activités, articles ménagers, catégories) vit dans `core/catalogue/` ; les composants le lisent via les snapshots de `shared/hooks/useCatalogueSnapshot.ts`, jamais directement.
 - Depuis le raccordement API, IndexedDB n'est **qu'un cache de lecture** : la source de vérité est `meals-planning-api`.
 
 ---
@@ -167,7 +167,7 @@ Trois couches, sans exception :
 - `buildRecipeId` → `CHAR_01` : sert aux **noms de fichiers image** uniquement.
 - `buildRecipeDbId` → `char-001` : **vraie clé interne** (clé de `typedRecipesDb`, `MealSlot.recipeIds`, etc.).
 - Les deux sont dans `core/logic/recipeBuilder/recipeBuilderLogic.ts`.
-- L'`id` uuid de l'API est stocké à part dans `RecipeDetails.apiId` ; la traduction code ↔ uuid passe par `core/typed-db/recipeIdMap.ts` (`getIdByCode` / `getCodeById`), reconstruit à chaque hydratation du catalogue.
+- L'`id` uuid de l'API est stocké à part dans `RecipeDetails.apiId` ; la traduction code ↔ uuid passe par `core/catalogue/recipeIdMap.ts` (`getIdByCode` / `getCodeById`), reconstruit à chaque hydratation du catalogue.
 - `typedRecipesDb` / `typedFoodDb` / `typedOutdoorDb` restent des objets mutables rafraîchis en place (`replaceRecipesDb` etc.), pas de `useLiveQuery`.
 - **`Ingredient.id` est stable** d'un enregistrement à l'autre : `PUT /recipes/:id` fait un upsert par id (connu → update en place, absent → nouvelle ligne, disparu du tableau envoyé → supprimé ; id étranger à la recette → `400`). `recipeToBuilderState` préserve `ing.id` dans `DraftIngredient.apiId` (distinct de `DraftIngredient.id`, la clé locale/React) ; `builderStateToApiBody` le renvoie quand présent, l'omet pour un ingrédient ajouté dans le builder.
 
@@ -187,7 +187,7 @@ Trois couches, sans exception :
 ## TypeScript
 
 - `any` interdit partout.
-- `as unknown as X` interdit hors `core/typed-db/`.
+- `as unknown as X` interdit partout.
 - Enums en anglais.
 - Props interfaces nommées `<ComponentName>Props`.
 

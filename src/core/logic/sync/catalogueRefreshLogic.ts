@@ -1,4 +1,4 @@
-import { CatalogueScope } from "../../typed-db/catalogueEvents";
+import { CatalogueScope } from "../../catalogue/catalogueEvents";
 
 export type CatalogueSignatures = Partial<Record<CatalogueScope, string>>;
 

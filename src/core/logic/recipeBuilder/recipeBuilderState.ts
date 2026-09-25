@@ -1,6 +1,6 @@
 import { RecipeBuilderState } from "../../domain/recipeBuilderTypes";
 import { MealType, RecipeKind } from "../../domain/recipe";
-import { typedCategoriesDb } from "../../typed-db/typedCategoriesDb";
+import { typedCategoriesDb } from "../../catalogue/typedCategoriesDb";
 
 export const initialRecipeBuilderState = (): RecipeBuilderState => ({
   recipeNumber: "",

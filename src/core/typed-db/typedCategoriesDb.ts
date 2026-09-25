@@ -1,10 +1,10 @@
 import { Category } from "../domain/recipe";
+import { replaceArrayInPlace } from "./replaceInPlace";
 
 export const typedCategoriesDb: Category[] = [];
 
 export function replaceCategoriesDb(next: Category[]): void {
-  typedCategoriesDb.length = 0;
-  typedCategoriesDb.push(...next);
+  replaceArrayInPlace(typedCategoriesDb, next);
 }
 
 export const getCategoryById = (id: string) =>

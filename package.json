@@ -1,14 +1,13 @@
 {
   "name": "artemis-foodlab",
   "private": true,
-  "version": "6.74.6",
+  "version": "6.74.7",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "import:assets": "node scripts/import-assets.cjs"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

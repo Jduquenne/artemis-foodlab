@@ -1,6 +1,7 @@
 import { Trash2 } from "lucide-react";
 import { PREPARATION_OPTIONS } from "../../../../core/domain/preparationOptions";
 import { Unit, IngredientCategory } from "../../../../core/domain/types";
+import { isUnit } from "../../../../core/logic/unit/unitLogic";
 import { IngredientFoodSearch } from "./IngredientFoodSearch";
 import { BaseRecipeSearch } from "./BaseRecipeSearch";
 import { DraftIngredient } from "../../../../core/domain/recipeBuilderTypes";
@@ -67,7 +68,7 @@ export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: Ingredi
             value={ingredient.name}
             linked={!!ingredient.foodId}
             onChange={(name, foodId, category, unit) =>
-              update({ name, foodId, category: category ?? ingredient.category, unit: (unit as Unit) ?? ingredient.unit })
+              update({ name, foodId, category: category ?? ingredient.category, unit: isUnit(unit) ? unit : ingredient.unit })
             }
           />
           <input

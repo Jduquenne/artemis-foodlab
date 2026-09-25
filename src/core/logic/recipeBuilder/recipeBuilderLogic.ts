@@ -125,7 +125,7 @@ export function recipeToBuilderState(
     foodId: ing.foodId,
     baseId: ing.baseId,
     quantity: ing.quantity,
-    unit: ing.unit as Unit,
+    unit: ing.unit,
     preparation: ing.preparation ?? "",
     category: (ing.category as IngredientCategory) ?? IngredientCategory.UNKNOWN,
   }));

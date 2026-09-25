@@ -7,8 +7,8 @@ import {
   RecipeAssetKey,
   RecipeDetails,
   RecipeKind,
-  Unit,
 } from "../../domain/types";
+import { parseUnit } from "../unit/unitLogic";
 
 export interface ApiIngredient {
   id: string;
@@ -88,7 +88,7 @@ function mapApiIngredient(ing: ApiIngredient, codeByApiId: Map<string, string>):
     id: ing.id,
     name: ing.name,
     quantity: ing.quantity,
-    unit: (ing.unit ?? Unit.NONE) as Unit,
+    unit: parseUnit(ing.unit),
     category: ing.category as IngredientCategory,
     foodId: ing.foodId ?? undefined,
     baseId: ing.baseId ? (codeByApiId.get(ing.baseId) ?? ing.baseId) : undefined,

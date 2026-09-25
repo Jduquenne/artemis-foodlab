@@ -1,4 +1,5 @@
-import { BatchFreezerItem, FoodFreezerItem, FreezerBag, FreezerCategory, FreezerItem, Unit } from "../../domain/types";
+import { BatchFreezerItem, FoodFreezerItem, FreezerBag, FreezerCategory, FreezerItem } from "../../domain/types";
+import { parseUnit } from "../unit/unitLogic";
 import { getCodeById } from "../../typed-db/recipeIdMap";
 
 export interface ApiFreezerBag {
@@ -42,7 +43,7 @@ export function mapApiBag(bag: ApiFreezerBag): FreezerBag {
   return {
     id: bag.id,
     quantity: bag.quantity,
-    unit: bag.unit as Unit,
+    unit: parseUnit(bag.unit),
     preparation: bag.preparation ?? undefined,
     addedDate: bag.addedDate.slice(0, 10),
   };

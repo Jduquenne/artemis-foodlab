@@ -1,42 +1,10 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
 node_modules
 dist
-dist-ssr
+dev
 *.local
 .env
-scripts
-
-
-# Dev-only data (local seeds, not committed)
-dev/
-.env
-
-# Cloudflare Worker (sheets-gateway) — code lives on the Dev branch only
-worker/
-
-# Backup files
-src/core/data/recipes-ingredients_backup.json
-src/core/data/recipes-db_backup.json
-
-# Cloudflare Worker (sheets-gateway)
-worker/.wrangler
-worker/.dev.vars
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+*.log
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+.claude/settings.local.json
+.vscode/*
+.idea

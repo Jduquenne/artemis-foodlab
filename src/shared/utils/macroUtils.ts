@@ -35,7 +35,7 @@ export function scaleMacros(m: Macronutrients, factor: number): Macronutrients {
 export function toGrams(
   quantity: number,
   unit: Unit,
-  unitWeight?: number,
+  unitWeight?: number | null,
 ): number | null {
   switch (unit) {
     case Unit.G:

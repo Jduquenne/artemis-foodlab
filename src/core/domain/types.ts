@@ -44,8 +44,8 @@ export interface Food {
   name: string;
   category: IngredientCategory;
   macros: Macronutrients;
-  unit?: string;
-  unitWeight?: number;
+  unit: string | null;
+  unitWeight: number | null;
   isFreezable?: boolean;
 }
 
@@ -138,7 +138,7 @@ export enum HouseholdCategory {
 
 export interface HouseholdItem {
   id: string;
-  categoryId?: string;
+  categoryId: string;
   name: string;
   category: HouseholdCategory;
 }

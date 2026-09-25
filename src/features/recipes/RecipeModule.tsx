@@ -7,6 +7,7 @@ import { SearchBar } from '../../shared/components/ui/SearchBar';
 import { CategoryCard } from '../../shared/components/ui/CategoryCard';
 import { useSearchRecipes } from '../../shared/hooks/useSearch';
 import { CATEGORIES } from '../../core/domain/categories';
+import { isBrowsableCategory } from '../../core/domain/recipePredicates';
 import { MacroFilterButton } from './components/filter/MacroFilterButton';
 import { PREDEFINED_FILTERS } from '../../core/domain/predefinedFilters';
 import { useMenuStore } from '../../shared/store/useMenuStore';
@@ -20,7 +21,6 @@ export const RecipeModule = () => {
     const { activeFilterIds, setActiveFilterIds } = useMenuStore();
     const [searchQuery, setSearchQuery] = useState(() => sessionStorage.getItem('last_recipe_search') || '');
     const [isSearchOpen, setIsSearchOpen] = useState(() => (sessionStorage.getItem('last_recipe_search') || '').length > 0);
-    const excluded = ["Produits Sucrés", "Extérieur"];
 
     const isSearchActive = isSearchOpen || searchQuery.length > 0;
     const showResults = searchQuery.length >= 3 || activeFilterIds.length > 0;
@@ -124,10 +124,11 @@ export const RecipeModule = () => {
                 ) : (
                     <div className="h-full grid grid-cols-2 tablet:grid-cols-3 lg:grid-cols-6 auto-rows-fr gap-3">
                         {CATEGORIES
-                            .filter(cat => !excluded.includes(cat.name))
+                            .filter(isBrowsableCategory)
                             .map((cat) => (
                                 <CategoryCard
                                     key={cat.id}
+                                    id={cat.id}
                                     name={cat.name}
                                     onClick={() => navigate(`/recipes/category/${cat.id}`)}
                                 />

@@ -1,4 +1,7 @@
+import { Category } from "./categories";
 import { MealSlot, RecipeDetails, RecipeKind } from "./types";
+
+const NON_BROWSABLE_CATEGORY_IDS: readonly string[] = ["outdoor", "sweet-grocery"];
 
 export function isDessert(recipe: Pick<RecipeDetails, "isDessert"> | undefined | null): boolean {
   return recipe?.isDessert === true;
@@ -22,6 +25,10 @@ export function isBase(recipe: Pick<RecipeDetails, "kind"> | undefined | null): 
 
 export function isOutdoor(recipe: Pick<RecipeDetails, "categoryId"> | undefined | null): boolean {
   return recipe?.categoryId === "outdoor";
+}
+
+export function isBrowsableCategory(category: Pick<Category, "id">): boolean {
+  return !NON_BROWSABLE_CATEGORY_IDS.includes(category.id);
 }
 
 export function isPlannable(recipe: Pick<RecipeDetails, "kind"> | undefined | null): boolean {

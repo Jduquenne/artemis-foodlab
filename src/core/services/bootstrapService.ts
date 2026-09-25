@@ -38,9 +38,13 @@ export interface BootstrapResult {
   shoppingPeriod: CurrentPeriod | null;
 }
 
-export async function syncBootstrapFromApi(): Promise<BootstrapResult | null> {
+export interface SyncBootstrapOptions {
+  silent?: boolean;
+}
+
+export async function syncBootstrapFromApi(options: SyncBootstrapOptions = {}): Promise<BootstrapResult | null> {
   try {
-    const data = await apiFetchJson<ApiBootstrap>("/bootstrap");
+    const data = await apiFetchJson<ApiBootstrap>("/bootstrap", { suppressGlobalError: options.silent ?? false });
 
     await applyCatalogueData(
       data.recipes,

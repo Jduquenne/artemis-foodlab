@@ -26,9 +26,11 @@ export const getCategories = async (): Promise<FreezerCategory[]> => {
   return categories.sort((a, b) => a.name.localeCompare(b.name, "fr"));
 };
 
-export async function syncFreezerFromApi(): Promise<void> {
+export async function syncFreezerFromApi(options: { silent?: boolean } = {}): Promise<void> {
   try {
-    const categories = await apiFetchJson<ApiFreezerCategory[]>("/freezer-categories");
+    const categories = await apiFetchJson<ApiFreezerCategory[]>("/freezer-categories", {
+      suppressGlobalError: options.silent ?? false,
+    });
     const mapped = categories.map(mapApiFreezerCategory);
     await db.transaction("rw", db.freezerCategories, async () => {
       await db.freezerCategories.clear();

@@ -8,7 +8,7 @@ import { SettingsPopover } from './SettingsPopover';
 import { NewsButton } from './NewsButton';
 import { useNewsStore } from '../../store/useNewsStore';
 import { useIsAdmin } from '../../hooks/useIsAdmin';
-import { useCatalogueRefresh } from '../../hooks/useCatalogueRefresh';
+import { useAppRefresh } from '../../hooks/useAppRefresh';
 
 const NewsModal = lazy(() =>
   import('../../../features/news/NewsModal').then((m) => ({ default: m.NewsModal }))
@@ -18,7 +18,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   const [newsOpen, setNewsOpen] = useState(false);
   const { hasNew, markAsSeen } = useNewsStore();
   const isAdmin = useIsAdmin();
-  useCatalogueRefresh();
+  useAppRefresh();
   const location = useLocation();
 
   const handleOpenNews = () => {

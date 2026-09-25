@@ -4,11 +4,10 @@ import { silentRefresh } from "../../core/services/authService";
 import { syncBootstrapFromApi } from "../../core/services/bootstrapService";
 import { syncFreezerFromApi } from "../../core/services/freezerService";
 import { useAuthStore, AuthStatus } from "../store/useAuthStore";
-import { useJournalStore } from "../store/useJournalStore";
-import { useProfileStore } from "../store/useProfileStore";
 import { useMediaStore } from "../store/useMediaStore";
-import { useMenuStore } from "../store/useMenuStore";
 import { useNotificationStore } from "../store/useNotificationStore";
+import { applyBootstrapResult } from "../utils/applyBootstrapResult";
+import { markAppRefreshed } from "../utils/appRefresh";
 
 export function useAuthInit(): AuthStatus {
   const status = useAuthStore((s) => s.status);
@@ -47,13 +46,9 @@ export function useAuthInit(): AuthStatus {
     useMediaStore.getState().resolveCatalogue();
     syncBootstrapFromApi().then((result) => {
       useMediaStore.getState().resolveCatalogue();
+      markAppRefreshed();
       if (!result) return;
-      useProfileStore.getState().replaceProfiles(result.profiles);
-      useJournalStore.getState().replaceOverrides(result.journalOverrides);
-      useMenuStore.getState().replaceShoppingPeriod({
-        id: result.shoppingPeriod?.id ?? null,
-        days: result.shoppingPeriod?.days ?? [],
-      });
+      applyBootstrapResult(result);
     });
     syncFreezerFromApi();
   }, [status]);

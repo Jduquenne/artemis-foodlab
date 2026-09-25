@@ -1,19 +1,16 @@
 import { useEffect } from "react";
-import { CATALOGUE_POLL_MS, CATALOGUE_REFRESH_MIN_MS } from "../../core/domain/catalogueRefreshConfig";
-import { shouldRefreshCatalogue } from "../../core/logic/sync/catalogueRefreshLogic";
-import { getLastCatalogueSyncAt, syncCatalogueFromApi } from "../../core/services/catalogueSyncService";
+import { CATALOGUE_POLL_MS } from "../../core/domain/catalogueRefreshConfig";
 import { useAuthStore } from "../store/useAuthStore";
+import { refreshAppData } from "../utils/appRefresh";
 
-export function useCatalogueRefresh(): void {
+export function useAppRefresh(): void {
   const isAuthenticated = useAuthStore((s) => s.status === "authenticated");
 
   useEffect(() => {
     if (!isAuthenticated) return;
 
     const refresh = () => {
-      if (document.visibilityState !== "visible") return;
-      if (!shouldRefreshCatalogue(Date.now(), getLastCatalogueSyncAt(), CATALOGUE_REFRESH_MIN_MS)) return;
-      void syncCatalogueFromApi({ silent: true });
+      void refreshAppData();
     };
 
     document.addEventListener("visibilitychange", refresh);

@@ -25,13 +25,8 @@ import * as outdoorService from "./outdoorService";
 import * as householdItemsService from "./householdItemsService";
 import * as recipeCategoriesService from "./recipeCategoriesService";
 
-let lastCatalogueSyncAt = 0;
 let lastSignatures: CatalogueSignatures = {};
 let inflightSync: Promise<void> | null = null;
-
-export function getLastCatalogueSyncAt(): number {
-  return lastCatalogueSyncAt;
-}
 
 function refreshDerivedData(): void {
   refreshPlannableDb();
@@ -78,7 +73,6 @@ export async function applyCatalogueData(
   };
   const changed = changedScopes(lastSignatures, signatures);
   lastSignatures = signatures;
-  lastCatalogueSyncAt = Date.now();
   if (changed.length === 0) return;
 
   const recipes = mapApiRecipes(apiRecipes);
@@ -128,7 +122,6 @@ async function fetchAndApplyCatalogue(silent: boolean): Promise<void> {
 export function syncCatalogueFromApi(options: SyncCatalogueOptions = {}): Promise<void> {
   const silent = options.silent ?? false;
   if (inflightSync && silent) return inflightSync;
-  lastCatalogueSyncAt = Date.now();
   const current: Promise<void> = (inflightSync ?? Promise.resolve())
     .then(() => fetchAndApplyCatalogue(silent))
     .finally(() => {

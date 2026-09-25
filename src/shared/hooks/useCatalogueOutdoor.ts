@@ -8,6 +8,7 @@ import {
 } from "../../core/services/catalogueWriteService";
 import { syncCatalogueFromApi } from "../../core/services/catalogueSyncService";
 import { useOutdoorSnapshot } from "./useCatalogueSnapshot";
+import { compareByName } from "../utils/sortUtils";
 
 export interface UseCatalogueOutdoorResult {
   activities: OutdoorEntry[];
@@ -19,7 +20,7 @@ export interface UseCatalogueOutdoorResult {
 export function useCatalogueOutdoor(): UseCatalogueOutdoorResult {
   const outdoorDb = useOutdoorSnapshot();
   const activities = useMemo(
-    () => Object.values(outdoorDb).sort((a, b) => a.name.localeCompare(b.name, "fr")),
+    () => Object.values(outdoorDb).sort(compareByName),
     [outdoorDb],
   );
 

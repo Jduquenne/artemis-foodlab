@@ -1,5 +1,6 @@
 import { Category, RecipeDetails, RecipeKind } from "../../domain/recipe";
 import { isBase, isDessert, isDish, isIngredient } from "../../domain/recipePredicates";
+import { compareByName } from "../../../shared/utils/sortUtils";
 
 export type RecipeKindFilter = RecipeKind | "all" | "dessert";
 
@@ -18,7 +19,7 @@ export const RECIPE_KIND_FILTERS: { id: RecipeKindFilter; label: string }[] = [
 ];
 
 export function sortRecipes(recipes: RecipeDetails[]): RecipeDetails[] {
-  return [...recipes].sort((a, b) => a.name.localeCompare(b.name, "fr"));
+  return [...recipes].sort(compareByName);
 }
 
 function matchesKind(recipe: RecipeDetails, kind: RecipeKindFilter): boolean {

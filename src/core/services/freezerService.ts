@@ -9,6 +9,7 @@ import {
   mapApiFreezerCategory,
 } from "../logic/freezer/freezerApiMapper";
 import { BatchFreezerItem, FoodFreezerItem, FreezerBag, FreezerCategory } from "../domain/freezer";
+import { compareByName } from "../../shared/utils/sortUtils";
 
 const today = () => new Date().toISOString().slice(0, 10);
 
@@ -23,7 +24,7 @@ async function withCategory(
 
 export const getCategories = async (): Promise<FreezerCategory[]> => {
   const categories = await db.freezerCategories.toArray();
-  return categories.sort((a, b) => a.name.localeCompare(b.name, "fr"));
+  return categories.sort(compareByName);
 };
 
 export async function syncFreezerFromApi(options: { silent?: boolean } = {}): Promise<void> {

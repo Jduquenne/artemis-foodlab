@@ -9,6 +9,7 @@ import { distributeToColumns } from "../../../shared/utils/columnUtils";
 import { isoDateFromWeekDay } from "../../../shared/utils/dateUtils";
 import { getIngredientCategoryFromSlug } from "../../domain/ingredientCategorySlugs";
 import { ApiShoppingExtra } from "./shoppingApiMapper";
+import { compareByName, compareText } from "../../../shared/utils/sortUtils";
 
 export interface IngredientSource {
   recipeId: string;
@@ -92,10 +93,6 @@ function slotScaleFactor(
     return 1 / defaultPortions;
   }
   return 1;
-}
-
-function compareNames(a: { name: string }, b: { name: string }): number {
-  return a.name.localeCompare(b.name, "fr");
 }
 
 function buildIngredientSource(
@@ -198,7 +195,7 @@ function aggregateSlots(
         ? { ...item, preparation: [...preps].join(", ") }
         : item;
     })
-    .sort(compareNames);
+    .sort(compareByName);
 }
 
 function aggregateBases(slots: MealSlot[], catalogue: ShoppingCatalogue): BaseEntry[] {
@@ -234,7 +231,7 @@ function aggregateBases(slots: MealSlot[], catalogue: ShoppingCatalogue): BaseEn
     }
   }
 
-  return Array.from(map.values()).sort(compareNames);
+  return Array.from(map.values()).sort(compareByName);
 }
 
 async function resolveWeekSlots(days: ShoppingDay[]): Promise<MealSlot[]> {
@@ -342,7 +339,7 @@ export function groupAndSortSources(sources: IngredientSource[]): IngredientSour
   return [...seen.values()].sort((a, b) => {
     const minA = a.reduce((m, s) => s.isoDate < m ? s.isoDate : m, a[0].isoDate);
     const minB = b.reduce((m, s) => s.isoDate < m ? s.isoDate : m, b[0].isoDate);
-    return minA.localeCompare(minB);
+    return compareText(minA, minB);
   });
 }
 
@@ -422,12 +419,12 @@ export function buildRecipeCards(
     .map((r) => ({
       recipeId: r.recipeId,
       recipeName: r.recipeName,
-      directIngredients: Array.from(r.directIngs.values()).sort(compareNames),
+      directIngredients: Array.from(r.directIngs.values()).sort(compareByName),
       baseGroups: Array.from(r.baseGroups.values())
-        .map((b) => ({ baseId: b.baseId, baseName: b.baseName, ingredients: Array.from(b.ings.values()).sort(compareNames) }))
-        .sort((a, b) => a.baseName.localeCompare(b.baseName, "fr")),
+        .map((b) => ({ baseId: b.baseId, baseName: b.baseName, ingredients: Array.from(b.ings.values()).sort(compareByName) }))
+        .sort((a, b) => compareText(a.baseName, b.baseName)),
     }))
-    .sort((a, b) => a.recipeName.localeCompare(b.recipeName, "fr"));
+    .sort((a, b) => compareText(a.recipeName, b.recipeName));
 }
 
 function groupByCategory(

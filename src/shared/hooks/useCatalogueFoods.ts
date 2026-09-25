@@ -3,6 +3,7 @@ import { Food } from "../../core/domain/ingredient";
 import { FoodInput, createFood, deleteFood, updateFood } from "../../core/services/catalogueWriteService";
 import { syncCatalogueFromApi } from "../../core/services/catalogueSyncService";
 import { useFoodsSnapshot } from "./useCatalogueSnapshot";
+import { compareByName } from "../utils/sortUtils";
 
 export interface UseCatalogueFoodsResult {
   foods: Food[];
@@ -14,7 +15,7 @@ export interface UseCatalogueFoodsResult {
 export function useCatalogueFoods(): UseCatalogueFoodsResult {
   const foodsDb = useFoodsSnapshot();
   const foods = useMemo(
-    () => Object.values(foodsDb).sort((a, b) => a.name.localeCompare(b.name, "fr")),
+    () => Object.values(foodsDb).sort(compareByName),
     [foodsDb],
   );
 

@@ -3,6 +3,7 @@ import { Food, Unit } from '../../domain/ingredient';
 import { RecipeDetails } from '../../domain/recipe';
 import { isBatchCookable } from '../../domain/recipePredicates';
 import { formatQty, pluralizeUnit } from '../../../shared/utils/unitUtils';
+import { compareByName, compareText } from "../../../shared/utils/sortUtils";
 
 export const FREEZER_BAG_UNITS = Object.values(Unit).filter(u => u !== Unit.NONE);
 
@@ -52,7 +53,7 @@ export function searchBatchRecipes(recipes: Record<string, RecipeDetails>, query
       const bBatch = isBatchCookable(b);
       if (aBatch && !bBatch) return -1;
       if (!aBatch && bBatch) return 1;
-      return a.name.localeCompare(b.name);
+      return compareByName(a, b);
     })
     .slice(0, 30)
     .map(([id, r]) => ({ id, name: r.name, isBatch: isBatchCookable(r) }));
@@ -68,7 +69,7 @@ export function searchFreezerFoods(foods: Record<string, Food>, query: string): 
       const bStarts = b.name.toLowerCase().startsWith(q);
       if (aStarts && !bStarts) return -1;
       if (!aStarts && bStarts) return 1;
-      return a.name.localeCompare(b.name);
+      return compareByName(a, b);
     })
     .slice(0, 8);
 }
@@ -119,7 +120,7 @@ function getFreezerItemName(item: FreezerItem): string {
 }
 
 export function sortFreezerItemsAlphabetically(items: FreezerItem[]): FreezerItem[] {
-  return [...items].sort((a, b) => getFreezerItemName(a).localeCompare(getFreezerItemName(b), 'fr'));
+  return [...items].sort((a, b) => compareText(getFreezerItemName(a), getFreezerItemName(b)));
 }
 
 export function distributeFreezerItemsToColumns(items: FreezerItem[], colCount: number): FreezerItem[][] {

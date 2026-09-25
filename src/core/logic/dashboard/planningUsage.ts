@@ -2,6 +2,7 @@ import { Food } from "../../domain/ingredient";
 import { Category, RecipeAsset, RecipeDetails } from "../../domain/recipe";
 import { isDessert, isDish } from "../../domain/recipePredicates";
 import { RecipeUsageItem } from "../../services/planningUsageService";
+import { compareByName, compareText } from "../../../shared/utils/sortUtils";
 
 export interface DishUsage {
   code: string;
@@ -80,7 +81,7 @@ export function buildPlanningUsageInsights(
 
   const mostPlanned = all
     .filter((d) => d.plannedCount > 0)
-    .sort((a, b) => b.plannedCount - a.plannedCount || a.name.localeCompare(b.name, "fr"))
+    .sort((a, b) => b.plannedCount - a.plannedCount || compareByName(a, b))
     .slice(0, TOP_COUNT);
 
   const toReview = all
@@ -88,8 +89,8 @@ export function buildPlanningUsageInsights(
     .sort(
       (a, b) =>
         a.plannedCount - b.plannedCount ||
-        (a.lastWeek ?? "").localeCompare(b.lastWeek ?? "") ||
-        a.name.localeCompare(b.name, "fr"),
+        compareText(a.lastWeek ?? "", b.lastWeek ?? "") ||
+        compareByName(a, b),
     );
 
   return {
@@ -118,11 +119,11 @@ export function getReviewFilterOptions(
   const categoryOptions: ReviewFilterOption[] = categories
     .filter((category) => perCategory.has(category.id))
     .map((category) => ({ id: category.id, name: category.name, count: perCategory.get(category.id) ?? 0 }))
-    .sort((a, b) => a.name.localeCompare(b.name, "fr"));
+    .sort(compareByName);
 
   const foodOptions: ReviewFilterOption[] = [...perFood.entries()]
     .map(([id, count]) => ({ id, name: foods[id]?.name ?? id, count }))
-    .sort((a, b) => a.name.localeCompare(b.name, "fr"));
+    .sort(compareByName);
 
   return { categories: categoryOptions, foods: foodOptions };
 }

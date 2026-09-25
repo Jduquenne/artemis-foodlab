@@ -1,4 +1,5 @@
 import { RecipeDetails } from "../../domain/recipe";
+import { compareByName, compareText } from "../../../shared/utils/sortUtils";
 
 export const RECENT_RECIPE_DAYS = 30;
 
@@ -38,9 +39,9 @@ export function getNewsGroups(
   return [...byDate.entries()]
     .map(([date, list]) => ({
       date,
-      recipes: [...list].sort((a, b) => a.name.localeCompare(b.name, "fr")),
+      recipes: [...list].sort(compareByName),
     }))
-    .sort((a, b) => b.date.localeCompare(a.date));
+    .sort((a, b) => compareText(b.date, a.date));
 }
 
 export function latestNewsDate(groups: NewsGroup[]): string {

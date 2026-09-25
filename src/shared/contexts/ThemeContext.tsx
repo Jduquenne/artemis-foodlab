@@ -1,5 +1,6 @@
 import { useEffect, useState, ReactNode } from 'react';
 import { ThemeContext, Theme } from '../hooks/useTheme';
+import { applyThemeColor } from '../utils/themeColor';
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     const [theme, setTheme] = useState<Theme>(() =>
@@ -8,6 +9,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
     useEffect(() => {
         document.documentElement.classList.toggle('dark', theme === 'dark');
+        applyThemeColor(theme);
         localStorage.setItem('theme', theme);
     }, [theme]);
 

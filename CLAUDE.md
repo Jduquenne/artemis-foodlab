@@ -13,7 +13,7 @@ npm run preview      # preview du build
 
 ## Product context
 
-PWA offline, production, pas POC.
+PWA, connexion requise, production, pas POC.
 Priorités : scalabilité et clarté architecturale.
 UI en français.
 
@@ -215,7 +215,7 @@ Ils vivent dans `core/logic/<feature>/` et sont réutilisés partout — jamais 
 
 **Statut : EN PRODUCTION depuis le 2026-09-09.** `master` est déployé sur GitHub Pages via `.github/workflows/deploy.yml` (sur push `master`) et sert le bundle branché API ; **`Dev` = branche de travail, `master` = prod**. Source de vérité pour recettes, aliments, activités extérieures, articles ménagers, catégories, ainsi que les données utilisateur (planning, congélateur, coches ménagères, journal, courses) et l'authentification par token JWT (`role: "admin" | "guest"`). IndexedDB sert de cache de lecture uniquement. Config : `VITE_API_URL` — dans `.env` en local, dans **`.env.production` (committé)** pour le build CI (l'URL de l'API n'est pas un secret, elle est dans le bundle) ; aucun secret GitHub. `apiClient` concatène `` `${API_URL}${path}` `` (URL nue, sans slash final ni `/api`).
 
-- **Écritures** : toujours l'API d'abord, cache mis à jour seulement après succès. Pas d'écriture optimiste, pas de file d'attente hors-ligne (hors-ligne = lecture seule).
+- **Écritures** : toujours l'API d'abord, cache mis à jour seulement après succès. Pas d'écriture optimiste, pas de file d'attente hors-ligne (connexion requise).
 - **Erreurs** : `apiClient` appelle `onApiError` → notification globale (`useAuthInit`). Un composant ne catche en local que pour piloter l'état de son formulaire, jamais pour ré-afficher le message. Opt-out du handler global : `apiFetch(path, { suppressGlobalError: true })` (utilisé par l'import).
 - **Photos de recettes** : servies par l'API (`assets.mealPhoto.url` / `assets.bookPhoto.url`, URL absolue directement dans `<img src>` ; route `/media/…` → 302 vers URL signée courte, **ne pas stocker la cible**). Les webp bundlés ont été purgés.
 - **Cold start Render (free tier)** : 1re requête après ~15 min d'inactivité peut prendre 30-60 s. `useDelayedFlag` affiche un message « Réveil du serveur… » après 5 s (splash + login). Pas de timeout `fetch`.

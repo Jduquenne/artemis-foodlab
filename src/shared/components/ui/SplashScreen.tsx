@@ -1,3 +1,5 @@
+import { LOGO_URL } from "../../utils/assetUrl";
+
 export interface SplashScreenProps {
   isExiting: boolean;
   slow?: boolean;
@@ -11,7 +13,7 @@ export const SplashScreen = ({ isExiting, slow = false }: SplashScreenProps) => 
       <div className="flex flex-col items-center gap-6 px-6">
         <div className="w-24 h-24 rounded-3xl bg-white flex items-center justify-center overflow-hidden shadow-lg shadow-orange-200 select-none">
           <img
-            src="/artemis-foodlab/assets/logo/logo-256.png"
+            src={LOGO_URL}
             alt="Artemis Foodlab"
             className="w-full h-full object-contain"
             draggable={false}

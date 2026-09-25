@@ -184,7 +184,7 @@ export interface PredefinedFilter {
   check: (macros: Macronutrients) => boolean;
 }
 
-export type SlotType = "breakfast" | "lunch" | "snack" | "dinner";
+export type SlotType = `${MealType}`;
 
 export interface MealSlot {
   id: string;

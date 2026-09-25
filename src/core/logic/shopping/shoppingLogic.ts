@@ -348,10 +348,6 @@ export const CATEGORY_ORDER: IngredientCategory[] = [
   IngredientCategory.UNKNOWN,
 ];
 
-export function getPeriodKey(days: ShoppingDay[]): string {
-  return [...days].map((d) => `${d.year}-${d.week}-${d.day}`).sort().join('|');
-}
-
 type IngredientGroup = { label: string; list: ConsolidatedIngredient[] };
 
 export function buildRecipeCards(

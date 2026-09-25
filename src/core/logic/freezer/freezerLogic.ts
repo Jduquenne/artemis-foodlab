@@ -192,20 +192,3 @@ export function getFreezerCategoryAccent(category: Pick<FreezerCategory, 'id' | 
   for (let i = 0; i < category.id.length; i++) hash = (hash * 31 + category.id.charCodeAt(i)) | 0;
   return FREEZER_ACCENTS[FREEZER_COLOR_KEYS[Math.abs(hash) % FREEZER_COLOR_KEYS.length]];
 }
-
-export function getFoodQuantitiesInFreezer(categories: FreezerCategory[]): Map<string, Map<string, number>> {
-  const map = new Map<string, Map<string, number>>();
-  for (const cat of categories) {
-    for (const item of cat.items) {
-      if (item.type === 'food' && item.foodId) {
-        const unitMap = map.get(item.foodId) ?? new Map<string, number>();
-        for (const bag of item.bags) {
-          const qty = Number(bag.quantity) || 0;
-          unitMap.set(bag.unit, (unitMap.get(bag.unit) ?? 0) + qty);
-        }
-        if (unitMap.size > 0) map.set(item.foodId, unitMap);
-      }
-    }
-  }
-  return map;
-}

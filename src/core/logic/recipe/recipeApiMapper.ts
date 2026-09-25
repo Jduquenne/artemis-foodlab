@@ -76,7 +76,7 @@ export interface ApiOutdoorActivity {
   assets: Partial<Record<RecipeAssetKey, RecipeAsset>>;
 }
 
-export function buildCodeByApiId(recipes: ApiRecipe[]): Map<string, string> {
+function buildCodeByApiId(recipes: ApiRecipe[]): Map<string, string> {
   const map = new Map<string, string>();
   for (const r of recipes) map.set(r.id, r.code);
   return map;

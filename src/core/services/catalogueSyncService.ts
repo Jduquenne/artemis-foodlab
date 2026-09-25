@@ -113,7 +113,7 @@ async function fetchAndApplyCatalogue(silent: boolean): Promise<void> {
 
     await applyCatalogueData(apiRecipes, apiOutdoor, apiFoods, apiHouseholdItems, apiCategories);
   } catch {
-    /* réseau indisponible ou API injoignable, on garde le cache existant */
+    return;
   }
 }
 
@@ -149,16 +149,12 @@ export async function syncRecipeFromApi(uuid: string): Promise<void> {
     refreshDerivedData();
     notifyCatalogueChange("recipes");
   } catch {
-    /* réseau indisponible ou API injoignable, on garde le cache existant */
+    return;
   }
 }
 
 export async function removeRecipeFromCatalogue(code: string): Promise<void> {
-  try {
-    await recipesService.remove(code);
-  } catch {
-    /* échec de suppression du cache local, non bloquant */
-  }
+  await recipesService.remove(code).catch(() => undefined);
   removeRecipe(code);
   applyRecipeIdMap();
   refreshDerivedData();

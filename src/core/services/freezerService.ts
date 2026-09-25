@@ -37,7 +37,7 @@ export async function syncFreezerFromApi(options: { silent?: boolean } = {}): Pr
       await db.freezerCategories.bulkPut(mapped);
     });
   } catch {
-    /* réseau indisponible ou API injoignable, on garde le cache existant */
+    return;
   }
 }
 

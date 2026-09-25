@@ -13,6 +13,6 @@ export function setStoredRefreshToken(token: string | null): void {
     if (token) localStorage.setItem(STORAGE_KEY, token);
     else localStorage.removeItem(STORAGE_KEY);
   } catch {
-    /* stockage indisponible (mode privé, quota) */
+    return;
   }
 }

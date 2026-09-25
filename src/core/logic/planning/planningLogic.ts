@@ -66,10 +66,6 @@ export function computeDragMoveSlots(
     };
   }
 
-  // Destination has no recipe of its own (either no row at all, or a dessert-only slot left
-  // behind by an earlier "leave desserts" choice) — its own desserts, if any, never belong to
-  // the meal being dragged and must stay put, only the incoming recipe (and optionally the
-  // dragged meal's desserts) get merged in.
   const destinationDessertIds = toMeal?.dessertIds ?? [];
   const incomingDessertIds = moveDesserts ? (fromMeal.dessertIds ?? []) : [];
   const mergedDessertIds = [...new Set([...destinationDessertIds, ...incomingDessertIds])].slice(0, MAX_DESSERTS_PER_SLOT);

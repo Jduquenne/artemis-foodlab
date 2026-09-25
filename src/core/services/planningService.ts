@@ -63,7 +63,7 @@ export async function syncWeekFromApi(year: number, week: number): Promise<void>
       await db.planning.bulkPut(mapped);
     });
   } catch {
-    /* réseau indisponible ou API injoignable, on garde le cache existant pour cette semaine */
+    return;
   }
 }
 

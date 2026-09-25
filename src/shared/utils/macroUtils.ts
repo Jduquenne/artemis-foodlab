@@ -121,7 +121,7 @@ export function refreshRecipeMacros(
     try {
       RECIPE_MACROS[id] = calculateRecipeMacros(recipe, allRecipes, foodDb);
     } catch {
-      /* recipe has unresolvable ingredients (missing foodId / baseId) — skip silently */
+      delete RECIPE_MACROS[id];
     }
     const grams = calculateRecipeBaseGrams(recipe, foodDb);
     if (grams > 0) RECIPE_BASE_GRAMS[id] = grams;

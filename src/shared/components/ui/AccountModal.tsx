@@ -82,11 +82,7 @@ export const AccountModal = ({ onClose }: AccountModalProps) => {
   };
 
   const doLogout = async () => {
-    try {
-      await logout();
-    } catch {
-      // même si l'appel réseau échoue, on déconnecte localement
-    }
+    await logout().catch(() => undefined);
     setUser(null);
     setStatus("unauthenticated");
   };

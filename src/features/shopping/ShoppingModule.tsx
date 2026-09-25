@@ -343,14 +343,10 @@ export const ShoppingModule = () => {
 
     const handleDeleteExtra = async (extraId: string) => {
         if (!currentPeriodId) return;
-        try {
-            await withPending(`shopping-extra-delete:${extraId}`, async () => {
-                await deleteExtra(currentPeriodId, extraId);
-                setExtrasRaw(prev => prev.filter(e => e.id !== extraId));
-            });
-        } catch {
-            // erreur affichée par le handler global
-        }
+        await withPending(`shopping-extra-delete:${extraId}`, async () => {
+            await deleteExtra(currentPeriodId, extraId);
+            setExtrasRaw(prev => prev.filter(e => e.id !== extraId));
+        }).catch(() => undefined);
     };
 
     const handleEditExtra = (extraId: string) => {

@@ -1,7 +1,7 @@
 import { Food, Unit } from "../../core/domain/ingredient";
 import { Macronutrients } from "../../core/domain/nutrition";
 import { MealSlot } from "../../core/domain/planning";
-import { RecipeDetails } from "../../core/domain/recipe";
+import { PlannableItem, RecipeDetails } from "../../core/domain/recipe";
 import { getAllRecipeIds, isDish, isBase } from "../../core/domain/recipePredicates";
 import { typedRecipesDb } from "../../core/typed-db/typedRecipesDb";
 import { typedFoodDb } from "../../core/typed-db/typedFoodDb";
@@ -131,7 +131,7 @@ export function refreshRecipeMacros(
 refreshRecipeMacros(typedRecipesDb, typedFoodDb);
 
 export interface MacroCatalogue {
-  plannable: Record<string, RecipeDetails>;
+  plannable: Record<string, PlannableItem>;
   recipes: Record<string, RecipeDetails>;
   foods: Record<string, Food>;
   recipeMacros: Record<string, Macronutrients>;
@@ -149,8 +149,9 @@ export function computeSlotMacros(
     const key = slot.itemApiIds?.[id] ?? "";
     const recipe = catalogue.plannable[id];
     const itemIngredientOverrides = ingredientOverrides[key];
-    if (recipe && itemIngredientOverrides && Object.keys(itemIngredientOverrides).length > 0) {
-      return addMacros(sum, calculateOverriddenRecipeMacros(recipe, itemIngredientOverrides, catalogue.recipes, catalogue.foods));
+    const fullRecipe = catalogue.recipes[id];
+    if (fullRecipe && itemIngredientOverrides && Object.keys(itemIngredientOverrides).length > 0) {
+      return addMacros(sum, calculateOverriddenRecipeMacros(fullRecipe, itemIngredientOverrides, catalogue.recipes, catalogue.foods));
     }
     const m = catalogue.recipeMacros[id];
     if (!m) return sum;

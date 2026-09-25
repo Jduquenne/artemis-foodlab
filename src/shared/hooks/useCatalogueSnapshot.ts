@@ -1,7 +1,7 @@
 import { useSyncExternalStore } from "react";
 import { HouseholdItem } from "../../core/domain/household";
 import { Food } from "../../core/domain/ingredient";
-import { Category, OutdoorEntry, RecipeDetails } from "../../core/domain/recipe";
+import { Category, OutdoorEntry, PlannableItem, RecipeDetails } from "../../core/domain/recipe";
 import { CatalogueScope, getCatalogueVersion, subscribeCatalogue } from "../../core/typed-db/catalogueEvents";
 import { typedCategoriesDb } from "../../core/typed-db/typedCategoriesDb";
 import { typedFoodDb } from "../../core/typed-db/typedFoodDb";
@@ -52,5 +52,5 @@ export const useFoodsSnapshot = (): Record<string, Food> => useCatalogueSnapshot
 export const useHouseholdSnapshot = (): Record<string, HouseholdItem> => useCatalogueSnapshot(householdSource);
 export const useOutdoorSnapshot = (): Record<string, OutdoorEntry> => useCatalogueSnapshot(outdoorSource);
 export const useCategoriesSnapshot = (): Category[] => useCatalogueSnapshot(categoriesSource);
-export const usePlannableSnapshot = (): Record<string, RecipeDetails> => useCatalogueSnapshot(plannableSource);
+export const usePlannableSnapshot = (): Record<string, PlannableItem> => useCatalogueSnapshot(plannableSource);
 export const useRecipeMetricsSnapshot = (): RecipeMetricsSnapshot => useCatalogueSnapshot(recipeMetricsSource);

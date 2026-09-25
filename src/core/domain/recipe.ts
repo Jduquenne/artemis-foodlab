@@ -45,6 +45,24 @@ export interface RecipeDetails {
   announcedAt?: string | null;
 }
 
+export interface PlannableItem {
+  code: string;
+  apiId: string;
+  name: string;
+  categoryId: string;
+  instructions: string | null;
+  assets: Partial<Record<RecipeAssetKey, RecipeAsset>>;
+  isFromBook?: boolean;
+  bookPage?: number;
+  kind?: RecipeKind;
+  mealTypes?: MealType[];
+  defaultPortions?: number;
+  ingredients?: Ingredient[];
+  batchCooking?: boolean;
+  isDessert?: boolean;
+  announcedAt?: string | null;
+}
+
 export interface OutdoorEntry {
   code: string;
   apiId: string;

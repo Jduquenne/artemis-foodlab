@@ -3,7 +3,6 @@ import { Food } from "../domain/ingredient";
 import { Category } from "../domain/recipe";
 import { replaceCategoriesDb } from "../typed-db/typedCategoriesDb";
 import { refreshRecipeMacros } from "../../shared/utils/macroUtils";
-import { refreshPlannableDb } from "../typed-db/plannableDb";
 import { replaceFoodDb, typedFoodDb } from "../typed-db/typedFoodDb";
 import { putRecipeInDb, removeRecipeFromDb, replaceRecipesDb, typedRecipesDb } from "../typed-db/typedRecipesDb";
 import { replaceOutdoorDb, typedOutdoorDb } from "../typed-db/typedOutdoorDb";
@@ -29,7 +28,6 @@ let lastSignatures: CatalogueSignatures = {};
 let inflightSync: Promise<void> | null = null;
 
 function refreshDerivedData(): void {
-  refreshPlannableDb();
   refreshRecipeMacros(typedRecipesDb, typedFoodDb);
 }
 

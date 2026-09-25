@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { typedRecipesDb } from "../../../../core/typed-db/typedRecipesDb";
+import { useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { buildPlanningUsageInsights } from "../../../../core/logic/dashboard/planningUsage";
 import { usePlanningUsage } from "../../../../shared/hooks/usePlanningUsage";
 import { AsyncImage } from "../../../../shared/components/ui/AsyncImage";
@@ -14,10 +14,11 @@ const SEGMENTS = [
 
 export const PlanningUsageCard = () => {
   const { usage, loading, error } = usePlanningUsage();
+  const recipes = useRecipesSnapshot();
 
   const insights = useMemo(
-    () => (usage ? buildPlanningUsageInsights(usage, typedRecipesDb) : null),
-    [usage],
+    () => (usage ? buildPlanningUsageInsights(usage, recipes) : null),
+    [usage, recipes],
   );
 
   return (

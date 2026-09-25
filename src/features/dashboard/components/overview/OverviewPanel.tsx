@@ -1,8 +1,5 @@
 import { useMemo } from "react";
-import { typedCategoriesDb } from "../../../../core/typed-db/typedCategoriesDb";
-import { typedRecipesDb } from "../../../../core/typed-db/typedRecipesDb";
-import { typedFoodDb } from "../../../../core/typed-db/typedFoodDb";
-import { RECIPE_MACROS } from "../../../../shared/utils/macroUtils";
+import { useCategoriesSnapshot, useFoodsSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import {
   getCatalogueCounts,
   getCatalogueIssues,
@@ -15,10 +12,14 @@ import { CategoryBreakdown } from "./CategoryBreakdown";
 import { PlanningUsageCard } from "./PlanningUsageCard";
 
 export const OverviewPanel = () => {
-  const counts = useMemo(() => getCatalogueCounts(typedRecipesDb), []);
-  const foodStats = useMemo(() => getFoodStats(typedRecipesDb, typedFoodDb), []);
-  const issues = useMemo(() => getCatalogueIssues(typedRecipesDb, typedFoodDb, RECIPE_MACROS), []);
-  const breakdown = useMemo(() => getCategoryBreakdown(typedRecipesDb, typedCategoriesDb), []);
+  const recipes = useRecipesSnapshot();
+  const foods = useFoodsSnapshot();
+  const categories = useCategoriesSnapshot();
+  const metrics = useRecipeMetricsSnapshot();
+  const counts = useMemo(() => getCatalogueCounts(recipes), [recipes]);
+  const foodStats = useMemo(() => getFoodStats(recipes, foods), [recipes, foods]);
+  const issues = useMemo(() => getCatalogueIssues(recipes, foods, metrics.macros), [recipes, foods, metrics]);
+  const breakdown = useMemo(() => getCategoryBreakdown(recipes, categories), [recipes, categories]);
 
   return (
     <div className="h-full flex flex-col gap-3 overflow-y-auto">

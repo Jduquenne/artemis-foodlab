@@ -1,6 +1,6 @@
 import { Pencil, Trash2 } from "lucide-react";
 import { OutdoorEntry } from "../../../../core/domain/recipe";
-import { getCategoryById } from "../../../../core/typed-db/typedCategoriesDb";
+import { useCategoriesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 
 export interface OutdoorRowProps {
   activity: OutdoorEntry;
@@ -9,7 +9,8 @@ export interface OutdoorRowProps {
 }
 
 export const OutdoorRow = ({ activity, onEdit, onAskDelete }: OutdoorRowProps) => {
-  const category = getCategoryById(activity.categoryId);
+  const categories = useCategoriesSnapshot();
+  const category = categories.find((c) => c.id === activity.categoryId);
 
   return (
     <div className="flex items-center gap-3 px-4 py-2.5">

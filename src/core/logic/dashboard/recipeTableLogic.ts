@@ -1,5 +1,4 @@
-import { RecipeDetails, RecipeKind } from "../../domain/recipe";
-import { getCategoryById } from "../../typed-db/typedCategoriesDb";
+import { Category, RecipeDetails, RecipeKind } from "../../domain/recipe";
 import { isBase, isDessert, isDish, isIngredient } from "../../domain/recipePredicates";
 
 export type RecipeKindFilter = RecipeKind | "all" | "dessert";
@@ -32,6 +31,7 @@ function matchesKind(recipe: RecipeDetails, kind: RecipeKindFilter): boolean {
 
 export function filterRecipes(
   recipes: RecipeDetails[],
+  categories: Category[],
   query: string,
   kind: RecipeKindFilter,
 ): RecipeDetails[] {
@@ -39,7 +39,7 @@ export function filterRecipes(
   return recipes.filter((recipe) => {
     if (!matchesKind(recipe, kind)) return false;
     if (!needle) return true;
-    const category = getCategoryById(recipe.categoryId)?.name ?? "";
+    const category = categories.find((c) => c.id === recipe.categoryId)?.name ?? "";
     return (
       recipe.name.toLowerCase().includes(needle) ||
       category.toLowerCase().includes(needle)

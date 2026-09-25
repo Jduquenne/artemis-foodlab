@@ -1,5 +1,4 @@
-import { OutdoorEntry } from "../../domain/recipe";
-import { getCategoryById } from "../../typed-db/typedCategoriesDb";
+import { Category, OutdoorEntry } from "../../domain/recipe";
 import { OutdoorActivityInput } from "../../services/catalogueWriteService";
 import { buildRecipeDbId } from "../recipeBuilder/recipeBuilderLogic";
 import { RecapEntry, diffEntry } from "./recap";
@@ -30,10 +29,10 @@ export function suggestOutdoorCode(entries: OutdoorEntry[]): string {
   return `${prefix}-${String(max + 1).padStart(3, "0")}`;
 }
 
-export function validateOutdoorForm(draft: OutdoorFormDraft): string[] {
+export function validateOutdoorForm(draft: OutdoorFormDraft, categories: Category[]): string[] {
   const errors: string[] = [];
   if (!draft.name.trim()) errors.push("Le nom est requis.");
-  if (!getCategoryById(draft.categoryId)) errors.push("Catégorie inconnue.");
+  if (!categories.some((c) => c.id === draft.categoryId)) errors.push("Catégorie inconnue.");
   return errors;
 }
 
@@ -49,25 +48,26 @@ export function outdoorFormToBody(code: string, draft: OutdoorFormDraft): Outdoo
   return { code: code.trim(), name: draft.name.trim(), categoryId: draft.categoryId };
 }
 
-function categoryLabel(id: string): string {
-  return getCategoryById(id)?.name ?? id;
+function categoryLabel(categories: Category[], id: string): string {
+  return categories.find((c) => c.id === id)?.name ?? id;
 }
 
 export function buildOutdoorRecap(
   original: OutdoorEntry | null,
   code: string,
   draft: OutdoorFormDraft,
+  categories: Category[],
 ): RecapEntry[] {
   if (original === null) {
     return [
       { label: "Identifiant", value: code.trim() },
       { label: "Nom", value: draft.name.trim() },
-      { label: "Catégorie", value: categoryLabel(draft.categoryId) },
+      { label: "Catégorie", value: categoryLabel(categories, draft.categoryId) },
     ];
   }
   const changes: RecapEntry[] = [];
   const add = (entry: RecapEntry | null) => { if (entry) changes.push(entry); };
   add(diffEntry("Nom", original.name.trim(), draft.name.trim()));
-  add(diffEntry("Catégorie", categoryLabel(original.categoryId), categoryLabel(draft.categoryId)));
+  add(diffEntry("Catégorie", categoryLabel(categories, original.categoryId), categoryLabel(categories, draft.categoryId)));
   return changes;
 }

@@ -1,8 +1,8 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { Food } from "../../core/domain/ingredient";
-import { typedFoodDb } from "../../core/typed-db/typedFoodDb";
 import { FoodInput, createFood, deleteFood, updateFood } from "../../core/services/catalogueWriteService";
 import { syncCatalogueFromApi } from "../../core/services/catalogueSyncService";
+import { useFoodsSnapshot } from "./useCatalogueSnapshot";
 
 export interface UseCatalogueFoodsResult {
   foods: Food[];
@@ -11,18 +11,17 @@ export interface UseCatalogueFoodsResult {
   remove: (id: string) => Promise<boolean>;
 }
 
-function snapshot(): Food[] {
-  return Object.values(typedFoodDb).sort((a, b) => a.name.localeCompare(b.name, "fr"));
-}
-
 export function useCatalogueFoods(): UseCatalogueFoodsResult {
-  const [foods, setFoods] = useState<Food[]>(snapshot);
+  const foodsDb = useFoodsSnapshot();
+  const foods = useMemo(
+    () => Object.values(foodsDb).sort((a, b) => a.name.localeCompare(b.name, "fr")),
+    [foodsDb],
+  );
 
   const create = useCallback(async (body: FoodInput) => {
     try {
       await createFood(body);
       await syncCatalogueFromApi();
-      setFoods(snapshot());
       return true;
     } catch {
       return false;
@@ -33,7 +32,6 @@ export function useCatalogueFoods(): UseCatalogueFoodsResult {
     try {
       await updateFood(id, body);
       await syncCatalogueFromApi();
-      setFoods(snapshot());
       return true;
     } catch {
       return false;
@@ -44,7 +42,6 @@ export function useCatalogueFoods(): UseCatalogueFoodsResult {
     try {
       await deleteFood(id);
       await syncCatalogueFromApi();
-      setFoods(snapshot());
       return true;
     } catch {
       return false;

@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Plus, Search } from "lucide-react";
 import { OutdoorEntry } from "../../../../core/domain/recipe";
-import { getCategoryById } from "../../../../core/typed-db/typedCategoriesDb";
+import { useCategoriesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { useCatalogueOutdoor } from "../../../../shared/hooks/useCatalogueOutdoor";
 import { OutdoorRow } from "./OutdoorRow";
 import { OutdoorFormModal } from "./OutdoorFormModal";
@@ -9,6 +9,7 @@ import { ConfirmActionModal } from "./ConfirmActionModal";
 
 export const OutdoorActivitiesTable = () => {
   const { activities, create, save, remove } = useCatalogueOutdoor();
+  const categories = useCategoriesSnapshot();
   const [query, setQuery] = useState("");
   const [creating, setCreating] = useState(false);
   const [editing, setEditing] = useState<OutdoorEntry | null>(null);
@@ -18,12 +19,12 @@ export const OutdoorActivitiesTable = () => {
     const needle = query.trim().toLowerCase();
     if (!needle) return activities;
     return activities.filter((activity) => {
-      const category = getCategoryById(activity.categoryId)?.name ?? "";
+      const category = categories.find((c) => c.id === activity.categoryId)?.name ?? "";
       return (
         activity.name.toLowerCase().includes(needle) || category.toLowerCase().includes(needle)
       );
     });
-  }, [activities, query]);
+  }, [activities, categories, query]);
 
   return (
     <div className="h-full rounded-2xl border border-slate-200 bg-white dark:bg-slate-100 flex flex-col overflow-hidden">
@@ -89,7 +90,7 @@ export const OutdoorActivitiesTable = () => {
           recap={[
             { label: "Activité", value: pendingDelete.name },
             { label: "Identifiant", value: pendingDelete.code },
-            { label: "Catégorie", value: getCategoryById(pendingDelete.categoryId)?.name ?? pendingDelete.categoryId },
+            { label: "Catégorie", value: categories.find((c) => c.id === pendingDelete.categoryId)?.name ?? pendingDelete.categoryId },
           ]}
           consequence="L'activité sera retirée du catalogue. Si un planning l'utilise encore, l'API refusera la suppression."
           confirmLabel="Supprimer"

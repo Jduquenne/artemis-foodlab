@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { X } from "lucide-react";
 import { OutdoorEntry } from "../../../../core/domain/recipe";
-import { typedCategoriesDb } from "../../../../core/typed-db/typedCategoriesDb";
+import { useCategoriesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { OutdoorActivityInput } from "../../../../core/services/catalogueWriteService";
 import {
   OutdoorFormDraft,
@@ -27,6 +27,7 @@ const INPUT_CLASS =
 
 export const OutdoorFormModal = ({ activity, activities, onClose, onSubmit }: OutdoorFormModalProps) => {
   const isCreate = activity === null;
+  const categories = useCategoriesSnapshot();
   const [draft, setDraft] = useState<OutdoorFormDraft>(() =>
     activity ? outdoorToDraft(activity) : emptyOutdoorDraft(),
   );
@@ -44,7 +45,7 @@ export const OutdoorFormModal = ({ activity, activities, onClose, onSubmit }: Ou
   const patch = (update: Partial<OutdoorFormDraft>) => setDraft((prev) => ({ ...prev, ...update }));
 
   const review = () => {
-    const found = validateOutdoorForm(draft);
+    const found = validateOutdoorForm(draft, categories);
     if (isCreate) {
       const codeError = validateNewOutdoorCode(effectiveCode, activities);
       if (codeError) found.unshift(codeError);
@@ -53,7 +54,7 @@ export const OutdoorFormModal = ({ activity, activities, onClose, onSubmit }: Ou
       setErrors(found);
       return;
     }
-    if (!isCreate && buildOutdoorRecap(activity, effectiveCode, draft).length === 0) {
+    if (!isCreate && buildOutdoorRecap(activity, effectiveCode, draft, categories).length === 0) {
       setErrors(["Aucune modification à enregistrer."]);
       return;
     }
@@ -110,7 +111,7 @@ export const OutdoorFormModal = ({ activity, activities, onClose, onSubmit }: Ou
               onChange={(e) => patch({ categoryId: e.target.value })}
               className={INPUT_CLASS}
             >
-              {typedCategoriesDb.map((category) => (
+              {categories.map((category) => (
                 <option key={category.id} value={category.id}>{category.name}</option>
               ))}
             </select>
@@ -147,7 +148,7 @@ export const OutdoorFormModal = ({ activity, activities, onClose, onSubmit }: Ou
         <ConfirmActionModal
           title={isCreate ? "Confirmer l'ajout de l'activité" : "Confirmer la modification"}
           intro={isCreate ? undefined : "Modifications à appliquer :"}
-          recap={buildOutdoorRecap(activity, effectiveCode, draft)}
+          recap={buildOutdoorRecap(activity, effectiveCode, draft, categories)}
           confirmLabel={isCreate ? "Ajouter" : "Enregistrer"}
           onConfirm={confirmed}
           onCancel={() => setConfirming(false)}

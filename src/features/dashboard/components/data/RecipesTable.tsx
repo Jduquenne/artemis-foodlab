@@ -9,7 +9,7 @@ import {
   filterRecipes,
 } from "../../../../core/logic/dashboard/recipeTableLogic";
 import { recipeToBuilderState } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
-import { getCategoryById } from "../../../../core/typed-db/typedCategoriesDb";
+import { useCategoriesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { useRecipeBuilderStore } from "../../../../shared/store/useRecipeBuilderStore";
 import { useCatalogueRecipes } from "../../../../shared/hooks/useCatalogueRecipes";
 import { RecipeRow } from "./RecipeRow";
@@ -17,6 +17,7 @@ import { ConfirmActionModal } from "./ConfirmActionModal";
 
 export const RecipesTable = () => {
   const { recipes, remove } = useCatalogueRecipes();
+  const categories = useCategoriesSnapshot();
   const navigate = useNavigate();
   const loadFromRecipe = useRecipeBuilderStore((s) => s.loadFromRecipe);
   const reset = useRecipeBuilderStore((s) => s.reset);
@@ -27,8 +28,8 @@ export const RecipesTable = () => {
   const [pendingDelete, setPendingDelete] = useState<RecipeDetails | null>(null);
 
   const filtered = useMemo(
-    () => filterRecipes(recipes, query, kind),
-    [recipes, query, kind],
+    () => filterRecipes(recipes, categories, query, kind),
+    [recipes, categories, query, kind],
   );
 
   const editInBuilder = (recipe: RecipeDetails) => {
@@ -109,7 +110,7 @@ export const RecipesTable = () => {
           title="Confirmer la suppression de la recette"
           recap={[
             { label: "Recette", value: pendingDelete.name },
-            { label: "Catégorie", value: getCategoryById(pendingDelete.categoryId)?.name ?? pendingDelete.categoryId },
+            { label: "Catégorie", value: categories.find((c) => c.id === pendingDelete.categoryId)?.name ?? pendingDelete.categoryId },
             { label: "Type", value: RECIPE_KIND_LABELS[pendingDelete.kind] },
           ]}
           consequence="La recette sera retirée du catalogue. Si un planning l'utilise encore, l'API refusera la suppression."

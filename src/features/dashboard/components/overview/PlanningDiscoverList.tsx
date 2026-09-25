@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import { ChevronDown, ExternalLink } from "lucide-react";
-import { typedCategoriesDb } from "../../../../core/typed-db/typedCategoriesDb";
-import { typedFoodDb } from "../../../../core/typed-db/typedFoodDb";
+import { useCategoriesSnapshot, useFoodsSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import {
   DishUsage,
   EMPTY_REVIEW_FILTERS,
@@ -30,10 +29,12 @@ const PREVIEW_COUNT = 6;
 export const PlanningDiscoverList = ({ dishes }: PlanningDiscoverListProps) => {
   const [filters, setFilters] = useState<ReviewFilters>(EMPTY_REVIEW_FILTERS);
   const [showAll, setShowAll] = useState(false);
+  const foods = useFoodsSnapshot();
+  const categories = useCategoriesSnapshot();
 
   const options = useMemo(
-    () => getReviewFilterOptions(dishes, typedFoodDb, typedCategoriesDb),
-    [dishes],
+    () => getReviewFilterOptions(dishes, foods, categories),
+    [dishes, foods, categories],
   );
   const filtered = useMemo(() => filterReviewDishes(dishes, filters), [dishes, filters]);
 

@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import { Calendar, Home, Snowflake } from "lucide-react";
-import { SyncScope, ALL_SCOPES, SCOPE_LABELS } from "../../../../core/logic/sync/syncPayload";
+import { SyncScope, ALL_SCOPES, SCOPE_LABELS } from "../../../../core/logic/sync/importPayloadLogic";
 
 const SCOPE_ICONS: Record<SyncScope, ReactNode> = {
     planning: <Calendar size={18} />,

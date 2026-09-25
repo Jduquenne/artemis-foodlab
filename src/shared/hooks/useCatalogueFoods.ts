@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { Food } from "../../core/domain/ingredient";
-import { FoodInput, createFood, deleteFood, updateFood } from "../../core/services/catalogueWriteService";
+import { createFood, deleteFood, updateFood } from "../../core/services/catalogueWriteService";
+import { FoodInput } from "../../core/domain/catalogueInput";
 import { syncCatalogueFromApi } from "../../core/services/catalogueSyncService";
 import { useFoodsSnapshot } from "./useCatalogueSnapshot";
 import { compareByName } from "../utils/sortUtils";

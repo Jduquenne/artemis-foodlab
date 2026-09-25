@@ -1,7 +1,7 @@
 import { Food } from "../../domain/ingredient";
 import { Category, RecipeAsset, RecipeDetails } from "../../domain/recipe";
 import { isDessert, isDish } from "../../domain/recipePredicates";
-import { RecipeUsageItem } from "../../services/planningUsageService";
+import { RecipeUsageItem } from "../../domain/planningUsage";
 import { compareByName, compareText } from "../../../shared/utils/sortUtils";
 import { countBy } from "../../../shared/utils/collectionUtils";
 

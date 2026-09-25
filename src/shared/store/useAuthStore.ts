@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { AuthUser } from "../../core/services/authService";
+import { AuthUser } from "../../core/domain/user";
 
 export type AuthStatus = "checking" | "authenticated" | "unauthenticated";
 

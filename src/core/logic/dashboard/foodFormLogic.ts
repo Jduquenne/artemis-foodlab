@@ -1,6 +1,6 @@
 import { Food, IngredientCategory } from "../../domain/ingredient";
 import { Macronutrients } from "../../domain/nutrition";
-import { FoodInput } from "../../services/catalogueWriteService";
+import { FoodInput } from "../../domain/catalogueInput";
 import { getIngredientCategoryId } from "../../domain/ingredientCategorySlugs";
 import { RecapEntry, diffEntry, recapBool, recapText } from "./recapLogic";
 import { toNumber } from "../../../shared/utils/numberUtils";

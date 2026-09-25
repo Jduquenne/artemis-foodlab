@@ -1,11 +1,5 @@
+import { RecipeUsageItem } from "../domain/planningUsage";
 import { apiFetchJson } from "./apiClient";
-
-export interface RecipeUsageItem {
-  code: string;
-  plannedCount: number;
-  firstWeek: string;
-  lastWeek: string;
-}
 
 export async function getRecipeUsage(): Promise<RecipeUsageItem[]> {
   const { items } = await apiFetchJson<{ items: RecipeUsageItem[] }>(

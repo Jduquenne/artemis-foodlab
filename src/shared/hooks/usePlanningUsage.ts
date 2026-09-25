@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { RecipeUsageItem, getRecipeUsage } from "../../core/services/planningUsageService";
+import { getRecipeUsage } from "../../core/services/planningUsageService";
+import { RecipeUsageItem } from "../../core/domain/planningUsage";
 
 export interface UsePlanningUsageResult {
   usage: RecipeUsageItem[] | null;

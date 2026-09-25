@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { X, RefreshCw } from "lucide-react";
-import { CreateUserInput } from "../../../../core/services/usersService";
-import { UserRole } from "../../../../core/services/authService";
+import { CreateUserInput } from "../../../../core/domain/user";
+import { UserRole } from "../../../../core/domain/user";
 import {
   EMPTY_USER_FORM,
   UserFormDraft,

@@ -1,6 +1,6 @@
 import { lazy, Suspense, useRef, useState } from "react";
 import { Settings, Upload, Bell, UserCircle, ScrollText, Users } from "lucide-react";
-import { isValidSyncPayload, SyncPayload } from "../../../core/logic/sync/syncPayload";
+import { isValidSyncPayload, SyncPayload } from "../../../core/logic/sync/importPayloadLogic";
 import { ThemeToggle } from "./ThemeToggle";
 
 const ImportModal = lazy(() => import("../../../features/sync/ImportModal").then(m => ({ default: m.ImportModal })));

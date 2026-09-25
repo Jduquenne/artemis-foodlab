@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { X } from "lucide-react";
 import { OutdoorEntry } from "../../../../core/domain/recipe";
 import { useCategoriesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
-import { OutdoorActivityInput } from "../../../../core/services/catalogueWriteService";
+import { OutdoorActivityInput } from "../../../../core/domain/catalogueInput";
 import {
   OutdoorFormDraft,
   buildOutdoorRecap,

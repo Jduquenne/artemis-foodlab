@@ -1,5 +1,5 @@
 import { EMPTY_JOURNAL_OVERRIDES } from "../../core/logic/journal/journalOverrideLogic";
-import { JournalOverrides } from "../../core/services/journalService";
+import { JournalOverrides } from "../../core/domain/journal";
 import { useJournalStore } from "../store/useJournalStore";
 import { useProfileStore } from "../store/useProfileStore";
 

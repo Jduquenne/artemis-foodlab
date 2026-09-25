@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { X, Upload, Loader2, RotateCw, AlertTriangle } from "lucide-react";
-import { SyncScope, SyncPayload, detectScopes, SCOPE_LABELS } from "../../core/logic/sync/syncPayload";
+import { SyncScope, SyncPayload, detectScopes, SCOPE_LABELS } from "../../core/logic/sync/importPayloadLogic";
 import { importToApi, ImportResult } from "../../core/services/importService";
 import { ApiError } from "../../core/services/apiClient";
 import { ScopeSelector } from "./components/scope/ScopeSelector";

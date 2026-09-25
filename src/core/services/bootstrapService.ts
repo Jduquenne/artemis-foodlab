@@ -7,11 +7,8 @@ import { ApiShoppingPeriod } from "../logic/shopping/shoppingApiMapper";
 import { apiFetchJson } from "./apiClient";
 import { applyCatalogueData } from "./catalogueSyncService";
 import { applyHouseholdFlags } from "./householdService";
-import {
-  ApiJournalOverride,
-  JournalOverridesByProfile,
-  mapJournalOverrides,
-} from "./journalService";
+import { JournalOverridesByProfile } from "../domain/journal";
+import { ApiJournalOverride, mapJournalOverrides } from "../logic/journal/journalApiMapper";
 import { ApiProfile, mapProfiles } from "./profileService";
 import { CurrentPeriod, mapApiPeriod } from "./shoppingPeriodService";
 

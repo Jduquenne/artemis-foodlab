@@ -1,23 +1,8 @@
 import { apiFetch, apiFetchJson } from "./apiClient";
 import { ApiOutdoorActivity, ApiRecipe, ApiRecipeInput } from "../logic/recipe/recipeApiMapper";
+import { FoodInput, OutdoorActivityInput } from "../domain/catalogueInput";
 import { Food } from "../domain/ingredient";
 import { RecipeAssetKey } from "../domain/recipe";
-
-export interface OutdoorActivityInput {
-  code: string;
-  name: string;
-  categoryId: string;
-}
-
-export interface FoodInput {
-  id: string;
-  name: string;
-  categoryId: string;
-  unit: string | null;
-  unitWeight: number | null;
-  isFreezable: boolean;
-  macros: { kcal: number; proteins: number; lipids: number; carbohydrates: number; fibers: number };
-}
 
 export function createFood(body: FoodInput): Promise<Food> {
   return apiFetchJson<Food>("/foods", { method: "POST", body });

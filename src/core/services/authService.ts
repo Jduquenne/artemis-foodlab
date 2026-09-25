@@ -1,26 +1,11 @@
 import { apiFetchJson, performTokenRefresh, setAccessToken } from "./apiClient";
+import { AuthUser, UpdateMeInput } from "../domain/user";
 import { getStoredRefreshToken, setStoredRefreshToken } from "./refreshTokenStore";
-
-export type UserRole = "admin" | "guest";
-
-export interface AuthUser {
-  id: string;
-  email: string;
-  role: UserRole;
-  freezerName: string;
-  displayName: string | null;
-}
 
 interface LoginResponse {
   accessToken: string;
   refreshToken?: string;
   user: AuthUser;
-}
-
-export interface UpdateMeInput {
-  freezerName?: string;
-  displayName?: string | null;
-  email?: string;
 }
 
 function adoptSession(data: LoginResponse): AuthUser {

@@ -1,10 +1,6 @@
 import { create } from "zustand";
-import {
-  JournalOverrideInput,
-  JournalOverrides,
-  JournalOverridesByProfile,
-  saveJournalOverride,
-} from "../../core/services/journalService";
+import { saveJournalOverride } from "../../core/services/journalService";
+import { JournalOverrideInput, JournalOverrides, JournalOverridesByProfile } from "../../core/domain/journal";
 import { recipesCatalogue } from "../../core/catalogue/recipes";
 import {
   EMPTY_JOURNAL_OVERRIDES,

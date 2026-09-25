@@ -1,7 +1,7 @@
 {
   "name": "artemis-foodlab",
   "private": true,
-  "version": "6.75.21",
+  "version": "6.75.22",
   "type": "module",
   "engines": {
     "node": ">=24"

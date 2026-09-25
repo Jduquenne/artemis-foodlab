@@ -1,6 +1,7 @@
 import { Ingredient, Unit } from "../../domain/ingredient";
 import { RecipeDetails } from "../../domain/recipe";
-import { ApiJournalOverride, JournalOverrides } from "../../services/journalService";
+import { JournalOverrides } from "../../domain/journal";
+import { ApiJournalOverride } from "../../logic/journal/journalApiMapper";
 import { omitKey } from "../../../shared/utils/collectionUtils";
 import { roundTo } from "../../../shared/utils/numberUtils";
 

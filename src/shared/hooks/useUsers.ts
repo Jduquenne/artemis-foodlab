@@ -1,13 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-import {
-  AdminUser,
-  CreateUserInput,
-  createUser,
-  deleteUser,
-  listUsers,
-  updateUserRole,
-} from "../../core/services/usersService";
-import { UserRole } from "../../core/services/authService";
+import { createUser, deleteUser, listUsers, updateUserRole } from "../../core/services/usersService";
+import { AdminUser, CreateUserInput } from "../../core/domain/user";
+import { UserRole } from "../../core/domain/user";
 
 export interface UseUsersResult {
   users: AdminUser[];

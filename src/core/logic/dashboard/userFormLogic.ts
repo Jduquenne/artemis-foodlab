@@ -1,5 +1,5 @@
-import { CreateUserInput, PASSWORD_MIN_LENGTH } from "../../services/usersService";
-import { UserRole } from "../../services/authService";
+import { CreateUserInput, PASSWORD_MIN_LENGTH } from "../../domain/user";
+import { UserRole } from "../../domain/user";
 import { RecapEntry } from "./recapLogic";
 
 export const ROLE_LABELS: Record<UserRole, string> = {

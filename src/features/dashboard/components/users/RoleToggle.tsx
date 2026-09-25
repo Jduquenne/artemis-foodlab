@@ -1,4 +1,4 @@
-import { UserRole } from "../../../../core/services/authService";
+import { UserRole } from "../../../../core/domain/user";
 
 export interface RoleToggleProps {
   value: UserRole;

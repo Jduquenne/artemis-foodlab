@@ -1,5 +1,5 @@
 import { apiFetchJson } from "./apiClient";
-import { SyncPayload, SyncScope } from "../logic/sync/syncPayload";
+import { SyncPayload, SyncScope } from "../logic/sync/importPayloadLogic";
 
 export interface ImportResult {
   summary: {

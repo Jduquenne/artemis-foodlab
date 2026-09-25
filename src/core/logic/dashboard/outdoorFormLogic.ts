@@ -1,5 +1,5 @@
 import { Category, OutdoorEntry } from "../../domain/recipe";
-import { OutdoorActivityInput } from "../../services/catalogueWriteService";
+import { OutdoorActivityInput } from "../../domain/catalogueInput";
 import { buildRecipeDbId } from "../recipeBuilder/recipeCodeLogic";
 import { RecapEntry, diffEntry } from "./recapLogic";
 import { nextSequentialCode, validateNewCode } from "../../../shared/utils/codeUtils";

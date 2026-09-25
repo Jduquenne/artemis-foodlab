@@ -1,11 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { OutdoorEntry } from "../../core/domain/recipe";
-import {
-  OutdoorActivityInput,
-  createOutdoorActivity,
-  deleteOutdoorActivity,
-  updateOutdoorActivity,
-} from "../../core/services/catalogueWriteService";
+import { createOutdoorActivity, deleteOutdoorActivity, updateOutdoorActivity } from "../../core/services/catalogueWriteService";
+import { OutdoorActivityInput } from "../../core/domain/catalogueInput";
 import { syncCatalogueFromApi } from "../../core/services/catalogueSyncService";
 import { useOutdoorSnapshot } from "./useCatalogueSnapshot";
 import { compareByName } from "../utils/sortUtils";

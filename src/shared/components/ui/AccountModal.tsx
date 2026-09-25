@@ -3,7 +3,7 @@ import { X, LogOut, ShieldCheck } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { changePassword, logout, updateMe } from "../../../core/services/authService";
 import { useAuthStore } from "../../store/useAuthStore";
-import { PASSWORD_MIN_LENGTH } from "../../../core/services/usersService";
+import { PASSWORD_MIN_LENGTH } from "../../../core/domain/user";
 
 export interface AccountModalProps {
   onClose: () => void;

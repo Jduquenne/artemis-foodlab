@@ -9,7 +9,7 @@ import { useSearchRecipes } from '../../shared/hooks/useSearch';
 import { CATEGORIES } from '../../core/domain/categories';
 import { isBrowsableCategory } from '../../core/domain/recipePredicates';
 import { MacroFilterButton } from './components/filter/MacroFilterButton';
-import { PREDEFINED_FILTERS } from '../../core/domain/predefinedFilters';
+import { PREDEFINED_FILTERS } from '../../core/logic/recipe/predefinedFilterLogic';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { filterRecipesByMacros } from '../../core/logic/recipe/recipeLogic';
 import { RecipeSearchResults } from './components/RecipeSearchResults';

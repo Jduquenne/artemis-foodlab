@@ -3,7 +3,7 @@ import { isIngredient } from "../../domain/recipePredicates";
 import { typedRecipesDb } from "../../typed-db/typedRecipesDb";
 import { typedFoodDb } from "../../typed-db/typedFoodDb";
 import { OutdoorEntry, typedOutdoorDb } from "../../typed-db/typedOutdoorDb";
-import { PREDEFINED_FILTERS } from "../../domain/predefinedFilters";
+import { PREDEFINED_FILTERS } from "./predefinedFilterLogic";
 import { calculateRecipeMacros } from "../../../shared/utils/macroUtils";
 
 export const UNIT_WEIGHT_UNITS: string[] = [

@@ -573,7 +573,7 @@ export const PlanningModule = () => {
                         ))}
                     </div>
 
-                    <div className={`hidden sm:grid grid-cols-[repeat(7,1fr)] grid-rows-[44px_repeat(4,1fr)] gap-3 h-full min-h-0 px-2 pb-2 tablet:h-auto tablet:flex-1 tablet:-mx-8 tablet:gap-2 tablet:grid-flow-col tablet:grid-rows-[repeat(7,minmax(0,1fr))] ${TABLET_WEEK_GRID_COLS}`}>
+                    <div className={`hidden sm:grid grid-cols-[repeat(7,1fr)] grid-rows-[44px_repeat(4,1fr)] gap-3 h-full min-h-0 px-2 pb-2 tablet:h-auto tablet:flex-1 tablet:-mx-8 tablet:gap-2 tablet:grid-flow-col tablet:grid-rows-7 ${TABLET_WEEK_GRID_COLS}`}>
                         {DAYS.map((day, i) => {
                             const selected = isSelectionMode && isDayDraft(day);
                             const confirmed = !isSelectionMode && isDayConfirmed(day);

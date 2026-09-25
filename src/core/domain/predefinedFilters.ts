@@ -1,34 +1,18 @@
-import { PredefinedFilter } from "./types";
+import { Macronutrients } from "./types";
 
-export const PREDEFINED_FILTERS: PredefinedFilter[] = [
-  {
-    id: "low-kcal",
-    label: "Moins de 500 kcal",
-    check: (m) => m.kcal < 500,
-  },
-  {
-    id: "extra-low-kcal",
-    label: "Moins de 400 kcal",
-    check: (m) => m.kcal < 400,
-  },
-  {
-    id: "high-protein",
-    label: "Riche en protéines (> 30g)",
-    check: (m) => m.proteins > 30,
-  },
-  {
-    id: "low-carb",
-    label: "Pauvre en glucides (< 40g)",
-    check: (m) => m.carbohydrates < 40,
-  },
-  {
-    id: "low-lipid",
-    label: "Pauvre en lipides (< 19g)",
-    check: (m) => m.lipids < 19,
-  },
-  {
-    id: "high-fiber",
-    label: "Riche en fibres (> 10g)",
-    check: (m) => m.fibers > 10,
-  },
+export interface PredefinedFilterDefinition {
+  id: string;
+  macro: keyof Macronutrients;
+  comparison: "below" | "above";
+  threshold: number;
+  title: string;
+}
+
+export const PREDEFINED_FILTER_DEFINITIONS: readonly PredefinedFilterDefinition[] = [
+  { id: "low-kcal", macro: "kcal", comparison: "below", threshold: 500, title: "" },
+  { id: "extra-low-kcal", macro: "kcal", comparison: "below", threshold: 400, title: "" },
+  { id: "high-protein", macro: "proteins", comparison: "above", threshold: 30, title: "Riche en protéines" },
+  { id: "low-carb", macro: "carbohydrates", comparison: "below", threshold: 40, title: "Pauvre en glucides" },
+  { id: "low-lipid", macro: "lipids", comparison: "below", threshold: 19, title: "Pauvre en lipides" },
+  { id: "high-fiber", macro: "fibers", comparison: "above", threshold: 10, title: "Riche en fibres" },
 ];

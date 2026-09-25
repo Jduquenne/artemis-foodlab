@@ -5,7 +5,7 @@ import { useMemo, useState, useEffect, useRef } from 'react';
 import { CATEGORIES } from '../../../../core/domain/categories';
 import { markScrolling } from '../../../../shared/utils/scrollGuard';
 import { MacroFilterButton } from '../filter/MacroFilterButton';
-import { PREDEFINED_FILTERS } from '../../../../core/domain/predefinedFilters';
+import { PREDEFINED_FILTERS } from '../../../../core/logic/recipe/predefinedFilterLogic';
 import { isPlannable } from '../../../../core/domain/recipePredicates';
 import { useMenuStore } from '../../../../shared/store/useMenuStore';
 import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';

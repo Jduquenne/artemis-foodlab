@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { X, Check } from 'lucide-react';
-import { PREDEFINED_FILTERS } from '../../../../core/domain/predefinedFilters';
+import { PREDEFINED_FILTERS } from '../../../../core/logic/recipe/predefinedFilterLogic';
 
 export interface MacroFilterModalProps {
   activeFilterIds: string[];

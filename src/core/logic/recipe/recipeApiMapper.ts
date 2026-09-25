@@ -9,7 +9,6 @@ import {
   RecipeKind,
   Unit,
 } from "../../domain/types";
-import { ZERO } from "../../../shared/utils/macroUtils";
 
 export interface ApiIngredient {
   id: string;
@@ -105,7 +104,6 @@ export function mapApiRecipe(api: ApiRecipe, codeByApiId: Map<string, string>): 
     categoryId: api.categoryId,
     mealTypes: api.mealTypes as MealType[],
     kind: api.kind as RecipeKind,
-    macronutriment: ZERO,
     defaultPortions: api.defaultPortions,
     ingredients: api.ingredients.map((ing) => mapApiIngredient(ing, codeByApiId)),
     instructions: api.instructions,

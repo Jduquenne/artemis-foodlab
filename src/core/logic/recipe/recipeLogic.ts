@@ -80,19 +80,6 @@ export function filterRecipesByMacros<T extends { recipeId?: string; id: string 
   });
 }
 
-export function filterCategoryRecipesByMacros(
-  recipes: CategoryRecipeEntry[],
-  activeFilterIds: string[],
-): CategoryRecipeEntry[] {
-  if (activeFilterIds.length === 0) return recipes;
-  const activeFilters = PREDEFINED_FILTERS.filter(f => activeFilterIds.includes(f.id));
-  return recipes.filter(recipe => {
-    const macros = typedRecipesDb[recipe.id]?.macronutriment;
-    if (!macros) return false;
-    return activeFilters.every(f => f.check(macros));
-  });
-}
-
 export function patchRecipeQuantities(recipe: RecipeDetails, quantities: Record<string, number>): RecipeDetails {
   return {
     ...recipe,

@@ -111,7 +111,6 @@ export interface RecipeDetails {
   categoryId: string;
   mealTypes: MealType[];
   kind: RecipeKind;
-  macronutriment: Macronutrients;
   defaultPortions: number;
   ingredients: Ingredient[];
   instructions: string | null;

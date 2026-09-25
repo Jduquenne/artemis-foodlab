@@ -9,7 +9,7 @@ import { PREDEFINED_FILTERS } from '../../../../core/logic/recipe/predefinedFilt
 import { isPlannable } from '../../../../core/domain/recipePredicates';
 import { useMenuStore } from '../../../../shared/store/useMenuStore';
 import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
-import { getCategoryRecipes, filterCategoryRecipesByMacros } from '../../../../core/logic/recipe/recipeLogic';
+import { getCategoryRecipes, filterRecipesByMacros } from '../../../../core/logic/recipe/recipeLogic';
 import { resolveRestoredCount } from '../../../../core/logic/recipe/scrollRestoreLogic';
 import { useScrollRestore } from '../../../../shared/hooks/useScrollRestore';
 import { RecipePhotoCard } from '../../../../shared/components/ui/RecipePhotoCard';
@@ -26,7 +26,7 @@ export const CategoryDetail = () => {
     const recipes = useMemo(() => getCategoryRecipes(categoryId ?? ''), [categoryId]);
 
     const filteredRecipes = useMemo(
-        () => filterCategoryRecipesByMacros(recipes, activeFilterIds),
+        () => filterRecipesByMacros(recipes, activeFilterIds),
         [recipes, activeFilterIds],
     );
 

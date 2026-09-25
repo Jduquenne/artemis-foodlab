@@ -1,13 +1,14 @@
 import { create } from "zustand";
+import { recipesCatalogue } from "../../core/catalogue/recipes";
 import { persist } from "zustand/middleware";
 import { RecipeBuilderState, DraftIngredient } from "../../core/domain/recipeBuilderTypes";
 import { initialRecipeBuilderState } from "../../core/logic/recipeBuilder/recipeBuilderState";
 import { migrateDraftV2ToV3 } from "../../core/logic/recipeBuilder/recipeBuilderMigration";
-import { suggestNextRecipeNumber } from "../../core/logic/recipeBuilder/recipeBuilderLogic";
+import { suggestNextRecipeNumber } from "../../core/logic/recipeBuilder/recipeCodeLogic";
 
 function freshDraft(): RecipeBuilderState {
   const draft = initialRecipeBuilderState();
-  return { ...draft, recipeNumber: suggestNextRecipeNumber(draft.categoryId) };
+  return { ...draft, recipeNumber: suggestNextRecipeNumber(Object.keys(recipesCatalogue), draft.categoryId) };
 }
 
 interface RecipeBuilderStore {

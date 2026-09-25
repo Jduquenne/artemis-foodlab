@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
 import { Save, X, Check, Loader2, Trash2, AlertTriangle } from "lucide-react";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
-import { getBuilderRecipeCode, summarizeBuilderState, validateBuilderState } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
+import { summarizeBuilderState, validateBuilderState } from "../../../../core/logic/recipeBuilder/recipeBuilderValidation";
+import { getBuilderRecipeCode } from "../../../../core/logic/recipeBuilder/recipeCodeLogic";
 import { useCategoriesSnapshot, useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { useRecipeBuilderSave } from "../../../../shared/hooks/useRecipeBuilderSave";
 import { useRecipeBuilderStore } from "../../../../shared/store/useRecipeBuilderStore";

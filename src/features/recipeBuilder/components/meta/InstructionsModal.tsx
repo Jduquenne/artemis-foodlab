@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { X, Plus, ChevronUp, ChevronDown } from "lucide-react";
-import { splitPastedInstructionLines, spliceInstructionPaste } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
+import { splitPastedInstructionLines, spliceInstructionPaste } from "../../../../core/logic/recipeBuilder/instructionsLogic";
 
 export interface InstructionsModalProps {
   instructions: string[];

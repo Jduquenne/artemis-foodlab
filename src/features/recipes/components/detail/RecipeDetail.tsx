@@ -11,7 +11,7 @@ import {
 } from '../../../../core/logic/recipe/recipeLogic';
 import { RecipePhotoCard } from '../../../../shared/components/ui/RecipePhotoCard';
 import { PortionsStepper } from './PortionsStepper';
-import { recipeToBuilderState } from '../../../../core/logic/recipeBuilder/recipeBuilderLogic';
+import { recipeToBuilderState } from '../../../../core/logic/recipeBuilder/recipeBuilderMapper';
 import { useIsAdmin } from '../../../../shared/hooks/useIsAdmin';
 import { useRecipeBuilderStore } from '../../../../shared/store/useRecipeBuilderStore';
 import { MacroColumn } from '../macro/MacroColumn';

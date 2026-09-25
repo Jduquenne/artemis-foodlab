@@ -4,12 +4,7 @@ import { MealType, RecipeKind } from "../../../../core/domain/recipe";
 import { MEAL_TYPE_LABELS, RECIPE_KIND_LABELS } from "../../../../core/domain/recipeLabels";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
 import { useCategoriesSnapshot, useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
-import {
-  CATEGORY_PREFIX,
-  buildRecipeDbId,
-  buildRecipeId,
-  suggestNextRecipeNumber,
-} from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
+import { CATEGORY_PREFIX, buildRecipeDbId, buildRecipeId, suggestNextRecipeNumber } from "../../../../core/logic/recipeBuilder/recipeCodeLogic";
 import { InstructionsModal } from "./InstructionsModal";
 
 export interface RecipeMetaFormProps {
@@ -41,7 +36,7 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
   const changeCategory = (categoryId: string) => {
     onChange({
       categoryId,
-      recipeNumber: isExisting ? state.recipeNumber : suggestNextRecipeNumber(categoryId),
+      recipeNumber: isExisting ? state.recipeNumber : suggestNextRecipeNumber(Object.keys(recipes), categoryId),
     });
   };
 

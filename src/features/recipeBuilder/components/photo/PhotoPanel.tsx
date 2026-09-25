@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Download, Loader2, ImageOff, ImagePlus } from "lucide-react";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
-import { buildImageName, getBuilderRecipeCode } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
+import { buildImageName, getBuilderRecipeCode } from "../../../../core/logic/recipeBuilder/recipeCodeLogic";
 import { useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { AsyncImage } from "../../../../shared/components/ui/AsyncImage";
 import { builderStateToRecetteCardData, builderStateToBookCardData } from "../../../../shared/utils/cards/cardAdapter";

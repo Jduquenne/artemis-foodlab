@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
 import { useFoodsSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { Food, IngredientCategory } from "../../../../core/domain/ingredient";
-import { searchFoods } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
+import { searchFoods } from "../../../../core/logic/recipeBuilder/ingredientSearchLogic";
 
 export interface IngredientFoodSearchProps {
   value: string;

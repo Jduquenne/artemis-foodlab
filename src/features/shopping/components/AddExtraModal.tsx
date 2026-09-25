@@ -4,7 +4,7 @@ import { Food, IngredientCategory, Unit } from "../../../core/domain/ingredient"
 import { useFoodsSnapshot } from "../../../shared/hooks/useCatalogueSnapshot";
 import { getIngredientCategoryFromSlug, getIngredientCategoryId } from "../../../core/domain/ingredientCategorySlugs";
 import { getCodeById, getIdByCode } from "../../../core/catalogue/recipeIdMap";
-import { searchFoods } from "../../../core/logic/recipeBuilder/recipeBuilderLogic";
+import { searchFoods } from "../../../core/logic/recipeBuilder/ingredientSearchLogic";
 import { ApiShoppingExtra } from "../../../core/logic/shopping/shoppingApiMapper";
 import { ExtraInput } from "../../../core/services/shoppingPeriodService";
 

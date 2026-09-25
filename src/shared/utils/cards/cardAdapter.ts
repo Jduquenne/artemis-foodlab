@@ -2,7 +2,7 @@ import { IngredientCategory } from "../../../core/domain/ingredient";
 import { Macronutrients } from "../../../core/domain/nutrition";
 import { RecipeDetails } from "../../../core/domain/recipe";
 import { DraftIngredient, RecipeBuilderState } from "../../../core/domain/recipeBuilderTypes";
-import { formatIngredientsForIngredientCard } from "../../../core/logic/recipeBuilder/recipeBuilderLogic";
+import { formatIngredientsForIngredientCard } from "./ingredientLines";
 import { getCardColors } from "./cardColors";
 import { buildFoodQuantityLabel } from "./cardUtils";
 import {

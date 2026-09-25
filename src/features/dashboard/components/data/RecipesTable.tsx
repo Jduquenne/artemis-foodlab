@@ -8,7 +8,7 @@ import {
   RecipeKindFilter,
   filterRecipes,
 } from "../../../../core/logic/dashboard/recipeTableLogic";
-import { recipeToBuilderState } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
+import { recipeToBuilderState } from "../../../../core/logic/recipeBuilder/recipeBuilderMapper";
 import { useCategoriesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { useRecipeBuilderStore } from "../../../../shared/store/useRecipeBuilderStore";
 import { useCatalogueRecipes } from "../../../../shared/hooks/useCatalogueRecipes";

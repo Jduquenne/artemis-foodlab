@@ -1,6 +1,6 @@
 import { Category, OutdoorEntry } from "../../domain/recipe";
 import { OutdoorActivityInput } from "../../services/catalogueWriteService";
-import { buildRecipeDbId } from "../recipeBuilder/recipeBuilderLogic";
+import { buildRecipeDbId } from "../recipeBuilder/recipeCodeLogic";
 import { RecapEntry, diffEntry } from "./recap";
 import { padNumber } from "../../../shared/utils/numberUtils";
 

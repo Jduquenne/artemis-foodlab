@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { Search, X } from "lucide-react";
 import { useRecipesSnapshot } from "../../../shared/hooks/useCatalogueSnapshot";
-import { recipeToBuilderState } from "../../../core/logic/recipeBuilder/recipeBuilderLogic";
+import { recipeToBuilderState } from "../../../core/logic/recipeBuilder/recipeBuilderMapper";
 import { RecipeBuilderState } from "../../../core/domain/recipeBuilderTypes";
 
 export interface LoadRecipeModalProps {

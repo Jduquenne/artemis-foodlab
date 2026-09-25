@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
 import { useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { isBase } from "../../../../core/domain/recipePredicates";
-import { searchBases } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
+import { searchBases } from "../../../../core/logic/recipeBuilder/ingredientSearchLogic";
 
 export interface BaseRecipeSearchProps {
   value: string;

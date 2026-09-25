@@ -5,7 +5,7 @@ import { isUnit } from "../../../../core/logic/unit/unitLogic";
 import { IngredientFoodSearch } from "./IngredientFoodSearch";
 import { BaseRecipeSearch } from "./BaseRecipeSearch";
 import { DraftIngredient } from "../../../../core/domain/recipeBuilderTypes";
-import { switchIngredientType } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
+import { switchIngredientType } from "../../../../core/logic/recipeBuilder/recipeBuilderMapper";
 
 export interface IngredientBuilderRowProps {
   ingredient: DraftIngredient;

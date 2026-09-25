@@ -1,8 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Calculator, ChevronLeft, ChevronRight, Pencil } from 'lucide-react';
-import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
-import { typedFoodDb } from '../../../../core/typed-db/typedFoodDb';
+import { useFoodsSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 import { calculateRecipeMacros } from '../../../../shared/utils/macroUtils';
 import {
   getLinkedBases,
@@ -28,7 +27,9 @@ export const RecipeDetail = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  const recipe = recipeId ? typedRecipesDb[recipeId] : undefined;
+  const recipes = useRecipesSnapshot();
+  const foods = useFoodsSnapshot();
+  const recipe = recipeId ? recipes[recipeId] : undefined;
   const mealPhotoUrl = recipe?.assets?.mealPhoto?.url;
   const instructionsPhotoUrl = useMediaSrc(recipe?.assets?.instructionsPhoto);
   const categoryId = searchParams.get('category');
@@ -39,8 +40,8 @@ export const RecipeDetail = () => {
   const loadFromRecipe = useRecipeBuilderStore(s => s.loadFromRecipe);
   const isAdmin = useIsAdmin();
   const categoryRecipeIds = useMemo(
-    () => (categoryId ? getCategoryRecipeIds(categoryId) : []),
-    [categoryId],
+    () => (categoryId ? getCategoryRecipeIds(recipes, categoryId) : []),
+    [recipes, categoryId],
   );
 
   const currentIndex = categoryRecipeIds.indexOf(recipeId ?? '');
@@ -65,13 +66,13 @@ export const RecipeDetail = () => {
   const macros = useMemo(() => {
     if (!recipe) return null;
     try {
-      return calculateRecipeMacros(recipe, typedRecipesDb, typedFoodDb);
+      return calculateRecipeMacros(recipe, recipes, foods);
     } catch {
       return null;
     }
-  }, [recipe]);
+  }, [recipe, recipes, foods]);
 
-  const linkedBases = useMemo(() => (recipe ? getLinkedBases(recipe) : []), [recipe]);
+  const linkedBases = useMemo(() => (recipe ? getLinkedBases(recipes, recipe) : []), [recipes, recipe]);
 
   if (!recipe || !scaledRecipe || (!mealPhotoUrl && !instructionsPhotoUrl)) return null;
 
@@ -144,7 +145,7 @@ export const RecipeDetail = () => {
                   className="flex flex-col items-center gap-2 group"
                 >
                   <div className="h-28 md:h-32 aspect-[189/208] rounded-2xl overflow-hidden shadow-md ring-1 ring-slate-200 dark:ring-slate-300 group-hover:opacity-75 group-hover:ring-orange-300 transition-all">
-                    <RecipePhotoCard recipeId={id} recipe={typedRecipesDb[id]} fill />
+                    <RecipePhotoCard recipeId={id} recipe={recipes[id]} fill />
                   </div>
                   <span className="text-xs font-semibold text-slate-500 text-center w-20 leading-tight line-clamp-2">{name}</span>
                 </a>
@@ -200,7 +201,7 @@ export const RecipeDetail = () => {
                   className="flex flex-col items-center gap-1 group"
                 >
                   <div className="h-14 aspect-[189/208] rounded-xl overflow-hidden shadow-md ring-1 ring-slate-200 dark:ring-slate-300 group-hover:opacity-75 group-hover:ring-orange-300 transition-all">
-                    <RecipePhotoCard recipeId={id} recipe={typedRecipesDb[id]} fill />
+                    <RecipePhotoCard recipeId={id} recipe={recipes[id]} fill />
                   </div>
                   <span className="text-[10px] font-semibold text-slate-500 text-center w-14 leading-tight line-clamp-2">{name}</span>
                 </a>

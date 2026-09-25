@@ -1,7 +1,6 @@
 import { ChevronDown, RotateCcw } from 'lucide-react';
 import { Ingredient } from '../../../../core/domain/ingredient';
-import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
-import { typedFoodDb } from '../../../../core/typed-db/typedFoodDb';
+import { useFoodsSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 import { UNIT_WEIGHT_UNITS } from '../../../../core/logic/recipe/recipeLogic';
 
 export interface IngredientAdjustRowProps {
@@ -27,6 +26,8 @@ export const IngredientAdjustRow = ({
   onResetUnitWeight,
   onToggleExpand,
 }: IngredientAdjustRowProps) => {
+  const recipes = useRecipesSnapshot();
+  const foods = useFoodsSnapshot();
   const hasData = !!(ing.foodId || ing.baseId);
   const isBase = !!ing.baseId;
   const originalQty = ing.quantity ?? 0;
@@ -34,10 +35,10 @@ export const IngredientAdjustRow = ({
   const unitLabel = ing.unit || null;
 
   const showUnitWeight = !!(ing.foodId && UNIT_WEIGHT_UNITS.includes(ing.unit));
-  const originalUnitWeight = ing.foodId ? (typedFoodDb[ing.foodId]?.unitWeight ?? null) : null;
+  const originalUnitWeight = ing.foodId ? (foods[ing.foodId]?.unitWeight ?? null) : null;
   const isUnitWeightModified = showUnitWeight && originalUnitWeight !== currentUnitWeight;
 
-  const baseRecipe = isBase && ing.baseId ? typedRecipesDb[ing.baseId] : null;
+  const baseRecipe = isBase && ing.baseId ? recipes[ing.baseId] : null;
   const baseScaleFactor = baseRecipe ? currentQty / Math.max(baseRecipe.defaultPortions, 1) : 0;
 
   return (

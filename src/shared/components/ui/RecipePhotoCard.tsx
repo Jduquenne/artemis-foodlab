@@ -3,12 +3,12 @@ import { RecipeDetails } from "../../../core/domain/recipe";
 import { calculateRecipeMacros } from "../../utils/macroUtils";
 import { recipeToPhotoCardData } from "../../utils/cards/cardAdapter";
 import { buildPhotoSvg } from "../../utils/cards/cardSvg";
-import { typedRecipesDb } from "../../../core/typed-db/typedRecipesDb";
-import { typedFoodDb } from "../../../core/typed-db/typedFoodDb";
 import { useMediaSrc } from "../../hooks/useMediaSrc";
+import { useFoodsSnapshot, useRecipesSnapshot } from "../../hooks/useCatalogueSnapshot";
+import { createCardCache } from "../../utils/cards/cardCache";
 import { SvgCard } from "./SvgCard";
 
-const cache = new Map<string, string>();
+const renderPhotoSvg = createCardCache(buildPhotoSvg);
 
 export interface RecipePhotoCardProps {
   recipeId: string;
@@ -20,21 +20,16 @@ export interface RecipePhotoCardProps {
 
 export const RecipePhotoCard = ({ recipeId, recipe, scale, fill, cover }: RecipePhotoCardProps) => {
   const imageHref = useMediaSrc(recipe.assets.mealPhoto) ?? "";
+  const recipes = useRecipesSnapshot();
+  const foods = useFoodsSnapshot();
   const svgContent = useMemo(() => {
-    const cacheKey = `${recipeId}|${imageHref}`;
-    const cached = cache.get(cacheKey);
-    if (cached) return cached;
     try {
-      const macros = calculateRecipeMacros(recipe, typedRecipesDb, typedFoodDb);
-      const svg = buildPhotoSvg(recipeToPhotoCardData(recipeId, recipe, macros, imageHref));
-      cache.set(cacheKey, svg);
-      return svg;
+      const macros = calculateRecipeMacros(recipe, recipes, foods);
+      return renderPhotoSvg(recipeToPhotoCardData(recipeId, recipe, macros, imageHref));
     } catch {
-      const svg = buildPhotoSvg(recipeToPhotoCardData(recipeId, recipe, null, imageHref));
-      cache.set(cacheKey, svg);
-      return svg;
+      return renderPhotoSvg(recipeToPhotoCardData(recipeId, recipe, null, imageHref));
     }
-  }, [recipeId, recipe, imageHref]);
+  }, [recipeId, recipe, recipes, foods, imageHref]);
 
   return <SvgCard svgContent={svgContent} width={189} height={208} scale={scale} fill={fill} cover={cover} />;
 };

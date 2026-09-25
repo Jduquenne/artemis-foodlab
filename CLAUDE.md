@@ -148,7 +148,7 @@ Trois couches, sans exception :
 
 - **Ouverture depuis le planning** : toujours `navigate(buildRecipeDetailUrl(recipeId, portions))` — créneau simple = `savedMeal.persons`, multi = `recipePersons?.[rid] ?? persons`, dessert = `persons` effectif de `DessertColumn`. `persons` planning ≡ « parts » (`persons / defaultPortions`). Les overrides en grammes (`recipeQuantities`) ne sont pas des parts → ignorés ici.
 - **Macros = par portion, donc invariantes au scaling** : `macros` et `handleEditInBuilder` utilisent la recette **non** scalée ; seule la carte reçoit `scaledRecipe`.
-- **Piège cache** : `RecipeRecetteCard`/`RecipeBookCard` mémoïsent leur SVG dans un `Map` module-level. Toute donnée qui change le rendu doit être dans la clé (aujourd'hui `defaultPortions` y est). Ne pas alimenter une autre carte (`RecipePhotoCard`, `RecipeIngredientsCard`) avec des données scalées sans vérifier sa clé.
+- **Cache des cartes SVG** : chaque carte mémoïse son SVG via `createCardCache` (`shared/utils/cards/cardCache.ts`), dont la clé est le JSON des données de rendu (`recipeTo…CardData`). Le cache ne peut donc plus être périmé : toute donnée qui change le rendu change la clé. Avant le 2026-09-25 la clé était `id|image|parts` et ignorait nom/ingrédients/instructions (carte périmée jusqu'au rechargement).
 - `RecipeMacroPage` (calculateur, route séparée) n'est pas portion-aware et ne reçoit pas `?portions`.
 
 ---

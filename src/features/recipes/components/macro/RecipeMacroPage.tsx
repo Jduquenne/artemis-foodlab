@@ -1,8 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
-import { typedFoodDb } from '../../../../core/typed-db/typedFoodDb';
+import { useFoodsSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 import { RecipePhotoCard } from '../../../../shared/components/ui/RecipePhotoCard';
 import { calculateRecipeMacros } from '../../../../shared/utils/macroUtils';
 import { buildUnitWeightOverrides, patchRecipeQuantities, applyUnitWeightOverrides } from '../../../../core/logic/recipe/recipeLogic';
@@ -14,7 +13,9 @@ export const RecipeMacroPage = () => {
   const { recipeId } = useParams();
   const { isLeaving, goBack } = useModalBack(`/recipes/detail/${recipeId}`);
 
-  const recipe = recipeId ? typedRecipesDb[recipeId] : undefined;
+  const recipes = useRecipesSnapshot();
+  const foods = useFoodsSnapshot();
+  const recipe = recipeId ? recipes[recipeId] : undefined;
 
   const [quantities, setQuantities] = useState<Record<string, number>>(() => {
     if (!recipe) return {};
@@ -22,12 +23,12 @@ export const RecipeMacroPage = () => {
   });
 
   const [unitWeights, setUnitWeights] = useState<Record<string, number>>(
-    () => (recipe ? buildUnitWeightOverrides(recipe) : {}),
+    () => (recipe ? buildUnitWeightOverrides(foods, recipe) : {}),
   );
 
   const [expandedBases, setExpandedBases] = useState<Set<string>>(new Set());
 
-  const patchedFoods = useMemo(() => applyUnitWeightOverrides(unitWeights), [unitWeights]);
+  const patchedFoods = useMemo(() => applyUnitWeightOverrides(foods, unitWeights), [foods, unitWeights]);
 
   const patchedRecipe = useMemo(
     () => (recipe ? patchRecipeQuantities(recipe, quantities) : null),
@@ -36,9 +37,9 @@ export const RecipeMacroPage = () => {
 
   const macros = useMemo(() => {
     if (!patchedRecipe) return null;
-    try { return calculateRecipeMacros(patchedRecipe, typedRecipesDb, patchedFoods); }
+    try { return calculateRecipeMacros(patchedRecipe, recipes, patchedFoods); }
     catch { return null; }
-  }, [patchedRecipe, patchedFoods]);
+  }, [patchedRecipe, recipes, patchedFoods]);
 
   if (!recipe) return null;
 
@@ -53,7 +54,7 @@ export const RecipeMacroPage = () => {
   };
 
   const resetUnitWeight = (foodId: string) => {
-    const original = typedFoodDb[foodId]?.unitWeight;
+    const original = foods[foodId]?.unitWeight;
     if (original != null) {
       setUnitWeights(prev => ({ ...prev, [foodId]: original }));
     } else {

@@ -2,9 +2,10 @@ import { useMemo } from "react";
 import { RecipeDetails } from "../../../core/domain/recipe";
 import { recipeToIngredientsCardData } from "../../utils/cards/cardAdapter";
 import { buildIngredientsSvg } from "../../utils/cards/cardSvg";
+import { createCardCache } from "../../utils/cards/cardCache";
 import { SvgCard } from "./SvgCard";
 
-const cache = new Map<string, string>();
+const renderIngredientsSvg = createCardCache(buildIngredientsSvg);
 
 export interface RecipeIngredientsCardProps {
   recipeId: string;
@@ -14,13 +15,10 @@ export interface RecipeIngredientsCardProps {
 }
 
 export const RecipeIngredientsCard = ({ recipeId, recipe, scale, fill }: RecipeIngredientsCardProps) => {
-  const svgContent = useMemo(() => {
-    const cached = cache.get(recipeId);
-    if (cached) return cached;
-    const svg = buildIngredientsSvg(recipeToIngredientsCardData(recipeId, recipe));
-    cache.set(recipeId, svg);
-    return svg;
-  }, [recipeId, recipe]);
+  const svgContent = useMemo(
+    () => renderIngredientsSvg(recipeToIngredientsCardData(recipeId, recipe)),
+    [recipeId, recipe],
+  );
 
   return <SvgCard svgContent={svgContent} width={189} height={208} scale={scale} fill={fill} />;
 };

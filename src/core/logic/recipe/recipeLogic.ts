@@ -1,8 +1,6 @@
 import { Food, Unit } from "../../domain/ingredient";
 import { RecipeDetails } from "../../domain/recipe";
 import { isIngredient } from "../../domain/recipePredicates";
-import { typedRecipesDb } from "../../typed-db/typedRecipesDb";
-import { typedFoodDb } from "../../typed-db/typedFoodDb";
 import { OutdoorEntry, typedOutdoorDb } from "../../typed-db/typedOutdoorDb";
 import { PREDEFINED_FILTERS } from "./predefinedFilterLogic";
 import { calculateRecipeMacros } from "../../../shared/utils/macroUtils";
@@ -28,6 +26,7 @@ export function searchOutdoorRecipes(query: string): OutdoorEntry[] {
 }
 
 export function getLinkedBases(
+  recipes: Record<string, RecipeDetails>,
   recipe: Pick<RecipeDetails, "ingredients">,
 ): { id: string; name: string }[] {
   const seen = new Set<string>();
@@ -35,7 +34,7 @@ export function getLinkedBases(
   for (const ing of recipe.ingredients) {
     if (ing.baseId && !seen.has(ing.baseId)) {
       seen.add(ing.baseId);
-      const base = typedRecipesDb[ing.baseId];
+      const base = recipes[ing.baseId];
       if (base?.assets?.mealPhoto) {
         result.push({ id: ing.baseId, name: base.name });
       }
@@ -44,8 +43,8 @@ export function getLinkedBases(
   return result;
 }
 
-export function getCategoryRecipeIds(categoryId: string): string[] {
-  return Object.entries(typedRecipesDb)
+export function getCategoryRecipeIds(recipes: Record<string, RecipeDetails>, categoryId: string): string[] {
+  return Object.entries(recipes)
     .filter(([, r]) => r.categoryId === categoryId && (r.assets?.mealPhoto || r.assets?.instructionsPhoto))
     .map(([id]) => id);
 }
@@ -115,19 +114,19 @@ export function buildRecipeDetailUrl(recipeId: string, portions: number | undefi
   return portions ? `/recipes/detail/${recipeId}?portions=${portions}` : `/recipes/detail/${recipeId}`;
 }
 
-export function buildUnitWeightOverrides(recipe: RecipeDetails): Record<string, number> {
+export function buildUnitWeightOverrides(foods: Record<string, Food>, recipe: RecipeDetails): Record<string, number> {
   const map: Record<string, number> = {};
   for (const ing of recipe.ingredients) {
     if (ing.foodId && UNIT_WEIGHT_UNITS.includes(ing.unit)) {
-      const w = typedFoodDb[ing.foodId]?.unitWeight;
+      const w = foods[ing.foodId]?.unitWeight;
       if (w != null) map[ing.foodId] = w;
     }
   }
   return map;
 }
 
-export function applyUnitWeightOverrides(unitWeights: Record<string, number>): Record<string, Food> {
-  const result = { ...typedFoodDb };
+export function applyUnitWeightOverrides(foods: Record<string, Food>, unitWeights: Record<string, number>): Record<string, Food> {
+  const result = { ...foods };
   for (const [foodId, weight] of Object.entries(unitWeights)) {
     if (result[foodId]) result[foodId] = { ...result[foodId], unitWeight: weight };
   }

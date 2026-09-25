@@ -3,9 +3,10 @@ import { RecipeDetails } from "../../../core/domain/recipe";
 import { recipeToRecetteCardData } from "../../utils/cards/cardAdapter";
 import { buildRecetteSvg } from "../../utils/cards/cardSvg";
 import { useMediaSrc } from "../../hooks/useMediaSrc";
+import { createCardCache } from "../../utils/cards/cardCache";
 import { SvgCard } from "./SvgCard";
 
-const cache = new Map<string, string>();
+const renderRecetteSvg = createCardCache(buildRecetteSvg);
 
 export interface RecipeRecetteCardProps {
   recipeId: string;
@@ -16,14 +17,10 @@ export interface RecipeRecetteCardProps {
 
 export const RecipeRecetteCard = ({ recipeId, recipe, scale, fill }: RecipeRecetteCardProps) => {
   const imageHref = useMediaSrc(recipe.assets.mealPhoto) ?? "";
-  const svgContent = useMemo(() => {
-    const cacheKey = `${recipeId}|${imageHref}|${recipe.defaultPortions}`;
-    const cached = cache.get(cacheKey);
-    if (cached) return cached;
-    const svg = buildRecetteSvg(recipeToRecetteCardData(recipeId, recipe, imageHref));
-    cache.set(cacheKey, svg);
-    return svg;
-  }, [recipeId, recipe, imageHref]);
+  const svgContent = useMemo(
+    () => renderRecetteSvg(recipeToRecetteCardData(recipeId, recipe, imageHref)),
+    [recipeId, recipe, imageHref],
+  );
 
   return <SvgCard svgContent={svgContent} width={559} height={397} scale={scale} fill={fill} />;
 };

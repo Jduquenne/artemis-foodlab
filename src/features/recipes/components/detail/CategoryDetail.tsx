@@ -116,7 +116,7 @@ export const CategoryDetail = () => {
                                 name={recipe.name}
                                 frontContent={
                                     recipe.isIngredientKind
-                                        ? <FoodPhotoCard recipeId={recipe.id} recipe={recipesDb[recipe.id]} fill />
+                                        ? <FoodPhotoCard recipe={recipesDb[recipe.id]} fill />
                                         : <RecipePhotoCard recipeId={recipe.id} recipe={recipesDb[recipe.id]} fill />
                                 }
                                 backContent={recipe.isIngredientKind ? undefined : <RecipeIngredientsCard recipeId={recipe.id} recipe={recipesDb[recipe.id]} fill />}

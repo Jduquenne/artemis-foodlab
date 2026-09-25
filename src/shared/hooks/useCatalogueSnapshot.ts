@@ -1,9 +1,11 @@
 import { useSyncExternalStore } from "react";
+import { HouseholdItem } from "../../core/domain/household";
 import { Food } from "../../core/domain/ingredient";
 import { Category, RecipeDetails } from "../../core/domain/recipe";
 import { CatalogueScope, getCatalogueVersion, subscribeCatalogue } from "../../core/typed-db/catalogueEvents";
 import { typedCategoriesDb } from "../../core/typed-db/typedCategoriesDb";
 import { typedFoodDb } from "../../core/typed-db/typedFoodDb";
+import { typedHouseholdDb } from "../../core/typed-db/typedHouseholdDb";
 import { buildPlannableDb } from "../../core/typed-db/plannableDb";
 import { typedRecipesDb } from "../../core/typed-db/typedRecipesDb";
 import { Macronutrients } from "../../core/domain/nutrition";
@@ -31,6 +33,7 @@ function useCatalogueSnapshot<T>(source: SnapshotSource<T>): T {
 const recipesSource = createSnapshotSource(["recipes"], () => ({ ...typedRecipesDb }));
 const foodsSource = createSnapshotSource(["foods"], () => ({ ...typedFoodDb }));
 const categoriesSource = createSnapshotSource(["categories"], () => [...typedCategoriesDb]);
+const householdSource = createSnapshotSource(["household"], () => ({ ...typedHouseholdDb }));
 const plannableSource = createSnapshotSource(["recipes", "outdoor"], buildPlannableDb);
 const recipeMetricsSource = createSnapshotSource(["recipes", "foods"], () => ({
   macros: { ...RECIPE_MACROS },
@@ -44,6 +47,7 @@ export interface RecipeMetricsSnapshot {
 
 export const useRecipesSnapshot = (): Record<string, RecipeDetails> => useCatalogueSnapshot(recipesSource);
 export const useFoodsSnapshot = (): Record<string, Food> => useCatalogueSnapshot(foodsSource);
+export const useHouseholdSnapshot = (): Record<string, HouseholdItem> => useCatalogueSnapshot(householdSource);
 export const useCategoriesSnapshot = (): Category[] => useCatalogueSnapshot(categoriesSource);
 export const usePlannableSnapshot = (): Record<string, RecipeDetails> => useCatalogueSnapshot(plannableSource);
 export const useRecipeMetricsSnapshot = (): RecipeMetricsSnapshot => useCatalogueSnapshot(recipeMetricsSource);

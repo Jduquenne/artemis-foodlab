@@ -47,14 +47,17 @@ import { PricePerKgModal } from './components/PricePerKgModal';
 import { HouseholdShoppingCard } from './components/HouseholdShoppingCard';
 import { HouseholdPanel } from '../household/components/HouseholdPanel';
 import { AddExtraModal } from './components/AddExtraModal';
-import { typedHouseholdDb } from '../../core/typed-db/typedHouseholdDb';
+import { useHouseholdSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
 
 export const ShoppingModule = () => {
     const navigate = useNavigate();
     const shoppingDays = useMenuStore((s) => s.shoppingDays);
     const currentPeriodId = useMenuStore((s) => s.currentPeriodId);
     const authStatus = useAuthStore((s) => s.status);
-    const allHouseholdItems = useMemo(() => Object.values(typedHouseholdDb), []);
+    const recipes = useRecipesSnapshot();
+    const { baseGrams } = useRecipeMetricsSnapshot();
+    const householdDb = useHouseholdSnapshot();
+    const allHouseholdItems = useMemo(() => Object.values(householdDb), [householdDb]);
 
     const colCount = Math.min(useColCount(), 3);
     const { foodBags } = useFreezerStock();
@@ -135,13 +138,13 @@ export const ShoppingModule = () => {
     };
 
     const ingredients = useLiveQuery(
-        () => getShoppingListForDays(shoppingDays),
-        [shoppingDays]
+        () => getShoppingListForDays(shoppingDays, { recipes, baseGrams }),
+        [shoppingDays, recipes, baseGrams]
     );
 
     const basesRaw = useLiveQuery(
-        () => getBasesForDays(shoppingDays),
-        [shoppingDays]
+        () => getBasesForDays(shoppingDays, { recipes, baseGrams }),
+        [shoppingDays, recipes, baseGrams]
     );
     const bases = useMemo(() => basesRaw ?? [], [basesRaw]);
 
@@ -153,8 +156,8 @@ export const ShoppingModule = () => {
     }, [householdRecords, allHouseholdItems]);
 
     const recipeCards = useMemo<RecipeCard[]>(
-        () => ingredients ? buildRecipeCards(ingredients, bases) : [],
-        [ingredients, bases]
+        () => ingredients ? buildRecipeCards(ingredients, bases, recipes) : [],
+        [ingredients, bases, recipes]
     );
 
     const keyToFoodId = useMemo(() => {

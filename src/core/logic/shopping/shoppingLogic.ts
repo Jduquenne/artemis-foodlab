@@ -1,12 +1,9 @@
-import { addDays, getISOWeek, getISOWeekYear } from "date-fns";
 import { getWeekSlots } from "../../services/planningService";
 import { HouseholdItem } from "../../domain/household";
 import { Ingredient, IngredientCategory } from "../../domain/ingredient";
 import { MealSlot, ShoppingDay } from "../../domain/planning";
-import { RecipeKind } from "../../domain/recipe";
+import { RecipeDetails, RecipeKind } from "../../domain/recipe";
 import { getAllRecipeIds } from "../../domain/recipePredicates";
-import { typedRecipesDb } from "../../typed-db/typedRecipesDb";
-import { RECIPE_BASE_GRAMS } from "../../../shared/utils/macroUtils";
 import { pluralizeUnit } from "../../../shared/utils/unitUtils";
 import { distributeToColumns } from "../../../shared/utils/columnUtils";
 import { isoDateFromWeekDay } from "../../../shared/utils/dateUtils";
@@ -66,14 +63,20 @@ function cleanRecipeName(name: string): string {
     .trim();
 }
 
+export interface ShoppingCatalogue {
+  recipes: Record<string, RecipeDetails>;
+  baseGrams: Record<string, number>;
+}
+
 function slotScaleFactor(
   slot: MealSlot,
   recipeId: string,
   defaultPortions: number,
+  baseGramsById: Record<string, number>,
 ): number {
   const recipePersonsOverride = slot.recipePersons?.[recipeId];
   const recipeGramsOverride = slot.recipeQuantities?.[recipeId];
-  const baseGrams = RECIPE_BASE_GRAMS[recipeId];
+  const baseGrams = baseGramsById[recipeId];
   if (recipeGramsOverride !== undefined && baseGrams) {
     const persons =
       recipePersonsOverride ?? slot.persons ?? defaultPortions;
@@ -93,8 +96,9 @@ function slotScaleFactor(
 
 async function aggregateSlots(
   slots: MealSlot[],
+  catalogue: ShoppingCatalogue,
 ): Promise<ConsolidatedIngredient[]> {
-  const data = typedRecipesDb;
+  const data = catalogue.recipes;
   const map = new Map<string, ConsolidatedIngredient>();
   const prepMap = new Map<string, Set<string>>();
 
@@ -139,7 +143,7 @@ async function aggregateSlots(
       if (!details) continue;
 
       const recipeName = cleanRecipeName(details.name);
-      const scaleFactor = slotScaleFactor(slot, recipeId, details.defaultPortions);
+      const scaleFactor = slotScaleFactor(slot, recipeId, details.defaultPortions, catalogue.baseGrams);
       const effectivePersons = slot.recipePersons?.[recipeId] ?? slot.persons;
 
       for (const ing of details.ingredients) {
@@ -201,8 +205,8 @@ async function aggregateSlots(
     .sort((a, b) => a.name.localeCompare(b.name, "fr"));
 }
 
-async function aggregateBases(slots: MealSlot[]): Promise<BaseEntry[]> {
-  const data = typedRecipesDb;
+async function aggregateBases(slots: MealSlot[], catalogue: ShoppingCatalogue): Promise<BaseEntry[]> {
+  const data = catalogue.recipes;
   const map = new Map<string, BaseEntry>();
 
   for (const slot of slots) {
@@ -211,7 +215,7 @@ async function aggregateBases(slots: MealSlot[]): Promise<BaseEntry[]> {
       const details = data[recipeId];
       if (!details) continue;
 
-      const scaleFactor = slotScaleFactor(slot, recipeId, details.defaultPortions);
+      const scaleFactor = slotScaleFactor(slot, recipeId, details.defaultPortions, catalogue.baseGrams);
 
       for (const ing of details.ingredients) {
         if (!ing.baseId) continue;
@@ -259,30 +263,20 @@ async function resolveWeekSlots(days: ShoppingDay[]): Promise<MealSlot[]> {
   return slots;
 }
 
-export const getNextWeekShoppingList = async (): Promise<
-  ConsolidatedIngredient[]
-> => {
-  const nextWeekDate = addDays(new Date(), 7);
-  const nextWeek = getISOWeek(nextWeekDate);
-  const nextYear = getISOWeekYear(nextWeekDate);
-
-  const slots = await getWeekSlots(nextYear, nextWeek);
-
-  return aggregateSlots(slots);
-};
-
 export const getShoppingListForDays = async (
   days: ShoppingDay[],
+  catalogue: ShoppingCatalogue,
 ): Promise<ConsolidatedIngredient[]> => {
   if (days.length === 0) return [];
-  return aggregateSlots(await resolveWeekSlots(days));
+  return aggregateSlots(await resolveWeekSlots(days), catalogue);
 };
 
 export const getBasesForDays = async (
   days: ShoppingDay[],
+  catalogue: ShoppingCatalogue,
 ): Promise<BaseEntry[]> => {
   if (days.length === 0) return [];
-  return aggregateBases(await resolveWeekSlots(days));
+  return aggregateBases(await resolveWeekSlots(days), catalogue);
 };
 
 export interface RecipeCardIngredient {
@@ -360,7 +354,11 @@ export function getPeriodKey(days: ShoppingDay[]): string {
 
 type IngredientGroup = { label: string; list: ConsolidatedIngredient[] };
 
-export function buildRecipeCards(ingredients: ConsolidatedIngredient[], bases: BaseEntry[]): RecipeCard[] {
+export function buildRecipeCards(
+  ingredients: ConsolidatedIngredient[],
+  bases: BaseEntry[],
+  recipes: Record<string, RecipeDetails>,
+): RecipeCard[] {
   type RecipeAcc = {
     recipeId: string;
     recipeName: string;
@@ -404,7 +402,7 @@ export function buildRecipeCards(ingredients: ConsolidatedIngredient[], bases: B
     }
   }
   return Array.from(recipeMap.values())
-    .filter((r) => typedRecipesDb[r.recipeId]?.kind !== RecipeKind.INGREDIENT)
+    .filter((r) => recipes[r.recipeId]?.kind !== RecipeKind.INGREDIENT)
     .map((r) => ({
       recipeId: r.recipeId,
       recipeName: r.recipeName,

@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { X, Search } from "lucide-react";
 import { Food, IngredientCategory, Unit } from "../../../core/domain/ingredient";
-import { typedFoodDb } from "../../../core/typed-db/typedFoodDb";
+import { useFoodsSnapshot } from "../../../shared/hooks/useCatalogueSnapshot";
 import { getIngredientCategoryFromSlug, getIngredientCategoryId } from "../../../core/typed-db/ingredientCategoryMap";
 import { getCodeById, getIdByCode } from "../../../core/typed-db/recipeIdMap";
 import { searchFoods } from "../../../core/logic/recipeBuilder/recipeBuilderLogic";
@@ -18,10 +18,9 @@ export interface AddExtraModalProps {
 const INPUT_CLASS =
   "rounded-lg border border-slate-200 bg-white dark:bg-slate-100 px-2.5 py-1.5 text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400";
 
-const foodList = () => Object.values(typedFoodDb);
-
 export const AddExtraModal = ({ extra, plannedRecipes, onClose, onSubmit }: AddExtraModalProps) => {
   const isEdit = extra !== null;
+  const foods = useFoodsSnapshot();
   const [name, setName] = useState(extra?.name ?? "");
   const [quantity, setQuantity] = useState(extra?.quantity != null ? String(extra.quantity) : "");
   const [unit, setUnit] = useState<string>(extra?.unit ?? "");
@@ -37,8 +36,8 @@ export const AddExtraModal = ({ extra, plannedRecipes, onClose, onSubmit }: AddE
   const [submitting, setSubmitting] = useState(false);
 
   const suggestions = useMemo(
-    () => (foodQuery.trim().length >= 2 ? searchFoods(foodQuery.trim(), foodList()) : []),
-    [foodQuery],
+    () => (foodQuery.trim().length >= 2 ? searchFoods(foodQuery.trim(), Object.values(foods)) : []),
+    [foodQuery, foods],
   );
 
   const pickFood = (food: Food) => {

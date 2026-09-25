@@ -4,7 +4,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { HouseholdCategory } from '../../../core/domain/household';
 import { getRecords, toggleItem, clearAll } from '../../../core/services/householdService';
 import { distributeToColumns } from '../../../shared/utils/columnUtils';
-import { typedHouseholdDb } from '../../../core/typed-db/typedHouseholdDb';
+import { useHouseholdSnapshot } from '../../../shared/hooks/useCatalogueSnapshot';
 import { withPending } from '../../../shared/utils/withPending';
 import { HouseholdCategoryCard } from './HouseholdCategoryCard';
 
@@ -23,7 +23,8 @@ export interface HouseholdPanelProps {
 export const HouseholdPanel = ({ colCount }: HouseholdPanelProps) => {
   const records = useLiveQuery(() => getRecords(), []);
   const [spinning, setSpinning] = useState(false);
-  const allItems = useMemo(() => Object.values(typedHouseholdDb), []);
+  const householdDb = useHouseholdSnapshot();
+  const allItems = useMemo(() => Object.values(householdDb), [householdDb]);
 
   const checkedIds = useMemo(() => {
     const set = new Set<string>();

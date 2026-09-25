@@ -94,10 +94,36 @@ function slotScaleFactor(
   return 1;
 }
 
-async function aggregateSlots(
+function compareNames(a: { name: string }, b: { name: string }): number {
+  return a.name.localeCompare(b.name, "fr");
+}
+
+function buildIngredientSource(
+  slot: MealSlot,
+  recipeId: string,
+  recipeName: string,
+  ingredient: Ingredient,
+  quantity: number,
+  fromBaseId?: string,
+): IngredientSource {
+  const persons = slot.recipePersons?.[recipeId] ?? slot.persons;
+  return {
+    recipeId,
+    recipeName,
+    day: slot.day,
+    isoDate: isoDateFromWeekDay(slot.year, slot.week, slot.day),
+    slot: slot.slot,
+    quantity,
+    unit: ingredient.unit,
+    ...(fromBaseId && { fromBaseId }),
+    ...(persons !== undefined && { persons, baseQuantity: ingredient.quantity ?? 0 }),
+  };
+}
+
+function aggregateSlots(
   slots: MealSlot[],
   catalogue: ShoppingCatalogue,
-): Promise<ConsolidatedIngredient[]> {
+): ConsolidatedIngredient[] {
   const data = catalogue.recipes;
   const map = new Map<string, ConsolidatedIngredient>();
   const prepMap = new Map<string, Set<string>>();
@@ -144,7 +170,6 @@ async function aggregateSlots(
 
       const recipeName = cleanRecipeName(details.name);
       const scaleFactor = slotScaleFactor(slot, recipeId, details.defaultPortions, catalogue.baseGrams);
-      const effectivePersons = slot.recipePersons?.[recipeId] ?? slot.persons;
 
       for (const ing of details.ingredients) {
         if (ing.baseId) {
@@ -153,44 +178,15 @@ async function aggregateSlots(
             const basePortionScale = (ing.quantity ?? 1) / baseRecipe.defaultPortions;
             const combinedScale = scaleFactor * basePortionScale;
             for (const baseIng of baseRecipe.ingredients) {
-              const baseQty = baseIng.quantity ?? 0;
-              const qty = baseQty * combinedScale;
-              const source: IngredientSource = {
-                recipeId,
-                recipeName,
-                day: slot.day,
-                isoDate: isoDateFromWeekDay(slot.year, slot.week, slot.day),
-                slot: slot.slot,
-                quantity: qty,
-                unit: baseIng.unit,
-                fromBaseId: ing.baseId,
-                ...(effectivePersons !== undefined && {
-                  persons: effectivePersons,
-                  baseQuantity: baseQty,
-                }),
-              };
-              addIngredientToMap(baseIng, qty, source);
+              const qty = (baseIng.quantity ?? 0) * combinedScale;
+              addIngredientToMap(baseIng, qty, buildIngredientSource(slot, recipeId, recipeName, baseIng, qty, ing.baseId));
             }
             continue;
           }
         }
 
-        const baseQty = ing.quantity ?? 0;
-        const qty = baseQty * scaleFactor;
-        const source: IngredientSource = {
-          recipeId,
-          recipeName,
-          day: slot.day,
-          isoDate: isoDateFromWeekDay(slot.year, slot.week, slot.day),
-          slot: slot.slot,
-          quantity: qty,
-          unit: ing.unit,
-          ...(effectivePersons !== undefined && {
-            persons: effectivePersons,
-            baseQuantity: baseQty,
-          }),
-        };
-        addIngredientToMap(ing, qty, source);
+        const qty = (ing.quantity ?? 0) * scaleFactor;
+        addIngredientToMap(ing, qty, buildIngredientSource(slot, recipeId, recipeName, ing, qty));
       }
     }
   }
@@ -202,10 +198,10 @@ async function aggregateSlots(
         ? { ...item, preparation: [...preps].join(", ") }
         : item;
     })
-    .sort((a, b) => a.name.localeCompare(b.name, "fr"));
+    .sort(compareNames);
 }
 
-async function aggregateBases(slots: MealSlot[], catalogue: ShoppingCatalogue): Promise<BaseEntry[]> {
+function aggregateBases(slots: MealSlot[], catalogue: ShoppingCatalogue): BaseEntry[] {
   const data = catalogue.recipes;
   const map = new Map<string, BaseEntry>();
 
@@ -238,9 +234,7 @@ async function aggregateBases(slots: MealSlot[], catalogue: ShoppingCatalogue): 
     }
   }
 
-  return Array.from(map.values()).sort((a, b) =>
-    a.name.localeCompare(b.name, "fr"),
-  );
+  return Array.from(map.values()).sort(compareNames);
 }
 
 async function resolveWeekSlots(days: ShoppingDay[]): Promise<MealSlot[]> {
@@ -307,6 +301,32 @@ export function buildSourceCheckKey(
   return `${ingredientKey}::${source.recipeId}::${source.day}::${source.slot}`;
 }
 
+function checkedSourcesQuantity(ing: ConsolidatedIngredient, sourceChecked: Set<string>): number {
+  return ing.sources
+    .filter((s) => sourceChecked.has(buildSourceCheckKey(ing.key, s)))
+    .reduce((sum, s) => sum + s.quantity, 0);
+}
+
+export function remainingToBuy(
+  ing: ConsolidatedIngredient,
+  stocks: Record<string, number>,
+  sourceChecked: Set<string>,
+): number {
+  if (ing.totalQuantity === 0) return 0;
+  const effective = Math.max(0, ing.totalQuantity - checkedSourcesQuantity(ing, sourceChecked));
+  return Math.max(0, effective - (stocks[ing.key] ?? 0));
+}
+
+export function isIngredientNeeded(
+  ing: ConsolidatedIngredient,
+  checked: Set<string>,
+  stocks: Record<string, number>,
+  sourceChecked: Set<string>,
+): boolean {
+  if (checked.has(ing.key)) return false;
+  return ing.totalQuantity === 0 || remainingToBuy(ing, stocks, sourceChecked) > 0;
+}
+
 export function isIngChecked(ing: RecipeCardIngredient, sourceChecked: Set<string>): boolean {
   return ing.sources.length > 0 && ing.sources.every(
     (s) => sourceChecked.has(buildSourceCheckKey(ing.ingredientKey, s))
@@ -350,51 +370,51 @@ export const CATEGORY_ORDER: IngredientCategory[] = [
 
 type IngredientGroup = { label: string; list: ConsolidatedIngredient[] };
 
+function accumulateIngredient(
+  target: Map<string, RecipeCardIngredient>,
+  ing: ConsolidatedIngredient,
+  source: IngredientSource,
+): void {
+  const existing = target.get(ing.key);
+  if (existing) {
+    existing.quantity += source.quantity;
+    existing.sources.push(source);
+    return;
+  }
+  target.set(ing.key, { ingredientKey: ing.key, name: ing.name, quantity: source.quantity, unit: ing.unit, sources: [source] });
+}
+
+interface RecipeCardAccumulator {
+  recipeId: string;
+  recipeName: string;
+  directIngs: Map<string, RecipeCardIngredient>;
+  baseGroups: Map<string, { baseId: string; baseName: string; ings: Map<string, RecipeCardIngredient> }>;
+}
+
 export function buildRecipeCards(
   ingredients: ConsolidatedIngredient[],
   bases: BaseEntry[],
   recipes: Record<string, RecipeDetails>,
 ): RecipeCard[] {
-  type RecipeAcc = {
-    recipeId: string;
-    recipeName: string;
-    directIngs: Map<string, RecipeCardIngredient>;
-    baseGroups: Map<string, { baseId: string; baseName: string; ings: Map<string, RecipeCardIngredient> }>;
-  };
-  const recipeMap = new Map<string, RecipeAcc>();
+  const recipeMap = new Map<string, RecipeCardAccumulator>();
   for (const ing of ingredients) {
     for (const source of ing.sources) {
-      if (!recipeMap.has(source.recipeId)) {
-        recipeMap.set(source.recipeId, {
-          recipeId: source.recipeId,
-          recipeName: source.recipeName,
-          directIngs: new Map(),
-          baseGroups: new Map(),
-        });
+      let recipe = recipeMap.get(source.recipeId);
+      if (!recipe) {
+        recipe = { recipeId: source.recipeId, recipeName: source.recipeName, directIngs: new Map(), baseGroups: new Map() };
+        recipeMap.set(source.recipeId, recipe);
       }
-      const recipe = recipeMap.get(source.recipeId)!;
-      if (source.fromBaseId) {
+      if (!source.fromBaseId) {
+        accumulateIngredient(recipe.directIngs, ing, source);
+        continue;
+      }
+      let baseGroup = recipe.baseGroups.get(source.fromBaseId);
+      if (!baseGroup) {
         const baseName = bases.find((b) => b.baseId === source.fromBaseId)?.name ?? source.fromBaseId;
-        if (!recipe.baseGroups.has(source.fromBaseId)) {
-          recipe.baseGroups.set(source.fromBaseId, { baseId: source.fromBaseId, baseName, ings: new Map() });
-        }
-        const baseGroup = recipe.baseGroups.get(source.fromBaseId)!;
-        if (!baseGroup.ings.has(ing.key)) {
-          baseGroup.ings.set(ing.key, { ingredientKey: ing.key, name: ing.name, quantity: source.quantity, unit: ing.unit, sources: [source] });
-        } else {
-          const ex = baseGroup.ings.get(ing.key)!;
-          ex.quantity += source.quantity;
-          ex.sources.push(source);
-        }
-      } else {
-        if (!recipe.directIngs.has(ing.key)) {
-          recipe.directIngs.set(ing.key, { ingredientKey: ing.key, name: ing.name, quantity: source.quantity, unit: ing.unit, sources: [source] });
-        } else {
-          const ex = recipe.directIngs.get(ing.key)!;
-          ex.quantity += source.quantity;
-          ex.sources.push(source);
-        }
+        baseGroup = { baseId: source.fromBaseId, baseName, ings: new Map() };
+        recipe.baseGroups.set(source.fromBaseId, baseGroup);
       }
+      accumulateIngredient(baseGroup.ings, ing, source);
     }
   }
   return Array.from(recipeMap.values())
@@ -402,48 +422,38 @@ export function buildRecipeCards(
     .map((r) => ({
       recipeId: r.recipeId,
       recipeName: r.recipeName,
-      directIngredients: Array.from(r.directIngs.values()).sort((a, b) => a.name.localeCompare(b.name, 'fr')),
+      directIngredients: Array.from(r.directIngs.values()).sort(compareNames),
       baseGroups: Array.from(r.baseGroups.values())
-        .map((b) => ({ baseId: b.baseId, baseName: b.baseName, ingredients: Array.from(b.ings.values()).sort((a, b) => a.name.localeCompare(b.name, 'fr')) }))
-        .sort((a, b) => a.baseName.localeCompare(b.baseName, 'fr')),
+        .map((b) => ({ baseId: b.baseId, baseName: b.baseName, ingredients: Array.from(b.ings.values()).sort(compareNames) }))
+        .sort((a, b) => a.baseName.localeCompare(b.baseName, "fr")),
     }))
-    .sort((a, b) => a.recipeName.localeCompare(b.recipeName, 'fr'));
+    .sort((a, b) => a.recipeName.localeCompare(b.recipeName, "fr"));
+}
+
+function groupByCategory(
+  ingredients: ConsolidatedIngredient[],
+  keep: (ingredient: ConsolidatedIngredient) => boolean = () => true,
+): IngredientGroup[] {
+  const groups: IngredientGroup[] = CATEGORY_ORDER
+    .map((cat) => ({ label: cat as string, list: ingredients.filter((i) => i.category === cat && keep(i)) }))
+    .filter((g) => g.list.length > 0);
+  const uncategorized = ingredients.filter((i) => (!i.category || !CATEGORY_ORDER.includes(i.category)) && keep(i));
+  if (uncategorized.length > 0) groups.push({ label: "Autres", list: uncategorized });
+  return groups;
 }
 
 export function groupIngredients(ingredients: ConsolidatedIngredient[]): IngredientGroup[] {
-  const groups: IngredientGroup[] = CATEGORY_ORDER
-    .map((cat) => ({ label: cat as string, list: ingredients.filter((i) => i.category === cat) }))
-    .filter((g) => g.list.length > 0);
-  const uncategorized = ingredients.filter((i) => !i.category || !CATEGORY_ORDER.includes(i.category));
-  if (uncategorized.length > 0) groups.push({ label: 'Autres', list: uncategorized });
-  return groups;
+  return groupByCategory(ingredients);
 }
 
 export function filterGroupedIngredients(
   ingredients: ConsolidatedIngredient[],
-  filter: 'all' | 'missing',
+  filter: "all" | "missing",
   checked: Set<string>,
   stocks: Record<string, number>,
   sourceChecked: Set<string>,
 ): IngredientGroup[] {
-  const getEffective = (i: ConsolidatedIngredient) => {
-    const srcQty = i.sources
-      .filter((s) => sourceChecked.has(`${i.key}::${s.recipeId}::${s.day}::${s.slot}`))
-      .reduce((sum, s) => sum + s.quantity, 0);
-    return Math.max(0, i.totalQuantity - srcQty);
-  };
-  const isNeeded = (i: ConsolidatedIngredient) => {
-    if (checked.has(i.key)) return false;
-    if (i.totalQuantity === 0) return true;
-    return Math.max(0, getEffective(i) - (stocks[i.key] ?? 0)) > 0;
-  };
-  const filterItem = (i: ConsolidatedIngredient) => filter === 'all' || isNeeded(i);
-  const groups: IngredientGroup[] = CATEGORY_ORDER
-    .map((cat) => ({ label: cat as string, list: ingredients.filter((i) => i.category === cat && filterItem(i)) }))
-    .filter((g) => g.list.length > 0);
-  const uncategorized = ingredients.filter((i) => (!i.category || !CATEGORY_ORDER.includes(i.category)) && filterItem(i));
-  if (uncategorized.length > 0) groups.push({ label: 'Autres', list: uncategorized });
-  return groups;
+  return groupByCategory(ingredients, (i) => filter === "all" || isIngredientNeeded(i, checked, stocks, sourceChecked));
 }
 
 export function computeUncheckedCount(
@@ -453,15 +463,7 @@ export function computeUncheckedCount(
   sourceChecked: Set<string>,
   householdItems: HouseholdItem[],
 ): number {
-  const ingredientUnchecked = ingredients.filter((i) => {
-    if (checked.has(i.key)) return false;
-    if (i.totalQuantity === 0) return true;
-    const srcQty = i.sources
-      .filter((s) => sourceChecked.has(`${i.key}::${s.recipeId}::${s.day}::${s.slot}`))
-      .reduce((sum, s) => sum + s.quantity, 0);
-    const effective = Math.max(0, i.totalQuantity - srcQty);
-    return Math.max(0, effective - (stocks[i.key] ?? 0)) > 0;
-  }).length;
+  const ingredientUnchecked = ingredients.filter((i) => isIngredientNeeded(i, checked, stocks, sourceChecked)).length;
   const householdUnchecked = householdItems.filter((i) => !checked.has(`household::${i.id}`)).length;
   return ingredientUnchecked + householdUnchecked;
 }
@@ -483,7 +485,7 @@ export function assignIngredientColumns(
 }
 
 export function buildShoppingClipboardText(
-  allGroupedItems: { label: string; list: ConsolidatedIngredient[] }[],
+  allGroupedItems: IngredientGroup[],
   checked: Set<string>,
   stocks: Record<string, number>,
   sourceChecked: Set<string>,
@@ -499,24 +501,12 @@ export function buildShoppingClipboardText(
   const lines: string[] = [];
 
   for (const group of allGroupedItems) {
-    const items = group.list.filter((i) => {
-      if (checked.has(i.key)) return false;
-      if (i.totalQuantity === 0) return true;
-      const srcQty = i.sources
-        .filter((s) => sourceChecked.has(`${i.key}::${s.recipeId}::${s.day}::${s.slot}`))
-        .reduce((sum, s) => sum + s.quantity, 0);
-      const effective = Math.max(0, i.totalQuantity - srcQty);
-      return Math.max(0, effective - (stocks[i.key] ?? 0)) > 0;
-    });
+    const items = group.list.filter((i) => isIngredientNeeded(i, checked, stocks, sourceChecked));
 
     if (items.length === 0) continue;
 
     const itemParts = items.map((item) => {
-      const srcQty = item.sources
-        .filter((s) => sourceChecked.has(`${item.key}::${s.recipeId}::${s.day}::${s.slot}`))
-        .reduce((sum, s) => sum + s.quantity, 0);
-      const effective = Math.max(0, item.totalQuantity - srcQty);
-      const needed = item.totalQuantity === 0 ? 0 : Math.max(0, effective - (stocks[item.key] ?? 0));
+      const needed = remainingToBuy(item, stocks, sourceChecked);
 
       let part = item.name;
       if (item.preparation) part += ` (${item.preparation})`;

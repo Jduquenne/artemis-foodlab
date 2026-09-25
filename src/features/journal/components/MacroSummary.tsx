@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SlidersHorizontal, CalendarRange } from "lucide-react";
-import { Macronutrients } from "../../../core/domain/nutrition";
+import { Macronutrients, NUTRIENT_DEFINITIONS } from "../../../core/domain/nutrition";
 import { MealSlot } from "../../../core/domain/planning";
 import { useActiveTargets } from "../../../shared/hooks/useActiveProfile";
 import { MacroTargetsModal } from "./modal/MacroTargetsModal";
@@ -12,12 +12,6 @@ export interface MacroSummaryProps {
   weekSlots: MealSlot[];
 }
 
-const ITEMS: { key: keyof Omit<Macronutrients, "kcal">; label: string }[] = [
-  { key: "proteins", label: "Protéines" },
-  { key: "lipids", label: "Lipides" },
-  { key: "carbohydrates", label: "Glucides" },
-  { key: "fibers", label: "Fibres" },
-];
 
 export const MacroSummary = ({ macros, weekSlots }: MacroSummaryProps) => {
   const { kcalTarget, macroTargets } = useActiveTargets();
@@ -79,7 +73,7 @@ export const MacroSummary = ({ macros, weekSlots }: MacroSummaryProps) => {
         </div>
 
         <div className="grid grid-cols-4 gap-2 tablet:gap-3">
-          {ITEMS.map(({ key, label }) => {
+          {NUTRIENT_DEFINITIONS.map(({ key, label }) => {
             const value = macros[key];
             const target = macroTargets[key];
             const pct = Math.min(100, Math.round((value / target) * 100));

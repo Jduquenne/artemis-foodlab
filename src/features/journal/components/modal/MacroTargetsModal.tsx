@@ -3,17 +3,20 @@ import { X, Check } from "lucide-react";
 import { useProfileStore } from "../../../../shared/store/useProfileStore";
 import { useActiveProfile, useActiveTargets } from "../../../../shared/hooks/useActiveProfile";
 import { atwaterKcal } from "../../../../core/logic/nutrition/atwaterLogic";
+import { NUTRIENT_DEFINITIONS, NutrientKey } from "../../../../core/domain/nutrition";
 
 export interface MacroTargetsModalProps {
   onClose: () => void;
 }
 
-const FIELDS = [
-  { key: "proteins" as const, label: "Protéines", unit: "g", min: 10, max: 500, step: 5 },
-  { key: "lipids" as const, label: "Lipides", unit: "g", min: 10, max: 300, step: 5 },
-  { key: "carbohydrates" as const, label: "Glucides", unit: "g", min: 10, max: 600, step: 5 },
-  { key: "fibers" as const, label: "Fibres", unit: "g", min: 5, max: 100, step: 1 },
-];
+const TARGET_RANGES: Record<NutrientKey, { min: number; max: number; step: number }> = {
+  proteins: { min: 10, max: 500, step: 5 },
+  lipids: { min: 10, max: 300, step: 5 },
+  carbohydrates: { min: 10, max: 600, step: 5 },
+  fibers: { min: 5, max: 100, step: 1 },
+};
+
+const FIELDS = NUTRIENT_DEFINITIONS.map((definition) => ({ ...definition, ...TARGET_RANGES[definition.key] }));
 
 export const MacroTargetsModal = ({ onClose }: MacroTargetsModalProps) => {
   const profile = useActiveProfile();

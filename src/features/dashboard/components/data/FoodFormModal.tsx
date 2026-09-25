@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { X } from "lucide-react";
 import { Food, IngredientCategory, Unit } from "../../../../core/domain/ingredient";
-import { Macronutrients } from "../../../../core/domain/nutrition";
+import { Macronutrients, NUTRIENT_DEFINITIONS } from "../../../../core/domain/nutrition";
 import { FoodInput } from "../../../../core/domain/catalogueInput";
 import {
   FoodFormDraft,
@@ -24,12 +24,6 @@ export interface FoodFormModalProps {
   onSubmit: (body: FoodInput) => Promise<boolean>;
 }
 
-const MACRO_FIELDS: { key: keyof Macronutrients; label: string }[] = [
-  { key: "proteins", label: "Protéines" },
-  { key: "lipids", label: "Lipides" },
-  { key: "carbohydrates", label: "Glucides" },
-  { key: "fibers", label: "Fibres" },
-];
 
 const INPUT_CLASS =
   "rounded-lg border border-slate-200 bg-white dark:bg-slate-100 px-2.5 py-1.5 text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400";
@@ -174,7 +168,7 @@ export const FoodFormModal = ({ food, foods, onClose, onSubmit }: FoodFormModalP
           <div className="flex flex-col gap-1.5">
             <span className="text-xs font-bold text-slate-500">Valeurs pour 100 g / 100 ml</span>
             <div className="grid grid-cols-5 gap-2">
-              {MACRO_FIELDS.map((field) => (
+              {NUTRIENT_DEFINITIONS.map((field) => (
                 <label key={field.key} className="flex flex-col gap-1">
                   <span className="text-[10px] text-slate-400 text-center">{field.label}</span>
                   <input

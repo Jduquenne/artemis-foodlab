@@ -1,5 +1,5 @@
 import { Food, IngredientCategory } from "../../domain/ingredient";
-import { Macronutrients } from "../../domain/nutrition";
+import { Macronutrients, NUTRIENT_DEFINITIONS, NutrientKey } from "../../domain/nutrition";
 import { FoodInput } from "../../domain/catalogueInput";
 import { getIngredientCategoryId } from "../../domain/ingredientCategorySlugs";
 import { RecapEntry, diffEntry, recapBool, recapText } from "./recapLogic";
@@ -16,7 +16,7 @@ export interface FoodFormDraft {
   macros: Record<keyof Macronutrients, string>;
 }
 
-export const EDITABLE_MACRO_KEYS: (keyof Macronutrients)[] = ["proteins", "lipids", "carbohydrates", "fibers"];
+export const EDITABLE_MACRO_KEYS: NutrientKey[] = NUTRIENT_DEFINITIONS.map((definition) => definition.key);
 
 export function parseEditableMacros(
   raw: Record<keyof Macronutrients, string>,
@@ -85,13 +85,9 @@ export function validateFoodForm(draft: FoodFormDraft): string[] {
   return errors;
 }
 
-const MACRO_LABELS: Record<keyof Macronutrients, string> = {
-  kcal: "Kcal",
-  proteins: "Protéines",
-  lipids: "Lipides",
-  carbohydrates: "Glucides",
-  fibers: "Fibres",
-};
+const MACRO_LABELS: Record<NutrientKey, string> = Object.fromEntries(
+  NUTRIENT_DEFINITIONS.map((definition) => [definition.key, definition.label]),
+) as Record<NutrientKey, string>;
 
 export function buildFoodRecap(original: Food | null, id: string, draft: FoodFormDraft): RecapEntry[] {
   const draftKcal = String(atwaterKcal(parseEditableMacros(draft.macros)));

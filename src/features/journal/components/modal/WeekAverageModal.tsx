@@ -10,19 +10,14 @@ import {
   computeWeekAverage,
 } from "../../../../core/logic/journal/weekAverageLogic";
 import { toggleInList } from "../../../../shared/utils/collectionUtils";
+import { NUTRIENT_DEFINITIONS } from "../../../../core/domain/nutrition";
 
 export interface WeekAverageModalProps {
   weekSlots: MealSlot[];
   onClose: () => void;
 }
 
-const ROWS = [
-  { key: "kcal" as const, label: "Calories", unit: "kcal" },
-  { key: "proteins" as const, label: "Protéines", unit: "g" },
-  { key: "lipids" as const, label: "Lipides", unit: "g" },
-  { key: "carbohydrates" as const, label: "Glucides", unit: "g" },
-  { key: "fibers" as const, label: "Fibres", unit: "g" },
-];
+const ROWS = [{ key: "kcal" as const, label: "Calories", unit: "kcal" }, ...NUTRIENT_DEFINITIONS];
 
 export const WeekAverageModal = ({ weekSlots, onClose }: WeekAverageModalProps) => {
   const { kcalTarget, macroTargets } = useActiveTargets();

@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Macronutrients } from "../../../../core/domain/nutrition";
+import { Macronutrients, MACRO_DISPLAYS } from "../../../../core/domain/nutrition";
 import { DraftIngredient } from "../../../../core/domain/recipeBuilderTypes";
 import { computeDraftTotal } from "../../../../core/logic/recipeBuilder/builderMacrosLogic";
 import { useFoodsSnapshot, useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
@@ -9,13 +9,6 @@ export interface MacroPreviewProps {
   defaultPortions: number;
 }
 
-const MACRO_LABELS: { key: keyof Macronutrients; label: string; unit: string }[] = [
-  { key: "kcal", label: "Kcal", unit: "" },
-  { key: "proteins", label: "Protéines", unit: "g" },
-  { key: "lipids", label: "Lipides", unit: "g" },
-  { key: "carbohydrates", label: "Glucides", unit: "g" },
-  { key: "fibers", label: "Fibres", unit: "g" },
-];
 
 export const MacroPreview = ({ ingredients, defaultPortions }: MacroPreviewProps) => {
   const [mode, setMode] = useState<"portion" | "total">("portion");
@@ -62,7 +55,7 @@ export const MacroPreview = ({ ingredients, defaultPortions }: MacroPreviewProps
         <p className="text-xs text-slate-400 py-1.5">Aucun ingrédient ajouté</p>
       ) : (
         <div className="flex justify-between gap-2">
-          {MACRO_LABELS.map(({ key, label, unit }) => (
+          {MACRO_DISPLAYS.map(({ key, label, unit }) => (
             <div
               key={key}
               className="flex-1 flex flex-col items-center gap-0.5 bg-slate-100 dark:bg-slate-200 rounded-xl px-1 py-1.5"

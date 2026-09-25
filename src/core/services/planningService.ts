@@ -6,10 +6,10 @@ import {
   ApiPlanningSlot,
   ApiPlanningSlotItem,
   buildSlotItemsBatchPayload,
-  diffSlotItems,
   mapApiItemsToSlotFields,
   mapApiSlotToMealSlot,
 } from "../logic/planning/planningApiMapper";
+import { diffSlotItems } from "../logic/planning/slotDiffLogic";
 
 export const getWeekSlots = (year: number, week: number) =>
   db.planning.where("[year+week]").equals([year, week]).toArray();

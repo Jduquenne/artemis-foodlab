@@ -4,7 +4,7 @@ import { MealSlot as MealSlotComp } from "./MealSlot";
 import { MultiMealSlot } from "./MultiMealSlot";
 import { MealSlotDef } from "../../../../core/domain/planningConfig";
 import { SLOT_DISPLAY } from "../../slotDisplay";
-import { SlotCopyProps } from "../../../../core/logic/planning/planningLogic";
+import { SlotCopyProps } from "../../../../core/logic/planning/planningCopyLogic";
 import { buildRecipeDetailUrl } from "../../../../core/logic/recipe/recipeLogic";
 
 export interface PlanningSlotProps {

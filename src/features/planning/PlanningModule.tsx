@@ -25,7 +25,9 @@ import { isDessert, canAddDessert, isSlotFull } from '../../core/domain/recipePr
 import { MEAL_SLOTS, DAYS } from '../../core/domain/planningConfig';
 import { SLOT_DISPLAY } from './slotDisplay';
 import { usePlannableSnapshot, useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
-import { computeSlotCopyProps, parseFullSlotId, computeDragMoveSlots, ParsedSlot } from '../../core/logic/planning/planningLogic';
+import { computeSlotCopyProps } from '../../core/logic/planning/planningCopyLogic';
+import { computeDragMoveSlots } from '../../core/logic/planning/planningDragLogic';
+import { ParsedSlot, buildSlotId, parseFullSlotId } from '../../core/logic/planning/planningSlotIdLogic';
 import { withPending } from '../../shared/utils/withPending';
 import { MoveDessertsPrompt } from './components/MoveDessertsPrompt';
 import { TABLET_WEEK_GRID_COLS } from './planningLayout';
@@ -133,7 +135,7 @@ export const PlanningModule = () => {
     const activeMeal = useMemo(
         () => {
             if (!activeDragId) return null;
-            return planningData.find(p => `${year}-W${weekNumber}-${p.day}-${p.slot}` === activeDragId) ?? dragSourceSlot;
+            return planningData.find(p => buildSlotId(year, weekNumber, p.day, p.slot) === activeDragId) ?? dragSourceSlot;
         },
         [activeDragId, planningData, year, weekNumber, dragSourceSlot]
     );
@@ -219,12 +221,12 @@ export const PlanningModule = () => {
     };
 
     const handleDeleteMeal = async (day: string, slot: SlotType) => {
-        const slotId = `${year}-W${weekNumber}-${day}-${slot}`;
+        const slotId = buildSlotId(year, weekNumber, day, slot);
         await withPending(`planning-slot-delete:${slotId}`, () => deleteSlot(slotId));
     };
 
     const handleAddDessert = async (day: string, slot: SlotType, recipeId: string) => {
-        const slotId = `${year}-W${weekNumber}-${day}-${slot}`;
+        const slotId = buildSlotId(year, weekNumber, day, slot);
         const savedSlot = planningData.find(p => p.day === day && p.slot === slot)
             ?? { id: slotId, day, slot, recipeIds: [], year, week: weekNumber };
         await addDessertToSlot(savedSlot, recipeId);
@@ -233,14 +235,14 @@ export const PlanningModule = () => {
     const handleRemoveDessert = async (day: string, slot: SlotType, recipeId: string) => {
         const savedSlot = planningData.find(p => p.day === day && p.slot === slot);
         if (!savedSlot) return;
-        const slotId = `${year}-W${weekNumber}-${day}-${slot}`;
+        const slotId = buildSlotId(year, weekNumber, day, slot);
         await withPending(`planning-dessert-remove:${slotId}:${recipeId}`, () => removeDessertFromSlot(savedSlot, recipeId));
     };
 
     const handleRemoveRecipe = async (day: string, slot: SlotType, recipeIdToRemove: string) => {
         const existing = planningData.find(p => p.day === day && p.slot === slot);
         if (!existing) return;
-        const slotId = `${year}-W${weekNumber}-${day}-${slot}`;
+        const slotId = buildSlotId(year, weekNumber, day, slot);
         await withPending(`planning-recipe-remove:${slotId}:${recipeIdToRemove}`, async () => {
             const ids = existing.recipeIds.filter(id => id !== recipeIdToRemove);
             if (ids.length === 0) await deleteSlot(existing.id);
@@ -250,7 +252,7 @@ export const PlanningModule = () => {
 
     const handleDragStart = ({ active }: DragStartEvent) => {
         setActiveDragId(active.id as string);
-        const meal = planningData.find(p => `${year}-W${weekNumber}-${p.day}-${p.slot}` === (active.id as string));
+        const meal = planningData.find(p => buildSlotId(year, weekNumber, p.day, p.slot) === (active.id as string));
         setDragSourceSlot(meal ?? null);
     };
 
@@ -278,8 +280,8 @@ export const PlanningModule = () => {
 
         if (!fromMeal) return;
 
-        const fromId = `${from.year}-W${from.week}-${from.day}-${from.slot}`;
-        const toId = `${to.year}-W${to.week}-${to.day}-${to.slot}`;
+        const fromId = buildSlotId(from.year, from.week, from.day, from.slot);
+        const toId = buildSlotId(to.year, to.week, to.day, to.slot);
 
         if ((fromMeal.dessertIds?.length ?? 0) > 0) {
             setPendingDragMove({ fromMeal, toMeal, fromId, toId, from, to });
@@ -325,7 +327,7 @@ export const PlanningModule = () => {
     const handleSetDessertPersons = async (day: string, slot: SlotType, dessertId: string, persons: number) => {
         const existing = planningData.find(p => p.day === day && p.slot === slot);
         if (!existing) return;
-        const slotId = `${year}-W${weekNumber}-${day}-${slot}`;
+        const slotId = buildSlotId(year, weekNumber, day, slot);
         await withPending(`planning-dessert-persons:${slotId}:${dessertId}`, () => setRecipePersonsOnSlot(existing, dessertId, persons));
     };
 
@@ -347,7 +349,7 @@ export const PlanningModule = () => {
                 const sep = target.indexOf('|');
                 const targetDay = target.slice(0, sep);
                 const targetSlot = target.slice(sep + 1) as SlotType;
-                const slotId = `${year}-W${weekNumber}-${targetDay}-${targetSlot}`;
+                const slotId = buildSlotId(year, weekNumber, targetDay, targetSlot);
                 const existing = planningData.find(p => p.day === targetDay && p.slot === targetSlot);
                 const personsUpdate = sourcePersons !== undefined
                     ? { recipePersons: { ...existing?.recipePersons, [recipeId]: sourcePersons } }
@@ -378,7 +380,7 @@ export const PlanningModule = () => {
     };
 
     const handleConfirmPersons = async (slotId: string, persons: number) => {
-        const existing = planningData.find(p => `${year}-W${weekNumber}-${p.day}-${p.slot}` === slotId);
+        const existing = planningData.find(p => buildSlotId(year, weekNumber, p.day, p.slot) === slotId);
         if (existing) await withPending(`planning-persons:${slotId}`, () => saveSlot({ ...existing, persons }));
         setEditingPersonsSlotId(null);
     };
@@ -386,7 +388,7 @@ export const PlanningModule = () => {
     const handleSaveRecipeMeta = async (day: string, slot: SlotType, recipeId: string, persons: number, grams: number) => {
         const existing = planningData.find(p => p.day === day && p.slot === slot);
         if (!existing) return;
-        const slotId = `${year}-W${weekNumber}-${day}-${slot}`;
+        const slotId = buildSlotId(year, weekNumber, day, slot);
         await withPending(`planning-recipe-meta:${slotId}:${recipeId}`, () => saveSlot({
             ...existing,
             recipePersons: { ...existing.recipePersons, [recipeId]: persons },
@@ -396,7 +398,7 @@ export const PlanningModule = () => {
 
     const handleAddToSlot = async (day: string, slot: SlotType) => {
         if (!addRecipeId) return;
-        const slotId = `${year}-W${weekNumber}-${day}-${slot}`;
+        const slotId = buildSlotId(year, weekNumber, day, slot);
         const mealDef = MEAL_SLOTS.find(m => m.id === slot)!;
         const existing = planningData.find(p => p.day === day && p.slot === slot);
         const recipe = recipesDb[addRecipeId];
@@ -435,7 +437,7 @@ export const PlanningModule = () => {
     const atMax = draftDays.length >= 10;
 
     const renderSlot = (day: string, mealType: typeof MEAL_SLOTS[number]) => {
-        const slotId = `${year}-W${weekNumber}-${day}-${mealType.id}`;
+        const slotId = buildSlotId(year, weekNumber, day, mealType.id);
         const savedMeal = planningData.find(p => p.day === day && p.slot === mealType.id);
         const isEditingThis = editingPersonsSlotId === slotId;
         const copyProps = computeSlotCopyProps(copyState, copyTargets, day, mealType, savedMeal);
@@ -642,7 +644,7 @@ export const PlanningModule = () => {
                                 : []
                         }
                         onSelect={async (recipe) => {
-                            const slotId = `${year}-W${weekNumber}-${pickerSlot.day}-${pickerSlot.slot}`;
+                            const slotId = buildSlotId(year, weekNumber, pickerSlot.day, pickerSlot.slot);
                             const isMulti = MEAL_SLOTS.find(m => m.id === pickerSlot.slot)?.multi ?? false;
                             const existing = planningData.find(p => p.day === pickerSlot.day && p.slot === pickerSlot.slot);
                             if (isMulti && existing && !isSlotFull(existing) && !existing.recipeIds.includes(recipe.recipeId)) {

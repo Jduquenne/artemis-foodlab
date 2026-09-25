@@ -6,6 +6,7 @@ import { useCatalogueOutdoor } from "../../../../shared/hooks/useCatalogueOutdoo
 import { OutdoorRow } from "./OutdoorRow";
 import { OutdoorFormModal } from "./OutdoorFormModal";
 import { ConfirmActionModal } from "./ConfirmActionModal";
+import { includesAnyText, normalizeQuery } from "../../../../shared/utils/textUtils";
 
 export const OutdoorActivitiesTable = () => {
   const { activities, create, save, remove } = useCatalogueOutdoor();
@@ -16,13 +17,11 @@ export const OutdoorActivitiesTable = () => {
   const [pendingDelete, setPendingDelete] = useState<OutdoorEntry | null>(null);
 
   const filtered = useMemo(() => {
-    const needle = query.trim().toLowerCase();
+    const needle = normalizeQuery(query);
     if (!needle) return activities;
     return activities.filter((activity) => {
       const category = categories.find((c) => c.id === activity.categoryId)?.name ?? "";
-      return (
-        activity.name.toLowerCase().includes(needle) || category.toLowerCase().includes(needle)
-      );
+      return includesAnyText([activity.name, category], needle);
     });
   }, [activities, categories, query]);
 

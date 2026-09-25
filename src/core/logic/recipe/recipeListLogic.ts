@@ -3,6 +3,7 @@ import { OutdoorEntry, RecipeDetails } from "../../domain/recipe";
 import { isIngredient } from "../../domain/recipePredicates";
 import { calculateRecipeMacros } from "../../../shared/utils/macroUtils";
 import { PREDEFINED_FILTERS } from "./predefinedFilterLogic";
+import { includesText, normalizeQuery } from "../../../shared/utils/textUtils";
 
 export interface CategoryRecipeEntry {
   id: string;
@@ -12,8 +13,8 @@ export interface CategoryRecipeEntry {
 }
 
 export function searchOutdoorRecipes(outdoor: Record<string, OutdoorEntry>, query: string): OutdoorEntry[] {
-  const q = query.toLowerCase();
-  return Object.values(outdoor).filter(e => !q || e.name.toLowerCase().includes(q));
+  const q = normalizeQuery(query);
+  return Object.values(outdoor).filter(e => !q || includesText(e.name, q));
 }
 
 export function getLinkedBases(

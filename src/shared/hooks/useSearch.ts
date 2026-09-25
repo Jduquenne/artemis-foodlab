@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { RecipeDetails, RecipeKind } from "../../core/domain/recipe";
 import { isDessert } from "../../core/domain/recipePredicates";
 import { useRecipesSnapshot } from "./useCatalogueSnapshot";
+import { includesText, normalizeQuery } from "../utils/textUtils";
 
 export interface SearchRecipeResult {
   id: string;
@@ -22,7 +23,7 @@ function matchesRecipeId(recipeId: string, query: string): boolean {
 
 function getMatchedIngredients(recipe: RecipeDetails, query: string): string[] {
   return recipe.ingredients
-    .filter((ing) => ing.name.toLowerCase().includes(query))
+    .filter((ing) => includesText(ing.name, query))
     .map((ing) => ing.name);
 }
 
@@ -32,13 +33,13 @@ function matchesQuery(
   query: string,
 ): boolean {
   const isNumeric = /^\d+$/.test(query);
-  const nameMatch = recipe.name.toLowerCase().includes(query);
+  const nameMatch = includesText(recipe.name, query);
   const idMatch = matchesRecipeId(recipeId, query);
 
   if (isNumeric) return nameMatch || idMatch;
 
   const ingredientMatch = recipe.ingredients.some((ing) =>
-    ing.name.toLowerCase().includes(query),
+    includesText(ing.name, query),
   );
   return nameMatch || idMatch || ingredientMatch;
 }
@@ -73,7 +74,7 @@ function search(
   filter?: (recipe: RecipeDetails) => boolean,
 ): SearchRecipeResult[] {
   if (query === null) return [];
-  const normalizedQuery = query.toLowerCase().trim();
+  const normalizedQuery = normalizeQuery(query);
 
   const results = Object.entries(db)
     .filter(([, recipe]) => Boolean(recipe.assets?.mealPhoto))
@@ -90,7 +91,7 @@ function search(
   const nameOrId = results
     .filter(
       (r) =>
-        r.name.toLowerCase().includes(normalizedQuery) ||
+        includesText(r.name, normalizedQuery) ||
         matchesRecipeId(r.recipeId, normalizedQuery),
     )
     .sort((a, b) => closestWordDistance(a.name, normalizedQuery) - closestWordDistance(b.name, normalizedQuery));
@@ -98,7 +99,7 @@ function search(
   const ingredientOnly = results
     .filter(
       (r) =>
-        !r.name.toLowerCase().includes(normalizedQuery) &&
+        !includesText(r.name, normalizedQuery) &&
         !matchesRecipeId(r.recipeId, normalizedQuery),
     )
     .sort((a, b) => {

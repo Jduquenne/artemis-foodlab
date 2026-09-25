@@ -3,6 +3,7 @@ import { Search, X } from "lucide-react";
 import { useRecipesSnapshot } from "../../../shared/hooks/useCatalogueSnapshot";
 import { recipeToBuilderState } from "../../../core/logic/recipeBuilder/recipeBuilderMapper";
 import { RecipeBuilderState } from "../../../core/domain/recipeBuilderTypes";
+import { includesText, normalizeQuery } from "../../../shared/utils/textUtils";
 
 export interface LoadRecipeModalProps {
   onLoad: (state: RecipeBuilderState) => void;
@@ -14,10 +15,10 @@ export const LoadRecipeModal = ({ onLoad, onClose }: LoadRecipeModalProps) => {
   const recipes = useRecipesSnapshot();
 
   const results = useMemo(() => {
-    const q = query.toLowerCase().trim();
+    const q = normalizeQuery(query);
     if (!q) return [];
     return Object.entries(recipes)
-      .filter(([, r]) => r.name.toLowerCase().includes(q))
+      .filter(([, r]) => includesText(r.name, q))
       .slice(0, 20);
   }, [recipes, query]);
 

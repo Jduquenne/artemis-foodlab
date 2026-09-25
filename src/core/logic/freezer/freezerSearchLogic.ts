@@ -2,6 +2,7 @@ import { Food } from "../../domain/ingredient";
 import { RecipeDetails } from "../../domain/recipe";
 import { isBatchCookable } from "../../domain/recipePredicates";
 import { compareByName } from "../../../shared/utils/sortUtils";
+import { includesText, normalizeQuery, rankByQuery } from "../../../shared/utils/textUtils";
 
 export interface BatchRecipeResult {
   id: string;
@@ -10,9 +11,9 @@ export interface BatchRecipeResult {
 }
 
 export function searchBatchRecipes(recipes: Record<string, RecipeDetails>, query: string): BatchRecipeResult[] {
-  const q = query.toLowerCase().trim();
+  const q = normalizeQuery(query);
   return Object.entries(recipes)
-    .filter(([, r]) => r.assets?.mealPhoto && (!q || r.name.toLowerCase().includes(q)))
+    .filter(([, r]) => r.assets?.mealPhoto && (!q || includesText(r.name, q)))
     .sort(([, a], [, b]) => {
       const aBatch = isBatchCookable(a);
       const bBatch = isBatchCookable(b);
@@ -25,16 +26,7 @@ export function searchBatchRecipes(recipes: Record<string, RecipeDetails>, query
 }
 
 export function searchFreezerFoods(foods: Record<string, Food>, query: string): Food[] {
-  const q = query.toLowerCase().trim();
+  const q = normalizeQuery(query);
   if (!q) return [];
-  return Object.values(foods)
-    .filter(f => f.name.toLowerCase().includes(q))
-    .sort((a, b) => {
-      const aStarts = a.name.toLowerCase().startsWith(q);
-      const bStarts = b.name.toLowerCase().startsWith(q);
-      if (aStarts && !bStarts) return -1;
-      if (!aStarts && bStarts) return 1;
-      return compareByName(a, b);
-    })
-    .slice(0, 8);
+  return rankByQuery(Object.values(foods).sort(compareByName), q, (food) => food.name).slice(0, 8);
 }

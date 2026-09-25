@@ -1,6 +1,7 @@
 import { Category, RecipeDetails, RecipeKind } from "../../domain/recipe";
 import { isBase, isDessert, isDish, isIngredient } from "../../domain/recipePredicates";
 import { compareByName } from "../../../shared/utils/sortUtils";
+import { includesAnyText, normalizeQuery } from "../../../shared/utils/textUtils";
 
 export type RecipeKindFilter = RecipeKind | "all" | "dessert";
 
@@ -30,14 +31,11 @@ export function filterRecipes(
   query: string,
   kind: RecipeKindFilter,
 ): RecipeDetails[] {
-  const needle = query.trim().toLowerCase();
+  const needle = normalizeQuery(query);
   return recipes.filter((recipe) => {
     if (!matchesKind(recipe, kind)) return false;
     if (!needle) return true;
     const category = categories.find((c) => c.id === recipe.categoryId)?.name ?? "";
-    return (
-      recipe.name.toLowerCase().includes(needle) ||
-      category.toLowerCase().includes(needle)
-    );
+    return includesAnyText([recipe.name, category], needle);
   });
 }

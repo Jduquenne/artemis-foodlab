@@ -5,6 +5,7 @@ import { useCatalogueFoods } from "../../../../shared/hooks/useCatalogueFoods";
 import { FoodRow } from "./FoodRow";
 import { FoodFormModal } from "./FoodFormModal";
 import { ConfirmActionModal } from "./ConfirmActionModal";
+import { includesAnyText, normalizeQuery } from "../../../../shared/utils/textUtils";
 
 export const FoodsTable = () => {
   const { foods, create, save, remove } = useCatalogueFoods();
@@ -14,11 +15,9 @@ export const FoodsTable = () => {
   const [pendingDelete, setPendingDelete] = useState<Food | null>(null);
 
   const filtered = useMemo(() => {
-    const needle = query.trim().toLowerCase();
+    const needle = normalizeQuery(query);
     if (!needle) return foods;
-    return foods.filter(
-      (food) => food.name.toLowerCase().includes(needle) || food.category.toLowerCase().includes(needle),
-    );
+    return foods.filter((food) => includesAnyText([food.name, food.category], needle));
   }, [foods, query]);
 
   return (

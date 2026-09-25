@@ -1,23 +1,16 @@
 import { Food } from "../../domain/ingredient";
+import { normalizeQuery, rankByQuery } from "../../../shared/utils/textUtils";
+
+const MAX_SUGGESTIONS = 8;
 
 export function searchFoods(query: string, foods: Food[]): Food[] {
-  const q = query.toLowerCase();
-  const startsWith = foods.filter((f) => f.name.toLowerCase().startsWith(q));
-  const contains = foods.filter(
-    (f) => !f.name.toLowerCase().startsWith(q) && f.name.toLowerCase().includes(q),
-  );
-  return [...startsWith, ...contains].slice(0, 8);
+  return rankByQuery(foods, normalizeQuery(query), (food) => food.name).slice(0, MAX_SUGGESTIONS);
 }
 
 export function searchBases(
   query: string,
   bases: { id: string; name: string }[],
 ): { id: string; name: string }[] {
-  if (!query) return bases.slice(0, 8);
-  const q = query.toLowerCase();
-  const startsWith = bases.filter((r) => r.name.toLowerCase().startsWith(q));
-  const contains = bases.filter(
-    (r) => !r.name.toLowerCase().startsWith(q) && r.name.toLowerCase().includes(q),
-  );
-  return [...startsWith, ...contains].slice(0, 8);
+  if (!query) return bases.slice(0, MAX_SUGGESTIONS);
+  return rankByQuery(bases, normalizeQuery(query), (base) => base.name).slice(0, MAX_SUGGESTIONS);
 }

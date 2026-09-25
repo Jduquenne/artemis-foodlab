@@ -1,5 +1,6 @@
 import { Snowflake } from 'lucide-react';
-import { ConsolidatedIngredient, IngredientSource, buildSourceCheckKey } from '../../../../core/logic/shopping/shoppingLogic';
+import { ConsolidatedIngredient, IngredientSource } from '../../../../core/domain/shopping';
+import { buildSourceCheckKey } from '../../../../core/logic/shopping/shoppingChecks';
 import { FreezerBag } from '../../../../core/domain/freezer';
 import { IngredientTooltip } from './IngredientTooltip';
 import { pluralizeUnit, formatQty } from '../../../../shared/utils/unitUtils';

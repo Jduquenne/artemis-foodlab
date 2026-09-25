@@ -1,5 +1,5 @@
 import { Loader2, Pencil, Trash2 } from 'lucide-react';
-import { ConsolidatedIngredient } from '../../../../core/logic/shopping/shoppingLogic';
+import { ConsolidatedIngredient } from '../../../../core/domain/shopping';
 import { pluralizeUnit, formatQty } from '../../../../shared/utils/unitUtils';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { CheckToggleIcon } from '../../../../shared/components/ui/CheckToggleIcon';

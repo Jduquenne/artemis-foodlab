@@ -1,4 +1,5 @@
-import { IngredientSource, RecipeBaseGroup, buildSourceCheckKey, isIngChecked } from '../../../../core/logic/shopping/shoppingLogic';
+import { IngredientSource, RecipeBaseGroup } from '../../../../core/domain/shopping';
+import { buildSourceCheckKey, isIngChecked } from '../../../../core/logic/shopping/shoppingChecks';
 import { IngredientRow } from './IngredientRow';
 import { useAnyPendingKey } from '../../../../shared/hooks/useAnyPendingKey';
 import { CheckToggleIcon } from '../../../../shared/components/ui/CheckToggleIcon';

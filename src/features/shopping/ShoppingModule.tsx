@@ -3,20 +3,17 @@ import { ShoppingCart, CalendarDays, Clipboard, Check, Scale, Plus } from 'lucid
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useNavigate } from 'react-router-dom';
 import { FreezerBag } from '../../core/domain/freezer';
+import { IngredientSource, RecipeCard } from '../../core/domain/shopping';
+import { extrasToIngredients } from '../../core/logic/shopping/shoppingApiMapper';
+import { computeUncheckedCount, buildSourceCheckKey } from '../../core/logic/shopping/shoppingChecks';
+import { buildShoppingClipboardText } from '../../core/logic/shopping/shoppingClipboard';
 import {
-    getShoppingListForDays,
-    getBasesForDays,
-    buildShoppingClipboardText,
-    IngredientSource,
-    RecipeCard,
-    buildRecipeCards,
     groupIngredients,
     filterGroupedIngredients,
-    computeUncheckedCount,
     assignIngredientColumns,
-    extrasToIngredients,
-    buildSourceCheckKey,
-} from '../../core/logic/shopping/shoppingLogic';
+} from '../../core/logic/shopping/shoppingGrouping';
+import { buildRecipeCards } from '../../core/logic/shopping/shoppingRecipeCards';
+import { getShoppingListForDays, getBasesForDays } from '../../core/services/shoppingListService';
 import { getRecords as getHouseholdRecords } from '../../core/services/householdService';
 import { syncWeekFromApi } from '../../core/services/planningService';
 import {

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { X, Snowflake, ChevronDown, ChevronUp } from 'lucide-react';
-import { IngredientSource, groupAndSortSources } from '../../../core/logic/shopping/shoppingLogic';
+import { IngredientSource } from '../../../core/domain/shopping';
+import { groupAndSortSources } from '../../../core/logic/shopping/shoppingRecipeCards';
 import { FreezerBag } from '../../../core/domain/freezer';
 import { pluralizeUnit, formatQty } from '../../../shared/utils/unitUtils';
 import { FreezerBagRow } from './FreezerBagRow';

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ConsolidatedIngredient, IngredientSource } from '../../../../core/logic/shopping/shoppingLogic';
+import { ConsolidatedIngredient, IngredientSource } from '../../../../core/domain/shopping';
 import { FreezerBag } from '../../../../core/domain/freezer';
 import { ExtraCheckRow } from './ExtraCheckRow';
 import { IngredientCheckRow } from './IngredientCheckRow';

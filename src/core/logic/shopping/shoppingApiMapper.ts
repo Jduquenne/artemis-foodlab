@@ -1,3 +1,6 @@
+import { ConsolidatedIngredient } from "../../domain/shopping";
+import { getIngredientCategoryFromSlug } from "../../domain/ingredientCategorySlugs";
+
 export interface ApiShoppingDay {
   id: string;
   year: number;
@@ -39,4 +42,18 @@ export interface ApiShoppingExtra {
   recipeId: string | null;
   isChecked: boolean;
   createdAt: string;
+}
+
+export function extrasToIngredients(extras: ApiShoppingExtra[]): ConsolidatedIngredient[] {
+  return extras.map((extra) => ({
+    key: `extra::${extra.id}`,
+    name: extra.name,
+    foodId: extra.foodId ?? undefined,
+    totalQuantity: extra.quantity ?? 0,
+    unit: extra.unit ?? "",
+    category: extra.categoryId ? getIngredientCategoryFromSlug(extra.categoryId) : undefined,
+    sources: [],
+    isExtra: true,
+    extraId: extra.id,
+  }));
 }

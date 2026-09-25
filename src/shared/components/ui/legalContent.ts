@@ -84,7 +84,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
           "L'application n'utilise que des cookies et un stockage local strictement nécessaires à son fonctionnement :",
           "— un cookie de session (« refresh_token ») pour te garder connecté ;",
           "— le stockage local du navigateur pour tes préférences (thème, affichage), tes brouillons et la date de dernière consultation des nouveautés ;",
-          "— une base locale (IndexedDB) qui conserve une copie de tes données pour l'accès hors ligne et la rapidité d'affichage.",
+          "— une base locale (IndexedDB) qui conserve une copie de tes données pour la rapidité d'affichage.",
           "Aucun cookie tiers, aucun traceur publicitaire ou de mesure d'audience n'est déposé. Aucun consentement n'est donc requis à ce titre.",
         ],
       },
@@ -140,7 +140,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
       {
         heading: "Cookies",
         body: [
-          "L'application n'utilise que des cookies et un stockage strictement nécessaires (authentification, préférences, cache hors ligne) et aucun traceur tiers. Voir la Politique de confidentialité.",
+          "L'application n'utilise que des cookies et un stockage strictement nécessaires (authentification, préférences, cache d'affichage) et aucun traceur tiers. Voir la Politique de confidentialité.",
         ],
       },
     ],

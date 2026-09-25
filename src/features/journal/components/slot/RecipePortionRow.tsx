@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ChevronDown, ChevronRight, Minus, Plus } from "lucide-react";
-import { RecipeKind } from "../../../../core/domain/types";
+import { RecipeKind } from "../../../../core/domain/recipe";
 import { RECIPE_BASE_GRAMS, RECIPE_MACROS, calculateOverriddenRecipeMacros } from "../../../../shared/utils/macroUtils";
 import { defaultIngredientOverridesForPortions, isOverridableIngredient } from "../../../../core/logic/journal/journalOverrideLogic";
 import { useJournalStore } from "../../../../shared/store/useJournalStore";

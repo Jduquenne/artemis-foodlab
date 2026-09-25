@@ -1,4 +1,5 @@
-import { Food, RecipeDetails, Unit } from "../../domain/types";
+import { Food, Unit } from "../../domain/ingredient";
+import { RecipeDetails } from "../../domain/recipe";
 import { isIngredient } from "../../domain/recipePredicates";
 import { typedRecipesDb } from "../../typed-db/typedRecipesDb";
 import { typedFoodDb } from "../../typed-db/typedFoodDb";

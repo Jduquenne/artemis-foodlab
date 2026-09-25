@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { MealSlot } from "../../../../core/domain/types";
+import { MealSlot } from "../../../../core/domain/planning";
 import { MealSlot as MealSlotComp } from "./MealSlot";
 import { MultiMealSlot } from "./MultiMealSlot";
 import { MealSlotDef } from "../../../../core/domain/planningConfig";

@@ -1,4 +1,5 @@
-import { Ingredient, RecipeDetails, Unit } from "../../domain/types";
+import { Ingredient, Unit } from "../../domain/ingredient";
+import { RecipeDetails } from "../../domain/recipe";
 import { ApiJournalOverride, JournalOverrides } from "../../services/journalService";
 
 export const EMPTY_JOURNAL_OVERRIDES: JournalOverrides = {

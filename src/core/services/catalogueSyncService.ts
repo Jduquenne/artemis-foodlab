@@ -1,5 +1,6 @@
-import { Food, HouseholdItem } from "../domain/types";
-import { Category } from "../domain/types";
+import { HouseholdItem } from "../domain/household";
+import { Food } from "../domain/ingredient";
+import { Category } from "../domain/recipe";
 import { replaceCategoriesDb } from "../typed-db/typedCategoriesDb";
 import { refreshRecipeMacros } from "../../shared/utils/macroUtils";
 import { refreshPlannableDb } from "../typed-db/plannableDb";

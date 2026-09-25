@@ -1,4 +1,4 @@
-import { RecipeAsset, RecipeAssetKey } from "../../domain/types";
+import { RecipeAsset, RecipeAssetKey } from "../../domain/recipe";
 
 export const MEDIA_RESOLVE_MAX_KEYS = 200;
 export const MEDIA_REFRESH_MARGIN_MS = 5 * 60 * 1000;

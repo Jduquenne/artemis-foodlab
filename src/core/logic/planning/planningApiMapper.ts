@@ -1,4 +1,4 @@
-import { MealSlot, SlotType } from "../../domain/types";
+import { MealSlot, SlotType } from "../../domain/planning";
 import { getCodeById, getIdByCode } from "../../typed-db/recipeIdMap";
 
 export interface ApiPlanningSlotItem {

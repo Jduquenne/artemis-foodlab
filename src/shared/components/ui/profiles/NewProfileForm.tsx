@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Plus, Loader2 } from "lucide-react";
 import { PROFILE_NAME_MAX_LENGTH } from "../../../../core/domain/profileConfig";
-import { Profile } from "../../../../core/domain/types";
+import { Profile } from "../../../../core/domain/profile";
 import { suggestProfileColor } from "../../../../core/logic/profile/profileLogic";
 import { useProfileStore } from "../../../store/useProfileStore";
 import { ProfileColorPicker } from "./ProfileColorPicker";

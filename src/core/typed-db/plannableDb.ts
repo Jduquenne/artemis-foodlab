@@ -1,6 +1,6 @@
 import { typedRecipesDb } from "./typedRecipesDb";
 import { typedOutdoorDb } from "./typedOutdoorDb";
-import { RecipeDetails } from "../domain/types";
+import { RecipeDetails } from "../domain/recipe";
 
 const outdoor = typedOutdoorDb as unknown as Record<string, RecipeDetails>;
 

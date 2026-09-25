@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Plus, Search } from "lucide-react";
-import { Food } from "../../../../core/domain/types";
+import { Food } from "../../../../core/domain/ingredient";
 import { useCatalogueFoods } from "../../../../shared/hooks/useCatalogueFoods";
 import { FoodRow } from "./FoodRow";
 import { FoodFormModal } from "./FoodFormModal";

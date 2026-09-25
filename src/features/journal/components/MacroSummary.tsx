@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { SlidersHorizontal, CalendarRange } from "lucide-react";
-import { Macronutrients, MealSlot } from "../../../core/domain/types";
+import { Macronutrients } from "../../../core/domain/nutrition";
+import { MealSlot } from "../../../core/domain/planning";
 import { useActiveTargets } from "../../../shared/hooks/useActiveProfile";
 import { MacroTargetsModal } from "./modal/MacroTargetsModal";
 import { ProfileSwitcher } from "./ProfileSwitcher";

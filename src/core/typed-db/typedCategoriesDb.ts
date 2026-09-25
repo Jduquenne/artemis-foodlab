@@ -1,4 +1,4 @@
-import { Category } from "../domain/types";
+import { Category } from "../domain/recipe";
 
 export const typedCategoriesDb: Category[] = [];
 

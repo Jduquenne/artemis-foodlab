@@ -1,12 +1,6 @@
-import {
-  Food,
-  IngredientCategory,
-  Macronutrients,
-  MealType,
-  RecipeDetails,
-  RecipeKind,
-  Unit,
-} from "../../domain/types";
+import { Food, IngredientCategory, Unit } from "../../domain/ingredient";
+import { Macronutrients } from "../../domain/nutrition";
+import { MealType, RecipeDetails, RecipeKind } from "../../domain/recipe";
 import { getCategoryById } from "../../typed-db/typedCategoriesDb";
 import {
   DraftIngredient,

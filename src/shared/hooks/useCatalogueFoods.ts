@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { Food } from "../../core/domain/types";
+import { Food } from "../../core/domain/ingredient";
 import { typedFoodDb } from "../../core/typed-db/typedFoodDb";
 import { FoodInput, createFood, deleteFood, updateFood } from "../../core/services/catalogueWriteService";
 import { syncCatalogueFromApi } from "../../core/services/catalogueSyncService";

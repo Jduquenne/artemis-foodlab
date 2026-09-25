@@ -1,5 +1,5 @@
 import { ChevronDown, RotateCcw } from 'lucide-react';
-import { Ingredient } from '../../../../core/domain/types';
+import { Ingredient } from '../../../../core/domain/ingredient';
 import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
 import { typedFoodDb } from '../../../../core/typed-db/typedFoodDb';
 import { UNIT_WEIGHT_UNITS } from '../../../../core/logic/recipe/recipeLogic';

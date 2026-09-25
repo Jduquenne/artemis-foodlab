@@ -1,4 +1,4 @@
-import { SlotType } from "./types";
+import { SlotType } from "./planning";
 
 export const MEAL_SLOTS = [
   { id: "breakfast", multi: true, hasDessert: false },

@@ -1,5 +1,5 @@
 import { ChevronRight } from "lucide-react";
-import { RecipeDetails } from "../../../core/domain/types";
+import { RecipeDetails } from "../../../core/domain/recipe";
 import { getCategoryById } from "../../../core/typed-db/typedCategoriesDb";
 import { getCardColors } from "../../../shared/utils/cards/cardColors";
 import { AsyncImage } from "../../../shared/components/ui/AsyncImage";

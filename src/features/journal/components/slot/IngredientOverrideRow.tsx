@@ -1,5 +1,5 @@
 import { RotateCcw } from "lucide-react";
-import { Ingredient } from "../../../../core/domain/types";
+import { Ingredient } from "../../../../core/domain/ingredient";
 import { pluralizeUnit } from "../../../../shared/utils/unitUtils";
 
 export interface IngredientOverrideRowProps {

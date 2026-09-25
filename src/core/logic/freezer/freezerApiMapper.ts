@@ -1,4 +1,10 @@
-import { BatchFreezerItem, FoodFreezerItem, FreezerBag, FreezerCategory, FreezerItem } from "../../domain/types";
+import {
+  BatchFreezerItem,
+  FoodFreezerItem,
+  FreezerBag,
+  FreezerCategory,
+  FreezerItem,
+} from "../../domain/freezer";
 import { parseUnit } from "../unit/unitLogic";
 import { getCodeById } from "../../typed-db/recipeIdMap";
 

@@ -1,5 +1,7 @@
-import { Food, HouseholdItem, Profile } from "../domain/types";
-import { Category } from "../domain/types";
+import { HouseholdItem } from "../domain/household";
+import { Food } from "../domain/ingredient";
+import { Profile } from "../domain/profile";
+import { Category } from "../domain/recipe";
 import { ApiOutdoorActivity, ApiRecipe } from "../logic/recipe/recipeApiMapper";
 import { ApiShoppingPeriod } from "../logic/shopping/shoppingApiMapper";
 import { apiFetchJson } from "./apiClient";

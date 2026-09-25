@@ -1,5 +1,6 @@
 import { apiFetch, apiFetchJson } from "./apiClient";
-import { MacroTargets, Profile } from "../domain/types";
+import { MacroTargets } from "../domain/nutrition";
+import { Profile } from "../domain/profile";
 import { sortProfilesByPosition } from "../logic/profile/profileLogic";
 
 export interface ApiProfile {

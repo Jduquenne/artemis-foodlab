@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { ArrowLeft, Plus, Pencil, Snowflake } from "lucide-react";
-import { FreezerCategory } from "../../../../core/domain/types";
+import { FreezerCategory } from "../../../../core/domain/freezer";
 import { removeItemFromCategory, updateCategoryName } from "../../../../core/services/freezerService";
 import { FreezerItemRow } from "../item/FreezerItemRow";
 import { AddFreezerItemModal } from "../modal/AddFreezerItemModal";

@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { ShoppingCart, CalendarDays, Clipboard, Check, Scale, Plus } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useNavigate } from 'react-router-dom';
-import { FreezerBag } from '../../core/domain/types';
+import { FreezerBag } from '../../core/domain/freezer';
 import {
     getShoppingListForDays,
     getBasesForDays,

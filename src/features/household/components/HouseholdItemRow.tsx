@@ -1,4 +1,4 @@
-import { HouseholdItem } from "../../../core/domain/types";
+import { HouseholdItem } from "../../../core/domain/household";
 import { usePendingKey } from "../../../shared/hooks/usePendingKey";
 import { CheckToggleIcon } from "../../../shared/components/ui/CheckToggleIcon";
 

@@ -1,5 +1,5 @@
 import { PREPARATION_OPTIONS } from "../../../../core/domain/preparationOptions";
-import { Unit } from "../../../../core/domain/types";
+import { Unit } from "../../../../core/domain/ingredient";
 import { FREEZER_BAG_UNITS } from "../../../../core/logic/freezer/freezerLogic";
 import { FoodSearchInput } from "./FoodSearchInput";
 

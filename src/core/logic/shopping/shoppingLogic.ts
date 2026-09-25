@@ -1,6 +1,9 @@
 import { addDays, getISOWeek, getISOWeekYear } from "date-fns";
 import { getWeekSlots } from "../../services/planningService";
-import { HouseholdItem, Ingredient, IngredientCategory, MealSlot, RecipeKind, ShoppingDay } from "../../domain/types";
+import { HouseholdItem } from "../../domain/household";
+import { Ingredient, IngredientCategory } from "../../domain/ingredient";
+import { MealSlot, ShoppingDay } from "../../domain/planning";
+import { RecipeKind } from "../../domain/recipe";
 import { getAllRecipeIds } from "../../domain/recipePredicates";
 import { typedRecipesDb } from "../../typed-db/typedRecipesDb";
 import { RECIPE_BASE_GRAMS } from "../../../shared/utils/macroUtils";

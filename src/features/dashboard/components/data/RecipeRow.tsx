@@ -1,5 +1,5 @@
 import { Image, ImageOff, Pencil, Trash2, Utensils } from "lucide-react";
-import { RecipeDetails } from "../../../../core/domain/types";
+import { RecipeDetails } from "../../../../core/domain/recipe";
 import { getCategoryById } from "../../../../core/typed-db/typedCategoriesDb";
 import { getCardColors } from "../../../../shared/utils/cards/cardColors";
 import { RECIPE_KIND_LABELS } from "../../../../core/logic/dashboard/recipeTableLogic";

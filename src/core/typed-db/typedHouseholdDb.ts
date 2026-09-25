@@ -1,4 +1,4 @@
-import { HouseholdItem } from "../domain/types";
+import { HouseholdItem } from "../domain/household";
 
 export const typedHouseholdDb: Record<string, HouseholdItem> = {};
 

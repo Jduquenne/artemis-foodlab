@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { X } from "lucide-react";
-import { Food, IngredientCategory, Macronutrients, Unit } from "../../../../core/domain/types";
+import { Food, IngredientCategory, Unit } from "../../../../core/domain/ingredient";
+import { Macronutrients } from "../../../../core/domain/nutrition";
 import { FoodInput } from "../../../../core/services/catalogueWriteService";
 import {
   FoodFormDraft,

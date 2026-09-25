@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { addDays, subDays } from "date-fns";
 import { getWeekNumber, getMonday } from "../../shared/utils/weekUtils";
 import { getWeekSlots, syncWeekFromApi } from "../../core/services/planningService";
-import { MealSlot } from "../../core/domain/types";
+import { MealSlot } from "../../core/domain/planning";
 import { computeDayMacros } from "../../shared/utils/macroUtils";
 import { useActiveJournalOverrides } from "../../shared/hooks/useActiveJournalOverrides";
 import { useAuthStore } from "../../shared/store/useAuthStore";

@@ -1,6 +1,6 @@
 import { Trash2 } from "lucide-react";
 import { PREPARATION_OPTIONS } from "../../../../core/domain/preparationOptions";
-import { Unit, IngredientCategory } from "../../../../core/domain/types";
+import { Unit, IngredientCategory } from "../../../../core/domain/ingredient";
 import { isUnit } from "../../../../core/logic/unit/unitLogic";
 import { IngredientFoodSearch } from "./IngredientFoodSearch";
 import { BaseRecipeSearch } from "./BaseRecipeSearch";

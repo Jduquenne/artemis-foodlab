@@ -1,4 +1,7 @@
-import { Food, Macronutrients, MealSlot, RecipeDetails, Unit } from "../../core/domain/types";
+import { Food, Unit } from "../../core/domain/ingredient";
+import { Macronutrients } from "../../core/domain/nutrition";
+import { MealSlot } from "../../core/domain/planning";
+import { RecipeDetails } from "../../core/domain/recipe";
 import { getAllRecipeIds, isDish, isBase } from "../../core/domain/recipePredicates";
 import { typedRecipesDb } from "../../core/typed-db/typedRecipesDb";
 import { typedFoodDb } from "../../core/typed-db/typedFoodDb";

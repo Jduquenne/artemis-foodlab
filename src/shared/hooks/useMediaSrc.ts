@@ -1,4 +1,4 @@
-import { RecipeAsset } from "../../core/domain/types";
+import { RecipeAsset } from "../../core/domain/recipe";
 import { useMediaStore } from "../store/useMediaStore";
 
 export function useMediaSrc(asset: RecipeAsset | undefined): string | undefined {

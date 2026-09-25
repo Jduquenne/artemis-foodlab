@@ -1,4 +1,4 @@
-import { RecipeDetails, RecipeKind } from "../../domain/types";
+import { RecipeDetails, RecipeKind } from "../../domain/recipe";
 import { getCategoryById } from "../../typed-db/typedCategoriesDb";
 import { isBase, isDessert, isDish, isIngredient } from "../../domain/recipePredicates";
 

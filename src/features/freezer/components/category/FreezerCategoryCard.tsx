@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { MoreVertical, Pencil, Trash2, Snowflake, Palette } from "lucide-react";
-import { FreezerCategory } from "../../../../core/domain/types";
+import { FreezerCategory } from "../../../../core/domain/freezer";
 import { updateCategoryName, updateCategoryColor, deleteCategory } from "../../../../core/services/freezerService";
 import {
   getFreezerCategoryAccent,

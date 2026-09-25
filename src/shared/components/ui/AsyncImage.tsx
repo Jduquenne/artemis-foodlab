@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { ImageOff } from "lucide-react";
-import { RecipeAsset } from "../../../core/domain/types";
+import { RecipeAsset } from "../../../core/domain/recipe";
 import { useMediaSrc } from "../../hooks/useMediaSrc";
 import { useMediaStore } from "../../store/useMediaStore";
 

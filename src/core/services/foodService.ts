@@ -1,4 +1,4 @@
-import { Food } from "../domain/types";
+import { Food } from "../domain/ingredient";
 import { db } from "./databaseService";
 
 export const getAll = () => db.foods.toArray();

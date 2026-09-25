@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Check, Loader2, X } from "lucide-react";
 import { PREPARATION_OPTIONS } from "../../../../core/domain/preparationOptions";
-import { Unit, FreezerBag } from "../../../../core/domain/types";
+import { FreezerBag } from "../../../../core/domain/freezer";
+import { Unit } from "../../../../core/domain/ingredient";
 import { FREEZER_BAG_UNITS } from "../../../../core/logic/freezer/freezerLogic";
 
 export interface AddBagFormProps {

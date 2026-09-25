@@ -1,4 +1,4 @@
-import { Food } from "../domain/types";
+import { Food } from "../domain/ingredient";
 
 export const typedFoodDb: Record<string, Food> = {};
 

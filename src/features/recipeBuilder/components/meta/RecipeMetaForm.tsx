@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Maximize2 } from "lucide-react";
-import { MealType, RecipeKind } from "../../../../core/domain/types";
+import { MealType, RecipeKind } from "../../../../core/domain/recipe";
 import { typedCategoriesDb } from "../../../../core/typed-db/typedCategoriesDb";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
 import { typedRecipesDb } from "../../../../core/typed-db/typedRecipesDb";

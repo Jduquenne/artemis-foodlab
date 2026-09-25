@@ -1,6 +1,7 @@
-import { Category } from "./types";
+import { Category } from "./recipe";
 import { MAX_DESSERTS_PER_SLOT, MAX_RECIPES_PER_SLOT } from "./planningConfig";
-import { MealSlot, RecipeDetails, RecipeKind } from "./types";
+import { MealSlot } from "./planning";
+import { RecipeDetails, RecipeKind } from "./recipe";
 
 const NON_BROWSABLE_CATEGORY_IDS: readonly string[] = ["outdoor", "sweet-grocery"];
 

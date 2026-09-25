@@ -1,4 +1,4 @@
-import { Profile } from "./types";
+import { Profile } from "./profile";
 
 export const MAX_PROFILES = 3;
 export const DEFAULT_PROFILE_COLOR = "slate";

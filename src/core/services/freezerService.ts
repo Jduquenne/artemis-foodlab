@@ -8,7 +8,7 @@ import {
   mapApiBag,
   mapApiFreezerCategory,
 } from "../logic/freezer/freezerApiMapper";
-import { BatchFreezerItem, FoodFreezerItem, FreezerBag, FreezerCategory } from "../domain/types";
+import { BatchFreezerItem, FoodFreezerItem, FreezerBag, FreezerCategory } from "../domain/freezer";
 
 const today = () => new Date().toISOString().slice(0, 10);
 

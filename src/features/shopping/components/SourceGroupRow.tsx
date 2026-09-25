@@ -1,5 +1,5 @@
 import { IngredientSource, buildSourceCheckKey } from '../../../core/logic/shopping/shoppingLogic';
-import { SlotType } from '../../../core/domain/types';
+import { SlotType } from '../../../core/domain/planning';
 import { pluralizeUnit } from '../../../shared/utils/unitUtils';
 import { formatSourceDayFull, formatSourceDayShort } from '../../../shared/utils/dateUtils';
 import { SLOT_LABELS } from '../../../shared/utils/slotLabels';

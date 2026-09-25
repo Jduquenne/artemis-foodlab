@@ -1,4 +1,4 @@
-import { IngredientCategory } from "../domain/types";
+import { IngredientCategory } from "../domain/ingredient";
 
 const INGREDIENT_CATEGORY_ID: Record<IngredientCategory, string> = {
   [IngredientCategory.FRUIT_VEGETABLE]: "fruit-vegetable",

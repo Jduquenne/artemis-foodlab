@@ -1,4 +1,4 @@
-import { CopyState, MealSlot, SlotType } from "../../domain/types";
+import { CopyState, MealSlot, SlotType } from "../../domain/planning";
 import { canAddDessert, isSlotFull } from "../../domain/recipePredicates";
 import { MAX_DESSERTS_PER_SLOT, MEAL_SLOTS, MealSlotDef } from "../../domain/planningConfig";
 

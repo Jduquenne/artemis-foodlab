@@ -1,4 +1,6 @@
-import { RecipeDetails, Macronutrients, IngredientCategory } from "../../../core/domain/types";
+import { IngredientCategory } from "../../../core/domain/ingredient";
+import { Macronutrients } from "../../../core/domain/nutrition";
+import { RecipeDetails } from "../../../core/domain/recipe";
 import { DraftIngredient, RecipeBuilderState } from "../../../core/domain/recipeBuilderTypes";
 import { formatIngredientsForIngredientCard } from "../../../core/logic/recipeBuilder/recipeBuilderLogic";
 import { getCardColors } from "./cardColors";

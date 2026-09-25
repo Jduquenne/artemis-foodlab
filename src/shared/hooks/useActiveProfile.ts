@@ -1,5 +1,5 @@
 import { DEFAULT_PROFILE_TARGETS } from "../../core/domain/profileConfig";
-import { Profile } from "../../core/domain/types";
+import { Profile } from "../../core/domain/profile";
 import { useProfileStore } from "../store/useProfileStore";
 
 export function useActiveProfile(): Profile | null {

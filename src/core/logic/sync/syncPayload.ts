@@ -1,4 +1,6 @@
-import { FreezerCategory, HouseholdRecord, MealSlot } from "../../domain/types";
+import { FreezerCategory } from "../../domain/freezer";
+import { HouseholdRecord } from "../../domain/household";
+import { MealSlot } from "../../domain/planning";
 
 export type SyncScope = "planning" | "household" | "freezer";
 

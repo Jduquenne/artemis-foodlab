@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { ChefHat, MoreVertical, Trash2, AlertTriangle, Loader2 } from "lucide-react";
-import { BatchFreezerItem } from "../../../../core/domain/types";
+import { BatchFreezerItem } from "../../../../core/domain/freezer";
 import { updateBatchPortions } from "../../../../core/services/freezerService";
 import { freezerItemAge } from "../../../../core/logic/freezer/freezerLogic";
 import { FloatingMenu } from "../../../../shared/components/ui/FloatingMenu";

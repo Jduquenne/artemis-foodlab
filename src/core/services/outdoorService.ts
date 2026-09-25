@@ -1,4 +1,4 @@
-import { OutdoorEntry } from "../domain/types";
+import { OutdoorEntry } from "../domain/recipe";
 import { db } from "./databaseService";
 
 export const getAll = () => db.outdoorActivities.toArray();

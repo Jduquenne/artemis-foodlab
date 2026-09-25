@@ -1,4 +1,4 @@
-import { HouseholdItem } from '../../../core/domain/types';
+import { HouseholdItem } from '../../../core/domain/household';
 import { HouseholdCheckRow } from './HouseholdCheckRow';
 
 export interface HouseholdShoppingCardProps {

@@ -1,4 +1,4 @@
-import { RecipeDetails } from "../domain/types";
+import { RecipeDetails } from "../domain/recipe";
 import { db } from "./databaseService";
 
 export const getAll = () => db.recipes.toArray();

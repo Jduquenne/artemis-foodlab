@@ -1,5 +1,5 @@
 import { RecipeBuilderState } from "../../domain/recipeBuilderTypes";
-import { MealType, RecipeKind } from "../../domain/types";
+import { MealType, RecipeKind } from "../../domain/recipe";
 import { typedCategoriesDb } from "../../typed-db/typedCategoriesDb";
 
 export const initialRecipeBuilderState = (): RecipeBuilderState => ({

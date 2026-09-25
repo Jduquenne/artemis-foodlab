@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Loader2, Trash2 } from "lucide-react";
 import { PROFILE_NAME_MAX_LENGTH } from "../../../../core/domain/profileConfig";
-import { Profile } from "../../../../core/domain/types";
+import { Profile } from "../../../../core/domain/profile";
 import { useProfileStore } from "../../../store/useProfileStore";
 import { usePendingKey } from "../../../hooks/usePendingKey";
 import { withPending } from "../../../utils/withPending";

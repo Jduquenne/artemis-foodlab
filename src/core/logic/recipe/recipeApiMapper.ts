@@ -1,13 +1,12 @@
+import { Ingredient, IngredientCategory } from "../../domain/ingredient";
 import {
-  Ingredient,
-  IngredientCategory,
   MealType,
   OutdoorEntry,
   RecipeAsset,
   RecipeAssetKey,
   RecipeDetails,
   RecipeKind,
-} from "../../domain/types";
+} from "../../domain/recipe";
 import { parseUnit } from "../unit/unitLogic";
 
 export interface ApiIngredient {

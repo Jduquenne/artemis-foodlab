@@ -1,4 +1,4 @@
-import { OutdoorEntry } from "../../domain/types";
+import { OutdoorEntry } from "../../domain/recipe";
 import { getCategoryById } from "../../typed-db/typedCategoriesDb";
 import { OutdoorActivityInput } from "../../services/catalogueWriteService";
 import { buildRecipeDbId } from "../recipeBuilder/recipeBuilderLogic";

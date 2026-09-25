@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { X } from "lucide-react";
-import { Unit, FoodFreezerItem, BatchFreezerItem } from "../../../../core/domain/types";
+import { FoodFreezerItem, BatchFreezerItem } from "../../../../core/domain/freezer";
+import { Unit } from "../../../../core/domain/ingredient";
 import { addItemToCategory } from "../../../../core/services/freezerService";
 import { FoodTab } from "./FoodTab";
 import { BatchTab } from "./BatchTab";

@@ -1,5 +1,5 @@
 import { apiFetch, apiFetchJson } from "./apiClient";
-import { ShoppingDay } from "../domain/types";
+import { ShoppingDay } from "../domain/planning";
 import {
   ApiItemCheck,
   ApiShoppingDay,

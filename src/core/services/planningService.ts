@@ -1,5 +1,5 @@
 import { db } from "./databaseService";
-import { MealSlot } from "../domain/types";
+import { MealSlot } from "../domain/planning";
 import { canAddDessert } from "../domain/recipePredicates";
 import { apiFetch, apiFetchJson } from "./apiClient";
 import {

@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
 import { typedFoodDb } from "../../../../core/typed-db/typedFoodDb";
-import { Food, IngredientCategory } from "../../../../core/domain/types";
+import { Food, IngredientCategory } from "../../../../core/domain/ingredient";
 import { searchFoods } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
 
 export interface IngredientFoodSearchProps {

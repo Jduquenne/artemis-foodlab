@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { RotateCcw } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { HouseholdCategory } from '../../../core/domain/types';
+import { HouseholdCategory } from '../../../core/domain/household';
 import { getRecords, toggleItem, clearAll } from '../../../core/services/householdService';
 import { distributeToColumns } from '../../../shared/utils/columnUtils';
 import { typedHouseholdDb } from '../../../core/typed-db/typedHouseholdDb';

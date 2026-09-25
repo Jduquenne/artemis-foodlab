@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { X, Snowflake, ChevronDown, ChevronUp } from 'lucide-react';
 import { IngredientSource, groupAndSortSources } from '../../../core/logic/shopping/shoppingLogic';
-import { FreezerBag } from '../../../core/domain/types';
+import { FreezerBag } from '../../../core/domain/freezer';
 import { pluralizeUnit, formatQty } from '../../../shared/utils/unitUtils';
 import { FreezerBagRow } from './FreezerBagRow';
 import { SourceGroupRow } from './SourceGroupRow';

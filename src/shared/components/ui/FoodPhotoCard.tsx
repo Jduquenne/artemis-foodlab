@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { RecipeDetails } from "../../../core/domain/types";
+import { RecipeDetails } from "../../../core/domain/recipe";
 import { calculateRecipeMacros } from "../../utils/macroUtils";
 import { recipeToFoodCardData } from "../../utils/cards/cardAdapter";
 import { buildFoodCardSvg } from "../../utils/cards/cardSvg";

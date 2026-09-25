@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { X } from "lucide-react";
 import { DAYS } from "../../../../core/domain/planningConfig";
-import { MealSlot } from "../../../../core/domain/types";
+import { MealSlot } from "../../../../core/domain/planning";
 import { useActiveJournalOverrides } from "../../../../shared/hooks/useActiveJournalOverrides";
 import { useActiveTargets } from "../../../../shared/hooks/useActiveProfile";
 import {

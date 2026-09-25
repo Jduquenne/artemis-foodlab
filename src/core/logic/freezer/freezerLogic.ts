@@ -1,4 +1,5 @@
-import { FoodFreezerItem, FreezerBag, FreezerCategory, FreezerItem, Food, Unit } from '../../domain/types';
+import { FoodFreezerItem, FreezerBag, FreezerCategory, FreezerItem } from '../../domain/freezer';
+import { Food, Unit } from '../../domain/ingredient';
 import { isBatchCookable } from '../../domain/recipePredicates';
 import { typedRecipesDb } from '../../typed-db/typedRecipesDb';
 import { typedFoodDb } from '../../typed-db/typedFoodDb';

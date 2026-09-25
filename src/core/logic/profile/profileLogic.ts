@@ -1,5 +1,5 @@
 import { DEFAULT_PROFILE_COLOR, MAX_PROFILES, PROFILE_COLORS } from "../../domain/profileConfig";
-import { Profile } from "../../domain/types";
+import { Profile } from "../../domain/profile";
 
 export function sortProfilesByPosition(profiles: Profile[]): Profile[] {
   return [...profiles].sort((a, b) => a.position - b.position);

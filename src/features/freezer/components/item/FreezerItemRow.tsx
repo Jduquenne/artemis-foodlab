@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { Snowflake, Plus, MoreVertical, Trash2, Loader2 } from "lucide-react";
-import { FreezerItem } from "../../../../core/domain/types";
+import { FreezerItem } from "../../../../core/domain/freezer";
 import { addBagToFoodItem } from "../../../../core/services/freezerService";
 import { getFoodBagsSummary } from "../../../../core/logic/freezer/freezerLogic";
 import { FloatingMenu } from "../../../../shared/components/ui/FloatingMenu";

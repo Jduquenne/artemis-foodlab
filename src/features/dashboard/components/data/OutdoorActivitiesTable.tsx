@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Plus, Search } from "lucide-react";
-import { OutdoorEntry } from "../../../../core/domain/types";
+import { OutdoorEntry } from "../../../../core/domain/recipe";
 import { getCategoryById } from "../../../../core/typed-db/typedCategoriesDb";
 import { useCatalogueOutdoor } from "../../../../shared/hooks/useCatalogueOutdoor";
 import { OutdoorRow } from "./OutdoorRow";

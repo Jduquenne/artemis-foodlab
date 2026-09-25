@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { OutdoorEntry } from "../../core/domain/types";
+import { OutdoorEntry } from "../../core/domain/recipe";
 import { typedOutdoorDb } from "../../core/typed-db/typedOutdoorDb";
 import {
   OutdoorActivityInput,

@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { MoreVertical, Copy, Trash2, Pencil, AlertTriangle, Loader2 } from "lucide-react";
-import { FreezerBag } from "../../../../core/domain/types";
+import { FreezerBag } from "../../../../core/domain/freezer";
 import { addBagToFoodItem, removeBagFromFoodItem, updateBagInFoodItem } from "../../../../core/services/freezerService";
 import { pluralizeUnit } from "../../../../shared/utils/unitUtils";
 import { freezerItemAge } from "../../../../core/logic/freezer/freezerLogic";

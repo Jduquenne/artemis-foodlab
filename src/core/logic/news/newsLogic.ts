@@ -1,4 +1,4 @@
-import { RecipeDetails } from "../../domain/types";
+import { RecipeDetails } from "../../domain/recipe";
 
 export const RECENT_RECIPE_DAYS = 30;
 

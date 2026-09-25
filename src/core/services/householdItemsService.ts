@@ -1,4 +1,4 @@
-import { HouseholdItem } from "../domain/types";
+import { HouseholdItem } from "../domain/household";
 import { db } from "./databaseService";
 
 export const getAll = () => db.householdItems.toArray();

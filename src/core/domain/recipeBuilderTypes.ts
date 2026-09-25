@@ -1,4 +1,5 @@
-import { RecipeKind, Unit, IngredientCategory, MealType } from "./types";
+import { Unit, IngredientCategory } from "./ingredient";
+import { RecipeKind, MealType } from "./recipe";
 
 export interface DraftIngredient {
   id: string;

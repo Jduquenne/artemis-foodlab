@@ -1,5 +1,6 @@
 import { useMemo } from "react";
-import { Macronutrients, MealSlot, SlotType } from "../../../../core/domain/types";
+import { Macronutrients } from "../../../../core/domain/nutrition";
+import { MealSlot, SlotType } from "../../../../core/domain/planning";
 import { getAllRecipeIds, hasDesserts } from "../../../../core/domain/recipePredicates";
 import { computeSlotMacros, ZERO } from "../../../../shared/utils/macroUtils";
 import { useActiveJournalOverrides } from "../../../../shared/hooks/useActiveJournalOverrides";

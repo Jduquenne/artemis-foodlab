@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { RecipeDetails } from "../../../core/domain/types";
+import { RecipeDetails } from "../../../core/domain/recipe";
 import { recipeToBookCardData } from "../../utils/cards/cardAdapter";
 import { buildRecetteBookSvg } from "../../utils/cards/cardSvg";
 import { useMediaSrc } from "../../hooks/useMediaSrc";

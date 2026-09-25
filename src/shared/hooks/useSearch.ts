@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { RecipeDetails, RecipeKind } from "../../core/domain/types";
+import { RecipeDetails, RecipeKind } from "../../core/domain/recipe";
 import { isDessert } from "../../core/domain/recipePredicates";
 import { typedRecipesDb } from "../../core/typed-db/typedRecipesDb";
 

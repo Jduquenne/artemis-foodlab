@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { Profile } from "../../core/domain/types";
+import { Profile } from "../../core/domain/profile";
 import {
   CreateProfileInput,
   UpdateProfileInput,

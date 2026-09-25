@@ -1,4 +1,5 @@
-import { Macronutrients, MealSlot } from "../../domain/types";
+import { Macronutrients } from "../../domain/nutrition";
+import { MealSlot } from "../../domain/planning";
 import { computeDayMacros } from "../../../shared/utils/macroUtils";
 
 export interface WeekAverageResult {

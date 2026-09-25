@@ -1,6 +1,6 @@
 import { Snowflake } from 'lucide-react';
 import { ConsolidatedIngredient, IngredientSource, buildSourceCheckKey } from '../../../../core/logic/shopping/shoppingLogic';
-import { FreezerBag } from '../../../../core/domain/types';
+import { FreezerBag } from '../../../../core/domain/freezer';
 import { IngredientTooltip } from './IngredientTooltip';
 import { pluralizeUnit, formatQty } from '../../../../shared/utils/unitUtils';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';

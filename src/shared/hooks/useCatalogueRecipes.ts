@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { RecipeDetails } from "../../core/domain/types";
+import { RecipeDetails } from "../../core/domain/recipe";
 import { typedRecipesDb } from "../../core/typed-db/typedRecipesDb";
 import { deleteRecipe } from "../../core/services/catalogueWriteService";
 import { removeRecipeFromCatalogue } from "../../core/services/catalogueSyncService";

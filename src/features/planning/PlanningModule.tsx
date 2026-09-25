@@ -20,7 +20,7 @@ import { formatDayDate } from '../../shared/utils/dateUtils';
 import { computeDayMacros } from '../../shared/utils/macroUtils';
 import { useSearchParams } from 'react-router-dom';
 import { useMenuStore } from '../../shared/store/useMenuStore';
-import { SlotType, ShoppingDay, MealSlot, CopyState } from '../../core/domain/types';
+import { SlotType, ShoppingDay, MealSlot, CopyState } from '../../core/domain/planning';
 import { isDessert, canAddDessert, isSlotFull } from '../../core/domain/recipePredicates';
 import { MEAL_SLOTS, DAYS } from '../../core/domain/planningConfig';
 import { SLOT_DISPLAY } from './slotDisplay';

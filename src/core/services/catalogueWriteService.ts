@@ -1,6 +1,7 @@
 import { apiFetch, apiFetchJson } from "./apiClient";
 import { ApiOutdoorActivity, ApiRecipe, ApiRecipeInput } from "../logic/recipe/recipeApiMapper";
-import { Food, RecipeAssetKey } from "../domain/types";
+import { Food } from "../domain/ingredient";
+import { RecipeAssetKey } from "../domain/recipe";
 
 export interface OutdoorActivityInput {
   code: string;

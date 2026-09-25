@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { X } from "lucide-react";
-import { OutdoorEntry } from "../../../../core/domain/types";
+import { OutdoorEntry } from "../../../../core/domain/recipe";
 import { typedCategoriesDb } from "../../../../core/typed-db/typedCategoriesDb";
 import { OutdoorActivityInput } from "../../../../core/services/catalogueWriteService";
 import {

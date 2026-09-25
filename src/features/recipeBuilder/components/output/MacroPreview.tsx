@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Macronutrients } from "../../../../core/domain/types";
+import { Macronutrients } from "../../../../core/domain/nutrition";
 import { DraftIngredient } from "../../../../core/domain/recipeBuilderTypes";
 import { computeDraftTotal } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
 

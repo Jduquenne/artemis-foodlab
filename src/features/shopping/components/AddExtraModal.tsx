@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { X, Search } from "lucide-react";
-import { Food, IngredientCategory, Unit } from "../../../core/domain/types";
+import { Food, IngredientCategory, Unit } from "../../../core/domain/ingredient";
 import { typedFoodDb } from "../../../core/typed-db/typedFoodDb";
 import { getIngredientCategoryFromSlug, getIngredientCategoryId } from "../../../core/typed-db/ingredientCategoryMap";
 import { getCodeById, getIdByCode } from "../../../core/typed-db/recipeIdMap";

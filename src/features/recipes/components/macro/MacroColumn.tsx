@@ -1,4 +1,4 @@
-import { Macronutrients } from '../../../../core/domain/types';
+import { Macronutrients } from '../../../../core/domain/nutrition';
 
 export interface MacroColumnProps {
   macros: Macronutrients;

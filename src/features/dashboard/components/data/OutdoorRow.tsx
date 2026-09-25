@@ -1,5 +1,5 @@
 import { Pencil, Trash2 } from "lucide-react";
-import { OutdoorEntry } from "../../../../core/domain/types";
+import { OutdoorEntry } from "../../../../core/domain/recipe";
 import { getCategoryById } from "../../../../core/typed-db/typedCategoriesDb";
 
 export interface OutdoorRowProps {

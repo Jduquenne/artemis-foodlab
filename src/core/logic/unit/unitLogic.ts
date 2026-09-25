@@ -1,4 +1,4 @@
-import { Unit } from "../../domain/types";
+import { Unit } from "../../domain/ingredient";
 
 const KNOWN_UNITS: readonly string[] = Object.values(Unit);
 

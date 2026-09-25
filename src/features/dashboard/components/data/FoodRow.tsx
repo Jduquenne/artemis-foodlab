@@ -1,5 +1,5 @@
 import { Pencil, Snowflake, Trash2 } from "lucide-react";
-import { Food } from "../../../../core/domain/types";
+import { Food } from "../../../../core/domain/ingredient";
 
 export interface FoodRowProps {
   food: Food;

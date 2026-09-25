@@ -1,4 +1,4 @@
-import { Macronutrients } from "./types";
+import { Macronutrients } from "./nutrition";
 
 export interface PredefinedFilterDefinition {
   id: string;

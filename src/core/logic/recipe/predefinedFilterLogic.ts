@@ -1,5 +1,6 @@
 import { PREDEFINED_FILTER_DEFINITIONS, PredefinedFilterDefinition } from "../../domain/predefinedFilters";
-import { Macronutrients, PredefinedFilter } from "../../domain/types";
+import { Macronutrients } from "../../domain/nutrition";
+import { PredefinedFilter } from "../../domain/recipe";
 
 export function matchesFilterDefinition(definition: PredefinedFilterDefinition, macros: Macronutrients): boolean {
   const value = macros[definition.macro];

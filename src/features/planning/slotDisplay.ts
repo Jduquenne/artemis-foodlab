@@ -1,4 +1,4 @@
-import { SlotType } from "../../core/domain/types";
+import { SlotType } from "../../core/domain/planning";
 
 export interface SlotDisplay {
   label: string;

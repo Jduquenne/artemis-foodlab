@@ -1,7 +1,5 @@
 import { OutdoorEntry } from "../domain/recipe";
 
-export type { OutdoorEntry };
-
 export const typedOutdoorDb: Record<string, OutdoorEntry> = {};
 
 export function replaceOutdoorDb(next: Record<string, OutdoorEntry>): void {

@@ -20,9 +20,10 @@ import { formatDayDate } from '../../shared/utils/dateUtils';
 import { computeDayMacros } from '../../shared/utils/macroUtils';
 import { useSearchParams } from 'react-router-dom';
 import { useMenuStore } from '../../shared/store/useMenuStore';
-import { SlotType, ShoppingDay, MealSlot } from '../../core/domain/types';
+import { SlotType, ShoppingDay, MealSlot, CopyState } from '../../core/domain/types';
 import { isDessert, canAddDessert, isSlotFull } from '../../core/domain/recipePredicates';
-import { MEAL_SLOTS, DAYS, CopyState } from '../../core/domain/planningConfig';
+import { MEAL_SLOTS, DAYS } from '../../core/domain/planningConfig';
+import { SLOT_DISPLAY } from './slotDisplay';
 import { computeSlotCopyProps, parseFullSlotId, computeDragMoveSlots, ParsedSlot } from '../../core/logic/planning/planningLogic';
 import { withPending } from '../../shared/utils/withPending';
 import { MoveDessertsPrompt } from './components/MoveDessertsPrompt';
@@ -552,9 +553,9 @@ export const PlanningModule = () => {
                     {!isSelectionMode && (
                         <div key={slideKey} className={`sm:hidden flex flex-col gap-1.5 h-full ${slideKey > 0 ? (slideDir === 'left' ? 'animate-slide-from-right' : 'animate-slide-from-left') : ''}`} onTouchStart={onSwipeTouchStart} onTouchEnd={onSwipeTouchEnd}>
                             {MEAL_SLOTS.map(mealType => (
-                                <div key={mealType.id} className="flex flex-col gap-0.5 min-h-0" style={{ flex: mealType.flex }}>
+                                <div key={mealType.id} className="flex flex-col gap-0.5 min-h-0" style={{ flex: SLOT_DISPLAY[mealType.id].flex }}>
                                     <span className="text-[9px] font-black uppercase tracking-widest text-slate-400 px-1 shrink-0">
-                                        {mealType.icon} {mealType.label}
+                                        {SLOT_DISPLAY[mealType.id].icon} {SLOT_DISPLAY[mealType.id].label}
                                     </span>
                                     <div className="flex-1 min-h-0">
                                         {renderSlot(selectedDay, mealType)}
@@ -568,7 +569,7 @@ export const PlanningModule = () => {
                         <span />
                         {MEAL_SLOTS.map(mealType => (
                             <span key={mealType.id} className="text-center text-xs font-black uppercase tracking-widest text-slate-400 truncate">
-                                {mealType.icon} {mealType.label}
+                                {SLOT_DISPLAY[mealType.id].icon} {SLOT_DISPLAY[mealType.id].label}
                             </span>
                         ))}
                     </div>

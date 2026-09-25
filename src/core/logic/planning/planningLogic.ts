@@ -1,6 +1,6 @@
-import { MealSlot, SlotType } from "../../domain/types";
+import { CopyState, MealSlot, SlotType } from "../../domain/types";
 import { canAddDessert, isSlotFull } from "../../domain/recipePredicates";
-import { CopyState, MAX_DESSERTS_PER_SLOT, MEAL_SLOTS, MealSlotDef } from "../../domain/planningConfig";
+import { MAX_DESSERTS_PER_SLOT, MEAL_SLOTS, MealSlotDef } from "../../domain/planningConfig";
 
 export function parseFullSlotId(fullId: string): ParsedSlot | null {
   const wIdx = fullId.indexOf('-W');

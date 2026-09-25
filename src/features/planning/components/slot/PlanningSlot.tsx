@@ -3,6 +3,7 @@ import { MealSlot } from "../../../../core/domain/types";
 import { MealSlot as MealSlotComp } from "./MealSlot";
 import { MultiMealSlot } from "./MultiMealSlot";
 import { MealSlotDef } from "../../../../core/domain/planningConfig";
+import { SLOT_DISPLAY } from "../../slotDisplay";
 import { SlotCopyProps } from "../../../../core/logic/planning/planningLogic";
 import { buildRecipeDetailUrl } from "../../../../core/logic/recipe/recipeLogic";
 
@@ -53,8 +54,8 @@ export const PlanningSlot = ({
     <div className={`relative h-full w-full min-h-0 min-w-0 transition-opacity ${isDimmed ? "pointer-events-none opacity-30" : ""}`}>
       {mealType.multi ? (
         <MultiMealSlot
-          label={mealType.label}
-          icon={mealType.icon}
+          label={SLOT_DISPLAY[mealType.id].label}
+          icon={SLOT_DISPLAY[mealType.id].icon}
           slotId={slotId}
           recipeIds={recipeIds}
           onAdd={blocked ? () => {} : onOpenPicker}
@@ -81,8 +82,8 @@ export const PlanningSlot = ({
         />
       ) : (
         <MealSlotComp
-          label={mealType.label}
-          icon={mealType.icon}
+          label={SLOT_DISPLAY[mealType.id].label}
+          icon={SLOT_DISPLAY[mealType.id].icon}
           slotId={slotId}
           recipeIds={recipeIds}
           persons={savedMeal?.persons}

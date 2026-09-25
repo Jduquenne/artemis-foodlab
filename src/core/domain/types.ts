@@ -217,6 +217,15 @@ export interface MealSlot {
   recipeQuantities?: Record<string, number>;
 }
 
+export interface CopyState {
+  recipeId: string;
+  slotType: SlotType;
+  sourceDay: string;
+  isDessert: boolean;
+  recipeName: string;
+  sourcePersons?: number;
+}
+
 export interface HouseholdRecord {
   id: string;
   lastCheckedAt: string;

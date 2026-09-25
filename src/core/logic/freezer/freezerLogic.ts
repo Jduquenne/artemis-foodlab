@@ -1,5 +1,5 @@
 import { FoodFreezerItem, FreezerBag, FreezerCategory, FreezerItem } from '../../domain/freezer';
-import { Food, Unit } from '../../domain/ingredient';
+import { Food } from '../../domain/ingredient';
 import { RecipeDetails } from '../../domain/recipe';
 import { isBatchCookable } from '../../domain/recipePredicates';
 import { formatQty, pluralizeUnit } from '../../../shared/utils/unitUtils';
@@ -14,8 +14,6 @@ export function bagQuantity(bag: Pick<FreezerBag, 'quantity'>): number {
 export function totalBagQuantity(bags: readonly FreezerBag[]): number {
   return sumBy(bags, bagQuantity);
 }
-
-export const FREEZER_BAG_UNITS = Object.values(Unit).filter(u => u !== Unit.NONE);
 
 export function getFoodBagsSummary(item: FoodFreezerItem): string {
   const count = item.bags.length;

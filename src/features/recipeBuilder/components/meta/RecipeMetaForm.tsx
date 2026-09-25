@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { Maximize2 } from "lucide-react";
 import { MealType, RecipeKind } from "../../../../core/domain/recipe";
+import { MEAL_TYPE_LABELS, RECIPE_KIND_LABELS } from "../../../../core/domain/recipeLabels";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
 import { useCategoriesSnapshot, useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import {
   CATEGORY_PREFIX,
-  MEAL_TYPE_LABELS,
-  RECIPE_KIND_LABELS,
   buildRecipeDbId,
   buildRecipeId,
   suggestNextRecipeNumber,

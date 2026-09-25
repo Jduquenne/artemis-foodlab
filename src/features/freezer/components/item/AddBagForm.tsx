@@ -2,8 +2,7 @@ import { useState } from "react";
 import { Check, Loader2, X } from "lucide-react";
 import { PREPARATION_OPTIONS } from "../../../../core/domain/preparationOptions";
 import { FreezerBag } from "../../../../core/domain/freezer";
-import { Unit } from "../../../../core/domain/ingredient";
-import { FREEZER_BAG_UNITS } from "../../../../core/logic/freezer/freezerLogic";
+import { Unit, SELECTABLE_UNITS } from "../../../../core/domain/ingredient";
 
 export interface AddBagFormProps {
   onSave: (bag: Omit<FreezerBag, "id" | "addedDate">) => void;
@@ -48,7 +47,7 @@ export const AddBagForm = ({ onSave, onCancel, initialUnit = Unit.G, saving }: A
         disabled={saving}
         className="w-20 px-1.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 focus:outline-none focus:border-orange-400 disabled:opacity-50"
       >
-        {FREEZER_BAG_UNITS.map(u => (
+        {SELECTABLE_UNITS.map(u => (
           <option key={u} value={u}>{u}</option>
         ))}
       </select>

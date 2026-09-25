@@ -12,6 +12,8 @@ export enum Unit {
   TRANCHE = "tranche",
 }
 
+export const SELECTABLE_UNITS: Unit[] = Object.values(Unit).filter((u) => u !== Unit.NONE);
+
 export enum IngredientCategory {
   FRUIT_VEGETABLE = "Fruits et légumes",
   DRIED_FRUIT = "Fruits secs",

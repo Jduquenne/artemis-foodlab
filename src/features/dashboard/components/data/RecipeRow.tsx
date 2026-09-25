@@ -2,7 +2,7 @@ import { Image, ImageOff, Pencil, Trash2, Utensils } from "lucide-react";
 import { RecipeDetails } from "../../../../core/domain/recipe";
 import { useCategoriesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { getCardColors } from "../../../../shared/utils/cards/cardColors";
-import { RECIPE_KIND_LABELS } from "../../../../core/logic/dashboard/recipeTableLogic";
+import { RECIPE_KIND_LABELS } from "../../../../core/domain/recipeLabels";
 
 export interface RecipeRowProps {
   recipe: RecipeDetails;

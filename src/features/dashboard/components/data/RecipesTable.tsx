@@ -2,9 +2,9 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Plus, Search } from "lucide-react";
 import { RecipeDetails } from "../../../../core/domain/recipe";
+import { RECIPE_KIND_LABELS } from "../../../../core/domain/recipeLabels";
 import {
   RECIPE_KIND_FILTERS,
-  RECIPE_KIND_LABELS,
   RecipeKindFilter,
   filterRecipes,
 } from "../../../../core/logic/dashboard/recipeTableLogic";

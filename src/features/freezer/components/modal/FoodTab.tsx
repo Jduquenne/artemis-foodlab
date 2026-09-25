@@ -1,6 +1,5 @@
 import { PREPARATION_OPTIONS } from "../../../../core/domain/preparationOptions";
-import { Unit } from "../../../../core/domain/ingredient";
-import { FREEZER_BAG_UNITS } from "../../../../core/logic/freezer/freezerLogic";
+import { Unit, SELECTABLE_UNITS } from "../../../../core/domain/ingredient";
 import { FoodSearchInput } from "./FoodSearchInput";
 
 export interface FoodTabProps {
@@ -56,7 +55,7 @@ export const FoodTab = ({
           onChange={e => onUnitChange(e.target.value as Unit)}
           className="w-full px-3 py-3 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
         >
-          {FREEZER_BAG_UNITS.map(u => (
+          {SELECTABLE_UNITS.map(u => (
             <option key={u} value={u}>{u}</option>
           ))}
         </select>

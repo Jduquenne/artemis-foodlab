@@ -1,11 +1,11 @@
 import { Trash2 } from "lucide-react";
 import { PREPARATION_OPTIONS } from "../../../../core/domain/preparationOptions";
-import { Unit, IngredientCategory } from "../../../../core/domain/ingredient";
+import { Unit, IngredientCategory, SELECTABLE_UNITS } from "../../../../core/domain/ingredient";
 import { isUnit } from "../../../../core/logic/unit/unitLogic";
 import { IngredientFoodSearch } from "./IngredientFoodSearch";
 import { BaseRecipeSearch } from "./BaseRecipeSearch";
 import { DraftIngredient } from "../../../../core/domain/recipeBuilderTypes";
-import { BUILDER_UNITS, switchIngredientType } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
+import { switchIngredientType } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
 
 export interface IngredientBuilderRowProps {
   ingredient: DraftIngredient;
@@ -86,7 +86,7 @@ export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: Ingredi
             className="w-20 px-1 py-2 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
           >
             <option value={Unit.NONE}>—</option>
-            {BUILDER_UNITS.map(u => (
+            {SELECTABLE_UNITS.map(u => (
               <option key={u} value={u}>{u}</option>
             ))}
           </select>

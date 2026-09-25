@@ -1,6 +1,7 @@
 import { Food, IngredientCategory, Unit } from "../../domain/ingredient";
 import { Macronutrients } from "../../domain/nutrition";
-import { Category, MealType, RecipeDetails, RecipeKind } from "../../domain/recipe";
+import { Category, RecipeDetails, RecipeKind } from "../../domain/recipe";
+import { MEAL_TYPE_LABELS, RECIPE_KIND_LABELS } from "../../domain/recipeLabels";
 import {
   DraftIngredient,
   RecipeBuilderState,
@@ -14,8 +15,6 @@ import { getIngredientCategoryId } from "../../domain/ingredientCategorySlugs";
 import { ApiIngredientInput, ApiRecipeInput } from "../recipe/recipeApiMapper";
 import { padNumber } from "../../../shared/utils/numberUtils";
 import { groupBy } from "../../../shared/utils/collectionUtils";
-
-export const BUILDER_UNITS: Unit[] = Object.values(Unit).filter((u) => u !== Unit.NONE);
 
 export function switchIngredientType(
   ing: DraftIngredient,
@@ -151,19 +150,6 @@ export function suggestNextRecipeNumber(categoryId: string): string {
   }
   return String(max + 1);
 }
-
-export const RECIPE_KIND_LABELS: Record<RecipeKind, string> = {
-  [RecipeKind.DISH]: "Plat",
-  [RecipeKind.INGREDIENT]: "Ingrédient",
-  [RecipeKind.BASE]: "Base",
-};
-
-export const MEAL_TYPE_LABELS: Record<MealType, string> = {
-  [MealType.BREAKFAST]: "Matin",
-  [MealType.LUNCH]: "Midi",
-  [MealType.DINNER]: "Soir",
-  [MealType.SNACK]: "En-cas",
-};
 
 export function summarizeBuilderState(state: RecipeBuilderState, categories: Category[]): { label: string; value: string }[] {
   const isBase = state.kind === RecipeKind.BASE;

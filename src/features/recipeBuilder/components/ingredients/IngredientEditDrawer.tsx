@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { X } from "lucide-react";
 import { PREPARATION_OPTIONS } from "../../../../core/domain/preparationOptions";
-import { Unit, IngredientCategory } from "../../../../core/domain/ingredient";
+import { Unit, IngredientCategory, SELECTABLE_UNITS } from "../../../../core/domain/ingredient";
 import { isUnit } from "../../../../core/logic/unit/unitLogic";
 import { IngredientFoodSearch } from "./IngredientFoodSearch";
 import { BaseRecipeSearch } from "./BaseRecipeSearch";
 import { DraftIngredient } from "../../../../core/domain/recipeBuilderTypes";
-import { BUILDER_UNITS, switchIngredientType } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
+import { switchIngredientType } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
 
 export interface IngredientEditDrawerProps {
   ingredient: DraftIngredient;
@@ -127,7 +127,7 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
                   className={FIELD_CLASS}
                 >
                   <option value={Unit.NONE}>—</option>
-                  {BUILDER_UNITS.map(u => (
+                  {SELECTABLE_UNITS.map(u => (
                     <option key={u} value={u}>{u}</option>
                   ))}
                 </select>

@@ -4,12 +4,6 @@ import { compareByName } from "../../../shared/utils/sortUtils";
 
 export type RecipeKindFilter = RecipeKind | "all" | "dessert";
 
-export const RECIPE_KIND_LABELS: Record<RecipeKind, string> = {
-  [RecipeKind.DISH]: "Plat",
-  [RecipeKind.INGREDIENT]: "Ingrédient",
-  [RecipeKind.BASE]: "Base",
-};
-
 export const RECIPE_KIND_FILTERS: { id: RecipeKindFilter; label: string }[] = [
   { id: "all", label: "Tous" },
   { id: RecipeKind.DISH, label: "Plats" },

@@ -52,14 +52,14 @@ Déjà branché sur : courses, ménager, journal (stepper portions), congélateu
 
 `MealSlot.dessertIds` n'a **aucune dépendance** envers `recipeIds` — un créneau déjeuner/dîner (`hasDessert: true` dans `MEAL_SLOTS`) peut avoir des desserts sans plat principal (`recipeIds: []`). Toute UI/logique touchant les créneaux doit respecter cet invariant, ne jamais gater l'affichage ou l'ajout d'un dessert sur la présence d'une recette (piège déjà rencontré dans `MealSlot.tsx` — `showDessertColumn` était gaté sur `hasPhoto`, corrigé).
 
-Déplacement (drag & drop) d'un repas ayant des desserts → l'utilisateur choisit de les faire suivre ou non (`MoveDessertsPrompt`), calcul dans `computeDragMoveSlots` (`core/logic/planning/planningLogic.ts`). Seul le cas où la destination a déjà une **vraie recette** déclenche un échange complet (recette + dessert des deux côtés) ; une destination « dessert seul » ne doit jamais céder son propre dessert au créneau de départ — piège déjà rencontré et corrigé (un dessert non lié au repas déplacé partait avec lui).
+Déplacement (drag & drop) d'un repas ayant des desserts → l'utilisateur choisit de les faire suivre ou non (`MoveDessertsPrompt`), calcul dans `computeDragMoveSlots` (`core/logic/planning/planningDragLogic.ts`). Seul le cas où la destination a déjà une **vraie recette** déclenche un échange complet (recette + dessert des deux côtés) ; une destination « dessert seul » ne doit jamais céder son propre dessert au créneau de départ — piège déjà rencontré et corrigé (un dessert non lié au repas déplacé partait avec lui).
 
 ---
 
 ## Journal — moyenne de semaine et objectifs
 
 - `WeekAverageModal` (bouton « Moyenne », à gauche de « Objectifs ») : moyenne par jour des macros sur les jours choisis (défaut lun→ven) de la semaine affichée. Calcul pur `core/logic/journal/weekAverageLogic.ts` ; les jours cochés **sans aucun repas planifié sont exclus** du dénominateur (le modal affiche le nombre de jours comptés).
-- Objectifs : les **calories ne sont plus éditables**, elles sont calculées (Atwater `atwaterKcal`, `core/logic/dashboard/foodFormLogic.ts` : `4P + 9L + 4G + 2·fibres`) à partir des 4 macros et enregistrées à la validation. Un objectif kcal enregistré avant ce changement peut être incohérent jusqu'à la prochaine validation.
+- Objectifs : les **calories ne sont plus éditables**, elles sont calculées (Atwater `atwaterKcal`, `core/logic/nutrition/atwaterLogic.ts` : `4P + 9L + 4G + 2·fibres`) à partir des 4 macros et enregistrées à la validation. Un objectif kcal enregistré avant ce changement peut être incohérent jusqu'à la prochaine validation.
 
 ---
 
@@ -103,11 +103,27 @@ Trois couches, sans exception :
 ### Règles de placement (invariants)
 
 - Logique métier → `core/logic/<feature>/` — jamais inline dans un composant ou un hook.
-- Toute fonction logique est une **fonction nommée pure**, testable isolément.
+- Toute fonction logique est une **fonction nommée pure**, testable isolément. Un fichier de logique fait une seule chose (pas de fourre-tout) ; `core/logic/` n'importe jamais `core/services/` (les types partagés vivent dans `core/domain/`).
 - Utils transverses → `shared/utils/`
 - Hooks → `shared/hooks/` — jamais dans un composant directement.
 - Données statiques → fichier dédié dans le dossier de la feature, pas dans le composant.
 - Un seul composant par fichier.
+
+### Catalogue en mémoire, snapshots et synchronisation
+
+- **Ne jamais lire un magasin `core/catalogue/` depuis un composant ni depuis `useMemo`** : utiliser `shared/hooks/useCatalogueSnapshot.ts` (`useRecipesSnapshot`, `useFoodsSnapshot`, `useCategoriesSnapshot`, `useOutdoorSnapshot`, `useHouseholdSnapshot`, `usePlannableSnapshot`, `useRecipeMetricsSnapshot`, et `useMacroCatalogue` pour les macros). Chaque snapshot change d'identité seulement quand son domaine change : c'est ce qui rend les dépendances de `useMemo` correctes (`exhaustive-deps` refuse un « numéro de version » en dépendance).
+- **La logique `core/logic/` reçoit le catalogue en paramètre** (`recipes`, `foods`, `MacroCatalogue`, `ShoppingCatalogue`…) : fonctions pures, jamais de lecture d'un magasin global. Exceptions voulues : lectures au moment d'une action (`useJournalStore`, `useRecipeBuilderSave`, `initialRecipeBuilderState`), `catalogueSyncService`, `macroUtils` (recalcul).
+- **Notifications** : seul `catalogueSyncService` signale (`notifyCatalogueChange`, après le recalcul des données dérivées), jamais les `replace…` eux-mêmes. `useNewsStore` et `useMediaStore` s'abonnent eux-mêmes.
+- **Rafraîchissement entre appareils** : `useAppRefresh` (dans `Layout`) → `refreshAppData` (`shared/utils/appRefresh.ts`) au focus, au retour réseau et toutes les 5 min, au plus toutes les 2 min, silencieux, sauté si une action est en cours (`usePendingStore`). Recharge `/bootstrap` (catalogue, coches ménager, profils, ajustements du journal, période de courses) + congélateur ; `useRefreshStore.tick` fait rejouer leur chargement à Planning, Courses et Journal. Pas de temps réel (délai jusqu'à 2 min, dernier écrit gagne).
+- **Cache des cartes SVG** : `createCardCache` (clé = JSON des données de rendu).
+
+### Utilitaires partagés (`shared/utils/`) — à réutiliser, ne pas réécrire
+
+`sortUtils` (`compareText`, `compareByName`, tri français), `numberUtils` (`toNumber`, `roundTo`, `padNumber`), `collectionUtils` (`sumBy`, `countBy`, `groupBy`, `toggleInList`, `omitKey`), `textUtils` (`normalizeQuery`, `includesText`, `includesAnyText`, `rankByQuery`), `codeUtils` (`highestSequence`, `nextSequentialCode`, `validateNewCode`), `unitUtils` (`formatQty`, `pluralizeUnit`), `assetUrl` (`buildAssetUrl`, `LOGO_URL`, toujours `BASE_URL`, jamais `/artemis-foodlab/` en dur). Libellés macros : `core/domain/nutrition.ts` (`NUTRIENT_DEFINITIONS`, `MACRO_DISPLAYS`) ; libellés recette : `core/domain/recipeLabels.ts` ; unités : `SELECTABLE_UNITS`, `UNIT_WEIGHT_UNITS` (`core/domain/ingredient.ts`). Identifiant de créneau : `buildSlotId` (`planningSlotIdLogic.ts`).
+
+### Refactoring en cours
+
+Journal de relecture et décisions : `dev/refactoring.md` (ignoré par git). Fait : `core/domain`, `core/catalogue`, `core/logic`. À faire : `core/services/`, puis `features/` et `shared/`.
 
 ---
 
@@ -144,7 +160,7 @@ Trois couches, sans exception :
 
 ## Recette — quantités selon le nombre de parts
 
-`RecipeDetail` affiche la carte SVG « recette » (`RecipeRecetteCard`, ou `RecipeBookCard` si photo livre) avec des quantités mises à l'échelle : `scaleRecipeToPortions(recipe, portions)` (`core/logic/recipe/recipeLogic.ts`, linéaire `portions / defaultPortions`, arrondi 2 décimales, inclut les ingrédients `baseId`). Les parts viennent de `?portions=N` (`resolveInitialPortions`) ou du `PortionsStepper` du header ; state **local**, non persisté, remis au défaut quand `recipeId` change (chevrons précédent/suivant).
+`RecipeDetail` affiche la carte SVG « recette » (`RecipeRecetteCard`, ou `RecipeBookCard` si photo livre) avec des quantités mises à l'échelle : `scaleRecipeToPortions(recipe, portions)` (`core/logic/recipe/recipeScalingLogic.ts`, linéaire `portions / defaultPortions`, arrondi 2 décimales, inclut les ingrédients `baseId`). Les parts viennent de `?portions=N` (`resolveInitialPortions`) ou du `PortionsStepper` du header ; state **local**, non persisté, remis au défaut quand `recipeId` change (chevrons précédent/suivant).
 
 - **Ouverture depuis le planning** : toujours `navigate(buildRecipeDetailUrl(recipeId, portions))` — créneau simple = `savedMeal.persons`, multi = `recipePersons?.[rid] ?? persons`, dessert = `persons` effectif de `DessertColumn`. `persons` planning ≡ « parts » (`persons / defaultPortions`). Les overrides en grammes (`recipeQuantities`) ne sont pas des parts → ignorés ici.
 - **Macros = par portion, donc invariantes au scaling** : `macros` et `handleEditInBuilder` utilisent la recette **non** scalée ; seule la carte reçoit `scaledRecipe`.
@@ -156,7 +172,7 @@ Trois couches, sans exception :
 ## Recipe Builder — points d'attention
 
 - **Téléchargement** : « Télécharger la recette » (`PhotoPanel`) génère la carte SVG recette depuis l'**état courant du builder** (`builderStateToRecetteCardData` / `builderStateToBookCardData` dans `shared/utils/cards/cardAdapter.ts`) puis la rasterise en PNG ×3 (`shared/utils/cards/cardExport.ts`, images converties en `data:` URL pour éviter un canvas tainted). Ce n'est **pas** la photo brute du plat.
-- **Instructions** : `RecipeMetaForm` n'a qu'un bouton ; l'édition se fait dans `InstructionsModal` (une ligne = une étape, `state.instructions: string[]`, `Entrée` = étape suivante, `Maj+Entrée` = saut de ligne). Un collage multi-lignes est éclaté en étapes (`splitPastedInstructionLines` / `spliceInstructionPaste`, `recipeBuilderLogic.ts`).
+- **Instructions** : `RecipeMetaForm` n'a qu'un bouton ; l'édition se fait dans `InstructionsModal` (une ligne = une étape, `state.instructions: string[]`, `Entrée` = étape suivante, `Maj+Entrée` = saut de ligne). Un collage multi-lignes est éclaté en étapes (`splitPastedInstructionLines` / `spliceInstructionPaste`, `instructionsLogic.ts`).
 - Portions par défaut d'une nouvelle recette : **2** (`initialRecipeBuilderState`).
 - Accès : icône `ChefHat` dans `Layout.tsx` (admin), bouton « Nouvelle recette » de `RecipeModule`, crayon de `RecipeDetail`.
 
@@ -166,7 +182,7 @@ Trois couches, sans exception :
 
 - `buildRecipeId` → `CHAR_01` : sert aux **noms de fichiers image** uniquement.
 - `buildRecipeDbId` → `char-001` : **vraie clé interne** (clé de `recipesCatalogue`, `MealSlot.recipeIds`, etc.).
-- Les deux sont dans `core/logic/recipeBuilder/recipeBuilderLogic.ts`.
+- Les deux sont dans `core/logic/recipeBuilder/recipeCodeLogic.ts`.
 - L'`id` uuid de l'API est stocké à part dans `RecipeDetails.apiId` ; la traduction code ↔ uuid passe par `core/catalogue/recipeIdMap.ts` (`getIdByCode` / `getCodeById`), reconstruit à chaque hydratation du catalogue.
 - `recipesCatalogue` / `foodsCatalogue` / `outdoorCatalogue` / `householdCatalogue` / `categoriesCatalogue` restent des objets mutables rafraîchis en place (`replaceRecipes` etc.), sans `useLiveQuery` ; `catalogueSyncService` signale chaque changement (`core/catalogue/catalogueEvents.ts`) et les composants lisent des copies via `useRecipesSnapshot` & co (`shared/hooks/useCatalogueSnapshot.ts`), jamais les objets directement.
 - **`Ingredient.id` est stable** d'un enregistrement à l'autre : `PUT /recipes/:id` fait un upsert par id (connu → update en place, absent → nouvelle ligne, disparu du tableau envoyé → supprimé ; id étranger à la recette → `400`). `recipeToBuilderState` préserve `ing.id` dans `DraftIngredient.apiId` (distinct de `DraftIngredient.id`, la clé locale/React) ; `builderStateToApiBody` le renvoie quand présent, l'omet pour un ingrédient ajouté dans le builder.

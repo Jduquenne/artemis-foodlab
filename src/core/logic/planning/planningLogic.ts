@@ -1,6 +1,6 @@
 import { MealSlot, SlotType } from "../../domain/types";
 import { canAddDessert, isSlotFull } from "../../domain/recipePredicates";
-import { CopyState, MEAL_SLOTS, MealSlotDef } from "../../domain/planningConfig";
+import { CopyState, MAX_DESSERTS_PER_SLOT, MEAL_SLOTS, MealSlotDef } from "../../domain/planningConfig";
 
 export function parseFullSlotId(fullId: string): ParsedSlot | null {
   const wIdx = fullId.indexOf('-W');
@@ -72,7 +72,7 @@ export function computeDragMoveSlots(
   // dragged meal's desserts) get merged in.
   const destinationDessertIds = toMeal?.dessertIds ?? [];
   const incomingDessertIds = moveDesserts ? (fromMeal.dessertIds ?? []) : [];
-  const mergedDessertIds = [...new Set([...destinationDessertIds, ...incomingDessertIds])].slice(0, 3);
+  const mergedDessertIds = [...new Set([...destinationDessertIds, ...incomingDessertIds])].slice(0, MAX_DESSERTS_PER_SLOT);
 
   const destinationSlot: MealSlot = toMeal
     ? {

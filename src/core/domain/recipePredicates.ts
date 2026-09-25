@@ -1,4 +1,5 @@
 import { Category } from "./categories";
+import { MAX_DESSERTS_PER_SLOT, MAX_RECIPES_PER_SLOT } from "./planningConfig";
 import { MealSlot, RecipeDetails, RecipeKind } from "./types";
 
 const NON_BROWSABLE_CATEGORY_IDS: readonly string[] = ["outdoor", "sweet-grocery"];
@@ -48,9 +49,9 @@ export function hasDesserts(slot: Pick<MealSlot, "dessertIds">): boolean {
 }
 
 export function canAddDessert(slot: Pick<MealSlot, "dessertIds">): boolean {
-  return (slot.dessertIds?.length ?? 0) < 3;
+  return (slot.dessertIds?.length ?? 0) < MAX_DESSERTS_PER_SLOT;
 }
 
 export function isSlotFull(slot: Pick<MealSlot, "recipeIds">): boolean {
-  return slot.recipeIds.length >= 4;
+  return slot.recipeIds.length >= MAX_RECIPES_PER_SLOT;
 }

@@ -1,5 +1,6 @@
 import { Plus } from 'lucide-react';
 import { RecipeCell } from './RecipeCell';
+import { MAX_RECIPES_PER_SLOT } from '../../../../core/domain/planningConfig';
 
 export interface MultiRecipeGridProps {
     slotId: string;
@@ -35,7 +36,7 @@ export const MultiRecipeGrid = ({
     batchRecipeIds,
 }: MultiRecipeGridProps) => (
     <div className={`w-full h-full flex flex-row sm:grid sm:grid-cols-2 sm:grid-rows-2 gap-0.5 p-0.5 ${isTargetMode ? 'pointer-events-none' : ''}`}>
-        {Array.from({ length: 4 }).map((_, idx) => {
+        {Array.from({ length: MAX_RECIPES_PER_SLOT }).map((_, idx) => {
             const rid = recipeIds[idx];
             if (rid) {
                 return (

@@ -1,5 +1,6 @@
 import { Plus, Check } from 'lucide-react';
 import { DessertCell } from './DessertCell';
+import { MAX_DESSERTS_PER_SLOT } from '../../../../core/domain/planningConfig';
 
 export interface DessertColumnProps {
     slotId: string;
@@ -31,8 +32,8 @@ export const DessertColumn = ({
     onSetDessertPersons,
 }: DessertColumnProps) => {
     const isTargetMode = dessertCopyTargetState === 'selectable' || dessertCopyTargetState === 'selected';
-    const addButtonShown = dessertIds.length < 3 && !isAddMode && !isTargetMode && !!onAddDessert;
-    const placeholderCount = Math.max(0, 3 - dessertIds.length - (addButtonShown ? 1 : 0));
+    const addButtonShown = dessertIds.length < MAX_DESSERTS_PER_SLOT && !isAddMode && !isTargetMode && !!onAddDessert;
+    const placeholderCount = Math.max(0, MAX_DESSERTS_PER_SLOT - dessertIds.length - (addButtonShown ? 1 : 0));
 
     return (
         <div

@@ -7,6 +7,9 @@ export const MEAL_SLOTS = [
   { id: "dinner" as SlotType, label: "Dîner", icon: "🌙", multi: false, flex: 3, hasDessert: true },
 ] as const;
 
+export const MAX_DESSERTS_PER_SLOT = 3;
+export const MAX_RECIPES_PER_SLOT = 4;
+
 export type MealSlotDef = typeof MEAL_SLOTS[number];
 
 export interface CopyState {

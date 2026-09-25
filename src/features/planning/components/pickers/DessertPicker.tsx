@@ -4,6 +4,7 @@ import { SearchBar } from '../../../../shared/components/ui/SearchBar';
 import { useSearchDesserts } from '../../../../shared/hooks/useSearch';
 import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
 import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
+import { MAX_DESSERTS_PER_SLOT } from '../../../../core/domain/planningConfig';
 
 export interface DessertPickerProps {
     existingIds: string[];
@@ -35,7 +36,7 @@ export const DessertPicker = ({ existingIds, onSelect, onClose }: DessertPickerP
                 <div className="p-6 border-b border-slate-200 flex justify-between items-center bg-orange-50 dark:bg-orange-950/30 shrink-0">
                     <div>
                         <h2 className="text-xl font-black text-slate-900">Ajouter un dessert</h2>
-                        <p className="text-orange-600 dark:text-orange-400 font-bold uppercase text-xs tracking-widest">max 3</p>
+                        <p className="text-orange-600 dark:text-orange-400 font-bold uppercase text-xs tracking-widest">max {MAX_DESSERTS_PER_SLOT}</p>
                     </div>
                     <button aria-label="Fermer" onClick={handleClose} className="p-2 hover:bg-white/60 dark:hover:bg-slate-200/40 rounded-full transition-all">
                         <X size={24} className="text-slate-400" />

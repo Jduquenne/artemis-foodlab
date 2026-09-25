@@ -1,8 +1,8 @@
 import { Category, OutdoorEntry } from "../../domain/recipe";
 import { OutdoorActivityInput } from "../../services/catalogueWriteService";
 import { buildRecipeDbId } from "../recipeBuilder/recipeCodeLogic";
-import { RecapEntry, diffEntry } from "./recap";
-import { padNumber } from "../../../shared/utils/numberUtils";
+import { RecapEntry, diffEntry } from "./recapLogic";
+import { nextSequentialCode, validateNewCode } from "../../../shared/utils/codeUtils";
 
 export interface OutdoorFormDraft {
   name: string;
@@ -20,14 +20,7 @@ export function outdoorToDraft(entry: OutdoorEntry): OutdoorFormDraft {
 }
 
 export function suggestOutdoorCode(entries: OutdoorEntry[]): string {
-  const prefix = buildRecipeDbId(DEFAULT_CATEGORY_ID, "");
-  const pattern = new RegExp(`^${prefix}-(\\d+)$`);
-  let max = 0;
-  for (const entry of entries) {
-    const match = entry.code.match(pattern);
-    if (match) max = Math.max(max, Number(match[1]));
-  }
-  return `${prefix}-${padNumber(max + 1, 3)}`;
+  return nextSequentialCode(buildRecipeDbId(DEFAULT_CATEGORY_ID, ""), entries.map((entry) => entry.code));
 }
 
 export function validateOutdoorForm(draft: OutdoorFormDraft, categories: Category[]): string[] {
@@ -38,11 +31,7 @@ export function validateOutdoorForm(draft: OutdoorFormDraft, categories: Categor
 }
 
 export function validateNewOutdoorCode(code: string, entries: OutdoorEntry[]): string | null {
-  const trimmed = code.trim();
-  if (!trimmed) return "L'identifiant est requis.";
-  if (!/^[a-z]+-\d+$/.test(trimmed)) return "L'identifiant doit être au format « od-001 ».";
-  if (entries.some((entry) => entry.code === trimmed)) return "Cet identifiant est déjà utilisé.";
-  return null;
+  return validateNewCode(code, entries.map((entry) => entry.code), "od-001");
 }
 
 export function outdoorFormToBody(code: string, draft: OutdoorFormDraft): OutdoorActivityInput {

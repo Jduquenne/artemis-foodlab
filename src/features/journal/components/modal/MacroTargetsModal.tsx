@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { X, Check } from "lucide-react";
 import { useProfileStore } from "../../../../shared/store/useProfileStore";
 import { useActiveProfile, useActiveTargets } from "../../../../shared/hooks/useActiveProfile";
-import { atwaterKcal } from "../../../../core/logic/dashboard/foodFormLogic";
+import { atwaterKcal } from "../../../../core/logic/nutrition/atwaterLogic";
 
 export interface MacroTargetsModalProps {
   onClose: () => void;

@@ -1,4 +1,5 @@
 import { RecipeBuilderState } from "../../domain/recipeBuilderTypes";
+import { highestSequence } from "../../../shared/utils/codeUtils";
 import { padNumber } from "../../../shared/utils/numberUtils";
 
 export const CATEGORY_PREFIX: Record<string, string> = {
@@ -55,11 +56,5 @@ export function getBuilderRecipeCode(state: RecipeBuilderState): string {
 
 export function suggestNextRecipeNumber(existingCodes: readonly string[], categoryId: string): string {
   const prefix = (CATEGORY_PREFIX[categoryId] ?? categoryId).toLowerCase();
-  const pattern = new RegExp(`^${prefix}-0*(\\d+)$`);
-  let max = 0;
-  for (const code of existingCodes) {
-    const match = pattern.exec(code);
-    if (match) max = Math.max(max, Number(match[1]));
-  }
-  return String(max + 1);
+  return String(highestSequence(existingCodes, prefix) + 1);
 }

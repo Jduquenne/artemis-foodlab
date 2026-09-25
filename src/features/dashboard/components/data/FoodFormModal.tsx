@@ -5,7 +5,6 @@ import { Macronutrients } from "../../../../core/domain/nutrition";
 import { FoodInput } from "../../../../core/services/catalogueWriteService";
 import {
   FoodFormDraft,
-  atwaterKcal,
   buildFoodRecap,
   emptyFoodDraft,
   foodFormToBody,
@@ -15,6 +14,7 @@ import {
   validateFoodForm,
   validateNewFoodId,
 } from "../../../../core/logic/dashboard/foodFormLogic";
+import { atwaterKcal } from "../../../../core/logic/nutrition/atwaterLogic";
 import { ConfirmActionModal } from "./ConfirmActionModal";
 
 export interface FoodFormModalProps {
@@ -47,6 +47,7 @@ export const FoodFormModal = ({ food, foods, onClose, onSubmit }: FoodFormModalP
     [isCreate, draft.category, foods],
   );
   const effectiveId = isCreate ? (idTouched ? id : suggestedId) : food.id;
+  const idError = isCreate && idTouched ? validateNewFoodId(effectiveId, foods) : null;
 
   const patch = (update: Partial<FoodFormDraft>) => setDraft((prev) => ({ ...prev, ...update }));
   const patchMacro = (key: keyof Macronutrients, value: string) =>
@@ -108,8 +109,9 @@ export const FoodFormModal = ({ food, foods, onClose, onSubmit }: FoodFormModalP
                   setId(e.target.value);
                 }}
                 placeholder="fv-014"
-                className={`${INPUT_CLASS} font-mono`}
+                className={`${INPUT_CLASS} font-mono ${idError ? "border-red-400" : ""}`}
               />
+              {idError && <span className="text-xs text-red-500">{idError}</span>}
             </label>
           )}
 
@@ -123,7 +125,10 @@ export const FoodFormModal = ({ food, foods, onClose, onSubmit }: FoodFormModalP
               <span className="text-xs font-bold text-slate-500">Catégorie</span>
               <select
                 value={draft.category}
-                onChange={(e) => patch({ category: e.target.value as IngredientCategory })}
+                onChange={(e) => {
+                  patch({ category: e.target.value as IngredientCategory });
+                  setIdTouched(false);
+                }}
                 className={INPUT_CLASS}
               >
                 {Object.values(IngredientCategory).map((category) => (

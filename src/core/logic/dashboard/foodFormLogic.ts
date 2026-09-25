@@ -2,8 +2,10 @@ import { Food, IngredientCategory } from "../../domain/ingredient";
 import { Macronutrients } from "../../domain/nutrition";
 import { FoodInput } from "../../services/catalogueWriteService";
 import { getIngredientCategoryId } from "../../domain/ingredientCategorySlugs";
-import { RecapEntry, diffEntry, recapBool, recapText } from "./recap";
-import { toNumber, padNumber } from "../../../shared/utils/numberUtils";
+import { RecapEntry, diffEntry, recapBool, recapText } from "./recapLogic";
+import { toNumber } from "../../../shared/utils/numberUtils";
+import { nextSequentialCode, validateNewCode } from "../../../shared/utils/codeUtils";
+import { atwaterKcal } from "../nutrition/atwaterLogic";
 
 export interface FoodFormDraft {
   name: string;
@@ -15,22 +17,6 @@ export interface FoodFormDraft {
 }
 
 export const EDITABLE_MACRO_KEYS: (keyof Macronutrients)[] = ["proteins", "lipids", "carbohydrates", "fibers"];
-
-const ATWATER_FACTORS: Record<"proteins" | "lipids" | "carbohydrates" | "fibers", number> = {
-  proteins: 4,
-  carbohydrates: 4,
-  lipids: 9,
-  fibers: 2,
-};
-
-export function atwaterKcal(macros: Pick<Macronutrients, "proteins" | "lipids" | "carbohydrates" | "fibers">): number {
-  return Math.round(
-    macros.proteins * ATWATER_FACTORS.proteins +
-      macros.lipids * ATWATER_FACTORS.lipids +
-      macros.carbohydrates * ATWATER_FACTORS.carbohydrates +
-      macros.fibers * ATWATER_FACTORS.fibers,
-  );
-}
 
 export function parseEditableMacros(
   raw: Record<keyof Macronutrients, string>,
@@ -58,22 +44,11 @@ export function suggestFoodId(category: IngredientCategory, foods: Food[]): stri
   const siblings = foods.filter((food) => food.category === category && /^[a-z]+-\d+$/.test(food.id));
   if (siblings.length === 0) return "";
   const prefix = siblings[0].id.split("-")[0];
-  let max = 0;
-  let width = 3;
-  for (const food of siblings) {
-    const [, digits] = food.id.split("-");
-    width = Math.max(width, digits.length);
-    max = Math.max(max, Number(digits));
-  }
-  return `${prefix}-${padNumber(max + 1, width)}`;
+  return nextSequentialCode(prefix, siblings.map((food) => food.id));
 }
 
 export function validateNewFoodId(id: string, foods: Food[]): string | null {
-  const trimmed = id.trim();
-  if (!trimmed) return "L'identifiant est requis.";
-  if (!/^[a-z]+-\d+$/.test(trimmed)) return "L'identifiant doit être au format « fv-014 ».";
-  if (foods.some((food) => food.id === trimmed)) return "Cet identifiant est déjà utilisé.";
-  return null;
+  return validateNewCode(id, foods.map((food) => food.id), "fv-014");
 }
 
 export function foodToDraft(food: Food): FoodFormDraft {

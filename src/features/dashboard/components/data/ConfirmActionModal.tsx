@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AlertTriangle } from "lucide-react";
-import { RecapEntry, isRecapChange } from "../../../../core/logic/dashboard/recap";
+import { RecapEntry, isRecapChange } from "../../../../core/logic/dashboard/recapLogic";
 
 export interface ConfirmActionModalProps {
   title: string;

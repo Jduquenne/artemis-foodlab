@@ -1,6 +1,6 @@
 import { CreateUserInput, PASSWORD_MIN_LENGTH } from "../../services/usersService";
 import { UserRole } from "../../services/authService";
-import { RecapEntry } from "./recap";
+import { RecapEntry } from "./recapLogic";
 
 export const ROLE_LABELS: Record<UserRole, string> = {
   admin: "Administrateur",

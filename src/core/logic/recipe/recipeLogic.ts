@@ -1,7 +1,6 @@
 import { Food, Unit } from "../../domain/ingredient";
-import { RecipeDetails } from "../../domain/recipe";
+import { OutdoorEntry, RecipeDetails } from "../../domain/recipe";
 import { isIngredient } from "../../domain/recipePredicates";
-import { OutdoorEntry, typedOutdoorDb } from "../../typed-db/typedOutdoorDb";
 import { PREDEFINED_FILTERS } from "./predefinedFilterLogic";
 import { calculateRecipeMacros } from "../../../shared/utils/macroUtils";
 
@@ -20,9 +19,9 @@ export interface CategoryRecipeEntry {
   isIngredientKind: boolean;
 }
 
-export function searchOutdoorRecipes(query: string): OutdoorEntry[] {
+export function searchOutdoorRecipes(outdoor: Record<string, OutdoorEntry>, query: string): OutdoorEntry[] {
   const q = query.toLowerCase();
-  return Object.values(typedOutdoorDb).filter(e => !q || e.name.toLowerCase().includes(q));
+  return Object.values(outdoor).filter(e => !q || e.name.toLowerCase().includes(q));
 }
 
 export function getLinkedBases(

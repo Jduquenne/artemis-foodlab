@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Download, Loader2, ImageOff, ImagePlus } from "lucide-react";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
 import { buildImageName, getBuilderRecipeCode } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
-import { typedRecipesDb } from "../../../../core/typed-db/typedRecipesDb";
+import { useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { AsyncImage } from "../../../../shared/components/ui/AsyncImage";
 import { builderStateToRecetteCardData, builderStateToBookCardData } from "../../../../shared/utils/cards/cardAdapter";
 import { downloadRecetteCard, downloadRecetteBookCard } from "../../../../shared/utils/cards/cardExport";
@@ -24,7 +24,8 @@ export const PhotoPanel = ({ state, mealPhoto, onPickMeal, bookPhoto, onPickBook
   const [error, setError] = useState("");
 
   const code = getBuilderRecipeCode(state);
-  const existing = typedRecipesDb[code];
+  const recipes = useRecipesSnapshot();
+  const existing = recipes[code];
   const existingUrl = existing?.assets?.mealPhoto?.url;
 
   const localUrl = useMemo(() => (mealPhoto ? URL.createObjectURL(mealPhoto) : null), [mealPhoto]);

@@ -1,7 +1,6 @@
 import { Food, IngredientCategory, Unit } from "../../domain/ingredient";
 import { Macronutrients } from "../../domain/nutrition";
-import { MealType, RecipeDetails, RecipeKind } from "../../domain/recipe";
-import { getCategoryById } from "../../typed-db/typedCategoriesDb";
+import { Category, MealType, RecipeDetails, RecipeKind } from "../../domain/recipe";
 import {
   DraftIngredient,
   RecipeBuilderState,
@@ -9,7 +8,6 @@ import {
 import { ZERO, calculateRecipeMacros, addMacros, scaleMacros, toGrams } from "../../../shared/utils/macroUtils";
 import { IngredientLineItem } from "../../../shared/utils/cards/cardTypes";
 import { wrapLineAtMaxChars } from "../../../shared/utils/cards/cardUtils";
-import { typedFoodDb } from "../../typed-db/typedFoodDb";
 import { typedRecipesDb } from "../../typed-db/typedRecipesDb";
 import { getIdByCode } from "../../typed-db/recipeIdMap";
 import { getIngredientCategoryId } from "../../typed-db/ingredientCategoryMap";
@@ -104,8 +102,6 @@ export function buildImageName(
   return type ? `${id}_${namePart}_${type}` : `${id}_${namePart}`;
 }
 
-const foodDb: Record<string, Food> = typedFoodDb;
-
 export function recipeToBuilderState(
   recipeId: string,
   recipe: RecipeDetails,
@@ -167,12 +163,12 @@ export const MEAL_TYPE_LABELS: Record<MealType, string> = {
   [MealType.SNACK]: "En-cas",
 };
 
-export function summarizeBuilderState(state: RecipeBuilderState): { label: string; value: string }[] {
+export function summarizeBuilderState(state: RecipeBuilderState, categories: Category[]): { label: string; value: string }[] {
   const isBase = state.kind === RecipeKind.BASE;
   const rows: { label: string; value: string }[] = [
     { label: "Identifiant", value: buildRecipeDbId(state.categoryId, state.recipeNumber) },
     { label: "Nom", value: state.name.trim() || "—" },
-    { label: "Catégorie", value: getCategoryById(state.categoryId)?.name ?? state.categoryId },
+    { label: "Catégorie", value: categories.find((c) => c.id === state.categoryId)?.name ?? state.categoryId },
     { label: "Type", value: RECIPE_KIND_LABELS[state.kind] },
     { label: "Portions", value: String(state.defaultPortions) },
   ];
@@ -428,7 +424,11 @@ export function formatIngredientsForIngredientCard(
   return result;
 }
 
-export function computeDraftTotal(ingredients: DraftIngredient[]): {
+export function computeDraftTotal(
+  foods: Record<string, Food>,
+  recipes: Record<string, RecipeDetails>,
+  ingredients: DraftIngredient[],
+): {
   macros: Macronutrients;
   missing: number;
 } {
@@ -439,7 +439,7 @@ export function computeDraftTotal(ingredients: DraftIngredient[]): {
     if (ing.quantity == null || ing.quantity === 0) continue;
 
     if (ing.foodId) {
-      const food = foodDb[ing.foodId];
+      const food = foods[ing.foodId];
       if (!food) {
         missing++;
         continue;
@@ -451,12 +451,12 @@ export function computeDraftTotal(ingredients: DraftIngredient[]): {
       }
       total = addMacros(total, scaleMacros(food.macros, grams / 100));
     } else if (ing.baseId) {
-      const base = typedRecipesDb[ing.baseId];
+      const base = recipes[ing.baseId];
       if (!base) {
         missing++;
         continue;
       }
-      const basePerPortion = calculateRecipeMacros(base, typedRecipesDb, foodDb);
+      const basePerPortion = calculateRecipeMacros(base, recipes, foods);
       total = addMacros(total, scaleMacros(basePerPortion, ing.quantity));
     } else {
       missing++;

@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Macronutrients } from "../../../../core/domain/nutrition";
 import { DraftIngredient } from "../../../../core/domain/recipeBuilderTypes";
 import { computeDraftTotal } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
+import { useFoodsSnapshot, useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 
 export interface MacroPreviewProps {
   ingredients: DraftIngredient[];
@@ -19,7 +20,9 @@ const MACRO_LABELS: { key: keyof Macronutrients; label: string; unit: string }[]
 export const MacroPreview = ({ ingredients, defaultPortions }: MacroPreviewProps) => {
   const [mode, setMode] = useState<"portion" | "total">("portion");
 
-  const { macros: total, missing } = useMemo(() => computeDraftTotal(ingredients), [ingredients]);
+  const foods = useFoodsSnapshot();
+  const recipes = useRecipesSnapshot();
+  const { macros: total, missing } = useMemo(() => computeDraftTotal(foods, recipes, ingredients), [foods, recipes, ingredients]);
 
   const portions = Math.max(defaultPortions, 1);
   const factor = mode === "portion" ? 1 / portions : 1;

@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
-import { typedRecipesDb } from "../../../../core/typed-db/typedRecipesDb";
+import { useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { isBase } from "../../../../core/domain/recipePredicates";
 import { searchBases } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
 
@@ -11,14 +11,15 @@ export interface BaseRecipeSearchProps {
 
 export const BaseRecipeSearch = ({ value, onChange }: BaseRecipeSearchProps) => {
   const [open, setOpen] = useState(false);
+  const recipes = useRecipesSnapshot();
 
   const suggestions = useMemo(() => {
     if (!open) return [];
-    const bases = Object.entries(typedRecipesDb)
+    const bases = Object.entries(recipes)
       .filter(([, r]) => isBase(r))
       .map(([id, r]) => ({ id, name: r.name }));
     return searchBases(value, bases);
-  }, [open, value]);
+  }, [open, value, recipes]);
 
   return (
     <div className="relative flex-1 min-w-0">

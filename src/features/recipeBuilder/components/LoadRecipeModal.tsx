@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { Search, X } from "lucide-react";
-import { typedRecipesDb } from "../../../core/typed-db/typedRecipesDb";
+import { useRecipesSnapshot } from "../../../shared/hooks/useCatalogueSnapshot";
 import { recipeToBuilderState } from "../../../core/logic/recipeBuilder/recipeBuilderLogic";
 import { RecipeBuilderState } from "../../../core/domain/recipeBuilderTypes";
 
@@ -11,17 +11,18 @@ export interface LoadRecipeModalProps {
 
 export const LoadRecipeModal = ({ onLoad, onClose }: LoadRecipeModalProps) => {
   const [query, setQuery] = useState("");
+  const recipes = useRecipesSnapshot();
 
   const results = useMemo(() => {
     const q = query.toLowerCase().trim();
     if (!q) return [];
-    return Object.entries(typedRecipesDb)
+    return Object.entries(recipes)
       .filter(([, r]) => r.name.toLowerCase().includes(q))
       .slice(0, 20);
-  }, [query]);
+  }, [recipes, query]);
 
   const handleSelect = (recipeId: string) => {
-    const recipe = typedRecipesDb[recipeId];
+    const recipe = recipes[recipeId];
     if (!recipe) return;
     onLoad(recipeToBuilderState(recipeId, recipe));
     onClose();

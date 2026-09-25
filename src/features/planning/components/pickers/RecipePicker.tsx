@@ -4,7 +4,7 @@ import { SearchRecipeResult, useSearchMeals } from '../../../../shared/hooks/use
 import { Check, Loader2, X, TreePine } from 'lucide-react';
 import { searchOutdoorRecipes } from '../../../../core/logic/recipe/recipeLogic';
 import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
-import { useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
+import { useOutdoorSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 
 export interface RecipePickerProps {
     onSelect: (recipe: SearchRecipeResult) => void | Promise<void>;
@@ -15,13 +15,14 @@ export interface RecipePickerProps {
 
 export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = [] }: RecipePickerProps) => {
     const recipesDb = useRecipesSnapshot();
+    const outdoorDb = useOutdoorSnapshot();
     const [query, setQuery] = useState('');
     const [pendingSelection, setPendingSelection] = useState<SearchRecipeResult | null>(null);
     const [isClosing, setIsClosing] = useState(false);
     const [saving, setSaving] = useState(false);
     const results = useSearchMeals(query);
 
-    const outdoorResults = useMemo(() => searchOutdoorRecipes(query), [query]);
+    const outdoorResults = useMemo(() => searchOutdoorRecipes(outdoorDb, query), [outdoorDb, query]);
 
     const handleClose = () => { setIsClosing(true); setTimeout(onClose, 300); };
 

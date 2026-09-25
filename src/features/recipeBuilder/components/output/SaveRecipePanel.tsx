@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { Save, X, Check, Loader2, Trash2, AlertTriangle } from "lucide-react";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
 import { getBuilderRecipeCode, summarizeBuilderState, validateBuilderState } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
-import { typedRecipesDb } from "../../../../core/typed-db/typedRecipesDb";
+import { useCategoriesSnapshot, useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { useRecipeBuilderSave } from "../../../../shared/hooks/useRecipeBuilderSave";
 import { useRecipeBuilderStore } from "../../../../shared/store/useRecipeBuilderStore";
 
@@ -20,10 +20,12 @@ export const SaveRecipePanel = ({ state, mealPhoto, bookPhoto, onSaved }: SaveRe
   const resetBuilder = useRecipeBuilderStore((s) => s.reset);
 
   const code = getBuilderRecipeCode(state);
-  const existing = typedRecipesDb[code];
+  const recipes = useRecipesSnapshot();
+  const categories = useCategoriesSnapshot();
+  const existing = recipes[code];
   const isExisting = Boolean(existing?.apiId);
   const liveErrors = useMemo(() => validateBuilderState(state), [state]);
-  const recap = useMemo(() => summarizeBuilderState(state), [state]);
+  const recap = useMemo(() => summarizeBuilderState(state, categories), [state, categories]);
 
   const close = () => {
     setIsOpen(false);

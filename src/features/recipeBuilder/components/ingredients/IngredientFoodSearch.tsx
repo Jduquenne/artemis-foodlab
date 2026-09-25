@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
-import { typedFoodDb } from "../../../../core/typed-db/typedFoodDb";
+import { useFoodsSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { Food, IngredientCategory } from "../../../../core/domain/ingredient";
 import { searchFoods } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
 
@@ -10,15 +10,15 @@ export interface IngredientFoodSearchProps {
   onChange: (name: string, foodId?: string, category?: IngredientCategory, unit?: string) => void;
 }
 
-const foods: Food[] = Object.values(typedFoodDb);
-
 export const IngredientFoodSearch = ({ value, linked, onChange }: IngredientFoodSearchProps) => {
+  const foodsDb = useFoodsSnapshot();
+  const foods = useMemo<Food[]>(() => Object.values(foodsDb), [foodsDb]);
   const isUnlinked = value.trim().length > 0 && !linked;
   const [open, setOpen] = useState(false);
 
   const suggestions = useMemo(
     () => (open && value.length > 0 ? searchFoods(value, foods) : []),
-    [open, value],
+    [open, value, foods],
   );
 
   return (

@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { RecipeBuilderState, DraftIngredient, initialRecipeBuilderState } from "../../core/domain/recipeBuilderTypes";
+import { RecipeBuilderState, DraftIngredient } from "../../core/domain/recipeBuilderTypes";
+import { initialRecipeBuilderState } from "../../core/logic/recipeBuilder/recipeBuilderState";
 import { suggestNextRecipeNumber } from "../../core/logic/recipeBuilder/recipeBuilderLogic";
 
 function freshDraft(): RecipeBuilderState {

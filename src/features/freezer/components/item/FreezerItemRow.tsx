@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { Snowflake, Plus, MoreVertical, Trash2, Loader2 } from "lucide-react";
 import { FreezerItem } from "../../../../core/domain/freezer";
 import { addBagToFoodItem } from "../../../../core/services/freezerService";
-import { getFoodBagsSummary } from "../../../../core/logic/freezer/freezerLogic";
+import { getFoodBagsSummary } from "../../../../core/logic/freezer/freezerStockLogic";
 import { FloatingMenu } from "../../../../shared/components/ui/FloatingMenu";
 import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
 import { BatchFreezerItemRow } from "./BatchFreezerItemRow";

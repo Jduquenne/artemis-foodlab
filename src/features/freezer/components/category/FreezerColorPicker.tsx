@@ -1,5 +1,5 @@
 import { Check } from "lucide-react";
-import { FREEZER_ACCENTS, FREEZER_COLOR_KEYS } from "../../../../core/logic/freezer/freezerLogic";
+import { FREEZER_ACCENTS, FREEZER_COLOR_KEYS } from "../../freezerAccents";
 
 export interface FreezerColorPickerProps {
   value: string | null;

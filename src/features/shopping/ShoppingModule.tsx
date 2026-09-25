@@ -36,7 +36,7 @@ import { useAuthStore } from '../../shared/store/useAuthStore';
 import { useColCount } from '../../shared/hooks/useColCount';
 import { useFreezerStock } from '../../shared/hooks/useFreezerStock';
 import { withPending } from '../../shared/utils/withPending';
-import { computeFreezerBagSelection } from '../../core/logic/freezer/freezerLogic';
+import { computeFreezerBagSelection } from '../../core/logic/freezer/freezerStockLogic';
 import { ShoppingCategoryCard } from './components/ingredients/ShoppingCategoryCard';
 import { RecipeShoppingCard } from './components/meals/RecipeShoppingCard';
 import { SourcesModal } from './components/SourcesModal';

@@ -2,11 +2,9 @@ import { useState, useRef, useEffect } from "react";
 import { MoreVertical, Pencil, Trash2, Snowflake, Palette } from "lucide-react";
 import { FreezerCategory } from "../../../../core/domain/freezer";
 import { updateCategoryName, updateCategoryColor, deleteCategory } from "../../../../core/services/freezerService";
-import {
-  getFreezerCategoryAccent,
-  sortFreezerItemsAlphabetically,
-  summarizeFreezerCategory,
-} from "../../../../core/logic/freezer/freezerLogic";
+import { getFreezerCategoryAccent } from "../../freezerAccents";
+import { sortFreezerItemsAlphabetically } from "../../../../core/logic/freezer/freezerItemsLogic";
+import { summarizeFreezerCategory } from "../../../../core/logic/freezer/freezerStockLogic";
 import { InlineNameEditor } from "../InlineNameEditor";
 import { FreezerColorPicker } from "./FreezerColorPicker";
 import { usePendingKey } from "../../../../shared/hooks/usePendingKey";

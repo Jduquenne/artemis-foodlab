@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
-import { searchFreezerFoods } from "../../../../core/logic/freezer/freezerLogic";
+import { searchFreezerFoods } from "../../../../core/logic/freezer/freezerSearchLogic";
 import { useFoodsSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 
 export interface FoodSearchInputProps {

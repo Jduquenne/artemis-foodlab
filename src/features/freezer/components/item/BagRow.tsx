@@ -3,7 +3,7 @@ import { MoreVertical, Copy, Trash2, Pencil, AlertTriangle, Loader2 } from "luci
 import { FreezerBag } from "../../../../core/domain/freezer";
 import { addBagToFoodItem, removeBagFromFoodItem, updateBagInFoodItem } from "../../../../core/services/freezerService";
 import { pluralizeUnit } from "../../../../shared/utils/unitUtils";
-import { freezerItemAge } from "../../../../core/logic/freezer/freezerLogic";
+import { freezerItemAge } from "../../../../core/logic/freezer/freezerAgeLogic";
 import { FloatingMenu } from "../../../../shared/components/ui/FloatingMenu";
 import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
 import { withPending } from "../../../../shared/utils/withPending";

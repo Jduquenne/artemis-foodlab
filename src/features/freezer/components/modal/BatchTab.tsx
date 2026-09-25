@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
-import { searchBatchRecipes } from "../../../../core/logic/freezer/freezerLogic";
+import { searchBatchRecipes } from "../../../../core/logic/freezer/freezerSearchLogic";
 import { useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 
 export interface BatchTabProps {

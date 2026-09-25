@@ -6,7 +6,7 @@ import { FreezerBag } from '../../../core/domain/freezer';
 import { pluralizeUnit, formatQty } from '../../../shared/utils/unitUtils';
 import { FreezerBagRow } from './FreezerBagRow';
 import { SourceGroupRow } from './SourceGroupRow';
-import { totalBagQuantity } from '../../../core/logic/freezer/freezerLogic';
+import { totalBagQuantity } from '../../../core/logic/freezer/freezerStockLogic';
 
 export interface SourcesModalProps {
     ingredientKey: string;

@@ -3,7 +3,7 @@ import { pluralizeUnit, formatQty } from '../../../shared/utils/unitUtils';
 import { formatBagDate } from '../../../shared/utils/dateUtils';
 import { usePendingKey } from '../../../shared/hooks/usePendingKey';
 import { CheckToggleIcon } from '../../../shared/components/ui/CheckToggleIcon';
-import { bagQuantity } from '../../../core/logic/freezer/freezerLogic';
+import { bagQuantity } from '../../../core/logic/freezer/freezerStockLogic';
 
 export interface FreezerBagRowProps {
   bag: FreezerBag;

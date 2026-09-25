@@ -7,7 +7,8 @@ import { AddFreezerItemModal } from "../modal/AddFreezerItemModal";
 import { InlineNameEditor } from "../InlineNameEditor";
 import { markScrolling } from "../../../../shared/utils/scrollGuard";
 import { useFreezerColCount } from "../../../../shared/hooks/useFreezerColCount";
-import { distributeFreezerItemsToColumns, getFreezerCategoryAccent } from "../../../../core/logic/freezer/freezerLogic";
+import { getFreezerCategoryAccent } from "../../freezerAccents";
+import { distributeFreezerItemsToColumns } from "../../../../core/logic/freezer/freezerItemsLogic";
 import { withPending } from "../../../../shared/utils/withPending";
 
 export interface FreezerCategoryDetailProps {

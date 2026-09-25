@@ -14,10 +14,10 @@ export interface SmallCardData {
   imageHref: string;
   recipeName: string;
   recipeNumber: number;
-  fibres: number;
-  glucides: number;
-  lipides: number;
-  proteines: number;
+  fibers: number;
+  carbohydrates: number;
+  lipids: number;
+  proteins: number;
   kcal: number;
   colors: CardColors;
 }
@@ -42,10 +42,10 @@ export interface RecetteCardData {
 export interface FoodCardData {
   imageHref: string;
   foodLabel: string;
-  fibres: number;
-  glucides: number;
-  lipides: number;
-  proteines: number;
+  fibers: number;
+  carbohydrates: number;
+  lipids: number;
+  proteins: number;
   kcal: number;
   colors: CardColors;
 }

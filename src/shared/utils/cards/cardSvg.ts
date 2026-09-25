@@ -9,7 +9,7 @@ import {
   RecetteCardData,
   RecetteBookCardData,
   FoodCardData,
-} from "../../../core/domain/cardTypes";
+} from "./cardTypes";
 import {
   buildRecipeNameText,
   buildInstructionText,
@@ -27,10 +27,10 @@ export function buildPhotoSvg(data: SmallCardData): string {
       "[[RECIPE_NAME_TEXT]]",
       buildRecipeNameText(data.recipeName, 71.875, 15.5, 121.75, 11.1, "#ffffff"),
     )
-    .replace("[[FIBRES]]", `${data.fibres}g`)
-    .replace("[[GLUCIDES]]", `${data.glucides}g`)
-    .replace("[[LIPIDES]]", `${data.lipides}g`)
-    .replace("[[PROTEINES]]", `${data.proteines}g`)
+    .replace("[[FIBRES]]", `${data.fibers}g`)
+    .replace("[[GLUCIDES]]", `${data.carbohydrates}g`)
+    .replace("[[LIPIDES]]", `${data.lipids}g`)
+    .replace("[[PROTEINES]]", `${data.proteins}g`)
     .replace("[[KCAL]]", String(data.kcal))
     .replace("[[RECIPE_NUMBER]]", String(data.recipeNumber))
     .replace('fill="[[COLOR_BG]]"', `fill="${data.colors.bg}"`)
@@ -74,10 +74,10 @@ export function buildFoodCardSvg(data: FoodCardData): string {
     .replace('href="[[IMAGE_HREF]]"', `href="${data.imageHref}"`)
     .replace("[[FOOD_LABEL_BG]]", buildFoodLabelBg(data.foodLabel))
     .replace("[[FOOD_LABEL]]", data.foodLabel)
-    .replace("[[FIBRES]]", `${data.fibres}g`)
-    .replace("[[GLUCIDES]]", `${data.glucides}g`)
-    .replace("[[LIPIDES]]", `${data.lipides}g`)
-    .replace("[[PROTEINES]]", `${data.proteines}g`)
+    .replace("[[FIBRES]]", `${data.fibers}g`)
+    .replace("[[GLUCIDES]]", `${data.carbohydrates}g`)
+    .replace("[[LIPIDES]]", `${data.lipids}g`)
+    .replace("[[PROTEINES]]", `${data.proteins}g`)
     .replace("[[KCAL]]", String(data.kcal))
     .replace('fill="[[COLOR_BG]]"', `fill="${data.colors.bg}"`)
     .replace('fill="[[COLOR_CIRCLE]]"', `fill="${data.colors.circle}"`);

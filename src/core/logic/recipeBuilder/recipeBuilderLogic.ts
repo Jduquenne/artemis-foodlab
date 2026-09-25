@@ -14,7 +14,7 @@ import {
   RecipeBuilderState,
 } from "../../domain/recipeBuilderTypes";
 import { ZERO, calculateRecipeMacros, addMacros, scaleMacros, toGrams } from "../../../shared/utils/macroUtils";
-import { IngredientLineItem } from "../../domain/cardTypes";
+import { IngredientLineItem } from "../../../shared/utils/cards/cardTypes";
 import { wrapLineAtMaxChars } from "../../../shared/utils/cards/cardUtils";
 import { typedFoodDb } from "../../typed-db/typedFoodDb";
 import { typedRecipesDb } from "../../typed-db/typedRecipesDb";

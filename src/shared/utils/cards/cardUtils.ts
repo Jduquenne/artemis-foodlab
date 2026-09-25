@@ -1,4 +1,4 @@
-import { CardColors, IngredientLineItem } from "../../../core/domain/cardTypes";
+import { CardColors, IngredientLineItem } from "./cardTypes";
 
 const MIN_CARD_SCALE = 0.05;
 

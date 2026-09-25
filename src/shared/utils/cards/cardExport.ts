@@ -1,4 +1,4 @@
-import { RecetteCardData, RecetteBookCardData } from "../../../core/domain/cardTypes";
+import { RecetteCardData, RecetteBookCardData } from "./cardTypes";
 import { buildRecetteSvg, buildRecetteBookSvg } from "./cardSvg";
 
 const EXPORT_SCALE = 3;

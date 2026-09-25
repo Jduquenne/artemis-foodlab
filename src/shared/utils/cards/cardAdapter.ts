@@ -9,7 +9,7 @@ import {
   RecetteCardData,
   RecetteBookCardData,
   FoodCardData,
-} from "../../../core/domain/cardTypes";
+} from "./cardTypes";
 
 function extractRecipeNumber(recipeId: string): number {
   return parseInt(recipeId.replace(/^[a-z]+-/, ""), 10);
@@ -40,10 +40,10 @@ export function recipeToPhotoCardData(
     imageHref,
     recipeName: recipe.name,
     recipeNumber: extractRecipeNumber(recipeId),
-    fibres: Math.round(m.fibers),
-    glucides: Math.round(m.carbohydrates),
-    lipides: Math.round(m.lipids),
-    proteines: Math.round(m.proteins),
+    fibers: Math.round(m.fibers),
+    carbohydrates: Math.round(m.carbohydrates),
+    lipids: Math.round(m.lipids),
+    proteins: Math.round(m.proteins),
     kcal: Math.round(m.kcal),
     colors: getCardColors(recipe.categoryId),
   };
@@ -63,10 +63,10 @@ export function recipeToFoodCardData(
   return {
     imageHref,
     foodLabel: recipe.name + quantitySuffix,
-    fibres: Math.round(m.fibers),
-    glucides: Math.round(m.carbohydrates),
-    lipides: Math.round(m.lipids),
-    proteines: Math.round(m.proteins),
+    fibers: Math.round(m.fibers),
+    carbohydrates: Math.round(m.carbohydrates),
+    lipids: Math.round(m.lipids),
+    proteins: Math.round(m.proteins),
     kcal: Math.round(m.kcal),
     colors: getCardColors(recipe.categoryId),
   };

@@ -11,7 +11,7 @@ export const initialRecipeBuilderState = (): RecipeBuilderState => ({
   defaultPortions: 2,
   isDessert: false,
   batchCooking: false,
-  fromBook: false,
+  isFromBook: false,
   bookPage: null,
   ingredients: [],
   instructions: [],

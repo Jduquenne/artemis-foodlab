@@ -49,7 +49,7 @@ export const PhotoPanel = ({ state, mealPhoto, onPickMeal, bookPhoto, onPickBook
     setDownloading(true);
     try {
       const filename = buildImageName(state.categoryId, state.recipeNumber, state.name || "recette");
-      if (state.fromBook && bookSource) {
+      if (state.isFromBook && bookSource) {
         await downloadRecetteBookCard(builderStateToBookCardData(state, "", ""), source, bookSource, filename);
       } else {
         await downloadRecetteCard(builderStateToRecetteCardData(state, ""), source, filename);
@@ -109,7 +109,7 @@ export const PhotoPanel = ({ state, mealPhoto, onPickMeal, bookPhoto, onPickBook
 
       {error && <span className="text-[11px] text-red-500">{error}</span>}
 
-      {state.fromBook && (
+      {state.isFromBook && (
         <PhotoField
           label="Photo du livre"
           file={bookPhoto}

@@ -145,8 +145,8 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
           </button>
           <button
             type="button"
-            onClick={() => onChange({ fromBook: !state.fromBook })}
-            className={chipClass(state.fromBook)}
+            onClick={() => onChange({ isFromBook: !state.isFromBook })}
+            className={chipClass(state.isFromBook)}
           >
             Livre
           </button>
@@ -171,7 +171,7 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
         </div>
       )}
 
-      {state.fromBook && (
+      {state.isFromBook && (
         <div>
           <label className={labelClass}>Page du livre</label>
           <input
@@ -187,7 +187,7 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
         </div>
       )}
 
-      {!state.fromBook && (
+      {!state.isFromBook && (
         <div>
           <div className="flex items-center justify-between mb-1">
             <label className={`${labelClass} mb-0`}>Instructions</label>

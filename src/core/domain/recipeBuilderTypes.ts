@@ -22,7 +22,7 @@ export interface RecipeBuilderState {
   defaultPortions: number;
   isDessert: boolean;
   batchCooking: boolean;
-  fromBook: boolean;
+  isFromBook: boolean;
   bookPage: number | null;
   ingredients: DraftIngredient[];
   instructions: string[];

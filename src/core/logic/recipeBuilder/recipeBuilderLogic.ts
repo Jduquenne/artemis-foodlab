@@ -138,7 +138,7 @@ export function recipeToBuilderState(
     defaultPortions: recipe.defaultPortions,
     isDessert: recipe.isDessert ?? false,
     batchCooking: recipe.batchCooking ?? false,
-    fromBook: recipe.isFromBook ?? false,
+    isFromBook: recipe.isFromBook ?? false,
     bookPage: recipe.bookPage ?? null,
     ingredients,
     instructions: recipe.instructions?.split("\n") ?? [],
@@ -191,7 +191,7 @@ export function summarizeBuilderState(state: RecipeBuilderState): { label: strin
   const options = [
     !isBase && state.isDessert ? "Dessert" : null,
     state.batchCooking ? "Batch cooking" : null,
-    state.fromBook ? `Livre${state.bookPage ? ` p.${state.bookPage}` : ""}` : null,
+    state.isFromBook ? `Livre${state.bookPage ? ` p.${state.bookPage}` : ""}` : null,
   ].filter(Boolean) as string[];
   if (options.length) rows.push({ label: "Options", value: options.join(", ") });
   rows.push({
@@ -210,7 +210,7 @@ export function validateBuilderState(state: RecipeBuilderState): string[] {
   if (state.kind !== RecipeKind.BASE && state.mealTypes.length === 0) {
     errors.push("Sélectionne au moins un type de repas.");
   }
-  if (state.fromBook && (state.bookPage == null || state.bookPage <= 0)) {
+  if (state.isFromBook && (state.bookPage == null || state.bookPage <= 0)) {
     errors.push("Indique la page du livre.");
   }
   const named = state.ingredients.filter((ing) => ing.name.trim());
@@ -251,8 +251,8 @@ export function builderStateToApiBody(state: RecipeBuilderState): ApiRecipeInput
     defaultPortions: state.defaultPortions,
     batchCooking: state.batchCooking,
     isDessert: isBaseKind ? false : state.isDessert,
-    isFromBook: state.fromBook,
-    bookPage: state.fromBook ? state.bookPage : null,
+    isFromBook: state.isFromBook,
+    bookPage: state.isFromBook ? state.bookPage : null,
     instructions:
       state.instructions.map((line) => line.trim()).filter(Boolean).join("\n") || null,
     ingredients,

@@ -1,9 +1,11 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { subscribeCatalogue } from "../../core/typed-db/catalogueEvents";
 import { typedRecipesDb } from "../../core/typed-db/typedRecipesDb";
 import { typedOutdoorDb } from "../../core/typed-db/typedOutdoorDb";
 import { collectAssetKeys, refreshDelayMs } from "../../core/logic/media/mediaLogic";
 import { resolveMediaKeys } from "../../core/services/mediaService";
+import { useAuthStore } from "./useAuthStore";
 
 interface MediaStore {
   overrides: Record<string, string>;
@@ -21,6 +23,7 @@ let failed = new Set<string>();
 let failureFlush: ReturnType<typeof setTimeout> | null = null;
 let refreshTimer: ReturnType<typeof setTimeout> | null = null;
 let lastCatalogueResolve = 0;
+let pendingResolve: ReturnType<typeof setTimeout> | null = null;
 
 function armRefreshTimer(expiresAt: string, onDue: () => void): void {
   if (refreshTimer) clearTimeout(refreshTimer);
@@ -60,9 +63,17 @@ export const useMediaStore = create<MediaStore>()(
       },
 
       resolveCatalogue: () => {
-        const now = Date.now();
-        if (now - lastCatalogueResolve < CATALOGUE_THROTTLE_MS) return;
-        lastCatalogueResolve = now;
+        const wait = CATALOGUE_THROTTLE_MS - (Date.now() - lastCatalogueResolve);
+        if (wait > 0) {
+          if (pendingResolve === null) {
+            pendingResolve = setTimeout(() => {
+              pendingResolve = null;
+              get().resolveCatalogue();
+            }, wait);
+          }
+          return;
+        }
+        lastCatalogueResolve = Date.now();
         const keys = collectAssetKeys([
           ...Object.values(typedRecipesDb).map((recipe) => recipe.assets),
           ...Object.values(typedOutdoorDb).map((entry) => entry.assets),
@@ -103,3 +114,7 @@ export const useMediaStore = create<MediaStore>()(
     },
   ),
 );
+
+subscribeCatalogue(() => {
+  if (useAuthStore.getState().status === "authenticated") useMediaStore.getState().resolveCatalogue();
+});

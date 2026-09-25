@@ -8,7 +8,7 @@ import {
 import { ZERO, calculateRecipeMacros, addMacros, scaleMacros, toGrams } from "../../../shared/utils/macroUtils";
 import { IngredientLineItem } from "../../../shared/utils/cards/cardTypes";
 import { wrapLineAtMaxChars } from "../../../shared/utils/cards/cardUtils";
-import { typedRecipesDb } from "../../catalogue/typedRecipesDb";
+import { recipesCatalogue } from "../../catalogue/recipes";
 import { getIdByCode } from "../../catalogue/recipeIdMap";
 import { getIngredientCategoryId } from "../../catalogue/ingredientCategoryMap";
 import { ApiIngredientInput, ApiRecipeInput } from "../recipe/recipeApiMapper";
@@ -143,7 +143,7 @@ export function suggestNextRecipeNumber(categoryId: string): string {
   const prefix = (CATEGORY_PREFIX[categoryId] ?? categoryId).toLowerCase();
   const pattern = new RegExp(`^${prefix}-0*(\\d+)$`);
   let max = 0;
-  for (const code of Object.keys(typedRecipesDb)) {
+  for (const code of Object.keys(recipesCatalogue)) {
     const match = pattern.exec(code);
     if (match) max = Math.max(max, Number(match[1]));
   }

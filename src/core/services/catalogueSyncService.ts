@@ -1,12 +1,12 @@
 import { HouseholdItem } from "../domain/household";
 import { Food } from "../domain/ingredient";
 import { Category } from "../domain/recipe";
-import { replaceCategoriesDb } from "../catalogue/typedCategoriesDb";
+import { replaceCategories } from "../catalogue/categories";
 import { refreshRecipeMacros } from "../../shared/utils/macroUtils";
-import { replaceFoodDb, typedFoodDb } from "../catalogue/typedFoodDb";
-import { putRecipeInDb, removeRecipeFromDb, replaceRecipesDb, typedRecipesDb } from "../catalogue/typedRecipesDb";
-import { replaceOutdoorDb, typedOutdoorDb } from "../catalogue/typedOutdoorDb";
-import { replaceHouseholdDb } from "../catalogue/typedHouseholdDb";
+import { replaceFoods, foodsCatalogue } from "../catalogue/foods";
+import { putRecipe, removeRecipe, replaceRecipes, recipesCatalogue } from "../catalogue/recipes";
+import { replaceOutdoor, outdoorCatalogue } from "../catalogue/outdoor";
+import { replaceHousehold } from "../catalogue/household";
 import { setRecipeIdMap } from "../catalogue/recipeIdMap";
 import { CatalogueScope, notifyCatalogueChange } from "../catalogue/catalogueEvents";
 import { CatalogueSignatures, changedScopes } from "../logic/sync/catalogueRefreshLogic";
@@ -28,11 +28,11 @@ let lastSignatures: CatalogueSignatures = {};
 let inflightSync: Promise<void> | null = null;
 
 function refreshDerivedData(): void {
-  refreshRecipeMacros(typedRecipesDb, typedFoodDb);
+  refreshRecipeMacros(recipesCatalogue, foodsCatalogue);
 }
 
 function applyRecipeIdMap(): void {
-  const entries = [...Object.values(typedRecipesDb), ...Object.values(typedOutdoorDb)]
+  const entries = [...Object.values(recipesCatalogue), ...Object.values(outdoorCatalogue)]
     .map((r) => ({ code: r.code, apiId: r.apiId }));
   setRecipeIdMap(entries);
 }
@@ -45,11 +45,11 @@ export async function hydrateFromCache(): Promise<void> {
     householdItemsService.getAllAsRecord(),
     recipeCategoriesService.getAll(),
   ]);
-  if (Object.keys(recipes).length > 0) replaceRecipesDb(recipes);
-  if (Object.keys(foods).length > 0) replaceFoodDb(foods);
-  if (Object.keys(outdoor).length > 0) replaceOutdoorDb(outdoor);
-  if (Object.keys(householdItems).length > 0) replaceHouseholdDb(householdItems);
-  if (categories.length > 0) replaceCategoriesDb(categories);
+  if (Object.keys(recipes).length > 0) replaceRecipes(recipes);
+  if (Object.keys(foods).length > 0) replaceFoods(foods);
+  if (Object.keys(outdoor).length > 0) replaceOutdoor(outdoor);
+  if (Object.keys(householdItems).length > 0) replaceHousehold(householdItems);
+  if (categories.length > 0) replaceCategories(categories);
   if (Object.keys(recipes).length > 0 || Object.keys(outdoor).length > 0) applyRecipeIdMap();
   refreshDerivedData();
   notifyCatalogueChange("recipes", "foods", "categories", "outdoor", "household");
@@ -86,11 +86,11 @@ export async function applyCatalogueData(
     recipeCategoriesService.bulkPut(apiCategories),
   ]);
 
-  replaceRecipesDb(recipes);
-  replaceOutdoorDb(outdoor);
-  replaceFoodDb(foods);
-  replaceHouseholdDb(householdItems);
-  replaceCategoriesDb(apiCategories);
+  replaceRecipes(recipes);
+  replaceOutdoor(outdoor);
+  replaceFoods(foods);
+  replaceHousehold(householdItems);
+  replaceCategories(apiCategories);
   applyRecipeIdMap();
   refreshDerivedData();
   notifyCatalogueChange(...changed);
@@ -131,7 +131,7 @@ export function syncCatalogueFromApi(options: SyncCatalogueOptions = {}): Promis
 
 function codeByApiIdFromCache(): Map<string, string> {
   const map = new Map<string, string>();
-  for (const recipe of Object.values(typedRecipesDb)) {
+  for (const recipe of Object.values(recipesCatalogue)) {
     if (recipe.apiId) map.set(recipe.apiId, recipe.code);
   }
   return map;
@@ -144,7 +144,7 @@ export async function syncRecipeFromApi(uuid: string): Promise<void> {
     codeByApiId.set(api.id, api.code);
     const recipe = mapApiRecipe(api, codeByApiId);
     await recipesService.put(recipe.code, recipe);
-    putRecipeInDb(recipe.code, recipe);
+    putRecipe(recipe.code, recipe);
     applyRecipeIdMap();
     refreshDerivedData();
     notifyCatalogueChange("recipes");
@@ -159,7 +159,7 @@ export async function removeRecipeFromCatalogue(code: string): Promise<void> {
   } catch {
     /* échec de suppression du cache local, non bloquant */
   }
-  removeRecipeFromDb(code);
+  removeRecipe(code);
   applyRecipeIdMap();
   refreshDerivedData();
   notifyCatalogueChange("recipes");

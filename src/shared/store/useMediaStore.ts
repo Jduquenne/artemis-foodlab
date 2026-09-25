@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { subscribeCatalogue } from "../../core/catalogue/catalogueEvents";
-import { typedRecipesDb } from "../../core/catalogue/typedRecipesDb";
-import { typedOutdoorDb } from "../../core/catalogue/typedOutdoorDb";
+import { recipesCatalogue } from "../../core/catalogue/recipes";
+import { outdoorCatalogue } from "../../core/catalogue/outdoor";
 import { collectAssetKeys, refreshDelayMs } from "../../core/logic/media/mediaLogic";
 import { resolveMediaKeys } from "../../core/services/mediaService";
 import { useAuthStore } from "./useAuthStore";
@@ -75,8 +75,8 @@ export const useMediaStore = create<MediaStore>()(
         }
         lastCatalogueResolve = Date.now();
         const keys = collectAssetKeys([
-          ...Object.values(typedRecipesDb).map((recipe) => recipe.assets),
-          ...Object.values(typedOutdoorDb).map((entry) => entry.assets),
+          ...Object.values(recipesCatalogue).map((recipe) => recipe.assets),
+          ...Object.values(outdoorCatalogue).map((entry) => entry.assets),
         ]);
         void get().resolveKeys(keys);
       },

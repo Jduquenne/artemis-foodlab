@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { subscribeCatalogue } from "../../core/catalogue/catalogueEvents";
-import { typedRecipesDb } from "../../core/catalogue/typedRecipesDb";
+import { recipesCatalogue } from "../../core/catalogue/recipes";
 import { getNewsGroups, latestNewsDate } from "../../core/logic/news/newsLogic";
 
 interface NewsStore {
@@ -17,11 +17,11 @@ export const useNewsStore = create<NewsStore>()(
       lastSeenDate: "",
       hasNew: false,
       syncHasNew: () => {
-        const latest = latestNewsDate(getNewsGroups(typedRecipesDb));
+        const latest = latestNewsDate(getNewsGroups(recipesCatalogue));
         set({ hasNew: latest !== "" && latest > get().lastSeenDate });
       },
       markAsSeen: () => {
-        const latest = latestNewsDate(getNewsGroups(typedRecipesDb));
+        const latest = latestNewsDate(getNewsGroups(recipesCatalogue));
         set({ lastSeenDate: latest || get().lastSeenDate, hasNew: false });
       },
     }),

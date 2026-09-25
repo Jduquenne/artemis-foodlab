@@ -3,12 +3,12 @@ import { HouseholdItem } from "../../core/domain/household";
 import { Food } from "../../core/domain/ingredient";
 import { Category, OutdoorEntry, PlannableItem, RecipeDetails } from "../../core/domain/recipe";
 import { CatalogueScope, getCatalogueVersion, subscribeCatalogue } from "../../core/catalogue/catalogueEvents";
-import { typedCategoriesDb } from "../../core/catalogue/typedCategoriesDb";
-import { typedFoodDb } from "../../core/catalogue/typedFoodDb";
-import { typedOutdoorDb } from "../../core/catalogue/typedOutdoorDb";
-import { typedHouseholdDb } from "../../core/catalogue/typedHouseholdDb";
-import { buildPlannableDb } from "../../core/catalogue/plannableDb";
-import { typedRecipesDb } from "../../core/catalogue/typedRecipesDb";
+import { categoriesCatalogue } from "../../core/catalogue/categories";
+import { foodsCatalogue } from "../../core/catalogue/foods";
+import { outdoorCatalogue } from "../../core/catalogue/outdoor";
+import { householdCatalogue } from "../../core/catalogue/household";
+import { buildPlannableItems } from "../../core/catalogue/plannable";
+import { recipesCatalogue } from "../../core/catalogue/recipes";
 import { Macronutrients } from "../../core/domain/nutrition";
 import { RECIPE_BASE_GRAMS, RECIPE_MACROS } from "../utils/macroUtils";
 
@@ -31,12 +31,12 @@ function useCatalogueSnapshot<T>(source: SnapshotSource<T>): T {
   return useSyncExternalStore(subscribeCatalogue, source.read);
 }
 
-const recipesSource = createSnapshotSource(["recipes"], () => ({ ...typedRecipesDb }));
-const foodsSource = createSnapshotSource(["foods"], () => ({ ...typedFoodDb }));
-const categoriesSource = createSnapshotSource(["categories"], () => [...typedCategoriesDb]);
-const householdSource = createSnapshotSource(["household"], () => ({ ...typedHouseholdDb }));
-const outdoorSource = createSnapshotSource(["outdoor"], () => ({ ...typedOutdoorDb }));
-const plannableSource = createSnapshotSource(["recipes", "outdoor"], buildPlannableDb);
+const recipesSource = createSnapshotSource(["recipes"], () => ({ ...recipesCatalogue }));
+const foodsSource = createSnapshotSource(["foods"], () => ({ ...foodsCatalogue }));
+const categoriesSource = createSnapshotSource(["categories"], () => [...categoriesCatalogue]);
+const householdSource = createSnapshotSource(["household"], () => ({ ...householdCatalogue }));
+const outdoorSource = createSnapshotSource(["outdoor"], () => ({ ...outdoorCatalogue }));
+const plannableSource = createSnapshotSource(["recipes", "outdoor"], buildPlannableItems);
 const recipeMetricsSource = createSnapshotSource(["recipes", "foods"], () => ({
   macros: { ...RECIPE_MACROS },
   baseGrams: { ...RECIPE_BASE_GRAMS },

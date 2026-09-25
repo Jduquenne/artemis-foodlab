@@ -165,10 +165,10 @@ Trois couches, sans exception :
 ## Identifiants de recette — deux formats à ne pas confondre
 
 - `buildRecipeId` → `CHAR_01` : sert aux **noms de fichiers image** uniquement.
-- `buildRecipeDbId` → `char-001` : **vraie clé interne** (clé de `typedRecipesDb`, `MealSlot.recipeIds`, etc.).
+- `buildRecipeDbId` → `char-001` : **vraie clé interne** (clé de `recipesCatalogue`, `MealSlot.recipeIds`, etc.).
 - Les deux sont dans `core/logic/recipeBuilder/recipeBuilderLogic.ts`.
 - L'`id` uuid de l'API est stocké à part dans `RecipeDetails.apiId` ; la traduction code ↔ uuid passe par `core/catalogue/recipeIdMap.ts` (`getIdByCode` / `getCodeById`), reconstruit à chaque hydratation du catalogue.
-- `typedRecipesDb` / `typedFoodDb` / `typedOutdoorDb` restent des objets mutables rafraîchis en place (`replaceRecipesDb` etc.), pas de `useLiveQuery`.
+- `recipesCatalogue` / `foodsCatalogue` / `outdoorCatalogue` / `householdCatalogue` / `categoriesCatalogue` restent des objets mutables rafraîchis en place (`replaceRecipes` etc.), sans `useLiveQuery` ; `catalogueSyncService` signale chaque changement (`core/catalogue/catalogueEvents.ts`) et les composants lisent des copies via `useRecipesSnapshot` & co (`shared/hooks/useCatalogueSnapshot.ts`), jamais les objets directement.
 - **`Ingredient.id` est stable** d'un enregistrement à l'autre : `PUT /recipes/:id` fait un upsert par id (connu → update en place, absent → nouvelle ligne, disparu du tableau envoyé → supprimé ; id étranger à la recette → `400`). `recipeToBuilderState` préserve `ing.id` dans `DraftIngredient.apiId` (distinct de `DraftIngredient.id`, la clé locale/React) ; `builderStateToApiBody` le renvoie quand présent, l'omet pour un ingrédient ajouté dans le builder.
 
 > La Google Sheets Gateway (dossier `/worker`) a été **abandonnée** (2026-07-21) et tout son code supprimé. Ne pas la ressusciter.

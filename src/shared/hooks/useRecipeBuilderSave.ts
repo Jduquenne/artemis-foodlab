@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { RecipeBuilderState } from "../../core/domain/recipeBuilderTypes";
 import { builderStateToApiBody, validateBuilderState } from "../../core/logic/recipeBuilder/recipeBuilderLogic";
-import { typedRecipesDb } from "../../core/catalogue/typedRecipesDb";
+import { recipesCatalogue } from "../../core/catalogue/recipes";
 import {
   createRecipe,
   deleteRecipe,
@@ -37,7 +37,7 @@ export function useRecipeBuilderSave() {
     setStatus("saving");
     try {
       const body = builderStateToApiBody(state);
-      const existing = typedRecipesDb[body.code];
+      const existing = recipesCatalogue[body.code];
       const saved = existing?.apiId ? await updateRecipe(existing.apiId, body) : await createRecipe(body);
       if (photos.mealPhoto) await uploadRecipePhoto(saved.id, photos.mealPhoto, "mealPhoto");
       if (photos.bookPhoto) await uploadRecipePhoto(saved.id, photos.bookPhoto, "bookPhoto");
@@ -51,7 +51,7 @@ export function useRecipeBuilderSave() {
   }, []);
 
   const remove = useCallback(async (code: string): Promise<boolean> => {
-    const existing = typedRecipesDb[code];
+    const existing = recipesCatalogue[code];
     if (!existing?.apiId) return false;
     setStatus("saving");
     try {

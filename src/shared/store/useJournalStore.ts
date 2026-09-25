@@ -5,7 +5,7 @@ import {
   JournalOverridesByProfile,
   saveJournalOverride,
 } from "../../core/services/journalService";
-import { typedRecipesDb } from "../../core/catalogue/typedRecipesDb";
+import { recipesCatalogue } from "../../core/catalogue/recipes";
 import {
   EMPTY_JOURNAL_OVERRIDES,
   applyOverrideResult,
@@ -61,7 +61,7 @@ export const useJournalStore = create<JournalState>((set, get) => {
     recipeId: string,
     planningSlotItemId: string,
   ): Record<string, number> => {
-    const recipe = typedRecipesDb[recipeId];
+    const recipe = recipesCatalogue[recipeId];
     const portions = current.portionOverrides[planningSlotItemId] ?? 1;
     return defaultIngredientOverridesForPortions(recipe, portions);
   };
@@ -74,13 +74,13 @@ export const useJournalStore = create<JournalState>((set, get) => {
   return {
     overridesByProfile: {},
     setPortionOverride: async (planningSlotItemId, recipeId, value) => {
-      const recipe = typedRecipesDb[recipeId];
+      const recipe = recipesCatalogue[recipeId];
       const ratio = recipe && recipe.defaultPortions > 0 ? value / recipe.defaultPortions : 1;
       const ingredientOverrides = recipe ? scaleIngredientsByRatio(recipe, ratio) : {};
       await persistOverride(planningSlotItemId, { portionsOverride: value, gramsOverride: null, ingredientOverrides });
     },
     setGramOverride: async (planningSlotItemId, recipeId, value) => {
-      const recipe = typedRecipesDb[recipeId];
+      const recipe = recipesCatalogue[recipeId];
       const baseGrams = RECIPE_BASE_GRAMS[recipeId] ?? 0;
       const ratio = baseGrams > 0 ? value / baseGrams : 1;
       const ingredientOverrides = recipe ? scaleIngredientsByRatio(recipe, ratio) : {};

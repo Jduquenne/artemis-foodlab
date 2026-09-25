@@ -1,12 +1,13 @@
-import { plannableDb } from '../../../core/typed-db/plannableDb';
 import { AsyncImage } from '../../../shared/components/ui/AsyncImage';
+import { usePlannableSnapshot } from '../../../shared/hooks/useCatalogueSnapshot';
 
 export interface MealDragOverlayProps {
     recipeId: string;
 }
 
 export const MealDragOverlay = ({ recipeId }: MealDragOverlayProps) => {
-    const recipe = plannableDb[recipeId];
+    const plannable = usePlannableSnapshot();
+    const recipe = plannable[recipeId];
 
     if (!recipe?.assets?.mealPhoto) return null;
 

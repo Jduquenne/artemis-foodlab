@@ -3,8 +3,6 @@ import { Plus, Check, Users, Snowflake } from 'lucide-react';
 import { PersonsEditor } from './PersonsEditor';
 import { SlotPersonsBadge } from './SlotPersonsBadge';
 import { useDraggable, useDroppable } from '@dnd-kit/core';
-import { plannableDb } from '../../../../core/typed-db/plannableDb';
-import { RECIPE_BASE_GRAMS } from '../../../../shared/utils/macroUtils';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 import { hasRecipes as slotHasRecipes, isSlotFull, isDish, isBase } from '../../../../core/domain/recipePredicates';
 import { MultiRecipeGrid } from './MultiRecipeGrid';
@@ -12,6 +10,7 @@ import { MultiSlotActions } from './MultiSlotActions';
 import { RecipeMetaEditor } from './RecipeMetaEditor';
 import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
+import { usePlannableSnapshot, useRecipeMetricsSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 
 export interface MultiMealSlotProps {
     label: string;
@@ -60,12 +59,14 @@ export const MultiMealSlot = ({
     onConfirmPersons,
     onCancelPersons,
 }: MultiMealSlotProps) => {
+    const plannable = usePlannableSnapshot();
+    const { baseGrams } = useRecipeMetricsSnapshot();
     const [editingMetaId, setEditingMetaId] = useState<string | null>(null);
     const [savingMeta, setSavingMeta] = useState(false);
     const isPersonsPending = usePendingKey(`planning-persons:${slotId}`);
     const isSingleRemovePending = usePendingKey(`planning-recipe-remove:${slotId}:${recipeIds[0] ?? ''}`);
 
-    const firstRecipe = recipeIds.length === 1 ? plannableDb[recipeIds[0]] : undefined;
+    const firstRecipe = recipeIds.length === 1 ? plannable[recipeIds[0]] : undefined;
     const singleHasPhoto = Boolean(firstRecipe?.assets?.mealPhoto);
     const singleHasRecipesPage = Boolean(firstRecipe?.assets?.mealPhoto || firstRecipe?.assets?.instructionsPhoto);
     const singleIsDish = isDish(firstRecipe) || isBase(firstRecipe);
@@ -109,7 +110,7 @@ export const MultiMealSlot = ({
             : undefined;
 
     const singleRecipeId = recipeIds.length === 1 ? recipeIds[0] : null;
-    const singleBaseGrams = singleRecipeId ? (RECIPE_BASE_GRAMS[singleRecipeId] ?? 0) : 0;
+    const singleBaseGrams = singleRecipeId ? (baseGrams[singleRecipeId] ?? 0) : 0;
     const singleCurrentGrams = singleRecipeId ? recipeQuantities?.[singleRecipeId] : undefined;
     const singleCurrentPersons = singleRecipeId ? recipePersons?.[singleRecipeId] : undefined;
     const singleIsCustom = singleCurrentPersons !== undefined || (!singleIsDish && singleCurrentGrams !== undefined);
@@ -250,11 +251,11 @@ export const MultiMealSlot = ({
 
             {editingMetaId && onSaveRecipeMeta && (
                 <RecipeMetaEditor
-                    initialPersons={recipePersons?.[editingMetaId] ?? (isDish(plannableDb[editingMetaId]) || isBase(plannableDb[editingMetaId]) ? 1 : plannableDb[editingMetaId]?.defaultPortions ?? 1)}
-                    defaultPersons={isDish(plannableDb[editingMetaId]) || isBase(plannableDb[editingMetaId]) ? 1 : plannableDb[editingMetaId]?.defaultPortions ?? 1}
-                    initialGrams={recipeQuantities?.[editingMetaId] ?? Math.round(RECIPE_BASE_GRAMS[editingMetaId] ?? 0)}
-                    defaultGrams={Math.round(RECIPE_BASE_GRAMS[editingMetaId] ?? 0)}
-                    isDish={isDish(plannableDb[editingMetaId]) || isBase(plannableDb[editingMetaId])}
+                    initialPersons={recipePersons?.[editingMetaId] ?? (isDish(plannable[editingMetaId]) || isBase(plannable[editingMetaId]) ? 1 : plannable[editingMetaId]?.defaultPortions ?? 1)}
+                    defaultPersons={isDish(plannable[editingMetaId]) || isBase(plannable[editingMetaId]) ? 1 : plannable[editingMetaId]?.defaultPortions ?? 1}
+                    initialGrams={recipeQuantities?.[editingMetaId] ?? Math.round(baseGrams[editingMetaId] ?? 0)}
+                    defaultGrams={Math.round(baseGrams[editingMetaId] ?? 0)}
+                    isDish={isDish(plannable[editingMetaId]) || isBase(plannable[editingMetaId])}
                     pending={savingMeta}
                     onConfirm={async (persons, grams) => {
                         setSavingMeta(true);

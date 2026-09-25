@@ -2,9 +2,9 @@ import { useState, useMemo } from 'react';
 import { SearchBar } from '../../../../shared/components/ui/SearchBar';
 import { SearchRecipeResult, useSearchMeals } from '../../../../shared/hooks/useSearch';
 import { Check, Loader2, X, TreePine } from 'lucide-react';
-import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
 import { searchOutdoorRecipes } from '../../../../core/logic/recipe/recipeLogic';
 import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
+import { useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 
 export interface RecipePickerProps {
     onSelect: (recipe: SearchRecipeResult) => void | Promise<void>;
@@ -14,6 +14,7 @@ export interface RecipePickerProps {
 }
 
 export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = [] }: RecipePickerProps) => {
+    const recipesDb = useRecipesSnapshot();
     const [query, setQuery] = useState('');
     const [pendingSelection, setPendingSelection] = useState<SearchRecipeResult | null>(null);
     const [isClosing, setIsClosing] = useState(false);
@@ -96,7 +97,7 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
                                             : 'border-slate-200 hover:border-orange-200 hover:bg-orange-50 dark:hover:bg-orange-950/20'
                                     }`}
                                 >
-                                    <AsyncImage asset={typedRecipesDb[recipe.recipeId]?.assets?.mealPhoto} alt={recipe.name} wrapperClassName="w-16 h-16 rounded-xl shadow-sm shrink-0" className="object-cover" />
+                                    <AsyncImage asset={recipesDb[recipe.recipeId]?.assets?.mealPhoto} alt={recipe.name} wrapperClassName="w-16 h-16 rounded-xl shadow-sm shrink-0" className="object-cover" />
                                     <div className="flex-1">
                                         <p className="font-black text-slate-800">{recipe.name}</p>
                                         <p className="text-xs text-slate-400 uppercase font-bold">{recipe.recipeId}</p>

@@ -1,8 +1,6 @@
 import React, { useState, useMemo, useRef, useEffect, useLayoutEffect } from 'react';
 import { useFreezerStock } from '../../shared/hooks/useFreezerStock';
 import { Check, X, ShoppingCart } from 'lucide-react';
-import { typedRecipesDb as recipesDb } from '../../core/typed-db/typedRecipesDb';
-import { plannableDb } from '../../core/typed-db/plannableDb';
 import { CopyModeBar } from './components/bars/CopyModeBar';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { getWeekSlots, saveSlot, deleteSlot, addDessertToSlot, removeDessertFromSlot, setRecipePersonsOnSlot, syncWeekFromApi } from '../../core/services/planningService';
@@ -24,6 +22,7 @@ import { SlotType, ShoppingDay, MealSlot, CopyState } from '../../core/domain/pl
 import { isDessert, canAddDessert, isSlotFull } from '../../core/domain/recipePredicates';
 import { MEAL_SLOTS, DAYS } from '../../core/domain/planningConfig';
 import { SLOT_DISPLAY } from './slotDisplay';
+import { usePlannableSnapshot, useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
 import { computeSlotCopyProps, parseFullSlotId, computeDragMoveSlots, ParsedSlot } from '../../core/logic/planning/planningLogic';
 import { withPending } from '../../shared/utils/withPending';
 import { MoveDessertsPrompt } from './components/MoveDessertsPrompt';
@@ -46,6 +45,8 @@ const todayDayName = (() => {
 })();
 
 export const PlanningModule = () => {
+    const plannable = usePlannableSnapshot();
+    const recipesDb = useRecipesSnapshot();
     const [searchParams, setSearchParams] = useSearchParams();
     const { shoppingDays, setShoppingDays } = useMenuStore();
     const { batchRecipeIds } = useFreezerStock();
@@ -310,7 +311,7 @@ export const PlanningModule = () => {
     const cancelDragMove = () => setPendingDragMove(null);
 
     const handleStartCopy = (recipeId: string, slotType: SlotType, sourceDay: string, isDessertCopy: boolean) => {
-        const recipeName = plannableDb[recipeId]?.name ?? '';
+        const recipeName = plannable[recipeId]?.name ?? '';
         const sourceSlot = planningData.find(p => p.day === sourceDay && p.slot === slotType);
         const sourcePersons = sourceSlot?.recipePersons?.[recipeId];
         setCopyState({ recipeId, slotType, sourceDay, isDessert: isDessertCopy, recipeName, sourcePersons });

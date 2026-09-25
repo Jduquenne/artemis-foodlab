@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { X, Copy, Users, Minus, Plus, Check, Loader2 } from 'lucide-react';
-import { plannableDb } from '../../../../core/typed-db/plannableDb';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { buildRecipeDetailUrl } from '../../../../core/logic/recipe/recipeLogic';
+import { usePlannableSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 
 export interface DessertCellProps {
     slotId: string;
@@ -21,7 +21,8 @@ export interface DessertCellProps {
 }
 
 export const DessertCell = ({ slotId, recipeId, onRemove, isAddMode, onCopy, isCopySource, hideActions, persons, isPersonsCustom, onSetPersons }: DessertCellProps) => {
-    const recipe = plannableDb[recipeId];
+    const plannable = usePlannableSnapshot();
+    const recipe = plannable[recipeId];
     const navigate = useNavigate();
     const [isEditingPersons, setIsEditingPersons] = useState(false);
     const [draft, setDraft] = useState(persons ?? 1);

@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { X, Check, Loader2 } from 'lucide-react';
 import { SearchBar } from '../../../../shared/components/ui/SearchBar';
 import { useSearchDesserts } from '../../../../shared/hooks/useSearch';
-import { typedRecipesDb } from '../../../../core/typed-db/typedRecipesDb';
 import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
 import { MAX_DESSERTS_PER_SLOT } from '../../../../core/domain/planningConfig';
+import { useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 
 export interface DessertPickerProps {
     existingIds: string[];
@@ -13,6 +13,7 @@ export interface DessertPickerProps {
 }
 
 export const DessertPicker = ({ existingIds, onSelect, onClose }: DessertPickerProps) => {
+    const recipesDb = useRecipesSnapshot();
     const [query, setQuery] = useState('');
     const [isClosing, setIsClosing] = useState(false);
     const [savingId, setSavingId] = useState<string | null>(null);
@@ -63,7 +64,7 @@ export const DessertPicker = ({ existingIds, onSelect, onClose }: DessertPickerP
                                             : 'border-slate-200 hover:border-orange-200 hover:bg-orange-50 dark:hover:bg-orange-950/20'
                                     }`}
                                 >
-                                    <AsyncImage asset={typedRecipesDb[recipe.recipeId]?.assets?.mealPhoto} alt={recipe.name} wrapperClassName="w-16 h-16 rounded-xl shadow-sm shrink-0" className="object-cover" />
+                                    <AsyncImage asset={recipesDb[recipe.recipeId]?.assets?.mealPhoto} alt={recipe.name} wrapperClassName="w-16 h-16 rounded-xl shadow-sm shrink-0" className="object-cover" />
                                     <div className="flex-1">
                                         <p className="font-black text-slate-800">{recipe.name}</p>
                                         <p className="text-xs text-slate-400 uppercase font-bold">{recipe.recipeId}</p>

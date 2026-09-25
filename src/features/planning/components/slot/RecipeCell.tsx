@@ -1,10 +1,9 @@
 import { X, Copy, Users, Snowflake, Loader2 } from 'lucide-react';
-import { plannableDb } from '../../../../core/typed-db/plannableDb';
-import { RECIPE_BASE_GRAMS } from '../../../../shared/utils/macroUtils';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 import { isDish, isBase } from '../../../../core/domain/recipePredicates';
 import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
+import { usePlannableSnapshot, useRecipeMetricsSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 
 export interface RecipeCellProps {
     slotId: string;
@@ -20,10 +19,12 @@ export interface RecipeCellProps {
 }
 
 export const RecipeCell = ({ slotId, recipeId, onNavigate, onRemove, onCopy, hideRemove, persons, grams, onEditMeta, inFreezer }: RecipeCellProps) => {
-    const recipe = plannableDb[recipeId];
+    const plannable = usePlannableSnapshot();
+    const { baseGrams } = useRecipeMetricsSnapshot();
+    const recipe = plannable[recipeId];
     const hasPhoto = Boolean(recipe?.assets?.mealPhoto);
     const hasRecipesPage = Boolean(recipe?.assets?.mealPhoto || recipe?.assets?.instructionsPhoto);
-    const defaultGrams = RECIPE_BASE_GRAMS[recipeId] ?? 0;
+    const defaultGrams = baseGrams[recipeId] ?? 0;
     const recipeIsDish = isDish(recipe) || isBase(recipe);
     const isCustom = persons !== undefined || (!recipeIsDish && grams !== undefined);
     const removePending = usePendingKey(`planning-recipe-remove:${slotId}:${recipeId}`);

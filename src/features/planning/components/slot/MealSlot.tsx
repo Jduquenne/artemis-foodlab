@@ -1,7 +1,6 @@
 import { Plus, Snowflake } from 'lucide-react';
 import { PersonsEditor } from './PersonsEditor';
 import { useDraggable, useDroppable } from '@dnd-kit/core';
-import { plannableDb } from '../../../../core/typed-db/plannableDb';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 import { isOutdoor } from '../../../../core/domain/recipePredicates';
 import { SlotPersonsBadge } from './SlotPersonsBadge';
@@ -9,6 +8,7 @@ import { SlotActions } from './SlotActions';
 import { DessertColumn } from './DessertColumn';
 import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
+import { usePlannableSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 
 export interface MealSlotProps {
     label: string;
@@ -50,8 +50,9 @@ export const MealSlot = ({
     onCopyDessert, copySourceDessertId, dessertCopyTargetState, onSelectDessertAsTarget,
     inFreezer, recipePersons, onSetDessertPersons,
 }: MealSlotProps) => {
+    const plannable = usePlannableSnapshot();
     const firstId = recipeIds[0];
-    const recipe = firstId ? plannableDb[firstId] : undefined;
+    const recipe = firstId ? plannable[firstId] : undefined;
     const hasPhoto = Boolean(recipe?.assets?.mealPhoto);
     const hasRecipesPage = Boolean(recipe?.assets?.mealPhoto || recipe?.assets?.instructionsPhoto);
     const defaultPortion = recipe?.defaultPortions;

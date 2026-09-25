@@ -10,21 +10,6 @@ export enum Unit {
   TRANCHE = "tranche",
 }
 
-export enum Preparation {
-  DICED = "dés",
-  ESCALOPE = "escalope",
-  ROUNDS = "rondelles",
-  SLICES = "lamelles",
-  BRUNOISE = "brunoise",
-  LARGE_DICED = "gros dés",
-  GRATED = "râpé",
-  HALF = "demie",
-  HALF_ROUNDS = "demi-rondelles",
-  STICKS = "bâtonnets",
-  WHOLE = "entier",
-  LING = "julienne",
-}
-
 export enum IngredientCategory {
   FRUIT_VEGETABLE = "Fruits et légumes",
   DRIED_FRUIT = "Fruits secs",
@@ -72,7 +57,7 @@ export interface Ingredient {
   category: IngredientCategory;
   foodId?: string;
   baseId?: string;
-  preparation?: Preparation;
+  preparation?: string;
 }
 
 export interface Macronutrients {
@@ -163,7 +148,7 @@ export interface FreezerBag {
   id: string;
   quantity: number;
   unit: Unit;
-  preparation?: Preparation;
+  preparation?: string;
   addedDate: string;
 }
 

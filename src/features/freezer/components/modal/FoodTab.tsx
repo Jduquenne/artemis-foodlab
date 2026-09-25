@@ -1,4 +1,5 @@
-import { Unit, Preparation } from "../../../../core/domain/types";
+import { PREPARATION_OPTIONS } from "../../../../core/domain/preparationOptions";
+import { Unit } from "../../../../core/domain/types";
 import { FREEZER_BAG_UNITS } from "../../../../core/logic/freezer/freezerLogic";
 import { FoodSearchInput } from "./FoodSearchInput";
 
@@ -7,12 +8,12 @@ export interface FoodTabProps {
   foodId: string | undefined;
   foodQty: string;
   foodUnit: Unit;
-  foodPreparation: Preparation | "";
+  foodPreparation: string;
   existingNames?: string[];
   onNameChange: (name: string, id?: string) => void;
   onQtyChange: (qty: string) => void;
   onUnitChange: (unit: Unit) => void;
-  onPreparationChange: (prep: Preparation | "") => void;
+  onPreparationChange: (prep: string) => void;
 }
 
 export const FoodTab = ({
@@ -67,11 +68,11 @@ export const FoodTab = ({
       </label>
       <select
         value={foodPreparation}
-        onChange={e => onPreparationChange(e.target.value as Preparation | "")}
+        onChange={e => onPreparationChange(e.target.value as string)}
         className="w-full px-4 py-3 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
       >
         <option value="">—</option>
-        {Object.values(Preparation).map(p => (
+        {PREPARATION_OPTIONS.map(p => (
           <option key={p} value={p}>{p}</option>
         ))}
       </select>

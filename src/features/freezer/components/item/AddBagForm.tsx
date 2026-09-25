@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Check, Loader2, X } from "lucide-react";
-import { Unit, FreezerBag, Preparation } from "../../../../core/domain/types";
+import { PREPARATION_OPTIONS } from "../../../../core/domain/preparationOptions";
+import { Unit, FreezerBag } from "../../../../core/domain/types";
 import { FREEZER_BAG_UNITS } from "../../../../core/logic/freezer/freezerLogic";
 
 export interface AddBagFormProps {
@@ -13,7 +14,7 @@ export interface AddBagFormProps {
 export const AddBagForm = ({ onSave, onCancel, initialUnit = Unit.G, saving }: AddBagFormProps) => {
   const [quantity, setQuantity] = useState("");
   const [unit, setUnit] = useState<Unit>(initialUnit);
-  const [preparation, setPreparation] = useState<Preparation | "">("");
+  const [preparation, setPreparation] = useState<string>("");
 
   const parsedQty = parseFloat(quantity);
   const canSave = !isNaN(parsedQty) && parsedQty > 0;
@@ -52,12 +53,12 @@ export const AddBagForm = ({ onSave, onCancel, initialUnit = Unit.G, saving }: A
       </select>
       <select
         value={preparation}
-        onChange={e => setPreparation(e.target.value as Preparation | "")}
+        onChange={e => setPreparation(e.target.value as string)}
         disabled={saving}
         className="flex-1 min-w-0 px-1.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 focus:outline-none focus:border-orange-400 disabled:opacity-50"
       >
         <option value="">—</option>
-        {Object.values(Preparation).map(p => (
+        {PREPARATION_OPTIONS.map(p => (
           <option key={p} value={p}>{p}</option>
         ))}
       </select>

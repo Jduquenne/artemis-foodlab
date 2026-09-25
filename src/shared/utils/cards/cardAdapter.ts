@@ -1,4 +1,4 @@
-import { RecipeDetails, Macronutrients, Unit, IngredientCategory, Preparation } from "../../../core/domain/types";
+import { RecipeDetails, Macronutrients, Unit, IngredientCategory } from "../../../core/domain/types";
 import { DraftIngredient, RecipeBuilderState } from "../../../core/domain/recipeBuilderTypes";
 import { formatIngredientsForIngredientCard } from "../../../core/logic/recipeBuilder/recipeBuilderLogic";
 import { getCardColors } from "./cardColors";
@@ -24,7 +24,7 @@ function ingredientsToDraft(recipe: Pick<RecipeDetails, "ingredients">): DraftIn
     baseId: ing.baseId,
     quantity: ing.quantity,
     unit: ing.unit as Unit,
-    preparation: (ing.preparation ?? "") as Preparation | "",
+    preparation: ing.preparation ?? "",
     category: (ing.category as IngredientCategory) ?? IngredientCategory.UNKNOWN,
   }));
 }

@@ -3,7 +3,6 @@ import {
   IngredientCategory,
   MealType,
   OutdoorEntry,
-  Preparation,
   RecipeAsset,
   RecipeAssetKey,
   RecipeDetails,
@@ -94,7 +93,7 @@ function mapApiIngredient(ing: ApiIngredient, codeByApiId: Map<string, string>):
     category: ing.category as IngredientCategory,
     foodId: ing.foodId ?? undefined,
     baseId: ing.baseId ? (codeByApiId.get(ing.baseId) ?? ing.baseId) : undefined,
-    preparation: (ing.preparation ?? undefined) as Preparation | undefined,
+    preparation: ing.preparation ?? undefined,
   };
 }
 

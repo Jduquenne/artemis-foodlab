@@ -1,5 +1,6 @@
 import { Trash2 } from "lucide-react";
-import { Unit, IngredientCategory, Preparation } from "../../../../core/domain/types";
+import { PREPARATION_OPTIONS } from "../../../../core/domain/preparationOptions";
+import { Unit, IngredientCategory } from "../../../../core/domain/types";
 import { IngredientFoodSearch } from "./IngredientFoodSearch";
 import { BaseRecipeSearch } from "./BaseRecipeSearch";
 import { DraftIngredient } from "../../../../core/domain/recipeBuilderTypes";
@@ -90,11 +91,11 @@ export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: Ingredi
           </select>
           <select
             value={ingredient.preparation ?? ""}
-            onChange={e => update({ preparation: e.target.value as Preparation | "" })}
+            onChange={e => update({ preparation: e.target.value as string })}
             className="w-32 px-1 py-2 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
           >
             <option value="">—</option>
-            {Object.values(Preparation).map(p => (
+            {PREPARATION_OPTIONS.map(p => (
               <option key={p} value={p}>{p}</option>
             ))}
           </select>

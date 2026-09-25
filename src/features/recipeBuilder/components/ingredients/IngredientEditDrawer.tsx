@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { X } from "lucide-react";
-import { Unit, IngredientCategory, Preparation } from "../../../../core/domain/types";
+import { PREPARATION_OPTIONS } from "../../../../core/domain/preparationOptions";
+import { Unit, IngredientCategory } from "../../../../core/domain/types";
 import { IngredientFoodSearch } from "./IngredientFoodSearch";
 import { BaseRecipeSearch } from "./BaseRecipeSearch";
 import { DraftIngredient } from "../../../../core/domain/recipeBuilderTypes";
@@ -135,11 +136,11 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
                 <label className={LABEL_CLASS}>Préparation</label>
                 <select
                   value={ingredient.preparation ?? ""}
-                  onChange={e => update({ preparation: e.target.value as Preparation | "" })}
+                  onChange={e => update({ preparation: e.target.value as string })}
                   className={FIELD_CLASS}
                 >
                   <option value="">—</option>
-                  {Object.values(Preparation).map(p => (
+                  {PREPARATION_OPTIONS.map(p => (
                     <option key={p} value={p}>{p}</option>
                   ))}
                 </select>

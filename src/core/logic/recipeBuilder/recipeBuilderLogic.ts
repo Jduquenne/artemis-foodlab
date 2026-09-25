@@ -3,7 +3,6 @@ import {
   IngredientCategory,
   Macronutrients,
   MealType,
-  Preparation,
   RecipeDetails,
   RecipeKind,
   Unit,
@@ -127,7 +126,7 @@ export function recipeToBuilderState(
     baseId: ing.baseId,
     quantity: ing.quantity,
     unit: ing.unit as Unit,
-    preparation: (ing.preparation ?? "") as Preparation | "",
+    preparation: ing.preparation ?? "",
     category: (ing.category as IngredientCategory) ?? IngredientCategory.UNKNOWN,
   }));
   return {

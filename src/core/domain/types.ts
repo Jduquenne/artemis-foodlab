@@ -47,18 +47,6 @@ export enum IngredientCategory {
   UNKNOWN = "Inconnu",
 }
 
-export interface Recipe {
-  id: string;
-  name: string;
-  categoryId: string;
-  recipeId?: string;
-  type?: "photo" | "ingredients" | "recipes";
-  url?: string;
-  image?: string;
-  ingredientsImage?: string;
-  instructionsImage?: string;
-}
-
 export interface Food {
   id: string;
   categoryId: string;

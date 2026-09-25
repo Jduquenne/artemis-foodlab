@@ -19,4 +19,3 @@ export interface CopyState {
 }
 
 export const DAYS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"] as const;
-export type DayName = typeof DAYS[number];

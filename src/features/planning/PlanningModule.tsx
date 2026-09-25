@@ -17,6 +17,7 @@ import { getWeekNumber, getMonday, getWeekRange } from '../../shared/utils/weekU
 import { formatDayDate } from '../../shared/utils/dateUtils';
 import { computeDayMacros } from '../../shared/utils/macroUtils';
 import { useMacroCatalogue } from '../../shared/hooks/useMacroCatalogue';
+import { useRefreshStore } from '../../shared/store/useRefreshStore';
 import { useSearchParams } from 'react-router-dom';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { SlotType, ShoppingDay, MealSlot, CopyState } from '../../core/domain/planning';
@@ -115,9 +116,10 @@ export const PlanningModule = () => {
     const planningData = useMemo(() => liveData ?? [], [liveData]);
 
     const authStatus = useAuthStore((s) => s.status);
+    const refreshTick = useRefreshStore((s) => s.tick);
     useEffect(() => {
         if (authStatus === 'authenticated') syncWeekFromApi(year, weekNumber);
-    }, [authStatus, year, weekNumber]);
+    }, [authStatus, year, weekNumber, refreshTick]);
 
     const macroCatalogue = useMacroCatalogue();
     const dayKcal = useMemo(() =>

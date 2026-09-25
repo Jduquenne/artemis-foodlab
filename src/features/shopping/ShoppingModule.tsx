@@ -47,6 +47,7 @@ import { PricePerKgModal } from './components/PricePerKgModal';
 import { HouseholdShoppingCard } from './components/HouseholdShoppingCard';
 import { HouseholdPanel } from '../household/components/HouseholdPanel';
 import { AddExtraModal } from './components/AddExtraModal';
+import { useRefreshStore } from '../../shared/store/useRefreshStore';
 import { useHouseholdSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
 
 export const ShoppingModule = () => {
@@ -58,6 +59,7 @@ export const ShoppingModule = () => {
     const { baseGrams } = useRecipeMetricsSnapshot();
     const householdDb = useHouseholdSnapshot();
     const allHouseholdItems = useMemo(() => Object.values(householdDb), [householdDb]);
+    const refreshTick = useRefreshStore((s) => s.tick);
 
     const colCount = Math.min(useColCount(), 3);
     const { foodBags } = useFreezerStock();
@@ -96,7 +98,7 @@ export const ShoppingModule = () => {
         };
         load();
         return () => { active = false; };
-    }, [currentPeriodId]);
+    }, [currentPeriodId, refreshTick]);
 
     useEffect(() => {
         if (authStatus !== 'authenticated') return;
@@ -105,7 +107,7 @@ export const ShoppingModule = () => {
             const [year, week] = key.split('-').map(Number);
             syncWeekFromApi(year, week);
         }
-    }, [authStatus, shoppingDays]);
+    }, [authStatus, shoppingDays, refreshTick]);
 
     const patchItemCheck = (updated: ApiItemCheck) => {
         setItemChecksRaw(prev => {

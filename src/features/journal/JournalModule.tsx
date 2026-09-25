@@ -7,6 +7,7 @@ import { computeDayMacros } from "../../shared/utils/macroUtils";
 import { useMacroCatalogue } from "../../shared/hooks/useMacroCatalogue";
 import { useActiveJournalOverrides } from "../../shared/hooks/useActiveJournalOverrides";
 import { useAuthStore } from "../../shared/store/useAuthStore";
+import { useRefreshStore } from "../../shared/store/useRefreshStore";
 import { markScrolling } from "../../shared/utils/scrollGuard";
 import { DayNav } from "./components/DayNav";
 import { MacroSummary } from "./components/MacroSummary";
@@ -44,6 +45,21 @@ export const JournalModule = () => {
       setWeekSlots(null);
     };
   }, [year, week, authStatus]);
+
+  const refreshTick = useRefreshStore((s) => s.tick);
+  const handledTick = useRef(refreshTick);
+  useEffect(() => {
+    if (handledTick.current === refreshTick) return;
+    handledTick.current = refreshTick;
+    let active = true;
+    const reload = async () => {
+      await syncWeekFromApi(year, week);
+      const slots = await getWeekSlots(year, week);
+      if (active) setWeekSlots(slots);
+    };
+    reload();
+    return () => { active = false; };
+  }, [refreshTick, year, week]);
 
   const isLoading = weekSlots === null;
 

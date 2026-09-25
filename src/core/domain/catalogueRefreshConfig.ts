@@ -1,0 +1,2 @@
+export const CATALOGUE_REFRESH_MIN_MS = 120_000;
+export const CATALOGUE_POLL_MS = 300_000;

@@ -9,7 +9,8 @@ import { putRecipeInDb, removeRecipeFromDb, replaceRecipesDb, typedRecipesDb } f
 import { replaceOutdoorDb, typedOutdoorDb } from "../typed-db/typedOutdoorDb";
 import { replaceHouseholdDb } from "../typed-db/typedHouseholdDb";
 import { setRecipeIdMap } from "../typed-db/recipeIdMap";
-import { notifyCatalogueChange } from "../typed-db/catalogueEvents";
+import { CatalogueScope, notifyCatalogueChange } from "../typed-db/catalogueEvents";
+import { CatalogueSignatures, changedScopes } from "../logic/sync/catalogueRefreshLogic";
 import {
   ApiOutdoorActivity,
   ApiRecipe,
@@ -23,6 +24,14 @@ import * as recipesService from "./recipesService";
 import * as outdoorService from "./outdoorService";
 import * as householdItemsService from "./householdItemsService";
 import * as recipeCategoriesService from "./recipeCategoriesService";
+
+let lastCatalogueSyncAt = 0;
+let lastSignatures: CatalogueSignatures = {};
+let inflightSync: Promise<void> | null = null;
+
+export function getLastCatalogueSyncAt(): number {
+  return lastCatalogueSyncAt;
+}
 
 function refreshDerivedData(): void {
   refreshPlannableDb();
@@ -60,6 +69,18 @@ export async function applyCatalogueData(
   apiHouseholdItems: HouseholdItem[],
   apiCategories: Category[],
 ): Promise<void> {
+  const signatures: Record<CatalogueScope, string> = {
+    recipes: JSON.stringify(apiRecipes),
+    outdoor: JSON.stringify(apiOutdoor),
+    foods: JSON.stringify(apiFoods),
+    household: JSON.stringify(apiHouseholdItems),
+    categories: JSON.stringify(apiCategories),
+  };
+  const changed = changedScopes(lastSignatures, signatures);
+  lastSignatures = signatures;
+  lastCatalogueSyncAt = Date.now();
+  if (changed.length === 0) return;
+
   const recipes = mapApiRecipes(apiRecipes);
   const outdoor = mapApiOutdoorActivities(apiOutdoor);
   const foods = Object.fromEntries(apiFoods.map((f) => [f.id, f]));
@@ -80,23 +101,41 @@ export async function applyCatalogueData(
   replaceCategoriesDb(apiCategories);
   applyRecipeIdMap();
   refreshDerivedData();
-  notifyCatalogueChange("recipes", "foods", "categories", "outdoor", "household");
+  notifyCatalogueChange(...changed);
 }
 
-export async function syncCatalogueFromApi(): Promise<void> {
+export interface SyncCatalogueOptions {
+  silent?: boolean;
+}
+
+async function fetchAndApplyCatalogue(silent: boolean): Promise<void> {
+  const options = { suppressGlobalError: silent };
   try {
     const [apiRecipes, apiOutdoor, apiFoods, apiHouseholdItems, apiCategories] = await Promise.all([
-      apiFetchJson<ApiRecipe[]>("/recipes"),
-      apiFetchJson<ApiOutdoorActivity[]>("/outdoor-activities"),
-      apiFetchJson<Food[]>("/foods"),
-      apiFetchJson<HouseholdItem[]>("/household-items"),
-      apiFetchJson<Category[]>("/recipe-categories"),
+      apiFetchJson<ApiRecipe[]>("/recipes", options),
+      apiFetchJson<ApiOutdoorActivity[]>("/outdoor-activities", options),
+      apiFetchJson<Food[]>("/foods", options),
+      apiFetchJson<HouseholdItem[]>("/household-items", options),
+      apiFetchJson<Category[]>("/recipe-categories", options),
     ]);
 
     await applyCatalogueData(apiRecipes, apiOutdoor, apiFoods, apiHouseholdItems, apiCategories);
   } catch {
     /* réseau indisponible ou API injoignable, on garde le cache existant */
   }
+}
+
+export function syncCatalogueFromApi(options: SyncCatalogueOptions = {}): Promise<void> {
+  const silent = options.silent ?? false;
+  if (inflightSync && silent) return inflightSync;
+  lastCatalogueSyncAt = Date.now();
+  const current: Promise<void> = (inflightSync ?? Promise.resolve())
+    .then(() => fetchAndApplyCatalogue(silent))
+    .finally(() => {
+      if (inflightSync === current) inflightSync = null;
+    });
+  inflightSync = current;
+  return current;
 }
 
 function codeByApiIdFromCache(): Map<string, string> {

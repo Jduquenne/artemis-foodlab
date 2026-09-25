@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Plus, Search } from "lucide-react";
 import { OutdoorEntry } from "../../../../core/domain/types";
-import { getCategoryById } from "../../../../core/domain/categories";
+import { getCategoryById } from "../../../../core/typed-db/typedCategoriesDb";
 import { useCatalogueOutdoor } from "../../../../shared/hooks/useCatalogueOutdoor";
 import { OutdoorRow } from "./OutdoorRow";
 import { OutdoorFormModal } from "./OutdoorFormModal";

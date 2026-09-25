@@ -1,5 +1,5 @@
 import { Food, RecipeAsset, RecipeDetails } from "../../domain/types";
-import { Category } from "../../domain/categories";
+import { Category } from "../../domain/types";
 import { isDessert, isDish } from "../../domain/recipePredicates";
 import { RecipeUsageItem } from "../../services/planningUsageService";
 

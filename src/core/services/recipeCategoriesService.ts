@@ -1,4 +1,4 @@
-import { Category } from "../domain/categories";
+import { Category } from "../domain/types";
 import { db } from "./databaseService";
 
 export const getAll = () => db.recipeCategories.toArray();

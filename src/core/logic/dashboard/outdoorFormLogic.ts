@@ -1,5 +1,5 @@
 import { OutdoorEntry } from "../../domain/types";
-import { getCategoryById } from "../../domain/categories";
+import { getCategoryById } from "../../typed-db/typedCategoriesDb";
 import { OutdoorActivityInput } from "../../services/catalogueWriteService";
 import { buildRecipeDbId } from "../recipeBuilder/recipeBuilderLogic";
 import { RecapEntry, diffEntry } from "./recap";

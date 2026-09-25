@@ -1,4 +1,4 @@
-import { Category } from "./categories";
+import { Category } from "./types";
 import { MAX_DESSERTS_PER_SLOT, MAX_RECIPES_PER_SLOT } from "./planningConfig";
 import { MealSlot, RecipeDetails, RecipeKind } from "./types";
 

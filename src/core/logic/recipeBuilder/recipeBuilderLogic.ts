@@ -8,7 +8,7 @@ import {
   RecipeKind,
   Unit,
 } from "../../domain/types";
-import { getCategoryById } from "../../domain/categories";
+import { getCategoryById } from "../../typed-db/typedCategoriesDb";
 import {
   DraftIngredient,
   RecipeBuilderState,

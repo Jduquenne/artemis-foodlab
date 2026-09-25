@@ -1,5 +1,5 @@
 import { RecipeDetails, RecipeKind } from "../../domain/types";
-import { getCategoryById } from "../../domain/categories";
+import { getCategoryById } from "../../typed-db/typedCategoriesDb";
 import { isBase, isDessert, isDish, isIngredient } from "../../domain/recipePredicates";
 
 export type RecipeKindFilter = RecipeKind | "all" | "dessert";

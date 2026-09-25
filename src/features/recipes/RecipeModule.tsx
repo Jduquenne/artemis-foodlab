@@ -6,7 +6,7 @@ import { useRecipeBuilderStore } from '../../shared/store/useRecipeBuilderStore'
 import { SearchBar } from '../../shared/components/ui/SearchBar';
 import { CategoryCard } from '../../shared/components/ui/CategoryCard';
 import { useSearchRecipes } from '../../shared/hooks/useSearch';
-import { CATEGORIES } from '../../core/domain/categories';
+import { typedCategoriesDb } from '../../core/typed-db/typedCategoriesDb';
 import { isBrowsableCategory } from '../../core/domain/recipePredicates';
 import { MacroFilterButton } from './components/filter/MacroFilterButton';
 import { PREDEFINED_FILTERS } from '../../core/logic/recipe/predefinedFilterLogic';
@@ -123,7 +123,7 @@ export const RecipeModule = () => {
                     />
                 ) : (
                     <div className="h-full grid grid-cols-2 tablet:grid-cols-3 lg:grid-cols-6 auto-rows-fr gap-3">
-                        {CATEGORIES
+                        {typedCategoriesDb
                             .filter(isBrowsableCategory)
                             .map((cat) => (
                                 <CategoryCard

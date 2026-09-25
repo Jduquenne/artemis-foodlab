@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Maximize2 } from "lucide-react";
 import { MealType, RecipeKind } from "../../../../core/domain/types";
-import { CATEGORIES } from "../../../../core/domain/categories";
+import { typedCategoriesDb } from "../../../../core/typed-db/typedCategoriesDb";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
 import { typedRecipesDb } from "../../../../core/typed-db/typedRecipesDb";
 import {
@@ -81,7 +81,7 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
         <div className="flex-1 min-w-0">
           <label className={labelClass}>Catégorie</label>
           <select value={state.categoryId} onChange={(e) => changeCategory(e.target.value)} className={inputClass}>
-            {CATEGORIES.map((c) => (
+            {typedCategoriesDb.map((c) => (
               <option key={c.id} value={c.id}>
                 {c.name}
               </option>

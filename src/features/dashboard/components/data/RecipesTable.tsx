@@ -9,7 +9,7 @@ import {
   filterRecipes,
 } from "../../../../core/logic/dashboard/recipeTableLogic";
 import { recipeToBuilderState } from "../../../../core/logic/recipeBuilder/recipeBuilderLogic";
-import { getCategoryById } from "../../../../core/domain/categories";
+import { getCategoryById } from "../../../../core/typed-db/typedCategoriesDb";
 import { useRecipeBuilderStore } from "../../../../shared/store/useRecipeBuilderStore";
 import { useCatalogueRecipes } from "../../../../shared/hooks/useCatalogueRecipes";
 import { RecipeRow } from "./RecipeRow";

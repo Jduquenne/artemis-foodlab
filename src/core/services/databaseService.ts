@@ -1,7 +1,7 @@
 import Dexie, { Table } from "dexie";
 import { getWeekNumber } from "../../shared/utils/weekUtils";
 import { FreezerCategory, MealSlot, HouseholdRecord, RecipeDetails, Food, OutdoorEntry, HouseholdItem } from "../domain/types";
-import { Category } from "../domain/categories";
+import { Category } from "../domain/types";
 
 class AppDatabase extends Dexie {
   planning!: Table<MealSlot>;

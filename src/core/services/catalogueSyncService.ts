@@ -1,5 +1,6 @@
 import { Food, HouseholdItem } from "../domain/types";
-import { Category, replaceCategories } from "../domain/categories";
+import { Category } from "../domain/types";
+import { replaceCategoriesDb } from "../typed-db/typedCategoriesDb";
 import { refreshRecipeMacros } from "../../shared/utils/macroUtils";
 import { refreshPlannableDb } from "../typed-db/plannableDb";
 import { replaceFoodDb, typedFoodDb } from "../typed-db/typedFoodDb";
@@ -44,7 +45,7 @@ export async function hydrateFromCache(): Promise<void> {
   if (Object.keys(foods).length > 0) replaceFoodDb(foods);
   if (Object.keys(outdoor).length > 0) replaceOutdoorDb(outdoor);
   if (Object.keys(householdItems).length > 0) replaceHouseholdDb(householdItems);
-  if (categories.length > 0) replaceCategories(categories);
+  if (categories.length > 0) replaceCategoriesDb(categories);
   if (Object.keys(recipes).length > 0 || Object.keys(outdoor).length > 0) applyRecipeIdMap();
   refreshDerivedData();
 }
@@ -73,7 +74,7 @@ export async function applyCatalogueData(
   replaceOutdoorDb(outdoor);
   replaceFoodDb(foods);
   replaceHouseholdDb(householdItems);
-  replaceCategories(apiCategories);
+  replaceCategoriesDb(apiCategories);
   applyRecipeIdMap();
   refreshDerivedData();
 }

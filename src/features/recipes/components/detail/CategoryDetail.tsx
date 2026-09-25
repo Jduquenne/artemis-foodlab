@@ -2,7 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { FlipCard } from '../FlipCard';
 import { ArrowLeft, X } from 'lucide-react';
 import { useMemo, useState, useEffect, useRef } from 'react';
-import { CATEGORIES } from '../../../../core/domain/categories';
+import { typedCategoriesDb } from '../../../../core/typed-db/typedCategoriesDb';
 import { markScrolling } from '../../../../shared/utils/scrollGuard';
 import { MacroFilterButton } from '../filter/MacroFilterButton';
 import { PREDEFINED_FILTERS } from '../../../../core/logic/recipe/predefinedFilterLogic';
@@ -22,7 +22,7 @@ export const CategoryDetail = () => {
     const navigate = useNavigate();
     const { activeFilterIds, setActiveFilterIds } = useMenuStore();
 
-    const categoryInfo = CATEGORIES.find(cat => cat.id === categoryId);
+    const categoryInfo = typedCategoriesDb.find(cat => cat.id === categoryId);
     const recipes = useMemo(() => getCategoryRecipes(categoryId ?? ''), [categoryId]);
 
     const filteredRecipes = useMemo(

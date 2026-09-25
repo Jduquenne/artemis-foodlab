@@ -1,6 +1,6 @@
 import { Pencil, Trash2 } from "lucide-react";
 import { OutdoorEntry } from "../../../../core/domain/types";
-import { getCategoryById } from "../../../../core/domain/categories";
+import { getCategoryById } from "../../../../core/typed-db/typedCategoriesDb";
 
 export interface OutdoorRowProps {
   activity: OutdoorEntry;

@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { X } from "lucide-react";
 import { OutdoorEntry } from "../../../../core/domain/types";
-import { CATEGORIES } from "../../../../core/domain/categories";
+import { typedCategoriesDb } from "../../../../core/typed-db/typedCategoriesDb";
 import { OutdoorActivityInput } from "../../../../core/services/catalogueWriteService";
 import {
   OutdoorFormDraft,
@@ -110,7 +110,7 @@ export const OutdoorFormModal = ({ activity, activities, onClose, onSubmit }: Ou
               onChange={(e) => patch({ categoryId: e.target.value })}
               className={INPUT_CLASS}
             >
-              {CATEGORIES.map((category) => (
+              {typedCategoriesDb.map((category) => (
                 <option key={category.id} value={category.id}>{category.name}</option>
               ))}
             </select>

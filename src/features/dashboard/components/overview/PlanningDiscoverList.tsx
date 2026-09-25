@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { ChevronDown, ExternalLink } from "lucide-react";
-import { CATEGORIES } from "../../../../core/domain/categories";
+import { typedCategoriesDb } from "../../../../core/typed-db/typedCategoriesDb";
 import { typedFoodDb } from "../../../../core/typed-db/typedFoodDb";
 import {
   DishUsage,
@@ -32,7 +32,7 @@ export const PlanningDiscoverList = ({ dishes }: PlanningDiscoverListProps) => {
   const [showAll, setShowAll] = useState(false);
 
   const options = useMemo(
-    () => getReviewFilterOptions(dishes, typedFoodDb, CATEGORIES),
+    () => getReviewFilterOptions(dishes, typedFoodDb, typedCategoriesDb),
     [dishes],
   );
   const filtered = useMemo(() => filterReviewDishes(dishes, filters), [dishes, filters]);

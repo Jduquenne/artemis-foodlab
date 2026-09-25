@@ -47,6 +47,12 @@ export enum IngredientCategory {
   UNKNOWN = "Inconnu",
 }
 
+export interface Category {
+  id: string;
+  name: string;
+  color: string;
+}
+
 export interface Food {
   id: string;
   categoryId: string;

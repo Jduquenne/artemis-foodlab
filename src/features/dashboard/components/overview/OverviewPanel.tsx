@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { CATEGORIES } from "../../../../core/domain/categories";
+import { typedCategoriesDb } from "../../../../core/typed-db/typedCategoriesDb";
 import { typedRecipesDb } from "../../../../core/typed-db/typedRecipesDb";
 import { typedFoodDb } from "../../../../core/typed-db/typedFoodDb";
 import { RECIPE_MACROS } from "../../../../shared/utils/macroUtils";
@@ -18,7 +18,7 @@ export const OverviewPanel = () => {
   const counts = useMemo(() => getCatalogueCounts(typedRecipesDb), []);
   const foodStats = useMemo(() => getFoodStats(typedRecipesDb, typedFoodDb), []);
   const issues = useMemo(() => getCatalogueIssues(typedRecipesDb, typedFoodDb, RECIPE_MACROS), []);
-  const breakdown = useMemo(() => getCategoryBreakdown(typedRecipesDb, CATEGORIES), []);
+  const breakdown = useMemo(() => getCategoryBreakdown(typedRecipesDb, typedCategoriesDb), []);
 
   return (
     <div className="h-full flex flex-col gap-3 overflow-y-auto">

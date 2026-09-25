@@ -1,5 +1,5 @@
 import { Food, Macronutrients, RecipeDetails } from "../../domain/types";
-import { Category } from "../../domain/categories";
+import { Category } from "../../domain/types";
 import { isBase, isDish, isIngredient } from "../../domain/recipePredicates";
 
 export interface CatalogueCounts {

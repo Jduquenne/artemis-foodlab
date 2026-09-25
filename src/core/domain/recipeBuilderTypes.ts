@@ -1,5 +1,5 @@
 import { RecipeKind, Unit, IngredientCategory, Preparation, MealType } from "./types";
-import { CATEGORIES } from "./categories";
+import { typedCategoriesDb } from "../typed-db/typedCategoriesDb";
 
 export interface DraftIngredient {
   id: string;
@@ -32,7 +32,7 @@ export interface RecipeBuilderState {
 export const initialRecipeBuilderState = (): RecipeBuilderState => ({
   recipeNumber: "",
   name: "",
-  categoryId: CATEGORIES[0]?.id ?? "",
+  categoryId: typedCategoriesDb[0]?.id ?? "",
   kind: RecipeKind.DISH,
   mealTypes: [MealType.LUNCH, MealType.DINNER],
   defaultPortions: 2,

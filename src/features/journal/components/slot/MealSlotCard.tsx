@@ -3,6 +3,7 @@ import { Macronutrients } from "../../../../core/domain/nutrition";
 import { MealSlot, SlotType } from "../../../../core/domain/planning";
 import { getAllRecipeIds, hasDesserts } from "../../../../core/domain/recipePredicates";
 import { computeSlotMacros, ZERO } from "../../../../shared/utils/macroUtils";
+import { useMacroCatalogue } from "../../../../shared/hooks/useMacroCatalogue";
 import { useActiveJournalOverrides } from "../../../../shared/hooks/useActiveJournalOverrides";
 import { SLOT_LABELS } from "../../../../shared/utils/slotLabels";
 import { markScrolling } from "../../../../shared/utils/scrollGuard";
@@ -22,11 +23,12 @@ const MACRO_ITEMS: { key: keyof Omit<Macronutrients, "kcal">; label: string }[] 
 
 export const MealSlotCard = ({ slotType, slot }: MealSlotCardProps) => {
   const { portionOverrides, gramOverrides, ingredientOverrides } = useActiveJournalOverrides();
+  const catalogue = useMacroCatalogue();
 
   const allIds = slot ? getAllRecipeIds(slot) : [];
   const totalMacros = useMemo(
-    () => (slot ? computeSlotMacros(slot, portionOverrides, gramOverrides, ingredientOverrides) : { ...ZERO }),
-    [slot, portionOverrides, gramOverrides, ingredientOverrides],
+    () => (slot ? computeSlotMacros(catalogue, slot, portionOverrides, gramOverrides, ingredientOverrides) : { ...ZERO }),
+    [catalogue, slot, portionOverrides, gramOverrides, ingredientOverrides],
   );
 
   const hasContent = allIds.length > 0;

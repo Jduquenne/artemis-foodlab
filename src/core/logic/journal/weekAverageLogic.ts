@@ -1,6 +1,6 @@
 import { Macronutrients } from "../../domain/nutrition";
 import { MealSlot } from "../../domain/planning";
-import { computeDayMacros } from "../../../shared/utils/macroUtils";
+import { MacroCatalogue, computeDayMacros } from "../../../shared/utils/macroUtils";
 
 export interface WeekAverageResult {
   average: Macronutrients;
@@ -16,6 +16,7 @@ export function isDayFilled(slots: MealSlot[]): boolean {
 }
 
 export function computeWeekAverage(
+  catalogue: MacroCatalogue,
   weekSlots: MealSlot[],
   days: readonly string[],
   portionOverrides: Record<string, number>,
@@ -29,7 +30,7 @@ export function computeWeekAverage(
   if (filledDays.length === 0) return { average: { ...EMPTY_MACROS }, countedDays: 0 };
 
   const total = filledDays.reduce<Macronutrients>((sum, slots) => {
-    const m = computeDayMacros(slots, portionOverrides, gramOverrides, ingredientOverrides);
+    const m = computeDayMacros(catalogue, slots, portionOverrides, gramOverrides, ingredientOverrides);
     return {
       kcal: sum.kcal + m.kcal,
       proteins: sum.proteins + m.proteins,

@@ -16,6 +16,7 @@ import { DayTabsBar } from './components/bars/DayTabsBar';
 import { getWeekNumber, getMonday, getWeekRange } from '../../shared/utils/weekUtils';
 import { formatDayDate } from '../../shared/utils/dateUtils';
 import { computeDayMacros } from '../../shared/utils/macroUtils';
+import { useMacroCatalogue } from '../../shared/hooks/useMacroCatalogue';
 import { useSearchParams } from 'react-router-dom';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { SlotType, ShoppingDay, MealSlot, CopyState } from '../../core/domain/planning';
@@ -118,12 +119,13 @@ export const PlanningModule = () => {
         if (authStatus === 'authenticated') syncWeekFromApi(year, weekNumber);
     }, [authStatus, year, weekNumber]);
 
+    const macroCatalogue = useMacroCatalogue();
     const dayKcal = useMemo(() =>
         Object.fromEntries(DAYS.map(day => {
             const slots = planningData.filter(p => p.day === day);
-            return [day, slots.length ? Math.round(computeDayMacros(slots, {}, {}).kcal) : 0];
+            return [day, slots.length ? Math.round(computeDayMacros(macroCatalogue, slots, {}, {}).kcal) : 0];
         })),
-        [planningData]
+        [macroCatalogue, planningData]
     );
 
     const activeMeal = useMemo(

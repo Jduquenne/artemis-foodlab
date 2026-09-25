@@ -5,7 +5,6 @@ import { RecipeDetails } from "../../core/domain/recipe";
 import { getAllRecipeIds, isDish, isBase } from "../../core/domain/recipePredicates";
 import { typedRecipesDb } from "../../core/typed-db/typedRecipesDb";
 import { typedFoodDb } from "../../core/typed-db/typedFoodDb";
-import { plannableDb } from "../../core/typed-db/plannableDb";
 
 export const ZERO: Macronutrients = {
   kcal: 0,
@@ -131,7 +130,16 @@ export function refreshRecipeMacros(
 
 refreshRecipeMacros(typedRecipesDb, typedFoodDb);
 
+export interface MacroCatalogue {
+  plannable: Record<string, RecipeDetails>;
+  recipes: Record<string, RecipeDetails>;
+  foods: Record<string, Food>;
+  recipeMacros: Record<string, Macronutrients>;
+  baseGrams: Record<string, number>;
+}
+
 export function computeSlotMacros(
+  catalogue: MacroCatalogue,
   slot: MealSlot,
   portionOverrides: Record<string, number>,
   gramOverrides: Record<string, number>,
@@ -139,14 +147,14 @@ export function computeSlotMacros(
 ): Macronutrients {
   return getAllRecipeIds(slot).reduce((sum, id) => {
     const key = slot.itemApiIds?.[id] ?? "";
-    const recipe = plannableDb[id];
+    const recipe = catalogue.plannable[id];
     const itemIngredientOverrides = ingredientOverrides[key];
     if (recipe && itemIngredientOverrides && Object.keys(itemIngredientOverrides).length > 0) {
-      return addMacros(sum, calculateOverriddenRecipeMacros(recipe, itemIngredientOverrides, typedRecipesDb, typedFoodDb));
+      return addMacros(sum, calculateOverriddenRecipeMacros(recipe, itemIngredientOverrides, catalogue.recipes, catalogue.foods));
     }
-    const m = RECIPE_MACROS[id];
+    const m = catalogue.recipeMacros[id];
     if (!m) return sum;
-    const baseGrams = RECIPE_BASE_GRAMS[id];
+    const baseGrams = catalogue.baseGrams[id];
     let factor: number;
     if (!isDish(recipe) && !isBase(recipe) && baseGrams) {
       const grams = gramOverrides[key] ?? baseGrams;
@@ -159,13 +167,14 @@ export function computeSlotMacros(
 }
 
 export function computeDayMacros(
+  catalogue: MacroCatalogue,
   slots: MealSlot[],
   portionOverrides: Record<string, number>,
   gramOverrides: Record<string, number>,
   ingredientOverrides: Record<string, Record<string, number>> = {},
 ): Macronutrients {
   return slots.reduce(
-    (total, slot) => addMacros(total, computeSlotMacros(slot, portionOverrides, gramOverrides, ingredientOverrides)),
+    (total, slot) => addMacros(total, computeSlotMacros(catalogue, slot, portionOverrides, gramOverrides, ingredientOverrides)),
     { ...ZERO },
   );
 }

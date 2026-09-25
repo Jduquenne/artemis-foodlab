@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { ChevronDown, ChevronRight, Minus, Plus } from "lucide-react";
 import { RecipeKind } from "../../../../core/domain/recipe";
-import { RECIPE_BASE_GRAMS, RECIPE_MACROS, calculateOverriddenRecipeMacros } from "../../../../shared/utils/macroUtils";
+import { calculateOverriddenRecipeMacros } from "../../../../shared/utils/macroUtils";
+import { useMacroCatalogue } from "../../../../shared/hooks/useMacroCatalogue";
 import { defaultIngredientOverridesForPortions, isOverridableIngredient } from "../../../../core/logic/journal/journalOverrideLogic";
 import { useJournalStore } from "../../../../shared/store/useJournalStore";
 import { useActiveJournalOverrides } from "../../../../shared/hooks/useActiveJournalOverrides";
 import { useProfileStore } from "../../../../shared/store/useProfileStore";
-import { typedRecipesDb } from "../../../../core/typed-db/typedRecipesDb";
-import { typedFoodDb } from "../../../../core/typed-db/typedFoodDb";
 import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
 import { withPending } from "../../../../shared/utils/withPending";
 import { IngredientOverrideRow } from "./IngredientOverrideRow";
@@ -24,10 +23,11 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId }: RecipePortion
   const [expanded, setExpanded] = useState(false);
   const key = planningSlotItemId ?? "";
   const pending = usePendingKey(`journal-override:${key}`);
-  const recipe = typedRecipesDb[recipeId];
+  const catalogue = useMacroCatalogue();
+  const recipe = catalogue.recipes[recipeId];
   const name = recipe?.name ?? recipeId;
   const isIngredient = recipe?.kind === RecipeKind.INGREDIENT;
-  const baseGrams = RECIPE_BASE_GRAMS[recipeId] ?? 0;
+  const baseGrams = catalogue.baseGrams[recipeId] ?? 0;
   const useGrams = isIngredient && baseGrams > 0;
   const itemIngredientOverrides = ingredientOverrides[key];
   const hasIngredientOverrides = !!itemIngredientOverrides && Object.keys(itemIngredientOverrides).length > 0;
@@ -35,7 +35,7 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId }: RecipePortion
   if (useGrams) {
     const defaultGrams = Math.round(baseGrams);
     const grams = gramOverrides[key] ?? defaultGrams;
-    const kcal = (RECIPE_MACROS[recipeId]?.kcal ?? 0) * (grams / baseGrams);
+    const kcal = (catalogue.recipeMacros[recipeId]?.kcal ?? 0) * (grams / baseGrams);
 
     return (
       <div className="flex flex-col py-0.5 gap-0.5">
@@ -67,8 +67,8 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId }: RecipePortion
 
   const portions = portionOverrides[key] ?? 1;
   const kcal = hasIngredientOverrides && recipe
-    ? calculateOverriddenRecipeMacros(recipe, itemIngredientOverrides, typedRecipesDb, typedFoodDb).kcal
-    : (RECIPE_MACROS[recipeId]?.kcal ?? 0) * portions;
+    ? calculateOverriddenRecipeMacros(recipe, itemIngredientOverrides, catalogue.recipes, catalogue.foods).kcal
+    : (catalogue.recipeMacros[recipeId]?.kcal ?? 0) * portions;
   const overridableIngredients = recipe?.ingredients.filter(isOverridableIngredient) ?? [];
   const canExpand = !!planningSlotItemId && overridableIngredients.length > 0;
   const scaledDefaults = recipe ? defaultIngredientOverridesForPortions(recipe, portions) : {};

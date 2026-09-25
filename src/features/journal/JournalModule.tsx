@@ -4,6 +4,7 @@ import { getWeekNumber, getMonday } from "../../shared/utils/weekUtils";
 import { getWeekSlots, syncWeekFromApi } from "../../core/services/planningService";
 import { MealSlot } from "../../core/domain/planning";
 import { computeDayMacros } from "../../shared/utils/macroUtils";
+import { useMacroCatalogue } from "../../shared/hooks/useMacroCatalogue";
 import { useActiveJournalOverrides } from "../../shared/hooks/useActiveJournalOverrides";
 import { useAuthStore } from "../../shared/store/useAuthStore";
 import { markScrolling } from "../../shared/utils/scrollGuard";
@@ -21,6 +22,7 @@ function getDayKey(date: Date): string {
 
 export const JournalModule = () => {
   const { portionOverrides, gramOverrides, ingredientOverrides } = useActiveJournalOverrides();
+  const catalogue = useMacroCatalogue();
   const authStatus = useAuthStore((s) => s.status);
   const [selectedDate, setSelectedDate] = useState(() => new Date());
   const [weekSlots, setWeekSlots] = useState<MealSlot[] | null>(null);
@@ -57,8 +59,8 @@ export const JournalModule = () => {
   }, [daySlots]);
 
   const totalMacros = useMemo(
-    () => computeDayMacros(daySlots, portionOverrides, gramOverrides, ingredientOverrides),
-    [daySlots, portionOverrides, gramOverrides, ingredientOverrides]
+    () => computeDayMacros(catalogue, daySlots, portionOverrides, gramOverrides, ingredientOverrides),
+    [catalogue, daySlots, portionOverrides, gramOverrides, ingredientOverrides]
   );
 
   const goToPrev = useCallback(() => setSelectedDate((d) => subDays(d, 1)), []);

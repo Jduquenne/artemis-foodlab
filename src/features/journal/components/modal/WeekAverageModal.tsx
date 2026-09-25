@@ -3,6 +3,7 @@ import { X } from "lucide-react";
 import { DAYS } from "../../../../core/domain/planningConfig";
 import { MealSlot } from "../../../../core/domain/planning";
 import { useActiveJournalOverrides } from "../../../../shared/hooks/useActiveJournalOverrides";
+import { useMacroCatalogue } from "../../../../shared/hooks/useMacroCatalogue";
 import { useActiveTargets } from "../../../../shared/hooks/useActiveProfile";
 import {
   DEFAULT_AVERAGE_DAYS,
@@ -26,14 +27,15 @@ const ROWS = [
 export const WeekAverageModal = ({ weekSlots, onClose }: WeekAverageModalProps) => {
   const { kcalTarget, macroTargets } = useActiveTargets();
   const { portionOverrides, gramOverrides, ingredientOverrides } = useActiveJournalOverrides();
+  const catalogue = useMacroCatalogue();
   const [isClosing, setIsClosing] = useState(false);
   const [days, setDays] = useState<string[]>([...DEFAULT_AVERAGE_DAYS]);
 
   const handleClose = () => { setIsClosing(true); setTimeout(onClose, 220); };
 
   const { average, countedDays } = useMemo(
-    () => computeWeekAverage(weekSlots, days, portionOverrides, gramOverrides, ingredientOverrides),
-    [weekSlots, days, portionOverrides, gramOverrides, ingredientOverrides]
+    () => computeWeekAverage(catalogue, weekSlots, days, portionOverrides, gramOverrides, ingredientOverrides),
+    [catalogue, weekSlots, days, portionOverrides, gramOverrides, ingredientOverrides]
   );
 
   return (

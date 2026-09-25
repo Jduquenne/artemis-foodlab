@@ -4,7 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 import { useFoodsSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 import { RecipePhotoCard } from '../../../../shared/components/ui/RecipePhotoCard';
 import { calculateRecipeMacros } from '../../../../shared/utils/macroUtils';
-import { buildUnitWeightOverrides, patchRecipeQuantities, applyUnitWeightOverrides } from '../../../../core/logic/recipe/recipeLogic';
+import { buildUnitWeightOverrides, patchRecipeQuantities, applyUnitWeightOverrides } from '../../../../core/logic/recipe/recipeScalingLogic';
 import { MacroBar } from './MacroBar';
 import { IngredientAdjustRow } from './IngredientAdjustRow';
 import { useModalBack } from '../../../../shared/hooks/useModalBack';

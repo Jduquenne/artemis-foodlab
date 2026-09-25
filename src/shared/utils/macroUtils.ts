@@ -1,4 +1,4 @@
-import { Food, Unit } from "../../core/domain/ingredient";
+import { Food, UNIT_WEIGHT_UNITS, Unit } from "../../core/domain/ingredient";
 import { Macronutrients } from "../../core/domain/nutrition";
 import { MealSlot } from "../../core/domain/planning";
 import { PlannableItem, RecipeDetails } from "../../core/domain/recipe";
@@ -46,14 +46,8 @@ export function toGrams(
       return quantity * 1000;
     case Unit.ML:
       return quantity;
-    case Unit.PIECE:
-    case Unit.PORTION:
-    case Unit.TRANCHE:
-    case Unit.FEUILLE:
-    case Unit.SACHET:
-      return unitWeight != null ? quantity * unitWeight : null;
     default:
-      return null;
+      return UNIT_WEIGHT_UNITS.includes(unit) && unitWeight != null ? quantity * unitWeight : null;
   }
 }
 

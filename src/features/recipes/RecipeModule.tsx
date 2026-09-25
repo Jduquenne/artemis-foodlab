@@ -11,7 +11,7 @@ import { isBrowsableCategory } from '../../core/domain/recipePredicates';
 import { MacroFilterButton } from './components/filter/MacroFilterButton';
 import { PREDEFINED_FILTERS } from '../../core/logic/recipe/predefinedFilterLogic';
 import { useMenuStore } from '../../shared/store/useMenuStore';
-import { filterRecipesByMacros } from '../../core/logic/recipe/recipeLogic';
+import { filterRecipesByMacros } from '../../core/logic/recipe/recipeListLogic';
 import { RecipeSearchResults } from './components/RecipeSearchResults';
 
 export const RecipeModule = () => {

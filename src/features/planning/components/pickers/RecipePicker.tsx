@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { SearchBar } from '../../../../shared/components/ui/SearchBar';
 import { SearchRecipeResult, useSearchMeals } from '../../../../shared/hooks/useSearch';
 import { Check, Loader2, X, TreePine } from 'lucide-react';
-import { searchOutdoorRecipes } from '../../../../core/logic/recipe/recipeLogic';
+import { searchOutdoorRecipes } from '../../../../core/logic/recipe/recipeListLogic';
 import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
 import { useOutdoorSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 

@@ -1,7 +1,7 @@
 import { ChevronDown, RotateCcw } from 'lucide-react';
 import { Ingredient } from '../../../../core/domain/ingredient';
 import { useFoodsSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
-import { UNIT_WEIGHT_UNITS } from '../../../../core/logic/recipe/recipeLogic';
+import { UNIT_WEIGHT_UNITS } from '../../../../core/domain/ingredient';
 
 export interface IngredientAdjustRowProps {
   ingredient: Ingredient;

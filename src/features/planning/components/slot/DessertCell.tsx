@@ -4,7 +4,7 @@ import { X, Copy, Users, Minus, Plus, Check, Loader2 } from 'lucide-react';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
-import { buildRecipeDetailUrl } from '../../../../core/logic/recipe/recipeLogic';
+import { buildRecipeDetailUrl } from '../../../../core/logic/recipe/recipeScalingLogic';
 import { usePlannableSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 
 export interface DessertCellProps {

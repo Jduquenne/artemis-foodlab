@@ -3,12 +3,8 @@ import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Calculator, ChevronLeft, ChevronRight, Pencil } from 'lucide-react';
 import { useFoodsSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 import { calculateRecipeMacros } from '../../../../shared/utils/macroUtils';
-import {
-  getLinkedBases,
-  getCategoryRecipeIds,
-  resolveInitialPortions,
-  scaleRecipeToPortions,
-} from '../../../../core/logic/recipe/recipeLogic';
+import { getLinkedBases, getCategoryRecipeIds } from '../../../../core/logic/recipe/recipeListLogic';
+import { resolveInitialPortions, scaleRecipeToPortions } from '../../../../core/logic/recipe/recipeScalingLogic';
 import { RecipePhotoCard } from '../../../../shared/components/ui/RecipePhotoCard';
 import { PortionsStepper } from './PortionsStepper';
 import { recipeToBuilderState } from '../../../../core/logic/recipeBuilder/recipeBuilderMapper';

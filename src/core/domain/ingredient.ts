@@ -14,6 +14,14 @@ export enum Unit {
 
 export const SELECTABLE_UNITS: Unit[] = Object.values(Unit).filter((u) => u !== Unit.NONE);
 
+export const UNIT_WEIGHT_UNITS: readonly Unit[] = [
+  Unit.PIECE,
+  Unit.PORTION,
+  Unit.TRANCHE,
+  Unit.FEUILLE,
+  Unit.SACHET,
+];
+
 export enum IngredientCategory {
   FRUIT_VEGETABLE = "Fruits et légumes",
   DRIED_FRUIT = "Fruits secs",

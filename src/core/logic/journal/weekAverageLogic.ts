@@ -52,7 +52,3 @@ export function computeWeekAverage(
     countedDays: n,
   };
 }
-
-export function toggleDay(days: readonly string[], day: string): string[] {
-  return days.includes(day) ? days.filter((d) => d !== day) : [...days, day];
-}

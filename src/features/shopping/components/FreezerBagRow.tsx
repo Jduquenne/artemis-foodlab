@@ -3,6 +3,7 @@ import { pluralizeUnit, formatQty } from '../../../shared/utils/unitUtils';
 import { formatBagDate } from '../../../shared/utils/dateUtils';
 import { usePendingKey } from '../../../shared/hooks/usePendingKey';
 import { CheckToggleIcon } from '../../../shared/components/ui/CheckToggleIcon';
+import { bagQuantity } from '../../../core/logic/freezer/freezerLogic';
 
 export interface FreezerBagRowProps {
   bag: FreezerBag;
@@ -12,7 +13,7 @@ export interface FreezerBagRowProps {
 
 export const FreezerBagRow = ({ bag, isSelected, onToggleBag }: FreezerBagRowProps) => {
   const pending = usePendingKey(`shopping-bag:${bag.id}`);
-  const qty = Number(bag.quantity) || 0;
+  const qty = bagQuantity(bag);
 
   return (
     <div

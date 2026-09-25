@@ -2,6 +2,7 @@ import { Category, OutdoorEntry } from "../../domain/recipe";
 import { OutdoorActivityInput } from "../../services/catalogueWriteService";
 import { buildRecipeDbId } from "../recipeBuilder/recipeBuilderLogic";
 import { RecapEntry, diffEntry } from "./recap";
+import { padNumber } from "../../../shared/utils/numberUtils";
 
 export interface OutdoorFormDraft {
   name: string;
@@ -26,7 +27,7 @@ export function suggestOutdoorCode(entries: OutdoorEntry[]): string {
     const match = entry.code.match(pattern);
     if (match) max = Math.max(max, Number(match[1]));
   }
-  return `${prefix}-${String(max + 1).padStart(3, "0")}`;
+  return `${prefix}-${padNumber(max + 1, 3)}`;
 }
 
 export function validateOutdoorForm(draft: OutdoorFormDraft, categories: Category[]): string[] {

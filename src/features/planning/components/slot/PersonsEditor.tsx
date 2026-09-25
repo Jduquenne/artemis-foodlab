@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Check, Loader2, RotateCcw, X } from 'lucide-react';
+import { toNumber } from "../../../../shared/utils/numberUtils";
 
 export interface PersonsEditorProps {
     initialValue: number;
@@ -29,7 +30,7 @@ export const PersonsEditor = ({ initialValue, defaultPortion, onConfirm, onCance
                 min="1"
                 value={draft}
                 disabled={pending}
-                onChange={(e) => setDraft(Number(e.target.value) || 0)}
+                onChange={(e) => setDraft(toNumber(e.target.value))}
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') confirm();
                     if (e.key === 'Escape') onCancel();

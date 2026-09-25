@@ -1,6 +1,8 @@
 import { Ingredient, Unit } from "../../domain/ingredient";
 import { RecipeDetails } from "../../domain/recipe";
 import { ApiJournalOverride, JournalOverrides } from "../../services/journalService";
+import { omitKey } from "../../../shared/utils/collectionUtils";
+import { roundTo } from "../../../shared/utils/numberUtils";
 
 export const EMPTY_JOURNAL_OVERRIDES: JournalOverrides = {
   portionOverrides: {},
@@ -16,7 +18,7 @@ export function scaleIngredientsByRatio(recipe: RecipeDetails, ratio: number): R
   const result: Record<string, number> = {};
   for (const ingredient of recipe.ingredients) {
     if (ingredient.quantity == null || ingredient.unit === Unit.NONE) continue;
-    result[ingredient.id] = Math.round(ingredient.quantity * ratio * 100) / 100;
+    result[ingredient.id] = roundTo(ingredient.quantity * ratio, 2);
   }
   return result;
 }
@@ -27,11 +29,6 @@ export function defaultIngredientOverridesForPortions(
 ): Record<string, number> {
   if (!recipe || recipe.defaultPortions <= 0) return {};
   return scaleIngredientsByRatio(recipe, portions / recipe.defaultPortions);
-}
-
-export function omitKey<T>(record: Record<string, T>, key: string): Record<string, T> {
-  if (!(key in record)) return record;
-  return Object.fromEntries(Object.entries(record).filter(([k]) => k !== key));
 }
 
 export function applyOverrideResult(

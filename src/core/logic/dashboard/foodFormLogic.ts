@@ -3,6 +3,7 @@ import { Macronutrients } from "../../domain/nutrition";
 import { FoodInput } from "../../services/catalogueWriteService";
 import { getIngredientCategoryId } from "../../domain/ingredientCategorySlugs";
 import { RecapEntry, diffEntry, recapBool, recapText } from "./recap";
+import { toNumber, padNumber } from "../../../shared/utils/numberUtils";
 
 export interface FoodFormDraft {
   name: string;
@@ -31,14 +32,14 @@ export function atwaterKcal(macros: Pick<Macronutrients, "proteins" | "lipids" |
   );
 }
 
-function parseEditableMacros(
+export function parseEditableMacros(
   raw: Record<keyof Macronutrients, string>,
 ): Pick<Macronutrients, "proteins" | "lipids" | "carbohydrates" | "fibers"> {
   return {
-    proteins: Number(raw.proteins) || 0,
-    lipids: Number(raw.lipids) || 0,
-    carbohydrates: Number(raw.carbohydrates) || 0,
-    fibers: Number(raw.fibers) || 0,
+    proteins: toNumber(raw.proteins),
+    lipids: toNumber(raw.lipids),
+    carbohydrates: toNumber(raw.carbohydrates),
+    fibers: toNumber(raw.fibers),
   };
 }
 
@@ -64,7 +65,7 @@ export function suggestFoodId(category: IngredientCategory, foods: Food[]): stri
     width = Math.max(width, digits.length);
     max = Math.max(max, Number(digits));
   }
-  return `${prefix}-${String(max + 1).padStart(width, "0")}`;
+  return `${prefix}-${padNumber(max + 1, width)}`;
 }
 
 export function validateNewFoodId(id: string, foods: Food[]): string | null {

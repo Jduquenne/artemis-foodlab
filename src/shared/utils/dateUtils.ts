@@ -7,6 +7,7 @@ import {
   parseISO,
 } from "date-fns";
 import { fr } from "date-fns/locale";
+import { padNumber } from "./numberUtils";
 
 const WEEK_DAY_ORDER = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 
@@ -28,7 +29,7 @@ export function formatSourceDayShort(isoDate: string): string {
 export const getWeekId = (date: Date = new Date()) => {
   const week = getISOWeek(date);
   const year = getISOWeekYear(date);
-  return `${year}-W${week.toString().padStart(2, "0")}`;
+  return `${year}-W${padNumber(week, 2)}`;
 };
 
 export const getDaysOfWeek = (date: Date = new Date()) => {

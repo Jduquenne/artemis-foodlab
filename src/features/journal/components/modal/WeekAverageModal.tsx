@@ -8,8 +8,8 @@ import { useActiveTargets } from "../../../../shared/hooks/useActiveProfile";
 import {
   DEFAULT_AVERAGE_DAYS,
   computeWeekAverage,
-  toggleDay,
 } from "../../../../core/logic/journal/weekAverageLogic";
+import { toggleInList } from "../../../../shared/utils/collectionUtils";
 
 export interface WeekAverageModalProps {
   weekSlots: MealSlot[];
@@ -68,7 +68,7 @@ export const WeekAverageModal = ({ weekSlots, onClose }: WeekAverageModalProps) 
               return (
                 <button
                   key={day}
-                  onClick={() => setDays((prev) => toggleDay(prev, day))}
+                  onClick={() => setDays((prev) => toggleInList(prev, day))}
                   aria-pressed={active}
                   className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-colors ${
                     active

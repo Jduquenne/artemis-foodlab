@@ -3,6 +3,7 @@ import { OutdoorEntry, RecipeDetails } from "../../domain/recipe";
 import { isIngredient } from "../../domain/recipePredicates";
 import { PREDEFINED_FILTERS } from "./predefinedFilterLogic";
 import { calculateRecipeMacros } from "../../../shared/utils/macroUtils";
+import { roundTo } from "../../../shared/utils/numberUtils";
 
 export const UNIT_WEIGHT_UNITS: string[] = [
   Unit.PIECE,
@@ -104,7 +105,7 @@ export function scaleRecipeToPortions(recipe: RecipeDetails, portions: number): 
     defaultPortions: portions,
     ingredients: recipe.ingredients.map(ing => ({
       ...ing,
-      quantity: ing.quantity == null ? null : Math.round(ing.quantity * factor * 100) / 100,
+      quantity: ing.quantity == null ? null : roundTo(ing.quantity * factor, 2),
     })),
   };
 }

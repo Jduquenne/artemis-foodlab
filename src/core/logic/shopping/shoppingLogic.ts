@@ -10,6 +10,7 @@ import { isoDateFromWeekDay } from "../../../shared/utils/dateUtils";
 import { getIngredientCategoryFromSlug } from "../../domain/ingredientCategorySlugs";
 import { ApiShoppingExtra } from "./shoppingApiMapper";
 import { compareByName, compareText } from "../../../shared/utils/sortUtils";
+import { sumBy } from "../../../shared/utils/collectionUtils";
 
 export interface IngredientSource {
   recipeId: string;
@@ -299,9 +300,10 @@ export function buildSourceCheckKey(
 }
 
 function checkedSourcesQuantity(ing: ConsolidatedIngredient, sourceChecked: Set<string>): number {
-  return ing.sources
-    .filter((s) => sourceChecked.has(buildSourceCheckKey(ing.key, s)))
-    .reduce((sum, s) => sum + s.quantity, 0);
+  return sumBy(
+    ing.sources.filter((s) => sourceChecked.has(buildSourceCheckKey(ing.key, s))),
+    (s) => s.quantity,
+  );
 }
 
 export function remainingToBuy(

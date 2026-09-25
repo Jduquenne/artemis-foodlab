@@ -5,6 +5,7 @@ import { IngredientTooltip } from './IngredientTooltip';
 import { pluralizeUnit, formatQty } from '../../../../shared/utils/unitUtils';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { CheckToggleIcon } from '../../../../shared/components/ui/CheckToggleIcon';
+import { sumBy } from '../../../../shared/utils/collectionUtils';
 
 export interface IngredientCheckRowProps {
     item: ConsolidatedIngredient;
@@ -41,9 +42,10 @@ export const IngredientCheckRow = ({
 }: IngredientCheckRowProps) => {
     const pending = usePendingKey(`shopping-check:${item.key}`);
 
-    const checkedSourceQty = item.sources
-        .filter(s => sourceChecked.has(buildSourceCheckKey(item.key, s)))
-        .reduce((sum, s) => sum + s.quantity, 0);
+    const checkedSourceQty = sumBy(
+        item.sources.filter(s => sourceChecked.has(buildSourceCheckKey(item.key, s))),
+        s => s.quantity,
+    );
     const effectiveTotal = Math.max(0, item.totalQuantity - checkedSourceQty);
     const needed = effectiveTotal === 0 ? 0 : Math.max(0, effectiveTotal - stock);
     const hasStock = effectiveTotal > 0 && stock > 0;

@@ -10,6 +10,7 @@ import {
   emptyFoodDraft,
   foodFormToBody,
   foodToDraft,
+  parseEditableMacros,
   suggestFoodId,
   validateFoodForm,
   validateNewFoodId,
@@ -53,12 +54,7 @@ export const FoodFormModal = ({ food, foods, onClose, onSubmit }: FoodFormModalP
 
   const computedKcal = useMemo(
     () =>
-      atwaterKcal({
-        proteins: Number(draft.macros.proteins) || 0,
-        lipids: Number(draft.macros.lipids) || 0,
-        carbohydrates: Number(draft.macros.carbohydrates) || 0,
-        fibers: Number(draft.macros.fibers) || 0,
-      }),
+      atwaterKcal(parseEditableMacros(draft.macros)),
     [draft.macros],
   );
 

@@ -4,6 +4,16 @@ import { RecipeDetails } from '../../domain/recipe';
 import { isBatchCookable } from '../../domain/recipePredicates';
 import { formatQty, pluralizeUnit } from '../../../shared/utils/unitUtils';
 import { compareByName, compareText } from "../../../shared/utils/sortUtils";
+import { sumBy } from "../../../shared/utils/collectionUtils";
+import { toNumber } from "../../../shared/utils/numberUtils";
+
+export function bagQuantity(bag: Pick<FreezerBag, 'quantity'>): number {
+  return toNumber(bag.quantity);
+}
+
+export function totalBagQuantity(bags: readonly FreezerBag[]): number {
+  return sumBy(bags, bagQuantity);
+}
 
 export const FREEZER_BAG_UNITS = Object.values(Unit).filter(u => u !== Unit.NONE);
 
@@ -14,7 +24,7 @@ export function getFoodBagsSummary(item: FoodFreezerItem): string {
   const units = new Set(item.bags.map(b => b.unit));
   if (units.size === 1) {
     const unit = item.bags[0].unit;
-    const total = item.bags.reduce((s, b) => s + (Number(b.quantity) || 0), 0);
+    const total = totalBagQuantity(item.bags);
     return `${bagsLabel} · ${formatQty(total)}${unit ? ' ' + pluralizeUnit(unit, total) : ''}`;
   }
   return bagsLabel;
@@ -91,7 +101,7 @@ export function getFoodIdsInFreezer(categories: FreezerCategory[]): Set<string> 
   for (const cat of categories) {
     for (const item of cat.items) {
       if (item.type === 'food' && item.foodId) {
-        const total = item.bags.reduce((sum, b) => sum + (Number(b.quantity) || 0), 0);
+        const total = totalBagQuantity(item.bags);
         if (total > 0) set.add(item.foodId);
       }
     }
@@ -106,7 +116,7 @@ export function getFoodBagsInFreezer(categories: FreezerCategory[]): Map<string,
       if (item.type === 'food' && item.foodId) {
         const existing = map.get(item.foodId) ?? [];
         for (const bag of item.bags) {
-          if ((Number(bag.quantity) || 0) > 0) existing.push(bag);
+          if (bagQuantity(bag) > 0) existing.push(bag);
         }
         if (existing.length > 0) map.set(item.foodId, existing);
       }
@@ -139,7 +149,7 @@ export function computeFreezerBagSelection(
   const next = isSelected ? current.filter(id => id !== bagId) : [...current, bagId];
   const total = next.reduce((sum, id) => {
     const bag = allBags.find(b => b.id === id);
-    return sum + (Number(bag?.quantity) || 0);
+    return sum + (bag ? bagQuantity(bag) : 0);
   }, 0);
   return { next, total };
 }
@@ -158,7 +168,7 @@ export function summarizeFreezerCategory(category: FreezerCategory): FreezerCate
   for (const item of category.items) {
     if (item.type === 'batch') {
       batchCount++;
-      portions += Number(item.portions) || 0;
+      portions += toNumber(item.portions);
     } else {
       foodCount++;
     }

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { X, Check } from 'lucide-react';
 import { PREDEFINED_FILTERS } from '../../../../core/logic/recipe/predefinedFilterLogic';
+import { toggleInList } from '../../../../shared/utils/collectionUtils';
 
 export interface MacroFilterModalProps {
   activeFilterIds: string[];
@@ -15,7 +16,7 @@ export const MacroFilterModal = ({ activeFilterIds, onSubmit, onClose }: MacroFi
   const handleClose = () => { setIsClosing(true); setTimeout(onClose, 220); };
 
   const toggle = (id: string) => {
-    setDraft(prev => prev.includes(id) ? prev.filter(f => f !== id) : [...prev, id]);
+    setDraft(prev => toggleInList(prev, id));
   };
 
   return (

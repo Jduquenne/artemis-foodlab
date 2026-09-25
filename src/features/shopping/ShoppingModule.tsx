@@ -49,6 +49,7 @@ import { HouseholdPanel } from '../household/components/HouseholdPanel';
 import { AddExtraModal } from './components/AddExtraModal';
 import { useRefreshStore } from '../../shared/store/useRefreshStore';
 import { useHouseholdSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
+import { sumBy } from '../../shared/utils/collectionUtils';
 
 export const ShoppingModule = () => {
     const navigate = useNavigate();
@@ -379,7 +380,7 @@ export const ShoppingModule = () => {
     );
 
     const mealColumns = useMemo(
-        () => distributeToColumns(recipeCards, c => c.directIngredients.length + c.baseGroups.reduce((s, b) => s + b.ingredients.length, 0), colCount),
+        () => distributeToColumns(recipeCards, c => c.directIngredients.length + sumBy(c.baseGroups, b => b.ingredients.length), colCount),
         [recipeCards, colCount]
     );
 

@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Check, Loader2, RotateCcw, X, Users } from 'lucide-react';
+import { toNumber } from "../../../../shared/utils/numberUtils";
 
 export interface RecipeMetaEditorProps {
     initialPersons: number;
@@ -58,7 +59,7 @@ export const RecipeMetaEditor = ({
                         min="1"
                         value={draftPersons}
                         disabled={pending}
-                        onChange={(e) => setDraftPersons(Number(e.target.value) || 0)}
+                        onChange={(e) => setDraftPersons(toNumber(e.target.value))}
                         onKeyDown={handleKeyDown}
                         className="w-14 text-center text-xl font-black text-slate-900 bg-slate-100 dark:bg-slate-200 rounded-xl py-1.5 border-0 outline-none focus:ring-2 focus:ring-orange-400 disabled:opacity-50"
                     />
@@ -72,7 +73,7 @@ export const RecipeMetaEditor = ({
                                 min="1"
                                 value={draftGrams}
                                 disabled={pending}
-                                onChange={(e) => setDraftGrams(Number(e.target.value) || 0)}
+                                onChange={(e) => setDraftGrams(toNumber(e.target.value))}
                                 onKeyDown={handleKeyDown}
                                 className="w-14 text-center text-xl font-black text-slate-900 bg-slate-100 dark:bg-slate-200 rounded-xl py-1.5 border-0 outline-none focus:ring-2 focus:ring-orange-400 disabled:opacity-50"
                             />

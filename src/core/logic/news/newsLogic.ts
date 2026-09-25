@@ -1,5 +1,7 @@
 import { RecipeDetails } from "../../domain/recipe";
 import { compareByName, compareText } from "../../../shared/utils/sortUtils";
+import { groupBy } from "../../../shared/utils/collectionUtils";
+import { padNumber } from "../../../shared/utils/numberUtils";
 
 export const RECENT_RECIPE_DAYS = 30;
 
@@ -13,9 +15,17 @@ export interface NewsGroup {
 function localDateKey(iso: string): string {
   const date = new Date(iso);
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
+  const month = padNumber(date.getMonth() + 1, 2);
+  const day = padNumber(date.getDate(), 2);
   return `${year}-${month}-${day}`;
+}
+
+type AnnouncedRecipe = RecipeDetails & { announcedAt: string };
+
+function isAnnouncedSince(recipe: RecipeDetails, cutoff: number): recipe is AnnouncedRecipe {
+  if (!recipe.announcedAt) return false;
+  const timestamp = new Date(recipe.announcedAt).getTime();
+  return !Number.isNaN(timestamp) && timestamp >= cutoff;
 }
 
 export function getNewsGroups(
@@ -24,17 +34,8 @@ export function getNewsGroups(
   windowDays: number = RECENT_RECIPE_DAYS,
 ): NewsGroup[] {
   const cutoff = now.getTime() - windowDays * DAY_MS;
-  const byDate = new Map<string, RecipeDetails[]>();
-
-  for (const recipe of Object.values(recipes)) {
-    if (!recipe.announcedAt) continue;
-    const timestamp = new Date(recipe.announcedAt).getTime();
-    if (Number.isNaN(timestamp) || timestamp < cutoff) continue;
-    const key = localDateKey(recipe.announcedAt);
-    const list = byDate.get(key) ?? [];
-    list.push(recipe);
-    byDate.set(key, list);
-  }
+  const recentRecipes = Object.values(recipes).filter((recipe) => isAnnouncedSince(recipe, cutoff));
+  const byDate = groupBy(recentRecipes, (recipe) => localDateKey(recipe.announcedAt));
 
   return [...byDate.entries()]
     .map(([date, list]) => ({

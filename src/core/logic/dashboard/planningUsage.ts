@@ -3,6 +3,7 @@ import { Category, RecipeAsset, RecipeDetails } from "../../domain/recipe";
 import { isDessert, isDish } from "../../domain/recipePredicates";
 import { RecipeUsageItem } from "../../services/planningUsageService";
 import { compareByName, compareText } from "../../../shared/utils/sortUtils";
+import { countBy } from "../../../shared/utils/collectionUtils";
 
 export interface DishUsage {
   code: string;
@@ -106,15 +107,8 @@ export function getReviewFilterOptions(
   foods: Record<string, Food>,
   categories: Category[],
 ): { categories: ReviewFilterOption[]; foods: ReviewFilterOption[] } {
-  const perCategory = new Map<string, number>();
-  const perFood = new Map<string, number>();
-
-  for (const dish of dishes) {
-    perCategory.set(dish.categoryId, (perCategory.get(dish.categoryId) ?? 0) + 1);
-    for (const foodId of dish.foodIds) {
-      perFood.set(foodId, (perFood.get(foodId) ?? 0) + 1);
-    }
-  }
+  const perCategory = countBy(dishes, (dish) => dish.categoryId);
+  const perFood = countBy(dishes.flatMap((dish) => dish.foodIds), (foodId) => foodId);
 
   const categoryOptions: ReviewFilterOption[] = categories
     .filter((category) => perCategory.has(category.id))

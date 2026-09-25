@@ -2,6 +2,7 @@ import { Food } from "../../domain/ingredient";
 import { Macronutrients } from "../../domain/nutrition";
 import { Category, RecipeDetails } from "../../domain/recipe";
 import { isBase, isDish, isIngredient } from "../../domain/recipePredicates";
+import { sumBy, countBy } from "../../../shared/utils/collectionUtils";
 
 export interface CatalogueCounts {
   recipes: number;
@@ -31,7 +32,7 @@ export interface CatalogueHealth {
 export function getCatalogueHealth(issues: CatalogueIssue[]): CatalogueHealth {
   return {
     issueCount: issues.length,
-    flaggedItems: issues.reduce((sum, issue) => sum + issue.names.length, 0),
+    flaggedItems: sumBy(issues, (issue) => issue.names.length),
   };
 }
 
@@ -83,10 +84,7 @@ export function getCategoryBreakdown(
   recipes: Record<string, RecipeDetails>,
   categories: Category[],
 ): CategoryBreakdownRow[] {
-  const perCategory = new Map<string, number>();
-  for (const recipe of Object.values(recipes)) {
-    perCategory.set(recipe.categoryId, (perCategory.get(recipe.categoryId) ?? 0) + 1);
-  }
+  const perCategory = countBy(Object.values(recipes), (recipe) => recipe.categoryId);
   return categories
     .map((category) => ({
       id: category.id,

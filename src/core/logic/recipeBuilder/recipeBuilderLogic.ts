@@ -12,6 +12,8 @@ import { recipesCatalogue } from "../../catalogue/recipes";
 import { getIdByCode } from "../../catalogue/recipeIdMap";
 import { getIngredientCategoryId } from "../../domain/ingredientCategorySlugs";
 import { ApiIngredientInput, ApiRecipeInput } from "../recipe/recipeApiMapper";
+import { padNumber } from "../../../shared/utils/numberUtils";
+import { groupBy } from "../../../shared/utils/collectionUtils";
 
 export const BUILDER_UNITS: Unit[] = Object.values(Unit).filter((u) => u !== Unit.NONE);
 
@@ -78,7 +80,7 @@ export function buildRecipeId(
   const prefix = CATEGORY_PREFIX[categoryId] ?? categoryId.toUpperCase();
   if (!recipeNumber) return prefix;
   const num = parseInt(recipeNumber, 10);
-  return `${prefix}_${isNaN(num) ? recipeNumber : String(num).padStart(2, "0")}`;
+  return `${prefix}_${isNaN(num) ? recipeNumber : padNumber(num, 2)}`;
 }
 
 export function buildRecipeDbId(
@@ -88,7 +90,7 @@ export function buildRecipeDbId(
   const prefix = (CATEGORY_PREFIX[categoryId] ?? categoryId).toLowerCase();
   if (!recipeNumber) return prefix;
   const num = parseInt(recipeNumber, 10);
-  return `${prefix}-${isNaN(num) ? recipeNumber : String(num).padStart(3, "0")}`;
+  return `${prefix}-${isNaN(num) ? recipeNumber : padNumber(num, 3)}`;
 }
 
 export function buildImageName(
@@ -340,12 +342,7 @@ export function formatIngredientsForIngredientCard(
 ): IngredientLineItem[] {
   const filtered = ingredients.filter((ing) => ing.name.trim());
 
-  const groups = new Map<IngredientCategory, DraftIngredient[]>();
-  for (const ing of filtered) {
-    const arr = groups.get(ing.category) ?? [];
-    arr.push(ing);
-    groups.set(ing.category, arr);
-  }
+  const groups = groupBy(filtered, (ing) => ing.category);
 
   const epicerieWithQty: DraftIngredient[] = [];
   const epicerieNoQty: string[] = [];

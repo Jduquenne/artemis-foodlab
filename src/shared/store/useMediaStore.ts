@@ -6,6 +6,7 @@ import { outdoorCatalogue } from "../../core/catalogue/outdoor";
 import { collectAssetKeys, refreshDelayMs } from "../../core/logic/media/mediaLogic";
 import { resolveMediaKeys } from "../../core/services/mediaService";
 import { useAuthStore } from "./useAuthStore";
+import { omitKey } from "../utils/collectionUtils";
 
 interface MediaStore {
   overrides: Record<string, string>;
@@ -86,8 +87,7 @@ export const useMediaStore = create<MediaStore>()(
         failed.add(key);
         set((state) => {
           if (!(key in state.overrides)) return state;
-          const overrides = Object.fromEntries(Object.entries(state.overrides).filter(([k]) => k !== key));
-          return { overrides };
+          return { overrides: omitKey(state.overrides, key) };
         });
         if (failureFlush) return;
         failureFlush = setTimeout(() => {

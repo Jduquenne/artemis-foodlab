@@ -6,6 +6,7 @@ import { SLOT_LABELS } from '../../../shared/utils/slotLabels';
 import { useAnyPendingKey } from '../../../shared/hooks/useAnyPendingKey';
 import { CheckToggleIcon } from '../../../shared/components/ui/CheckToggleIcon';
 import { compareText } from "../../../shared/utils/sortUtils";
+import { sumBy } from '../../../shared/utils/collectionUtils';
 
 export interface SourceGroupRowProps {
   ingredientKey: string;
@@ -24,7 +25,7 @@ export const SourceGroupRow = ({ ingredientKey, group, sourceChecked, onToggleSo
 
   if (group.length > 1) {
     const sorted = [...group].sort((a, b) => compareText(a.isoDate, b.isoDate));
-    const totalQty = group.reduce((sum, s) => sum + s.quantity, 0);
+    const totalQty = sumBy(group, s => s.quantity);
     const unit = group[0].unit;
     const uniqueSlots = [...new Set(group.map(s => s.slot))];
     const slotLabel = uniqueSlots.length === 1 ? (SLOT_LABELS[uniqueSlots[0] as SlotType] ?? uniqueSlots[0]) : null;

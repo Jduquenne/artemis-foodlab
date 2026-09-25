@@ -5,6 +5,7 @@ import { FreezerBag } from '../../../core/domain/freezer';
 import { pluralizeUnit, formatQty } from '../../../shared/utils/unitUtils';
 import { FreezerBagRow } from './FreezerBagRow';
 import { SourceGroupRow } from './SourceGroupRow';
+import { totalBagQuantity } from '../../../core/logic/freezer/freezerLogic';
 
 export interface SourcesModalProps {
     ingredientKey: string;
@@ -72,7 +73,7 @@ export const SourcesModal = ({ ingredientKey, sources, sourceChecked, onToggleSo
                         </div>
                         {selectedBagIds.length > 0 && (
                             <p className="text-xs text-cyan-600 font-semibold mt-2 px-3">
-                                {formatQty(freezerBags.filter(b => selectedBagIds.includes(b.id)).reduce((s, b) => s + (Number(b.quantity) || 0), 0))} {pluralizeUnit(freezerBags.find(b => selectedBagIds.includes(b.id))?.unit ?? '', 0)} déduits de la liste
+                                {formatQty(totalBagQuantity(freezerBags.filter(b => selectedBagIds.includes(b.id))))} {pluralizeUnit(freezerBags.find(b => selectedBagIds.includes(b.id))?.unit ?? '', 0)} déduits de la liste
                             </p>
                         )}
                     </div>

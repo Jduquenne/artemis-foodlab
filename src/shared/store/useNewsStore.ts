@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { subscribeCatalogue } from "../../core/typed-db/catalogueEvents";
 import { typedRecipesDb } from "../../core/typed-db/typedRecipesDb";
 import { getNewsGroups, latestNewsDate } from "../../core/logic/news/newsLogic";
 
@@ -30,3 +31,5 @@ export const useNewsStore = create<NewsStore>()(
     }
   )
 );
+
+subscribeCatalogue(() => useNewsStore.getState().syncHasNew());

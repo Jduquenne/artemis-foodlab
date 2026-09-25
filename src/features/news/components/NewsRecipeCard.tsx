@@ -1,6 +1,6 @@
 import { ChevronRight } from "lucide-react";
 import { RecipeDetails } from "../../../core/domain/recipe";
-import { getCategoryById } from "../../../core/typed-db/typedCategoriesDb";
+import { useCategoriesSnapshot } from "../../../shared/hooks/useCatalogueSnapshot";
 import { getCardColors } from "../../../shared/utils/cards/cardColors";
 import { AsyncImage } from "../../../shared/components/ui/AsyncImage";
 
@@ -10,7 +10,8 @@ export interface NewsRecipeCardProps {
 }
 
 export const NewsRecipeCard = ({ recipe, onClick }: NewsRecipeCardProps) => {
-  const category = getCategoryById(recipe.categoryId);
+  const categories = useCategoriesSnapshot();
+  const category = categories.find((c) => c.id === recipe.categoryId);
 
   return (
     <button

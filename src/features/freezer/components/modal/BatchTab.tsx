@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
 import { searchBatchRecipes } from "../../../../core/logic/freezer/freezerLogic";
+import { useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 
 export interface BatchTabProps {
   selectedRecipeId: string | null;
@@ -11,8 +12,9 @@ export interface BatchTabProps {
 
 export const BatchTab = ({ selectedRecipeId, portions, onSelectRecipe, onPortionsChange }: BatchTabProps) => {
   const [search, setSearch] = useState("");
+  const recipesDb = useRecipesSnapshot();
 
-  const recipes = useMemo(() => searchBatchRecipes(search), [search]);
+  const recipes = useMemo(() => searchBatchRecipes(recipesDb, search), [recipesDb, search]);
 
   return (
     <>

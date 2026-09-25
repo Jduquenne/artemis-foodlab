@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
 import { searchFreezerFoods } from "../../../../core/logic/freezer/freezerLogic";
+import { useFoodsSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 
 export interface FoodSearchInputProps {
   value: string;
@@ -16,7 +17,8 @@ export const FoodSearchInput = ({ value, onChange, existingNames }: FoodSearchIn
     [existingNames]
   );
 
-  const suggestions = useMemo(() => searchFreezerFoods(value), [value]);
+  const foods = useFoodsSnapshot();
+  const suggestions = useMemo(() => searchFreezerFoods(foods, value), [foods, value]);
 
   const showList = open && suggestions.length > 0;
 

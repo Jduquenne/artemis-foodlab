@@ -9,7 +9,6 @@ import {
   uploadRecipePhoto,
 } from "../../core/services/catalogueWriteService";
 import { removeRecipeFromCatalogue, syncRecipeFromApi } from "../../core/services/catalogueSyncService";
-import { useNewsStore } from "../store/useNewsStore";
 
 export type RecipeBuilderSaveStatus = "idle" | "saving" | "done" | "error";
 
@@ -43,7 +42,6 @@ export function useRecipeBuilderSave() {
       if (photos.mealPhoto) await uploadRecipePhoto(saved.id, photos.mealPhoto, "mealPhoto");
       if (photos.bookPhoto) await uploadRecipePhoto(saved.id, photos.bookPhoto, "bookPhoto");
       await syncRecipeFromApi(saved.id);
-      useNewsStore.getState().syncHasNew();
       setStatus("done");
       return true;
     } catch {

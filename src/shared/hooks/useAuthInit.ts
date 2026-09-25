@@ -8,7 +8,6 @@ import { useJournalStore } from "../store/useJournalStore";
 import { useProfileStore } from "../store/useProfileStore";
 import { useMediaStore } from "../store/useMediaStore";
 import { useMenuStore } from "../store/useMenuStore";
-import { useNewsStore } from "../store/useNewsStore";
 import { useNotificationStore } from "../store/useNotificationStore";
 
 export function useAuthInit(): AuthStatus {
@@ -47,7 +46,6 @@ export function useAuthInit(): AuthStatus {
     if (status !== "authenticated") return;
     useMediaStore.getState().resolveCatalogue();
     syncBootstrapFromApi().then((result) => {
-      useNewsStore.getState().syncHasNew();
       useMediaStore.getState().resolveCatalogue();
       if (!result) return;
       useProfileStore.getState().replaceProfiles(result.profiles);

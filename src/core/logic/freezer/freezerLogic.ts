@@ -1,8 +1,7 @@
 import { FoodFreezerItem, FreezerBag, FreezerCategory, FreezerItem } from '../../domain/freezer';
 import { Food, Unit } from '../../domain/ingredient';
+import { RecipeDetails } from '../../domain/recipe';
 import { isBatchCookable } from '../../domain/recipePredicates';
-import { typedRecipesDb } from '../../typed-db/typedRecipesDb';
-import { typedFoodDb } from '../../typed-db/typedFoodDb';
 import { formatQty, pluralizeUnit } from '../../../shared/utils/unitUtils';
 
 export const FREEZER_BAG_UNITS = Object.values(Unit).filter(u => u !== Unit.NONE);
@@ -44,9 +43,9 @@ export interface BatchRecipeResult {
   isBatch: boolean;
 }
 
-export function searchBatchRecipes(query: string): BatchRecipeResult[] {
+export function searchBatchRecipes(recipes: Record<string, RecipeDetails>, query: string): BatchRecipeResult[] {
   const q = query.toLowerCase().trim();
-  return Object.entries(typedRecipesDb)
+  return Object.entries(recipes)
     .filter(([, r]) => r.assets?.mealPhoto && (!q || r.name.toLowerCase().includes(q)))
     .sort(([, a], [, b]) => {
       const aBatch = isBatchCookable(a);
@@ -59,10 +58,10 @@ export function searchBatchRecipes(query: string): BatchRecipeResult[] {
     .map(([id, r]) => ({ id, name: r.name, isBatch: isBatchCookable(r) }));
 }
 
-export function searchFreezerFoods(query: string): Food[] {
+export function searchFreezerFoods(foods: Record<string, Food>, query: string): Food[] {
   const q = query.toLowerCase().trim();
   if (!q) return [];
-  return Object.values(typedFoodDb as Record<string, Food>)
+  return Object.values(foods)
     .filter(f => f.name.toLowerCase().includes(q))
     .sort((a, b) => {
       const aStarts = a.name.toLowerCase().startsWith(q);

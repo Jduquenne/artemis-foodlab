@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo } from "react";
 import { Sparkles, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { typedRecipesDb } from "../../core/typed-db/typedRecipesDb";
+import { useRecipesSnapshot } from "../../shared/hooks/useCatalogueSnapshot";
 import { getNewsGroups } from "../../core/logic/news/newsLogic";
 import { NewsRecipeCard } from "./components/NewsRecipeCard";
 import { formatNewsDate } from "../../shared/utils/dateUtils";
@@ -13,7 +13,8 @@ export interface NewsModalProps {
 export const NewsModal = ({ onClose }: NewsModalProps) => {
   const [isClosing, setIsClosing] = useState(false);
   const navigate = useNavigate();
-  const groups = useMemo(() => getNewsGroups(typedRecipesDb), []);
+  const recipes = useRecipesSnapshot();
+  const groups = useMemo(() => getNewsGroups(recipes), [recipes]);
 
   const handleClose = useCallback(() => {
     setIsClosing(true);

@@ -4,7 +4,6 @@ import { typedRecipesDb } from "../../core/typed-db/typedRecipesDb";
 import { deleteRecipe } from "../../core/services/catalogueWriteService";
 import { removeRecipeFromCatalogue } from "../../core/services/catalogueSyncService";
 import { sortRecipes } from "../../core/logic/dashboard/recipeTableLogic";
-import { useNewsStore } from "../store/useNewsStore";
 
 export interface UseCatalogueRecipesResult {
   recipes: RecipeDetails[];
@@ -24,7 +23,6 @@ export function useCatalogueRecipes(): UseCatalogueRecipesResult {
     try {
       await deleteRecipe(target.apiId);
       await removeRecipeFromCatalogue(code);
-      useNewsStore.getState().syncHasNew();
       setRecipes(snapshot());
       return true;
     } catch {

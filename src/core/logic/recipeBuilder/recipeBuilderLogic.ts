@@ -10,7 +10,7 @@ import { IngredientLineItem } from "../../../shared/utils/cards/cardTypes";
 import { wrapLineAtMaxChars } from "../../../shared/utils/cards/cardUtils";
 import { recipesCatalogue } from "../../catalogue/recipes";
 import { getIdByCode } from "../../catalogue/recipeIdMap";
-import { getIngredientCategoryId } from "../../catalogue/ingredientCategoryMap";
+import { getIngredientCategoryId } from "../../domain/ingredientCategorySlugs";
 import { ApiIngredientInput, ApiRecipeInput } from "../recipe/recipeApiMapper";
 
 export const BUILDER_UNITS: Unit[] = Object.values(Unit).filter((u) => u !== Unit.NONE);

@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { X, Search } from "lucide-react";
 import { Food, IngredientCategory, Unit } from "../../../core/domain/ingredient";
 import { useFoodsSnapshot } from "../../../shared/hooks/useCatalogueSnapshot";
-import { getIngredientCategoryFromSlug, getIngredientCategoryId } from "../../../core/catalogue/ingredientCategoryMap";
+import { getIngredientCategoryFromSlug, getIngredientCategoryId } from "../../../core/domain/ingredientCategorySlugs";
 import { getCodeById, getIdByCode } from "../../../core/catalogue/recipeIdMap";
 import { searchFoods } from "../../../core/logic/recipeBuilder/recipeBuilderLogic";
 import { ApiShoppingExtra } from "../../../core/logic/shopping/shoppingApiMapper";

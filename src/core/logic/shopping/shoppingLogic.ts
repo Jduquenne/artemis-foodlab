@@ -7,7 +7,7 @@ import { getAllRecipeIds } from "../../domain/recipePredicates";
 import { pluralizeUnit } from "../../../shared/utils/unitUtils";
 import { distributeToColumns } from "../../../shared/utils/columnUtils";
 import { isoDateFromWeekDay } from "../../../shared/utils/dateUtils";
-import { getIngredientCategoryFromSlug } from "../../catalogue/ingredientCategoryMap";
+import { getIngredientCategoryFromSlug } from "../../domain/ingredientCategorySlugs";
 import { ApiShoppingExtra } from "./shoppingApiMapper";
 
 export interface IngredientSource {

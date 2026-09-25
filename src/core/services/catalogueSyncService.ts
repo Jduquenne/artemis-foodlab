@@ -9,6 +9,7 @@ import { putRecipeInDb, removeRecipeFromDb, replaceRecipesDb, typedRecipesDb } f
 import { replaceOutdoorDb, typedOutdoorDb } from "../typed-db/typedOutdoorDb";
 import { replaceHouseholdDb } from "../typed-db/typedHouseholdDb";
 import { setRecipeIdMap } from "../typed-db/recipeIdMap";
+import { notifyCatalogueChange } from "../typed-db/catalogueEvents";
 import {
   ApiOutdoorActivity,
   ApiRecipe,
@@ -49,6 +50,7 @@ export async function hydrateFromCache(): Promise<void> {
   if (categories.length > 0) replaceCategoriesDb(categories);
   if (Object.keys(recipes).length > 0 || Object.keys(outdoor).length > 0) applyRecipeIdMap();
   refreshDerivedData();
+  notifyCatalogueChange("recipes", "foods", "categories", "outdoor", "household");
 }
 
 export async function applyCatalogueData(
@@ -78,6 +80,7 @@ export async function applyCatalogueData(
   replaceCategoriesDb(apiCategories);
   applyRecipeIdMap();
   refreshDerivedData();
+  notifyCatalogueChange("recipes", "foods", "categories", "outdoor", "household");
 }
 
 export async function syncCatalogueFromApi(): Promise<void> {
@@ -114,6 +117,7 @@ export async function syncRecipeFromApi(uuid: string): Promise<void> {
     putRecipeInDb(recipe.code, recipe);
     applyRecipeIdMap();
     refreshDerivedData();
+    notifyCatalogueChange("recipes");
   } catch {
     /* réseau indisponible ou API injoignable, on garde le cache existant */
   }
@@ -128,4 +132,5 @@ export async function removeRecipeFromCatalogue(code: string): Promise<void> {
   removeRecipeFromDb(code);
   applyRecipeIdMap();
   refreshDerivedData();
+  notifyCatalogueChange("recipes");
 }

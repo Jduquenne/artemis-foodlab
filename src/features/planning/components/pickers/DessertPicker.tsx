@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useDeferredValue } from 'react';
 import { X, Check, Loader2 } from 'lucide-react';
 import { SearchBar } from '../../../../shared/components/ui/SearchBar';
 import { useSearchDesserts } from '../../../../shared/hooks/useSearch';
@@ -15,9 +15,10 @@ export interface DessertPickerProps {
 export const DessertPicker = ({ existingIds, onSelect, onClose }: DessertPickerProps) => {
     const recipesDb = useRecipesSnapshot();
     const [query, setQuery] = useState('');
+    const deferredQuery = useDeferredValue(query);
     const [isClosing, setIsClosing] = useState(false);
     const [savingId, setSavingId] = useState<string | null>(null);
-    const results = useSearchDesserts(query);
+    const results = useSearchDesserts(deferredQuery);
 
     const handleClose = () => { setIsClosing(true); setTimeout(onClose, 300); };
 

@@ -67,11 +67,14 @@ function closestWordDistance(text: string, query: string): number {
   return min;
 }
 
+export const MAX_PICKER_RESULTS = 30;
+
 function search(
   db: Record<string, RecipeDetails>,
   query: string | null,
   kinds?: RecipeKind[],
   filter?: (recipe: RecipeDetails) => boolean,
+  limit?: number,
 ): SearchRecipeResult[] {
   if (query === null) return [];
   const normalizedQuery = normalizeQuery(query);
@@ -86,7 +89,9 @@ function search(
     )
     .map(([recipeId, recipe]) => toResult(recipeId, recipe, normalizedQuery));
 
-  if (!normalizedQuery || /^\d+$/.test(normalizedQuery)) return results;
+  if (!normalizedQuery || /^\d+$/.test(normalizedQuery)) {
+    return limit === undefined ? results : results.slice(0, limit);
+  }
 
   const nameOrId = results
     .filter(
@@ -108,7 +113,8 @@ function search(
       return aScore - bScore;
     });
 
-  return [...nameOrId, ...ingredientOnly];
+  const combined = [...nameOrId, ...ingredientOnly];
+  return limit === undefined ? combined : combined.slice(0, limit);
 }
 
 export const useSearchRecipes = (
@@ -121,7 +127,7 @@ export const useSearchRecipes = (
 export const useSearchMeals = (query: string | null): SearchRecipeResult[] => {
   const recipes = useRecipesSnapshot();
   return useMemo(
-    () => search(recipes, query, [RecipeKind.DISH, RecipeKind.INGREDIENT]),
+    () => search(recipes, query, [RecipeKind.DISH, RecipeKind.INGREDIENT], undefined, MAX_PICKER_RESULTS),
     [recipes, query],
   );
 };
@@ -133,5 +139,8 @@ export const useSearchIngredients = (query: string | null): SearchRecipeResult[]
 
 export const useSearchDesserts = (query: string | null): SearchRecipeResult[] => {
   const recipes = useRecipesSnapshot();
-  return useMemo(() => search(recipes, query, undefined, isDessert), [recipes, query]);
+  return useMemo(
+    () => search(recipes, query, undefined, isDessert, MAX_PICKER_RESULTS),
+    [recipes, query],
+  );
 };

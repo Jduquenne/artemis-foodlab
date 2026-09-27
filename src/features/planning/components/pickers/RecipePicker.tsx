@@ -1,6 +1,6 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useDeferredValue } from 'react';
 import { SearchBar } from '../../../../shared/components/ui/SearchBar';
-import { SearchRecipeResult, useSearchMeals } from '../../../../shared/hooks/useSearch';
+import { MAX_PICKER_RESULTS, SearchRecipeResult, useSearchMeals } from '../../../../shared/hooks/useSearch';
 import { Check, Loader2, X, TreePine } from 'lucide-react';
 import { searchOutdoorRecipes } from '../../../../core/logic/recipe/recipeListLogic';
 import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
@@ -17,12 +17,13 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
     const recipesDb = useRecipesSnapshot();
     const outdoorDb = useOutdoorSnapshot();
     const [query, setQuery] = useState('');
+    const deferredQuery = useDeferredValue(query);
     const [pendingSelection, setPendingSelection] = useState<SearchRecipeResult | null>(null);
     const [isClosing, setIsClosing] = useState(false);
     const [saving, setSaving] = useState(false);
-    const results = useSearchMeals(query);
+    const results = useSearchMeals(deferredQuery);
 
-    const outdoorResults = useMemo(() => searchOutdoorRecipes(outdoorDb, query), [outdoorDb, query]);
+    const outdoorResults = useMemo(() => searchOutdoorRecipes(outdoorDb, deferredQuery, MAX_PICKER_RESULTS), [outdoorDb, deferredQuery]);
 
     const handleClose = () => { setIsClosing(true); setTimeout(onClose, 300); };
 

@@ -12,9 +12,10 @@ export interface CategoryRecipeEntry {
   isIngredientKind: boolean;
 }
 
-export function searchOutdoorRecipes(outdoor: Record<string, OutdoorEntry>, query: string): OutdoorEntry[] {
+export function searchOutdoorRecipes(outdoor: Record<string, OutdoorEntry>, query: string, limit?: number): OutdoorEntry[] {
   const q = normalizeQuery(query);
-  return Object.values(outdoor).filter(e => !q || includesText(e.name, q));
+  const results = Object.values(outdoor).filter(e => !q || includesText(e.name, q));
+  return limit === undefined ? results : results.slice(0, limit);
 }
 
 export function getLinkedBases(

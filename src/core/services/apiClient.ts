@@ -20,6 +20,7 @@ export class ApiError extends Error {
   }
 }
 
+import { REFRESH_RETRY_DELAYS_MS, isRefreshRejected } from "../logic/auth/refreshOutcomeLogic";
 import { getStoredRefreshToken, setStoredRefreshToken } from "./refreshTokenStore";
 
 const API_URL = import.meta.env.VITE_API_URL as string;
@@ -73,24 +74,34 @@ async function parseApiError(res: Response): Promise<ApiError> {
 export function performTokenRefresh(): Promise<TokenRefreshResult | null> {
   if (!refreshPromise) {
     refreshPromise = (async () => {
-      const stored = getStoredRefreshToken();
-      const res = await fetch(`${API_URL}/auth/refresh`, {
-        method: "POST",
-        credentials: "include",
-        headers: stored ? { "Content-Type": "application/json" } : undefined,
-        body: stored ? JSON.stringify({ refreshToken: stored }) : undefined,
-      }).catch(() => null);
+      for (let attempt = 0; attempt <= REFRESH_RETRY_DELAYS_MS.length; attempt++) {
+        const stored = getStoredRefreshToken();
+        const res = await fetch(`${API_URL}/auth/refresh`, {
+          method: "POST",
+          credentials: "include",
+          headers: stored ? { "Content-Type": "application/json" } : undefined,
+          body: stored ? JSON.stringify({ refreshToken: stored }) : undefined,
+        }).catch(() => null);
 
-      if (!res || !res.ok) {
-        accessToken = null;
-        setStoredRefreshToken(null);
-        return null;
+        if (res?.ok) {
+          const data = await res.json() as TokenRefreshResult;
+          accessToken = data.accessToken;
+          setStoredRefreshToken(data.refreshToken ?? null);
+          return data;
+        }
+
+        if (isRefreshRejected(res?.status ?? null)) {
+          accessToken = null;
+          setStoredRefreshToken(null);
+          return null;
+        }
+
+        if (attempt < REFRESH_RETRY_DELAYS_MS.length) {
+          await new Promise((resolve) => setTimeout(resolve, REFRESH_RETRY_DELAYS_MS[attempt]));
+        }
       }
 
-      const data = await res.json() as TokenRefreshResult;
-      accessToken = data.accessToken;
-      setStoredRefreshToken(data.refreshToken ?? null);
-      return data;
+      return null;
     })().finally(() => {
       refreshPromise = null;
     });

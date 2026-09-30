@@ -25,6 +25,12 @@ export function collectAssetKeys(
   return keys;
 }
 
+export function earliestExpiry(current: string | null, next: string | null): string | null {
+  if (!current) return next || null;
+  if (!next) return current;
+  return new Date(current).getTime() <= new Date(next).getTime() ? current : next;
+}
+
 export function refreshDelayMs(expiresAt: string, now: number = Date.now()): number {
   const target = new Date(expiresAt).getTime() - MEDIA_REFRESH_MARGIN_MS;
   return Math.max(MEDIA_REFRESH_MIN_MS, target - now);

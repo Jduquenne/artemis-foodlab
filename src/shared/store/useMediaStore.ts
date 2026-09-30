@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 import { subscribeCatalogue } from "../../core/catalogue/catalogueEvents";
 import { recipesCatalogue } from "../../core/catalogue/recipes";
 import { outdoorCatalogue } from "../../core/catalogue/outdoor";
-import { collectAssetKeys, refreshDelayMs } from "../../core/logic/media/mediaLogic";
+import { collectAssetKeys, earliestExpiry, refreshDelayMs } from "../../core/logic/media/mediaLogic";
 import { resolveMediaKeys } from "../../core/services/mediaService";
 import { useAuthStore } from "./useAuthStore";
 import { omitKey } from "../utils/collectionUtils";
@@ -12,7 +12,8 @@ interface MediaStore {
   overrides: Record<string, string>;
   expiresAt: string | null;
   resolveCatalogue: () => void;
-  resolveKeys: (keys: string[]) => Promise<void>;
+  resolveKeys: (keys: string[], force?: boolean) => Promise<void>;
+  refreshCatalogue: () => void;
   reportFailure: (key: string | undefined) => void;
 }
 
@@ -26,6 +27,13 @@ let refreshTimer: ReturnType<typeof setTimeout> | null = null;
 let lastCatalogueResolve = 0;
 let pendingResolve: ReturnType<typeof setTimeout> | null = null;
 
+function collectCatalogueKeys(): string[] {
+  return collectAssetKeys([
+    ...Object.values(recipesCatalogue).map((recipe) => recipe.assets),
+    ...Object.values(outdoorCatalogue).map((entry) => entry.assets),
+  ]);
+}
+
 function armRefreshTimer(expiresAt: string, onDue: () => void): void {
   if (refreshTimer) clearTimeout(refreshTimer);
   refreshTimer = setTimeout(onDue, refreshDelayMs(expiresAt));
@@ -37,9 +45,9 @@ export const useMediaStore = create<MediaStore>()(
       overrides: {},
       expiresAt: null,
 
-      resolveKeys: async (keys) => {
+      resolveKeys: async (keys, force = false) => {
         const { overrides } = get();
-        const wanted = [...new Set(keys)].filter((key) => key && !dead.has(key) && !(key in overrides));
+        const wanted = [...new Set(keys)].filter((key) => key && !dead.has(key) && (force || !(key in overrides)));
         if (wanted.length === 0) return;
 
         const { urls, expiresAt, attemptedKeys } = await resolveMediaKeys(wanted);
@@ -51,16 +59,17 @@ export const useMediaStore = create<MediaStore>()(
         if (Object.keys(urls).length > 0 || expiresAt) {
           set((state) => ({
             overrides: { ...state.overrides, ...urls },
-            expiresAt: expiresAt ?? state.expiresAt,
+            expiresAt: force ? expiresAt || state.expiresAt : earliestExpiry(state.expiresAt, expiresAt),
           }));
         }
 
-        if (expiresAt) {
-          armRefreshTimer(expiresAt, () => {
-            lastCatalogueResolve = 0;
-            get().resolveCatalogue();
-          });
-        }
+        const nextExpiry = get().expiresAt;
+        if (nextExpiry) armRefreshTimer(nextExpiry, () => get().refreshCatalogue());
+      },
+
+      refreshCatalogue: () => {
+        lastCatalogueResolve = Date.now();
+        void get().resolveKeys(collectCatalogueKeys(), true);
       },
 
       resolveCatalogue: () => {
@@ -75,11 +84,7 @@ export const useMediaStore = create<MediaStore>()(
           return;
         }
         lastCatalogueResolve = Date.now();
-        const keys = collectAssetKeys([
-          ...Object.values(recipesCatalogue).map((recipe) => recipe.assets),
-          ...Object.values(outdoorCatalogue).map((entry) => entry.assets),
-        ]);
-        void get().resolveKeys(keys);
+        void get().resolveKeys(collectCatalogueKeys());
       },
 
       reportFailure: (key) => {
@@ -106,10 +111,7 @@ export const useMediaStore = create<MediaStore>()(
           useMediaStore.setState({ overrides: {}, expiresAt: null });
           return;
         }
-        armRefreshTimer(state.expiresAt, () => {
-          lastCatalogueResolve = 0;
-          useMediaStore.getState().resolveCatalogue();
-        });
+        armRefreshTimer(state.expiresAt, () => useMediaStore.getState().refreshCatalogue());
       },
     },
   ),

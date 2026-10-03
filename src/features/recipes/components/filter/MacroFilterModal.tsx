@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { X, Check } from 'lucide-react';
-import { PREDEFINED_FILTERS } from '../../../../core/logic/recipe/predefinedFilterLogic';
+import { usePredefinedFilters } from '../../../../shared/hooks/usePredefinedFilters';
 import { toggleInList } from '../../../../shared/utils/collectionUtils';
 
 export interface MacroFilterModalProps {
@@ -10,6 +10,7 @@ export interface MacroFilterModalProps {
 }
 
 export const MacroFilterModal = ({ activeFilterIds, onSubmit, onClose }: MacroFilterModalProps) => {
+  const predefinedFilters = usePredefinedFilters();
   const [draft, setDraft] = useState<string[]>(activeFilterIds);
   const [isClosing, setIsClosing] = useState(false);
 
@@ -40,7 +41,7 @@ export const MacroFilterModal = ({ activeFilterIds, onSubmit, onClose }: MacroFi
         </div>
 
         <div className="px-5 py-4 space-y-2">
-          {PREDEFINED_FILTERS.map((filter) => {
+          {predefinedFilters.map((filter) => {
             const active = draft.includes(filter.id);
             return (
               <button

@@ -1,8 +1,6 @@
-import { Food } from "../../domain/ingredient";
-import { OutdoorEntry, RecipeDetails } from "../../domain/recipe";
+import { Macronutrients } from "../../domain/nutrition";
+import { OutdoorEntry, PredefinedFilter, RecipeDetails } from "../../domain/recipe";
 import { isIngredient } from "../../domain/recipePredicates";
-import { calculateRecipeMacros } from "../../../shared/utils/macroUtils";
-import { PREDEFINED_FILTERS } from "./predefinedFilterLogic";
 import { includesText, normalizeQuery } from "../../../shared/utils/textUtils";
 
 export interface CategoryRecipeEntry {
@@ -59,18 +57,16 @@ export function getCategoryRecipes(recipes: Record<string, RecipeDetails>, categ
 }
 
 export function filterRecipesByMacros<T extends { recipeId?: string; id: string }>(
-  recipes: Record<string, RecipeDetails>,
-  foods: Record<string, Food>,
+  recipeMacros: Record<string, Macronutrients>,
   items: T[],
   activeFilterIds: string[],
+  filters: PredefinedFilter[],
 ): T[] {
   if (activeFilterIds.length === 0) return items;
-  const activeFilters = PREDEFINED_FILTERS.filter(f => activeFilterIds.includes(f.id));
+  const activeFilters = filters.filter(f => activeFilterIds.includes(f.id));
   return items.filter(item => {
-    const id = item.recipeId ?? item.id;
-    const details = recipes[id];
-    if (!details) return false;
-    const macros = calculateRecipeMacros(details, recipes, foods);
+    const macros = recipeMacros[item.recipeId ?? item.id];
+    if (!macros) return false;
     return activeFilters.every(f => f.check(macros));
   });
 }

@@ -1,4 +1,5 @@
 import { PREDEFINED_FILTER_DEFINITIONS, PredefinedFilterDefinition } from "../../domain/predefinedFilters";
+import { MacroMedians } from "./macroReferenceLogic";
 import { Macronutrients } from "../../domain/nutrition";
 import { PredefinedFilter } from "../../domain/recipe";
 
@@ -24,4 +25,13 @@ export function buildPredefinedFilter(definition: PredefinedFilterDefinition): P
   };
 }
 
-export const PREDEFINED_FILTERS: PredefinedFilter[] = PREDEFINED_FILTER_DEFINITIONS.map(buildPredefinedFilter);
+export function resolveFilterDefinition(definition: PredefinedFilterDefinition, medians: MacroMedians): PredefinedFilterDefinition {
+  if (!definition.dynamic) return definition;
+  const median = medians[definition.macro];
+  if (median === undefined) return definition;
+  return { ...definition, threshold: median };
+}
+
+export function buildPredefinedFilters(medians: MacroMedians): PredefinedFilter[] {
+  return PREDEFINED_FILTER_DEFINITIONS.map((definition) => buildPredefinedFilter(resolveFilterDefinition(definition, medians)));
+}

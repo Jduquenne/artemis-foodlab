@@ -6,10 +6,10 @@ import { useRecipeBuilderStore } from '../../shared/store/useRecipeBuilderStore'
 import { SearchBar } from '../../shared/components/ui/SearchBar';
 import { CategoryCard } from '../../shared/components/ui/CategoryCard';
 import { useSearchRecipes } from '../../shared/hooks/useSearch';
-import { useCategoriesSnapshot, useFoodsSnapshot, useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
+import { useCategoriesSnapshot, useRecipeMetricsSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
 import { isBrowsableCategory } from '../../core/domain/recipePredicates';
 import { MacroFilterButton } from './components/filter/MacroFilterButton';
-import { PREDEFINED_FILTERS } from '../../core/logic/recipe/predefinedFilterLogic';
+import { usePredefinedFilters } from '../../shared/hooks/usePredefinedFilters';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { filterRecipesByMacros } from '../../core/logic/recipe/recipeListLogic';
 import { RecipeSearchResults } from './components/RecipeSearchResults';
@@ -25,13 +25,13 @@ export const RecipeModule = () => {
     const isSearchActive = isSearchOpen || searchQuery.length > 0;
     const showResults = searchQuery.length >= 3 || activeFilterIds.length > 0;
     const baseResults = useSearchRecipes(showResults ? searchQuery : null);
-    const recipes = useRecipesSnapshot();
-    const foods = useFoodsSnapshot();
+    const { macros: recipeMacros } = useRecipeMetricsSnapshot();
+    const predefinedFilters = usePredefinedFilters();
     const categories = useCategoriesSnapshot();
 
     const filteredResults = useMemo(
-        () => filterRecipesByMacros(recipes, foods, baseResults, activeFilterIds),
-        [recipes, foods, baseResults, activeFilterIds],
+        () => filterRecipesByMacros(recipeMacros, baseResults, activeFilterIds, predefinedFilters),
+        [recipeMacros, baseResults, activeFilterIds, predefinedFilters],
     );
 
     const removeFilter = (id: string) => setActiveFilterIds(activeFilterIds.filter(f => f !== id));
@@ -79,7 +79,7 @@ export const RecipeModule = () => {
                     </div>
                     <div className="flex items-center gap-2 min-w-0">
                         {activeFilterIds.map(id => {
-                            const filter = PREDEFINED_FILTERS.find(f => f.id === id);
+                            const filter = predefinedFilters.find(f => f.id === id);
                             return filter ? (
                                 <span key={id} className="hidden sm:flex items-center gap-1 pl-2.5 pr-1.5 py-1 bg-orange-100 text-orange-700 text-xs font-semibold rounded-full whitespace-nowrap shrink-0">
                                     {filter.label}

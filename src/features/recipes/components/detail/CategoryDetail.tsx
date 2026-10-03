@@ -2,10 +2,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { FlipCard } from '../FlipCard';
 import { ArrowLeft, X } from 'lucide-react';
 import { useMemo, useState, useEffect, useRef } from 'react';
-import { useCategoriesSnapshot, useFoodsSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
+import { useCategoriesSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 import { markScrolling } from '../../../../shared/utils/scrollGuard';
 import { MacroFilterButton } from '../filter/MacroFilterButton';
-import { PREDEFINED_FILTERS } from '../../../../core/logic/recipe/predefinedFilterLogic';
+import { usePredefinedFilters } from '../../../../shared/hooks/usePredefinedFilters';
 import { isPlannable } from '../../../../core/domain/recipePredicates';
 import { useMenuStore } from '../../../../shared/store/useMenuStore';
 import { getCategoryRecipes, filterRecipesByMacros } from '../../../../core/logic/recipe/recipeListLogic';
@@ -22,15 +22,16 @@ export const CategoryDetail = () => {
     const { activeFilterIds, setActiveFilterIds } = useMenuStore();
 
     const recipesDb = useRecipesSnapshot();
-    const foods = useFoodsSnapshot();
+    const { macros: recipeMacros } = useRecipeMetricsSnapshot();
+    const predefinedFilters = usePredefinedFilters();
     const categories = useCategoriesSnapshot();
 
     const categoryInfo = categories.find(cat => cat.id === categoryId);
     const recipes = useMemo(() => getCategoryRecipes(recipesDb, categoryId ?? ''), [recipesDb, categoryId]);
 
     const filteredRecipes = useMemo(
-        () => filterRecipesByMacros(recipesDb, foods, recipes, activeFilterIds),
-        [recipesDb, foods, recipes, activeFilterIds],
+        () => filterRecipesByMacros(recipeMacros, recipes, activeFilterIds, predefinedFilters),
+        [recipeMacros, recipes, activeFilterIds, predefinedFilters],
     );
 
     const removeFilter = (id: string) => setActiveFilterIds(activeFilterIds.filter(f => f !== id));
@@ -91,7 +92,7 @@ export const CategoryDetail = () => {
 
                 <div className="flex items-center gap-2 shrink-0">
                     {activeFilterIds.map(id => {
-                        const filter = PREDEFINED_FILTERS.find(f => f.id === id);
+                        const filter = predefinedFilters.find(f => f.id === id);
                         return filter ? (
                             <span key={id} className="flex items-center gap-1 pl-2.5 pr-1.5 py-1 bg-orange-100 text-orange-700 text-xs font-semibold rounded-full whitespace-nowrap">
                                 {filter.label}

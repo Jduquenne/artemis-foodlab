@@ -6,35 +6,35 @@ import { useRecipeBuilderStore } from '../../shared/store/useRecipeBuilderStore'
 import { SearchBar } from '../../shared/components/ui/SearchBar';
 import { CategoryCard } from '../../shared/components/ui/CategoryCard';
 import { useSearchRecipes } from '../../shared/hooks/useSearch';
-import { useCategoriesSnapshot, useRecipeMetricsSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
+import { useCategoriesSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
 import { isBrowsableCategory } from '../../core/domain/recipePredicates';
-import { MacroFilterButton } from './components/filter/MacroFilterButton';
-import { usePredefinedFilters } from '../../shared/hooks/usePredefinedFilters';
+import { RecipeFilterButton } from './components/filter/RecipeFilterButton';
+import { ActiveFilterChips } from './components/filter/ActiveFilterChips';
+import { useTypeMedians } from '../../shared/hooks/useTypeMedians';
 import { useMenuStore } from '../../shared/store/useMenuStore';
-import { filterRecipesByMacros } from '../../core/logic/recipe/recipeListLogic';
+import { filterRecipesByFilter, isRecipeFilterActive } from '../../core/logic/recipe/recipeFilterLogic';
 import { RecipeSearchResults } from './components/RecipeSearchResults';
 
 export const RecipeModule = () => {
     const navigate = useNavigate();
     const isAdmin = useIsAdmin();
     const resetBuilder = useRecipeBuilderStore((s) => s.reset);
-    const { activeFilterIds, setActiveFilterIds } = useMenuStore();
+    const { recipeFilter, setRecipeFilter } = useMenuStore();
     const [searchQuery, setSearchQuery] = useState(() => sessionStorage.getItem('last_recipe_search') || '');
     const [isSearchOpen, setIsSearchOpen] = useState(() => (sessionStorage.getItem('last_recipe_search') || '').length > 0);
 
     const isSearchActive = isSearchOpen || searchQuery.length > 0;
-    const showResults = searchQuery.length >= 3 || activeFilterIds.length > 0;
-    const baseResults = useSearchRecipes(showResults ? searchQuery : null);
+    const showResults = searchQuery.length >= 3 || isRecipeFilterActive(recipeFilter);
+    const baseResults = useSearchRecipes(showResults ? searchQuery : '');
     const { macros: recipeMacros } = useRecipeMetricsSnapshot();
-    const predefinedFilters = usePredefinedFilters();
+    const medians = useTypeMedians();
+    const recipes = useRecipesSnapshot();
     const categories = useCategoriesSnapshot();
 
     const filteredResults = useMemo(
-        () => filterRecipesByMacros(recipeMacros, baseResults, activeFilterIds, predefinedFilters),
-        [recipeMacros, baseResults, activeFilterIds, predefinedFilters],
+        () => filterRecipesByFilter(baseResults, recipes, recipeMacros, recipeFilter, medians),
+        [baseResults, recipes, recipeMacros, recipeFilter, medians],
     );
-
-    const removeFilter = (id: string) => setActiveFilterIds(activeFilterIds.filter(f => f !== id));
 
     const handleSearchChange = (val: string) => {
         setSearchQuery(val);
@@ -78,17 +78,9 @@ export const RecipeModule = () => {
                         <p className="text-xs sm:text-sm text-slate-500">Que mangeons-nous aujourd'hui ?</p>
                     </div>
                     <div className="flex items-center gap-2 min-w-0">
-                        {activeFilterIds.map(id => {
-                            const filter = predefinedFilters.find(f => f.id === id);
-                            return filter ? (
-                                <span key={id} className="hidden sm:flex items-center gap-1 pl-2.5 pr-1.5 py-1 bg-orange-100 text-orange-700 text-xs font-semibold rounded-full whitespace-nowrap shrink-0">
-                                    {filter.label}
-                                    <button onClick={() => removeFilter(id)} className="hover:text-orange-900 transition-colors">
-                                        <X className="w-3 h-3" />
-                                    </button>
-                                </span>
-                            ) : null;
-                        })}
+                        <div className="hidden sm:flex items-center gap-2 min-w-0 overflow-x-auto">
+                            <ActiveFilterChips filter={recipeFilter} onChange={setRecipeFilter} />
+                        </div>
                         {isAdmin && (
                             <button
                                 onClick={() => { resetBuilder(); navigate('/recipe-builder'); }}
@@ -99,7 +91,7 @@ export const RecipeModule = () => {
                                 <span className="hidden sm:inline">Recette</span>
                             </button>
                         )}
-                        <MacroFilterButton activeFilterIds={activeFilterIds} onApply={setActiveFilterIds} />
+                        <RecipeFilterButton filter={recipeFilter} candidates={baseResults} onApply={setRecipeFilter} />
                         <button
                             onClick={openSearch}
                             className="sm:hidden p-2 rounded-xl text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 hover:text-orange-500 transition-colors"
@@ -122,7 +114,7 @@ export const RecipeModule = () => {
                     <RecipeSearchResults
                         results={filteredResults}
                         searchQuery={searchQuery}
-                        scrollKey={`search:${searchQuery}:${activeFilterIds.join(',')}`}
+                        scrollKey={`search:${searchQuery}:${JSON.stringify(recipeFilter)}`}
                     />
                 ) : (
                     <div className="h-full grid grid-cols-2 tablet:grid-cols-3 lg:grid-cols-6 auto-rows-fr gap-3">

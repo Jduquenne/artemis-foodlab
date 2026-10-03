@@ -1,5 +1,4 @@
 import { Ingredient } from "./ingredient";
-import { Macronutrients } from "./nutrition";
 
 export interface Category {
   id: string;
@@ -74,8 +73,3 @@ export interface OutdoorEntry {
   assets: Partial<Record<RecipeAssetKey, RecipeAsset>>;
 }
 
-export interface PredefinedFilter {
-  id: string;
-  label: string;
-  check: (macros: Macronutrients) => boolean;
-}

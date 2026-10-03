@@ -1,5 +1,4 @@
-import { Macronutrients } from "../../domain/nutrition";
-import { OutdoorEntry, PredefinedFilter, RecipeDetails } from "../../domain/recipe";
+import { OutdoorEntry, RecipeDetails } from "../../domain/recipe";
 import { isIngredient } from "../../domain/recipePredicates";
 import { includesText, normalizeQuery } from "../../../shared/utils/textUtils";
 
@@ -54,21 +53,6 @@ export function getCategoryRecipes(recipes: Record<string, RecipeDetails>, categ
         isIngredientKind: isIngredient(recipe),
       };
     });
-}
-
-export function filterRecipesByMacros<T extends { recipeId?: string; id: string }>(
-  recipeMacros: Record<string, Macronutrients>,
-  items: T[],
-  activeFilterIds: string[],
-  filters: PredefinedFilter[],
-): T[] {
-  if (activeFilterIds.length === 0) return items;
-  const activeFilters = filters.filter(f => activeFilterIds.includes(f.id));
-  return items.filter(item => {
-    const macros = recipeMacros[item.recipeId ?? item.id];
-    if (!macros) return false;
-    return activeFilters.every(f => f.check(macros));
-  });
 }
 
 export const resolveRestoredCount = (

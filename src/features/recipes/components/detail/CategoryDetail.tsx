@@ -1,14 +1,16 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { FlipCard } from '../FlipCard';
-import { ArrowLeft, X } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { useMemo, useState, useEffect, useRef } from 'react';
 import { useCategoriesSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 import { markScrolling } from '../../../../shared/utils/scrollGuard';
-import { MacroFilterButton } from '../filter/MacroFilterButton';
-import { usePredefinedFilters } from '../../../../shared/hooks/usePredefinedFilters';
+import { RecipeFilterButton } from '../filter/RecipeFilterButton';
+import { ActiveFilterChips } from '../filter/ActiveFilterChips';
+import { useTypeMedians } from '../../../../shared/hooks/useTypeMedians';
 import { isPlannable } from '../../../../core/domain/recipePredicates';
 import { useMenuStore } from '../../../../shared/store/useMenuStore';
-import { getCategoryRecipes, filterRecipesByMacros } from '../../../../core/logic/recipe/recipeListLogic';
+import { getCategoryRecipes } from '../../../../core/logic/recipe/recipeListLogic';
+import { filterRecipesByFilter, isRecipeFilterActive } from '../../../../core/logic/recipe/recipeFilterLogic';
 import { resolveRestoredCount } from '../../../../core/logic/recipe/recipeListLogic';
 import { useScrollRestore } from '../../../../shared/hooks/useScrollRestore';
 import { RecipePhotoCard } from '../../../../shared/components/ui/RecipePhotoCard';
@@ -19,22 +21,20 @@ import { LazyRender } from '../../../../shared/components/ui/LazyRender';
 export const CategoryDetail = () => {
     const { categoryId } = useParams();
     const navigate = useNavigate();
-    const { activeFilterIds, setActiveFilterIds } = useMenuStore();
+    const { recipeFilter, setRecipeFilter } = useMenuStore();
 
     const recipesDb = useRecipesSnapshot();
     const { macros: recipeMacros } = useRecipeMetricsSnapshot();
-    const predefinedFilters = usePredefinedFilters();
+    const medians = useTypeMedians();
     const categories = useCategoriesSnapshot();
 
     const categoryInfo = categories.find(cat => cat.id === categoryId);
     const recipes = useMemo(() => getCategoryRecipes(recipesDb, categoryId ?? ''), [recipesDb, categoryId]);
 
     const filteredRecipes = useMemo(
-        () => filterRecipesByMacros(recipeMacros, recipes, activeFilterIds, predefinedFilters),
-        [recipeMacros, recipes, activeFilterIds, predefinedFilters],
+        () => filterRecipesByFilter(recipes, recipesDb, recipeMacros, recipeFilter, medians),
+        [recipes, recipesDb, recipeMacros, recipeFilter, medians],
     );
-
-    const removeFilter = (id: string) => setActiveFilterIds(activeFilterIds.filter(f => f !== id));
 
     const BATCH_SIZE = 24;
     const { ref: scrollRef, initial, onScroll, saveVisibleCount } = useScrollRestore(`category:${categoryId}`);
@@ -84,27 +84,20 @@ export const CategoryDetail = () => {
                         {categoryInfo ? categoryInfo.name : categoryId}
                     </h1>
                     <span className="shrink-0 text-sm font-bold text-slate-400">
-                        {activeFilterIds.length > 0
+                        {isRecipeFilterActive(recipeFilter)
                             ? `${filteredRecipes.length} / ${recipes.length} recettes`
                             : `${recipes.length} recettes`}
                     </span>
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">
-                    {activeFilterIds.map(id => {
-                        const filter = predefinedFilters.find(f => f.id === id);
-                        return filter ? (
-                            <span key={id} className="flex items-center gap-1 pl-2.5 pr-1.5 py-1 bg-orange-100 text-orange-700 text-xs font-semibold rounded-full whitespace-nowrap">
-                                {filter.label}
-                                <button aria-label={`Retirer le filtre ${filter.label}`} onClick={() => removeFilter(id)} className="hover:text-orange-900 transition-colors">
-                                    <X className="w-3 h-3" />
-                                </button>
-                            </span>
-                        ) : null;
-                    })}
-                    <MacroFilterButton
-                        activeFilterIds={activeFilterIds}
-                        onApply={setActiveFilterIds}
+                    <div className="flex items-center gap-2 min-w-0 overflow-x-auto">
+                        <ActiveFilterChips filter={recipeFilter} onChange={setRecipeFilter} />
+                    </div>
+                    <RecipeFilterButton
+                        filter={recipeFilter}
+                        candidates={recipes}
+                        onApply={setRecipeFilter}
                     />
                 </div>
             </div>

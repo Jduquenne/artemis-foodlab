@@ -2,6 +2,8 @@ import { create } from "zustand";
 import { getISOWeek, getISOWeekYear } from "date-fns";
 import { getWeekId } from "../utils/dateUtils";
 import { ShoppingDay } from "../../core/domain/planning";
+import { EMPTY_RECIPE_FILTER, RecipeFilter } from "../../core/domain/recipeFilter";
+import { normalizeRecipeFilter } from "../../core/logic/recipe/recipeFilterLogic";
 import { clearAll as clearHouseholdItems } from "../../core/services/householdService";
 import { replacePeriod } from "../../core/services/shoppingPeriodService";
 
@@ -21,9 +23,9 @@ interface MenuState {
   currentWeekId: string;
   shoppingDays: ShoppingDay[];
   currentPeriodId: string | null;
-  activeFilterIds: string[];
+  recipeFilter: RecipeFilter;
   setShoppingDays: (days: ShoppingDay[]) => Promise<void>;
-  setActiveFilterIds: (ids: string[]) => void;
+  setRecipeFilter: (filter: RecipeFilter) => void;
   replaceShoppingPeriod: (period: { id: string | null; days: ShoppingDay[] }) => void;
 }
 
@@ -33,7 +35,7 @@ export const useMenuStore = create<MenuState>((set, get) => ({
   currentYear: getISOWeekYear(new Date()),
   shoppingDays: [],
   currentPeriodId: null,
-  activeFilterIds: safeParseJson<string[]>("cipe_active_filters", []),
+  recipeFilter: normalizeRecipeFilter(safeParseJson<Partial<RecipeFilter> | null>("cipe_recipe_filter", EMPTY_RECIPE_FILTER)),
 
   setShoppingDays: async (days) => {
     const newPeriodId = await replacePeriod(get().currentPeriodId, days);
@@ -45,8 +47,8 @@ export const useMenuStore = create<MenuState>((set, get) => ({
     set({ currentPeriodId: id, shoppingDays: days });
   },
 
-  setActiveFilterIds: (ids) => {
-    localStorage.setItem("cipe_active_filters", JSON.stringify(ids));
-    set({ activeFilterIds: ids });
+  setRecipeFilter: (filter) => {
+    localStorage.setItem("cipe_recipe_filter", JSON.stringify(filter));
+    set({ recipeFilter: filter });
   },
 }));

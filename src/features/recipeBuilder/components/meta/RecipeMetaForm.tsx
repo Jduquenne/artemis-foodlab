@@ -6,6 +6,7 @@ import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
 import { useCategoriesSnapshot, useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { CATEGORY_PREFIX, buildRecipeDbId, buildRecipeId, suggestNextRecipeNumber } from "../../../../core/logic/recipeBuilder/recipeCodeLogic";
 import { InstructionsModal } from "./InstructionsModal";
+import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
 
 export interface RecipeMetaFormProps {
   state: RecipeBuilderState;
@@ -62,11 +63,11 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
         </div>
         <div className="w-16 shrink-0">
           <label className={labelClass}>Portions</label>
-          <input
-            type="number"
+          <DecimalInput
+            integer
             min={1}
             value={state.defaultPortions}
-            onChange={(e) => onChange({ defaultPortions: Math.max(1, Number(e.target.value)) })}
+            onValueChange={(v) => onChange({ defaultPortions: v ?? 1 })}
             className={`${inputClass} text-center px-1`}
           />
         </div>

@@ -1,6 +1,7 @@
 import { RotateCcw } from "lucide-react";
 import { Ingredient } from "../../../../core/domain/ingredient";
 import { pluralizeUnit } from "../../../../shared/utils/unitUtils";
+import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
 
 export interface IngredientOverrideRowProps {
   ingredient: Ingredient;
@@ -29,16 +30,13 @@ export const IngredientOverrideRow = ({
         {ingredient.name}
       </span>
       <div className="flex items-center gap-1 shrink-0">
-        <input
-          type="number"
-          min={0}
+        <DecimalInput
           value={value}
           aria-label={`Quantité — ${ingredient.name}`}
-          onChange={(e) => {
-            const v = Number(e.target.value);
-            if (!isNaN(v) && v >= 0) onChange(v);
+          onValueChange={(v) => {
+            if (v !== null) onChange(v);
           }}
-          className="w-12 text-[11px] font-bold text-center bg-slate-50 dark:bg-slate-200 rounded px-1 py-0.5 outline-none focus:ring-1 focus:ring-orange-400 text-orange-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+          className="w-12 text-[11px] font-bold text-center bg-slate-50 dark:bg-slate-200 rounded px-1 py-0.5 outline-none focus:ring-1 focus:ring-orange-400 text-orange-500"
         />
         {unitLabel && <span className="text-[10px] text-slate-400 w-8">{unitLabel}</span>}
         {isModified && (

@@ -5,6 +5,7 @@ import { Unit } from "../../../../core/domain/ingredient";
 import { addItemToCategory } from "../../../../core/services/freezerService";
 import { FoodTab } from "./FoodTab";
 import { BatchTab } from "./BatchTab";
+import { parseDecimal } from "../../../../shared/utils/numberUtils";
 
 export interface AddFreezerItemModalProps {
   categoryId: string;
@@ -33,9 +34,9 @@ export const AddFreezerItemModal = ({ categoryId, existingFoodNames, onClose }: 
     n => n.toLowerCase() === foodName.trim().toLowerCase()
   );
 
-  const parsedFoodQty = parseFloat(foodQty);
+  const parsedFoodQty = parseDecimal(foodQty);
   const canSave =
-    tab === "food" ? !!foodId && foodName.trim().length > 0 && !isNaN(parsedFoodQty) && parsedFoodQty > 0 && !isDuplicateName
+    tab === "food" ? !!foodId && foodName.trim().length > 0 && parsedFoodQty !== null && parsedFoodQty > 0 && !isDuplicateName
       : selectedRecipeId !== null && portions > 0;
 
   const handleSave = async () => {
@@ -48,7 +49,7 @@ export const AddFreezerItemModal = ({ categoryId, existingFoodNames, onClose }: 
         ...(foodId ? { foodId } : {}),
         bags: [{
           id: crypto.randomUUID(),
-          quantity: parsedFoodQty,
+          quantity: parsedFoodQty ?? 0,
           unit: foodUnit,
           preparation: foodPreparation || undefined,
           addedDate: new Date().toISOString().slice(0, 10),

@@ -3,6 +3,7 @@ import { Check, Loader2, X } from "lucide-react";
 import { PREPARATION_OPTIONS } from "../../../../core/domain/preparationOptions";
 import { FreezerBag } from "../../../../core/domain/freezer";
 import { Unit, SELECTABLE_UNITS } from "../../../../core/domain/ingredient";
+import { parseDecimal } from "../../../../shared/utils/numberUtils";
 
 export interface AddBagFormProps {
   onSave: (bag: Omit<FreezerBag, "id" | "addedDate">) => void;
@@ -16,8 +17,8 @@ export const AddBagForm = ({ onSave, onCancel, initialUnit = Unit.G, saving }: A
   const [unit, setUnit] = useState<Unit>(initialUnit);
   const [preparation, setPreparation] = useState<string>("");
 
-  const parsedQty = parseFloat(quantity);
-  const canSave = !isNaN(parsedQty) && parsedQty > 0;
+  const parsedQty = parseDecimal(quantity);
+  const canSave = parsedQty !== null && parsedQty > 0;
 
   const handleSave = () => {
     if (!canSave || saving) return;

@@ -53,7 +53,7 @@ export const PricePerKgModal = ({ onClose }: PricePerKgModalProps) => {
                     <div>
                         <label className="text-xs font-semibold text-slate-500">Poids (g)</label>
                         <input
-                            type="number"
+                            type="text"
                             inputMode="decimal"
                             value={weight}
                             onChange={(e) => setWeight(e.target.value)}
@@ -64,7 +64,7 @@ export const PricePerKgModal = ({ onClose }: PricePerKgModalProps) => {
                     <div>
                         <label className="text-xs font-semibold text-slate-500">Prix (€)</label>
                         <input
-                            type="number"
+                            type="text"
                             inputMode="decimal"
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}

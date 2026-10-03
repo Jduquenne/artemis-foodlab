@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Check, Loader2, RotateCcw, X } from 'lucide-react';
-import { toNumber } from "../../../../shared/utils/numberUtils";
+import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
 
 export interface PersonsEditorProps {
     initialValue: number;
@@ -11,7 +11,7 @@ export interface PersonsEditorProps {
 }
 
 export const PersonsEditor = ({ initialValue, defaultPortion, onConfirm, onCancel, pending }: PersonsEditorProps) => {
-    const [draft, setDraft] = useState(initialValue);
+    const [draft, setDraft] = useState<number | null>(initialValue);
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -19,18 +19,18 @@ export const PersonsEditor = ({ initialValue, defaultPortion, onConfirm, onCance
         inputRef.current?.select();
     }, []);
 
-    const confirm = () => { if (!pending) onConfirm(Math.max(1, draft || 1)); };
+    const confirm = () => { if (!pending) onConfirm(Math.max(1, draft ?? 1)); };
 
     return (
         <div className="absolute inset-0 z-30 bg-white/97 dark:bg-slate-100/97 rounded-xl flex flex-col items-center justify-center gap-3 px-3">
             <span className="text-[11px] font-black uppercase tracking-widest text-slate-500">Personnes ?</span>
-            <input
+            <DecimalInput
                 ref={inputRef}
-                type="number"
-                min="1"
+                integer
+                min={1}
                 value={draft}
                 disabled={pending}
-                onChange={(e) => setDraft(toNumber(e.target.value))}
+                onValueChange={setDraft}
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') confirm();
                     if (e.key === 'Escape') onCancel();

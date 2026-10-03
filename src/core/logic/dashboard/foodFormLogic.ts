@@ -3,7 +3,7 @@ import { Macronutrients, NUTRIENT_DEFINITIONS, NutrientKey } from "../../domain/
 import { FoodInput } from "../../domain/catalogueInput";
 import { getIngredientCategoryId } from "../../domain/ingredientCategorySlugs";
 import { RecapEntry, diffEntry, recapBool, recapText } from "./recapLogic";
-import { toNumber } from "../../../shared/utils/numberUtils";
+import { parseDecimal } from "../../../shared/utils/numberUtils";
 import { nextSequentialCode, validateNewCode } from "../../../shared/utils/codeUtils";
 import { atwaterKcal } from "../nutrition/atwaterLogic";
 
@@ -22,10 +22,10 @@ export function parseEditableMacros(
   raw: Record<keyof Macronutrients, string>,
 ): Pick<Macronutrients, "proteins" | "lipids" | "carbohydrates" | "fibers"> {
   return {
-    proteins: toNumber(raw.proteins),
-    lipids: toNumber(raw.lipids),
-    carbohydrates: toNumber(raw.carbohydrates),
-    fibers: toNumber(raw.fibers),
+    proteins: parseDecimal(raw.proteins) ?? 0,
+    lipids: parseDecimal(raw.lipids) ?? 0,
+    carbohydrates: parseDecimal(raw.carbohydrates) ?? 0,
+    fibers: parseDecimal(raw.fibers) ?? 0,
   };
 }
 
@@ -72,12 +72,12 @@ export function validateFoodForm(draft: FoodFormDraft): string[] {
   const errors: string[] = [];
   if (!draft.name.trim()) errors.push("Le nom est requis.");
   if (!getIngredientCategoryId(draft.category)) errors.push("Catégorie inconnue de l'API.");
-  if (draft.unitWeight.trim() && !Number.isFinite(Number(draft.unitWeight))) {
+  if (draft.unitWeight.trim() && parseDecimal(draft.unitWeight) === null) {
     errors.push("Le poids unitaire doit être un nombre.");
   }
   for (const key of EDITABLE_MACRO_KEYS) {
-    const raw = draft.macros[key];
-    if (raw.trim() === "" || !Number.isFinite(Number(raw)) || Number(raw) < 0) {
+    const value = parseDecimal(draft.macros[key]);
+    if (value === null || value < 0) {
       errors.push("Les valeurs nutritionnelles doivent être des nombres positifs.");
       break;
     }
@@ -126,7 +126,7 @@ export function foodFormToBody(id: string, draft: FoodFormDraft): FoodInput {
     name: draft.name.trim(),
     categoryId,
     unit: draft.unit.trim() || null,
-    unitWeight: draft.unitWeight.trim() ? Number(draft.unitWeight) : null,
+    unitWeight: parseDecimal(draft.unitWeight),
     isFreezable: draft.isFreezable,
     macros: (() => {
       const editable = parseEditableMacros(draft.macros);

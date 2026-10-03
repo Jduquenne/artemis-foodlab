@@ -46,11 +46,12 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId }: RecipePortion
               key={`${activeProfileId}:${key}`}
               type="number"
               min={1}
+              step="any"
               defaultValue={grams}
               aria-label={`Quantité en grammes — ${name}`}
               disabled={!planningSlotItemId}
               onChange={(e) => {
-                const v = parseInt(e.target.value, 10);
+                const v = parseFloat(e.target.value);
                 if (!isNaN(v) && v > 0 && planningSlotItemId) setGramOverride(planningSlotItemId, recipeId, v);
               }}
               className="w-12 text-[11px] font-bold text-center bg-slate-50 dark:bg-slate-200 rounded px-1 py-0.5 outline-none focus:ring-1 focus:ring-orange-400 text-orange-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"

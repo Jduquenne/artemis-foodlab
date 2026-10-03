@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Check, Loader2, RotateCcw, X, Users } from 'lucide-react';
-import { toNumber } from "../../../../shared/utils/numberUtils";
+import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
 
 export interface RecipeMetaEditorProps {
     initialPersons: number;
@@ -23,8 +23,8 @@ export const RecipeMetaEditor = ({
     onConfirm,
     onCancel,
 }: RecipeMetaEditorProps) => {
-    const [draftPersons, setDraftPersons] = useState(initialPersons);
-    const [draftGrams, setDraftGrams] = useState(initialGrams);
+    const [draftPersons, setDraftPersons] = useState<number | null>(initialPersons);
+    const [draftGrams, setDraftGrams] = useState<number | null>(initialGrams);
     const firstInputRef = useRef<HTMLInputElement>(null);
     const showGrams = !isDish && defaultGrams > 0;
 
@@ -36,8 +36,8 @@ export const RecipeMetaEditor = ({
     const confirm = () => {
         if (pending) return;
         onConfirm(
-            Math.max(1, draftPersons || 1),
-            showGrams ? Math.max(1, draftGrams || 1) : initialGrams,
+            Math.max(1, draftPersons ?? 1),
+            showGrams ? Math.max(1, draftGrams ?? 1) : initialGrams,
         );
     };
 
@@ -53,13 +53,13 @@ export const RecipeMetaEditor = ({
                     <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-0.5">
                         <Users size={9} /> {isDish ? 'Portions' : 'Pers.'}
                     </span>
-                    <input
+                    <DecimalInput
                         ref={firstInputRef}
-                        type="number"
-                        min="1"
+                        integer
+                        min={1}
                         value={draftPersons}
                         disabled={pending}
-                        onChange={(e) => setDraftPersons(toNumber(e.target.value))}
+                        onValueChange={setDraftPersons}
                         onKeyDown={handleKeyDown}
                         className="w-14 text-center text-xl font-black text-slate-900 bg-slate-100 dark:bg-slate-200 rounded-xl py-1.5 border-0 outline-none focus:ring-2 focus:ring-orange-400 disabled:opacity-50"
                     />
@@ -68,12 +68,11 @@ export const RecipeMetaEditor = ({
                     <div className="flex flex-col items-center gap-1">
                         <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Grammes</span>
                         <div className="flex items-baseline gap-0.5">
-                            <input
-                                type="number"
-                                min="1"
+                            <DecimalInput
+                                min={1}
                                 value={draftGrams}
                                 disabled={pending}
-                                onChange={(e) => setDraftGrams(toNumber(e.target.value))}
+                                onValueChange={setDraftGrams}
                                 onKeyDown={handleKeyDown}
                                 className="w-14 text-center text-xl font-black text-slate-900 bg-slate-100 dark:bg-slate-200 rounded-xl py-1.5 border-0 outline-none focus:ring-2 focus:ring-orange-400 disabled:opacity-50"
                             />

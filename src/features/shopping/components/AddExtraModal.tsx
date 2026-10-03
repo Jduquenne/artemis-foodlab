@@ -7,6 +7,7 @@ import { getCodeById, getIdByCode } from "../../../core/catalogue/recipeIdMap";
 import { searchFoods } from "../../../core/logic/recipeBuilder/ingredientSearchLogic";
 import { ApiShoppingExtra } from "../../../core/logic/shopping/shoppingApiMapper";
 import { ExtraInput } from "../../../core/services/shoppingPeriodService";
+import { parseDecimal } from "../../../shared/utils/numberUtils";
 
 export interface AddExtraModalProps {
   extra: ApiShoppingExtra | null;
@@ -55,8 +56,8 @@ export const AddExtraModal = ({ extra, plannedRecipes, onClose, onSubmit }: AddE
       setError("Le nom est requis.");
       return;
     }
-    const qty = quantity.trim() ? Number(quantity) : null;
-    if (qty !== null && (!Number.isFinite(qty) || qty <= 0)) {
+    const qty = parseDecimal(quantity);
+    if (quantity.trim() && (qty === null || qty <= 0)) {
       setError("La quantité doit être un nombre supérieur à 0.");
       return;
     }

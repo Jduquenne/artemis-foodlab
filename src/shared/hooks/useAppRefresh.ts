@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { CATALOGUE_POLL_MS } from "../../core/domain/catalogueRefreshConfig";
 import { useAuthStore } from "../store/useAuthStore";
+import { useMediaStore } from "../store/useMediaStore";
 import { refreshAppData } from "../utils/appRefresh";
 
 export function useAppRefresh(): void {
@@ -10,6 +11,7 @@ export function useAppRefresh(): void {
     if (!isAuthenticated) return;
 
     const refresh = () => {
+      useMediaStore.getState().refreshIfDue();
       void refreshAppData();
     };
 

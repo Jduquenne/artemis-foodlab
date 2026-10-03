@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 import { subscribeCatalogue } from "../../core/catalogue/catalogueEvents";
 import { recipesCatalogue } from "../../core/catalogue/recipes";
 import { outdoorCatalogue } from "../../core/catalogue/outdoor";
-import { collectAssetKeys, earliestExpiry, refreshDelayMs } from "../../core/logic/media/mediaLogic";
+import { collectAssetKeys, earliestExpiry, isMediaExpired, isMediaRefreshDue, refreshDelayMs } from "../../core/logic/media/mediaLogic";
 import { resolveMediaKeys } from "../../core/services/mediaService";
 import { useAuthStore } from "./useAuthStore";
 import { omitKey } from "../utils/collectionUtils";
@@ -14,7 +14,9 @@ interface MediaStore {
   resolveCatalogue: () => void;
   resolveKeys: (keys: string[], force?: boolean) => Promise<void>;
   refreshCatalogue: () => void;
+  refreshIfDue: () => void;
   reportFailure: (key: string | undefined) => void;
+  reportFailedUrl: (url: string) => void;
 }
 
 const CATALOGUE_THROTTLE_MS = 3000;
@@ -72,6 +74,13 @@ export const useMediaStore = create<MediaStore>()(
         void get().resolveKeys(collectCatalogueKeys(), true);
       },
 
+      refreshIfDue: () => {
+        if (Date.now() - lastCatalogueResolve < CATALOGUE_THROTTLE_MS) return;
+        const { expiresAt } = get();
+        if (expiresAt === null) get().resolveCatalogue();
+        else if (isMediaRefreshDue(expiresAt)) get().refreshCatalogue();
+      },
+
       resolveCatalogue: () => {
         const wait = CATALOGUE_THROTTLE_MS - (Date.now() - lastCatalogueResolve);
         if (wait > 0) {
@@ -85,6 +94,11 @@ export const useMediaStore = create<MediaStore>()(
         }
         lastCatalogueResolve = Date.now();
         void get().resolveKeys(collectCatalogueKeys());
+      },
+
+      reportFailedUrl: (url) => {
+        const entry = Object.entries(get().overrides).find(([, signed]) => signed === url);
+        if (entry) get().reportFailure(entry[0]);
       },
 
       reportFailure: (key) => {
@@ -105,17 +119,19 @@ export const useMediaStore = create<MediaStore>()(
     }),
     {
       name: "cipe_media_overrides",
-      onRehydrateStorage: () => (state) => {
-        if (!state?.expiresAt) return;
-        if (Date.now() >= new Date(state.expiresAt).getTime()) {
-          useMediaStore.setState({ overrides: {}, expiresAt: null });
-          return;
-        }
-        armRefreshTimer(state.expiresAt, () => useMediaStore.getState().refreshCatalogue());
+      version: 1,
+      migrate: () => ({ overrides: {}, expiresAt: null }),
+      merge: (persisted, current) => {
+        const saved = persisted as Pick<MediaStore, "overrides" | "expiresAt"> | undefined;
+        if (!saved || !saved.expiresAt || isMediaExpired(saved.expiresAt)) return current;
+        return { ...current, overrides: saved.overrides, expiresAt: saved.expiresAt };
       },
     },
   ),
 );
+
+const restoredExpiry = useMediaStore.getState().expiresAt;
+if (restoredExpiry) armRefreshTimer(restoredExpiry, () => useMediaStore.getState().refreshCatalogue());
 
 subscribeCatalogue(() => {
   if (useAuthStore.getState().status === "authenticated") useMediaStore.getState().resolveCatalogue();

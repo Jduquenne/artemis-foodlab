@@ -35,3 +35,11 @@ export function refreshDelayMs(expiresAt: string, now: number = Date.now()): num
   const target = new Date(expiresAt).getTime() - MEDIA_REFRESH_MARGIN_MS;
   return Math.max(MEDIA_REFRESH_MIN_MS, target - now);
 }
+
+export function isMediaRefreshDue(expiresAt: string, now: number = Date.now()): boolean {
+  return now >= new Date(expiresAt).getTime() - MEDIA_REFRESH_MARGIN_MS;
+}
+
+export function isMediaExpired(expiresAt: string | null, now: number = Date.now()): boolean {
+  return expiresAt !== null && now >= new Date(expiresAt).getTime();
+}

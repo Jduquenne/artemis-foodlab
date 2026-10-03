@@ -1,4 +1,8 @@
 import { useId, useMemo } from 'react';
+import { useImageErrorCapture } from '../../hooks/useImageErrorCapture';
+import { useMediaStore } from '../../store/useMediaStore';
+
+const reportCardImageFailure = (src: string) => useMediaStore.getState().reportFailedUrl(src);
 
 export interface SvgCardProps {
   svgContent: string;
@@ -10,6 +14,7 @@ export interface SvgCardProps {
 }
 
 export const SvgCard = ({ svgContent, width, height, scale = 1, fill = false, cover = false }: SvgCardProps) => {
+  const captureImageErrors = useImageErrorCapture(reportCardImageFailure);
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '');
 
   const dedupedSvg = useMemo(() => svgContent
@@ -26,11 +31,12 @@ export const SvgCard = ({ svgContent, width, height, scale = 1, fill = false, co
       filledSvg = filledSvg.replace(/preserveAspectRatio="[^"]*"/, 'preserveAspectRatio="xMidYMid slice"');
     }
     return (
-      <div style={{ width: '100%', height: '100%' }} dangerouslySetInnerHTML={{ __html: filledSvg }} />
+      <div ref={captureImageErrors} style={{ width: '100%', height: '100%' }} dangerouslySetInnerHTML={{ __html: filledSvg }} />
     );
   }
   return (
     <div
+      ref={captureImageErrors}
       style={{ width: width * scale, height: height * scale, flexShrink: 0 }}
       dangerouslySetInnerHTML={{ __html: dedupedSvg }}
     />

@@ -6,6 +6,8 @@ export interface AuthUser {
   role: UserRole;
   freezerName: string;
   displayName: string | null;
+  isDemo: boolean;
+  demoExpiresAt: string | null;
 }
 
 export interface UpdateMeInput {
@@ -20,6 +22,7 @@ export interface AdminUser {
   role: UserRole;
   freezerName: string;
   displayName: string | null;
+  isDemo?: boolean;
   createdAt: string;
   updatedAt: string;
 }

@@ -6,9 +6,11 @@ import { SidebarLogo } from './SidebarLogo';
 import { SidebarNav } from './SidebarNav';
 import { SettingsPopover } from './SettingsPopover';
 import { NewsButton } from './NewsButton';
+import { DemoBanner } from './DemoBanner';
 import { useNewsStore } from '../../store/useNewsStore';
 import { useIsAdmin } from '../../hooks/useIsAdmin';
 import { useAppRefresh } from '../../hooks/useAppRefresh';
+import { useAuthStore } from '../../store/useAuthStore';
 
 const NewsModal = lazy(() =>
   import('../../../features/news/NewsModal').then((m) => ({ default: m.NewsModal }))
@@ -18,6 +20,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   const [newsOpen, setNewsOpen] = useState(false);
   const { hasNew, markAsSeen } = useNewsStore();
   const isAdmin = useIsAdmin();
+  const demoExpiresAt = useAuthStore((s) => (s.user?.isDemo ? s.user.demoExpiresAt : null));
   useAppRefresh();
   const location = useLocation();
 
@@ -65,9 +68,12 @@ export const Layout = ({ children }: { children: ReactNode }) => {
         </div>
       </aside>
 
-      <main className="flex-1 min-w-0 overflow-y-auto p-4 tablet:p-8">
-        {children}
-      </main>
+      <div className="flex-1 min-w-0 flex flex-col">
+        {demoExpiresAt && <DemoBanner expiresAt={demoExpiresAt} />}
+        <main className="flex-1 min-h-0 overflow-y-auto p-4 tablet:p-8">
+          {children}
+        </main>
+      </div>
 
       <Suspense>
         {newsOpen && <NewsModal onClose={() => setNewsOpen(false)} />}

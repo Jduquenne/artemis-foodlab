@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Plus, RotateCw, Users } from "lucide-react";
 import { useUsers } from "../../../../shared/hooks/useUsers";
 import { useAuthStore } from "../../../../shared/store/useAuthStore";
 import { AdminUser } from "../../../../core/domain/user";
 import { UserRole } from "../../../../core/domain/user";
-import { ROLE_LABELS, buildRoleChangeRecap } from "../../../../core/logic/dashboard/userFormLogic";
+import { ROLE_LABELS, buildRoleChangeRecap, excludeDemoAccounts } from "../../../../core/logic/dashboard/userFormLogic";
 import { UserRow } from "./UserRow";
 import { UserFormModal } from "./UserFormModal";
 import { ConfirmActionModal } from "../data/ConfirmActionModal";
 
 export const UsersPanel = () => {
-  const { users, loading, loadError, reload, create, setRole, remove } = useUsers();
+  const { users: allUsers, loading, loadError, reload, create, setRole, remove } = useUsers();
+  const users = useMemo(() => excludeDemoAccounts(allUsers), [allUsers]);
   const currentUserId = useAuthStore((state) => state.user?.id);
   const [creating, setCreating] = useState(false);
   const [pendingRole, setPendingRole] = useState<{ user: AdminUser; role: UserRole } | null>(null);

@@ -6,6 +6,9 @@ export type ApiErrorCode =
   | "CONFLICT"
   | "PAYLOAD_TOO_LARGE"
   | "RATE_LIMITED"
+  | "DEMO_FORBIDDEN"
+  | "DEMO_RATE_LIMIT"
+  | "DEMO_CAPACITY"
   | "INTERNAL_ERROR"
   | "NETWORK_ERROR";
 
@@ -33,6 +36,9 @@ const FALLBACK_MESSAGES: Record<ApiErrorCode, string> = {
   CONFLICT: "Cette action entre en conflit avec des données existantes.",
   PAYLOAD_TOO_LARGE: "Fichier trop volumineux.",
   RATE_LIMITED: "Trop de requêtes — réessaie dans un instant.",
+  DEMO_FORBIDDEN: "Cette action n'est pas disponible en mode démo.",
+  DEMO_RATE_LIMIT: "Trop de démos lancées depuis cette connexion — réessaie dans une heure.",
+  DEMO_CAPACITY: "La démo est momentanément complète — réessaie plus tard.",
   INTERNAL_ERROR: "Erreur serveur — réessaie plus tard.",
   NETWORK_ERROR: "Connexion impossible — vérifie ta connexion réseau.",
 };

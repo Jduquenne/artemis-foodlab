@@ -36,6 +36,9 @@ export const AccountModal = ({ onClose }: AccountModalProps) => {
 
   if (!user) return null;
 
+  const isDemo = user.isDemo;
+  const roleLabel = isDemo ? "Démo" : user.role === "admin" ? "Administrateur" : "Invité";
+
   const profileDirty =
     email.trim() !== user.email || displayName.trim() !== (user.displayName ?? "");
 
@@ -94,7 +97,7 @@ export const AccountModal = ({ onClose }: AccountModalProps) => {
           <div className="flex items-center gap-2">
             <h2 className="text-lg font-black text-slate-900">Compte</h2>
             <span className="text-[11px] font-bold uppercase px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-200 text-slate-500">
-              {user.role === "admin" ? "Administrateur" : "Invité"}
+              {roleLabel}
             </span>
           </div>
           <button aria-label="Fermer" onClick={onClose} className="p-2 hover:bg-black/5 rounded-full transition-colors">
@@ -107,7 +110,11 @@ export const AccountModal = ({ onClose }: AccountModalProps) => {
             <span className="text-xs font-black text-slate-500 uppercase tracking-wide">Profil</span>
             <label className="flex flex-col gap-1">
               <span className="text-xs font-bold text-slate-500">Adresse e-mail</span>
-              <input type="email" autoComplete="off" value={email} onChange={(e) => setEmail(e.target.value)} className={INPUT_CLASS} />
+              {isDemo ? (
+                <span className="text-sm text-slate-500">Compte de démonstration</span>
+              ) : (
+                <input type="email" autoComplete="off" value={email} onChange={(e) => setEmail(e.target.value)} className={INPUT_CLASS} />
+              )}
             </label>
             <label className="flex flex-col gap-1">
               <span className="text-xs font-bold text-slate-500">Nom affiché</span>
@@ -125,37 +132,38 @@ export const AccountModal = ({ onClose }: AccountModalProps) => {
             </button>
           </section>
 
-          <section className="flex flex-col gap-3 border-t border-slate-100 pt-5">
-            <span className="text-xs font-black text-slate-500 uppercase tracking-wide">Mot de passe</span>
-            <input
-              type="password"
-              autoComplete="current-password"
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
-              placeholder="Mot de passe actuel"
-              className={INPUT_CLASS}
-            />
-            <input
-              type="password"
-              autoComplete="new-password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              placeholder={`Nouveau mot de passe (${PASSWORD_MIN_LENGTH} car. min)`}
-              className={INPUT_CLASS}
-            />
-            <input
-              type="password"
-              autoComplete="new-password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Confirmer le nouveau mot de passe"
-              className={INPUT_CLASS}
-            />
-            {passwordError && <p className="text-xs text-red-500">{passwordError}</p>}
-            {passwordDone && (
-              <p className="text-xs text-emerald-600">
-                Mot de passe changé. Tes autres appareils ont été déconnectés.
-              </p>
+          {!isDemo && (
+            <section className="flex flex-col gap-3 border-t border-slate-100 pt-5">
+              <span className="text-xs font-black text-slate-500 uppercase tracking-wide">Mot de passe</span>
+              <input
+                type="password"
+                autoComplete="current-password"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                placeholder="Mot de passe actuel"
+                className={INPUT_CLASS}
+              />
+              <input
+                type="password"
+                autoComplete="new-password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder={`Nouveau mot de passe (${PASSWORD_MIN_LENGTH} car. min)`}
+                className={INPUT_CLASS}
+              />
+              <input
+                type="password"
+                autoComplete="new-password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Confirmer le nouveau mot de passe"
+                className={INPUT_CLASS}
+              />
+              {passwordError && <p className="text-xs text-red-500">{passwordError}</p>}
+              {passwordDone && (
+                <p className="text-xs text-emerald-600">
+                  Mot de passe changé. Tes autres appareils ont été déconnectés.
+                </p>
             )}
             <button
               type="button"
@@ -166,6 +174,7 @@ export const AccountModal = ({ onClose }: AccountModalProps) => {
               {passwordSaving ? "Modification…" : "Changer le mot de passe"}
             </button>
           </section>
+          )}
 
           <section className="flex flex-col gap-2 border-t border-slate-100 pt-5">
             {user.role === "admin" && (
@@ -184,7 +193,7 @@ export const AccountModal = ({ onClose }: AccountModalProps) => {
               className="flex items-center gap-2 text-sm font-bold text-red-500 hover:text-red-600 transition-colors"
             >
               <LogOut size={16} />
-              Se déconnecter
+              {isDemo ? "Quitter la démo" : "Se déconnecter"}
             </button>
           </section>
         </div>

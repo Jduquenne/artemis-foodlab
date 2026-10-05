@@ -22,6 +22,11 @@ export async function login(email: string, password: string): Promise<AuthUser> 
   return adoptSession(data);
 }
 
+export async function startDemo(): Promise<AuthUser> {
+  const data = await apiFetchJson<LoginResponse>("/auth/demo", { method: "POST" });
+  return adoptSession(data);
+}
+
 export async function updateMe(
   body: UpdateMeInput,
   opts?: { suppressGlobalError?: boolean },

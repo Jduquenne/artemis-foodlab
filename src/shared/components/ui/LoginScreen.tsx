@@ -1,5 +1,7 @@
 import { lazy, Suspense, useState } from "react";
-import { login } from "../../../core/services/authService";
+import { FlaskConical } from "lucide-react";
+import { login, startDemo } from "../../../core/services/authService";
+import { AuthUser } from "../../../core/domain/user";
 import { useAuthStore } from "../../store/useAuthStore";
 import { useDelayedFlag } from "../../hooks/useDelayedFlag";
 import { LOGO_URL } from "../../utils/assetUrl";
@@ -10,22 +12,29 @@ export const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isStartingDemo, setIsStartingDemo] = useState(false);
   const [legalOpen, setLegalOpen] = useState(false);
   const setUser = useAuthStore((s) => s.setUser);
   const setStatus = useAuthStore((s) => s.setStatus);
-  const slowLogin = useDelayedFlag(isSubmitting, 5000);
+  const busy = isSubmitting || isStartingDemo;
+  const slowLogin = useDelayedFlag(busy, 5000);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  const authenticate = async (request: () => Promise<AuthUser>, setBusy: (value: boolean) => void) => {
+    setBusy(true);
     try {
-      const user = await login(email, password);
-      setUser(user);
+      setUser(await request());
       setStatus("authenticated");
     } catch {
-      setIsSubmitting(false);
+      setBusy(false);
     }
   };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    authenticate(() => login(email, password), setIsSubmitting);
+  };
+
+  const handleDemo = () => authenticate(startDemo, setIsStartingDemo);
 
   return (
     <div className="fixed inset-0 z-90 flex flex-col items-center justify-center bg-slate-50 px-4">
@@ -64,18 +73,40 @@ export const LoginScreen = () => {
           />
           <button
             type="submit"
-            disabled={isSubmitting}
+            disabled={busy}
             className="w-full py-3 mt-1 bg-orange-500 hover:bg-orange-600 disabled:opacity-60 text-white text-sm font-bold rounded-xl transition-colors"
           >
             {isSubmitting ? "Connexion…" : "Se connecter"}
           </button>
-          {slowLogin && (
-            <p className="text-xs text-slate-400 text-center leading-relaxed">
-              Le serveur se réveille après une mise en veille. Ça peut prendre jusqu'à une minute — inutile
-              de réessayer.
-            </p>
-          )}
         </form>
+
+        <div className="w-full flex items-center gap-3">
+          <span className="flex-1 h-px bg-slate-200" />
+          <span className="text-xs font-bold text-slate-400 uppercase tracking-wide">ou</span>
+          <span className="flex-1 h-px bg-slate-200" />
+        </div>
+
+        <div className="w-full flex flex-col gap-2">
+          <button
+            type="button"
+            onClick={handleDemo}
+            disabled={busy}
+            className="w-full py-3 flex items-center justify-center gap-2 border border-orange-300 dark:border-orange-800 text-orange-600 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/30 disabled:opacity-60 text-sm font-bold rounded-xl transition-colors"
+          >
+            <FlaskConical size={16} />
+            {isStartingDemo ? "Préparation de la démo…" : "Essayer la démo"}
+          </button>
+          <p className="text-xs text-slate-400 text-center leading-relaxed">
+            Sans inscription : un compte pré-rempli rien que pour toi, effacé au bout de 2 heures.
+          </p>
+        </div>
+
+        {slowLogin && (
+          <p className="text-xs text-slate-400 text-center leading-relaxed">
+            Le serveur se réveille après une mise en veille. Ça peut prendre jusqu'à une minute — inutile
+            de réessayer.
+          </p>
+        )}
 
         <button
           type="button"

@@ -1,4 +1,4 @@
-import { CreateUserInput, PASSWORD_MIN_LENGTH } from "../../domain/user";
+import { AdminUser, CreateUserInput, PASSWORD_MIN_LENGTH } from "../../domain/user";
 import { UserRole } from "../../domain/user";
 import { RecapEntry } from "./recapLogic";
 
@@ -63,4 +63,8 @@ export function generatePassword(length = 16): string {
     result += PASSWORD_ALPHABET[values[i] % PASSWORD_ALPHABET.length];
   }
   return result;
+}
+
+export function excludeDemoAccounts(users: AdminUser[]): AdminUser[] {
+  return users.filter((user) => !user.isDemo);
 }

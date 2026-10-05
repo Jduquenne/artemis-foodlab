@@ -2,6 +2,7 @@ import { lazy, Suspense, useRef, useState } from "react";
 import { Settings, Upload, Bell, UserCircle, ScrollText, Users } from "lucide-react";
 import { isValidSyncPayload, SyncPayload } from "../../../core/logic/sync/importPayloadLogic";
 import { ThemeToggle } from "./ThemeToggle";
+import { useIsDemo } from "../../hooks/useIsDemo";
 
 const ImportModal = lazy(() => import("../../../features/sync/ImportModal").then(m => ({ default: m.ImportModal })));
 const NotificationSettingsModal = lazy(() => import("../ui/NotificationSettingsModal").then(m => ({ default: m.NotificationSettingsModal })));
@@ -17,6 +18,7 @@ export const SettingsPopover = () => {
   const [profilesOpen, setProfilesOpen] = useState(false);
   const [legalOpen, setLegalOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const isDemo = useIsDemo();
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -75,13 +77,15 @@ export const SettingsPopover = () => {
                 <Users className="w-4 h-4 text-slate-400 shrink-0" />
                 Profils
               </button>
-              <button
-                onClick={() => { fileInputRef.current?.click(); setOpen(false); }}
-                className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors border-t border-slate-100"
-              >
-                <Upload className="w-4 h-4 text-slate-400 shrink-0" />
-                Importer des données
-              </button>
+              {!isDemo && (
+                <button
+                  onClick={() => { fileInputRef.current?.click(); setOpen(false); }}
+                  className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors border-t border-slate-100"
+                >
+                  <Upload className="w-4 h-4 text-slate-400 shrink-0" />
+                  Importer des données
+                </button>
+              )}
               <button
                 onClick={() => { setNotifSettingsOpen(true); setOpen(false); }}
                 className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors border-t border-slate-100"

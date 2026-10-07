@@ -4,70 +4,52 @@ import { useProfileStore } from "../../../../shared/store/useProfileStore";
 import { useActiveProfile, useActiveTargets } from "../../../../shared/hooks/useActiveProfile";
 import { atwaterKcal } from "../../../../core/logic/nutrition/atwaterLogic";
 import { NUTRIENT_DEFINITIONS, NutrientKey } from "../../../../core/domain/nutrition";
+import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
+import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
+import { withPending } from "../../../../shared/utils/withPending";
 
 export interface MacroTargetsModalProps {
   onClose: () => void;
 }
 
-const TARGET_RANGES: Record<NutrientKey, { min: number; max: number; step: number }> = {
-  proteins: { min: 10, max: 500, step: 5 },
-  lipids: { min: 10, max: 300, step: 5 },
-  carbohydrates: { min: 10, max: 600, step: 5 },
-  fibers: { min: 5, max: 100, step: 1 },
-};
-
-const FIELDS = NUTRIENT_DEFINITIONS.map((definition) => ({ ...definition, ...TARGET_RANGES[definition.key] }));
-
 export const MacroTargetsModal = ({ onClose }: MacroTargetsModalProps) => {
   const profile = useActiveProfile();
   const { macroTargets } = useActiveTargets();
   const updateProfile = useProfileStore((s) => s.updateProfile);
-  const [submitting, setSubmitting] = useState(false);
+  const pendingKey = `profile-targets:${profile?.id ?? ""}`;
+  const submitting = usePendingKey(pendingKey);
   const [isClosing, setIsClosing] = useState(false);
-  const [draft, setDraft] = useState({
-    proteins: String(macroTargets.proteins),
-    lipids: String(macroTargets.lipids),
-    carbohydrates: String(macroTargets.carbohydrates),
-    fibers: String(macroTargets.fibers),
-  });
+  const [draft, setDraft] = useState<Record<NutrientKey, number | null>>({ ...macroTargets });
 
-  const computedKcal = useMemo(() => {
-    const toNumber = (v: string) => parseInt(v, 10) || 0;
-    return atwaterKcal({
-      proteins: toNumber(draft.proteins),
-      lipids: toNumber(draft.lipids),
-      carbohydrates: toNumber(draft.carbohydrates),
-      fibers: toNumber(draft.fibers),
-    });
-  }, [draft]);
+  const computedKcal = useMemo(
+    () =>
+      atwaterKcal({
+        proteins: draft.proteins ?? 0,
+        lipids: draft.lipids ?? 0,
+        carbohydrates: draft.carbohydrates ?? 0,
+        fibers: draft.fibers ?? 0,
+      }),
+    [draft],
+  );
 
   const handleClose = () => { setIsClosing(true); setTimeout(onClose, 220); };
 
-  const handleChange = (key: keyof typeof draft, value: string) => {
+  const handleChange = (key: NutrientKey, value: number | null) => {
     setDraft((prev) => ({ ...prev, [key]: value }));
   };
 
   const handleSubmit = async () => {
-    if (!profile || submitting) return;
-    const proteins = parseInt(draft.proteins, 10);
-    const lipids = parseInt(draft.lipids, 10);
-    const carbohydrates = parseInt(draft.carbohydrates, 10);
-    const fibers = parseInt(draft.fibers, 10);
-    if ([proteins, lipids, carbohydrates, fibers].some(isNaN)) return;
-    setSubmitting(true);
-    try {
+    const { proteins, lipids, carbohydrates, fibers } = draft;
+    if (!profile || proteins === null || lipids === null || carbohydrates === null || fibers === null) return;
+    const saved = await withPending(pendingKey, async () => {
       await updateProfile(profile.id, { kcalTarget: computedKcal, macroTargets: { proteins, lipids, carbohydrates, fibers } });
-      handleClose();
-    } catch {
-      setSubmitting(false);
-    }
+      return true;
+    }).catch(() => false);
+    if (saved) handleClose();
   };
 
   return (
-    <div
-      className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-      onClick={(e) => { if (e.target === e.currentTarget) handleClose(); }}
-    >
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div
         className={`w-full max-w-xs bg-white dark:bg-slate-100 rounded-2xl shadow-2xl flex flex-col overflow-hidden ${
           isClosing ? "modal-center-exit" : "modal-center-enter"
@@ -94,18 +76,15 @@ export const MacroTargetsModal = ({ onClose }: MacroTargetsModalProps) => {
               <span className="text-xs text-slate-400 w-6">kcal</span>
             </div>
           </div>
-          {FIELDS.map(({ key, label, unit, min, max, step }) => (
+          {NUTRIENT_DEFINITIONS.map(({ key, label, unit }) => (
             <div key={key} className="flex items-center justify-between gap-3">
               <label htmlFor={`macro-input-${key}`} className="text-sm font-semibold text-slate-600 shrink-0">{label}</label>
               <div className="flex items-center gap-1.5">
-                <input
+                <DecimalInput
                   id={`macro-input-${key}`}
-                  type="number"
-                  min={min}
-                  max={max}
-                  step={step}
+                  integer
                   value={draft[key]}
-                  onChange={(e) => handleChange(key, e.target.value)}
+                  onValueChange={(value) => handleChange(key, value)}
                   className="w-20 text-right text-sm font-bold bg-slate-50 dark:bg-slate-200 border border-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:border-orange-400 text-slate-800"
                 />
                 <span className="text-xs text-slate-400 w-6">{unit}</span>
@@ -123,7 +102,7 @@ export const MacroTargetsModal = ({ onClose }: MacroTargetsModalProps) => {
           </button>
           <button
             onClick={handleSubmit}
-            disabled={submitting}
+            disabled={submitting || Object.values(draft).some((value) => value === null)}
             className="flex items-center gap-1.5 px-5 py-2 rounded-xl text-sm font-bold bg-orange-500 hover:bg-orange-600 disabled:opacity-60 text-white transition-colors"
           >
             <Check className="w-4 h-4" />

@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-07 — `features/` review: journal, step 2 (v6.79.3)
+
+- Done: « Objectifs » and « Moyenne de la semaine » no longer close on a backdrop click (project convention, `docs/ui-design.md`). Targets: `type="number"` + `parseInt` → integer `DecimalInput`s (an emptied field disables « Valider » instead of being silently skipped), save through `withPending('profile-targets:<id>')`, modal stays open on error; the unused `min` / `max` / `step` ranges (never enforced by the browser on typing) removed.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: steps 3 and 4 of the journal review.
+
 ## 2026-10-07 — `features/` review: journal, step 1 (v6.79.2)
 
 - Done: read-only review of `features/journal` (9 files), findings arbitrated by the owner (`dev/refactoring.md`). Step 1 fixes a real bug: the grams field of a single-ingredient meal (`type="number"` + `parseFloat`) and the per-ingredient fields saved on every keystroke, so typing « 150 » sent 1, 15, 150 in parallel and an out-of-order response could leave 15. Both are now `DecimalInput`s that save once on blur / Enter with a local draft; `useJournalStore.persistOverride` queues saves per profile × planning item and builds each payload from the state left by the previous save (two quick edits on two ingredients of the same meal could also overwrite each other). Portion stepper and ingredient writes now catch their rejection.

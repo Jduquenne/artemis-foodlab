@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { format } from "date-fns";
 import { X } from "lucide-react";
 import { FoodFreezerItem, BatchFreezerItem } from "../../../../core/domain/freezer";
 import { Unit } from "../../../../core/domain/ingredient";
@@ -52,7 +53,7 @@ export const AddFreezerItemModal = ({ categoryId, existingFoodNames, onClose }: 
           quantity: parsedFoodQty ?? 0,
           unit: foodUnit,
           preparation: foodPreparation || undefined,
-          addedDate: new Date().toISOString().slice(0, 10),
+          addedDate: format(new Date(), "yyyy-MM-dd"),
         }],
       };
       await addItemToCategory(categoryId, item);

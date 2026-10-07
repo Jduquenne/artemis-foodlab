@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { db } from "./databaseService";
 import { apiFetch, apiFetchJson } from "./apiClient";
 import { getIdByCode } from "../catalogue/recipeIdMap";
@@ -11,7 +12,7 @@ import {
 import { BatchFreezerItem, FoodFreezerItem, FreezerBag, FreezerCategory } from "../domain/freezer";
 import { compareByName } from "../../shared/utils/sortUtils";
 
-const today = () => new Date().toISOString().slice(0, 10);
+const today = () => format(new Date(), "yyyy-MM-dd");
 
 async function withCategory(
   categoryId: string,

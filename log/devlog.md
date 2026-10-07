@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-07 — `core/services/` review, step 2 (v6.78.4)
+
+- Done: freezer bag dates (`freezerService.today`, `AddFreezerItemModal`) used `toISOString().slice(0, 10)`, i.e. the UTC date: a bag frozen between midnight and 1-2 am (France) was dated the day before. Now `format(new Date(), "yyyy-MM-dd")` (local date, date-fns).
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: same UTC pattern in `PlanningModule` (URL `d` parameter), for the `features/` review; step 3 of the services review.
+
 ## 2026-10-07 — `core/services/` review, step 1 (v6.78.3)
 
 - Done: read-only review of the 23 files of `core/services/`, findings arbitrated by the owner (decision log in `dev/refactoring.md`). Step 1: the five Dexie catalogue cache files (`foodService`, `outdoorService`, `householdItemsService`, `recipeCategoriesService`, `recipesService`) merged into `catalogueCacheService.ts`; profile mapper moved to `core/logic/profile/profileApiMapper.ts`; unused `getAllSlots` and `fetchProfiles` removed; `updateBagInFoodItem` builds its update object once.

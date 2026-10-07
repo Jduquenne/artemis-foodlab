@@ -9,6 +9,7 @@ import { InlineNameEditor } from "../InlineNameEditor";
 import { FreezerColorPicker } from "./FreezerColorPicker";
 import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
 import { useInlineRename } from "../../../../shared/hooks/useInlineRename";
+import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
 import { withPending } from "../../../../shared/utils/withPending";
 
 export interface FreezerCategoryCardProps {
@@ -19,6 +20,7 @@ export interface FreezerCategoryCardProps {
 export const FreezerCategoryCard = ({ category, onClick }: FreezerCategoryCardProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [picking, setPicking] = useState(false);
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const deletePending = usePendingKey(`freezer-category-delete:${category.id}`);
   const rename = useInlineRename(category.name, `freezer-category-rename:${category.id}`, (name) =>
@@ -41,9 +43,25 @@ export const FreezerCategoryCard = ({ category, onClick }: FreezerCategoryCardPr
     return () => document.removeEventListener("mousedown", handleClick);
   }, [menuOpen]);
 
-  const handleDelete = async () => {
+  const deleteNow = () =>
+    withPending(`freezer-category-delete:${category.id}`, () => deleteCategory(category.id)).then(
+      () => true,
+      () => false,
+    );
+
+  const handleDelete = () => {
     closeMenu();
-    await withPending(`freezer-category-delete:${category.id}`, () => deleteCategory(category.id)).catch(() => undefined);
+    if (category.items.length === 0) {
+      deleteNow();
+      return;
+    }
+    setConfirmingDelete(true);
+  };
+
+  const confirmDelete = async () => {
+    const deleted = await deleteNow();
+    if (deleted) setConfirmingDelete(false);
+    return deleted;
   };
 
   const handlePickColor = async (color: string | null) => {
@@ -61,104 +79,116 @@ export const FreezerCategoryCard = ({ category, onClick }: FreezerCategoryCardPr
   const countLine = formatFreezerCategoryCount(summary);
 
   return (
-    <div
-      role="button"
-      tabIndex={0}
-      onClick={onClick}
-      onKeyDown={e => { if (e.key === "Enter" || e.key === " ") onClick(); }}
-      className={`group relative bg-white dark:bg-slate-100 rounded-2xl border border-slate-200 shadow-sm flex flex-col cursor-pointer transition duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-orange-300 md:min-h-[8.5rem] ${menuOpen ? "z-30" : ""} ${deletePending ? "opacity-50 pointer-events-none" : ""}`}
-    >
-      <div className="flex-1 flex flex-col gap-2 px-4 py-3 md:py-4">
-        <div className={`h-1 w-10 rounded-full ${accent.bar}`} />
+    <>
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={onClick}
+        onKeyDown={e => { if (e.key === "Enter" || e.key === " ") onClick(); }}
+        className={`group relative bg-white dark:bg-slate-100 rounded-2xl border border-slate-200 shadow-sm flex flex-col cursor-pointer transition duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-orange-300 md:min-h-[8.5rem] ${menuOpen ? "z-30" : ""} ${deletePending ? "opacity-50 pointer-events-none" : ""}`}
+      >
+        <div className="flex-1 flex flex-col gap-2 px-4 py-3 md:py-4">
+          <div className={`h-1 w-10 rounded-full ${accent.bar}`} />
 
-        <div className="flex items-start gap-2.5">
-          <div className={`shrink-0 w-8 h-8 rounded-xl flex items-center justify-center ${accent.badge}`}>
-            <Snowflake className="w-4 h-4" />
+          <div className="flex items-start gap-2.5">
+            <div className={`shrink-0 w-8 h-8 rounded-xl flex items-center justify-center ${accent.badge}`}>
+              <Snowflake className="w-4 h-4" />
+            </div>
+
+            <div className="flex-1 min-w-0">
+              {rename.editing ? (
+                <InlineNameEditor
+                  value={rename.value}
+                  onChange={rename.setValue}
+                  onConfirm={rename.confirm}
+                  onCancel={rename.cancel}
+                  inputClassName="text-sm font-bold"
+                  pending={rename.pending}
+                />
+              ) : (
+                <span className="block text-sm font-bold text-slate-800 truncate">{category.name}</span>
+              )}
+              <p className="text-xs text-slate-400 mt-0.5 truncate">{countLine}</p>
+            </div>
+
+            <div className="relative shrink-0 -mt-1 -mr-1" ref={menuRef} onClick={e => e.stopPropagation()}>
+              <button
+                aria-label="Options"
+                onClick={e => { e.stopPropagation(); setMenuOpen(o => !o); setPicking(false); }}
+                className="p-1.5 rounded-lg text-slate-300 group-hover:text-slate-400 hover:!text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
+              >
+                <MoreVertical className="w-4 h-4" />
+              </button>
+              {menuOpen && (
+                <div className="absolute right-0 top-8 z-20 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl shadow-lg overflow-hidden min-w-40">
+                  <button
+                    onClick={e => { e.stopPropagation(); rename.start(); closeMenu(); }}
+                    className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors"
+                  >
+                    <Pencil className="w-3.5 h-3.5" /> Renommer
+                  </button>
+                  <button
+                    onClick={e => { e.stopPropagation(); setPicking(p => !p); }}
+                    className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors border-t border-slate-100"
+                  >
+                    <Palette className="w-3.5 h-3.5" /> Couleur
+                  </button>
+                  {picking && (
+                    <div className="px-4 py-3 border-t border-slate-100">
+                      <FreezerColorPicker value={category.color} onChange={handlePickColor} />
+                    </div>
+                  )}
+                  <button
+                    onClick={e => { e.stopPropagation(); handleDelete(); }}
+                    className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors border-t border-slate-100"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" /> Supprimer
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
 
-          <div className="flex-1 min-w-0">
-            {rename.editing ? (
-              <InlineNameEditor
-                value={rename.value}
-                onChange={rename.setValue}
-                onConfirm={rename.confirm}
-                onCancel={rename.cancel}
-                inputClassName="text-sm font-bold"
-                pending={rename.pending}
-              />
-            ) : (
-              <span className="block text-sm font-bold text-slate-800 truncate">{category.name}</span>
-            )}
-            <p className="text-xs text-slate-400 mt-0.5 truncate">{countLine}</p>
-          </div>
-
-          <div className="relative shrink-0 -mt-1 -mr-1" ref={menuRef} onClick={e => e.stopPropagation()}>
-            <button
-              aria-label="Options"
-              onClick={e => { e.stopPropagation(); setMenuOpen(o => !o); setPicking(false); }}
-              className="p-1.5 rounded-lg text-slate-300 group-hover:text-slate-400 hover:!text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
-            >
-              <MoreVertical className="w-4 h-4" />
-            </button>
-            {menuOpen && (
-              <div className="absolute right-0 top-8 z-20 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl shadow-lg overflow-hidden min-w-40">
-                <button
-                  onClick={e => { e.stopPropagation(); rename.start(); closeMenu(); }}
-                  className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors"
-                >
-                  <Pencil className="w-3.5 h-3.5" /> Renommer
-                </button>
-                <button
-                  onClick={e => { e.stopPropagation(); setPicking(p => !p); }}
-                  className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors border-t border-slate-100"
-                >
-                  <Palette className="w-3.5 h-3.5" /> Couleur
-                </button>
-                {picking && (
-                  <div className="px-4 py-3 border-t border-slate-100">
-                    <FreezerColorPicker value={category.color} onChange={handlePickColor} />
-                  </div>
-                )}
-                <button
-                  onClick={e => { e.stopPropagation(); handleDelete(); }}
-                  className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors border-t border-slate-100"
-                >
-                  <Trash2 className="w-3.5 h-3.5" /> Supprimer
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {summary.total === 0 ? (
-          <p className="flex-1 text-xs text-slate-300">Touche pour ajouter des articles</p>
-        ) : (
-          <div className="flex flex-wrap content-start gap-1">
-            {previewItems.map(item => {
-              const isBatch = item.type === "batch";
-              const name = isBatch ? item.recipeName : item.name;
-              return (
-                <span
-                  key={item.id}
-                  className={`text-xs px-2 py-0.5 rounded-full truncate max-w-[8.5rem] ${
-                    isBatch
-                      ? "bg-orange-50 text-orange-600 dark:bg-orange-900/20 dark:text-orange-300"
-                      : "bg-slate-100 dark:bg-slate-200 text-slate-600"
-                  }`}
-                >
-                  {name}
-                  {isBatch && item.portions > 0 ? ` ·${item.portions}` : ""}
+          {summary.total === 0 ? (
+            <p className="flex-1 text-xs text-slate-300">Touche pour ajouter des articles</p>
+          ) : (
+            <div className="flex flex-wrap content-start gap-1">
+              {previewItems.map(item => {
+                const isBatch = item.type === "batch";
+                const name = isBatch ? item.recipeName : item.name;
+                return (
+                  <span
+                    key={item.id}
+                    className={`text-xs px-2 py-0.5 rounded-full truncate max-w-[8.5rem] ${
+                      isBatch
+                        ? "bg-orange-50 text-orange-600 dark:bg-orange-900/20 dark:text-orange-300"
+                        : "bg-slate-100 dark:bg-slate-200 text-slate-600"
+                    }`}
+                  >
+                    {name}
+                    {isBatch && item.portions > 0 ? ` ·${item.portions}` : ""}
+                  </span>
+                );
+              })}
+              {extra > 0 && (
+                <span className="text-xs px-2 py-0.5 bg-slate-100 dark:bg-slate-200 text-slate-400 rounded-full">
+                  +{extra}
                 </span>
-              );
-            })}
-            {extra > 0 && (
-              <span className="text-xs px-2 py-0.5 bg-slate-100 dark:bg-slate-200 text-slate-400 rounded-full">
-                +{extra}
-              </span>
-            )}
-          </div>
-        )}
+              )}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+      {confirmingDelete && (
+        <ConfirmActionModal
+          title={`Supprimer « ${category.name} » ?`}
+          consequence={`Cette catégorie contient ${countLine}. Tout son contenu sera supprimé avec elle.`}
+          confirmLabel="Supprimer"
+          danger
+          onConfirm={confirmDelete}
+          onCancel={() => setConfirmingDelete(false)}
+        />
+      )}
+    </>
   );
 };

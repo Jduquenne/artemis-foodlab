@@ -23,3 +23,4 @@ Freezer categories containing items: foods (with bags) and batch-cooking dishes 
 - `freezerItemAge(iso, now?)` → `{ label, stale }`: « aujourd'hui / hier / il y a N j / N sem. / N mois / N ans »; `stale = days >= 90` → age shown in amber with `AlertTriangle`.
 - Bag units: `SELECTABLE_UNITS` (no `Unit.NONE`; a bag without unit could never be saved). Decimal input via `parseDecimal`.
 - Pending feedback on delete, portions, bags, rename, colour.
+- Deleting a **non-empty** category asks for confirmation (`ConfirmActionModal`, red « Supprimer », content count from `formatFreezerCategoryCount`); an empty category, an item, a batch or a bag is deleted in one click (owner's choice, 2026-10-07).

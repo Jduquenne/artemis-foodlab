@@ -13,7 +13,7 @@ import {
   validateNewOutdoorCode,
   validateOutdoorForm,
 } from "../../../../core/logic/dashboard/outdoorFormLogic";
-import { ConfirmActionModal } from "./ConfirmActionModal";
+import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
 
 export interface OutdoorFormModalProps {
   activity: OutdoorEntry | null;

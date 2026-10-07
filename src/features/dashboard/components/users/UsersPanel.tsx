@@ -7,7 +7,7 @@ import { UserRole } from "../../../../core/domain/user";
 import { ROLE_LABELS, buildRoleChangeRecap, excludeDemoAccounts } from "../../../../core/logic/dashboard/userFormLogic";
 import { UserRow } from "./UserRow";
 import { UserFormModal } from "./UserFormModal";
-import { ConfirmActionModal } from "../data/ConfirmActionModal";
+import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
 
 export const UsersPanel = () => {
   const { users: allUsers, loading, loadError, reload, create, setRole, remove } = useUsers();

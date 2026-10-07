@@ -4,7 +4,7 @@ import { Food } from "../../../../core/domain/ingredient";
 import { useCatalogueFoods } from "../../../../shared/hooks/useCatalogueFoods";
 import { FoodRow } from "./FoodRow";
 import { FoodFormModal } from "./FoodFormModal";
-import { ConfirmActionModal } from "./ConfirmActionModal";
+import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
 import { includesAnyText, normalizeQuery } from "../../../../shared/utils/textUtils";
 
 export const FoodsTable = () => {

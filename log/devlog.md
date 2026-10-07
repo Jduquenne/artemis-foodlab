@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-07 — Confirm before deleting a non-empty freezer category (v6.79.0)
+
+- Done: deleting a freezer category that still holds items now opens a confirmation (« Supprimer « Viandes » ? », content count, red « Supprimer »); an empty category is still deleted in one click, items / batches / bags unchanged (owner's choice). `ConfirmActionModal` moved from `features/dashboard/components/data/` to `shared/components/ui/` (owner's choice), the 7 dashboard imports updated, no other change to it. The modal is rendered next to the card (fragment), not inside it, so its clicks do not open the category and the card's hover transform does not shift it.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: step 4 of the freezer review (theme colours, « Aliment » tab orange).
+
 ## 2026-10-07 — `features/` review: freezer, step 2 (v6.78.14)
 
 - Done: `AddBagForm` and `EditBagForm` share the new `BagFields` component (quantity, unit, preparation, confirm / cancel); the category card summary line → `formatFreezerCategoryCount` (`freezerStockLogic`); the duplicate food name check, written twice with slightly different rules (one trimmed, one not) → `isFreezerFoodNameTaken` (`freezerItemsLogic`), used by `AddFreezerItemModal` and `FoodSearchInput`; `BagRow` no longer splits and rebuilds the edit payload (done in step 1).

@@ -13,7 +13,7 @@ import { useCategoriesSnapshot } from "../../../../shared/hooks/useCatalogueSnap
 import { useRecipeBuilderStore } from "../../../../shared/store/useRecipeBuilderStore";
 import { useCatalogueRecipes } from "../../../../shared/hooks/useCatalogueRecipes";
 import { RecipeRow } from "./RecipeRow";
-import { ConfirmActionModal } from "./ConfirmActionModal";
+import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
 
 export const RecipesTable = () => {
   const { recipes, remove } = useCatalogueRecipes();

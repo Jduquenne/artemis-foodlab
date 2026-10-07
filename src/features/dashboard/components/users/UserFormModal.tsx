@@ -11,7 +11,7 @@ import {
   validateUserForm,
 } from "../../../../core/logic/dashboard/userFormLogic";
 import { RoleToggle } from "./RoleToggle";
-import { ConfirmActionModal } from "../data/ConfirmActionModal";
+import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
 
 export interface UserFormModalProps {
   onClose: () => void;

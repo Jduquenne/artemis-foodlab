@@ -5,7 +5,7 @@ import { useCategoriesSnapshot } from "../../../../shared/hooks/useCatalogueSnap
 import { useCatalogueOutdoor } from "../../../../shared/hooks/useCatalogueOutdoor";
 import { OutdoorRow } from "./OutdoorRow";
 import { OutdoorFormModal } from "./OutdoorFormModal";
-import { ConfirmActionModal } from "./ConfirmActionModal";
+import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
 import { includesAnyText, normalizeQuery } from "../../../../shared/utils/textUtils";
 
 export const OutdoorActivitiesTable = () => {

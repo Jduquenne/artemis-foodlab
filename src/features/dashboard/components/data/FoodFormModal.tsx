@@ -15,7 +15,7 @@ import {
   validateNewFoodId,
 } from "../../../../core/logic/dashboard/foodFormLogic";
 import { atwaterKcal } from "../../../../core/logic/nutrition/atwaterLogic";
-import { ConfirmActionModal } from "./ConfirmActionModal";
+import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
 
 export interface FoodFormModalProps {
   food: Food | null;

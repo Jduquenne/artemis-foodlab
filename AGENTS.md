@@ -65,8 +65,8 @@ src/
                        nutrition, planning, profile, recipe, recipeBuilder, shopping, sync, unit)
     catalogue/         in-memory mutable catalogue + change events + code↔uuid map
     services/          apiClient, one service per API resource, Dexie database, catalogue sync
-  features/            dashboard, freezer, household, journal, news, planning,
-                       recipeBuilder, recipes, shopping, sync (import)
+  features/            dashboard, freezer, journal, news, planning, recipeBuilder,
+                       recipes, shopping (incl. household tab), sync (import)
   shared/
     components/        layout/ (Layout, sidebar, settings, demo banner), ui/ (reusable)
     hooks/             all hooks (snapshots, pending, auth init, refresh, search…)

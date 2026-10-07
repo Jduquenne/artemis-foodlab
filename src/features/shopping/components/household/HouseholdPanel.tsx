@@ -1,21 +1,13 @@
 import { useMemo, useState } from 'react';
 import { RotateCcw } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { HouseholdCategory } from '../../../core/domain/household';
-import { getRecords, toggleItem, clearAll } from '../../../core/services/householdService';
-import { distributeToColumns } from '../../../shared/utils/columnUtils';
-import { useHouseholdSnapshot } from '../../../shared/hooks/useCatalogueSnapshot';
-import { withPending } from '../../../shared/utils/withPending';
-import { usePendingKey } from '../../../shared/hooks/usePendingKey';
+import { HOUSEHOLD_CATEGORY_ORDER } from '../../../../core/domain/household';
+import { getRecords, toggleItem, clearAll } from '../../../../core/services/householdService';
+import { distributeToColumns } from '../../../../shared/utils/columnUtils';
+import { useHouseholdSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
+import { withPending } from '../../../../shared/utils/withPending';
+import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { HouseholdCategoryCard } from './HouseholdCategoryCard';
-
-const CATEGORY_ORDER: HouseholdCategory[] = [
-  HouseholdCategory.PANTRY,
-  HouseholdCategory.HYGIENE,
-  HouseholdCategory.MAINTENANCE,
-  HouseholdCategory.PHARMACY,
-  HouseholdCategory.PETS,
-];
 
 export interface HouseholdPanelProps {
   colCount: number;
@@ -48,7 +40,7 @@ export const HouseholdPanel = ({ colCount }: HouseholdPanelProps) => {
 
   const grouped = useMemo(
     () =>
-      CATEGORY_ORDER.map(cat => ({ label: cat, items: allItems.filter(i => i.category === cat) })).filter(
+      HOUSEHOLD_CATEGORY_ORDER.map(cat => ({ label: cat, items: allItems.filter(i => i.category === cat) })).filter(
         g => g.items.length > 0,
       ),
     [allItems],

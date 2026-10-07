@@ -29,7 +29,7 @@ import { RecipeShoppingCard } from './components/meals/RecipeShoppingCard';
 import { SourcesModal } from './components/SourcesModal';
 import { PricePerKgModal } from './components/PricePerKgModal';
 import { HouseholdShoppingCard } from './components/HouseholdShoppingCard';
-import { HouseholdPanel } from '../household/components/HouseholdPanel';
+import { HouseholdPanel } from './components/household/HouseholdPanel';
 import { AddExtraModal } from './components/AddExtraModal';
 import { useRefreshStore } from '../../shared/store/useRefreshStore';
 import { useHouseholdSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
@@ -313,7 +313,6 @@ export const ShoppingModule = () => {
                                         {col.map((card, i) => (
                                             <div key={card.recipeId} className="animate-fade-in-up" style={{ animationDelay: `${(ci + i) * 60}ms` }}>
                                                 <RecipeShoppingCard
-                                                    recipeId={card.recipeId}
                                                     recipeName={card.recipeName}
                                                     directIngredients={card.directIngredients}
                                                     baseGroups={card.baseGroups}

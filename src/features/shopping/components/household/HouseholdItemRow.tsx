@@ -1,6 +1,6 @@
-import { HouseholdItem } from "../../../core/domain/household";
-import { usePendingKey } from "../../../shared/hooks/usePendingKey";
-import { CheckToggleIcon } from "../../../shared/components/ui/CheckToggleIcon";
+import { HouseholdItem } from "../../../../core/domain/household";
+import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
+import { CheckToggleIcon } from "../../../../shared/components/ui/CheckToggleIcon";
 
 export interface HouseholdItemRowProps {
   item: HouseholdItem;

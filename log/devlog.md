@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-07 — `features/` review: shopping + household, step 3 (v6.78.10)
+
+- Done: `features/household/` (3 files) moved to `features/shopping/components/household/` (it only serves the Shopping « Articles » tab since the merge); household category order → `HOUSEHOLD_CATEGORY_ORDER` in `core/domain/household.ts`; `IngredientCheckRow` uses `remainingToBuy` / `checkedSourcesQuantity` instead of its own copy; `RecipeShoppingCard` loses an unused `recipeId` prop and a type re-export nobody imported; `SourceGroupRow` formats its three quantities with one local `formatSourceQty` (2 decimals kept). `AGENTS.md` project map updated.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: switch to the batch source-check endpoint (live in prod, confirmed by the owner); step 4 (theme classes of the shopping files).
+
 ## 2026-10-07 — `features/` review: shopping + household, step 2 (v6.78.9)
 
 - Done: the check state of `ShoppingModule` (7 `useMemo` maps, 3 copy-pasted patch functions, loading effect, all mutations) moved to the pure `buildShoppingCheckState` / `collectSourceCheckRequests` (`core/logic/shopping/shoppingCheckState.ts`) and the hook `useShoppingPeriodChecks`; `ShoppingModule` 641 → 416 lines. Fixed on the way: the loading effect reset state synchronously (rule 7) — data is now stored per period and read only for the current one; a food present under two keys (two units, or recipe + base) showed its source check on one line only and could hit a 409 when checking the other — checks now apply to every key of the food and batch writes are deduplicated by API key. Batch source-check API contract received (not deployed), recorded in `docs/api.md` § Planned.

@@ -9,6 +9,9 @@ import { CheckToggleIcon } from '../../../shared/components/ui/CheckToggleIcon';
 import { compareText } from "../../../shared/utils/sortUtils";
 import { sumBy } from '../../../shared/utils/collectionUtils';
 
+const formatSourceQty = (quantity: number, unit: string): string =>
+  quantity === 0 ? '—' : `${parseFloat(quantity.toFixed(2))}\u00a0${pluralizeUnit(unit, quantity)}`;
+
 export interface SourceGroupRowProps {
   ingredientKey: string;
   group: IngredientSource[];
@@ -47,7 +50,7 @@ export const SourceGroupRow = ({ ingredientKey, group, sourceChecked, onToggleSo
               {group[0].recipeName}
             </p>
             <span className="text-xs font-medium text-orange-500 shrink-0">
-              {totalQty === 0 ? '—' : `${parseFloat(totalQty.toFixed(2))}\u00a0${pluralizeUnit(unit, totalQty)}`}
+              {formatSourceQty(totalQty, unit)}
             </span>
           </div>
           <p className="text-xs text-slate-400 mt-0.5">
@@ -84,7 +87,7 @@ export const SourceGroupRow = ({ ingredientKey, group, sourceChecked, onToggleSo
           {SLOT_LABELS[src.slot as SlotType] ?? src.slot}
           <span className="mx-1 text-slate-300">·</span>
           <span className="text-orange-500 font-medium">
-            {src.quantity === 0 ? '—' : `${parseFloat(src.quantity.toFixed(2))}\u00a0${pluralizeUnit(src.unit, src.quantity)}`}
+            {formatSourceQty(src.quantity, src.unit)}
           </span>
           {src.persons !== undefined && src.baseQuantity !== undefined && (
             <>
@@ -92,7 +95,7 @@ export const SourceGroupRow = ({ ingredientKey, group, sourceChecked, onToggleSo
               <span className="text-slate-500 font-semibold">×{src.persons}</span>
               <span className="mx-1 text-slate-300">·</span>
               <span className="text-slate-400">
-                base&nbsp;{src.baseQuantity === 0 ? '—' : `${parseFloat(src.baseQuantity.toFixed(2))}\u00a0${pluralizeUnit(src.unit, src.baseQuantity)}`}
+                base&nbsp;{formatSourceQty(src.baseQuantity, src.unit)}
               </span>
             </>
           )}

@@ -6,6 +6,14 @@ export enum HouseholdCategory {
   PETS = "Animaux",
 }
 
+export const HOUSEHOLD_CATEGORY_ORDER: HouseholdCategory[] = [
+  HouseholdCategory.PANTRY,
+  HouseholdCategory.HYGIENE,
+  HouseholdCategory.MAINTENANCE,
+  HouseholdCategory.PHARMACY,
+  HouseholdCategory.PETS,
+];
+
 export interface HouseholdItem {
   id: string;
   categoryId: string;

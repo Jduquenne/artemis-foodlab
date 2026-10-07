@@ -5,10 +5,7 @@ import { RecipeBaseGroupSection } from './RecipeBaseGroupSection';
 import { useAnyPendingKey } from '../../../../shared/hooks/useAnyPendingKey';
 import { CheckToggleIcon } from '../../../../shared/components/ui/CheckToggleIcon';
 
-export type { RecipeCardIngredient, RecipeBaseGroup };
-
 export interface RecipeShoppingCardProps {
-    recipeId: string;
     recipeName: string;
     directIngredients: RecipeCardIngredient[];
     baseGroups: RecipeBaseGroup[];

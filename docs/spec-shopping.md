@@ -25,5 +25,5 @@ Need: add a manual line (e.g. a specific cheese wanted on top of a recipe) that 
 
 ## Household items
 
-- Checked = **"to buy"** (`household-shopping-flags`), `householdService` (`getRecords` / `toggleItem` / `clearAll`). Shown in the household tab of Shopping and in `HouseholdPanel`.
+- Checked = **"to buy"** (`household-shopping-flags`), `householdService` (`getRecords` / `toggleItem` / `clearAll`). Shown in the household tab of Shopping (`features/shopping/components/household/HouseholdPanel.tsx`, category order `HOUSEHOLD_CATEGORY_ORDER` in `core/domain/household.ts`) and as « Articles du quotidien » in the ingredients list.
 - Household categories from the API are not wired in the front.

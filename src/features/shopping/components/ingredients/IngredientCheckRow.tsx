@@ -1,12 +1,11 @@
 import { Snowflake } from 'lucide-react';
 import { ConsolidatedIngredient, IngredientSource } from '../../../../core/domain/shopping';
-import { buildSourceCheckKey } from '../../../../core/logic/shopping/shoppingChecks';
+import { checkedSourcesQuantity, remainingToBuy } from '../../../../core/logic/shopping/shoppingChecks';
 import { FreezerBag } from '../../../../core/domain/freezer';
 import { IngredientTooltip } from './IngredientTooltip';
 import { pluralizeUnit, formatQty } from '../../../../shared/utils/unitUtils';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { CheckToggleIcon } from '../../../../shared/components/ui/CheckToggleIcon';
-import { sumBy } from '../../../../shared/utils/collectionUtils';
 import { DecimalInput } from '../../../../shared/components/ui/DecimalInput';
 
 export interface IngredientCheckRowProps {
@@ -44,12 +43,8 @@ export const IngredientCheckRow = ({
 }: IngredientCheckRowProps) => {
     const pending = usePendingKey(`shopping-check:${item.key}`);
 
-    const checkedSourceQty = sumBy(
-        item.sources.filter(s => sourceChecked.has(buildSourceCheckKey(item.key, s))),
-        s => s.quantity,
-    );
-    const effectiveTotal = Math.max(0, item.totalQuantity - checkedSourceQty);
-    const needed = effectiveTotal === 0 ? 0 : Math.max(0, effectiveTotal - stock);
+    const effectiveTotal = Math.max(0, item.totalQuantity - checkedSourcesQuantity(item, sourceChecked));
+    const needed = remainingToBuy(item, { [item.key]: stock }, sourceChecked);
     const hasStock = effectiveTotal > 0 && stock > 0;
     const canEditStock = item.totalQuantity > 0;
 

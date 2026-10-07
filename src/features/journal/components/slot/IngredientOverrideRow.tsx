@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { RotateCcw } from "lucide-react";
 import { Ingredient } from "../../../../core/domain/ingredient";
 import { pluralizeUnit } from "../../../../shared/utils/unitUtils";
@@ -19,6 +20,12 @@ export const IngredientOverrideRow = ({
   onReset,
 }: IngredientOverrideRowProps) => {
   const value = overrideQuantity ?? defaultQuantity;
+  const [draft, setDraft] = useState<number | null>(null);
+
+  const commit = () => {
+    if (draft !== null && Math.abs(draft - value) > 0.001) onChange(draft);
+    setDraft(null);
+  };
   const isModified = Math.abs(value - defaultQuantity) > 0.001;
   const unitLabel = ingredient.unit ? pluralizeUnit(ingredient.unit, value) : "";
 
@@ -31,11 +38,11 @@ export const IngredientOverrideRow = ({
       </span>
       <div className="flex items-center gap-1 shrink-0">
         <DecimalInput
-          value={value}
+          value={draft ?? value}
           aria-label={`Quantité — ${ingredient.name}`}
-          onValueChange={(v) => {
-            if (v !== null) onChange(v);
-          }}
+          onValueChange={setDraft}
+          onBlur={commit}
+          onKeyDown={(e) => { if (e.key === "Enter") e.currentTarget.blur(); }}
           className="w-12 text-[11px] font-bold text-center bg-slate-50 dark:bg-slate-200 rounded px-1 py-0.5 outline-none focus:ring-1 focus:ring-orange-400 text-orange-500"
         />
         {unitLabel && <span className="text-[10px] text-slate-400 w-8">{unitLabel}</span>}

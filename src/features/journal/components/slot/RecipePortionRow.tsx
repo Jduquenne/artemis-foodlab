@@ -6,9 +6,9 @@ import { useMacroCatalogue } from "../../../../shared/hooks/useMacroCatalogue";
 import { defaultIngredientOverridesForPortions, isOverridableIngredient } from "../../../../core/logic/journal/journalOverrideLogic";
 import { useJournalStore } from "../../../../shared/store/useJournalStore";
 import { useActiveJournalOverrides } from "../../../../shared/hooks/useActiveJournalOverrides";
-import { useProfileStore } from "../../../../shared/store/useProfileStore";
 import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
 import { withPending } from "../../../../shared/utils/withPending";
+import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
 import { IngredientOverrideRow } from "./IngredientOverrideRow";
 
 export interface RecipePortionRowProps {
@@ -19,8 +19,8 @@ export interface RecipePortionRowProps {
 export const RecipePortionRow = ({ recipeId, planningSlotItemId }: RecipePortionRowProps) => {
   const { portionOverrides, gramOverrides, ingredientOverrides } = useActiveJournalOverrides();
   const { setPortionOverride, setGramOverride, setIngredientOverride, resetIngredientOverride } = useJournalStore();
-  const activeProfileId = useProfileStore((s) => s.activeProfileId);
   const [expanded, setExpanded] = useState(false);
+  const [gramsDraft, setGramsDraft] = useState<number | null>(null);
   const key = planningSlotItemId ?? "";
   const pending = usePendingKey(`journal-override:${key}`);
   const catalogue = useMacroCatalogue();
@@ -36,25 +36,26 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId }: RecipePortion
     const defaultGrams = Math.round(baseGrams);
     const grams = gramOverrides[key] ?? defaultGrams;
     const kcal = (catalogue.recipeMacros[recipeId]?.kcal ?? 0) * (grams / baseGrams);
+    const commitGrams = () => {
+      if (planningSlotItemId && gramsDraft !== null && gramsDraft > 0 && gramsDraft !== grams) {
+        setGramOverride(planningSlotItemId, recipeId, gramsDraft).catch(() => undefined);
+      }
+      setGramsDraft(null);
+    };
 
     return (
       <div className="flex flex-col py-0.5 gap-0.5">
         <span className="text-sm text-slate-700 font-semibold leading-tight w-full">{name}</span>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1">
-            <input
-              key={`${activeProfileId}:${key}`}
-              type="number"
-              min={1}
-              step="any"
-              defaultValue={grams}
+            <DecimalInput
+              value={gramsDraft ?? grams}
               aria-label={`Quantité en grammes — ${name}`}
               disabled={!planningSlotItemId}
-              onChange={(e) => {
-                const v = parseFloat(e.target.value);
-                if (!isNaN(v) && v > 0 && planningSlotItemId) setGramOverride(planningSlotItemId, recipeId, v);
-              }}
-              className="w-12 text-[11px] font-bold text-center bg-slate-50 dark:bg-slate-200 rounded px-1 py-0.5 outline-none focus:ring-1 focus:ring-orange-400 text-orange-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              onValueChange={setGramsDraft}
+              onBlur={commitGrams}
+              onKeyDown={(e) => { if (e.key === "Enter") e.currentTarget.blur(); }}
+              className="w-12 text-[11px] font-bold text-center bg-slate-50 dark:bg-slate-200 rounded px-1 py-0.5 outline-none focus:ring-1 focus:ring-orange-400 text-orange-500"
             />
             <span className="text-[11px] text-slate-400">g</span>
           </div>
@@ -95,7 +96,7 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId }: RecipePortion
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-0.5">
           <button
-            onClick={() => planningSlotItemId && withPending(`journal-override:${key}`, () => setPortionOverride(planningSlotItemId, recipeId, Math.max(1, portions - 1)))}
+            onClick={() => planningSlotItemId && withPending(`journal-override:${key}`, () => setPortionOverride(planningSlotItemId, recipeId, Math.max(1, portions - 1))).catch(() => undefined)}
             disabled={!planningSlotItemId || pending}
             aria-label={`Réduire les portions — ${name}`}
             className="w-5 h-5 flex items-center justify-center rounded text-slate-400 hover:text-orange-500 transition-colors disabled:opacity-40"
@@ -106,7 +107,7 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId }: RecipePortion
             {portions}×
           </span>
           <button
-            onClick={() => planningSlotItemId && withPending(`journal-override:${key}`, () => setPortionOverride(planningSlotItemId, recipeId, Math.min(10, portions + 1)))}
+            onClick={() => planningSlotItemId && withPending(`journal-override:${key}`, () => setPortionOverride(planningSlotItemId, recipeId, Math.min(10, portions + 1))).catch(() => undefined)}
             disabled={!planningSlotItemId || pending}
             aria-label={`Augmenter les portions — ${name}`}
             className="w-5 h-5 flex items-center justify-center rounded text-slate-400 hover:text-orange-500 transition-colors disabled:opacity-40"
@@ -127,8 +128,8 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId }: RecipePortion
               ingredient={ingredient}
               defaultQuantity={scaledDefaults[ingredient.id] ?? 0}
               overrideQuantity={itemIngredientOverrides?.[ingredient.id]}
-              onChange={(value) => setIngredientOverride(planningSlotItemId, recipeId, ingredient.id, value)}
-              onReset={() => resetIngredientOverride(planningSlotItemId, recipeId, ingredient.id)}
+              onChange={(value) => setIngredientOverride(planningSlotItemId, recipeId, ingredient.id, value).catch(() => undefined)}
+              onReset={() => resetIngredientOverride(planningSlotItemId, recipeId, ingredient.id).catch(() => undefined)}
             />
           ))}
         </div>

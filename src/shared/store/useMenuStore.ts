@@ -39,8 +39,8 @@ export const useMenuStore = create<MenuState>((set, get) => ({
 
   setShoppingDays: async (days) => {
     const newPeriodId = await replacePeriod(get().currentPeriodId, days);
-    await clearHouseholdItems();
     set({ shoppingDays: days, currentPeriodId: newPeriodId });
+    await clearHouseholdItems();
   },
 
   replaceShoppingPeriod: ({ id, days }) => {

@@ -16,8 +16,12 @@ export const toggleItem = async (id: string) => {
 
 export const clearAll = async () => {
   const records = await db.household.toArray();
-  await Promise.all(records.map(r => apiFetch(`/household-shopping-flags/${r.id}`, { method: "DELETE" })));
-  await db.household.clear();
+  const results = await Promise.allSettled(
+    records.map(r => apiFetch(`/household-shopping-flags/${r.id}`, { method: "DELETE" })),
+  );
+  await db.household.bulkDelete(records.filter((_, i) => results[i].status === "fulfilled").map(r => r.id));
+  const failure = results.find((r): r is PromiseRejectedResult => r.status === "rejected");
+  if (failure) throw failure.reason;
 };
 
 export async function applyHouseholdFlags(mapped: { id: string; lastCheckedAt: string }[]): Promise<void> {

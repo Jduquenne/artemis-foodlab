@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-07 — `core/services/` review, step 3 (v6.78.5)
+
+- Done: local cache kept consistent with the API on partial failures. `addItemToCategory` (food): if a bag creation fails, the item and the bags already created are still written to the cache before the error propagates (a retry no longer creates a hidden duplicate). `householdService.clearAll`: `Promise.allSettled`, only the flags actually deleted leave the cache, then the first error is rethrown. `useMenuStore.setShoppingDays`: the new period id is stored before clearing the household flags, so a failure there no longer leaves the store pointing to the deleted period. `useFreezerStock` reads through `getCategories()` (alphabetical order, owner's choice) instead of Dexie directly.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: API prompts (atomic freezer item + bags, shopping period days in one call) relayed by the owner; `HouseholdPanel.handleReset` has no `withPending` and leaves the spinner on if `clearAll` throws (for the `features/` review).
+
 ## 2026-10-07 — `core/services/` review, step 2 (v6.78.4)
 
 - Done: freezer bag dates (`freezerService.today`, `AddFreezerItemModal`) used `toISOString().slice(0, 10)`, i.e. the UTC date: a bag frozen between midnight and 1-2 am (France) was dated the day before. Now `format(new Date(), "yyyy-MM-dd")` (local date, date-fns).

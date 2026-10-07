@@ -76,21 +76,24 @@ export const addItemToCategory = async (
       body: { type: "food", categoryId, name: item.name, foodId: item.foodId ?? null },
     });
     const bags: FreezerBag[] = [];
-    for (const bag of item.bags) {
-      const createdBag = await apiFetchJson<ApiFreezerBag>("/freezer-bags", {
-        method: "POST",
-        body: {
-          foodItemId: created.id,
-          quantity: bag.quantity,
-          unit: bag.unit,
-          preparation: bag.preparation ?? null,
-          addedDate: bag.addedDate,
-        },
-      });
-      bags.push(mapApiBag(createdBag));
+    try {
+      for (const bag of item.bags) {
+        const createdBag = await apiFetchJson<ApiFreezerBag>("/freezer-bags", {
+          method: "POST",
+          body: {
+            foodItemId: created.id,
+            quantity: bag.quantity,
+            unit: bag.unit,
+            preparation: bag.preparation ?? null,
+            addedDate: bag.addedDate,
+          },
+        });
+        bags.push(mapApiBag(createdBag));
+      }
+    } finally {
+      const newItem: FoodFreezerItem = { id: created.id, type: "food", name: item.name, foodId: item.foodId, bags };
+      await withCategory(categoryId, cat => ({ items: [...cat.items, newItem] }));
     }
-    const newItem: FoodFreezerItem = { id: created.id, type: "food", name: item.name, foodId: item.foodId, bags };
-    await withCategory(categoryId, cat => ({ items: [...cat.items, newItem] }));
   } else {
     const addedDate = today();
     const recipeId = getIdByCode(item.recipeId) ?? item.recipeId;

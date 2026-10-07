@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-07 — `features/` review: freezer, step 2 (v6.78.14)
+
+- Done: `AddBagForm` and `EditBagForm` share the new `BagFields` component (quantity, unit, preparation, confirm / cancel); the category card summary line → `formatFreezerCategoryCount` (`freezerStockLogic`); the duplicate food name check, written twice with slightly different rules (one trimmed, one not) → `isFreezerFoodNameTaken` (`freezerItemsLogic`), used by `AddFreezerItemModal` and `FoodSearchInput`; `BagRow` no longer splits and rebuilds the edit payload (done in step 1).
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: step 3 (confirmation before deleting a non-empty category), step 4 (theme colours, « Aliment » tab orange).
+
 ## 2026-10-07 — `features/` review: freezer, step 1 (v6.78.13)
 
 - Done: read-only review of `features/freezer` (17 files), findings arbitrated by the owner (`dev/refactoring.md`). Step 1: « Ajouter à la catégorie » stayed stuck on « Enregistrement… » forever if the API call failed — now `withPending` and the modal stays open on error; six forms with hand-made `saving` states (freezer rename, category rename ×2, category creation, add bag, edit bag) go through `withPending` and keep the form open on error; the three inline renames share the new hook `useInlineRename`; every freezer `withPending` call now catches its rejection (no unhandled promise; the global toast still shows).

@@ -4,7 +4,7 @@ import { FreezerCategory } from "../../../../core/domain/freezer";
 import { updateCategoryName, updateCategoryColor, deleteCategory } from "../../../../core/services/freezerService";
 import { getFreezerCategoryAccent } from "../../freezerAccents";
 import { sortFreezerItemsAlphabetically } from "../../../../core/logic/freezer/freezerItemsLogic";
-import { summarizeFreezerCategory } from "../../../../core/logic/freezer/freezerStockLogic";
+import { formatFreezerCategoryCount, summarizeFreezerCategory } from "../../../../core/logic/freezer/freezerStockLogic";
 import { InlineNameEditor } from "../InlineNameEditor";
 import { FreezerColorPicker } from "./FreezerColorPicker";
 import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
@@ -58,11 +58,7 @@ export const FreezerCategoryCard = ({ category, onClick }: FreezerCategoryCardPr
   const previewItems = sortFreezerItemsAlphabetically(category.items).slice(0, 7);
   const extra = summary.total - previewItems.length;
 
-  const countLine =
-    summary.total === 0
-      ? "Vide"
-      : `${summary.total} article${summary.total > 1 ? "s" : ""}` +
-        (summary.portions > 0 ? ` · ${summary.portions} portion${summary.portions > 1 ? "s" : ""}` : "");
+  const countLine = formatFreezerCategoryCount(summary);
 
   return (
     <div

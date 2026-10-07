@@ -98,3 +98,10 @@ export function summarizeFreezerCategory(category: FreezerCategory): FreezerCate
   }
   return { total: category.items.length, foodCount, batchCount, portions };
 }
+
+export function formatFreezerCategoryCount(summary: FreezerCategorySummary): string {
+  if (summary.total === 0) return "Vide";
+  const items = `${summary.total} article${summary.total > 1 ? "s" : ""}`;
+  if (summary.portions === 0) return items;
+  return `${items} · ${summary.portions} portion${summary.portions > 1 ? "s" : ""}`;
+}

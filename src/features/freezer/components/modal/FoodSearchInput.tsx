@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
 import { searchFreezerFoods } from "../../../../core/logic/freezer/freezerSearchLogic";
+import { isFreezerFoodNameTaken } from "../../../../core/logic/freezer/freezerItemsLogic";
 import { useFoodsSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 
 export interface FoodSearchInputProps {
@@ -11,11 +12,6 @@ export interface FoodSearchInputProps {
 
 export const FoodSearchInput = ({ value, onChange, existingNames }: FoodSearchInputProps) => {
   const [open, setOpen] = useState(false);
-
-  const existingNamesLower = useMemo(
-    () => new Set((existingNames ?? []).map(n => n.toLowerCase())),
-    [existingNames]
-  );
 
   const foods = useFoodsSnapshot();
   const suggestions = useMemo(() => searchFreezerFoods(foods, value), [foods, value]);
@@ -40,7 +36,7 @@ export const FoodSearchInput = ({ value, onChange, existingNames }: FoodSearchIn
       {showList && (
         <div className="flex flex-col rounded-2xl border border-slate-200 overflow-hidden bg-white dark:bg-slate-100 shadow-sm">
           {suggestions.map(food => {
-            const isDuplicate = existingNamesLower.has(food.name.toLowerCase());
+            const isDuplicate = isFreezerFoodNameTaken(existingNames ?? [], food.name);
             return (
               <button
                 key={food.id}

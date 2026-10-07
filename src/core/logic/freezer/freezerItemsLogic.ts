@@ -15,3 +15,8 @@ export function distributeFreezerItemsToColumns(items: FreezerItem[], colCount: 
   const perCol = Math.ceil(sorted.length / colCount);
   return Array.from({ length: colCount }, (_, i) => sorted.slice(i * perCol, (i + 1) * perCol));
 }
+
+export function isFreezerFoodNameTaken(existingNames: string[], name: string): boolean {
+  const normalized = name.trim().toLowerCase();
+  return existingNames.some((n) => n.trim().toLowerCase() === normalized);
+}

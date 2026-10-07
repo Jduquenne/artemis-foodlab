@@ -4,6 +4,7 @@ import { X } from "lucide-react";
 import { FoodFreezerItem, BatchFreezerItem } from "../../../../core/domain/freezer";
 import { Unit } from "../../../../core/domain/ingredient";
 import { addItemToCategory } from "../../../../core/services/freezerService";
+import { isFreezerFoodNameTaken } from "../../../../core/logic/freezer/freezerItemsLogic";
 import { FoodTab } from "./FoodTab";
 import { BatchTab } from "./BatchTab";
 import { parseDecimal } from "../../../../shared/utils/numberUtils";
@@ -33,9 +34,7 @@ export const AddFreezerItemModal = ({ categoryId, existingFoodNames, onClose }: 
 
   const handleClose = () => { setIsClosing(true); setTimeout(onClose, 300); };
 
-  const isDuplicateName = tab === "food" && (existingFoodNames ?? []).some(
-    n => n.toLowerCase() === foodName.trim().toLowerCase()
-  );
+  const isDuplicateName = tab === "food" && isFreezerFoodNameTaken(existingFoodNames ?? [], foodName);
 
   const parsedFoodQty = parseDecimal(foodQty);
   const canSave =

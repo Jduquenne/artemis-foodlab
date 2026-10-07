@@ -16,6 +16,17 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-07 — Session end (« pause test », v6.79.6)
+
+- Done this session (v6.78.1 → 6.79.5, one commit per step): migration notes arbitrated; `core/services/` reviewed (cache services merged, atomic API calls for freezer item + bags and shopping period days, local cache kept consistent on partial failures); `features/shopping` + household tab, `features/freezer`, `features/journal` reviewed; named theme colours (D-031); batch source checks endpoint used. Three API endpoints were added by the API session and confirmed live by the owner: `POST /freezer-items` with `bags`, `PUT /shopping-periods/current`, `PUT /shopping-periods/:periodId/source-checks`.
+- Resume here: P4 review of `features/planning` (24 files, ~2 700 lines) — read-only first, findings to the owner, then one commit per step. Known points to include: ISO week-year (`PlanningModule.tsx:101`, also `JournalModule`), UTC date in the `d` URL parameter (`PlanningModule.tsx:77/106/195/203`), `dayNameOf` available in `weekUtils`, theme colours (D-031, script approach: map exact pairs, report one-offs).
+- To test first (all validated by tsc + lint only), light **and** dark mode:
+  1. Freezer: add a food with a bag (one atomic call), reload; add / edit / duplicate a bag; rename the freezer and a category (card + detail; Enter, Escape, empty, unchanged); create a category; delete an empty category (direct) and a non-empty one (confirmation); « Aliment » tab orange in the add modal.
+  2. Shopping: change the shopping days, reload, then remove all days; check / uncheck ingredients, stock with a comma (« 1,5 »); « Utilisé dans » sources and freezer bags; « Repas » view: check a whole card and a base group, reload; extras (add / edit / check / delete); « Articles » tab and « Tout réinitialiser »; price per kg.
+  3. Journal: grams of a single-ingredient meal saved on Enter / blur, reload; two ingredient edits in a row on the same recipe, reload; profile switch; « Objectifs » (empty field disables « Valider ») and « Moyenne » (no close on backdrop); day navigation across a week change; row kcal sum = card total.
+  4. Dashboard: any write still shows its confirmation (`ConfirmActionModal` moved to `shared/components/ui/`).
+- Still open: owner test results; next review folder (planning).
+
 ## 2026-10-07 — Journal migrated to the named theme colours (v6.79.5)
 
 - Done: the 21 `dark:*-slate-*` classes of `features/journal` replaced by the named colours (D-031), identical rendering except one hover: inactive profile in `ProfileSwitcher` (`hover:bg-slate-50 dark:hover:bg-slate-200/60` → `hover:bg-subtle-tint`, 40 % instead of 60 % in dark mode). This closes the journal review.

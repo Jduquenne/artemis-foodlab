@@ -5,15 +5,15 @@ The detailed backlog and future features live in `dev/issues.json` and `dev/refa
 
 ## Current focus
 
-1. 🟡 Code review refactoring: next is `core/services/`, then `features/`, then `shared/` (open points in `dev/refactoring.md`).
+1. 🟡 Code review refactoring: `core/services/`, Shopping, Freezer and Journal done; next is `features/planning` (largest, ties in with the ISO week-year bug), then dashboard, recipeBuilder, recipes, news + sync, then `shared/` (open points in `dev/refactoring.md`).
 2. ⬜ Fix the ISO week-year bug (see Known bugs).
 3. 🟡 Tablet portrait pass on the remaining screens.
 
 ## Honest status (2026-10-07)
 
-- Production at v6.78.0 on GitHub Pages, backed by the API since 2026-09-09.
+- Production at v6.78.0 on GitHub Pages, backed by the API since 2026-09-09. `master` holds v6.79.6 (session of 2026-10-07: services, shopping, freezer, journal reviews; deployed with each push on `master`).
 - Working in prod (confirmed by the owner): bootstrap boot, media batch resolution, journal per-ingredient overrides, profiles (v6.73.0), planning desserts + batch writes, shopping extras, account screen, admin dashboard.
-- Delivered, owner validation pending: demo mode (v6.78.0, the API must be in prod before the front); front fix for unexpected logouts (needs confirmation in prod).
+- Delivered, owner validation pending: demo mode (v6.78.0, the API must be in prod before the front); front fix for unexpected logouts (needs confirmation in prod); everything from v6.78.2 to v6.79.5 (validated by tsc + lint only — test list in `log/devlog.md`, entry « Session end »).
 - `npx tsc -b` and `npm run lint` pass. No automated tests exist.
 - UI changes are validated by type check + lint only unless the owner tested them in a browser.
 
@@ -32,7 +32,9 @@ Milestones reconstructed from history; definitions of done marked "proposed" wer
 ### P4 — Code review refactoring
 
 - ✅ `docs`, `public/`, `scripts/`, repo root, `core/domain`, `core/catalogue` (ex `typed-db`), catalogue change signal + snapshots + cross-device refresh, `core/logic`, shared utilities, macro labels centralised.
-- ⬜ `core/services/` (23 files, not reviewed), then `features/`, then `shared/`.
+- ✅ `core/services/` (2026-10-07; atomic freezer item + shopping period API calls).
+- 🟡 `features/`: ✅ shopping (incl. household tab, batch source checks), freezer, journal; ⬜ planning, dashboard, recipeBuilder, recipes, news, sync.
+- ⬜ `shared/`.
 - ⬜ Layering: `core/logic/` imports `shared/utils/` (`docs/architecture.md` § Placement rules); fix during the `shared/` review.
 - 🟡 Theming: replace the pre-existing `dark:*-slate-*` pairs with the named theme colours (D-031), feature by feature, as each folder is reviewed. Done: Shopping (incl. household tab), Freezer, Journal. Remaining: 194 occurrences in 74 files on 2026-10-07 (`docs/development.md` § Golden-rule checks).
 

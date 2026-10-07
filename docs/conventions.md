@@ -60,7 +60,7 @@ Any mutation triggered by a click (except a form with its own local `submitting`
 
 - `shared/store/usePendingStore.ts` — global `Set<string>` of keys in flight.
 - `shared/hooks/usePendingKey.ts` / `useAnyPendingKey.ts` — read one key, or the logical OR of several.
-- `shared/utils/withPending.ts` — `withPending(key, () => apiCall())` marks the key during the call and silently ignores a second call with the same key until the first resolves (double-click guard). Returns `undefined` in that case — always check the return value.
+- `shared/utils/withPending.ts` — `withPending(key, () => apiCall())` (`key` can be an array: one call that marks several rows, e.g. a batch of shopping source checks) marks the key during the call and silently ignores a second call with the same key until the first resolves (double-click guard). Returns `undefined` in that case — always check the return value.
 - `shared/components/ui/CheckToggleIcon.tsx` — replaces a `CheckCircle2`/`Circle` pair with an animated `Loader2` when `pending`.
 - Key at the level of the **business action**, not the HTTP request: an action that fires several calls (e.g. check all ingredients of a recipe) uses one key per affected element, never one per request — otherwise the spinner flickers. (Why not in `apiClient`: `docs/decisions.md` D-008.)
 - **Pitfall**: never wrap a free-text `onChange` with `withPending` — the guard can drop the last keystroke if it lands while a previous request is in flight, and nothing resends it. Reserved for discrete interactions (click, blur, explicit confirmation). Example: the grams field of `RecipePortionRow` deliberately has none.

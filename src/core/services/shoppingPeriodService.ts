@@ -81,27 +81,16 @@ export async function upsertItemCheck(
   });
 }
 
-export interface SourceCheckTarget {
+export interface SourceCheckUpsert {
   foodId: string;
   recipeId: string;
   day: string;
   slot: string;
+  isChecked: boolean;
 }
 
-export async function upsertSourceCheck(
-  periodId: string,
-  existingId: string | undefined,
-  target: SourceCheckTarget,
-  isChecked: boolean,
-): Promise<ApiSourceCheck> {
-  if (existingId) {
-    return apiFetchJson<ApiSourceCheck>(`/shopping-periods/${periodId}/source-checks/${existingId}`, {
-      method: "PUT",
-      body: { isChecked },
-    });
-  }
-  return apiFetchJson<ApiSourceCheck>(`/shopping-periods/${periodId}/source-checks`, {
-    method: "POST",
-    body: { ...target, isChecked },
+export const upsertSourceChecks = (periodId: string, checks: SourceCheckUpsert[]) =>
+  apiFetchJson<ApiSourceCheck[]>(`/shopping-periods/${periodId}/source-checks`, {
+    method: "PUT",
+    body: { checks },
   });
-}

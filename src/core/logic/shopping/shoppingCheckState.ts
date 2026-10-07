@@ -11,7 +11,6 @@ export interface ShoppingCheckState {
   stocks: Record<string, number>;
   freezerSelection: Record<string, string[]>;
   sourceChecked: Set<string>;
-  sourceCheckIdByKey: Map<string, string>;
 }
 
 export interface SourceToggle {
@@ -65,13 +64,11 @@ export function buildShoppingCheckState(
   }
 
   const sourceChecked = new Set<string>();
-  const sourceCheckIdByKey = new Map<string, string>();
   for (const sc of sourceChecks) {
+    if (!sc.isChecked) continue;
     const source = { recipeId: recipeCodeOf(sc.recipeId), day: sc.day, slot: sc.slot };
     for (const key of keysByFoodId.get(sc.foodId) ?? []) {
-      const localKey = buildSourceCheckKey(key, source);
-      sourceCheckIdByKey.set(localKey, sc.id);
-      if (sc.isChecked) sourceChecked.add(localKey);
+      sourceChecked.add(buildSourceCheckKey(key, source));
     }
   }
 
@@ -83,7 +80,6 @@ export function buildShoppingCheckState(
     stocks,
     freezerSelection,
     sourceChecked,
-    sourceCheckIdByKey,
   };
 }
 

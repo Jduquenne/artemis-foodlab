@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-07 — Batch source checks (v6.78.11)
+
+- Done: the batch endpoint `PUT /shopping-periods/:periodId/source-checks` is live in prod (confirmed by the owner). Checking a source, a base group or a whole recipe card in the « Repas » view now sends one call (deduplicated requests, all or nothing) instead of one request per source in series; the state is rebuilt by id from the response. `withPending` accepts an array of keys so every affected row shows its spinner. `upsertSourceCheck`, `SourceCheckTarget` and the now unused `sourceCheckIdByKey` removed. Contract moved from § Planned to § Shopping in `docs/api.md`.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser nor against the API.
+- Still open: owner test in prod (check / uncheck a recipe card and a base group, reload); step 4 of the shopping review (theme classes).
+
 ## 2026-10-07 — `features/` review: shopping + household, step 3 (v6.78.10)
 
 - Done: `features/household/` (3 files) moved to `features/shopping/components/household/` (it only serves the Shopping « Articles » tab since the merge); household category order → `HOUSEHOLD_CATEGORY_ORDER` in `core/domain/household.ts`; `IngredientCheckRow` uses `remainingToBuy` / `checkedSourcesQuantity` instead of its own copy; `RecipeShoppingCard` loses an unused `recipeId` prop and a type re-export nobody imported; `SourceGroupRow` formats its three quantities with one local `formatSourceQty` (2 decimals kept). `AGENTS.md` project map updated.

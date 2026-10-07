@@ -19,7 +19,7 @@ import {
   fetchSourceChecks,
   updateExtra,
   upsertItemCheck,
-  upsertSourceCheck,
+  upsertSourceChecks,
 } from "../../core/services/shoppingPeriodService";
 import { useRefreshStore } from "../store/useRefreshStore";
 import { withPending } from "../utils/withPending";
@@ -40,6 +40,10 @@ const recipeApiIdOf = (recipeCode: string) => getIdByCode(recipeCode) ?? recipeC
 
 function upsertById<T extends { id: string }>(list: T[], item: T): T[] {
   return list.some((e) => e.id === item.id) ? list.map((e) => (e.id === item.id ? item : e)) : [...list, item];
+}
+
+function upsertAllById<T extends { id: string }>(list: T[], items: T[]): T[] {
+  return items.reduce(upsertById, list);
 }
 
 export function useShoppingPeriodChecks(
@@ -120,13 +124,13 @@ export function useShoppingPeriodChecks(
 
   const toggleSourceBatch = async (toggles: SourceToggle[], isChecked: boolean) => {
     if (!periodId) return;
-    for (const request of collectSourceCheckRequests(toggles, state.keyToFoodId, recipeApiIdOf)) {
-      const existingId = state.sourceCheckIdByKey.get(request.localKey);
-      const updated = await withPending(`shopping-source:${request.localKey}`, () =>
-        upsertSourceCheck(periodId, existingId, request.target, isChecked),
-      );
-      if (updated) patch(periodId, (p) => ({ ...p, sourceChecks: upsertById(p.sourceChecks, updated) }));
-    }
+    const requests = collectSourceCheckRequests(toggles, state.keyToFoodId, recipeApiIdOf);
+    if (requests.length === 0) return;
+    const updated = await withPending(
+      requests.map((r) => `shopping-source:${r.localKey}`),
+      () => upsertSourceChecks(periodId, requests.map((r) => ({ ...r.target, isChecked }))),
+    ).catch(() => undefined);
+    if (updated) patch(periodId, (p) => ({ ...p, sourceChecks: upsertAllById(p.sourceChecks, updated) }));
   };
 
   const toggleSourceCheck = (ingredientKey: string, sources: IngredientSource[], isChecked: boolean) =>

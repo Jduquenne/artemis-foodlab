@@ -1,19 +1,7 @@
 import { apiFetch, apiFetchJson } from "./apiClient";
 import { MacroTargets } from "../domain/nutrition";
 import { Profile } from "../domain/profile";
-import { sortProfilesByPosition } from "../logic/profile/profileLogic";
-
-export interface ApiProfile {
-  id: string;
-  name: string;
-  color: string;
-  position: number;
-  kcalTarget: number;
-  proteinsTarget: number;
-  lipidsTarget: number;
-  carbohydratesTarget: number;
-  fibersTarget: number;
-}
+import { ApiProfile, mapProfile } from "../logic/profile/profileApiMapper";
 
 export interface CreateProfileInput {
   name: string;
@@ -26,26 +14,6 @@ export interface UpdateProfileInput {
   position?: number;
   kcalTarget?: number;
   macroTargets?: MacroTargets;
-}
-
-export function mapProfile(api: ApiProfile): Profile {
-  return {
-    id: api.id,
-    name: api.name,
-    color: api.color,
-    position: api.position,
-    kcalTarget: api.kcalTarget,
-    macroTargets: {
-      proteins: api.proteinsTarget,
-      lipids: api.lipidsTarget,
-      carbohydrates: api.carbohydratesTarget,
-      fibers: api.fibersTarget,
-    },
-  };
-}
-
-export function mapProfiles(api: ApiProfile[]): Profile[] {
-  return sortProfilesByPosition(api.map(mapProfile));
 }
 
 function buildUpdateBody(input: UpdateProfileInput): Record<string, unknown> {
@@ -61,10 +29,6 @@ function buildUpdateBody(input: UpdateProfileInput): Record<string, unknown> {
     body.fibersTarget = input.macroTargets.fibers;
   }
   return body;
-}
-
-export async function fetchProfiles(): Promise<Profile[]> {
-  return mapProfiles(await apiFetchJson<ApiProfile[]>("/profiles"));
 }
 
 export async function createProfileApi(input: CreateProfileInput): Promise<Profile> {

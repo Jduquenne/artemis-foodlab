@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-07 — `core/services/` review, step 1 (v6.78.3)
+
+- Done: read-only review of the 23 files of `core/services/`, findings arbitrated by the owner (decision log in `dev/refactoring.md`). Step 1: the five Dexie catalogue cache files (`foodService`, `outdoorService`, `householdItemsService`, `recipeCategoriesService`, `recipesService`) merged into `catalogueCacheService.ts`; profile mapper moved to `core/logic/profile/profileApiMapper.ts`; unused `getAllSlots` and `fetchProfiles` removed; `updateBagInFoodItem` builds its update object once.
+- Numbers: 23 → 19 files in `core/services/`. `npx tsc -b` + `npm run lint` pass; no behaviour change intended, not checked in a browser.
+- Still open: step 2 (freezer bag date in local time instead of UTC), step 3 (cache kept consistent on partial failures in freezer item creation and household « clear all »; `useFreezerStock` through `getCategories`, alphabetical order), API prompts for atomic freezer item + bags and shopping period days (written at step 3).
+
 ## 2026-10-07 — Migration notes arbitrated (v6.78.2)
 
 - Done: the owner arbitrated the six `Note (migration)` boxes: data-flow step 1 confirmed; predicates live in `core/domain/`; `useLiveQuery` on cached user data is intended; `core/logic` → `shared/utils` imports kept as a P4 refactoring point; theming rule kept, the 217 pre-existing `dark:*-slate-*` classes to be fixed progressively; legal-notice URL in `legalContent.ts` listed as a permanent grep exception. Boxes removed from `docs/architecture.md`, `docs/conventions.md`, `docs/development.md`; two items added to `docs/roadmap.md` § P4.

@@ -18,11 +18,7 @@ import {
   mapApiRecipes,
 } from "../logic/recipe/recipeApiMapper";
 import { apiFetchJson } from "./apiClient";
-import * as foodService from "./foodService";
-import * as recipesService from "./recipesService";
-import * as outdoorService from "./outdoorService";
-import * as householdItemsService from "./householdItemsService";
-import * as recipeCategoriesService from "./recipeCategoriesService";
+import { putCachedRecipe, readCatalogueCache, removeCachedRecipe, writeCatalogueCache } from "./catalogueCacheService";
 
 let lastSignatures: CatalogueSignatures = {};
 let inflightSync: Promise<void> | null = null;
@@ -38,13 +34,7 @@ function applyRecipeIdMap(): void {
 }
 
 export async function hydrateFromCache(): Promise<void> {
-  const [recipes, foods, outdoor, householdItems, categories] = await Promise.all([
-    recipesService.getAllAsRecord(),
-    foodService.getAllAsRecord(),
-    outdoorService.getAllAsRecord(),
-    householdItemsService.getAllAsRecord(),
-    recipeCategoriesService.getAll(),
-  ]);
+  const { recipes, foods, outdoor, householdItems, categories } = await readCatalogueCache();
   if (Object.keys(recipes).length > 0) replaceRecipes(recipes);
   if (Object.keys(foods).length > 0) replaceFoods(foods);
   if (Object.keys(outdoor).length > 0) replaceOutdoor(outdoor);
@@ -78,13 +68,7 @@ export async function applyCatalogueData(
   const foods = Object.fromEntries(apiFoods.map((f) => [f.id, f]));
   const householdItems = Object.fromEntries(apiHouseholdItems.map((h) => [h.id, h]));
 
-  await Promise.all([
-    recipesService.bulkPut(recipes),
-    outdoorService.bulkPut(outdoor),
-    foodService.bulkPut(foods),
-    householdItemsService.bulkPut(householdItems),
-    recipeCategoriesService.bulkPut(apiCategories),
-  ]);
+  await writeCatalogueCache({ recipes, foods, outdoor, householdItems, categories: apiCategories });
 
   replaceRecipes(recipes);
   replaceOutdoor(outdoor);
@@ -143,7 +127,7 @@ export async function syncRecipeFromApi(uuid: string): Promise<void> {
     const codeByApiId = codeByApiIdFromCache();
     codeByApiId.set(api.id, api.code);
     const recipe = mapApiRecipe(api, codeByApiId);
-    await recipesService.put(recipe.code, recipe);
+    await putCachedRecipe(recipe.code, recipe);
     putRecipe(recipe.code, recipe);
     applyRecipeIdMap();
     refreshDerivedData();
@@ -154,7 +138,7 @@ export async function syncRecipeFromApi(uuid: string): Promise<void> {
 }
 
 export async function removeRecipeFromCatalogue(code: string): Promise<void> {
-  await recipesService.remove(code).catch(() => undefined);
+  await removeCachedRecipe(code).catch(() => undefined);
   removeRecipe(code);
   applyRecipeIdMap();
   refreshDerivedData();

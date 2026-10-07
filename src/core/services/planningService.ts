@@ -14,8 +14,6 @@ import { diffSlotItems } from "../logic/planning/slotDiffLogic";
 export const getWeekSlots = (year: number, week: number) =>
   db.planning.where("[year+week]").equals([year, week]).toArray();
 
-export const getAllSlots = () => db.planning.toArray();
-
 export async function saveSlot(slot: MealSlot): Promise<void> {
   const previous = await db.planning.get(slot.id);
   const diff = diffSlotItems(previous, slot);

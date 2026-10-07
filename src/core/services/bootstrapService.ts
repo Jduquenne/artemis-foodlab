@@ -9,7 +9,7 @@ import { applyCatalogueData } from "./catalogueSyncService";
 import { applyHouseholdFlags } from "./householdService";
 import { JournalOverridesByProfile } from "../domain/journal";
 import { ApiJournalOverride, mapJournalOverrides } from "../logic/journal/journalApiMapper";
-import { ApiProfile, mapProfiles } from "./profileService";
+import { ApiProfile, mapProfiles } from "../logic/profile/profileApiMapper";
 import { CurrentPeriod, mapApiPeriod } from "./shoppingPeriodService";
 
 interface ApiBootstrapHouseholdFlag {

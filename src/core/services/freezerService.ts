@@ -154,21 +154,13 @@ export const updateBagInFoodItem = async (
   updates: Partial<Omit<FreezerBag, "id">>
 ): Promise<void> => {
   const { quantity, unit, preparation, addedDate } = updates;
-  await apiFetchJson(`/freezer-bags/${bagId}`, {
-    method: "PUT",
-    body: {
-      ...(quantity !== undefined && { quantity }),
-      ...(unit !== undefined && { unit }),
-      ...(preparation !== undefined && { preparation: preparation ?? null }),
-      ...(addedDate !== undefined && { addedDate }),
-    },
-  });
   const persistedUpdates = {
     ...(quantity !== undefined && { quantity }),
     ...(unit !== undefined && { unit }),
     ...(preparation !== undefined && { preparation }),
     ...(addedDate !== undefined && { addedDate }),
   };
+  await apiFetchJson(`/freezer-bags/${bagId}`, { method: "PUT", body: persistedUpdates });
   await withCategory(categoryId, cat => ({
     items: cat.items.map(item =>
       item.id === itemId && item.type === "food"

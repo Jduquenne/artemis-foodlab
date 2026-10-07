@@ -43,7 +43,7 @@ Known deviation: `core/logic/` still imports `shared/utils/` (`macroUtils`, `uni
 
 - `core/domain/` — types, configuration constants and domain predicates (`recipePredicates.ts`, `freezerPredicates.ts`), labels (`nutrition.ts`, `recipeLabels.ts`), `profileConfig.ts`, `ingredientCategorySlugs.ts`, etc.
 - `core/logic/<feature>/` — `auth`, `dashboard`, `freezer`, `journal`, `media`, `news`, `nutrition`, `planning`, `profile`, `recipe`, `recipeBuilder`, `shopping`, `sync`, `unit`.
-- `core/services/` — API access (`apiClient.ts` and one service per resource), `databaseService.ts` (Dexie), `catalogueSyncService.ts`, `refreshTokenStore.ts`.
+- `core/services/` — API access (`apiClient.ts` and one service per resource), `databaseService.ts` (Dexie), `catalogueCacheService.ts` (Dexie cache of the catalogue: read, replace, single recipe put/remove), `catalogueSyncService.ts`, `refreshTokenStore.ts`. API ↔ domain mappers live in `core/logic/<feature>/xxxApiMapper.ts`, not in services.
 - `core/catalogue/` — in-memory mutable catalogue (`recipes.ts`, `foods.ts`, `outdoor.ts`, `household.ts`, `categories.ts`, `plannable.ts`), `recipeIdMap.ts`, `catalogueEvents.ts`.
 
 ## Data flow

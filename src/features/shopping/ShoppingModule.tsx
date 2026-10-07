@@ -200,7 +200,7 @@ export const ShoppingModule = () => {
                             <button
                                 onClick={() => setShowPriceCalc(true)}
                                 title="Prix au kilo"
-                                className="shrink-0 p-2 rounded-xl border bg-white dark:bg-slate-100 border-slate-200 text-slate-400 hover:text-orange-600 hover:border-orange-300 transition-colors"
+                                className="shrink-0 p-2 rounded-xl border bg-surface border-slate-200 text-slate-400 hover:text-orange-600 hover:border-orange-300 transition-colors"
                             >
                                 <Scale className="w-4 h-4" />
                             </button>
@@ -210,7 +210,7 @@ export const ShoppingModule = () => {
                                     title={copied ? 'Copié !' : 'Copier la liste'}
                                     className={`shrink-0 p-2 rounded-xl border transition-colors ${copied
                                             ? 'bg-green-50 dark:bg-green-900/20 border-green-300 text-green-600'
-                                            : 'bg-white dark:bg-slate-100 border-slate-200 text-slate-400 hover:text-orange-600 hover:border-orange-300'
+                                            : 'bg-surface border-slate-200 text-slate-400 hover:text-orange-600 hover:border-orange-300'
                                         }`}
                                 >
                                     {copied ? <Check className="w-4 h-4" /> : <Clipboard className="w-4 h-4" />}
@@ -219,12 +219,12 @@ export const ShoppingModule = () => {
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between mt-3 bg-slate-100 dark:bg-slate-200/60 rounded-2xl p-1">
+                    <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between mt-3 bg-muted rounded-2xl p-1">
                         <div className="grid grid-cols-3 gap-0.5 sm:flex">
                             <button
                                 onClick={() => setViewMode('meals')}
                                 className={`px-3.5 py-1.5 rounded-xl text-sm font-bold text-center transition-all ${viewMode === 'meals'
-                                        ? 'bg-white dark:bg-slate-100 text-slate-900 shadow-sm'
+                                        ? 'bg-surface text-slate-900 shadow-sm'
                                         : 'text-slate-500 hover:text-slate-700'
                                     }`}
                             >
@@ -233,7 +233,7 @@ export const ShoppingModule = () => {
                             <button
                                 onClick={() => setViewMode('ingredients')}
                                 className={`px-3.5 py-1.5 rounded-xl text-sm font-bold text-center transition-all ${viewMode === 'ingredients'
-                                        ? 'bg-white dark:bg-slate-100 text-slate-900 shadow-sm'
+                                        ? 'bg-surface text-slate-900 shadow-sm'
                                         : 'text-slate-500 hover:text-slate-700'
                                     }`}
                             >
@@ -242,7 +242,7 @@ export const ShoppingModule = () => {
                             <button
                                 onClick={() => setViewMode('household')}
                                 className={`px-3.5 py-1.5 rounded-xl text-sm font-bold text-center transition-all ${viewMode === 'household'
-                                        ? 'bg-white dark:bg-slate-100 text-slate-900 shadow-sm'
+                                        ? 'bg-surface text-slate-900 shadow-sm'
                                         : 'text-slate-500 hover:text-slate-700'
                                     }`}
                             >
@@ -254,7 +254,7 @@ export const ShoppingModule = () => {
                                 <button
                                     onClick={() => setIngredientFilter('all')}
                                     className={`px-3.5 py-1.5 rounded-xl text-sm font-bold text-center transition-all ${ingredientFilter === 'all'
-                                            ? 'bg-white dark:bg-slate-100 text-slate-900 shadow-sm'
+                                            ? 'bg-surface text-slate-900 shadow-sm'
                                             : 'text-slate-500 hover:text-slate-700'
                                         }`}
                                 >
@@ -263,7 +263,7 @@ export const ShoppingModule = () => {
                                 <button
                                     onClick={() => setIngredientFilter('missing')}
                                     className={`px-3.5 py-1.5 rounded-xl text-sm font-bold text-center transition-all ${ingredientFilter === 'missing'
-                                            ? 'bg-white dark:bg-slate-100 text-slate-900 shadow-sm'
+                                            ? 'bg-surface text-slate-900 shadow-sm'
                                             : 'text-slate-500 hover:text-slate-700'
                                         }`}
                                 >

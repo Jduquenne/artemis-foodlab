@@ -20,7 +20,7 @@ export const ExtraCheckRow = ({ item, isChecked, onToggle, onEditExtra, onDelete
         <div
             onClick={() => !togglePending && onToggle(item.key)}
             className={`flex items-center justify-between gap-1.5 px-1.5 py-1 rounded-lg transition-all cursor-pointer select-none
-                ${isChecked ? 'opacity-40 bg-slate-50 dark:bg-slate-200/40' : 'hover:bg-slate-50 dark:hover:bg-slate-200/40'}`}
+                ${isChecked ? 'opacity-40 bg-subtle-tint' : 'hover:bg-subtle-tint'}`}
         >
             <div className="flex items-center gap-1.5 min-w-0 flex-1">
                 <CheckToggleIcon checked={isChecked} pending={togglePending} />

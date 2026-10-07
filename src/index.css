@@ -72,6 +72,13 @@
     --slate-900: #1c1410;
     --white:     #faf6ef;
 
+    --surface:        var(--white);
+    --surface-raised: var(--white);
+    --muted:          var(--slate-100);
+    --subtle:         var(--slate-50);
+    --subtle-tint:    var(--slate-50);
+    --strong:         var(--slate-200);
+
     --app-orange: #f97316;
 }
 
@@ -87,6 +94,13 @@
     --slate-800: #e8dcc8;
     --slate-900: #f5ede0;
     /* white n'est PAS overridé : text-white sur fond orange doit rester clair */
+
+    --surface:        var(--slate-100);
+    --surface-raised: var(--slate-200);
+    --muted:          var(--slate-200);
+    --subtle:         var(--slate-200);
+    --subtle-tint:    color-mix(in srgb, var(--slate-200) 40%, transparent);
+    --strong:         var(--slate-300);
 }
 
 /* =========================================================
@@ -106,6 +120,12 @@
     --color-slate-800: var(--slate-800);
     --color-slate-900: var(--slate-900);
     --color-white:     var(--white);
+    --color-surface:        var(--surface);
+    --color-surface-raised: var(--surface-raised);
+    --color-muted:          var(--muted);
+    --color-subtle:         var(--subtle);
+    --color-subtle-tint:    var(--subtle-tint);
+    --color-strong:         var(--strong);
     /* white reste clair dans les 2 thèmes → text-white sur fond orange toujours lisible */
 }
 

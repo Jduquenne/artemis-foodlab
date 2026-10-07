@@ -218,3 +218,11 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
 - **Date**: 2026-09-09
 - **Status**: accepted
 - **Decision**: a planned recipe counts as made; scope = calling admin's planning only; lunch and dinner only (server-side aggregation, since the front only caches visited weeks).
+
+## D-031 — Named theme colours instead of `dark:` slate pairs
+
+- **Date**: 2026-10-07
+- **Status**: accepted
+- **Context**: `white` is deliberately not overridden in dark mode (white text on orange must stay readable), so a light background needed a `dark:bg-slate-*` partner (`bg-white dark:bg-slate-100`, ~300 pairs). The rule "never `dark:bg-slate-*`" could not be met without changing the dark rendering.
+- **Decision**: six semantic colours defined as CSS variables in `src/index.css` (light / dark values, mapped in `@theme inline`): `surface`, `surface-raised`, `muted`, `subtle`, `subtle-tint`, `strong` (table in `docs/ui-design.md` § Theming). Each replaces one existing pair with an identical rendering; one-off pairs are mapped to the nearest colour or reported to the owner, no colour is created for a single use. Migration feature by feature during the P4 review, starting with Shopping.
+- **Names chosen by**: the owner, 2026-10-07.

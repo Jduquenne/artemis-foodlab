@@ -41,7 +41,7 @@ Run from the repo root (bash/Git Bash; in PowerShell use `Select-String` or Clau
 
 ```bash
 grep -rnE "as unknown as|eslint-disable|: any\b|<any>" src
-grep -rnE "dark:(text|bg)-slate-|bg-slate-900/" src
+grep -rnE "dark:[a-z:]*(text|bg)-slate-|bg-slate-900/" src
 grep -rn "/artemis-foodlab/" src
 grep -rn "core/services" src/core/logic
 ```
@@ -50,7 +50,7 @@ Comments (rule "zero comments", except `src/vite-env.d.ts`) are not reliably gre
 
 Known pre-existing hits:
 
-- Second command: 217 `dark:bg-slate-*` / `dark:text-slate-*` occurrences in 97 files (dashboard, freezer, journal, planning, recipes, builder, shopping, shared UI), counted on 2026-10-07. The theming rule stands: they are fixed progressively, feature by feature, during the P4 refactoring or the P5 tablet pass (`docs/roadmap.md`). Until then, a task must introduce **no new occurrence**, and a file being reworked should be cleaned.
+- Second command: 258 occurrences in 96 files on 2026-10-07, after the Shopping migration (the former pattern missed `dark:hover:` and counted 217). They are replaced by the named theme colours (D-031, `docs/ui-design.md` § Theming) feature by feature during the P4 review. Until then, a task must introduce **no new occurrence**, and a file being reworked should be cleaned.
 - Third command: `src/shared/components/ui/legalContent.ts` — the public app address in the legal notice. Permanent exception.
 
 ## Branches and deployment

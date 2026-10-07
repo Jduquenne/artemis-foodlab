@@ -20,8 +20,8 @@ export const IngredientRow = ({ ing, sourceChecked, onToggleSource }: Ingredient
             onClick={() => !pending && onToggleSource(ing.ingredientKey, ing.sources, !allChecked)}
             className={`flex items-center justify-between gap-1.5 px-1.5 py-1 rounded-lg transition-all cursor-pointer select-none ${
                 allChecked
-                    ? 'opacity-40 bg-slate-50 dark:bg-slate-200/40'
-                    : 'hover:bg-slate-50 dark:hover:bg-slate-200/40'
+                    ? 'opacity-40 bg-subtle-tint'
+                    : 'hover:bg-subtle-tint'
             }`}
         >
             <div className="flex items-center gap-1.5 min-w-0 flex-1">
@@ -31,7 +31,7 @@ export const IngredientRow = ({ ing, sourceChecked, onToggleSource }: Ingredient
                 </span>
             </div>
             {ing.quantity > 0 && (
-                <span className="text-xs font-bold px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-200 text-slate-500 shrink-0">
+                <span className="text-xs font-bold px-1.5 py-0.5 rounded-md bg-muted text-slate-500 shrink-0">
                     {formatQty(ing.quantity)} {pluralizeUnit(ing.unit, ing.quantity)}
                 </span>
             )}

@@ -42,13 +42,13 @@ export const PricePerKgModal = ({ onClose }: PricePerKgModalProps) => {
 
     return (
         <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4" onClick={onClose}>
-            <div className="bg-white dark:bg-slate-200 rounded-2xl shadow-2xl w-full max-w-sm" onClick={(e) => e.stopPropagation()}>
+            <div className="bg-surface-raised rounded-2xl shadow-2xl w-full max-w-sm" onClick={(e) => e.stopPropagation()}>
                 <div className="flex items-center justify-between px-5 pt-5 pb-3">
                     <p className="text-xs font-black text-orange-600 uppercase tracking-widest flex items-center gap-1.5">
                         <Scale className="w-3.5 h-3.5" />
                         Prix au kilo
                     </p>
-                    <button onClick={onClose} className="p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-300 transition-colors">
+                    <button onClick={onClose} className="p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-strong transition-colors">
                         <X className="w-4 h-4" />
                     </button>
                 </div>
@@ -61,7 +61,7 @@ export const PricePerKgModal = ({ onClose }: PricePerKgModalProps) => {
                             value={weight}
                             onChange={(e) => setWeight(e.target.value)}
                             placeholder="500"
-                            className="mt-1 w-full px-3 py-2 rounded-xl border border-slate-200 bg-white dark:bg-slate-100 text-slate-800 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-orange-300"
+                            className="mt-1 w-full px-3 py-2 rounded-xl border border-slate-200 bg-surface text-slate-800 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-orange-300"
                         />
                     </div>
                     <div>
@@ -72,7 +72,7 @@ export const PricePerKgModal = ({ onClose }: PricePerKgModalProps) => {
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
                             placeholder="2,50"
-                            className="mt-1 w-full px-3 py-2 rounded-xl border border-slate-200 bg-white dark:bg-slate-100 text-slate-800 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-orange-300"
+                            className="mt-1 w-full px-3 py-2 rounded-xl border border-slate-200 bg-surface text-slate-800 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-orange-300"
                         />
                     </div>
                     <div className="rounded-xl bg-orange-50 dark:bg-orange-900/20 px-3 py-3 text-center">

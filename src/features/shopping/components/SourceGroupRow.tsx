@@ -38,7 +38,7 @@ export const SourceGroupRow = ({ ingredientKey, group, sourceChecked, onToggleSo
       <div
         onClick={handleClick}
         className={`flex items-start gap-2.5 px-3 py-2.5 rounded-xl cursor-pointer select-none transition-all ${
-          allChecked ? 'opacity-40 bg-slate-50 dark:bg-slate-200/40' : 'hover:bg-slate-50 dark:hover:bg-slate-200/40'
+          allChecked ? 'opacity-40 bg-subtle-tint' : 'hover:bg-subtle-tint'
         }`}
       >
         <div className="mt-0.5 shrink-0">
@@ -71,7 +71,7 @@ export const SourceGroupRow = ({ ingredientKey, group, sourceChecked, onToggleSo
     <div
       onClick={handleClick}
       className={`flex items-start gap-2.5 px-3 py-2.5 rounded-xl cursor-pointer select-none transition-all ${
-        isChecked ? 'opacity-40 bg-slate-50 dark:bg-slate-200/40' : 'hover:bg-slate-50 dark:hover:bg-slate-200/40'
+        isChecked ? 'opacity-40 bg-subtle-tint' : 'hover:bg-subtle-tint'
       }`}
     >
       <div className="mt-0.5 shrink-0">

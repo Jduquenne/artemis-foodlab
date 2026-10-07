@@ -53,8 +53,8 @@ export const IngredientCheckRow = ({
             onClick={() => { if (!isEditing && !pending) onToggle(item.key); }}
             className={`flex items-center justify-between gap-1.5 px-1.5 py-1 rounded-lg transition-all cursor-pointer select-none
                 ${isChecked
-                    ? 'opacity-40 bg-slate-50 dark:bg-slate-200/40'
-                    : 'hover:bg-slate-50 dark:hover:bg-slate-200/40'}`}
+                    ? 'opacity-40 bg-subtle-tint'
+                    : 'hover:bg-subtle-tint'}`}
         >
             <div className="flex items-center gap-1.5 min-w-0 flex-1">
                 <CheckToggleIcon checked={isChecked} pending={pending} />
@@ -81,7 +81,7 @@ export const IngredientCheckRow = ({
                                 if (e.key === 'Enter') e.currentTarget.blur();
                                 if (e.key === 'Escape') onCancelEdit();
                             }}
-                            className="w-14 text-xs text-center bg-slate-100 dark:bg-slate-200 border border-orange-300 focus:outline-none focus:border-orange-500 rounded-md px-1 py-0.5"
+                            className="w-14 text-xs text-center bg-muted border border-orange-300 focus:outline-none focus:border-orange-500 rounded-md px-1 py-0.5"
                             autoFocus
                         />
                         <span className="text-xs text-slate-400">{pluralizeUnit(item.unit, editValue ?? 0)}</span>
@@ -97,10 +97,10 @@ export const IngredientCheckRow = ({
                             onClick={() => canEditStock && onStartEditing(item.key, stock)}
                             className={`font-bold text-xs px-1.5 py-0.5 rounded-md transition-colors ${
                                 !canEditStock
-                                    ? 'bg-slate-100 dark:bg-slate-200 text-slate-400 cursor-default'
+                                    ? 'bg-muted text-slate-400 cursor-default'
                                     : needed === 0
                                         ? 'bg-green-50 dark:bg-green-900/20 text-green-600 hover:bg-green-100 cursor-pointer'
-                                        : 'bg-slate-100 dark:bg-slate-200 text-slate-500 hover:bg-orange-50 hover:text-orange-600 cursor-pointer'
+                                        : 'bg-muted text-slate-500 hover:bg-orange-50 hover:text-orange-600 cursor-pointer'
                             }`}
                         >
                             {item.totalQuantity === 0

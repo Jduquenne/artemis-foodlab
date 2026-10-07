@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-07 — Named theme colours, Shopping migrated (v6.78.12)
+
+- Done: the theming rule « never `dark:bg-slate-*` » turned out impossible as written (`white` is not overridden in dark mode, so ~300 `bg-white dark:bg-slate-100`-style pairs are needed); the owner chose named colours (D-031): `surface`, `surface-raised`, `muted`, `subtle`, `subtle-tint`, `strong` in `src/index.css`, table in `docs/ui-design.md`. Shopping + household files migrated (40 classes, identical rendering), except three one-offs mapped to the nearest colour: the close buttons of `SourcesModal` / `PricePerKgModal` (`hover:bg-strong`, one step darker on hover in light mode) and the Shopping tab bar (`bg-muted`, slightly more opaque in dark mode). Golden-rule grep fixed to also catch `dark:hover:` (real count 258 in 96 files after this step). This closes the Shopping + household review.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser (light and dark mode to compare).
+- Still open: next `features/` folder of the P4 review; migrate the other features to the named colours as they are reviewed.
+
 ## 2026-10-07 — Batch source checks (v6.78.11)
 
 - Done: the batch endpoint `PUT /shopping-periods/:periodId/source-checks` is live in prod (confirmed by the owner). Checking a source, a base group or a whole recipe card in the « Repas » view now sends one call (deduplicated requests, all or nothing) instead of one request per source in series; the state is rebuilt by id from the response. `withPending` accepts an array of keys so every affected row shows its spinner. `upsertSourceCheck`, `SourceCheckTarget` and the now unused `sourceCheckIdByKey` removed. Contract moved from § Planned to § Shopping in `docs/api.md`.

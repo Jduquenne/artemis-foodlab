@@ -27,10 +27,10 @@ export const SourcesModal = ({ ingredientKey, sources, sourceChecked, onToggleSo
 
     return (
         <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4" onClick={onClose}>
-            <div className="bg-white dark:bg-slate-200 rounded-2xl shadow-2xl w-full max-w-sm" onClick={(e) => e.stopPropagation()}>
+            <div className="bg-surface-raised rounded-2xl shadow-2xl w-full max-w-sm" onClick={(e) => e.stopPropagation()}>
                 <div className="flex items-center justify-between px-5 pt-5 pb-3">
                     <p className="text-xs font-black text-orange-600 uppercase tracking-widest">Utilisé dans</p>
-                    <button onClick={onClose} className="p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-300 transition-colors">
+                    <button onClick={onClose} className="p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-strong transition-colors">
                         <X className="w-4 h-4" />
                     </button>
                 </div>

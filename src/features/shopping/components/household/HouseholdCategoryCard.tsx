@@ -11,7 +11,7 @@ export interface HouseholdCategoryCardProps {
 export const HouseholdCategoryCard = ({ label, items, checkedIds, onToggle }: HouseholdCategoryCardProps) => {
   return (
     <div className="break-inside-avoid mb-4">
-      <div className="bg-white dark:bg-slate-100 border border-slate-200 rounded-xl p-2 shadow-sm">
+      <div className="bg-surface border border-slate-200 rounded-xl p-2 shadow-sm">
         <h2 className="text-orange-600 font-black uppercase tracking-widest text-xs mb-1">
           {label}
         </h2>

@@ -34,7 +34,7 @@ export const ShoppingCategoryCard = ({ label, items, checked, stocks, sourceChec
     };
 
     return (
-        <div className="bg-white dark:bg-slate-100 border border-slate-200 rounded-xl p-2 shadow-sm">
+        <div className="bg-surface border border-slate-200 rounded-xl p-2 shadow-sm">
             <div className="flex items-center justify-between mb-1">
                 <h2 className="text-orange-600 font-black uppercase tracking-widest text-xs">
                     {label}

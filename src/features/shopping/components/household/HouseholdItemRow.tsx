@@ -17,7 +17,7 @@ export const HouseholdItemRow = ({ item, isChecked, onToggle }: HouseholdItemRow
       className={`flex items-center gap-1.5 px-1.5 py-1 rounded-lg transition-colors select-none cursor-pointer ${
         isChecked
           ? "bg-orange-50 dark:bg-orange-900/10 hover:bg-orange-100 dark:hover:bg-orange-900/20"
-          : "hover:bg-slate-50 dark:hover:bg-slate-200/40"
+          : "hover:bg-subtle-tint"
       }`}
     >
       <CheckToggleIcon checked={isChecked} pending={pending} checkedClassName="text-orange-500" />

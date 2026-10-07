@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-07 — Migration notes arbitrated (v6.78.2)
+
+- Done: the owner arbitrated the six `Note (migration)` boxes: data-flow step 1 confirmed; predicates live in `core/domain/`; `useLiveQuery` on cached user data is intended; `core/logic` → `shared/utils` imports kept as a P4 refactoring point; theming rule kept, the 217 pre-existing `dark:*-slate-*` classes to be fixed progressively; legal-notice URL in `legalContent.ts` listed as a permanent grep exception. Boxes removed from `docs/architecture.md`, `docs/conventions.md`, `docs/development.md`; two items added to `docs/roadmap.md` § P4.
+- Still open: font licences (`ATTRIBUTION.md`); `git rm --cached .claude/settings.local.json`.
+
 ## 2026-10-07 — Agent context migration
 
 - Done: restructured the agent context into `AGENTS.md` (router), `docs/` (architecture, development, conventions, ui-design, api, glossary, roadmap, decisions, 7 specs), `log/devlog.md`, `ATTRIBUTION.md`; `CLAUDE.md` now only imports `AGENTS.md`. Former `CLAUDE.md` archived in `docs/archive/`, traceability table in `docs/archive/migration-map-2026-10-07.md`. The WSL auto-memory (39 files) was moved out of the repo to the owner's private folder (it contained sensitive and personal details). `.claude/settings.json`: Git write commands and the private folder denied for agents. Sessions move from WSL to PowerShell.

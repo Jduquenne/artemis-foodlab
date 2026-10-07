@@ -48,7 +48,10 @@ grep -rn "core/services" src/core/logic
 
 Comments (rule "zero comments", except `src/vite-env.d.ts`) are not reliably greppable; review the diff.
 
-> Note (migration): on 2026-10-07 these checks are **not clean** on existing code — the second command reports 217 `dark:bg-slate-*` / `dark:text-slate-*` occurrences in 97 files (dashboard, freezer, journal, planning, recipes, builder, shopping, shared UI), and the third reports a legitimate full URL in `src/shared/components/ui/legalContent.ts`. Until the owner decides (fix, or relax the theming rule), the requirement is **no new occurrence** in the diff of a task. The first and fourth commands print nothing.
+Known pre-existing hits:
+
+- Second command: 217 `dark:bg-slate-*` / `dark:text-slate-*` occurrences in 97 files (dashboard, freezer, journal, planning, recipes, builder, shopping, shared UI), counted on 2026-10-07. The theming rule stands: they are fixed progressively, feature by feature, during the P4 refactoring or the P5 tablet pass (`docs/roadmap.md`). Until then, a task must introduce **no new occurrence**, and a file being reworked should be cleaned.
+- Third command: `src/shared/components/ui/legalContent.ts` — the public app address in the legal notice. Permanent exception.
 
 ## Branches and deployment
 

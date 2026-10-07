@@ -32,9 +32,7 @@ Coding rules for this repo. The verifiable subset is summarised in `AGENTS.md` Â
 
 ## Domain predicates
 
-Recipe, slot and freezer predicates are the single source of truth for any business condition. They are reused everywhere, never rewritten inline.
-
-> Note (migration): the previous `CLAUDE.md` placed them in `core/logic/<feature>/`; in the code they live in `core/domain/` (`recipePredicates.ts`, `freezerPredicates.ts`).
+Recipe, slot and freezer predicates are the single source of truth for any business condition. They live in `core/domain/` (`recipePredicates.ts`, `freezerPredicates.ts`), are reused everywhere and never rewritten inline.
 
 ## Reuse before writing
 

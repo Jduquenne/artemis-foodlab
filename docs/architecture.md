@@ -37,7 +37,7 @@ Three layers, no exceptions:
 - Static data → a dedicated file in the feature folder, not in the component.
 - Origin of these rules: `docs/decisions.md` D-001.
 
-> Note (migration): `core/logic/` still imports `shared/utils/` (`macroUtils`, `unitUtils`, `columnUtils`, `dateUtils`, `cards/*`), an inversion of the intended layering. Tracked as an open refactoring point in `dev/refactoring.md`.
+Known deviation: `core/logic/` still imports `shared/utils/` (`macroUtils`, `unitUtils`, `columnUtils`, `dateUtils`, `cards/*`), an inversion of the intended layering. P4 refactoring point (`docs/roadmap.md`), to fix during the `shared/` review; do not add new imports of this kind.
 
 ### `core/` contents
 
@@ -56,8 +56,6 @@ Three layers, no exceptions:
 6. Subscribers are notified after a mutation — no side effects in components.
 7. Derived data (aggregations, filters) is computed in `core/logic/`, not recomputed in render.
 
-> Note (migration): the previous `CLAUDE.md` stated step 1 as "data is loaded from IndexedDB via Zustand stores", which predates the API. Rewritten above from the API-era notes; owner to confirm.
-
 ## Source of truth, writes and errors
 
 - Writes: **API first**, local cache updated only after success. No optimistic writes, no offline write queue (connection required). See `docs/decisions.md` D-005.
@@ -71,7 +69,7 @@ Three layers, no exceptions:
 - **Notifications**: only `catalogueSyncService` signals (`notifyCatalogueChange`, after derived data is recomputed), never the `replace…` functions themselves. `useNewsStore` and `useMediaStore` subscribe themselves.
 - Targeted refresh after a builder save: `catalogueSyncService.syncRecipeFromApi(uuid)`; local removal without network: `removeRecipeFromCatalogue(code)`.
 
-> Note (migration): the previous `CLAUDE.md` said the catalogues are refreshed "without `useLiveQuery`". That is true for the catalogue, but `dexie-react-hooks` (`useLiveQuery`) is still used in 5 files: `PlanningModule`, `ShoppingModule`, `FreezerModule`, `HouseholdPanel`, `useFreezerStock`.
+- `useLiveQuery` is never used for the catalogue. It is intended for cached user data read from Dexie: `PlanningModule`, `ShoppingModule`, `FreezerModule`, `HouseholdPanel`, `useFreezerStock`.
 
 ### Cross-device refresh
 

@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-07 — Atomic freezer / shopping period contracts recorded (v6.78.6)
+
+- Done: the API session answered the relay prompt with two atomic endpoints (`POST /freezer-items` with `bags`, `PUT /shopping-periods/current`), implemented and tested locally, not deployed. Contracts recorded in `docs/api.md` § Planned; checked against `addItemToCategory` and `replacePeriod` (no blocker: the add-freezer modal sends one bag with quantity > 0; the store keeps its own days and only uses the period id).
+- Still open: front step (`fix:`) once the owner confirms both endpoints are live in prod; then the `core/services/` review is closed and P4 continues with `features/`.
+
 ## 2026-10-07 — `core/services/` review, step 3 (v6.78.5)
 
 - Done: local cache kept consistent with the API on partial failures. `addItemToCategory` (food): if a bag creation fails, the item and the bags already created are still written to the cache before the error propagates (a retry no longer creates a hidden duplicate). `householdService.clearAll`: `Promise.allSettled`, only the flags actually deleted leave the cache, then the first error is rethrown. `useMenuStore.setShoppingDays`: the new period id is stored before clearing the household flags, so a failure there no longer leaves the store pointing to the deleted period. `useFreezerStock` reads through `getCategories()` (alphabetical order, owner's choice) instead of Dexie directly.

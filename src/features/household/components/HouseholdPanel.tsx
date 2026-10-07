@@ -6,6 +6,7 @@ import { getRecords, toggleItem, clearAll } from '../../../core/services/househo
 import { distributeToColumns } from '../../../shared/utils/columnUtils';
 import { useHouseholdSnapshot } from '../../../shared/hooks/useCatalogueSnapshot';
 import { withPending } from '../../../shared/utils/withPending';
+import { usePendingKey } from '../../../shared/hooks/usePendingKey';
 import { HouseholdCategoryCard } from './HouseholdCategoryCard';
 
 const CATEGORY_ORDER: HouseholdCategory[] = [
@@ -23,6 +24,7 @@ export interface HouseholdPanelProps {
 export const HouseholdPanel = ({ colCount }: HouseholdPanelProps) => {
   const records = useLiveQuery(() => getRecords(), []);
   const [spinning, setSpinning] = useState(false);
+  const resetPending = usePendingKey('household-reset');
   const householdDb = useHouseholdSnapshot();
   const allItems = useMemo(() => Object.values(householdDb), [householdDb]);
 
@@ -32,11 +34,15 @@ export const HouseholdPanel = ({ colCount }: HouseholdPanelProps) => {
     return set;
   }, [records]);
 
-  const handleReset = async () => {
-    setSpinning(true);
-    await clearAll();
-    setTimeout(() => setSpinning(false), 600);
-  };
+  const handleReset = () =>
+    withPending('household-reset', async () => {
+      setSpinning(true);
+      try {
+        await clearAll();
+      } finally {
+        setTimeout(() => setSpinning(false), 600);
+      }
+    }).catch(() => undefined);
 
   const handleToggle = (id: string) => withPending(`household-check:${id}`, () => toggleItem(id));
 
@@ -68,8 +74,9 @@ export const HouseholdPanel = ({ colCount }: HouseholdPanelProps) => {
         {checkedIds.size > 0 && (
           <button
             onClick={handleReset}
+            disabled={resetPending}
             title="Tout désélectionner"
-            className="flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-orange-600 transition-colors"
+            className="flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-orange-600 transition-colors disabled:opacity-50"
           >
             <RotateCcw className={`w-3.5 h-3.5 ${spinning ? 'animate-spin-once' : ''}`} />
             Tout réinitialiser

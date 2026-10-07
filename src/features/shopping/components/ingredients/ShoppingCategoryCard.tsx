@@ -21,16 +21,15 @@ export interface ShoppingCategoryCardProps {
 export const ShoppingCategoryCard = ({ label, items, checked, stocks, sourceChecked, onToggle, onSetStock, onShowSources, onEditExtra, onDeleteExtra, foodBags }: ShoppingCategoryCardProps) => {
     const checkedCount = items.filter(i => checked.has(i.key)).length;
     const [editingKey, setEditingKey] = useState<string | null>(null);
-    const [editValue, setEditValue] = useState('');
+    const [editValue, setEditValue] = useState<number | null>(null);
 
     const startEditing = (key: string, currentStock: number) => {
         setEditingKey(key);
-        setEditValue(currentStock > 0 ? String(currentStock) : '');
+        setEditValue(currentStock > 0 ? currentStock : null);
     };
 
     const commitEdit = (key: string) => {
-        const val = parseFloat(editValue);
-        onSetStock(key, isNaN(val) ? 0 : val);
+        onSetStock(key, editValue ?? 0);
         setEditingKey(null);
     };
 

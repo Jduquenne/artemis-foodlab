@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { X, RotateCcw, Scale } from 'lucide-react';
 import { computePricePerKg } from '../../../core/logic/shopping/shoppingPriceLogic';
+import { parseDecimal } from '../../../shared/utils/numberUtils';
 
 export interface PricePerKgModalProps {
     onClose: () => void;
@@ -25,12 +26,14 @@ export const PricePerKgModal = ({ onClose }: PricePerKgModalProps) => {
     const [price, setPrice] = useState(() => loadStoredCalc().price);
 
     useEffect(() => {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({ weight, price }));
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({ weight, price }));
+        } catch {
+            return;
+        }
     }, [weight, price]);
 
-    const weightNum = parseFloat(weight.replace(',', '.'));
-    const priceNum = parseFloat(price.replace(',', '.'));
-    const result = computePricePerKg(weightNum, priceNum);
+    const result = computePricePerKg(parseDecimal(weight) ?? 0, parseDecimal(price) ?? 0);
 
     const handleReset = () => {
         setWeight('');

@@ -7,6 +7,7 @@ import { pluralizeUnit, formatQty } from '../../../../shared/utils/unitUtils';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { CheckToggleIcon } from '../../../../shared/components/ui/CheckToggleIcon';
 import { sumBy } from '../../../../shared/utils/collectionUtils';
+import { DecimalInput } from '../../../../shared/components/ui/DecimalInput';
 
 export interface IngredientCheckRowProps {
     item: ConsolidatedIngredient;
@@ -16,10 +17,10 @@ export interface IngredientCheckRowProps {
     matchingBags: FreezerBag[];
     inFreezer: boolean;
     isEditing: boolean;
-    editValue: string;
+    editValue: number | null;
     onToggle: (key: string) => void;
     onStartEditing: (key: string, currentStock: number) => void;
-    onEditValueChange: (value: string) => void;
+    onEditValueChange: (value: number | null) => void;
     onCommitEdit: (key: string) => void;
     onCancelEdit: () => void;
     onShowSources: (key: string, sources: IngredientSource[], freezerBags: FreezerBag[]) => void;
@@ -77,12 +78,9 @@ export const IngredientCheckRow = ({
                 {isEditing ? (
                     <div className="flex items-center gap-1">
                         <span className="text-xs text-slate-400">j'en ai :</span>
-                        <input
-                            type="number"
-                            min="0"
-                            step="any"
+                        <DecimalInput
                             value={editValue}
-                            onChange={e => onEditValueChange(e.target.value)}
+                            onValueChange={onEditValueChange}
                             onBlur={() => onCommitEdit(item.key)}
                             onKeyDown={e => {
                                 if (e.key === 'Enter') e.currentTarget.blur();
@@ -91,7 +89,7 @@ export const IngredientCheckRow = ({
                             className="w-14 text-xs text-center bg-slate-100 dark:bg-slate-200 border border-orange-300 focus:outline-none focus:border-orange-500 rounded-md px-1 py-0.5"
                             autoFocus
                         />
-                        <span className="text-xs text-slate-400">{pluralizeUnit(item.unit, parseFloat(editValue) || 0)}</span>
+                        <span className="text-xs text-slate-400">{pluralizeUnit(item.unit, editValue ?? 0)}</span>
                     </div>
                 ) : (
                     <>

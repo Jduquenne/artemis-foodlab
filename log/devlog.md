@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-07 — `features/` review: shopping + household, step 1 (v6.78.8)
+
+- Done: read-only review of `features/shopping` + `features/household` (18 files), findings arbitrated by the owner (`dev/refactoring.md`). Step 1 fixes: stock input in the ingredient row uses `DecimalInput` (commas accepted, no silent 0) instead of `type="number"` + `parseFloat`; price-per-kg calculator parses with `parseDecimal` and guards its `localStorage` write; household « Tout réinitialiser » goes through `withPending('household-reset')` (no double click, spinner always stops, button disabled while pending); shopping checks loading, stock commit and clipboard copy no longer leave unhandled rejections.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: step 2 (shopping check state → `core/logic/shopping/shoppingCheckState.ts` + `useShoppingPeriodChecks`, includes the synchronous reset in the loading effect), step 3 (`remainingToBuy` in `IngredientCheckRow`, household category order to the domain, small cleanups, `features/household` moved under `features/shopping`), step 4 (theme classes of these files); API prompt for batch source checks relayed by the owner.
+
 ## 2026-10-07 — Atomic freezer item and shopping period writes (v6.78.7)
 
 - Done: both endpoints confirmed live in prod by the owner. `addItemToCategory` (food) sends its bags in the `POST /freezer-items` call and builds the cache from the response (`mapApiItem`, now exported); the step-3 `try/finally` is gone. `replacePeriod(days)` is a single `PUT /shopping-periods/current` instead of DELETE + POST + one POST per day. Contracts moved from § Planned to § Freezer and § Shopping in `docs/api.md`. This closes the `core/services/` review.

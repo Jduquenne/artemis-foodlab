@@ -83,11 +83,13 @@ export const ShoppingModule = () => {
                 }
                 return;
             }
-            const [ic, sc, ex] = await Promise.all([
+            const loaded = await Promise.all([
                 fetchItemChecks(currentPeriodId),
                 fetchSourceChecks(currentPeriodId),
                 fetchExtras(currentPeriodId),
-            ]);
+            ]).catch(() => null);
+            if (!loaded) return;
+            const [ic, sc, ex] = loaded;
             if (active) {
                 setItemChecksRaw(ic);
                 setSourceChecksRaw(sc);
@@ -280,8 +282,9 @@ export const ShoppingModule = () => {
         const foodId = keyToFoodId.get(key);
         if (!foodId) return;
         const existing = itemCheckByFoodId.get(foodId);
-        const updated = await upsertItemCheck(currentPeriodId, existing?.id, { foodId }, { stockOverride: value > 0 ? value : null });
-        patchItemCheck(updated);
+        const updated = await upsertItemCheck(currentPeriodId, existing?.id, { foodId }, { stockOverride: value > 0 ? value : null })
+            .catch(() => null);
+        if (updated) patchItemCheck(updated);
     };
 
     const toggleSourceCheck = async (ingredientKey: string, sources: IngredientSource[], isChecked: boolean) => {
@@ -390,7 +393,8 @@ export const ShoppingModule = () => {
     const handleCopy = async () => {
         const uncheckedHousehold = householdItems.filter(i => !checked.has(`household::${i.id}`));
         const text = buildShoppingClipboardText(allGroupedItems, checked, stocks, sourceChecked, uncheckedHousehold);
-        await navigator.clipboard.writeText(text);
+        const written = await navigator.clipboard.writeText(text).then(() => true, () => false);
+        if (!written) return;
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ChevronDown, ChevronRight, Minus, Plus } from "lucide-react";
 import { RecipeKind } from "../../../../core/domain/recipe";
-import { calculateOverriddenRecipeMacros } from "../../../../shared/utils/macroUtils";
+import { computeItemMacros } from "../../../../shared/utils/macroUtils";
 import { useMacroCatalogue } from "../../../../shared/hooks/useMacroCatalogue";
 import { defaultIngredientOverridesForPortions, isOverridableIngredient } from "../../../../core/logic/journal/journalOverrideLogic";
 import { useJournalStore } from "../../../../shared/store/useJournalStore";
@@ -30,12 +30,11 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId }: RecipePortion
   const baseGrams = catalogue.baseGrams[recipeId] ?? 0;
   const useGrams = isIngredient && baseGrams > 0;
   const itemIngredientOverrides = ingredientOverrides[key];
-  const hasIngredientOverrides = !!itemIngredientOverrides && Object.keys(itemIngredientOverrides).length > 0;
+  const kcal = computeItemMacros(catalogue, recipeId, key, portionOverrides, gramOverrides, ingredientOverrides).kcal;
 
   if (useGrams) {
     const defaultGrams = Math.round(baseGrams);
     const grams = gramOverrides[key] ?? defaultGrams;
-    const kcal = (catalogue.recipeMacros[recipeId]?.kcal ?? 0) * (grams / baseGrams);
     const commitGrams = () => {
       if (planningSlotItemId && gramsDraft !== null && gramsDraft > 0 && gramsDraft !== grams) {
         setGramOverride(planningSlotItemId, recipeId, gramsDraft).catch(() => undefined);
@@ -68,9 +67,6 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId }: RecipePortion
   }
 
   const portions = portionOverrides[key] ?? 1;
-  const kcal = hasIngredientOverrides && recipe
-    ? calculateOverriddenRecipeMacros(recipe, itemIngredientOverrides, catalogue.recipes, catalogue.foods).kcal
-    : (catalogue.recipeMacros[recipeId]?.kcal ?? 0) * portions;
   const overridableIngredients = recipe?.ingredients.filter(isOverridableIngredient) ?? [];
   const canExpand = !!planningSlotItemId && overridableIngredients.length > 0;
   const scaledDefaults = recipe ? defaultIngredientOverridesForPortions(recipe, portions) : {};

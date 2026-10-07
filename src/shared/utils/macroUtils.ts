@@ -132,6 +132,29 @@ export interface MacroCatalogue {
   baseGrams: Record<string, number>;
 }
 
+export function computeItemMacros(
+  catalogue: MacroCatalogue,
+  recipeId: string,
+  itemKey: string,
+  portionOverrides: Record<string, number>,
+  gramOverrides: Record<string, number>,
+  ingredientOverrides: Record<string, Record<string, number>> = {},
+): Macronutrients {
+  const recipe = catalogue.plannable[recipeId];
+  const itemIngredientOverrides = ingredientOverrides[itemKey];
+  const fullRecipe = catalogue.recipes[recipeId];
+  if (fullRecipe && itemIngredientOverrides && Object.keys(itemIngredientOverrides).length > 0) {
+    return calculateOverriddenRecipeMacros(fullRecipe, itemIngredientOverrides, catalogue.recipes, catalogue.foods);
+  }
+  const m = catalogue.recipeMacros[recipeId];
+  if (!m) return { ...ZERO };
+  const baseGrams = catalogue.baseGrams[recipeId];
+  if (!isDish(recipe) && !isBase(recipe) && baseGrams) {
+    return scaleMacros(m, (gramOverrides[itemKey] ?? baseGrams) / baseGrams);
+  }
+  return scaleMacros(m, portionOverrides[itemKey] ?? 1);
+}
+
 export function computeSlotMacros(
   catalogue: MacroCatalogue,
   slot: MealSlot,
@@ -139,26 +162,14 @@ export function computeSlotMacros(
   gramOverrides: Record<string, number>,
   ingredientOverrides: Record<string, Record<string, number>> = {},
 ): Macronutrients {
-  return getAllRecipeIds(slot).reduce((sum, id) => {
-    const key = slot.itemApiIds?.[id] ?? "";
-    const recipe = catalogue.plannable[id];
-    const itemIngredientOverrides = ingredientOverrides[key];
-    const fullRecipe = catalogue.recipes[id];
-    if (fullRecipe && itemIngredientOverrides && Object.keys(itemIngredientOverrides).length > 0) {
-      return addMacros(sum, calculateOverriddenRecipeMacros(fullRecipe, itemIngredientOverrides, catalogue.recipes, catalogue.foods));
-    }
-    const m = catalogue.recipeMacros[id];
-    if (!m) return sum;
-    const baseGrams = catalogue.baseGrams[id];
-    let factor: number;
-    if (!isDish(recipe) && !isBase(recipe) && baseGrams) {
-      const grams = gramOverrides[key] ?? baseGrams;
-      factor = grams / baseGrams;
-    } else {
-      factor = portionOverrides[key] ?? 1;
-    }
-    return addMacros(sum, scaleMacros(m, factor));
-  }, { ...ZERO });
+  return getAllRecipeIds(slot).reduce(
+    (sum, id) =>
+      addMacros(
+        sum,
+        computeItemMacros(catalogue, id, slot.itemApiIds?.[id] ?? "", portionOverrides, gramOverrides, ingredientOverrides),
+      ),
+    { ...ZERO },
+  );
 }
 
 export function computeDayMacros(

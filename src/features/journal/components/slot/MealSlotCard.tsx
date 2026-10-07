@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Macronutrients } from "../../../../core/domain/nutrition";
+import { NUTRIENT_DEFINITIONS } from "../../../../core/domain/nutrition";
 import { MealSlot, SlotType } from "../../../../core/domain/planning";
 import { getAllRecipeIds, hasDesserts } from "../../../../core/domain/recipePredicates";
 import { computeSlotMacros, ZERO } from "../../../../shared/utils/macroUtils";
@@ -13,13 +13,6 @@ export interface MealSlotCardProps {
   slotType: SlotType;
   slot?: MealSlot;
 }
-
-const MACRO_ITEMS: { key: keyof Omit<Macronutrients, "kcal">; label: string }[] = [
-  { key: "proteins", label: "Prot" },
-  { key: "lipids", label: "Lip" },
-  { key: "carbohydrates", label: "Glu" },
-  { key: "fibers", label: "Fib" },
-];
 
 export const MealSlotCard = ({ slotType, slot }: MealSlotCardProps) => {
   const { portionOverrides, gramOverrides, ingredientOverrides } = useActiveJournalOverrides();
@@ -48,9 +41,9 @@ export const MealSlotCard = ({ slotType, slot }: MealSlotCardProps) => {
 
       {hasContent && (
         <div className="flex gap-1 shrink-0">
-          {MACRO_ITEMS.map(({ key, label }) => (
+          {NUTRIENT_DEFINITIONS.map(({ key, shortLabel }) => (
             <div key={key} className="flex-1 bg-slate-50 dark:bg-slate-200 rounded-lg px-1.5 py-1 flex flex-col items-center gap-0.5">
-              <span className="text-[8px] font-bold uppercase tracking-wide text-slate-400 leading-none">{label}</span>
+              <span className="text-[8px] font-bold uppercase tracking-wide text-slate-400 leading-none">{shortLabel}</span>
               <span className="text-[10px] font-bold text-slate-600 leading-none tabular-nums">{Math.round(totalMacros[key])}</span>
             </div>
           ))}

@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-07 — `features/` review: journal, step 3 (v6.79.4)
+
+- Done: `JournalModule` loads the week into state keyed by `year-week` with a single effect (load + refresh tick), instead of resetting to `null` in an effect cleanup and a second `useRef`-guarded refresh effect; a refresh no longer flashes the loader. Day name of a date → `dayNameOf` (`weekUtils`, from `DAYS` of `planningConfig`), replacing the local `DAYS` + `getDayKey`. `MealSlotCard` uses the central `shortLabel`s (« Prot. / Lip. / Gluc. / Fib. », owner OK). The per-item macro computation of `computeSlotMacros` is extracted as `computeItemMacros` (`macroUtils`) and reused by `RecipePortionRow` for its kcal, so a row and its card total can no longer diverge (placed in `macroUtils` rather than `core/logic/journal` to avoid a new `core` → `shared` import).
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: step 4 (theme colours) of the journal review.
+
 ## 2026-10-07 — `features/` review: journal, step 2 (v6.79.3)
 
 - Done: « Objectifs » and « Moyenne de la semaine » no longer close on a backdrop click (project convention, `docs/ui-design.md`). Targets: `type="number"` + `parseInt` → integer `DecimalInput`s (an emptied field disables « Valider » instead of being silently skipped), save through `withPending('profile-targets:<id>')`, modal stays open on error; the unused `min` / `max` / `step` ranges (never enforced by the browser on typing) removed.

@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { addDays, subDays } from "date-fns";
-import { getWeekNumber, getMonday } from "../../shared/utils/weekUtils";
+import { getWeekNumber, getMonday, dayNameOf } from "../../shared/utils/weekUtils";
 import { getWeekSlots, syncWeekFromApi } from "../../core/services/planningService";
 import { MealSlot } from "../../core/domain/planning";
 import { computeDayMacros } from "../../shared/utils/macroUtils";
@@ -14,53 +14,32 @@ import { MacroSummary } from "./components/MacroSummary";
 import { MealSlotCard } from "./components/slot/MealSlotCard";
 
 const SLOT_ORDER = ["breakfast", "lunch", "snack", "dinner"] as const;
-const DAYS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
-
-function getDayKey(date: Date): string {
-  const d = date.getDay();
-  return DAYS[d === 0 ? 6 : d - 1];
-}
 
 export const JournalModule = () => {
   const { portionOverrides, gramOverrides, ingredientOverrides } = useActiveJournalOverrides();
   const catalogue = useMacroCatalogue();
   const authStatus = useAuthStore((s) => s.status);
   const [selectedDate, setSelectedDate] = useState(() => new Date());
-  const [weekSlots, setWeekSlots] = useState<MealSlot[] | null>(null);
+  const [loaded, setLoaded] = useState<{ weekKey: string; slots: MealSlot[] } | null>(null);
+  const refreshTick = useRefreshStore((s) => s.tick);
   const monday = getMonday(selectedDate);
   const week = getWeekNumber(monday);
   const year = monday.getFullYear();
-  const dayKey = getDayKey(selectedDate);
+  const weekKey = `${year}-${week}`;
+  const dayKey = dayNameOf(selectedDate);
 
   useEffect(() => {
     let active = true;
     const load = async () => {
       if (authStatus === 'authenticated') await syncWeekFromApi(year, week);
       const slots = await getWeekSlots(year, week);
-      if (active) setWeekSlots(slots);
+      if (active) setLoaded({ weekKey: `${year}-${week}`, slots });
     };
     load();
-    return () => {
-      active = false;
-      setWeekSlots(null);
-    };
-  }, [year, week, authStatus]);
-
-  const refreshTick = useRefreshStore((s) => s.tick);
-  const handledTick = useRef(refreshTick);
-  useEffect(() => {
-    if (handledTick.current === refreshTick) return;
-    handledTick.current = refreshTick;
-    let active = true;
-    const reload = async () => {
-      await syncWeekFromApi(year, week);
-      const slots = await getWeekSlots(year, week);
-      if (active) setWeekSlots(slots);
-    };
-    reload();
     return () => { active = false; };
-  }, [refreshTick, year, week]);
+  }, [year, week, authStatus, refreshTick]);
 
+  const weekSlots = loaded && loaded.weekKey === weekKey ? loaded.slots : null;
   const isLoading = weekSlots === null;
 
   const daySlots = useMemo(

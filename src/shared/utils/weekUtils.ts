@@ -1,4 +1,5 @@
 import { getISOWeek, getISOWeekYear } from "date-fns";
+import { DAYS } from "../../core/domain/planningConfig";
 
 export { getISOWeek as getWeekNumber } from "date-fns";
 
@@ -41,3 +42,5 @@ export const getWeekRange = (monday: Date) => {
   sunday.setDate(monday.getDate() + 6);
   return `${formatDateShort(monday)} au ${formatDateShort(sunday)}`;
 };
+
+export const dayNameOf = (date: Date): string => DAYS[(date.getDay() + 6) % 7];

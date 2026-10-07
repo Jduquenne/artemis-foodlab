@@ -24,7 +24,7 @@ export const MacroSummary = ({ macros, weekSlots }: MacroSummaryProps) => {
 
   return (
     <>
-      <div className="bg-white dark:bg-slate-100 rounded-2xl px-4 py-3 tablet:px-6 tablet:py-5 flex flex-col gap-3 tablet:gap-5 shrink-0">
+      <div className="bg-surface rounded-2xl px-4 py-3 tablet:px-6 tablet:py-5 flex flex-col gap-3 tablet:gap-5 shrink-0">
         <div className="flex items-center justify-between">
           <ProfileSwitcher />
           <div className="flex items-center gap-1 shrink-0">
@@ -59,7 +59,7 @@ export const MacroSummary = ({ macros, weekSlots }: MacroSummaryProps) => {
                 : `${Math.round(kcalRemaining)} restantes · obj. ${kcalTarget}`}
             </span>
           </div>
-          <div className="h-2 tablet:h-3.5 bg-slate-100 dark:bg-slate-200 rounded-full overflow-hidden">
+          <div className="h-2 tablet:h-3.5 bg-muted rounded-full overflow-hidden">
             <div
               className="h-full w-full rounded-full bg-orange-500 origin-left transition-transform duration-700"
               style={{ transform: `scaleX(${kcalPct / 100})` }}
@@ -80,7 +80,7 @@ export const MacroSummary = ({ macros, weekSlots }: MacroSummaryProps) => {
             const isOver = value > target;
 
             return (
-              <div key={key} className="bg-slate-50 dark:bg-slate-200 rounded-xl px-2 py-2 tablet:px-4 tablet:py-4 flex flex-col gap-1 tablet:gap-2">
+              <div key={key} className="bg-subtle rounded-xl px-2 py-2 tablet:px-4 tablet:py-4 flex flex-col gap-1 tablet:gap-2">
                 <span className="text-[9px] sm:text-[10px] tablet:text-xs font-semibold uppercase tracking-wide text-slate-500 leading-none">
                   {label}
                 </span>
@@ -90,7 +90,7 @@ export const MacroSummary = ({ macros, weekSlots }: MacroSummaryProps) => {
                   </span>
                   <span className="text-[9px] tablet:text-sm text-slate-500 leading-none">/{target}g</span>
                 </div>
-                <div className="h-1 tablet:h-2 bg-slate-200 dark:bg-slate-300 rounded-full overflow-hidden">
+                <div className="h-1 tablet:h-2 bg-strong rounded-full overflow-hidden">
                   <div
                     className="h-full w-full rounded-full bg-orange-400 origin-left transition-transform duration-500"
                     style={{ transform: `scaleX(${pct / 100})` }}

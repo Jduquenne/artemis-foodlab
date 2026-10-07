@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-07 — Journal migrated to the named theme colours (v6.79.5)
+
+- Done: the 21 `dark:*-slate-*` classes of `features/journal` replaced by the named colours (D-031), identical rendering except one hover: inactive profile in `ProfileSwitcher` (`hover:bg-slate-50 dark:hover:bg-slate-200/60` → `hover:bg-subtle-tint`, 40 % instead of 60 % in dark mode). This closes the journal review.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser (light and dark mode to compare).
+- Still open: next `features/` folder of the P4 review.
+
 ## 2026-10-07 — `features/` review: journal, step 3 (v6.79.4)
 
 - Done: `JournalModule` loads the week into state keyed by `year-week` with a single effect (load + refresh tick), instead of resetting to `null` in an effect cleanup and a second `useRef`-guarded refresh effect; a refresh no longer flashes the loader. Day name of a date → `dayNameOf` (`weekUtils`, from `DAYS` of `planningConfig`), replacing the local `DAYS` + `getDayKey`. `MealSlotCard` uses the central `shortLabel`s (« Prot. / Lip. / Gluc. / Fib. », owner OK). The per-item macro computation of `computeSlotMacros` is extracted as `computeItemMacros` (`macroUtils`) and reused by `RecipePortionRow` for its kcal, so a row and its card total can no longer diverge (placed in `macroUtils` rather than `core/logic/journal` to avoid a new `core` → `shared` import).

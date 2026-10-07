@@ -22,8 +22,8 @@ export const ProfileSwitcher = () => {
               aria-pressed={active}
               className={`flex items-center gap-1.5 px-2 py-1 rounded-lg shrink-0 transition-colors ${
                 active
-                  ? "bg-slate-100 dark:bg-slate-200 text-slate-900"
-                  : "text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-200/60"
+                  ? "bg-muted text-slate-900"
+                  : "text-slate-500 hover:bg-subtle-tint"
               }`}
             >
               <ProfileDot color={profile.color} />

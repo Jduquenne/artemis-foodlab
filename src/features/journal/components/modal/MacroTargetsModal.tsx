@@ -51,7 +51,7 @@ export const MacroTargetsModal = ({ onClose }: MacroTargetsModalProps) => {
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div
-        className={`w-full max-w-xs bg-white dark:bg-slate-100 rounded-2xl shadow-2xl flex flex-col overflow-hidden ${
+        className={`w-full max-w-xs bg-surface rounded-2xl shadow-2xl flex flex-col overflow-hidden ${
           isClosing ? "modal-center-exit" : "modal-center-enter"
         }`}
       >
@@ -62,7 +62,7 @@ export const MacroTargetsModal = ({ onClose }: MacroTargetsModalProps) => {
           <button
             onClick={handleClose}
             aria-label="Fermer"
-            className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
+            className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-muted transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -85,7 +85,7 @@ export const MacroTargetsModal = ({ onClose }: MacroTargetsModalProps) => {
                   integer
                   value={draft[key]}
                   onValueChange={(value) => handleChange(key, value)}
-                  className="w-20 text-right text-sm font-bold bg-slate-50 dark:bg-slate-200 border border-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:border-orange-400 text-slate-800"
+                  className="w-20 text-right text-sm font-bold bg-subtle border border-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:border-orange-400 text-slate-800"
                 />
                 <span className="text-xs text-slate-400 w-6">{unit}</span>
               </div>
@@ -96,7 +96,7 @@ export const MacroTargetsModal = ({ onClose }: MacroTargetsModalProps) => {
         <div className="flex items-center justify-end gap-3 px-5 pb-5 pt-2 border-t border-slate-100">
           <button
             onClick={handleClose}
-            className="px-4 py-2 rounded-xl text-sm font-semibold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
+            className="px-4 py-2 rounded-xl text-sm font-semibold text-slate-500 hover:bg-muted transition-colors"
           >
             Annuler
           </button>

@@ -27,7 +27,7 @@ export const MealSlotCard = ({ slotType, slot }: MealSlotCardProps) => {
   const hasContent = allIds.length > 0;
 
   return (
-    <div className="bg-white dark:bg-slate-100 rounded-2xl p-3 flex flex-col gap-1.5 h-full min-h-0">
+    <div className="bg-surface rounded-2xl p-3 flex flex-col gap-1.5 h-full min-h-0">
       <div className="flex items-center justify-between shrink-0">
         <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-slate-400">
           {SLOT_LABELS[slotType]}
@@ -42,7 +42,7 @@ export const MealSlotCard = ({ slotType, slot }: MealSlotCardProps) => {
       {hasContent && (
         <div className="flex gap-1 shrink-0">
           {NUTRIENT_DEFINITIONS.map(({ key, shortLabel }) => (
-            <div key={key} className="flex-1 bg-slate-50 dark:bg-slate-200 rounded-lg px-1.5 py-1 flex flex-col items-center gap-0.5">
+            <div key={key} className="flex-1 bg-subtle rounded-lg px-1.5 py-1 flex flex-col items-center gap-0.5">
               <span className="text-[8px] font-bold uppercase tracking-wide text-slate-400 leading-none">{shortLabel}</span>
               <span className="text-[10px] font-bold text-slate-600 leading-none tabular-nums">{Math.round(totalMacros[key])}</span>
             </div>

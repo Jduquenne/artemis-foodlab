@@ -54,7 +54,7 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId }: RecipePortion
               onValueChange={setGramsDraft}
               onBlur={commitGrams}
               onKeyDown={(e) => { if (e.key === "Enter") e.currentTarget.blur(); }}
-              className="w-12 text-[11px] font-bold text-center bg-slate-50 dark:bg-slate-200 rounded px-1 py-0.5 outline-none focus:ring-1 focus:ring-orange-400 text-orange-500"
+              className="w-12 text-[11px] font-bold text-center bg-subtle rounded px-1 py-0.5 outline-none focus:ring-1 focus:ring-orange-400 text-orange-500"
             />
             <span className="text-[11px] text-slate-400">g</span>
           </div>
@@ -83,7 +83,7 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId }: RecipePortion
             onClick={() => setExpanded((e) => !e)}
             aria-label={expanded ? `Replier — ${name}` : `Modifier les ingrédients — ${name}`}
             aria-expanded={expanded}
-            className="flex items-center justify-center w-5 h-5 rounded-full bg-slate-100 dark:bg-slate-200 text-slate-400 hover:bg-orange-100 hover:text-orange-500 transition-colors shrink-0"
+            className="flex items-center justify-center w-5 h-5 rounded-full bg-muted text-slate-400 hover:bg-orange-100 hover:text-orange-500 transition-colors shrink-0"
           >
             {expanded ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
           </button>

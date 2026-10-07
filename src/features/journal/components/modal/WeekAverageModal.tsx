@@ -36,7 +36,7 @@ export const WeekAverageModal = ({ weekSlots, onClose }: WeekAverageModalProps) 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div
-        className={`w-full max-w-sm bg-white dark:bg-slate-100 rounded-2xl shadow-2xl flex flex-col overflow-hidden ${
+        className={`w-full max-w-sm bg-surface rounded-2xl shadow-2xl flex flex-col overflow-hidden ${
           isClosing ? "modal-center-exit" : "modal-center-enter"
         }`}
       >
@@ -47,7 +47,7 @@ export const WeekAverageModal = ({ weekSlots, onClose }: WeekAverageModalProps) 
           <button
             onClick={handleClose}
             aria-label="Fermer"
-            className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
+            className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-muted transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -65,7 +65,7 @@ export const WeekAverageModal = ({ weekSlots, onClose }: WeekAverageModalProps) 
                   className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-colors ${
                     active
                       ? "bg-orange-500 text-white"
-                      : "bg-slate-50 dark:bg-slate-200 text-slate-500 hover:text-orange-500"
+                      : "bg-subtle text-slate-500 hover:text-orange-500"
                   }`}
                 >
                   {day.slice(0, 3)}
@@ -96,7 +96,7 @@ export const WeekAverageModal = ({ weekSlots, onClose }: WeekAverageModalProps) 
                         <span className="text-[10px] text-slate-500">/{target} {unit}</span>
                       </div>
                     </div>
-                    <div className="h-1.5 bg-slate-200 dark:bg-slate-300 rounded-full overflow-hidden">
+                    <div className="h-1.5 bg-strong rounded-full overflow-hidden">
                       <div
                         className="h-full w-full rounded-full bg-orange-400 origin-left transition-transform duration-500"
                         style={{ transform: `scaleX(${pct / 100})` }}

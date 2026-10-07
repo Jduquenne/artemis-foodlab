@@ -28,7 +28,7 @@ export const DayNav = ({ date, onPrev, onNext }: DayNavProps) => {
         <button
           onClick={onPrev}
           aria-label="Jour précédent"
-          className="p-1.5 rounded-xl text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 hover:text-slate-600 transition-colors"
+          className="p-1.5 rounded-xl text-slate-400 hover:bg-muted hover:text-slate-600 transition-colors"
         >
           <ChevronLeft className="w-5 h-5" />
         </button>
@@ -44,7 +44,7 @@ export const DayNav = ({ date, onPrev, onNext }: DayNavProps) => {
         <button
           onClick={onNext}
           aria-label="Jour suivant"
-          className="p-1.5 rounded-xl text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 hover:text-slate-600 transition-colors"
+          className="p-1.5 rounded-xl text-slate-400 hover:bg-muted hover:text-slate-600 transition-colors"
         >
           <ChevronRight className="w-5 h-5" />
         </button>

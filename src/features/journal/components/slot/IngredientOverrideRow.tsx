@@ -43,7 +43,7 @@ export const IngredientOverrideRow = ({
           onValueChange={setDraft}
           onBlur={commit}
           onKeyDown={(e) => { if (e.key === "Enter") e.currentTarget.blur(); }}
-          className="w-12 text-[11px] font-bold text-center bg-slate-50 dark:bg-slate-200 rounded px-1 py-0.5 outline-none focus:ring-1 focus:ring-orange-400 text-orange-500"
+          className="w-12 text-[11px] font-bold text-center bg-subtle rounded px-1 py-0.5 outline-none focus:ring-1 focus:ring-orange-400 text-orange-500"
         />
         {unitLabel && <span className="text-[10px] text-slate-400 w-8">{unitLabel}</span>}
         {isModified && (

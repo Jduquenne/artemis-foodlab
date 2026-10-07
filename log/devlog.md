@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-07 — `features/` review: shopping + household, step 2 (v6.78.9)
+
+- Done: the check state of `ShoppingModule` (7 `useMemo` maps, 3 copy-pasted patch functions, loading effect, all mutations) moved to the pure `buildShoppingCheckState` / `collectSourceCheckRequests` (`core/logic/shopping/shoppingCheckState.ts`) and the hook `useShoppingPeriodChecks`; `ShoppingModule` 641 → 416 lines. Fixed on the way: the loading effect reset state synchronously (rule 7) — data is now stored per period and read only for the current one; a food present under two keys (two units, or recipe + base) showed its source check on one line only and could hit a 409 when checking the other — checks now apply to every key of the food and batch writes are deduplicated by API key. Batch source-check API contract received (not deployed), recorded in `docs/api.md` § Planned.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: steps 3 and 4 of the shopping review; front switch to the batch endpoint once the owner confirms it is live in prod.
+
 ## 2026-10-07 — `features/` review: shopping + household, step 1 (v6.78.8)
 
 - Done: read-only review of `features/shopping` + `features/household` (18 files), findings arbitrated by the owner (`dev/refactoring.md`). Step 1 fixes: stock input in the ingredient row uses `DecimalInput` (commas accepted, no silent 0) instead of `type="number"` + `parseFloat`; price-per-kg calculator parses with `parseDecimal` and guards its `localStorage` write; household « Tout réinitialiser » goes through `withPending('household-reset')` (no double click, spinner always stops, button disabled while pending); shopping checks loading, stock commit and clipboard copy no longer leave unhandled rejections.

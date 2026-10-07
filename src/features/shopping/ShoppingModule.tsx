@@ -3,9 +3,9 @@ import { ShoppingCart, CalendarDays, Clipboard, Check, Scale, Plus } from 'lucid
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useNavigate } from 'react-router-dom';
 import { FreezerBag } from '../../core/domain/freezer';
-import { IngredientSource, RecipeCard } from '../../core/domain/shopping';
-import { extrasToIngredients } from '../../core/logic/shopping/shoppingApiMapper';
-import { computeUncheckedCount, buildSourceCheckKey } from '../../core/logic/shopping/shoppingChecks';
+import { ConsolidatedIngredient, IngredientSource, RecipeCard } from '../../core/domain/shopping';
+import { ApiShoppingExtra, extrasToIngredients } from '../../core/logic/shopping/shoppingApiMapper';
+import { computeUncheckedCount } from '../../core/logic/shopping/shoppingChecks';
 import { buildShoppingClipboardText } from '../../core/logic/shopping/shoppingClipboard';
 import {
     groupIngredients,
@@ -16,27 +16,14 @@ import { buildRecipeCards } from '../../core/logic/shopping/shoppingRecipeCards'
 import { getShoppingListForDays, getBasesForDays } from '../../core/services/shoppingListService';
 import { getRecords as getHouseholdRecords } from '../../core/services/householdService';
 import { syncWeekFromApi } from '../../core/services/planningService';
-import {
-    fetchItemChecks,
-    fetchSourceChecks,
-    upsertItemCheck,
-    upsertSourceCheck,
-    fetchExtras,
-    createExtra,
-    updateExtra,
-    deleteExtra,
-    ExtraInput,
-} from '../../core/services/shoppingPeriodService';
-import { ApiItemCheck, ApiShoppingExtra, ApiSourceCheck } from '../../core/logic/shopping/shoppingApiMapper';
-import { getCodeById, getIdByCode } from '../../core/catalogue/recipeIdMap';
+import { ExtraInput } from '../../core/services/shoppingPeriodService';
 import { markScrolling } from '../../shared/utils/scrollGuard';
 import { distributeToColumns } from '../../shared/utils/columnUtils';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { useAuthStore } from '../../shared/store/useAuthStore';
 import { useColCount } from '../../shared/hooks/useColCount';
 import { useFreezerStock } from '../../shared/hooks/useFreezerStock';
-import { withPending } from '../../shared/utils/withPending';
-import { computeFreezerBagSelection } from '../../core/logic/freezer/freezerStockLogic';
+import { useShoppingPeriodChecks } from '../../shared/hooks/useShoppingPeriodChecks';
 import { ShoppingCategoryCard } from './components/ingredients/ShoppingCategoryCard';
 import { RecipeShoppingCard } from './components/meals/RecipeShoppingCard';
 import { SourcesModal } from './components/SourcesModal';
@@ -47,6 +34,8 @@ import { AddExtraModal } from './components/AddExtraModal';
 import { useRefreshStore } from '../../shared/store/useRefreshStore';
 import { useHouseholdSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
 import { sumBy } from '../../shared/utils/collectionUtils';
+
+const NO_INGREDIENTS: ConsolidatedIngredient[] = [];
 
 export const ShoppingModule = () => {
     const navigate = useNavigate();
@@ -66,39 +55,7 @@ export const ShoppingModule = () => {
     const [copied, setCopied] = useState(false);
     const [showPriceCalc, setShowPriceCalc] = useState(false);
     const [activeSources, setActiveSources] = useState<{ key: string; sources: IngredientSource[]; freezerBags: FreezerBag[] } | null>(null);
-
-    const [itemChecksRaw, setItemChecksRaw] = useState<ApiItemCheck[]>([]);
-    const [sourceChecksRaw, setSourceChecksRaw] = useState<ApiSourceCheck[]>([]);
-    const [extrasRaw, setExtrasRaw] = useState<ApiShoppingExtra[]>([]);
     const [extraModal, setExtraModal] = useState<{ open: boolean; extra: ApiShoppingExtra | null }>({ open: false, extra: null });
-
-    useEffect(() => {
-        let active = true;
-        const load = async () => {
-            if (!currentPeriodId) {
-                if (active) {
-                    setItemChecksRaw([]);
-                    setSourceChecksRaw([]);
-                    setExtrasRaw([]);
-                }
-                return;
-            }
-            const loaded = await Promise.all([
-                fetchItemChecks(currentPeriodId),
-                fetchSourceChecks(currentPeriodId),
-                fetchExtras(currentPeriodId),
-            ]).catch(() => null);
-            if (!loaded) return;
-            const [ic, sc, ex] = loaded;
-            if (active) {
-                setItemChecksRaw(ic);
-                setSourceChecksRaw(sc);
-                setExtrasRaw(ex);
-            }
-        };
-        load();
-        return () => { active = false; };
-    }, [currentPeriodId, refreshTick]);
 
     useEffect(() => {
         if (authStatus !== 'authenticated') return;
@@ -108,36 +65,6 @@ export const ShoppingModule = () => {
             syncWeekFromApi(year, week);
         }
     }, [authStatus, shoppingDays, refreshTick]);
-
-    const patchItemCheck = (updated: ApiItemCheck) => {
-        setItemChecksRaw(prev => {
-            const idx = prev.findIndex(ic => ic.id === updated.id);
-            if (idx === -1) return [...prev, updated];
-            const next = [...prev];
-            next[idx] = updated;
-            return next;
-        });
-    };
-
-    const patchSourceCheck = (updated: ApiSourceCheck) => {
-        setSourceChecksRaw(prev => {
-            const idx = prev.findIndex(sc => sc.id === updated.id);
-            if (idx === -1) return [...prev, updated];
-            const next = [...prev];
-            next[idx] = updated;
-            return next;
-        });
-    };
-
-    const patchExtra = (updated: ApiShoppingExtra) => {
-        setExtrasRaw(prev => {
-            const idx = prev.findIndex(e => e.id === updated.id);
-            if (idx === -1) return [...prev, updated];
-            const next = [...prev];
-            next[idx] = updated;
-            return next;
-        });
-    };
 
     const ingredients = useLiveQuery(
         () => getShoppingListForDays(shoppingDays, { recipes, baseGrams }),
@@ -162,164 +89,29 @@ export const ShoppingModule = () => {
         [ingredients, bases, recipes]
     );
 
-    const keyToFoodId = useMemo(() => {
-        const map = new Map<string, string>();
-        for (const ing of ingredients ?? []) {
-            if (ing.foodId) map.set(ing.key, ing.foodId);
-        }
-        return map;
-    }, [ingredients]);
+    const {
+        extras,
+        checked,
+        stocks,
+        sourceChecked,
+        freezerSelection,
+        toggleItem,
+        setStock,
+        toggleSourceCheck,
+        toggleSourceBatch,
+        toggleFreezerBag,
+        saveExtra,
+        removeExtra,
+    } = useShoppingPeriodChecks(currentPeriodId, ingredients ?? NO_INGREDIENTS, allHouseholdItems);
 
-    const foodIdToKey = useMemo(() => {
-        const map = new Map<string, string>();
-        for (const [key, foodId] of keyToFoodId) map.set(foodId, key);
-        return map;
-    }, [keyToFoodId]);
-
-    const itemCheckByFoodId = useMemo(() => {
-        const map = new Map<string, ApiItemCheck>();
-        for (const ic of itemChecksRaw) if (ic.foodId) map.set(ic.foodId, ic);
-        return map;
-    }, [itemChecksRaw]);
-
-    const itemCheckByHouseholdId = useMemo(() => {
-        const map = new Map<string, ApiItemCheck>();
-        for (const ic of itemChecksRaw) if (ic.householdItemId) map.set(ic.householdItemId, ic);
-        return map;
-    }, [itemChecksRaw]);
-
-    const sourceCheckIdByKey = useMemo(() => {
-        const map = new Map<string, string>();
-        for (const sc of sourceChecksRaw) {
-            const key = foodIdToKey.get(sc.foodId);
-            if (!key) continue;
-            const code = getCodeById(sc.recipeId) ?? sc.recipeId;
-            map.set(buildSourceCheckKey(key, { recipeId: code, day: sc.day, slot: sc.slot }), sc.id);
-        }
-        return map;
-    }, [sourceChecksRaw, foodIdToKey]);
-
-    const checked = useMemo(() => {
-        const set = new Set<string>();
-        for (const [key, foodId] of keyToFoodId) {
-            if (itemCheckByFoodId.get(foodId)?.isChecked) set.add(key);
-        }
-        for (const item of allHouseholdItems) {
-            if (itemCheckByHouseholdId.get(item.id)?.isChecked) set.add(`household::${item.id}`);
-        }
-        for (const extra of extrasRaw) {
-            if (extra.isChecked) set.add(`extra::${extra.id}`);
-        }
-        return set;
-    }, [keyToFoodId, itemCheckByFoodId, itemCheckByHouseholdId, allHouseholdItems, extrasRaw]);
-
-    const extraIngredients = useMemo(() => extrasToIngredients(extrasRaw), [extrasRaw]);
+    const extraIngredients = useMemo(() => extrasToIngredients(extras), [extras]);
     const displayIngredients = useMemo(
         () => (ingredients ? [...ingredients, ...extraIngredients] : undefined),
         [ingredients, extraIngredients],
     );
 
-    const stocks = useMemo(() => {
-        const rec: Record<string, number> = {};
-        for (const [key, foodId] of keyToFoodId) {
-            const ic = itemCheckByFoodId.get(foodId);
-            if (ic && ic.stock > 0) rec[key] = ic.stock;
-        }
-        return rec;
-    }, [keyToFoodId, itemCheckByFoodId]);
-
-    const freezerSelection = useMemo(() => {
-        const rec: Record<string, string[]> = {};
-        for (const [key, foodId] of keyToFoodId) {
-            const ic = itemCheckByFoodId.get(foodId);
-            if (ic && ic.freezerBagIds.length > 0) rec[key] = ic.freezerBagIds;
-        }
-        return rec;
-    }, [keyToFoodId, itemCheckByFoodId]);
-
-    const sourceChecked = useMemo(() => {
-        const set = new Set<string>();
-        for (const sc of sourceChecksRaw) {
-            if (!sc.isChecked) continue;
-            const key = foodIdToKey.get(sc.foodId);
-            if (!key) continue;
-            const code = getCodeById(sc.recipeId) ?? sc.recipeId;
-            set.add(buildSourceCheckKey(key, { recipeId: code, day: sc.day, slot: sc.slot }));
-        }
-        return set;
-    }, [sourceChecksRaw, foodIdToKey]);
-
-    const toggleItem = async (key: string) => {
-        if (!currentPeriodId) return;
-        const pendingKey = `shopping-check:${key}`;
-        if (key.startsWith('extra::')) {
-            const id = key.slice('extra::'.length);
-            const current = extrasRaw.find(e => e.id === id);
-            const updated = await withPending(pendingKey, () => updateExtra(currentPeriodId, id, { isChecked: !current?.isChecked }));
-            if (updated) patchExtra(updated);
-            return;
-        }
-        if (key.startsWith('household::')) {
-            const householdItemId = key.slice('household::'.length);
-            const existing = itemCheckByHouseholdId.get(householdItemId);
-            const updated = await withPending(pendingKey, () =>
-                upsertItemCheck(currentPeriodId, existing?.id, { householdItemId }, { isChecked: !existing?.isChecked })
-            );
-            if (updated) patchItemCheck(updated);
-        } else {
-            const foodId = keyToFoodId.get(key);
-            if (!foodId) return;
-            const existing = itemCheckByFoodId.get(foodId);
-            const updated = await withPending(pendingKey, () =>
-                upsertItemCheck(currentPeriodId, existing?.id, { foodId }, { isChecked: !existing?.isChecked })
-            );
-            if (updated) patchItemCheck(updated);
-        }
-    };
-
-    const setStock = async (key: string, value: number) => {
-        if (!currentPeriodId) return;
-        const foodId = keyToFoodId.get(key);
-        if (!foodId) return;
-        const existing = itemCheckByFoodId.get(foodId);
-        const updated = await upsertItemCheck(currentPeriodId, existing?.id, { foodId }, { stockOverride: value > 0 ? value : null })
-            .catch(() => null);
-        if (updated) patchItemCheck(updated);
-    };
-
-    const toggleSourceCheck = async (ingredientKey: string, sources: IngredientSource[], isChecked: boolean) => {
-        if (!currentPeriodId) return;
-        const foodId = keyToFoodId.get(ingredientKey);
-        if (!foodId) return;
-        for (const source of sources) {
-            const recipeId = getIdByCode(source.recipeId) ?? source.recipeId;
-            const localKey = buildSourceCheckKey(ingredientKey, source);
-            const existingId = sourceCheckIdByKey.get(localKey);
-            const updated = await withPending(`shopping-source:${localKey}`, () =>
-                upsertSourceCheck(currentPeriodId, existingId, { foodId, recipeId, day: source.day, slot: source.slot }, isChecked)
-            );
-            if (updated) patchSourceCheck(updated);
-        }
-    };
-
-    const toggleSourceBatch = async (batch: Array<{ ingredientKey: string; sources: IngredientSource[] }>, isChecked: boolean) => {
-        for (const { ingredientKey, sources } of batch) {
-            await toggleSourceCheck(ingredientKey, sources, isChecked);
-        }
-    };
-
-    const toggleFreezerBag = async (bagId: string) => {
-        if (!activeSources || !currentPeriodId) return;
-        const { key: ingredientKey, freezerBags } = activeSources;
-        const current = freezerSelection[ingredientKey] ?? [];
-        const { next } = computeFreezerBagSelection(current, bagId, freezerBags);
-        const foodId = keyToFoodId.get(ingredientKey);
-        if (!foodId) return;
-        const existing = itemCheckByFoodId.get(foodId);
-        const updated = await withPending(`shopping-bag:${bagId}`, () =>
-            upsertItemCheck(currentPeriodId, existing?.id, { foodId }, { freezerBagIds: next })
-        );
-        if (updated) patchItemCheck(updated);
+    const handleToggleFreezerBag = (bagId: string) => {
+        if (activeSources) toggleFreezerBag(activeSources.key, bagId, activeSources.freezerBags);
     };
 
     const plannedRecipes = useMemo(
@@ -327,31 +119,10 @@ export const ShoppingModule = () => {
         [recipeCards]
     );
 
-    const submitExtra = async (body: ExtraInput): Promise<boolean> => {
-        if (!currentPeriodId) return false;
-        try {
-            if (extraModal.extra) {
-                patchExtra(await updateExtra(currentPeriodId, extraModal.extra.id, body));
-            } else {
-                const created = await createExtra(currentPeriodId, body);
-                setExtrasRaw(prev => [...prev, created]);
-            }
-            return true;
-        } catch {
-            return false;
-        }
-    };
-
-    const handleDeleteExtra = async (extraId: string) => {
-        if (!currentPeriodId) return;
-        await withPending(`shopping-extra-delete:${extraId}`, async () => {
-            await deleteExtra(currentPeriodId, extraId);
-            setExtrasRaw(prev => prev.filter(e => e.id !== extraId));
-        }).catch(() => undefined);
-    };
+    const submitExtra = (body: ExtraInput) => saveExtra(extraModal.extra?.id ?? null, body);
 
     const handleEditExtra = (extraId: string) => {
-        setExtraModal({ open: true, extra: extrasRaw.find(e => e.id === extraId) ?? null });
+        setExtraModal({ open: true, extra: extras.find(e => e.id === extraId) ?? null });
     };
 
     const allGroupedItems = useMemo(
@@ -585,7 +356,7 @@ export const ShoppingModule = () => {
                                                         onSetStock={setStock}
                                                         onShowSources={(key, sources, bags) => setActiveSources({ key, sources, freezerBags: bags })}
                                                         onEditExtra={handleEditExtra}
-                                                        onDeleteExtra={handleDeleteExtra}
+                                                        onDeleteExtra={removeExtra}
                                                         foodBags={foodBags}
                                                     />
                                                 </div>
@@ -624,7 +395,7 @@ export const ShoppingModule = () => {
                     onClose={() => setActiveSources(null)}
                     freezerBags={activeSources.freezerBags}
                     selectedBagIds={freezerSelection[activeSources.key] ?? []}
-                    onToggleBag={toggleFreezerBag}
+                    onToggleBag={handleToggleFreezerBag}
                 />
             )}
 

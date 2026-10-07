@@ -55,7 +55,7 @@ export function mapApiBag(bag: ApiFreezerBag): FreezerBag {
   };
 }
 
-function mapApiItem(item: ApiFreezerItem): FreezerItem {
+export function mapApiItem(item: ApiFreezerItem): FreezerItem {
   if (item.type === "batch" && item.batch) {
     const batch: BatchFreezerItem = {
       id: item.id,

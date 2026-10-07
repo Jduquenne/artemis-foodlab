@@ -29,7 +29,7 @@ interface MenuState {
   replaceShoppingPeriod: (period: { id: string | null; days: ShoppingDay[] }) => void;
 }
 
-export const useMenuStore = create<MenuState>((set, get) => ({
+export const useMenuStore = create<MenuState>((set) => ({
   currentWeekId: getWeekId(),
   currentWeek: getISOWeek(new Date()),
   currentYear: getISOWeekYear(new Date()),
@@ -38,7 +38,7 @@ export const useMenuStore = create<MenuState>((set, get) => ({
   recipeFilter: normalizeRecipeFilter(safeParseJson<Partial<RecipeFilter> | null>("cipe_recipe_filter", EMPTY_RECIPE_FILTER)),
 
   setShoppingDays: async (days) => {
-    const newPeriodId = await replacePeriod(get().currentPeriodId, days);
+    const newPeriodId = await replacePeriod(days);
     set({ shoppingDays: days, currentPeriodId: newPeriodId });
     await clearHouseholdItems();
   },

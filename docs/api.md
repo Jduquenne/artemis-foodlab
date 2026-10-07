@@ -77,7 +77,7 @@ A separate Claude Code session owns `meals-planning-api` (sibling repo). Collabo
 
 ## Shopping and household
 
-- Shopping period: `GET /shopping-periods/current`; changing the shopping days deletes and recreates the period (checks, stocks and extras go with it). Under a period: `ShoppingDay[]`, item checks (`isChecked` / `stockOverride` / `freezerBagIds`, one resource for check + stock + bags), source checks (recipe × day × slot), extras.
+- Shopping period: `GET /shopping-periods/current`; changing the shopping days deletes and recreates the period (checks, stocks and extras go with it) in one call, `PUT /shopping-periods/current { "days": [ { year (2000–2100), week (1–53), day (non-empty) } ] }` (live 2026-10-07): one transaction that deletes all the account's periods (same cascade as `DELETE`) and creates the new one; max 50 days, no duplicate `(year, week, day)`; 200 = same shape as `GET /current` (`{ id, createdAt, days }`), `days: []` → 200 `null`; days ordered by year then week only; 400 `VALIDATION_ERROR` leaves everything untouched; no 404; counts once in the write limiter. Under a period: `ShoppingDay[]`, item checks (`isChecked` / `stockOverride` / `freezerBagIds`, one resource for check + stock + bags), source checks (recipe × day × slot), extras.
 - **Extras** — `/shopping-periods/:periodId/extras` (`requireAuth`, period of the user, else 404; cascade with the period). `GET` → `ShoppingExtra[]` sorted `createdAt` asc; `POST` → 201, body `{ name, quantity?, unit?, categoryId?, foodId?, recipeId?, isChecked? }`; `PUT /:id` partial; `DELETE /:id` → 204. `recipeId` = recipe uuid (400 if not a recipe); `categoryId` = ingredient category slug; `foodId` = short id; unknown FK → 400; `unit` free string ≤ 50 chars; no uniqueness; `quantity` is a JSON number; links `onDelete: SetNull`.
   Example: `{ "id": "uuid", "name": "Fromage de chèvre", "quantity": 200, "unit": "g", "categoryId": "dairy", "foodId": null, "recipeId": null, "isChecked": false, "createdAt": "2026-09-09T10:00:00.000Z" }`
 - Household: checking an item = "to buy" → `PUT /household-shopping-flags/:id` (check) / `DELETE` (uncheck).
@@ -87,6 +87,13 @@ A separate Claude Code session owns `meals-planning-api` (sibling repo). Collabo
 - `FreezerCategory.color: string | null` on `GET/POST/PUT /freezer-categories`: opaque string validated `^[a-z0-9-]{1,20}$`; the list of valid keys is 100 % front; `null` = automatic colour.
 - Freezer bag `unit` is required (non-empty) — `Unit.NONE` must not be offered for bags.
 - `BatchFreezerItem.recipeName` is returned by the API (current name via join) and no longer sent by the front.
+- **Food item with its bags in one call** (live 2026-10-07): `POST /freezer-items` with `type: "food"` accepts an optional `bags` array (max 50), each `{ quantity (> 0, ≤ 9999999.999), unit (non-empty), preparation (non-empty string | null, optional), addedDate ("YYYY-MM-DD") }`, without `foodItemId`; `bags` absent → `[]`; ignored for `type: "batch"`. All or nothing. 201 = full item, `food.bags` sorted by `addedDate` ascending (not the sent order), `addedDate` returned as an ISO datetime. Counts once in the write limiter. `addItemToCategory` builds the cache from this response (`mapApiItem`). Adding bags to an existing item stays one `POST /freezer-bags` per bag.
+  ```
+  POST /freezer-items { "type": "food", "categoryId": "<uuid>", "foodId": "fv-010", "name": "Betterave rouge",
+    "bags": [ { "quantity": 500, "unit": "g", "preparation": "écossés", "addedDate": "2026-10-01" } ] }
+  → 201 { "id": "<uuid>", "type": "food", "position": 0, "food": { "foodId": "fv-010", "name": "Betterave rouge",
+    "bags": [ { "id": "<uuid>", "quantity": 500, "unit": "g", "preparation": "écossés", "addedDate": "2026-10-01T00:00:00.000Z" } ] } }
+  ```
 - Blocked deletes return French 409 messages.
 
 ## Import
@@ -111,12 +118,4 @@ All `requireAuth + requireAdmin` (guest → 403, no token → 401).
 
 - **Google sign-in** (`dev/issues.json` #10): `POST /auth/google { credential }` (Google Identity Services ID token), response identical to login; 401 if the token is invalid or the e-mail unverified; 429 rate limit. New accounts are `guest`. Requires the owner's Google Cloud setup (OAuth client "Web application", origins `http://localhost:5173` and `https://jduquenne.github.io`, no redirect URI) and the same client id in `VITE_GOOGLE_CLIENT_ID` (front) and `GOOGLE_CLIENT_ID` (API). Wait for the API session to confirm it is live and send real payloads.
 - Optional `id` (foods) and `code` (outdoor) generated server-side: proposed by the API, not merged; the client still provides them.
-- **Atomic freezer item + bags** (received 2026-10-07, tested locally by the API session, not deployed): `POST /freezer-items` with `type: "food"` accepts an optional `bags` array (max 50), each `{ quantity (> 0, ≤ 9999999.999), unit (non-empty), preparation (non-empty string | null, optional), addedDate ("YYYY-MM-DD") }`, without `foodItemId`; `bags` absent → `[]`; ignored for `type: "batch"`. All or nothing. 201 = full item, `food.bags` sorted by `addedDate` ascending (not the sent order), `addedDate` returned as an ISO datetime. Counts once in the write limiter. Adding bags to an existing item stays one `POST /freezer-bags` per bag. Front use: `addItemToCategory` sends the bags in the item call and builds the cache from the response.
-  ```
-  POST /freezer-items { "type": "food", "categoryId": "<uuid>", "foodId": "fv-010", "name": "Betterave rouge",
-    "bags": [ { "quantity": 500, "unit": "g", "preparation": "écossés", "addedDate": "2026-10-01" } ] }
-  → 201 { "id": "<uuid>", "type": "food", "position": 0, "food": { "foodId": "fv-010", "name": "Betterave rouge",
-    "bags": [ { "id": "<uuid>", "quantity": 500, "unit": "g", "preparation": "écossés", "addedDate": "2026-10-01T00:00:00.000Z" } ] } }
-  ```
-- **Atomic shopping period replace** (same status): `PUT /shopping-periods/current { "days": [ { year (2000–2100), week (1–53), day (non-empty) } ] }`, max 50, no duplicate `(year, week, day)`. One transaction: deletes all the account's periods (same cascade as `DELETE` today: days, item checks and bag allocations, source checks, extras), then creates the new one. 200 = same shape as `GET /shopping-periods/current` (`{ id, createdAt, days: [{ id, year, week, day }] }`); `days: []` → 200 `null`. Days ordered by year then week only. Errors: 400 `VALIDATION_ERROR` (duplicate day, missing `days`, > 50 days), nothing deleted; no 404. Counts once in the write limiter. Front use: `replacePeriod(days)` replaces DELETE + POST + one POST per day.
 

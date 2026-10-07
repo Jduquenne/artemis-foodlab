@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-07 — Atomic freezer item and shopping period writes (v6.78.7)
+
+- Done: both endpoints confirmed live in prod by the owner. `addItemToCategory` (food) sends its bags in the `POST /freezer-items` call and builds the cache from the response (`mapApiItem`, now exported); the step-3 `try/finally` is gone. `replacePeriod(days)` is a single `PUT /shopping-periods/current` instead of DELETE + POST + one POST per day. Contracts moved from § Planned to § Freezer and § Shopping in `docs/api.md`. This closes the `core/services/` review.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser nor against the API.
+- Still open: owner test in prod (add a food with a bag to the freezer; change the shopping days, then empty them); P4 continues with `features/`.
+
 ## 2026-10-07 — Atomic freezer / shopping period contracts recorded (v6.78.6)
 
 - Done: the API session answered the relay prompt with two atomic endpoints (`POST /freezer-items` with `bags`, `PUT /shopping-periods/current`), implemented and tested locally, not deployed. Contracts recorded in `docs/api.md` § Planned; checked against `addItemToCategory` and `replacePeriod` (no blocker: the add-freezer modal sends one bag with quantity > 0; the store keeps its own days and only uses the period id).

@@ -23,19 +23,12 @@ export async function mapApiPeriod(period: ApiShoppingPeriod | null): Promise<Cu
   return { id: period.id, days };
 }
 
-export async function replacePeriod(currentPeriodId: string | null, days: ShoppingDay[]): Promise<string | null> {
-  if (currentPeriodId) {
-    await apiFetch(`/shopping-periods/${currentPeriodId}`, { method: "DELETE" });
-  }
-  if (days.length === 0) return null;
-  const created = await apiFetchJson<ApiShoppingPeriod>("/shopping-periods", { method: "POST" });
-  for (const day of days) {
-    await apiFetchJson(`/shopping-periods/${created.id}/days`, {
-      method: "POST",
-      body: { year: day.year, week: day.week, day: day.day },
-    });
-  }
-  return created.id;
+export async function replacePeriod(days: ShoppingDay[]): Promise<string | null> {
+  const period = await apiFetchJson<ApiShoppingPeriod | null>("/shopping-periods/current", {
+    method: "PUT",
+    body: { days: days.map(d => ({ year: d.year, week: d.week, day: d.day })) },
+  });
+  return period?.id ?? null;
 }
 
 export interface ExtraInput {

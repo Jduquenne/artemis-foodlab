@@ -8,6 +8,7 @@ import {
   ApiFreezerItem,
   mapApiBag,
   mapApiFreezerCategory,
+  mapApiItem,
 } from "../logic/freezer/freezerApiMapper";
 import { BatchFreezerItem, FoodFreezerItem, FreezerBag, FreezerCategory } from "../domain/freezer";
 import { compareByName } from "../../shared/utils/sortUtils";
@@ -73,27 +74,21 @@ export const addItemToCategory = async (
   if (item.type === "food") {
     const created = await apiFetchJson<ApiFreezerItem>("/freezer-items", {
       method: "POST",
-      body: { type: "food", categoryId, name: item.name, foodId: item.foodId ?? null },
+      body: {
+        type: "food",
+        categoryId,
+        name: item.name,
+        foodId: item.foodId ?? null,
+        bags: item.bags.map(bag => ({
+          quantity: bag.quantity,
+          unit: bag.unit,
+          preparation: bag.preparation ?? null,
+          addedDate: bag.addedDate,
+        })),
+      },
     });
-    const bags: FreezerBag[] = [];
-    try {
-      for (const bag of item.bags) {
-        const createdBag = await apiFetchJson<ApiFreezerBag>("/freezer-bags", {
-          method: "POST",
-          body: {
-            foodItemId: created.id,
-            quantity: bag.quantity,
-            unit: bag.unit,
-            preparation: bag.preparation ?? null,
-            addedDate: bag.addedDate,
-          },
-        });
-        bags.push(mapApiBag(createdBag));
-      }
-    } finally {
-      const newItem: FoodFreezerItem = { id: created.id, type: "food", name: item.name, foodId: item.foodId, bags };
-      await withCategory(categoryId, cat => ({ items: [...cat.items, newItem] }));
-    }
+    const newItem = mapApiItem(created);
+    await withCategory(categoryId, cat => ({ items: [...cat.items, newItem] }));
   } else {
     const addedDate = today();
     const recipeId = getIdByCode(item.recipeId) ?? item.recipeId;

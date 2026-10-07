@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-07 — `features/` review: freezer, step 1 (v6.78.13)
+
+- Done: read-only review of `features/freezer` (17 files), findings arbitrated by the owner (`dev/refactoring.md`). Step 1: « Ajouter à la catégorie » stayed stuck on « Enregistrement… » forever if the API call failed — now `withPending` and the modal stays open on error; six forms with hand-made `saving` states (freezer rename, category rename ×2, category creation, add bag, edit bag) go through `withPending` and keep the form open on error; the three inline renames share the new hook `useInlineRename`; every freezer `withPending` call now catches its rejection (no unhandled promise; the global toast still shows).
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: step 2 (shared `BagFields` for add/edit bag forms, category summary line and duplicate-name check to `core/logic/freezer`), step 3 (confirmation before deleting a non-empty category), step 4 (theme colours; « Aliment » tab orange when selected, owner's choice).
+
 ## 2026-10-07 — Named theme colours, Shopping migrated (v6.78.12)
 
 - Done: the theming rule « never `dark:bg-slate-*` » turned out impossible as written (`white` is not overridden in dark mode, so ~300 `bg-white dark:bg-slate-100`-style pairs are needed); the owner chose named colours (D-031): `surface`, `surface-raised`, `muted`, `subtle`, `subtle-tint`, `strong` in `src/index.css`, table in `docs/ui-design.md`. Shopping + household files migrated (40 classes, identical rendering), except three one-offs mapped to the nearest colour: the close buttons of `SourcesModal` / `PricePerKgModal` (`hover:bg-strong`, one step darker on hover in light mode) and the Shopping tab bar (`bg-muted`, slightly more opaque in dark mode). Golden-rule grep fixed to also catch `dark:hover:` (real count 258 in 96 files after this step). This closes the Shopping + household review.

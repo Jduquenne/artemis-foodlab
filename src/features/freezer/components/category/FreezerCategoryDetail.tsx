@@ -10,6 +10,7 @@ import { useFreezerColCount } from "../../../../shared/hooks/useFreezerColCount"
 import { getFreezerCategoryAccent } from "../../freezerAccents";
 import { distributeFreezerItemsToColumns } from "../../../../core/logic/freezer/freezerItemsLogic";
 import { withPending } from "../../../../shared/utils/withPending";
+import { useInlineRename } from "../../../../shared/hooks/useInlineRename";
 
 export interface FreezerCategoryDetailProps {
   category: FreezerCategory;
@@ -18,9 +19,9 @@ export interface FreezerCategoryDetailProps {
 
 export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetailProps) => {
   const [addOpen, setAddOpen] = useState(false);
-  const [editing, setEditing] = useState(false);
-  const [nameInput, setNameInput] = useState(category.name);
-  const [renaming, setRenaming] = useState(false);
+  const rename = useInlineRename(category.name, `freezer-category-rename:${category.id}`, (name) =>
+    updateCategoryName(category.id, name),
+  );
 
   const colCount = useFreezerColCount();
   const accent = getFreezerCategoryAccent(category);
@@ -35,24 +36,6 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
     [category.items]
   );
 
-  const handleRename = async () => {
-    const trimmed = nameInput.trim();
-    if (trimmed && trimmed !== category.name) {
-      setRenaming(true);
-      try {
-        await updateCategoryName(category.id, trimmed);
-      } finally {
-        setRenaming(false);
-      }
-    }
-    setEditing(false);
-  };
-
-  const handleCancelRename = () => {
-    setNameInput(category.name);
-    setEditing(false);
-  };
-
   return (
     <div className="h-full flex flex-col gap-4 overflow-hidden">
       <div className="flex items-center gap-3 shrink-0">
@@ -64,15 +47,15 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
           <ArrowLeft className="w-5 h-5" />
         </button>
 
-        {editing ? (
+        {rename.editing ? (
           <InlineNameEditor
-            value={nameInput}
-            onChange={setNameInput}
-            onConfirm={handleRename}
-            onCancel={handleCancelRename}
+            value={rename.value}
+            onChange={rename.setValue}
+            onConfirm={rename.confirm}
+            onCancel={rename.cancel}
             inputClassName="text-xl font-black"
             className="animate-fade-in-up"
-            pending={renaming}
+            pending={rename.pending}
           />
         ) : (
           <div className="flex-1 flex items-center gap-2 min-w-0">
@@ -82,7 +65,7 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
             <h1 className="text-xl font-black text-slate-900 truncate">{category.name}</h1>
             <button
               aria-label="Renommer"
-              onClick={() => { setNameInput(category.name); setEditing(true); }}
+              onClick={rename.start}
               className="shrink-0 p-1.5 rounded-lg text-slate-300 hover:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
             >
               <Pencil className="w-3.5 h-3.5" />
@@ -111,7 +94,7 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
                     key={item.id}
                     item={item}
                     categoryId={category.id}
-                    onDelete={() => withPending(`freezer-item-delete:${item.id}`, () => removeItemFromCategory(category.id, item.id))}
+                    onDelete={() => withPending(`freezer-item-delete:${item.id}`, () => removeItemFromCategory(category.id, item.id)).catch(() => undefined)}
                   />
                 ))}
               </div>

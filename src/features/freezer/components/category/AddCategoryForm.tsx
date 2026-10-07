@@ -1,31 +1,30 @@
 import { useState } from "react";
 import { Plus, X } from "lucide-react";
 import { createCategory } from "../../../../core/services/freezerService";
+import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
+import { withPending } from "../../../../shared/utils/withPending";
 import { FreezerColorPicker } from "./FreezerColorPicker";
 
 export const AddCategoryForm = () => {
   const [adding, setAdding] = useState(false);
   const [name, setName] = useState("");
   const [color, setColor] = useState<string | null>(null);
-  const [submitting, setSubmitting] = useState(false);
+  const submitting = usePendingKey("freezer-category-create");
 
   const reset = () => {
     setAdding(false);
     setName("");
     setColor(null);
-    setSubmitting(false);
   };
 
   const handleConfirm = async () => {
     const trimmed = name.trim();
-    if (!trimmed || submitting) return;
-    setSubmitting(true);
-    try {
+    if (!trimmed) return;
+    const created = await withPending("freezer-category-create", async () => {
       await createCategory(trimmed, color);
-      reset();
-    } finally {
-      setSubmitting(false);
-    }
+      return true;
+    }).catch(() => false);
+    if (created) reset();
   };
 
   if (adding) {

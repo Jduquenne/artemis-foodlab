@@ -8,6 +8,7 @@ import { summarizeFreezerCategory } from "../../../../core/logic/freezer/freezer
 import { InlineNameEditor } from "../InlineNameEditor";
 import { FreezerColorPicker } from "./FreezerColorPicker";
 import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
+import { useInlineRename } from "../../../../shared/hooks/useInlineRename";
 import { withPending } from "../../../../shared/utils/withPending";
 
 export interface FreezerCategoryCardProps {
@@ -18,11 +19,11 @@ export interface FreezerCategoryCardProps {
 export const FreezerCategoryCard = ({ category, onClick }: FreezerCategoryCardProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [picking, setPicking] = useState(false);
-  const [renaming, setRenaming] = useState(false);
-  const [savingRename, setSavingRename] = useState(false);
-  const [nameInput, setNameInput] = useState(category.name);
   const menuRef = useRef<HTMLDivElement>(null);
   const deletePending = usePendingKey(`freezer-category-delete:${category.id}`);
+  const rename = useInlineRename(category.name, `freezer-category-rename:${category.id}`, (name) =>
+    updateCategoryName(category.id, name),
+  );
 
   const closeMenu = () => {
     setMenuOpen(false);
@@ -40,34 +41,15 @@ export const FreezerCategoryCard = ({ category, onClick }: FreezerCategoryCardPr
     return () => document.removeEventListener("mousedown", handleClick);
   }, [menuOpen]);
 
-  const handleRename = async () => {
-    const trimmed = nameInput.trim();
-    if (trimmed && trimmed !== category.name) {
-      setSavingRename(true);
-      try {
-        await updateCategoryName(category.id, trimmed);
-      } finally {
-        setSavingRename(false);
-      }
-    }
-    setRenaming(false);
-    closeMenu();
-  };
-
-  const handleCancelRename = () => {
-    setNameInput(category.name);
-    setRenaming(false);
-  };
-
   const handleDelete = async () => {
     closeMenu();
-    await withPending(`freezer-category-delete:${category.id}`, () => deleteCategory(category.id));
+    await withPending(`freezer-category-delete:${category.id}`, () => deleteCategory(category.id)).catch(() => undefined);
   };
 
   const handlePickColor = async (color: string | null) => {
     closeMenu();
     if (color !== category.color) {
-      await withPending(`freezer-category-color:${category.id}`, () => updateCategoryColor(category.id, color));
+      await withPending(`freezer-category-color:${category.id}`, () => updateCategoryColor(category.id, color)).catch(() => undefined);
     }
   };
 
@@ -99,14 +81,14 @@ export const FreezerCategoryCard = ({ category, onClick }: FreezerCategoryCardPr
           </div>
 
           <div className="flex-1 min-w-0">
-            {renaming ? (
+            {rename.editing ? (
               <InlineNameEditor
-                value={nameInput}
-                onChange={setNameInput}
-                onConfirm={handleRename}
-                onCancel={handleCancelRename}
+                value={rename.value}
+                onChange={rename.setValue}
+                onConfirm={rename.confirm}
+                onCancel={rename.cancel}
                 inputClassName="text-sm font-bold"
-                pending={savingRename}
+                pending={rename.pending}
               />
             ) : (
               <span className="block text-sm font-bold text-slate-800 truncate">{category.name}</span>
@@ -125,7 +107,7 @@ export const FreezerCategoryCard = ({ category, onClick }: FreezerCategoryCardPr
             {menuOpen && (
               <div className="absolute right-0 top-8 z-20 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl shadow-lg overflow-hidden min-w-40">
                 <button
-                  onClick={e => { e.stopPropagation(); setRenaming(true); closeMenu(); }}
+                  onClick={e => { e.stopPropagation(); rename.start(); closeMenu(); }}
                   className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors"
                 >
                   <Pencil className="w-3.5 h-3.5" /> Renommer

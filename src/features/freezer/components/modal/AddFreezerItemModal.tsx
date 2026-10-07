@@ -7,6 +7,8 @@ import { addItemToCategory } from "../../../../core/services/freezerService";
 import { FoodTab } from "./FoodTab";
 import { BatchTab } from "./BatchTab";
 import { parseDecimal } from "../../../../shared/utils/numberUtils";
+import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
+import { withPending } from "../../../../shared/utils/withPending";
 
 export interface AddFreezerItemModalProps {
   categoryId: string;
@@ -16,7 +18,7 @@ export interface AddFreezerItemModalProps {
 
 export const AddFreezerItemModal = ({ categoryId, existingFoodNames, onClose }: AddFreezerItemModalProps) => {
   const [tab, setTab] = useState<"food" | "batch">("food");
-  const [saving, setSaving] = useState(false);
+  const saving = usePendingKey(`freezer-item-add:${categoryId}`);
   const [isClosing, setIsClosing] = useState(false);
 
   const [foodName, setFoodName] = useState("");
@@ -40,9 +42,7 @@ export const AddFreezerItemModal = ({ categoryId, existingFoodNames, onClose }: 
     tab === "food" ? !!foodId && foodName.trim().length > 0 && parsedFoodQty !== null && parsedFoodQty > 0 && !isDuplicateName
       : selectedRecipeId !== null && portions > 0;
 
-  const handleSave = async () => {
-    if (!canSave) return;
-    setSaving(true);
+  const saveItem = async () => {
     if (tab === "food") {
       const item: Omit<FoodFreezerItem, "id"> = {
         type: "food",
@@ -66,8 +66,15 @@ export const AddFreezerItemModal = ({ categoryId, existingFoodNames, onClose }: 
       };
       await addItemToCategory(categoryId, item);
     }
-    setSaving(false);
-    handleClose();
+  };
+
+  const handleSave = async () => {
+    if (!canSave) return;
+    const saved = await withPending(`freezer-item-add:${categoryId}`, async () => {
+      await saveItem();
+      return true;
+    }).catch(() => false);
+    if (saved) handleClose();
   };
 
   return (

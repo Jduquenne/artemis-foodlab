@@ -23,12 +23,12 @@ export const BatchFreezerItemRow = ({ item, categoryId, onDelete }: BatchFreezer
 
     const handleDecrement = () => {
         if (isEmpty || portionsPending) return;
-        withPending(`freezer-portions:${item.id}`, () => updateBatchPortions(categoryId, item.id, item.portions - 1));
+        withPending(`freezer-portions:${item.id}`, () => updateBatchPortions(categoryId, item.id, item.portions - 1)).catch(() => undefined);
     };
 
     const handleIncrement = () => {
         if (portionsPending) return;
-        withPending(`freezer-portions:${item.id}`, () => updateBatchPortions(categoryId, item.id, item.portions + 1));
+        withPending(`freezer-portions:${item.id}`, () => updateBatchPortions(categoryId, item.id, item.portions + 1)).catch(() => undefined);
     };
 
     return (

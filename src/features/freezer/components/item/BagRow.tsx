@@ -18,10 +18,10 @@ export interface BagRowProps {
 export const BagRow = ({ bag, categoryId, itemId }: BagRowProps) => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
-    const [savingEdit, setSavingEdit] = useState(false);
     const menuButtonRef = useRef<HTMLButtonElement>(null);
     const duplicatePending = usePendingKey(`freezer-bag-duplicate:${bag.id}`);
     const deletePending = usePendingKey(`freezer-bag-delete:${bag.id}`);
+    const savingEdit = usePendingKey(`freezer-bag-edit:${bag.id}`);
     const rowPending = duplicatePending || deletePending;
 
     const displayUnit = bag.unit ? " " + pluralizeUnit(bag.unit, bag.quantity) : "";
@@ -32,14 +32,12 @@ export const BagRow = ({ bag, categoryId, itemId }: BagRowProps) => {
             <EditBagForm
                 bag={bag}
                 saving={savingEdit}
-                onSave={async ({ addedDate, ...rest }) => {
-                    setSavingEdit(true);
-                    try {
-                        await updateBagInFoodItem(categoryId, itemId, bag.id, { ...rest, addedDate });
-                        setIsEditing(false);
-                    } finally {
-                        setSavingEdit(false);
-                    }
+                onSave={async updates => {
+                    const saved = await withPending(`freezer-bag-edit:${bag.id}`, async () => {
+                        await updateBagInFoodItem(categoryId, itemId, bag.id, updates);
+                        return true;
+                    }).catch(() => false);
+                    if (saved) setIsEditing(false);
                 }}
                 onCancel={() => setIsEditing(false)}
             />
@@ -87,7 +85,7 @@ export const BagRow = ({ bag, categoryId, itemId }: BagRowProps) => {
                                 unit: bag.unit,
                                 preparation: bag.preparation,
                             })
-                        );
+                        ).catch(() => undefined);
                     }}
                     className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors border-t border-slate-100"
                 >
@@ -97,7 +95,7 @@ export const BagRow = ({ bag, categoryId, itemId }: BagRowProps) => {
                 <button
                     onClick={() => {
                         setMenuOpen(false);
-                        withPending(`freezer-bag-delete:${bag.id}`, () => removeBagFromFoodItem(categoryId, itemId, bag.id));
+                        withPending(`freezer-bag-delete:${bag.id}`, () => removeBagFromFoodItem(categoryId, itemId, bag.id)).catch(() => undefined);
                     }}
                     className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-500 hover:bg-red-50 transition-colors border-t border-slate-100"
                 >

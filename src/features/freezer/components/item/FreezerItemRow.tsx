@@ -5,6 +5,7 @@ import { addBagToFoodItem } from "../../../../core/services/freezerService";
 import { getFoodBagsSummary } from "../../../../core/logic/freezer/freezerStockLogic";
 import { FloatingMenu } from "../../../../shared/components/ui/FloatingMenu";
 import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
+import { withPending } from "../../../../shared/utils/withPending";
 import { BatchFreezerItemRow } from "./BatchFreezerItemRow";
 import { BagRow } from "./BagRow";
 import { AddBagForm } from "./AddBagForm";
@@ -17,10 +18,10 @@ export interface FreezerItemRowProps {
 
 export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowProps) => {
   const [addingBag, setAddingBag] = useState(false);
-  const [savingBag, setSavingBag] = useState(false);
   const [itemMenuOpen, setItemMenuOpen] = useState(false);
   const itemMenuButtonRef = useRef<HTMLButtonElement>(null);
   const deletePending = usePendingKey(`freezer-item-delete:${item.id}`);
+  const savingBag = usePendingKey(`freezer-bag-add:${item.id}`);
 
   if (item.type === "batch") {
     return <BatchFreezerItemRow item={item} categoryId={categoryId} onDelete={onDelete} />;
@@ -84,13 +85,11 @@ export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowPro
               initialUnit={item.bags[0]?.unit}
               saving={savingBag}
               onSave={async bag => {
-                setSavingBag(true);
-                try {
+                const added = await withPending(`freezer-bag-add:${item.id}`, async () => {
                   await addBagToFoodItem(categoryId, item.id, bag);
-                  setAddingBag(false);
-                } finally {
-                  setSavingBag(false);
-                }
+                  return true;
+                }).catch(() => false);
+                if (added) setAddingBag(false);
               }}
               onCancel={() => setAddingBag(false)}
             />

@@ -32,20 +32,20 @@ export const BatchFreezerItemRow = ({ item, categoryId, onDelete }: BatchFreezer
     };
 
     return (
-        <div className={`px-3 py-2.5 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl transition ${isEmpty ? 'opacity-60' : ''} ${deletePending ? 'opacity-50 pointer-events-none' : ''}`}>
+        <div className={`px-3 py-2.5 bg-surface border border-slate-200 rounded-2xl transition ${isEmpty ? 'opacity-60' : ''} ${deletePending ? 'opacity-50 pointer-events-none' : ''}`}>
             <div className="flex items-center gap-2.5">
-                <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${isEmpty ? 'bg-slate-100 dark:bg-slate-200' : 'bg-orange-100 dark:bg-orange-900/30'}`}>
+                <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${isEmpty ? 'bg-muted' : 'bg-orange-100 dark:bg-orange-900/30'}`}>
                     <ChefHat className={`w-4 h-4 ${isEmpty ? 'text-slate-400' : 'text-orange-500'}`} />
                 </div>
                 <p className="flex-1 min-w-0 text-sm font-semibold text-slate-800 truncate">{item.recipeName}</p>
-                <span className={`shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full ${isEmpty ? 'bg-slate-100 dark:bg-slate-200 text-slate-400' : 'bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-300'}`}>
+                <span className={`shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full ${isEmpty ? 'bg-muted text-slate-400' : 'bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-300'}`}>
                     BATCH
                 </span>
                 <button
                     ref={menuButtonRef}
                     aria-label="Options"
                     onClick={() => setMenuOpen(o => !o)}
-                    className="shrink-0 p-2 rounded-xl text-slate-300 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
+                    className="shrink-0 p-2 rounded-xl text-slate-300 hover:text-slate-600 hover:bg-muted transition-colors"
                 >
                     {deletePending ? <Loader2 className="w-4 h-4 animate-spin text-orange-400" /> : <MoreVertical className="w-4 h-4" />}
                 </button>
@@ -72,7 +72,7 @@ export const BatchFreezerItemRow = ({ item, categoryId, onDelete }: BatchFreezer
                         aria-label="Consommer une portion"
                         onClick={handleDecrement}
                         disabled={isEmpty || portionsPending}
-                        className="w-7 h-7 rounded-lg bg-slate-100 dark:bg-slate-200 text-slate-600 font-bold text-base flex items-center justify-center hover:bg-orange-100 hover:text-orange-600 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                        className="w-7 h-7 rounded-lg bg-muted text-slate-600 font-bold text-base flex items-center justify-center hover:bg-orange-100 hover:text-orange-600 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                     >
                         −
                     </button>
@@ -83,7 +83,7 @@ export const BatchFreezerItemRow = ({ item, categoryId, onDelete }: BatchFreezer
                         aria-label="Ajouter une portion"
                         onClick={handleIncrement}
                         disabled={portionsPending}
-                        className="w-7 h-7 rounded-lg bg-slate-100 dark:bg-slate-200 text-slate-600 font-bold text-base flex items-center justify-center hover:bg-orange-100 hover:text-orange-600 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                        className="w-7 h-7 rounded-lg bg-muted text-slate-600 font-bold text-base flex items-center justify-center hover:bg-orange-100 hover:text-orange-600 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                     >
                         +
                     </button>

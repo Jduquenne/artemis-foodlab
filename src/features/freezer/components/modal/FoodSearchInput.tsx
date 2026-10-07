@@ -29,12 +29,12 @@ export const FoodSearchInput = ({ value, onChange, existingNames }: FoodSearchIn
           onFocus={() => setOpen(true)}
           onBlur={() => setOpen(false)}
           placeholder="Ex: Steak haché, Épinards..."
-          className="w-full pl-9 pr-4 py-3 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
+          className="w-full pl-9 pr-4 py-3 bg-surface border border-slate-200 rounded-2xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
         />
       </div>
 
       {showList && (
-        <div className="flex flex-col rounded-2xl border border-slate-200 overflow-hidden bg-white dark:bg-slate-100 shadow-sm">
+        <div className="flex flex-col rounded-2xl border border-slate-200 overflow-hidden bg-surface shadow-sm">
           {suggestions.map(food => {
             const isDuplicate = isFreezerFoodNameTaken(existingNames ?? [], food.name);
             return (
@@ -43,7 +43,7 @@ export const FoodSearchInput = ({ value, onChange, existingNames }: FoodSearchIn
                 onMouseDown={e => e.preventDefault()}
                 onClick={() => { if (!isDuplicate) { onChange(food.name, food.id); setOpen(false); } }}
                 disabled={isDuplicate}
-                className={`flex items-center justify-between px-4 py-2.5 text-left transition-colors border-b border-slate-100 last:border-0 ${isDuplicate ? "opacity-40 cursor-not-allowed" : "hover:bg-slate-50 dark:hover:bg-slate-200"}`}
+                className={`flex items-center justify-between px-4 py-2.5 text-left transition-colors border-b border-slate-100 last:border-0 ${isDuplicate ? "opacity-40 cursor-not-allowed" : "hover:bg-subtle"}`}
               >
                 <span className="text-sm font-semibold text-slate-800">{food.name}</span>
                 <span className="text-xs text-slate-400 ml-3 shrink-0">{isDuplicate ? "Déjà ajouté" : food.category}</span>

@@ -72,7 +72,7 @@ export const BagFields = ({
       aria-label="Annuler"
       onClick={onCancel}
       disabled={saving}
-      className="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors shrink-0 disabled:opacity-40"
+      className="p-1.5 rounded-lg text-slate-400 hover:bg-muted transition-colors shrink-0 disabled:opacity-40"
     >
       <X className="w-3.5 h-3.5" />
     </button>

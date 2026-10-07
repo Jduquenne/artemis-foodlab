@@ -30,9 +30,9 @@ export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowPro
   const isEmpty = item.bags.length === 0;
 
   return (
-    <div className={`bg-white dark:bg-slate-100 rounded-2xl border border-slate-200 px-3 py-2.5 transition ${isEmpty ? "opacity-60" : ""} ${deletePending ? "opacity-50 pointer-events-none" : ""}`}>
+    <div className={`bg-surface rounded-2xl border border-slate-200 px-3 py-2.5 transition ${isEmpty ? "opacity-60" : ""} ${deletePending ? "opacity-50 pointer-events-none" : ""}`}>
       <div className="flex items-center gap-2.5">
-        <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 bg-slate-100 dark:bg-slate-200">
+        <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 bg-muted">
           <Snowflake className={`w-4 h-4 ${isEmpty ? "text-slate-300" : "text-slate-500"}`} />
         </div>
 
@@ -53,7 +53,7 @@ export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowPro
             ref={itemMenuButtonRef}
             aria-label="Options"
             onClick={() => setItemMenuOpen(o => !o)}
-            className="p-2 rounded-xl text-slate-300 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
+            className="p-2 rounded-xl text-slate-300 hover:text-slate-600 hover:bg-muted transition-colors"
           >
             {deletePending ? <Loader2 className="w-4 h-4 animate-spin text-orange-400" /> : <MoreVertical className="w-4 h-4" />}
           </button>
@@ -70,7 +70,7 @@ export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowPro
       </div>
 
       {(item.bags.length > 0 || addingBag) && (
-        <div className="mt-2 ml-4 pl-3 border-l-2 border-slate-100 dark:border-slate-200 flex flex-col gap-1">
+        <div className="mt-2 ml-4 pl-3 border-l-2 border-muted flex flex-col gap-1">
           {item.bags.map(bag => (
             <BagRow
               key={bag.id}

@@ -45,7 +45,7 @@ export const FoodTab = ({
           value={foodQty}
           onChange={e => onQtyChange(e.target.value)}
           placeholder="500"
-          className="w-full px-4 py-3 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
+          className="w-full px-4 py-3 bg-surface border border-slate-200 rounded-2xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
         />
       </div>
       <div className="flex flex-col gap-1.5 w-36">
@@ -53,7 +53,7 @@ export const FoodTab = ({
         <select
           value={foodUnit}
           onChange={e => onUnitChange(e.target.value as Unit)}
-          className="w-full px-3 py-3 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
+          className="w-full px-3 py-3 bg-surface border border-slate-200 rounded-2xl text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
         >
           {SELECTABLE_UNITS.map(u => (
             <option key={u} value={u}>{u}</option>
@@ -68,7 +68,7 @@ export const FoodTab = ({
       <select
         value={foodPreparation}
         onChange={e => onPreparationChange(e.target.value as string)}
-        className="w-full px-4 py-3 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
+        className="w-full px-4 py-3 bg-surface border border-slate-200 rounded-2xl text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
       >
         <option value="">—</option>
         {PREPARATION_OPTIONS.map(p => (

@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-07 — Freezer migrated to the named theme colours (v6.79.1)
+
+- Done: the 43 `dark:*-slate-*` classes of `features/freezer` replaced by the named colours (D-031), identical rendering, including the bag tree border (`border-slate-100 dark:border-slate-200` → `border-muted`, same pair). One visible change, owner's choice: the « Aliment » tab of « Ajouter à la catégorie » is orange when selected, like « Batch cooking » (was dark slate in light mode and light beige in dark mode). This closes the freezer review.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser (light and dark mode to compare).
+- Still open: next `features/` folder of the P4 review; tablet portrait pass of the freezer (P5) not done.
+
 ## 2026-10-07 — Confirm before deleting a non-empty freezer category (v6.79.0)
 
 - Done: deleting a freezer category that still holds items now opens a confirmation (« Supprimer « Viandes » ? », content count, red « Supprimer »); an empty category is still deleted in one click, items / batches / bags unchanged (owner's choice). `ConfirmActionModal` moved from `features/dashboard/components/data/` to `shared/components/ui/` (owner's choice), the 7 dashboard imports updated, no other change to it. The modal is rendered next to the card (fragment), not inside it, so its clicks do not open the category and the card's hover transform does not shift it.

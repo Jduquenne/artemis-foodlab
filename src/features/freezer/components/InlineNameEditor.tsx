@@ -44,7 +44,7 @@ export const InlineNameEditor = ({
       aria-label="Annuler"
       onClick={e => { e.stopPropagation(); onCancel(); }}
       disabled={pending}
-      className="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors shrink-0 disabled:opacity-50"
+      className="p-1.5 rounded-lg text-slate-400 hover:bg-muted transition-colors shrink-0 disabled:opacity-50"
     >
       <X className="w-4 h-4" />
     </button>

@@ -29,7 +29,7 @@ export const AddCategoryForm = () => {
 
   if (adding) {
     return (
-      <div className="flex flex-col gap-2.5 rounded-2xl border border-slate-200 bg-white dark:bg-slate-100 p-3">
+      <div className="flex flex-col gap-2.5 rounded-2xl border border-slate-200 bg-surface p-3">
         <div className="flex items-center gap-2">
           <input
             autoFocus
@@ -40,7 +40,7 @@ export const AddCategoryForm = () => {
               if (e.key === "Escape") reset();
             }}
             placeholder="Nom de la catégorie..."
-            className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-slate-200 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
+            className="flex-1 px-4 py-2.5 bg-subtle border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
           />
           <button
             onClick={handleConfirm}
@@ -53,7 +53,7 @@ export const AddCategoryForm = () => {
             aria-label="Annuler"
             onClick={reset}
             disabled={submitting}
-            className="p-2.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 rounded-xl transition-colors disabled:opacity-40"
+            className="p-2.5 text-slate-400 hover:text-slate-600 hover:bg-muted rounded-xl transition-colors disabled:opacity-40"
           >
             <X className="w-4 h-4" />
           </button>

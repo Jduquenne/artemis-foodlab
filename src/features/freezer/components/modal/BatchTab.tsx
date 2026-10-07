@@ -25,7 +25,7 @@ export const BatchTab = ({ selectedRecipeId, portions, onSelectRecipe, onPortion
           value={search}
           onChange={e => { setSearch(e.target.value); onSelectRecipe(null, undefined); }}
           placeholder="Chercher une recette..."
-          className="w-full pl-9 pr-4 py-3 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
+          className="w-full pl-9 pr-4 py-3 bg-surface border border-slate-200 rounded-2xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
         />
       </div>
 
@@ -37,7 +37,7 @@ export const BatchTab = ({ selectedRecipeId, portions, onSelectRecipe, onPortion
             className={`flex items-center justify-between px-4 py-3 rounded-2xl text-left transition-colors ${
               selectedRecipeId === r.id
                 ? "bg-orange-500 text-white"
-                : "bg-white dark:bg-slate-100 text-slate-800 hover:bg-slate-100 dark:hover:bg-slate-200"
+                : "bg-surface text-slate-800 hover:bg-muted"
             }`}
           >
             <span className="text-sm font-semibold truncate">{r.name}</span>
@@ -59,7 +59,7 @@ export const BatchTab = ({ selectedRecipeId, portions, onSelectRecipe, onPortion
             <button
               aria-label="Diminuer"
               onClick={() => onPortionsChange(Math.max(1, portions - 1))}
-              className="w-11 h-11 rounded-xl bg-slate-100 dark:bg-slate-200 text-slate-700 font-bold text-lg flex items-center justify-center hover:bg-slate-200 transition-colors"
+              className="w-11 h-11 rounded-xl bg-muted text-slate-700 font-bold text-lg flex items-center justify-center hover:bg-slate-200 transition-colors"
             >
               −
             </button>
@@ -67,7 +67,7 @@ export const BatchTab = ({ selectedRecipeId, portions, onSelectRecipe, onPortion
             <button
               aria-label="Augmenter"
               onClick={() => onPortionsChange(portions + 1)}
-              className="w-11 h-11 rounded-xl bg-slate-100 dark:bg-slate-200 text-slate-700 font-bold text-lg flex items-center justify-center hover:bg-slate-200 transition-colors"
+              className="w-11 h-11 rounded-xl bg-muted text-slate-700 font-bold text-lg flex items-center justify-center hover:bg-slate-200 transition-colors"
             >
               +
             </button>

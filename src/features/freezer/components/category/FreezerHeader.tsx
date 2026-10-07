@@ -31,7 +31,7 @@ export const FreezerHeader = ({ categoryCount }: FreezerHeaderProps) => {
           <button
             aria-label="Renommer"
             onClick={rename.start}
-            className="shrink-0 p-1.5 rounded-lg text-slate-300 hover:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
+            className="shrink-0 p-1.5 rounded-lg text-slate-300 hover:text-slate-500 hover:bg-muted transition-colors"
           >
             <Pencil className="w-3.5 h-3.5" />
           </button>

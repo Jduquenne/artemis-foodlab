@@ -34,7 +34,7 @@ Milestones reconstructed from history; definitions of done marked "proposed" wer
 - ✅ `docs`, `public/`, `scripts/`, repo root, `core/domain`, `core/catalogue` (ex `typed-db`), catalogue change signal + snapshots + cross-device refresh, `core/logic`, shared utilities, macro labels centralised.
 - ⬜ `core/services/` (23 files, not reviewed), then `features/`, then `shared/`.
 - ⬜ Layering: `core/logic/` imports `shared/utils/` (`docs/architecture.md` § Placement rules); fix during the `shared/` review.
-- 🟡 Theming: replace the pre-existing `dark:*-slate-*` pairs with the named theme colours (D-031), feature by feature, as each folder is reviewed. Done: Shopping (incl. household tab). Remaining: 258 occurrences in 96 files (`docs/development.md` § Golden-rule checks).
+- 🟡 Theming: replace the pre-existing `dark:*-slate-*` pairs with the named theme colours (D-031), feature by feature, as each folder is reviewed. Done: Shopping (incl. household tab), Freezer. Remaining: 215 occurrences in 82 files on 2026-10-07 (`docs/development.md` § Golden-rule checks).
 
 ### P5 — Tablet portrait
 

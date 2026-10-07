@@ -1,0 +1,89 @@
+# Devlog
+
+Session journal, most recent first. Any future session should be able to resume from here.
+
+Entry format:
+
+```
+## YYYY-MM-DD — Title
+- Done: …
+- Numbers: versions, commits, measurements (optional)
+- Problems: …
+- Still open: …
+```
+
+Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE.md`.
+
+---
+
+## 2026-10-07 — Agent context migration
+
+- Done: restructured the agent context into `AGENTS.md` (router), `docs/` (architecture, development, conventions, ui-design, api, glossary, roadmap, decisions, 7 specs), `log/devlog.md`, `ATTRIBUTION.md`; `CLAUDE.md` now only imports `AGENTS.md`. Former `CLAUDE.md` archived in `docs/archive/`, traceability table in `docs/archive/migration-map-2026-10-07.md`. The WSL auto-memory (39 files) was moved out of the repo to the owner's private folder (it contained sensitive and personal details). `.claude/settings.json`: Git write commands and the private folder denied for agents. Sessions move from WSL to PowerShell.
+- Numbers: 282 information blocks traced; version 6.78.0 → 6.78.1.
+- Problems: contradictions found between the old docs and the code are flagged with `Note (migration)` boxes in `docs/architecture.md` and `docs/conventions.md`.
+- Still open: owner arbitration of the `Note (migration)` boxes, including 217 pre-existing `dark:*-slate-*` classes in 97 files that contradict the theming rule; font licences (`ATTRIBUTION.md`); `git rm --cached .claude/settings.local.json`; the `Read` deny on the private folder does not stop shell commands (see `AGENTS.md`).
+
+## 2026-10-05 — Demo mode (v6.78.0)
+
+- Done: « Essayer la démo » (ephemeral guest account, ~2 h) instead of registration: `startDemo`, `useIsDemo`, `useDemoCountdown` + `demoLogic`, `DemoBanner`, adapted `AccountModal` / `SettingsPopover`, demo accounts hidden in `UsersPanel`. API contract received and front coded the same day; committed by the owner.
+- Still open: API must be in prod before the front. ISO week-year bug reported by the API session, not fixed (roadmap).
+
+## 2026-10-03 — Decimal input, media cache, recipe filters (v6.75.26 → 6.77.0)
+
+- Done: `parseDecimal` + `DecimalInput` (commas accepted, fields can be cleared) — `fix` 6.75.26. Media cache: `onRehydrateStorage` referenced the store during `create()` (TDZ, swallowed) so expired signed URLs were never purged and the timer never re-armed; fixed with `merge`, timer after creation, `version: 1` purge, `refreshIfDue`, `useImageErrorCapture` for SVG cards — `fix` 6.75.27. Recipe filters by type with medians (6.76.0 fixed kcal 350/450, then 6.77.0 medians for 5 macros).
+- Still open: risk of re-resolution loop if a returned signed URL also fails (pre-existing).
+
+## 2026-09-27 → 2026-09-30 — Token lifetime and logouts; planning search
+
+- Done: access-token TTL confirmed 30 days in prod (`exp − iat`); the owner had been testing against the local API whose own `.env` differed. Real cause of logouts: `performTokenRefresh` cleared the stored refresh token on any failure, including network errors / 502-503 while Render woke up → now only on 400/401/403, with retries (front commit `d4b7dd3`). API session added a 15 s replay grace and JSON logs (`refresh_rejected`, `sessions_wiped`). Images: expired signed URLs kept in `cipe_media_overrides` caused `"exp" claim timestamp check failed`; fixed in `useMediaStore` + `earliestExpiry`. Planning pickers capped at 30 results + `useDeferredValue` (v6.75.25), fixing tablet/phone crashes.
+- Problems: a 401 « Session expirée » despite a refresh token being sent remained unexplained; the owner has no access to Render request logs.
+- Still open: confirm in prod that logouts stopped; proposed local trace of refresh failures (not accepted).
+
+## 2026-09-25 — Big code review / refactoring (v6.74.1 → 6.75.23)
+
+- Done: old `docs/` removed (stale since the API); `public/` cleaned (unused assets, `BASE_URL`, manifest `id`, `theme-color` follows the theme, category images by slug ~6 MB → ~0.6 MB); `scripts/` removed; root cleaned (`.gitignore`, unused deps, CI lint step, README rewritten); `core/domain` split (`types.ts` → 7 files); `core/typed-db` → `core/catalogue`; catalogue change signal + snapshots + cross-device refresh (`useAppRefresh`); `core/logic` fully audited and split (shopping, recipeBuilder, freezer, planning, recipe, dashboard); shared utilities; macro labels centralised. Bugs fixed on the way: macro filters in category view always false; SVG cards stale until reload; food form id validation.
+- Numbers: one commit per step.
+- Still open: `core/services/`, then `features/`, then `shared/` (decision log in `dev/refactoring.md`).
+
+## 2026-09-24 — Journal average, Atwater targets, tablet portrait, profiles, scroll restore (v6.71.0 → 6.74.0)
+
+- Done: week average modal; computed kcal targets; `tablet:` variant defined (it had been used but never defined) and Journal + Planning adapted; **profiles delivered in prod v6.73.0** (API first, then front; bug fixed before release: uncontrolled grams input not reset on profile switch); scroll restoration in the catalogue; API cascade of food renames to recipe ingredients (tested OK).
+- Still open: tablet pass on remaining screens; food-rename backfill to run by the owner; V2 "tastes per profile" = ideas only (#20-#24), not to be started without the owner's go.
+
+## 2026-09-23 — Journal per-ingredient overrides in prod; bootstrap
+
+- Done: issues #16-#19 (#16 stable `Ingredient.id` in the builder, #17 API upsert by id, #18 day-scoped ingredient overrides, #19 Journal UI), commits `462bb82`, `a4b8281`. Bug fixed during the work: default quantities not scaled by the current portion ratio. `GET /bootstrap` replaces ~9 boot requests (verified against the local API, then deployed; owner confirmed in prod). Media overrides persisted so `/media/resolve` no longer runs on every reload; `reportFailure` evicts before retry.
+- Problems: a "white screen for 8 s" turned out to be DevTools throttling left on.
+
+## 2026-09-21 — Recipe Builder and portions (v6.65.1 → 6.68.2)
+
+- Done: « Télécharger la recette » now exports the SVG recipe card as PNG (replacing the raw-photo download); builder icon back in the rail (v6.66.0); instructions modal (v6.67.0) and multi-line paste (v6.68.1); default portions 2 (v6.68.2); recipe detail scaled by portions + stepper, opened from the planning with its persons (v6.68.0). Lint lesson: no `setState` in effects (reset during render).
+- Still open: portion scaling validated by tsc + lint only.
+
+## 2026-09-18 — Planning desserts and batch writes (v6.65.0)
+
+- Done: dessert-only slots; drag & drop prompt for desserts; swap bug found by the owner on the way back and fixed; `DessertCell` click opens the recipe; `PUT /planning-slots/:id/items/batch` negotiated and verified locally against the real API (throwaway account, all cases), discovering that positions are not renormalised. Pending feedback rolled out app-wide (v6.62.0 → 6.65.0); freezer bags could never be saved without a unit — `Unit.NONE` removed from bag forms.
+
+## 2026-09-10 — Refresh token outside the cookie; media batch resolution (v6.62.0)
+
+- Done: refresh token returned in the body and stored in `localStorage` (Safari ITP / hardened Chrome refused the cross-site cookie); single refresh mutex. Front for `POST /media/resolve` (`useMediaStore`, `useMediaSrc`, `AsyncImage asset=…`), inert until the API sent `key`.
+- Still open (then): media code had been written on `master`; to rebase on `Dev` before committing.
+
+## 2026-09-09 — Production launch on the API (v6.49.0 → 6.61.0)
+
+- Done: `Dev → master` merged (merge commit `3744723`, v6.61.0); cross inspection front + API green (CORS, rate limits, migrations applied, refresh cookie tested on Chrome/Safari). Same period: dashboard data tab (recipes table, food creation `f2282b7` v6.49.0; outdoor CRUD + desserts filter `d367b9b` v6.50.0; category dot `54480e1`), users merged into the data tab with a universal confirm-with-recap step (v6.51.0), shopping extras (v6.53.0), account screen (v6.54.0), Recipe Builder refactor (v6.56.0), legal pages (v6.58.0), freezer UI redesign (v6.59.0 → 6.60.0), dashboard planning usage. Editable categories attempt reverted (D-014). Two discrepancies raised by the API session checked: no bug.
+- Numbers: tag `prod-pre-api` = `c7290d3`.
+
+## 2026-09-08 — Front/API integration commits (v6.41.1 → 6.48.1)
+
+- Done: CRLF noise fixed (`66bade1`); #1 outdoor activities persisted in the planning (`0e46cd1`); #2 Recipe Builder writes to the API, builder admin-only (`6094273`); #7 API error notifications (`05d5612`); #3 Sheets Gateway purge (`bda0a66`); #4 QR sync / export / backup reminder removed, import via `POST /import` (`785d74f`, `e523550`, `d763c75`); #5 journal/shopping localStorage keys removed (`7ee1112`); #9 `.env.production` committed so CI builds have `VITE_API_URL` (`03a3194`); #8 targeted recipe refresh (`d134ec5`); bundled webp photos purged (`e72b6f1`); #11 News based on `announcedAt` (`c84da3f`); #12 `AsyncImage` (`89cede0`); #14 dashboard overview + users + foods (`cbbc7a8`, `29ad536`); category slugs fix, hard-coded ingredient category table (`66c4058`).
+- Problems: `announcedAt` deployed before its migration → `GET /recipes` 500 in prod, fixed by running the migration. Bugs fixed during integration: `journal-settings` race; StrictMode double silent refresh triggered "session compromise" (multi-tab not covered).
+
+## 2026-07-21 — API project decided and specified
+
+- Done: Google Sheets Gateway (Cloudflare Worker) abandoned and deleted; decision to build `meals-planning-api` (Express, PostgreSQL + Prisma) in a separate repo; hosting Supabase + Render without credit card; full specification written (data model, auth, roles, shopping state, offline scope reduced to a read cache) and a start prompt for the API session.
+
+## Before 2026-07-21 (migrated)
+
+- 2026-06-03: placement refactor (`core/utils` removed, hooks/utils in `shared/` without exception); feature-by-feature audit of `features/` completed (v6.39.8).
+- 2026-02-20: first commits of the project (git history). Until the API, the app was fully local: static JSON catalogue, IndexedDB, QR sync / JSON export between devices.

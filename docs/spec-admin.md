@@ -1,0 +1,23 @@
+# Spec — Admin dashboard (`/dashboard`)
+
+Admin only (route mounted only when `useIsAdmin`). Module `features/dashboard/`, tabs in `data/dashboardTabs.ts`: `overview | data`.
+
+## Overview (`OverviewPanel`)
+
+- Bento layout, internal scroll in cells. Health banner (verdict + `CatalogueIssueList`, expandable), stat tiles, `CategoryBreakdown` (bars with `scaleX`). Pure computations in `core/logic/dashboard/dashboardStats.ts` (`getCatalogueCounts`, `getCatalogueIssues`, `getCatalogueHealth`, `getCategoryBreakdown`).
+- **Planning usage** (`PlanningUsageCard`): need = see the most planned recipes, the least planned and those never planned ("potentially useless"). Decisions (D-030): "made" = **planned** (no past/future distinction, occurrences in slots are counted); scope = the **calling admin's own planning**; only lunch and dinner slots count. Data: `GET /planning-slots/recipe-usage?slots=lunch,dinner` (`core/services/planningUsageService.ts`, `shared/hooks/usePlanningUsage.ts`).
+  - `core/logic/dashboard/planningUsage.ts`: `isMainDish(r) = isDish(r) && !isDessert(r)`; `buildPlanningUsageInsights` → `{ totalDishes, distribution: { never, once, occasional (2-4), regular (5+) }, mostPlanned (top 6), toReview (plannedCount ≤ 1, sorted never → once → age) }`; `getReviewFilterOptions` (categories and foods, alphabetical, with counts) and `filterReviewDishes` (AND).
+  - `shared/utils/weekUtils.ts`: `parseIsoWeek`, `weeksSinceIsoWeek`, `formatWeeksAgo` (« il y a 3 sem. »).
+  - UI: 4-segment distribution bar + legend; two columns « Tes valeurs sûres » (top 6, thumbnail + `×N` + mini bar) and `PlanningDiscoverList` (« À découvrir », never + once, badges, filters by recipe category and by food; with a filter active shows everything, otherwise 6 + « voir les N autres »). Each row with a photo has an `ExternalLink` opening `#/recipes/detail/<code>` in a new tab.
+
+## Data (`DataPanel`, sections in `dataSections.ts`)
+
+Sections: Aliments | Recettes | Activités | Utilisateurs (default = foods).
+
+- **Every write goes through `ConfirmActionModal`** (`components/data/`): recap + red `consequence` box + optional `requireText` (retype a string). `onConfirm: () => Promise<boolean>`, the caller handles closing. Recap helpers in `core/logic/dashboard/recapLogic.ts` (`RecapEntry` = `{ label, value }` | `{ label, from, to }`). Each `*FormLogic` has `buildXxxRecap(original | null, id, draft)`: creation → all values; edit → only changed fields; `[]` → form blocks with « Aucune modification ». Form button = « Continuer »; « Retour » goes back to the form with the draft intact. The confirm modal stacks above the form (`z-[110]`).
+- **Foods**: search, create, edit, delete (`FoodsTable`, `FoodFormModal`, `core/logic/dashboard/foodFormLogic.ts`, `useCatalogueFoods`). Id suggested client-side (`suggestFoodId`), live id validation, id follows the category even after manual typing. kcal computed with Atwater client-side (read-only field, sent on create and edit). After a write → full catalogue sync.
+- **Recipes**: `RecipesTable` (view, search, kind filter, Desserts filter, inline delete with 409 handling); editing only through the Recipe Builder (pencil). Category colour dot via inline hex (`getCardColors(categoryId).band`).
+- **Outdoor activities**: CRUD (`OutdoorActivitiesTable`, `OutdoorFormModal`, `outdoorFormLogic.ts`, `suggestOutdoorCode`, `useCatalogueOutdoor`).
+- **Users**: `UsersPanel` (`core/services/usersService.ts`, `shared/hooks/useUsers.ts`, `userFormLogic.ts`: `validateUserForm`, `generatePassword`, `ROLE_LABELS`, recaps). Create (« Ajouter », password ≥ 12 with a Generate button, display name), role change and deletion → `ConfirmActionModal` with `requireText = user.email`. Actions are disabled on the admin's own row (the role lives in the JWT) and on the last admin. Rows show `displayName || email`. Demo accounts are hidden (`excludeDemoAccounts`).
+- Category editing: **no UI** (decision 2026-09-09, D-014). A light rename-only version could come later.
+- Server errors → global toast; the modal stays open.

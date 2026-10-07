@@ -1,5 +1,55 @@
 {
   "enabledPlugins": {
     "frontend-design@claude-plugins-official": true
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git status *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git show *)",
+      "PowerShell(git status *)",
+      "PowerShell(git diff *)",
+      "PowerShell(git log *)",
+      "PowerShell(git show *)"
+    ],
+    "deny": [
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(git pull *)",
+      "Bash(git merge *)",
+      "Bash(git rebase *)",
+      "Bash(git reset *)",
+      "Bash(git checkout *)",
+      "Bash(git switch *)",
+      "Bash(git stash *)",
+      "Bash(git tag *)",
+      "Bash(git branch *)",
+      "Bash(git clean *)",
+      "Bash(git restore *)",
+      "Bash(git remote *)",
+      "PowerShell(git init *)",
+      "PowerShell(git add *)",
+      "PowerShell(git commit *)",
+      "PowerShell(git push *)",
+      "PowerShell(git pull *)",
+      "PowerShell(git merge *)",
+      "PowerShell(git rebase *)",
+      "PowerShell(git reset *)",
+      "PowerShell(git checkout *)",
+      "PowerShell(git switch *)",
+      "PowerShell(git stash *)",
+      "PowerShell(git tag *)",
+      "PowerShell(git branch *)",
+      "PowerShell(git clean *)",
+      "PowerShell(git restore *)",
+      "PowerShell(git remote *)",
+      "Read(//e/Développement/Jason/_private/**)",
+      "Read(//mnt/e/Développement/Jason/_private/**)",
+      "Edit(//e/Développement/Jason/_private/**)",
+      "Edit(//mnt/e/Développement/Jason/_private/**)"
+    ]
   }
 }

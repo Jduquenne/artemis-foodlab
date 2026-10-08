@@ -23,7 +23,7 @@ const badge = (dish: DishUsage): string => {
 };
 
 const SELECT_CLASS =
-  "min-w-0 flex-1 rounded-lg border border-slate-200 bg-white dark:bg-slate-100 px-2 py-1 text-xs text-slate-700 focus:outline-none focus:border-orange-400";
+  "min-w-0 flex-1 rounded-lg border border-slate-200 bg-surface px-2 py-1 text-xs text-slate-700 focus:outline-none focus:border-orange-400";
 
 const PREVIEW_COUNT = 6;
 

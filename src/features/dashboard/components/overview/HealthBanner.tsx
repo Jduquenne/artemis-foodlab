@@ -13,7 +13,7 @@ export const HealthBanner = ({ issues }: HealthBannerProps) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="shrink-0 rounded-2xl border border-slate-200 bg-white dark:bg-slate-100 overflow-hidden">
+    <div className="shrink-0 rounded-2xl border border-slate-200 bg-surface overflow-hidden">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}

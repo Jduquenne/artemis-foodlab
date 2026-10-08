@@ -22,7 +22,7 @@ export const PlanningUsageCard = () => {
   );
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white dark:bg-slate-100 p-4 flex flex-col gap-4">
+    <div className="rounded-2xl border border-slate-200 bg-surface p-4 flex flex-col gap-4">
       <h2 className="text-sm text-slate-500">
         Usage du planning <span className="text-xs text-slate-400">· déjeuner &amp; dîner</span>
       </h2>

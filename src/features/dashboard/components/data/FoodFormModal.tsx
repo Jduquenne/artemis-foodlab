@@ -176,7 +176,7 @@ export const FoodFormModal = ({ food, foods, onClose, onSubmit }: FoodFormModalP
           ))}
           <div className="flex flex-col gap-1">
             <span className="text-[10px] text-slate-400 text-center">Kcal</span>
-            <div className="rounded-lg border border-slate-200 bg-slate-100 dark:bg-slate-200 px-1 py-1.5 text-sm font-bold text-slate-500 text-center tabular-nums">
+            <div className="rounded-lg border border-slate-200 bg-muted px-1 py-1.5 text-sm font-bold text-slate-500 text-center tabular-nums">
               {computedKcal}
             </div>
           </div>

@@ -13,7 +13,7 @@ export interface FormModalShellProps {
 
 export const FormModalShell = ({ title, subtitle, errors, onClose, onContinue, confirmation, children }: FormModalShellProps) => (
   <div className="fixed inset-0 z-100 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4">
-    <div className="bg-white dark:bg-slate-100 w-full max-w-md rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden max-h-[90dvh]">
+    <div className="bg-surface w-full max-w-md rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden max-h-[90dvh]">
       <div className="p-5 border-b border-slate-200 flex justify-between items-center shrink-0">
         <div>
           <h2 className="text-lg font-black text-slate-900">{title}</h2>
@@ -39,7 +39,7 @@ export const FormModalShell = ({ title, subtitle, errors, onClose, onContinue, c
         <button
           type="button"
           onClick={onClose}
-          className="flex-1 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-200 text-slate-600 text-sm font-bold hover:bg-slate-200 transition-colors"
+          className="flex-1 py-2.5 rounded-xl bg-muted text-slate-600 text-sm font-bold hover:bg-slate-200 transition-colors"
         >
           Annuler
         </button>

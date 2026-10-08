@@ -17,7 +17,7 @@ export const CatalogueIssueList = ({ issues }: CatalogueIssueListProps) => {
           <div key={issue.key}>
             <button
               onClick={() => setOpenKey(isOpen ? null : issue.key)}
-              className="w-full flex items-center gap-3 px-4 py-2 text-left hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors"
+              className="w-full flex items-center gap-3 px-4 py-2 text-left hover:bg-subtle transition-colors"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" />
               <span className="flex-1 text-xs text-slate-700">{issue.label}</span>

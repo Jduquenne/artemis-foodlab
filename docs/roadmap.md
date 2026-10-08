@@ -5,7 +5,7 @@ The detailed backlog and future features live in `dev/issues.json` and `dev/refa
 
 ## Current focus
 
-1. 🟡 Code review refactoring: `core/services/`, Shopping, Freezer, Journal and Planning done; next is `features/dashboard`, then recipeBuilder (photo becomes mandatory), recipes, news + sync, then `shared/` (open points in `dev/refactoring.md`).
+1. 🟡 Code review refactoring: `core/services/`, Shopping, Freezer, Journal, Planning and Dashboard done; next is `features/recipeBuilder` (photo becomes mandatory), recipes, news + sync, then `shared/` (open points in `dev/refactoring.md`).
 2. ⬜ Fix the ISO week-year bug (see Known bugs).
 3. 🟡 Tablet portrait pass on the remaining screens.
 
@@ -33,10 +33,10 @@ Milestones reconstructed from history; definitions of done marked "proposed" wer
 
 - ✅ `docs`, `public/`, `scripts/`, repo root, `core/domain`, `core/catalogue` (ex `typed-db`), catalogue change signal + snapshots + cross-device refresh, `core/logic`, shared utilities, macro labels centralised.
 - ✅ `core/services/` (2026-10-07; atomic freezer item + shopping period API calls).
-- 🟡 `features/`: ✅ shopping (incl. household tab, batch source checks), freezer, journal, planning; ⬜ dashboard, recipeBuilder, recipes, news, sync.
+- 🟡 `features/`: ✅ shopping (incl. household tab, batch source checks), freezer, journal, planning, dashboard; ⬜ recipeBuilder, recipes, news, sync.
 - ⬜ `shared/`.
 - ⬜ Layering: `core/logic/` imports `shared/utils/` (`docs/architecture.md` § Placement rules); fix during the `shared/` review.
-- 🟡 Theming: replace the pre-existing `dark:*-slate-*` pairs with the named theme colours (D-031), feature by feature, as each folder is reviewed. Done: Shopping (incl. household tab), Freezer, Journal, Planning. Remaining: 127 occurrences in 56 files on 2026-10-08 (`docs/development.md` § Golden-rule checks).
+- 🟡 Theming: replace the pre-existing `dark:*-slate-*` pairs with the named theme colours (D-031), feature by feature, as each folder is reviewed. Done: Shopping (incl. household tab), Freezer, Journal, Planning, Dashboard. Remaining: 102 occurrences in 43 files on 2026-10-08 (`docs/development.md` § Golden-rule checks).
 
 ### P5 — Tablet portrait
 

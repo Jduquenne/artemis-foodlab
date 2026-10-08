@@ -11,7 +11,7 @@ export interface DataPanelShellProps {
 }
 
 export const DataPanelShell = ({ title, count, search, filters, onAdd, children }: DataPanelShellProps) => (
-  <div className="h-full rounded-2xl border border-slate-200 bg-white dark:bg-slate-100 flex flex-col overflow-hidden">
+  <div className="h-full rounded-2xl border border-slate-200 bg-surface flex flex-col overflow-hidden">
     <header className="shrink-0 flex flex-wrap items-center gap-3 px-4 py-3 border-b border-slate-100">
       <h2 className="text-sm font-bold text-slate-500 shrink-0">
         {title} <span className="text-slate-400">· {count}</span>
@@ -24,7 +24,7 @@ export const DataPanelShell = ({ title, count, search, filters, onAdd, children 
             value={search.value}
             onChange={(e) => search.onChange(e.target.value)}
             placeholder="Rechercher"
-            className="w-full pl-8 pr-3 py-1.5 rounded-lg border border-slate-200 bg-white dark:bg-slate-100 text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
+            className="w-full pl-8 pr-3 py-1.5 rounded-lg border border-slate-200 bg-surface text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
           />
         </div>
       ) : (

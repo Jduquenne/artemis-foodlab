@@ -9,7 +9,7 @@ export const CategoryBreakdown = ({ rows }: CategoryBreakdownProps) => {
   const max = Math.max(...rows.map((row) => row.recipes), 1);
 
   return (
-    <div className="h-full max-h-44 rounded-2xl border border-slate-200 bg-white dark:bg-slate-100 flex flex-col overflow-hidden">
+    <div className="h-full max-h-44 rounded-2xl border border-slate-200 bg-surface flex flex-col overflow-hidden">
       <h2 className="shrink-0 px-4 pt-4 pb-2 text-sm text-slate-500">Recettes par catégorie</h2>
       <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-3 flex flex-col gap-1">
         {rows.map((row) => (

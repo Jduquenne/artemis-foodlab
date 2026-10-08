@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — Dashboard migrated to the named theme colours (v6.80.3)
+
+- Done: the 12 `dark:*-slate-*` classes left in `features/dashboard` (25 before step 2) replaced by the named colours (D-031), all exact pairs, identical rendering: `bg-surface`, `bg-muted`, `hover:bg-subtle`. This closes the dashboard review.
+- Numbers: `npx tsc -b` + `npm run lint` pass; theme check 102 occurrences in 43 files left; not checked in a browser.
+- Still open: next `features/` folder (recipeBuilder: photo becomes mandatory); outdoor « activité » builder brainstorm; ISO week-year bug.
+
 ## 2026-10-08 — `features/` review: dashboard, step 2 (v6.80.2)
 
 - Done: shared dashboard building blocks in `features/dashboard/components/common/` (`PillTabs`, `DataPanelShell`, `DataList`, `RowActions`, `FormModalShell`, `FormField`, `formStyles.ts`), used by the 4 data panels, the 3 rows and the 3 forms (components 1 760 → ~1 615 lines). `categoryLabel` (`core/logic/recipe/categoryLogic.ts`) replaces 6 copies of the category name lookup (incl. `outdoorFormLogic`, `recipeBuilderValidation`). Duplicate `core/domain/user` imports merged. « À découvrir » link built with `buildRecipeDetailUrl`. The activity id now shows its error while typing, like the food id. Visible changes: account form inputs aligned on the other forms (slightly smaller, modal `max-w-md` instead of `max-w-sm`); every data panel header wraps on narrow widths like the recipes one; the users empty state lost its icon.

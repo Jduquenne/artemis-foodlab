@@ -1,6 +1,7 @@
-import React, { useState, useMemo, useRef, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { addDays } from 'date-fns';
 import { useFreezerStock } from '../../shared/hooks/useFreezerStock';
-import { Check, X, ShoppingCart } from 'lucide-react';
+import { X } from 'lucide-react';
 import { CopyModeBar } from './components/bars/CopyModeBar';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { getWeekSlots, saveSlot, deleteSlot, addDessertToSlot, removeDessertFromSlot, setRecipePersonsOnSlot, syncWeekFromApi } from '../../core/services/planningService';
@@ -14,23 +15,28 @@ import { PlanningHeader } from './components/PlanningHeader';
 import { PlanningSlot } from './components/slot/PlanningSlot';
 import { DayTabsBar } from './components/bars/DayTabsBar';
 import { getWeekNumber, getMonday, getWeekRange, dayNameOf } from '../../shared/utils/weekUtils';
-import { formatDayDate, toIsoDate } from '../../shared/utils/dateUtils';
+import { toIsoDate } from '../../shared/utils/dateUtils';
 import { computeDayMacros } from '../../shared/utils/macroUtils';
 import { useMacroCatalogue } from '../../shared/hooks/useMacroCatalogue';
 import { useRefreshStore } from '../../shared/store/useRefreshStore';
 import { useSearchParams } from 'react-router-dom';
-import { useMenuStore } from '../../shared/store/useMenuStore';
-import { SlotType, ShoppingDay, MealSlot, CopyState } from '../../core/domain/planning';
-import { isDessert, canAddDessert, isSlotFull } from '../../core/domain/recipePredicates';
+import { SlotType, MealSlot } from '../../core/domain/planning';
+import { isDessert, canAddDessert } from '../../core/domain/recipePredicates';
 import { MEAL_SLOTS, DAYS } from '../../core/domain/planningConfig';
 import { SLOT_DISPLAY } from './slotDisplay';
-import { usePlannableSnapshot, useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
+import { useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
 import { computeSlotCopyProps } from '../../core/logic/planning/planningCopyLogic';
+import { useShoppingDaysSelection } from '../../shared/hooks/useShoppingDaysSelection';
+import { usePlanningCopy } from '../../shared/hooks/usePlanningCopy';
+import { shiftDay } from '../../core/logic/planning/planningDayNavLogic';
+import { useHorizontalSwipe, SwipeDirection } from '../../shared/hooks/useHorizontalSwipe';
+import { useDragEdgeWeekNav } from '../../shared/hooks/useDragEdgeWeekNav';
+import { ShoppingDaysPicker } from './components/ShoppingDaysPicker';
+import { DayColumnHeader } from './components/DayColumnHeader';
 import { computeDragMoveSlots } from '../../core/logic/planning/planningDragLogic';
 import { ParsedSlot, buildSlotId, parseFullSlotId } from '../../core/logic/planning/planningSlotIdLogic';
 import { buildEmptySlot, placeRecipeInSlot } from '../../core/logic/planning/planningSlotEditLogic';
 import { withPending } from '../../shared/utils/withPending';
-import { usePendingKey } from '../../shared/hooks/usePendingKey';
 import { MoveDessertsPrompt } from './components/MoveDessertsPrompt';
 import { TABLET_WEEK_GRID_COLS } from './planningLayout';
 import {
@@ -46,21 +52,16 @@ import {
 } from '@dnd-kit/core';
 
 export const PlanningModule = () => {
-    const plannable = usePlannableSnapshot();
     const recipesDb = useRecipesSnapshot();
     const [searchParams, setSearchParams] = useSearchParams();
-    const { shoppingDays, setShoppingDays } = useMenuStore();
     const { batchRecipeIds } = useFreezerStock();
 
     const [pickerSlot, setPickerSlot] = useState<{ day: string; slot: SlotType } | null>(null);
     const [dessertPickerSlot, setDessertPickerSlot] = useState<{ day: string; slot: SlotType } | null>(null);
     const [activeDragId, setActiveDragId] = useState<string | null>(null);
-    const [weekNavZone, setWeekNavZone] = useState<'prev' | 'next' | null>(null);
     const [dragSourceSlot, setDragSourceSlot] = useState<MealSlot | null>(null);
     const [slideKey, setSlideKey] = useState(0);
-    const [slideDir, setSlideDir] = useState<'left' | 'right'>('left');
-    const swipeStartX = useRef<number | null>(null);
-    const swipeStartY = useRef<number | null>(null);
+    const [slideDir, setSlideDir] = useState<SwipeDirection>('left');
 
     const selectedDay = searchParams.get('day') ?? dayNameOf(new Date());
     const selectedDate = useMemo(() => {
@@ -79,30 +80,22 @@ export const PlanningModule = () => {
     const clearAddMode = () =>
         setSearchParams(p => { p.delete('addRecipe'); return p; }, { replace: true });
 
-    const [isSelectionMode, setIsSelectionMode] = useState(false);
-    const [draftDays, setDraftDays] = useState<ShoppingDay[]>([]);
     const [editingPersonsSlotId, setEditingPersonsSlotId] = useState<string | null>(null);
-    const [copyState, setCopyState] = useState<CopyState | null>(null);
-    const [copyTargets, setCopyTargets] = useState<Set<string>>(new Set());
-    const [isCopying, setIsCopying] = useState(false);
     const [pendingDragMove, setPendingDragMove] = useState<{
         fromMeal: MealSlot; toMeal: MealSlot | undefined; fromId: string; toId: string; from: ParsedSlot; to: ParsedSlot;
     } | null>(null);
     const [dragMoveChoice, setDragMoveChoice] = useState<'move' | 'keep' | null>(null);
 
-    const isShoppingDaysPending = usePendingKey('planning-shopping-days');
     const isAnyEditing = editingPersonsSlotId !== null;
-    const isCopyMode = !!copyState;
 
     const monday = useMemo(() => getMonday(selectedDate), [selectedDate]);
     const weekNumber = useMemo(() => getWeekNumber(monday), [monday]);
     const year = monday.getFullYear();
     const weekRange = useMemo(() => getWeekRange(monday), [monday]);
-    const selectedDayDate = useMemo(() => {
-        const d = new Date(monday);
-        d.setDate(d.getDate() + (DAYS as readonly string[]).indexOf(selectedDay));
-        return toIsoDate(d);
-    }, [monday, selectedDay]);
+    const selectedDayDate = useMemo(
+        () => toIsoDate(addDays(monday, (DAYS as readonly string[]).indexOf(selectedDay))),
+        [monday, selectedDay]
+    );
 
     const sensors = useSensors(
         useSensor(MouseSensor, { activationConstraint: { distance: 8 } }),
@@ -114,6 +107,11 @@ export const PlanningModule = () => {
         [year, weekNumber]
     );
     const planningData = useMemo(() => liveData ?? [], [liveData]);
+
+    const shopping = useShoppingDaysSelection(year, weekNumber);
+    const isSelectionMode = shopping.isSelectionMode;
+    const copy = usePlanningCopy(planningData, year, weekNumber);
+    const isCopyMode = !!copy.copyState;
 
     const authStatus = useAuthStore((s) => s.status);
     const refreshTick = useRefreshStore((s) => s.tick);
@@ -140,83 +138,24 @@ export const PlanningModule = () => {
 
     const changeWeek = (offset: number) => {
         if (isAnyEditing) return;
-        const d = new Date(selectedDate);
-        d.setDate(d.getDate() + offset * 7);
-        setSelectedDate(d);
+        setSelectedDate(addDays(selectedDate, offset * 7));
     };
 
-    const changeWeekRef = useRef(changeWeek);
-    useLayoutEffect(() => {
-        changeWeekRef.current = changeWeek;
-    });
+    const weekNavZone = useDragEdgeWeekNav(!!activeDragId, changeWeek);
 
-    useEffect(() => {
-        if (!activeDragId) return;
-        const ZONE_WIDTH = 72;
-        const handlePointerMove = (e: PointerEvent) => {
-            const x = e.clientX;
-            if (x < ZONE_WIDTH) {
-                setWeekNavZone('prev');
-            } else if (x > window.innerWidth - ZONE_WIDTH) {
-                setWeekNavZone('next');
-            } else {
-                setWeekNavZone(null);
-            }
-        };
-        window.addEventListener('pointermove', handlePointerMove);
-        return () => {
-            window.removeEventListener('pointermove', handlePointerMove);
-            setWeekNavZone(null);
-        };
-    }, [activeDragId]);
-
-    useEffect(() => {
-        if (!weekNavZone) return;
-        const timer = setTimeout(() => {
-            changeWeekRef.current(weekNavZone === 'prev' ? -1 : 1);
-            setWeekNavZone(null);
-        }, 1000);
-        return () => clearTimeout(timer);
-    }, [weekNavZone]);
-
-    const handleSwipe = (direction: 'left' | 'right') => {
+    const handleSwipe = (direction: SwipeDirection) => {
         if (isAnyEditing || isSelectionMode) return;
         setSlideDir(direction);
         setSlideKey(k => k + 1);
-        const currentIndex = (DAYS as readonly string[]).indexOf(selectedDay);
-        if (direction === 'left') {
-            if (currentIndex < 6) {
-                setSelectedDay(DAYS[currentIndex + 1]);
-            } else {
-                const next = new Date(selectedDate);
-                next.setDate(next.getDate() + 7);
-                setSearchParams(p => { p.set('day', DAYS[0]); p.set('d', toIsoDate(next)); return p; }, { replace: true });
-            }
-        } else {
-            if (currentIndex > 0) {
-                setSelectedDay(DAYS[currentIndex - 1]);
-            } else {
-                const prev = new Date(selectedDate);
-                prev.setDate(prev.getDate() - 7);
-                setSearchParams(p => { p.set('day', DAYS[6]); p.set('d', toIsoDate(prev)); return p; }, { replace: true });
-            }
-        }
+        const { day, weekOffset } = shiftDay(selectedDay, direction === 'left' ? 1 : -1);
+        setSearchParams(p => {
+            p.set('day', day);
+            if (weekOffset !== 0) p.set('d', toIsoDate(addDays(selectedDate, weekOffset * 7)));
+            return p;
+        }, { replace: true });
     };
 
-    const onSwipeTouchStart = (e: React.TouchEvent) => {
-        swipeStartX.current = e.touches[0].clientX;
-        swipeStartY.current = e.touches[0].clientY;
-    };
-
-    const onSwipeTouchEnd = (e: React.TouchEvent) => {
-        if (swipeStartX.current === null || swipeStartY.current === null) return;
-        const dx = e.changedTouches[0].clientX - swipeStartX.current;
-        const dy = e.changedTouches[0].clientY - swipeStartY.current;
-        swipeStartX.current = null;
-        swipeStartY.current = null;
-        if (Math.abs(dx) < 50 || Math.abs(dy) > Math.abs(dx)) return;
-        handleSwipe(dx < 0 ? 'left' : 'right');
-    };
+    const swipeHandlers = useHorizontalSwipe(handleSwipe);
 
     const handleDeleteMeal = async (day: string, slot: SlotType) => {
         const slotId = buildSlotId(year, weekNumber, day, slot);
@@ -259,7 +198,6 @@ export const PlanningModule = () => {
 
     const handleDragEnd = async ({ active, over }: DragEndEvent) => {
         setActiveDragId(null);
-        setWeekNavZone(null);
         const sourceMeal = dragSourceSlot;
         setDragSourceSlot(null);
 
@@ -318,14 +256,6 @@ export const PlanningModule = () => {
 
     const cancelDragMove = () => setPendingDragMove(null);
 
-    const handleStartCopy = (recipeId: string, slotType: SlotType, sourceDay: string, isDessertCopy: boolean) => {
-        const recipeName = plannable[recipeId]?.name ?? '';
-        const sourceSlot = planningData.find(p => p.day === sourceDay && p.slot === slotType);
-        const sourcePersons = sourceSlot?.recipePersons?.[recipeId];
-        setCopyState({ recipeId, slotType, sourceDay, isDessert: isDessertCopy, recipeName, sourcePersons });
-        setCopyTargets(new Set());
-    };
-
     const handleSetDessertPersons = async (day: string, slot: SlotType, dessertId: string, persons: number): Promise<boolean> => {
         const existing = planningData.find(p => p.day === day && p.slot === slot);
         if (!existing) return false;
@@ -335,55 +265,6 @@ export const PlanningModule = () => {
             return true;
         }).catch(() => false);
         return ok === true;
-    };
-
-    const toggleCopyTarget = (day: string, slotType: SlotType) => {
-        const key = `${day}|${slotType}`;
-        setCopyTargets(prev => {
-            const next = new Set(prev);
-            if (next.has(key)) { next.delete(key); } else { next.add(key); }
-            return next;
-        });
-    };
-
-    const copyToTargets = async ({ recipeId, sourcePersons, isDessert: isDessertCopy }: CopyState) => {
-        for (const target of copyTargets) {
-            const sep = target.indexOf('|');
-            const targetDay = target.slice(0, sep);
-            const targetSlot = target.slice(sep + 1) as SlotType;
-            const slotId = buildSlotId(year, weekNumber, targetDay, targetSlot);
-            const existing = planningData.find(p => p.day === targetDay && p.slot === targetSlot);
-            const personsUpdate = sourcePersons !== undefined
-                ? { recipePersons: { ...existing?.recipePersons, [recipeId]: sourcePersons } }
-                : {};
-            if (isDessertCopy) {
-                const base = existing ?? { id: slotId, day: targetDay, slot: targetSlot, recipeIds: [], year, week: weekNumber };
-                if (canAddDessert(base) && !base.dessertIds?.includes(recipeId)) {
-                    await saveSlot({ ...base, dessertIds: [...(base.dessertIds ?? []), recipeId], ...personsUpdate });
-                }
-            } else {
-                if (!existing) {
-                    await saveSlot({ id: slotId, day: targetDay, slot: targetSlot, recipeIds: [recipeId], year, week: weekNumber, ...personsUpdate });
-                } else if (!isSlotFull(existing) && !existing.recipeIds.includes(recipeId)) {
-                    await saveSlot({ ...existing, recipeIds: [...existing.recipeIds, recipeId], ...personsUpdate });
-                }
-            }
-        }
-    };
-
-    const confirmCopy = async () => {
-        if (!copyState || isCopying) return;
-        setIsCopying(true);
-        const ok = await copyToTargets(copyState).then(() => true).catch(() => false);
-        setIsCopying(false);
-        if (!ok) return;
-        setCopyState(null);
-        setCopyTargets(new Set());
-    };
-
-    const cancelCopy = () => {
-        setCopyState(null);
-        setCopyTargets(new Set());
     };
 
     const handleConfirmPersons = async (slotId: string, persons: number) => {
@@ -432,15 +313,7 @@ export const PlanningModule = () => {
         if (ok) clearAddMode();
     };
 
-    const enterSelectionMode = () => { setDraftDays([...shoppingDays]); setIsSelectionMode(true); setPickerSlot(null); };
-    const cancelSelection = () => setIsSelectionMode(false);
-    const confirmSelection = async () => {
-        const ok = await withPending('planning-shopping-days', async () => {
-            await setShoppingDays(draftDays);
-            return true;
-        }).catch(() => false);
-        if (ok) setIsSelectionMode(false);
-    };
+    const enterSelectionMode = () => { shopping.enter(); setPickerSlot(null); };
 
     const handlePickRecipe = async (recipeId: string) => {
         if (!pickerSlot) return;
@@ -458,24 +331,13 @@ export const PlanningModule = () => {
         if (ok) setDessertPickerSlot(null);
     };
 
-    const toggleDraftDay = (y: number, w: number, day: string) => {
-        setDraftDays(prev => {
-            const exists = prev.some(d => d.year === y && d.week === w && d.day === day);
-            if (exists) return prev.filter(d => !(d.year === y && d.week === w && d.day === day));
-            if (prev.length >= 10) return prev;
-            return [...prev, { year: y, week: w, day }];
-        });
-    };
-
-    const isDayDraft = (day: string) => draftDays.some(d => d.year === year && d.week === weekNumber && d.day === day);
-    const isDayConfirmed = (day: string) => shoppingDays.some(d => d.year === year && d.week === weekNumber && d.day === day);
-    const atMax = draftDays.length >= 10;
+    const mealCount = (day: string) => planningData.filter(p => p.day === day && p.recipeIds.length > 0).length;
 
     const renderSlot = (day: string, mealType: typeof MEAL_SLOTS[number]) => {
         const slotId = buildSlotId(year, weekNumber, day, mealType.id);
         const savedMeal = planningData.find(p => p.day === day && p.slot === mealType.id);
         const isEditingThis = editingPersonsSlotId === slotId;
-        const copyProps = computeSlotCopyProps(copyState, copyTargets, day, mealType, savedMeal);
+        const copyProps = computeSlotCopyProps(copy.copyState, copy.copyTargets, day, mealType, savedMeal);
         const isDimmed = (isAnyEditing && !isEditingThis) || (isCopyMode && !copyProps.isCopyRelevant);
 
         return (
@@ -500,11 +362,11 @@ export const PlanningModule = () => {
                 onCancelPersons={() => setEditingPersonsSlotId(null)}
                 onRemoveRecipe={(rid) => handleRemoveRecipe(day, mealType.id, rid)}
                 onSaveRecipeMeta={(rid, p, g) => handleSaveRecipeMeta(day, mealType.id, rid, p, g)}
-                onCopyRecipe={(rid) => handleStartCopy(rid, mealType.id, day, false)}
-                onCopyDessert={(rid) => handleStartCopy(rid, mealType.id, day, true)}
+                onCopyRecipe={(rid) => copy.start(rid, mealType.id, day, false)}
+                onCopyDessert={(rid) => copy.start(rid, mealType.id, day, true)}
                 onRemoveDessert={(rid) => handleRemoveDessert(day, mealType.id, rid)}
                 onSetDessertPersons={(rid, n) => handleSetDessertPersons(day, mealType.id, rid, n)}
-                onSelectAsTarget={() => toggleCopyTarget(day, mealType.id)}
+                onSelectAsTarget={() => copy.toggleTarget(day, mealType.id)}
                 batchRecipeIds={batchRecipeIds}
             />
         );
@@ -526,7 +388,7 @@ export const PlanningModule = () => {
                     isAnyEditing={isAnyEditing}
                     isSelectionMode={isSelectionMode}
                     isAddMode={isAddMode}
-                    hasShoppingDays={shoppingDays.length > 0}
+                    hasShoppingDays={shopping.hasShoppingDays}
                     onPrevWeek={() => changeWeek(-1)}
                     onNextWeek={() => changeWeek(1)}
                     onDateChange={(dateStr, dayIndex) => setSearchParams(p => { p.set('d', dateStr); p.set('day', DAYS[dayIndex]); return p; }, { replace: true })}
@@ -548,52 +410,28 @@ export const PlanningModule = () => {
                     monday={monday}
                     dayKcal={dayKcal}
                     isSelectionMode={isSelectionMode}
-                    isDraft={isDayDraft}
-                    isConfirmed={isDayConfirmed}
-                    hasMeals={(day) => planningData.some(p => p.day === day && p.recipeIds.length > 0)}
-                    atMax={atMax}
+                    isDraft={shopping.isDraft}
+                    isConfirmed={shopping.isConfirmed}
+                    hasMeals={(day) => mealCount(day) > 0}
+                    atMax={shopping.atMax}
                     onSelectDay={setSelectedDay}
-                    onToggleDraft={(day) => toggleDraftDay(year, weekNumber, day)}
+                    onToggleDraft={shopping.toggle}
                 />
 
                 <div className="flex-1 min-h-0 overflow-hidden tablet:overflow-visible tablet:flex tablet:flex-col tablet:gap-2">
 
                     {isSelectionMode && (
-                        <div className="sm:hidden h-full flex flex-col justify-center gap-5 px-1">
-                            <p className="text-center text-[10px] font-black uppercase tracking-widest text-slate-400">
-                                Jours de courses
-                            </p>
-                            <div className="grid grid-cols-7 gap-1.5">
-                                {DAYS.map(day => {
-                                    const isDraft = isDayDraft(day);
-                                    const blocked = !isDraft && atMax;
-                                    const mealCount = planningData.filter(p => p.day === day && p.recipeIds.length > 0).length;
-                                    return (
-                                        <button
-                                            key={day}
-                                            onClick={() => !blocked && toggleDraftDay(year, weekNumber, day)}
-                                            className={[
-                                                'flex flex-col items-center gap-1 py-3 rounded-2xl transition-all',
-                                                isDraft ? 'bg-orange-500 text-white shadow-lg shadow-orange-200 dark:shadow-orange-900/30' : 'bg-white dark:bg-slate-100 border border-slate-200 text-slate-500',
-                                                blocked ? 'opacity-25 pointer-events-none' : '',
-                                            ].join(' ')}
-                                        >
-                                            <span className="text-[10px] font-black uppercase tracking-tight">{day.slice(0, 3)}</span>
-                                            {isDraft
-                                                ? <Check className="w-3 h-3" />
-                                                : <span className={`text-[9px] font-bold ${mealCount > 0 ? 'text-orange-400' : 'text-slate-300'}`}>
-                                                    {mealCount > 0 ? mealCount : '—'}
-                                                </span>
-                                            }
-                                        </button>
-                                    );
-                                })}
-                            </div>
-                        </div>
+                        <ShoppingDaysPicker
+                            days={DAYS}
+                            isDraft={shopping.isDraft}
+                            mealCount={mealCount}
+                            atMax={shopping.atMax}
+                            onToggle={shopping.toggle}
+                        />
                     )}
 
                     {!isSelectionMode && (
-                        <div key={slideKey} className={`sm:hidden flex flex-col gap-1.5 h-full ${slideKey > 0 ? (slideDir === 'left' ? 'animate-slide-from-right' : 'animate-slide-from-left') : ''}`} onTouchStart={onSwipeTouchStart} onTouchEnd={onSwipeTouchEnd}>
+                        <div key={slideKey} className={`sm:hidden flex flex-col gap-1.5 h-full ${slideKey > 0 ? (slideDir === 'left' ? 'animate-slide-from-right' : 'animate-slide-from-left') : ''}`} {...swipeHandlers}>
                             {MEAL_SLOTS.map(mealType => (
                                 <div key={mealType.id} className="flex flex-col gap-0.5 min-h-0" style={{ flex: SLOT_DISPLAY[mealType.id].flex }}>
                                     <span className="text-[9px] font-black uppercase tracking-widest text-slate-400 px-1 shrink-0">
@@ -618,34 +456,20 @@ export const PlanningModule = () => {
 
                     <div className={`hidden sm:grid grid-cols-[repeat(7,1fr)] grid-rows-[44px_repeat(4,1fr)] gap-3 h-full min-h-0 px-2 pb-2 tablet:h-auto tablet:flex-1 tablet:-mx-8 tablet:gap-2 tablet:grid-flow-col tablet:grid-rows-7 ${TABLET_WEEK_GRID_COLS}`}>
                         {DAYS.map((day, i) => {
-                            const selected = isSelectionMode && isDayDraft(day);
-                            const confirmed = !isSelectionMode && isDayConfirmed(day);
-                            const blocked = isSelectionMode && !selected && atMax;
+                            const selected = isSelectionMode && shopping.isDraft(day);
                             return (
-                                <div key={day}
-                                    onClick={isSelectionMode && !blocked ? () => toggleDraftDay(year, weekNumber, day) : undefined}
-                                    className={[
-                                        'flex flex-col items-center justify-center font-black uppercase tracking-widest rounded-lg transition-colors select-none',
-                                        isSelectionMode ? (blocked ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer') : '',
-                                        selected ? 'text-orange-500 bg-orange-100 dark:bg-orange-900/30' : '',
-                                        confirmed ? 'text-orange-400' : 'text-slate-400',
-                                        isSelectionMode && !selected && !blocked ? 'hover:bg-slate-100 dark:hover:bg-slate-700/40' : '',
-                                    ].join(' ')}
-                                >
-                                    <div className="flex items-center gap-1 text-xs tablet:flex-col tablet:gap-0">
-                                        {selected && <Check className="w-3 h-3 shrink-0" />}
-                                        {confirmed && !isSelectionMode && <ShoppingCart className="w-2.5 h-2.5 shrink-0" />}
-                                        <span>{day.slice(0, 3)}</span>
-                                        <span className="font-semibold normal-case tracking-normal opacity-60 text-[10px]">
-                                            {formatDayDate(monday, i)}
-                                        </span>
-                                    </div>
-                                    {dayKcal[day] > 0 && (
-                                        <span className="font-semibold normal-case tracking-normal opacity-60 text-[11px]">
-                                            {dayKcal[day]} kcal
-                                        </span>
-                                    )}
-                                </div>
+                                <DayColumnHeader
+                                    key={day}
+                                    day={day}
+                                    dayIndex={i}
+                                    monday={monday}
+                                    kcal={dayKcal[day]}
+                                    isSelectionMode={isSelectionMode}
+                                    selected={selected}
+                                    confirmed={!isSelectionMode && shopping.isConfirmed(day)}
+                                    blocked={isSelectionMode && !selected && shopping.atMax}
+                                    onToggle={() => shopping.toggle(day)}
+                                />
                             );
                         })}
                         {MEAL_SLOTS.map(mealType => (
@@ -657,16 +481,16 @@ export const PlanningModule = () => {
                 </div>
 
                 {isSelectionMode && (
-                    <ShoppingSelectionBar count={draftDays.length} pending={isShoppingDaysPending} onConfirm={confirmSelection} onCancel={cancelSelection} onReset={() => setDraftDays([])} />
+                    <ShoppingSelectionBar count={shopping.draftCount} pending={shopping.isPending} onConfirm={shopping.confirm} onCancel={shopping.cancel} onReset={shopping.reset} />
                 )}
 
-                {isCopyMode && copyState && (
+                {copy.copyState && (
                     <CopyModeBar
-                        recipeName={copyState.recipeName}
-                        selectedCount={copyTargets.size}
-                        pending={isCopying}
-                        onConfirm={confirmCopy}
-                        onCancel={cancelCopy}
+                        recipeName={copy.copyState.recipeName}
+                        selectedCount={copy.copyTargets.size}
+                        pending={copy.isCopying}
+                        onConfirm={copy.confirm}
+                        onCancel={copy.cancel}
                     />
                 )}
 

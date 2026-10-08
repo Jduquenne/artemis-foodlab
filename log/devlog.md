@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — `features/` review: planning, step 4 (v6.79.10)
+
+- Done: `PlanningModule` 697 → 539 lines, same behaviour. Copy mode → `usePlanningCopy` + pure `buildCopiedSlot` / `copyTargetKey` / `parseCopyTargetKey` (`planningCopyLogic.ts`, no more `as SlotType` cast on the target key); shopping days selection → `useShoppingDaysSelection` + `MAX_SHOPPING_DAYS` (`planningConfig.ts`); swipe between days → `useHorizontalSwipe` + pure `shiftDay` (`planningDayNavLogic.ts`); week change while holding a dragged meal against an edge → `useDragEdgeWeekNav`; mobile « Jours de courses » grid → `ShoppingDaysPicker`; desktop day headers → `DayColumnHeader`.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: step 5 (duplicates, renaming, `dvh`, prompt backdrop, « Réinitialiser », `ShoppingSelectionBar` still has its own `10`), step 6 (theme).
+
 ## 2026-10-08 — `features/` review: planning, step 3 (v6.79.9)
 
 - Done: planning dates in local time. The `d` URL parameter and the date shown in the header were written with `toISOString()` (UTC): between midnight and 2 am (summer time), the header date was one day behind and « semaine suivante » could stay on the same week. New `toIsoDate` (`shared/utils/dateUtils.ts`, `format(date, "yyyy-MM-dd")`). « Aujourd'hui » (no `day` in the URL) was computed once when the app loaded, so it stayed on the previous day after midnight; now `dayNameOf(new Date())` at render time.

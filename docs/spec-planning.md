@@ -18,6 +18,7 @@ Pure functions in `core/logic/planning/planningSlotEditLogic.ts`, used by the re
 - Single slot (lunch, dinner): `replaceMainRecipe` swaps the dish and keeps the desserts, their persons/grams and the slot persons; only the settings of the replaced dish are dropped.
 - Multi slot (breakfast, snack): `addRecipeToMultiSlot` appends the recipe and keeps everything else; no-op when the slot is full or already holds it.
 - « Ajouter au planning » with a dessert on a lunch/dinner slot always adds it as a dessert, even when the slot has no dish.
+- Copy: targets are `copyTargetKey(day, slot)` keys; `buildCopiedSlot` (`planningCopyLogic.ts`) adds the copied recipe or dessert to each target, carrying the source persons; no-op when the target is full or already holds it.
 
 ## Drag & drop with desserts
 

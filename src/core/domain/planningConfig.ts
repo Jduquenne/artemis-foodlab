@@ -9,6 +9,7 @@ export const MEAL_SLOTS = [
 
 export const MAX_DESSERTS_PER_SLOT = 3;
 export const MAX_RECIPES_PER_SLOT = 4;
+export const MAX_SHOPPING_DAYS = 10;
 
 export type MealSlotDef = typeof MEAL_SLOTS[number];
 

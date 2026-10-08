@@ -135,7 +135,7 @@ Persisted keys: `theme`, `last_recipe_search`, `cipe_shopping_price_calc`, `cipe
 
 ## Hooks of note
 
-`useSearch{Recipes,Meals,Ingredients,Desserts}(query)`: `null` → `[]`, `''` → all; Meals/Desserts capped at `MAX_PICKER_RESULTS = 30`. `useScrollRestore(key)`, `useDelayedFlag(active, delayMs)`, `useModalBack`.
+`useSearch{Recipes,Meals,Ingredients,Desserts}(query)`: `null` → `[]`, `''` → all; Meals/Desserts capped at `MAX_PICKER_RESULTS = 30`. `useScrollRestore(key)`, `useDelayedFlag(active, delayMs)`, `useModalBack`. `useHorizontalSwipe(onSwipe)` (touch handlers, 50 px threshold, horizontal only). Planning: `useShoppingDaysSelection(year, week)` (shopping days selection mode, max `MAX_SHOPPING_DAYS`), `usePlanningCopy(planningData, year, week)` (copy mode), `useDragEdgeWeekNav(active, onChangeWeek)` (holding a dragged meal 1 s against a screen edge changes the week).
 
 ## Routing
 

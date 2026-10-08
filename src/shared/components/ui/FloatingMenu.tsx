@@ -31,7 +31,7 @@ export const FloatingMenu = ({ open, anchorRef, onClose, children, className }: 
             <div
                 ref={menuRef}
                 onClick={(e) => e.stopPropagation()}
-                className={`fixed top-0 left-0 invisible z-50 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl shadow-lg overflow-hidden min-w-44 ${className ?? ""}`}
+                className={`fixed top-0 left-0 invisible z-50 bg-surface border border-slate-200 rounded-2xl shadow-lg overflow-hidden min-w-44 ${className ?? ""}`}
             >
                 {children}
             </div>

@@ -42,7 +42,7 @@ export const NewProfileForm = ({ profiles }: NewProfileFormProps) => {
           placeholder="Nouveau profil"
           onChange={(e) => setName(e.target.value)}
           onKeyDown={(e) => { if (e.key === "Enter") handleSubmit(); }}
-          className="flex-1 min-w-0 rounded-lg border border-slate-200 bg-white dark:bg-slate-100 px-2.5 py-1.5 text-sm text-slate-800 focus:outline-none focus:border-orange-400"
+          className="flex-1 min-w-0 rounded-lg border border-slate-200 bg-surface px-2.5 py-1.5 text-sm text-slate-800 focus:outline-none focus:border-orange-400"
         />
         <button
           type="button"

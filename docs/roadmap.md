@@ -34,9 +34,9 @@ Milestones reconstructed from history; definitions of done marked "proposed" wer
 - ✅ `docs`, `public/`, `scripts/`, repo root, `core/domain`, `core/catalogue` (ex `typed-db`), catalogue change signal + snapshots + cross-device refresh, `core/logic`, shared utilities, macro labels centralised.
 - ✅ `core/services/` (2026-10-07; atomic freezer item + shopping period API calls).
 - ✅ `features/` (2026-10-08): shopping (incl. household tab, batch source checks), freezer, journal, planning, dashboard, recipeBuilder, recipes, news, sync.
-- ⬜ `shared/`.
+- ✅ `shared/` (2026-10-08): utils (D-032 split), hooks, stores, components (SVG card escaping fix).
 - ✅ Layering (2026-10-08, D-032): generic utilities in `core/utils/`, business ones in `core/logic/`, caches in `core/catalogue/recipeMetrics.ts`; `core/` no longer imports `shared/`.
-- 🟡 Theming: replace the pre-existing `dark:*-slate-*` pairs with the named theme colours (D-031), feature by feature, as each folder is reviewed. Done: Shopping (incl. household tab), Freezer, Journal, Planning, Dashboard, Recipe Builder, Recipes, News, Sync (all of `features/`). Remaining: 37 occurrences in 15 files on 2026-10-08, outside `features/` (`docs/development.md` § Golden-rule checks).
+- ✅ Theming (2026-10-08): every pre-existing `dark:*-slate-*` pair replaced by the named theme colours (D-031); 0 occurrence left in `src/`.
 
 ### P5 — Tablet portrait
 

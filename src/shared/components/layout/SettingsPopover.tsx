@@ -54,7 +54,7 @@ export const SettingsPopover = () => {
           className={`p-2.5 tablet:p-3 rounded-xl transition-colors ${
             open
               ? "bg-orange-100 dark:bg-orange-900/40 text-orange-600"
-              : "text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 hover:text-slate-600"
+              : "text-slate-400 hover:bg-muted hover:text-slate-600"
           }`}
         >
           <Settings className="w-5 h-5" />
@@ -63,7 +63,7 @@ export const SettingsPopover = () => {
         {open && (
           <>
             <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
-            <div className="absolute bottom-0 left-full ml-3 z-50 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl shadow-xl overflow-hidden w-52">
+            <div className="absolute bottom-0 left-full ml-3 z-50 bg-surface border border-slate-200 rounded-2xl shadow-xl overflow-hidden w-52">
               <SettingsMenuItem icon={<UserCircle className="w-4 h-4 text-slate-400 shrink-0" />} label="Compte" divided={false} onClick={() => { setAccountOpen(true); setOpen(false); }} />
               <SettingsMenuItem icon={<Users className="w-4 h-4 text-slate-400 shrink-0" />} label="Profils" onClick={() => { setProfilesOpen(true); setOpen(false); }} />
               {!isDemo && (

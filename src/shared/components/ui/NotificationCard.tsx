@@ -47,7 +47,7 @@ export const NotificationCard = ({ notification }: NotificationCardProps) => {
 
     return (
         <div className="fixed top-0 inset-x-0 z-50 flex justify-center items-start pt-3 px-4 pointer-events-none">
-            <div className={`w-full max-w-115 bg-white dark:bg-slate-100 rounded-2xl shadow-2xl border border-slate-200 overflow-hidden pointer-events-auto ${isLeaving ? 'notif-exit' : 'notif-enter'}`}>
+            <div className={`w-full max-w-115 bg-surface rounded-2xl shadow-2xl border border-slate-200 overflow-hidden pointer-events-auto ${isLeaving ? 'notif-exit' : 'notif-enter'}`}>
                 <div className={`flex items-start gap-3 px-4 pt-4 ${actions.length > 0 ? "pb-3" : "pb-4"}`}>
                     {isError
                         ? <AlertTriangle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
@@ -74,7 +74,7 @@ export const NotificationCard = ({ notification }: NotificationCardProps) => {
                                         ? isError
                                             ? "bg-red-500 hover:bg-red-600 text-white"
                                             : "bg-orange-500 hover:bg-orange-600 text-white"
-                                        : "bg-slate-100 dark:bg-slate-200 hover:bg-slate-200 dark:hover:bg-slate-300 text-slate-600"
+                                        : "bg-muted hover:bg-strong text-slate-600"
                                 }`}
                             >
                                 {action.label}
@@ -83,7 +83,7 @@ export const NotificationCard = ({ notification }: NotificationCardProps) => {
                     </div>
                 )}
 
-                <div className="h-1 bg-slate-100 dark:bg-slate-200">
+                <div className="h-1 bg-muted">
                     <div ref={barRef} className={`h-full w-full origin-left ${isError ? "bg-red-400" : "bg-orange-400"}`} />
                 </div>
             </div>

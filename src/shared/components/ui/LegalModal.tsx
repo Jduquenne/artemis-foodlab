@@ -14,7 +14,7 @@ export const LegalModal = ({ onClose, initialDoc = "privacy" }: LegalModalProps)
 
   return (
     <div className="fixed inset-0 z-100 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4">
-      <div className="bg-white dark:bg-slate-100 w-full max-w-lg rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden max-h-[90dvh]">
+      <div className="bg-surface w-full max-w-lg rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden max-h-[90dvh]">
         <div className="p-5 border-b border-slate-200 flex justify-between items-center shrink-0">
           <h2 className="text-lg font-black text-slate-900">Informations légales</h2>
           <button aria-label="Fermer" onClick={onClose} className="p-2 hover:bg-black/5 rounded-full transition-colors">
@@ -23,7 +23,7 @@ export const LegalModal = ({ onClose, initialDoc = "privacy" }: LegalModalProps)
         </div>
 
         <div className="px-5 pt-4 shrink-0">
-          <div className="flex gap-1 rounded-xl bg-slate-100 dark:bg-slate-200 p-1">
+          <div className="flex gap-1 rounded-xl bg-muted p-1">
             {LEGAL_DOCUMENTS.map((d) => (
               <button
                 key={d.id}
@@ -31,7 +31,7 @@ export const LegalModal = ({ onClose, initialDoc = "privacy" }: LegalModalProps)
                 onClick={() => setActiveId(d.id)}
                 className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-colors ${
                   d.id === activeId
-                    ? "bg-white dark:bg-slate-100 text-slate-800 shadow-sm"
+                    ? "bg-surface text-slate-800 shadow-sm"
                     : "text-slate-500 hover:text-slate-700"
                 }`}
               >

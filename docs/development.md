@@ -50,7 +50,7 @@ Comments (rule "zero comments", except `src/vite-env.d.ts`) are not reliably gre
 
 Known pre-existing hits:
 
-- Second command: 37 occurrences in 15 files on 2026-10-08, after the migration of all of `features/` (the former pattern missed `dark:hover:` and counted 217). They are replaced by the named theme colours (D-031, `docs/ui-design.md` § Theming) feature by feature during the P4 review. Until then, a task must introduce **no new occurrence**, and a file being reworked should be cleaned.
+- Second command: **0 occurrence** since 2026-10-08 (all pairs replaced by the named theme colours, D-031, `docs/ui-design.md` § Theming). Any hit is now a regression.
 - Third command: `src/shared/components/ui/legalContent.ts` — the public app address in the legal notice. Permanent exception.
 
 ## Branches and deployment

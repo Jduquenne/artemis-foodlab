@@ -26,7 +26,7 @@ export const LazyRender = ({ children, className, style, rootMargin = '300px' }:
     <div ref={ref} className={className} style={style}>
       {visible
         ? children
-        : <div className="w-full h-full rounded-2xl bg-slate-100 dark:bg-slate-200 animate-pulse" />
+        : <div className="w-full h-full rounded-2xl bg-muted animate-pulse" />
       }
     </div>
   );

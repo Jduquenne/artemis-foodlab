@@ -22,7 +22,7 @@ export const ProfilesModal = ({ onClose }: ProfilesModalProps) => {
       onClick={(e) => { if (e.target === e.currentTarget) handleClose(); }}
     >
       <div
-        className={`w-full max-w-sm bg-white dark:bg-slate-100 rounded-2xl shadow-2xl flex flex-col overflow-hidden ${
+        className={`w-full max-w-sm bg-surface rounded-2xl shadow-2xl flex flex-col overflow-hidden ${
           isClosing ? "modal-center-exit" : "modal-center-enter"
         }`}
       >
@@ -36,7 +36,7 @@ export const ProfilesModal = ({ onClose }: ProfilesModalProps) => {
           <button
             onClick={handleClose}
             aria-label="Fermer"
-            className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
+            className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-muted transition-colors"
           >
             <X className="w-4 h-4" />
           </button>

@@ -65,7 +65,7 @@ export const ProfileRow = ({ profile, canDelete }: ProfileRowProps) => {
           type="button"
           onClick={() => setColorOpen((o) => !o)}
           aria-label="Changer la couleur"
-          className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
+          className="p-1.5 rounded-lg hover:bg-muted transition-colors"
         >
           <ProfileDot color={profile.color} className="w-4 h-4" />
         </button>
@@ -76,7 +76,7 @@ export const ProfileRow = ({ profile, canDelete }: ProfileRowProps) => {
           onChange={(e) => setDraft(e.target.value)}
           onBlur={commitName}
           onKeyDown={(e) => { if (e.key === "Enter") e.currentTarget.blur(); }}
-          className="flex-1 min-w-0 rounded-lg border border-slate-200 bg-white dark:bg-slate-100 px-2.5 py-1.5 text-sm font-semibold text-slate-800 focus:outline-none focus:border-orange-400 disabled:opacity-60"
+          className="flex-1 min-w-0 rounded-lg border border-slate-200 bg-surface px-2.5 py-1.5 text-sm font-semibold text-slate-800 focus:outline-none focus:border-orange-400 disabled:opacity-60"
         />
         {canDelete && (
           <button

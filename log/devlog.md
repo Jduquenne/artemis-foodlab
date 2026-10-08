@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — `shared/` migrated to the named theme colours, code review done (v6.82.15)
+
+- Done: the last 31 `dark:*-slate-*` classes (all in `shared/components/`) replaced by the named colours (D-031): 30 exact pairs, one one-off (`ConfirmActionModal` recap list `bg-slate-50 dark:bg-slate-200/60` → `bg-subtle-tint`, 40 % instead of 60 % in dark mode, same mapping the owner accepted for the journal). The theme check now finds 0 occurrence in `src/`. This closes the `shared/` review and every folder of the P4 code review.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser (light and dark mode).
+- Still open: closing phase P4 in the roadmap needs the owner's agreement (its definition of done also asks the open points of `dev/refactoring.md` to be closed or explicitly deferred); outdoor activity photo waiting for the API deployment; later items: data import removal, backdrop-close convention, comma display in `DecimalInput` / `formatQty`, category change of a recipe, ISO week-year bug, ingredient card in search.
+
 ## 2026-10-08 — `shared/` review, part 4: layout duplicates (v6.82.14)
 
 - Done: sidebar links (5 in `SidebarNav` + 2 admin links in `Layout`) → `SidebarLink`; the 5 settings menu buttons → `SettingsMenuItem`; `FORM_INPUT_CLASS` moved from the dashboard to `shared/components/ui/formStyles.ts` and reused by `AccountModal` (identical class). Identical rendering.

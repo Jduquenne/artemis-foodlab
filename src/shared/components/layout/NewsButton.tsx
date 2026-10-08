@@ -10,7 +10,7 @@ export const NewsButton = ({ hasNew, onOpen }: NewsButtonProps) => (
     <button
       onClick={onOpen}
       title="Nouveautés"
-      className="p-2.5 tablet:p-3 rounded-xl transition-colors text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 hover:text-slate-600"
+      className="p-2.5 tablet:p-3 rounded-xl transition-colors text-slate-400 hover:bg-muted hover:text-slate-600"
     >
       <Sparkles className="w-5 h-5" />
     </button>

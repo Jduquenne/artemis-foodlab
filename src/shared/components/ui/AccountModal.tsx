@@ -90,11 +90,11 @@ export const AccountModal = ({ onClose }: AccountModalProps) => {
 
   return (
     <div className="fixed inset-0 z-100 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4">
-      <div className="bg-white dark:bg-slate-100 w-full max-w-sm rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden max-h-[90dvh]">
+      <div className="bg-surface w-full max-w-sm rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden max-h-[90dvh]">
         <div className="p-5 border-b border-slate-200 flex justify-between items-center shrink-0">
           <div className="flex items-center gap-2">
             <h2 className="text-lg font-black text-slate-900">Compte</h2>
-            <span className="text-[11px] font-bold uppercase px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-200 text-slate-500">
+            <span className="text-[11px] font-bold uppercase px-1.5 py-0.5 rounded bg-muted text-slate-500">
               {roleLabel}
             </span>
           </div>

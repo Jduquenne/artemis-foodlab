@@ -2,12 +2,9 @@ import {
   format,
   startOfISOWeek,
   addDays,
-  getISOWeek,
-  getISOWeekYear,
   parseISO,
 } from "date-fns";
 import { fr } from "date-fns/locale";
-import { padNumber } from "./numberUtils";
 import { DAYS } from "../domain/planningConfig";
 
 export const toIsoDate = (date: Date): string => format(date, "yyyy-MM-dd");
@@ -26,12 +23,6 @@ export function formatSourceDayFull(isoDate: string): string {
 export function formatSourceDayShort(isoDate: string): string {
   return format(parseISO(isoDate), "d MMM", { locale: fr });
 }
-
-export const getWeekId = (date: Date = new Date()) => {
-  const week = getISOWeek(date);
-  const year = getISOWeekYear(date);
-  return `${year}-W${padNumber(week, 2)}`;
-};
 
 export const formatDayDate = (monday: Date, dayIndex: number): string => {
   const d = addDays(monday, dayIndex);

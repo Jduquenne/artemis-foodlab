@@ -1,16 +1,15 @@
 import { create } from "zustand";
-import { getISOWeek, getISOWeekYear } from "date-fns";
-import { getWeekId } from "../../core/utils/dateUtils";
 import { ShoppingDay } from "../../core/domain/planning";
 import { EMPTY_RECIPE_FILTER, RecipeFilter } from "../../core/domain/recipeFilter";
 import { normalizeRecipeFilter } from "../../core/logic/recipe/recipeFilterLogic";
 import { clearAll as clearHouseholdItems } from "../../core/services/householdService";
 import { replacePeriod } from "../../core/services/shoppingPeriodService";
+import { readStorage, writeStorage } from "../utils/safeStorage";
 
 function safeParseJson<T>(key: string, fallback: T): T {
+  const raw = readStorage(key);
+  if (!raw) return fallback;
   try {
-    const raw = localStorage.getItem(key);
-    if (!raw) return fallback;
     return JSON.parse(raw) as T;
   } catch {
     return fallback;
@@ -18,9 +17,6 @@ function safeParseJson<T>(key: string, fallback: T): T {
 }
 
 interface MenuState {
-  currentWeek: number;
-  currentYear: number;
-  currentWeekId: string;
   shoppingDays: ShoppingDay[];
   currentPeriodId: string | null;
   recipeFilter: RecipeFilter;
@@ -30,9 +26,6 @@ interface MenuState {
 }
 
 export const useMenuStore = create<MenuState>((set) => ({
-  currentWeekId: getWeekId(),
-  currentWeek: getISOWeek(new Date()),
-  currentYear: getISOWeekYear(new Date()),
   shoppingDays: [],
   currentPeriodId: null,
   recipeFilter: normalizeRecipeFilter(safeParseJson<Partial<RecipeFilter> | null>("cipe_recipe_filter", EMPTY_RECIPE_FILTER)),
@@ -48,7 +41,7 @@ export const useMenuStore = create<MenuState>((set) => ({
   },
 
   setRecipeFilter: (filter) => {
-    localStorage.setItem("cipe_recipe_filter", JSON.stringify(filter));
+    writeStorage("cipe_recipe_filter", JSON.stringify(filter));
     set({ recipeFilter: filter });
   },
 }));

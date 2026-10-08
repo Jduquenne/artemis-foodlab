@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — `shared/` review, part 3: stores (v6.82.12)
+
+- Done: read-only review of `shared/store/` (11 stores), findings in `dev/refactoring.md`, no data bug. Fix: `localStorage` writes/reads that could throw when storage is blocked (strict private mode, full quota) now go through `readStorage` / `writeStorage` (`shared/utils/safeStorage.ts`): theme (read at startup, could prevent the app from rendering) and recipe filter save. Dead code removed: `useMenuStore.currentWeek` / `currentYear` / `currentWeekId` (never read) and `getWeekId`.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: `shared/` part 4 (components).
+
 ## 2026-10-08 — `shared/` review, part 2: hooks (v6.82.11)
 
 - Done: read-only review of `shared/hooks/` (37 hooks), findings in `dev/refactoring.md`, no bug. Search logic (~100 lines) moved out of `useSearch` to `searchRecipes` (`core/logic/recipe/recipeSearchLogic.ts`, with `SearchRecipeResult` and `MAX_PICKER_RESULTS`); the hooks only call it. `useVersionCheck`: comment removed (rule 2), `version.json` read without a cast. Theme context moved from `hooks/useTheme.ts` to `contexts/themeContextValue.ts` (name avoids a case clash with `ThemeContext.tsx` on Windows), stored theme validated (`readStoredTheme`). `useColCount` + `useFreezerColCount` → one `useColCount(breakpoints)`, Shopping (3 / 2 / 1 columns) and Freezer (2 / 1) keep their thresholds.

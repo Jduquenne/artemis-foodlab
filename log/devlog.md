@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — `shared/` review, part 1: card adapter cleanup (v6.82.9)
+
+- Done: `cardAdapter` no longer rewrites zero macros (uses `ZERO`) nor rounds the 5 macros by hand twice: new `roundMacros` (`core/logic/nutrition/macroLogic.ts`). Identical card rendering.
+- Numbers: `npx tsc -b` + `npm run lint` pass.
+- Still open: slot labels (« Collation » chosen by the owner; single source in `core/domain/` with a short label for the planning grid, to confirm); then hooks, stores, components.
+
 ## 2026-10-08 — `shared/` review, part 1: business utilities to `core/` (v6.82.8)
 
 - Done: `unitUtils` → `core/logic/unit/unitFormatLogic.ts`; `macroUtils` → `core/logic/nutrition/macroLogic.ts` (pure computations, no catalogue import any more); the precomputed caches `RECIPE_MACROS` / `RECIPE_BASE_GRAMS` and `refreshRecipeMacros` (filled at module load from the catalogue) → `core/catalogue/recipeMetrics.ts`. `core/` no longer imports anything from `shared/` (D-032 complete). Docs updated (architecture, conventions, spec-journal, decisions).

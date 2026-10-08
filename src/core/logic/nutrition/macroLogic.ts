@@ -32,6 +32,16 @@ export function scaleMacros(m: Macronutrients, factor: number): Macronutrients {
   };
 }
 
+export function roundMacros(m: Macronutrients): Macronutrients {
+  return {
+    kcal: Math.round(m.kcal),
+    proteins: Math.round(m.proteins),
+    lipids: Math.round(m.lipids),
+    carbohydrates: Math.round(m.carbohydrates),
+    fibers: Math.round(m.fibers),
+  };
+}
+
 export function toGrams(
   quantity: number,
   unit: Unit,

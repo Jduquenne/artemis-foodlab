@@ -1,5 +1,6 @@
 import { IngredientCategory } from "../../../core/domain/ingredient";
 import { Macronutrients } from "../../../core/domain/nutrition";
+import { ZERO, roundMacros } from "../../../core/logic/nutrition/macroLogic";
 import { RecipeDetails } from "../../../core/domain/recipe";
 import { DraftIngredient, RecipeBuilderState } from "../../../core/domain/recipeBuilderTypes";
 import { formatIngredientsForIngredientCard } from "./ingredientLines";
@@ -37,16 +38,11 @@ export function recipeToPhotoCardData(
   macros: Macronutrients | null,
   imageHref: string = recipe.assets.mealPhoto?.url ?? "",
 ): SmallCardData {
-  const m = macros ?? { kcal: 0, proteins: 0, lipids: 0, carbohydrates: 0, fibers: 0 };
   return {
     imageHref,
     recipeName: recipe.name,
     recipeNumber: extractRecipeNumber(recipeId),
-    fibers: Math.round(m.fibers),
-    carbohydrates: Math.round(m.carbohydrates),
-    lipids: Math.round(m.lipids),
-    proteins: Math.round(m.proteins),
-    kcal: Math.round(m.kcal),
+    ...roundMacros(macros ?? ZERO),
     colors: getCardColors(recipe.categoryId),
   };
 }
@@ -56,7 +52,6 @@ export function recipeToFoodCardData(
   macros: Macronutrients | null,
   imageHref: string = recipe.assets.mealPhoto?.url ?? "",
 ): FoodCardData {
-  const m = macros ?? { kcal: 0, proteins: 0, lipids: 0, carbohydrates: 0, fibers: 0 };
   const ing = recipe.ingredients[0];
   const quantitySuffix =
     ing?.quantity != null && ing?.unit
@@ -65,11 +60,7 @@ export function recipeToFoodCardData(
   return {
     imageHref,
     foodLabel: recipe.name + quantitySuffix,
-    fibers: Math.round(m.fibers),
-    carbohydrates: Math.round(m.carbohydrates),
-    lipids: Math.round(m.lipids),
-    proteins: Math.round(m.proteins),
-    kcal: Math.round(m.kcal),
+    ...roundMacros(macros ?? ZERO),
     colors: getCardColors(recipe.categoryId),
   };
 }

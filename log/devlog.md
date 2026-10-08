@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — `features/` review: planning, step 1 (v6.79.7)
+
+- Done: read-only review of `features/planning` (24 files), findings and owner decisions in `dev/refactoring.md`. Step 1 fixes data loss when placing a dish: « ajouter au planning » on a lunch/dinner slot erased its desserts, slot persons and dessert persons (and on breakfast/snack the persons of the other recipes); replacing the dish from the picker reset the dessert persons; a dessert added in that mode to a slot without a dish became the main dish (now always a dessert); the picker on a full multi slot replaced all recipes. Rules moved to `core/logic/planning/planningSlotEditLogic.ts` (`buildEmptySlot`, `replaceMainRecipe`, `addRecipeToMultiSlot`, `placeRecipeInSlot`).
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: next steps of the planning review: writes (dead `RecipePicker` confirmation removed, `withPending` + error handling), local dates, `PlanningModule` split, duplicates, theme; dessert choice window when a drag would exceed 3 desserts (`feature:`).
+
 ## 2026-10-07 — Session end (« pause test », v6.79.6)
 
 - Done this session (v6.78.1 → 6.79.5, one commit per step): migration notes arbitrated; `core/services/` reviewed (cache services merged, atomic API calls for freezer item + bags and shopping period days, local cache kept consistent on partial failures); `features/shopping` + household tab, `features/freezer`, `features/journal` reviewed; named theme colours (D-031); batch source checks endpoint used. Three API endpoints were added by the API session and confirmed live by the owner: `POST /freezer-items` with `bags`, `PUT /shopping-periods/current`, `PUT /shopping-periods/:periodId/source-checks`.

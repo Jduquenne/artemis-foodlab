@@ -10,6 +10,15 @@ Weekly grid of meal slots: breakfast, lunch, snack, dinner. Lunch and dinner acc
 - The API model supported this already (`plannable_items`); it was a front-only rendering limit.
 - Clicking a `DessertCell` opens the recipe detail, like the main dish in `MealSlot`.
 
+## Adding or replacing a dish
+
+Pure functions in `core/logic/planning/planningSlotEditLogic.ts`, used by the recipe picker and the « ajouter au planning » mode (`addRecipe` URL parameter):
+
+- `buildEmptySlot` builds a slot that does not exist yet.
+- Single slot (lunch, dinner): `replaceMainRecipe` swaps the dish and keeps the desserts, their persons/grams and the slot persons; only the settings of the replaced dish are dropped.
+- Multi slot (breakfast, snack): `addRecipeToMultiSlot` appends the recipe and keeps everything else; no-op when the slot is full or already holds it.
+- « Ajouter au planning » with a dessert on a lunch/dinner slot always adds it as a dessert, even when the slot has no dish.
+
 ## Drag & drop with desserts
 
 Moving a meal that has desserts → the user chooses whether they follow (`MoveDessertsPrompt`: « Déplacer aussi / Laisser sur place / Annuler », shown only if the moved meal has desserts). Pure computation `computeDragMoveSlots` (`core/logic/planning/planningDragLogic.ts`), three cases:

@@ -5,15 +5,15 @@ The detailed backlog and future features live in `dev/issues.json` and `dev/refa
 
 ## Current focus
 
-1. 🟡 Code review refactoring: `core/services/` and all of `features/` done (Shopping, Freezer, Journal, Planning, Dashboard, Recipe Builder, Recipes, News, Sync); next is `shared/` (open points in `dev/refactoring.md`).
-2. ✅ ISO week-year bug fixed (2026-10-08, v6.82.17); the API demo seeding has the same bug (fix proposed by the API session).
-3. 🟡 Tablet portrait pass on the remaining screens.
+1. 🟡 Tablet portrait pass (P5) on the remaining screens: Courses, Recettes, Congélateur, Recipe Builder, Dashboard.
+2. ⬜ Owner: browser tests of the 2026-10-07 / 2026-10-08 changes (list in `log/devlog.md`), build check before pushing, relay the demo seeding week fix to the API session.
+3. ✅ P4 code review closed on 2026-10-08 (deferred points in § P4).
 
-## Honest status (2026-10-07)
+## Honest status (2026-10-08)
 
-- Production at v6.78.0 on GitHub Pages, backed by the API since 2026-09-09. `master` holds v6.79.6 (session of 2026-10-07: services, shopping, freezer, journal reviews; deployed with each push on `master`).
+- Production on GitHub Pages, backed by the API since 2026-09-09; deployed with each push on `master`. `master` holds v6.82.18 (sessions of 2026-10-07 and 2026-10-08: full P4 code review, recipe variants, mandatory photos, dessert choice on drag, ISO week-year fix). The outdoor activity photo endpoint is live (owner, 2026-10-08).
 - Working in prod (confirmed by the owner): bootstrap boot, media batch resolution, journal per-ingredient overrides, profiles (v6.73.0), planning desserts + batch writes, shopping extras, account screen, admin dashboard.
-- Delivered, owner validation pending: demo mode (v6.78.0, the API must be in prod before the front); front fix for unexpected logouts (needs confirmation in prod); everything from v6.78.2 to v6.79.5 (validated by tsc + lint only — test list in `log/devlog.md`, entry « Session end »).
+- Delivered, owner validation pending: demo mode (v6.78.0); front fix for unexpected logouts (needs confirmation in prod); everything from v6.78.2 to v6.82.18 (validated by tsc + lint only — test lists in the `log/devlog.md` entries).
 - `npx tsc -b` and `npm run lint` pass. No automated tests exist.
 - UI changes are validated by type check + lint only unless the owner tested them in a browser.
 
@@ -26,7 +26,7 @@ Milestones reconstructed from history; definitions of done marked "proposed" wer
 | P1 — Local PWA (static JSON catalogue, IndexedDB, QR sync) | ✅ (before 2026-07) | superseded by P2 |
 | P2 — API integration (catalogue, user data, auth, import) | ✅ 2026-09-09 | `master` serves the API bundle; cross inspection front + API green |
 | P3 — Post-launch features (pending feedback, desserts, journal overrides, profiles, filters, demo) | ✅ 2026-10-05 | each feature documented in `docs/spec-*.md` and in prod |
-| P4 — Code review refactoring | 🟡 | proposed: every folder of `src/` reviewed with the owner; open points of `dev/refactoring.md` closed or explicitly deferred; tsc + lint green |
+| P4 — Code review refactoring | ✅ 2026-10-08 | proposed: every folder of `src/` reviewed with the owner; open points of `dev/refactoring.md` closed or explicitly deferred; tsc + lint green |
 | P5 — Tablet portrait pass | 🟡 | proposed: every screen validated by the owner at 820×1180 portrait |
 
 ### P4 — Code review refactoring
@@ -37,6 +37,7 @@ Milestones reconstructed from history; definitions of done marked "proposed" wer
 - ✅ `shared/` (2026-10-08): utils (D-032 split), hooks, stores, components (SVG card escaping fix).
 - ✅ Layering (2026-10-08, D-032): generic utilities in `core/utils/`, business ones in `core/logic/`, caches in `core/catalogue/recipeMetrics.ts`; `core/` no longer imports `shared/`.
 - ✅ Theming (2026-10-08): every pre-existing `dark:*-slate-*` pair replaced by the named theme colours (D-031); 0 occurrence left in `src/`.
+- Closed by the owner on 2026-10-08. Deferred (see § Ideas / later): data import removal; category change of an existing recipe; card of an ingredient-type recipe in search results. Kept as is: « no modal closes on backdrop click » convention, to revisit if annoying in use. Decided: decimals keep the dot display (« 1.5 ») in `DecimalInput` and `formatQty`.
 
 ### P5 — Tablet portrait
 
@@ -68,4 +69,7 @@ Future features (including profile food preferences, #20-#24) are tracked in `de
 - API: generate food ids / outdoor codes server-side; allow forcing `announcedAt` (re-announce toggle); media `Cache-Control: immutable` + thumbhash.
 - Real-time sync (SSE / WebSocket) instead of polling.
 - Light category rename (D-014 alternative).
+- Change the category of an existing recipe (its code changes: impact on photos, planning, API) — to design with the owner.
+- Search results show an ingredient-type recipe with the recipe card (flippable) instead of the food card used in its category view — not a bug, to think about.
+- Revisit the « no modal closes on backdrop click » convention after daily use.
 - Remove the data import (owner, 2026-10-08: obsolete since the API is the source of truth): front `features/sync` (`ImportModal`, `ScopeSelector`), `importService`, `core/logic/sync/importPayloadLogic.ts` + `importSummaryLogic.ts`, the entry in `SettingsPopover`; API side `POST /import` (prompt to relay to the API session). Not scheduled; would also settle the open question of activities created by the import without a photo.

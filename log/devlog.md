@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — P4 code review closed (v6.82.18)
+
+- Done: phase P4 closed with the owner's agreement. Every folder of `src/` reviewed; open points of `dev/refactoring.md` closed or deferred: data import removal, category change of a recipe, ingredient card in search (deferred, `docs/roadmap.md` § Ideas / later); backdrop-close convention kept as is; decimals keep the dot display (owner). Roadmap focus moves to the P5 tablet portrait pass.
+- Still open: owner's browser tests and build check before pushing; demo seeding week fix on the API side.
+
 ## 2026-10-08 — ISO week-year bug fixed (v6.82.17)
 
 - Done: Planning and Journal now key a week by the ISO week-year (`getWeekYear`, re-export of `getISOWeekYear` in `core/utils/weekUtils.ts`) instead of the calendar year of the Monday (wrong only when the Monday falls on Dec 29-31, e.g. 2024-12-30 → was (2024, 1), is (2025, 1)). Shopping days and drag & drop follow (they take year/week from the module). Prod inventory by the API session (read-only): no slot and no shopping day in week 1/52/53, planned range 2026-W09 → W42, so no data migration. Also from the API session: 0/9 outdoor activities without photo; `POST /import` never creates catalogue items (unknown codes skipped as anomalies).

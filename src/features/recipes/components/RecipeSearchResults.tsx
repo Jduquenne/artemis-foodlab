@@ -4,7 +4,7 @@ import { isPlannable } from '../../../core/domain/recipePredicates';
 import { useRecipesSnapshot } from '../../../shared/hooks/useCatalogueSnapshot';
 import { markScrolling } from '../../../shared/utils/scrollGuard';
 import { useScrollRestore } from '../../../shared/hooks/useScrollRestore';
-import { SearchRecipeResult } from '../../../shared/hooks/useSearch';
+import { SearchRecipeResult } from '../../../core/logic/recipe/recipeSearchLogic';
 import { RecipePhotoCard } from '../../../shared/components/ui/RecipePhotoCard';
 import { RecipeIngredientsCard } from '../../../shared/components/ui/RecipeIngredientsCard';
 import { LazyRender } from '../../../shared/components/ui/LazyRender';

@@ -1,0 +1,115 @@
+import { RecipeDetails, RecipeKind } from "../../domain/recipe";
+import { includesText, normalizeQuery } from "../../utils/textUtils";
+
+export interface SearchRecipeResult {
+  id: string;
+  recipeId: string;
+  name: string;
+  recipeUrl?: string;
+  matchedIngredients: string[];
+}
+
+function matchesRecipeId(recipeId: string, query: string): boolean {
+  const numPart = recipeId.split("-")[1];
+  return (
+    recipeId === query ||
+    numPart === query ||
+    (numPart !== undefined && parseInt(numPart, 10).toString() === query)
+  );
+}
+
+function getMatchedIngredients(recipe: RecipeDetails, query: string): string[] {
+  return recipe.ingredients
+    .filter((ing) => includesText(ing.name, query))
+    .map((ing) => ing.name);
+}
+
+function matchesQuery(
+  recipeId: string,
+  recipe: RecipeDetails,
+  query: string,
+): boolean {
+  const isNumeric = /^\d+$/.test(query);
+  const nameMatch = includesText(recipe.name, query);
+  const idMatch = matchesRecipeId(recipeId, query);
+
+  if (isNumeric) return nameMatch || idMatch;
+
+  const ingredientMatch = recipe.ingredients.some((ing) =>
+    includesText(ing.name, query),
+  );
+  return nameMatch || idMatch || ingredientMatch;
+}
+
+function toResult(
+  recipeId: string,
+  recipe: RecipeDetails,
+  query: string,
+): SearchRecipeResult {
+  const isNumeric = /^\d+$/.test(query);
+  return {
+    id: recipeId,
+    recipeId,
+    name: recipe.name,
+    recipeUrl: recipe.assets.mealPhoto?.url ?? recipe.assets.instructionsPhoto?.url,
+    matchedIngredients: isNumeric ? [] : getMatchedIngredients(recipe, query),
+  };
+}
+
+function closestWordDistance(text: string, query: string): number {
+  let min = Infinity;
+  for (const word of text.toLowerCase().split(/[\s,\-']+/)) {
+    if (word.includes(query)) min = Math.min(min, word.length - query.length);
+  }
+  return min;
+}
+
+export const MAX_PICKER_RESULTS = 30;
+
+export function searchRecipes(
+  db: Record<string, RecipeDetails>,
+  query: string | null,
+  kinds?: RecipeKind[],
+  filter?: (recipe: RecipeDetails) => boolean,
+  limit?: number,
+): SearchRecipeResult[] {
+  if (query === null) return [];
+  const normalizedQuery = normalizeQuery(query);
+
+  const results = Object.entries(db)
+    .filter(([, recipe]) => Boolean(recipe.assets?.mealPhoto))
+    .filter(([, recipe]) => !kinds || kinds.includes(recipe.kind))
+    .filter(([, recipe]) => !filter || filter(recipe))
+    .filter(
+      ([recipeId, recipe]) =>
+        !normalizedQuery || matchesQuery(recipeId, recipe, normalizedQuery),
+    )
+    .map(([recipeId, recipe]) => toResult(recipeId, recipe, normalizedQuery));
+
+  if (!normalizedQuery || /^\d+$/.test(normalizedQuery)) {
+    return limit === undefined ? results : results.slice(0, limit);
+  }
+
+  const nameOrId = results
+    .filter(
+      (r) =>
+        includesText(r.name, normalizedQuery) ||
+        matchesRecipeId(r.recipeId, normalizedQuery),
+    )
+    .sort((a, b) => closestWordDistance(a.name, normalizedQuery) - closestWordDistance(b.name, normalizedQuery));
+
+  const ingredientOnly = results
+    .filter(
+      (r) =>
+        !includesText(r.name, normalizedQuery) &&
+        !matchesRecipeId(r.recipeId, normalizedQuery),
+    )
+    .sort((a, b) => {
+      const aScore = Math.min(...a.matchedIngredients.map(i => closestWordDistance(i, normalizedQuery)));
+      const bScore = Math.min(...b.matchedIngredients.map(i => closestWordDistance(i, normalizedQuery)));
+      return aScore - bScore;
+    });
+
+  const combined = [...nameOrId, ...ingredientOnly];
+  return limit === undefined ? combined : combined.slice(0, limit);
+}

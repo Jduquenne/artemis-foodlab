@@ -1,11 +1,9 @@
 import { useEffect, useState, ReactNode } from 'react';
-import { ThemeContext, Theme } from '../hooks/useTheme';
+import { ThemeContext, Theme, readStoredTheme } from './themeContextValue';
 import { applyThemeColor } from '../utils/themeColor';
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-    const [theme, setTheme] = useState<Theme>(() =>
-        (localStorage.getItem('theme') as Theme) ?? 'light'
-    );
+    const [theme, setTheme] = useState<Theme>(() => readStoredTheme(localStorage.getItem('theme')));
 
     useEffect(() => {
         document.documentElement.classList.toggle('dark', theme === 'dark');

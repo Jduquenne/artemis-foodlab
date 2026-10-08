@@ -1,18 +1,20 @@
 import { useState, useEffect } from 'react';
 
-function computeCols(): number {
-  if (window.innerWidth >= 1280) return 4;
-  if (window.innerWidth >= 1024) return 3;
-  if (window.innerWidth >= 768) return 2;
-  return 1;
+export interface ColBreakpoint {
+  minWidth: number;
+  cols: number;
 }
 
-export function useColCount(): number {
-  const [cols, setCols] = useState(computeCols);
+function computeCols(breakpoints: readonly ColBreakpoint[]): number {
+  return breakpoints.find((breakpoint) => window.innerWidth >= breakpoint.minWidth)?.cols ?? 1;
+}
+
+export function useColCount(breakpoints: readonly ColBreakpoint[]): number {
+  const [cols, setCols] = useState(() => computeCols(breakpoints));
   useEffect(() => {
-    const handler = () => setCols(computeCols());
+    const handler = () => setCols(computeCols(breakpoints));
     window.addEventListener('resize', handler);
     return () => window.removeEventListener('resize', handler);
-  }, []);
+  }, [breakpoints]);
   return cols;
 }

@@ -1,6 +1,7 @@
 import { useState, useMemo, useDeferredValue } from 'react';
 import { SearchBar } from '../../../../shared/components/ui/SearchBar';
-import { MAX_PICKER_RESULTS, SearchRecipeResult, useSearchMeals } from '../../../../shared/hooks/useSearch';
+import { useSearchMeals } from '../../../../shared/hooks/useSearch';
+import { MAX_PICKER_RESULTS, SearchRecipeResult } from '../../../../core/logic/recipe/recipeSearchLogic';
 import { Check, Loader2, X, TreePine } from 'lucide-react';
 import { searchOutdoorRecipes } from '../../../../core/logic/recipe/recipeListLogic';
 import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';

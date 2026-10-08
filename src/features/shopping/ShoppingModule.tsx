@@ -21,7 +21,12 @@ import { markScrolling } from '../../shared/utils/scrollGuard';
 import { distributeToColumns } from '../../core/utils/columnUtils';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { useAuthStore } from '../../shared/store/useAuthStore';
-import { useColCount } from '../../shared/hooks/useColCount';
+import { ColBreakpoint, useColCount } from '../../shared/hooks/useColCount';
+
+const SHOPPING_COLUMNS: readonly ColBreakpoint[] = [
+    { minWidth: 1024, cols: 3 },
+    { minWidth: 768, cols: 2 },
+];
 import { useFreezerStock } from '../../shared/hooks/useFreezerStock';
 import { useShoppingPeriodChecks } from '../../shared/hooks/useShoppingPeriodChecks';
 import { ShoppingCategoryCard } from './components/ingredients/ShoppingCategoryCard';
@@ -48,7 +53,7 @@ export const ShoppingModule = () => {
     const allHouseholdItems = useMemo(() => Object.values(householdDb), [householdDb]);
     const refreshTick = useRefreshStore((s) => s.tick);
 
-    const colCount = Math.min(useColCount(), 3);
+    const colCount = useColCount(SHOPPING_COLUMNS);
     const { foodBags } = useFreezerStock();
     const [viewMode, setViewMode] = useState<'meals' | 'ingredients' | 'household'>('ingredients');
     const [ingredientFilter, setIngredientFilter] = useState<'all' | 'missing'>('all');

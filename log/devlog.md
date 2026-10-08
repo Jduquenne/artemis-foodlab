@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — `shared/` review, part 2: hooks (v6.82.11)
+
+- Done: read-only review of `shared/hooks/` (37 hooks), findings in `dev/refactoring.md`, no bug. Search logic (~100 lines) moved out of `useSearch` to `searchRecipes` (`core/logic/recipe/recipeSearchLogic.ts`, with `SearchRecipeResult` and `MAX_PICKER_RESULTS`); the hooks only call it. `useVersionCheck`: comment removed (rule 2), `version.json` read without a cast. Theme context moved from `hooks/useTheme.ts` to `contexts/themeContextValue.ts` (name avoids a case clash with `ThemeContext.tsx` on Windows), stored theme validated (`readStoredTheme`). `useColCount` + `useFreezerColCount` → one `useColCount(breakpoints)`, Shopping (3 / 2 / 1 columns) and Freezer (2 / 1) keep their thresholds.
+- Numbers: `npx tsc -b` + `npm run lint` pass; no behaviour change.
+- Still open: `shared/` part 3 (stores), part 4 (components).
+
 ## 2026-10-08 — Slot labels: single source, « Collation » in the planning grid (v6.82.10)
 
 - Done: slot labels moved from `shared/utils/slotLabels.ts` to `core/domain/slotLabels.ts`: `SLOT_LABELS` (full: « Petit-déjeuner », « Déjeuner », « Dîner », « Collation », journal and shopping) and `SLOT_SHORT_LABELS` (planning grid: « Petit déj. », …), used by `SLOT_DISPLAY` (which keeps the icon and row height). Visible change, owner's choice: the planning grid says « Collation » instead of « Goûter ». The recipe filter type « Goûter » (pastries) is a different concept and is unchanged.

@@ -15,8 +15,9 @@ export const useVersionCheck = () => {
       try {
         const res = await fetch(`${import.meta.env.BASE_URL}version.json?t=${Date.now()}`);
         if (!res.ok) return;
-        const { version } = await res.json() as { version: string };
-        if (version !== __APP_VERSION__) {
+        const data: unknown = await res.json();
+        const version = typeof data === "object" && data !== null && "version" in data ? data.version : null;
+        if (typeof version === "string" && version !== __APP_VERSION__) {
           push({
             message: `Nouvelle version disponible — mets à jour pour avoir les dernières fonctionnalités.`,
             actions: [
@@ -26,7 +27,9 @@ export const useVersionCheck = () => {
             duration: 0,
           });
         }
-      } catch { /* réseau indisponible, on ignore */ }
+      } catch {
+        return;
+      }
     };
 
     const timer = setInterval(check, CHECK_INTERVAL_MS);

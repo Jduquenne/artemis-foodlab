@@ -6,7 +6,9 @@ import { FreezerItemRow } from "../item/FreezerItemRow";
 import { AddFreezerItemModal } from "../modal/AddFreezerItemModal";
 import { InlineNameEditor } from "../InlineNameEditor";
 import { markScrolling } from "../../../../shared/utils/scrollGuard";
-import { useFreezerColCount } from "../../../../shared/hooks/useFreezerColCount";
+import { ColBreakpoint, useColCount } from "../../../../shared/hooks/useColCount";
+
+const FREEZER_COLUMNS: readonly ColBreakpoint[] = [{ minWidth: 900, cols: 2 }];
 import { getFreezerCategoryAccent } from "../../freezerAccents";
 import { distributeFreezerItemsToColumns } from "../../../../core/logic/freezer/freezerItemsLogic";
 import { withPending } from "../../../../shared/utils/withPending";
@@ -23,7 +25,7 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
     updateCategoryName(category.id, name),
   );
 
-  const colCount = useFreezerColCount();
+  const colCount = useColCount(FREEZER_COLUMNS);
   const accent = getFreezerCategoryAccent(category);
 
   const columns = useMemo(

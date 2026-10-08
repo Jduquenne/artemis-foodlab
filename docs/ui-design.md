@@ -29,7 +29,7 @@ Layout, theming and responsive rules. UI text is always in French.
 
   They take Tailwind modifiers and work for any colour utility (`hover:bg-muted`, `bg-surface/90`, `border-muted`). Do not add a colour for a single use: map it to the nearest one or ask the owner.
 - `dark:text-orange-*` and other semantic non-slate colours: `dark:` is legitimate, use it normally.
-- Dark mode is class-based via `ThemeProvider` (`shared/contexts/ThemeContext.tsx`). Never use `prefers-color-scheme` directly. The manifest `theme-color` follows the app theme (`shared/utils/themeColor.ts`).
+- Dark mode is class-based via `ThemeProvider` (`shared/contexts/ThemeContext.tsx`; context and `Theme` type in `themeContextValue.ts`, stored value validated by `readStoredTheme`). Never use `prefers-color-scheme` directly. The manifest `theme-color` follows the app theme (`shared/utils/themeColor.ts`).
 - Overlays: `bg-black/X`, never `bg-slate-900/X`. Overlays and animations follow the theme tokens.
 
 ## Animations

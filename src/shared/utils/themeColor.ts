@@ -1,4 +1,4 @@
-import type { Theme } from "../hooks/useTheme";
+import type { Theme } from "../contexts/themeContextValue";
 
 const THEME_COLORS: Record<Theme, string> = {
   light: "#f97316",

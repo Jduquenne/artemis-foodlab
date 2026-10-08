@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — Dessert choice when a drag would exceed 3 desserts (v6.80.0)
+
+- Done: dragging a meal with its desserts onto a dessert-only slot used to silently drop the desserts beyond 3. Now « Déplacer aussi » opens a window listing every dessert (destination + moved, deduplicated) when the total would exceed 3; the user checks 1 to 3 to keep, the others are deleted (owner's decision). Pure `incomingDessertChoice` + `keptDessertIds` parameter of `computeDragMoveSlots` (`planningDragLogic.ts`), new `DessertChoiceModal` (no close on backdrop, spinner during the move).
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: `features/dashboard` review findings waiting for the owner (`dev/refactoring.md`); kept desserts lose their persons override on a drag (pre-existing for every drag: `placeMeal` resets `recipePersons`).
+
 ## 2026-10-08 — Planning migrated to the named theme colours (v6.79.12)
 
 - Done: the 55 `dark:*-slate-*` classes of `features/planning` replaced by the named colours (D-031). 46 exact pairs, identical rendering. 9 one-offs, owner's choices: shopping selection bar hovers and desktop day header hover → `hover:bg-muted`; picker close buttons → `hover:bg-surface-raised/60`; empty dessert / breakfast cells → `bg-muted/50` (more visible in dark mode); edge zones while dragging: text `text-slate-400` only, progress track `bg-strong/60`. This closes the planning review.

@@ -29,6 +29,12 @@ function placeMeal(
   };
 }
 
+export function incomingDessertChoice(fromMeal: MealSlot, toMeal: MealSlot | undefined): string[] | null {
+  if (!toMeal || toMeal.recipeIds.length > 0) return null;
+  const merged = [...new Set([...(toMeal.dessertIds ?? []), ...(fromMeal.dessertIds ?? [])])];
+  return merged.length > MAX_DESSERTS_PER_SLOT ? merged : null;
+}
+
 export function computeDragMoveSlots(
   fromMeal: MealSlot,
   toMeal: MealSlot | undefined,
@@ -37,6 +43,7 @@ export function computeDragMoveSlots(
   from: ParsedSlot,
   to: ParsedSlot,
   moveDesserts: boolean,
+  keptDessertIds?: string[],
 ): DragMoveResult {
   const toHasRecipe = (toMeal?.recipeIds.length ?? 0) > 0;
 
@@ -51,7 +58,7 @@ export function computeDragMoveSlots(
 
   const destinationDessertIds = toMeal?.dessertIds ?? [];
   const incomingDessertIds = moveDesserts ? (fromMeal.dessertIds ?? []) : [];
-  const mergedDessertIds = [...new Set([...destinationDessertIds, ...incomingDessertIds])].slice(0, MAX_DESSERTS_PER_SLOT);
+  const mergedDessertIds = (keptDessertIds ?? [...new Set([...destinationDessertIds, ...incomingDessertIds])]).slice(0, MAX_DESSERTS_PER_SLOT);
   const destinationSlot = placeMeal(
     toMeal,
     toId,

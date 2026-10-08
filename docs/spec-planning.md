@@ -25,7 +25,7 @@ Pure functions in `core/logic/planning/planningSlotEditLogic.ts`, used by the re
 Moving a meal that has desserts → the user chooses whether they follow (`MoveDessertsPrompt`: « Déplacer aussi / Laisser sur place / Annuler », shown only if the moved meal has desserts). Pure computation `computeDragMoveSlots` (`core/logic/planning/planningDragLogic.ts`), three cases:
 
 1. Destination does not exist → the recipe (+ desserts if `moveDesserts`) is dropped there; origin deleted or emptied.
-2. **Destination exists without a recipe** (dessert-only or empty) → the recipe lands there; **desserts already at the destination never move**; those of the moved meal are added if `moveDesserts` (deduplicated merge, capped at 3).
+2. **Destination exists without a recipe** (dessert-only or empty) → the recipe lands there; **desserts already at the destination never move**; those of the moved meal are added if `moveDesserts` (deduplicated merge). If the merge would exceed `MAX_DESSERTS_PER_SLOT` (3), « Déplacer aussi » opens `DessertChoiceModal` (`incomingDessertChoice` returns the merged list): the user checks 1 to 3 desserts to keep at the destination, the unchecked ones are deleted (owner's decision, 2026-10-08), passed to `computeDragMoveSlots` as `keptDessertIds`.
 3. Destination has a **real recipe** → full swap (recipe + desserts on both sides if `moveDesserts`).
 
 A dessert-only destination must never give its own dessert to the origin slot (pitfall already met: `if (toMeal)` without checking `toMeal.recipeIds.length > 0`; a dessert unrelated to the moved meal left with it on the way back).

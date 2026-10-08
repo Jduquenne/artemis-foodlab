@@ -33,11 +33,12 @@ import { useHorizontalSwipe, SwipeDirection } from '../../shared/hooks/useHorizo
 import { useDragEdgeWeekNav } from '../../shared/hooks/useDragEdgeWeekNav';
 import { ShoppingDaysPicker } from './components/ShoppingDaysPicker';
 import { DayColumnHeader } from './components/DayColumnHeader';
-import { computeDragMoveSlots } from '../../core/logic/planning/planningDragLogic';
+import { computeDragMoveSlots, incomingDessertChoice } from '../../core/logic/planning/planningDragLogic';
 import { ParsedSlot, buildSlotId, parseFullSlotId } from '../../core/logic/planning/planningSlotIdLogic';
 import { buildEmptySlot, placeRecipeInSlot } from '../../core/logic/planning/planningSlotEditLogic';
 import { withPending } from '../../shared/utils/withPending';
 import { MoveDessertsPrompt } from './components/MoveDessertsPrompt';
+import { DessertChoiceModal } from './components/DessertChoiceModal';
 import { TABLET_WEEK_GRID_COLS } from './planningLayout';
 import {
     DndContext,
@@ -85,6 +86,7 @@ export const PlanningModule = () => {
         fromMeal: MealSlot; toMeal: MealSlot | undefined; fromId: string; toId: string; from: ParsedSlot; to: ParsedSlot;
     } | null>(null);
     const [dragMoveChoice, setDragMoveChoice] = useState<'move' | 'keep' | null>(null);
+    const [dessertChoiceIds, setDessertChoiceIds] = useState<string[] | null>(null);
 
     const isAnyEditing = editingPersonsSlotId !== null;
 
@@ -232,9 +234,9 @@ export const PlanningModule = () => {
 
     const executeDragMove = async (
         fromMeal: MealSlot, toMeal: MealSlot | undefined, fromId: string, toId: string,
-        from: ParsedSlot, to: ParsedSlot, moveDesserts: boolean,
+        from: ParsedSlot, to: ParsedSlot, moveDesserts: boolean, keptDessertIds?: string[],
     ): Promise<boolean> => {
-        const { toSave, toDelete } = computeDragMoveSlots(fromMeal, toMeal, fromId, toId, from, to, moveDesserts);
+        const { toSave, toDelete } = computeDragMoveSlots(fromMeal, toMeal, fromId, toId, from, to, moveDesserts, keptDessertIds);
         const ok = await withPending([`planning-move:${fromId}`, `planning-move:${toId}`], async () => {
             await Promise.all([
                 ...(toDelete ? [deleteSlot(toDelete)] : []),
@@ -245,16 +247,26 @@ export const PlanningModule = () => {
         return ok === true;
     };
 
-    const resolveDragMove = async (moveDesserts: boolean) => {
+    const resolveDragMove = async (moveDesserts: boolean, keptDessertIds?: string[]) => {
         if (!pendingDragMove) return;
-        setDragMoveChoice(moveDesserts ? 'move' : 'keep');
         const { fromMeal, toMeal, fromId, toId, from, to } = pendingDragMove;
-        const ok = await executeDragMove(fromMeal, toMeal, fromId, toId, from, to, moveDesserts);
+        if (moveDesserts && !keptDessertIds) {
+            const choice = incomingDessertChoice(fromMeal, toMeal);
+            if (choice) {
+                setDessertChoiceIds(choice);
+                return;
+            }
+        }
+        setDragMoveChoice(moveDesserts ? 'move' : 'keep');
+        const ok = await executeDragMove(fromMeal, toMeal, fromId, toId, from, to, moveDesserts, keptDessertIds);
         setDragMoveChoice(null);
-        if (ok) setPendingDragMove(null);
+        if (ok) cancelDragMove();
     };
 
-    const cancelDragMove = () => setPendingDragMove(null);
+    const cancelDragMove = () => {
+        setPendingDragMove(null);
+        setDessertChoiceIds(null);
+    };
 
     const handleSetDessertPersons = async (day: string, slot: SlotType, dessertId: string, persons: number): Promise<boolean> => {
         const existing = planningData.find(p => p.day === day && p.slot === slot);
@@ -516,7 +528,16 @@ export const PlanningModule = () => {
                     />
                 )}
 
-                {pendingDragMove && (
+                {pendingDragMove && dessertChoiceIds && (
+                    <DessertChoiceModal
+                        dessertIds={dessertChoiceIds}
+                        pending={dragMoveChoice !== null}
+                        onConfirm={(kept) => resolveDragMove(true, kept)}
+                        onCancel={cancelDragMove}
+                    />
+                )}
+
+                {pendingDragMove && !dessertChoiceIds && (
                     <MoveDessertsPrompt
                         dessertCount={pendingDragMove.fromMeal.dessertIds?.length ?? 0}
                         pendingChoice={dragMoveChoice}

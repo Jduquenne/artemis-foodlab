@@ -5,7 +5,7 @@ The detailed backlog and future features live in `dev/issues.json` and `dev/refa
 
 ## Current focus
 
-1. 🟡 Code review refactoring: `core/services/`, Shopping, Freezer, Journal and Planning done; next is `features/dashboard`, then recipeBuilder (photo becomes mandatory), recipes, news + sync, then `shared/`; the dessert choice window on drag & drop (planning, `feature:`) is pending an owner answer (open points in `dev/refactoring.md`).
+1. 🟡 Code review refactoring: `core/services/`, Shopping, Freezer, Journal and Planning done; next is `features/dashboard`, then recipeBuilder (photo becomes mandatory), recipes, news + sync, then `shared/` (open points in `dev/refactoring.md`).
 2. ⬜ Fix the ISO week-year bug (see Known bugs).
 3. 🟡 Tablet portrait pass on the remaining screens.
 

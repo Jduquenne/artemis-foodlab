@@ -18,14 +18,14 @@ export const MacroMedianRow = ({ display, median, value, onChange }: MacroMedian
   const disabled = median === undefined;
 
   return (
-    <div className="flex items-center justify-between gap-3 px-3 py-2.5 rounded-2xl bg-white dark:bg-slate-100 border border-slate-200">
+    <div className="flex items-center justify-between gap-3 px-3 py-2.5 rounded-2xl bg-surface border border-slate-200">
       <div className="min-w-0">
         <p className="text-sm font-bold text-slate-700 leading-tight">{display.label}</p>
         <p className="text-[11px] text-slate-400 tabular-nums">
           {median === undefined ? 'Aucune donnée' : `médiane ${formatMacroValue(display, median)}`}
         </p>
       </div>
-      <div role="group" aria-label={display.label} className="flex shrink-0 p-0.5 rounded-xl bg-slate-100 dark:bg-slate-200">
+      <div role="group" aria-label={display.label} className="flex shrink-0 p-0.5 rounded-xl bg-muted">
         {OPTIONS.map(({ comparison, label }) => {
           const selected = value === comparison;
           return (

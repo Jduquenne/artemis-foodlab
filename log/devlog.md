@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — Recipes migrated to the named theme colours (v6.82.3)
+
+- Done: the 23 `dark:*-slate-*` classes of `features/recipes` replaced by the named colours (D-031), all exact pairs, identical rendering (`bg-surface`, `bg-surface-raised`, `bg-muted`, `ring-strong` and their `hover:`). This closes the recipes review.
+- Numbers: `npx tsc -b` + `npm run lint` pass; theme check 43 occurrences in 19 files left; not checked in a browser.
+- Still open: next `features/` folders (`news` + `sync`), then `shared/`; outdoor activity photo waiting for the API deployment.
+
 ## 2026-10-08 — `features/` review: recipes, step 2 (v6.82.2)
 
 - Done: filter type counting moved out of `RecipeFilterModal` to `countFilterTypes` + `candidateRecipeId` (`core/logic/recipe/recipeFilterTypeLogic.ts`, also used by `filterRecipesByFilter`). Linked base thumbnails of `RecipeDetail` (desktop + mobile copies) → `LinkedBaseLink`, link built with `buildRecipeDetailUrl`. `MacroColumn` + `MacroRow` (identical but size) → `MacroCircles` (`compact`). « Pas d'ingrédients » fallback of `FlipCard` defined once. `recipeId!` assertions replaced by `recipe.code`; `recipe.recipeId || recipe.id` → `recipe.recipeId`; category title via `categoryLabel`. Identical rendering.

@@ -65,7 +65,7 @@ export const RecipeModule = () => {
                         <button
                             aria-label="Rechercher"
                             onClick={closeSearch}
-                            className="sm:hidden p-2 rounded-xl text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 hover:text-slate-600 transition-colors shrink-0"
+                            className="sm:hidden p-2 rounded-xl text-slate-400 hover:bg-muted hover:text-slate-600 transition-colors shrink-0"
                         >
                             <X className="w-5 h-5" />
                         </button>
@@ -94,7 +94,7 @@ export const RecipeModule = () => {
                         <RecipeFilterButton filter={recipeFilter} candidates={baseResults} onApply={setRecipeFilter} />
                         <button
                             onClick={openSearch}
-                            className="sm:hidden p-2 rounded-xl text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 hover:text-orange-500 transition-colors"
+                            className="sm:hidden p-2 rounded-xl text-slate-400 hover:bg-muted hover:text-orange-500 transition-colors"
                         >
                             <Search className="w-5 h-5" />
                         </button>

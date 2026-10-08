@@ -20,7 +20,7 @@ export const FilterTypeSelector = ({ value, counts, onChange }: FilterTypeSelect
             'flex flex-col items-center justify-center gap-0.5 px-2 py-3 min-h-14 rounded-2xl border text-sm font-bold text-center leading-tight transition-colors',
             selected
               ? 'bg-orange-500 border-orange-400 text-white shadow-sm'
-              : 'bg-white dark:bg-slate-100 border-slate-200 text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200',
+              : 'bg-surface border-slate-200 text-slate-600 hover:bg-muted',
           ].join(' ')}
         >
           <span>{label}</span>

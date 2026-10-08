@@ -24,7 +24,7 @@ export const RecipeFilterButton = ({ filter, candidates, onApply }: RecipeFilter
           'relative flex items-center gap-1.5 px-3 py-2.5 rounded-2xl shadow-sm border font-bold text-sm transition-colors shrink-0',
           active
             ? 'bg-orange-500 border-orange-400 text-white hover:bg-orange-600'
-            : 'bg-white dark:bg-slate-100 border-slate-200 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-200',
+            : 'bg-surface border-slate-200 text-slate-500 hover:bg-muted',
         ].join(' ')}
       >
         <SlidersHorizontal size={16} />

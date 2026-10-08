@@ -36,7 +36,7 @@ export const FlipCard = ({ name, frontContent, backContent, recipeUrl, onClick, 
         return (
             <div
                 aria-label={name}
-                className="relative w-full h-full cursor-pointer rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-white dark:bg-slate-100"
+                className="relative w-full h-full cursor-pointer rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-surface"
                 onClick={handleCardClick}
                 onContextMenu={(e) => { e.preventDefault(); setBackMounted(true); }}
             >
@@ -53,7 +53,7 @@ export const FlipCard = ({ name, frontContent, backContent, recipeUrl, onClick, 
                 {backContent && (
                     <button
                         onClick={(e) => { e.stopPropagation(); setBackMounted(true); setShowBack(prev => !prev); }}
-                        className={`absolute bottom-1.5 left-1.5 p-1.5 rounded-lg shadow border transition-colors ${showBack ? 'bg-orange-100 border-orange-300 text-orange-600' : 'bg-white/90 dark:bg-slate-200/90 border-slate-200 text-slate-400'}`}
+                        className={`absolute bottom-1.5 left-1.5 p-1.5 rounded-lg shadow border transition-colors ${showBack ? 'bg-orange-100 border-orange-300 text-orange-600' : 'bg-surface-raised/90 border-slate-200 text-slate-400'}`}
                     >
                         <Layers size={13} />
                     </button>
@@ -90,7 +90,7 @@ export const FlipCard = ({ name, frontContent, backContent, recipeUrl, onClick, 
             onClick={() => { if (hasRecipe) onClick(); }}
         >
             <div className={`relative w-full h-full transition-all duration-700 preserve-3d shadow-xl rounded-2xl ${isFlipped ? 'rotate-y-180' : ''}`}>
-                <div className="absolute inset-0 w-full h-full backface-hidden z-20 bg-white dark:bg-slate-100 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+                <div className="absolute inset-0 w-full h-full backface-hidden z-20 bg-surface rounded-xl overflow-hidden border border-slate-200 shadow-sm">
                     {frontContent}
                 </div>
                 <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 z-10 bg-orange-50 dark:bg-orange-950/40 rounded-xl overflow-hidden border-2 border-orange-200 dark:border-orange-800">

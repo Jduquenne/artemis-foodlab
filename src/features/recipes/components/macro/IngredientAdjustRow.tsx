@@ -81,7 +81,7 @@ export const IngredientAdjustRow = ({
               disabled={!hasData}
               value={currentQty}
               onValueChange={onQuantityChange}
-              className={`w-20 text-right text-sm font-medium bg-white dark:bg-slate-100 border rounded-lg px-2 py-1 focus:outline-none disabled:cursor-not-allowed transition-colors ${isQtyModified ? 'border-orange-400 text-orange-600' : 'border-slate-200 text-slate-800 focus:border-orange-400'}`}
+              className={`w-20 text-right text-sm font-medium bg-surface border rounded-lg px-2 py-1 focus:outline-none disabled:cursor-not-allowed transition-colors ${isQtyModified ? 'border-orange-400 text-orange-600' : 'border-slate-200 text-slate-800 focus:border-orange-400'}`}
             />
             <span className="text-xs text-slate-400 w-10">
               {unitLabel || '—'}
@@ -109,7 +109,7 @@ export const IngredientAdjustRow = ({
                 value={currentUnitWeight}
                 onValueChange={onUnitWeightChange}
                 placeholder="—"
-                className={`w-20 text-right text-xs bg-white dark:bg-slate-100 border rounded-lg px-2 py-1 focus:outline-none transition-colors ${isUnitWeightModified ? 'border-orange-400 text-orange-500' : 'border-slate-200 text-slate-500 focus:border-orange-400'}`}
+                className={`w-20 text-right text-xs bg-surface border rounded-lg px-2 py-1 focus:outline-none transition-colors ${isUnitWeightModified ? 'border-orange-400 text-orange-500' : 'border-slate-200 text-slate-500 focus:border-orange-400'}`}
               />
               <span className="text-[10px] text-slate-400 w-10">
                 g/{ing.unit}

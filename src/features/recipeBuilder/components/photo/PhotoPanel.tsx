@@ -63,7 +63,7 @@ export const PhotoPanel = ({ state, mealPhoto, onPickMeal, bookPhoto, onPickBook
 
   return (
     <div className="flex flex-col gap-2">
-      <h2 className="text-[10px] font-black text-slate-400 uppercase tracking-wide">Photo</h2>
+      <h2 className="text-[10px] font-black text-slate-400 uppercase tracking-wide">Photo du plat <span className="text-orange-500">· obligatoire</span></h2>
 
       <div className="flex gap-3">
         <div className="relative w-16 h-16 shrink-0 rounded-lg overflow-hidden border border-slate-200 bg-slate-100 dark:bg-slate-200">

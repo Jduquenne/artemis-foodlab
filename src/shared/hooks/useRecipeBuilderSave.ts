@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { RecipeBuilderState } from "../../core/domain/recipeBuilderTypes";
 import { builderStateToApiBody } from "../../core/logic/recipeBuilder/recipeBuilderMapper";
-import { validateBuilderIdentity, validateBuilderState } from "../../core/logic/recipeBuilder/recipeBuilderValidation";
+import { validateBuilderIdentity, validateBuilderPhoto, validateBuilderState } from "../../core/logic/recipeBuilder/recipeBuilderValidation";
 import { recipesCatalogue } from "../../core/catalogue/recipes";
 import {
   createRecipe,
@@ -29,7 +29,12 @@ export function useRecipeBuilderSave() {
   }, []);
 
   const save = useCallback(async (state: RecipeBuilderState, photos: RecipeBuilderPhotos): Promise<boolean> => {
-    const errors = [...validateBuilderState(state), ...validateBuilderIdentity(state, recipesCatalogue)];
+    const source = state.sourceCode ? recipesCatalogue[state.sourceCode] : undefined;
+    const errors = [
+      ...validateBuilderState(state),
+      ...validateBuilderIdentity(state, recipesCatalogue),
+      ...validateBuilderPhoto(Boolean(photos.mealPhoto || (source?.apiId && source.assets?.mealPhoto))),
+    ];
     if (errors.length > 0) {
       setValidationErrors(errors);
       setStatus("error");
@@ -39,8 +44,7 @@ export function useRecipeBuilderSave() {
     setStatus("saving");
     try {
       const body = builderStateToApiBody(state);
-      const existing = state.sourceCode ? recipesCatalogue[state.sourceCode] : undefined;
-      const saved = existing?.apiId ? await updateRecipe(existing.apiId, body) : await createRecipe(body);
+      const saved = source?.apiId ? await updateRecipe(source.apiId, body) : await createRecipe(body);
       useRecipeBuilderStore.getState().patch({ sourceCode: body.code });
       if (photos.mealPhoto) await uploadRecipePhoto(saved.id, photos.mealPhoto, "mealPhoto");
       if (photos.bookPhoto) await uploadRecipePhoto(saved.id, photos.bookPhoto, "bookPhoto");

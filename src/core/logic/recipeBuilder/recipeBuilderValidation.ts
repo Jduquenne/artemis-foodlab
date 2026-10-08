@@ -69,3 +69,7 @@ export function validateBuilderIdentity(state: RecipeBuilderState, recipes: Reco
   }
   return [];
 }
+
+export function validateBuilderPhoto(hasMealPhoto: boolean): string[] {
+  return hasMealPhoto ? [] : ["La photo du plat est obligatoire."];
+}

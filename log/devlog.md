@@ -16,6 +16,13 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — Recipe variants and mandatory dish photo (v6.81.0)
+
+- Done: « Variante » button in the builder header when an existing recipe is loaded: `VariantModal` asks for a new name (different from the source) and a dish photo, then the draft becomes a new recipe (`toVariantDraft`: no `sourceCode`, next free N° of the category, category editable, ingredients without API ids). The dish photo is now mandatory for every recipe type (`validateBuilderPhoto`, checked live in the save panel and again in `useRecipeBuilderSave`); the photo panel title says « obligatoire ».
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Problems: existing recipes without a photo (ingredient-type ones in particular, Dashboard « Recettes sans photo ») can no longer be updated until a photo is added.
+- Still open: step 3 (rules + duplicates), step 4 (theme), step 5 (« activité » builder brainstorm); category change of an existing recipe to design.
+
 ## 2026-10-08 — `features/` review: recipeBuilder, step 1 (v6.80.4)
 
 - Done: read-only review of `features/recipeBuilder` (14 files), findings and owner decisions in `dev/refactoring.md`. Step 1 fixes: the builder now remembers the loaded recipe (`sourceCode`); its category and N° are locked (name editable) and Save always updates it, so changing the N° of a loaded recipe can no longer overwrite another recipe or silently create a copy; a new draft whose code is taken is blocked (`validateBuilderIdentity`); draft store v4 with migration. « Nouvelle recette » always asks for confirmation (`ConfirmActionModal`). Mobile ingredient drawer no longer closes on backdrop click (it bypassed the disabled « Terminé »), its close button follows the same rule. « Télécharger la recette » shows an error message on failure.

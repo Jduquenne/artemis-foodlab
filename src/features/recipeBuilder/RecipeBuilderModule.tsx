@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { RotateCcw, FolderOpen } from "lucide-react";
+import { RotateCcw, FolderOpen, CopyPlus } from "lucide-react";
 import { useRecipeBuilderStore } from "../../shared/store/useRecipeBuilderStore";
 import { RecipeMetaForm } from "./components/meta/RecipeMetaForm";
 import { IngredientBuilderList } from "./components/ingredients/IngredientBuilderList";
@@ -8,6 +8,11 @@ import { MacroPreview } from "./components/output/MacroPreview";
 import { PhotoPanel } from "./components/photo/PhotoPanel";
 import { LoadRecipeModal } from "./components/LoadRecipeModal";
 import { ConfirmActionModal } from "../../shared/components/ui/ConfirmActionModal";
+import { VariantModal } from "./components/VariantModal";
+import { useBuilderSourceRecipe } from "../../shared/hooks/useBuilderSourceRecipe";
+import { useRecipesSnapshot } from "../../shared/hooks/useCatalogueSnapshot";
+import { toVariantDraft } from "../../core/logic/recipeBuilder/recipeVariantLogic";
+import { suggestNextRecipeNumber } from "../../core/logic/recipeBuilder/recipeCodeLogic";
 
 export const RecipeBuilderModule = () => {
   const { draft, patch, patchIngredients, reset, loadFromRecipe } = useRecipeBuilderStore();
@@ -15,10 +20,21 @@ export const RecipeBuilderModule = () => {
   const [mealPhoto, setMealPhoto] = useState<File | null>(null);
   const [bookPhoto, setBookPhoto] = useState<File | null>(null);
   const [confirmReset, setConfirmReset] = useState(false);
+  const [variantOpen, setVariantOpen] = useState(false);
+  const source = useBuilderSourceRecipe(draft);
+  const recipes = useRecipesSnapshot();
 
   const clearPhotos = () => {
     setMealPhoto(null);
     setBookPhoto(null);
+  };
+
+  const createVariant = (name: string, photo: File) => {
+    const recipeNumber = suggestNextRecipeNumber(Object.keys(recipes), draft.categoryId);
+    loadFromRecipe(toVariantDraft(draft, name, recipeNumber));
+    setMealPhoto(photo);
+    setBookPhoto(null);
+    setVariantOpen(false);
   };
 
   const handleReset = async () => {
@@ -36,6 +52,17 @@ export const RecipeBuilderModule = () => {
         <h1 className="min-w-0 truncate text-base sm:text-lg font-black text-slate-800">Créateur de recette</h1>
         <div className="flex items-center gap-1 shrink-0">
           <SaveRecipePanel state={draft} mealPhoto={mealPhoto} bookPhoto={bookPhoto} onSaved={clearPhotos} />
+          {source && (
+            <button
+              type="button"
+              onClick={() => setVariantOpen(true)}
+              title="Créer une variante de cette recette"
+              className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-slate-500 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900/20 rounded-xl transition-colors"
+            >
+              <CopyPlus className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Variante</span>
+            </button>
+          )}
           <button
             type="button"
             onClick={() => setLoadModalOpen(true)}
@@ -83,6 +110,10 @@ export const RecipeBuilderModule = () => {
           </div>
         </div>
       </div>
+
+      {variantOpen && source && (
+        <VariantModal sourceName={source.name} onConfirm={createVariant} onCancel={() => setVariantOpen(false)} />
+      )}
 
       {confirmReset && (
         <ConfirmActionModal

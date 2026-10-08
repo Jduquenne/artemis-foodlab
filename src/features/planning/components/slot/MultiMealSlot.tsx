@@ -27,7 +27,7 @@ export interface MultiMealSlotProps {
     onSelectAsTarget?: () => void;
     recipePersons?: Record<string, number>;
     recipeQuantities?: Record<string, number>;
-    onSaveRecipeMeta?: (recipeId: string, persons: number, grams: number) => void | Promise<void>;
+    onSaveRecipeMeta?: (recipeId: string, persons: number, grams: number) => Promise<boolean>;
     batchRecipeIds?: Set<string>;
     persons?: number;
     isEditingPersons?: boolean;
@@ -62,7 +62,7 @@ export const MultiMealSlot = ({
     const plannable = usePlannableSnapshot();
     const { baseGrams } = useRecipeMetricsSnapshot();
     const [editingMetaId, setEditingMetaId] = useState<string | null>(null);
-    const [savingMeta, setSavingMeta] = useState(false);
+    const isMetaPending = usePendingKey(`planning-recipe-meta:${slotId}:${editingMetaId ?? ''}`);
     const isPersonsPending = usePendingKey(`planning-persons:${slotId}`);
     const isSingleRemovePending = usePendingKey(`planning-recipe-remove:${slotId}:${recipeIds[0] ?? ''}`);
 
@@ -256,15 +256,9 @@ export const MultiMealSlot = ({
                     initialGrams={recipeQuantities?.[editingMetaId] ?? Math.round(baseGrams[editingMetaId] ?? 0)}
                     defaultGrams={Math.round(baseGrams[editingMetaId] ?? 0)}
                     isDish={isDish(plannable[editingMetaId]) || isBase(plannable[editingMetaId])}
-                    pending={savingMeta}
+                    pending={isMetaPending}
                     onConfirm={async (persons, grams) => {
-                        setSavingMeta(true);
-                        try {
-                            await onSaveRecipeMeta(editingMetaId, persons, grams);
-                            setEditingMetaId(null);
-                        } finally {
-                            setSavingMeta(false);
-                        }
+                        if (await onSaveRecipeMeta(editingMetaId, persons, grams)) setEditingMetaId(null);
                     }}
                     onCancel={() => setEditingMetaId(null)}
                 />

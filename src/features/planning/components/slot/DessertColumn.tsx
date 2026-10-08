@@ -14,7 +14,7 @@ export interface DessertColumnProps {
     onSelectAsTarget?: () => void;
     recipePersons?: Record<string, number>;
     slotPersons?: number;
-    onSetDessertPersons?: (id: string, n: number) => void;
+    onSetDessertPersons?: (id: string, n: number) => Promise<boolean>;
 }
 
 export const DessertColumn = ({

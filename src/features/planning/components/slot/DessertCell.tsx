@@ -17,7 +17,7 @@ export interface DessertCellProps {
     hideActions?: boolean;
     persons?: number;
     isPersonsCustom?: boolean;
-    onSetPersons?: (n: number) => void | Promise<void>;
+    onSetPersons?: (n: number) => Promise<boolean>;
 }
 
 export const DessertCell = ({ slotId, recipeId, onRemove, isAddMode, onCopy, isCopySource, hideActions, persons, isPersonsCustom, onSetPersons }: DessertCellProps) => {
@@ -26,8 +26,8 @@ export const DessertCell = ({ slotId, recipeId, onRemove, isAddMode, onCopy, isC
     const navigate = useNavigate();
     const [isEditingPersons, setIsEditingPersons] = useState(false);
     const [draft, setDraft] = useState(persons ?? 1);
-    const [savingPersons, setSavingPersons] = useState(false);
     const removePending = usePendingKey(`planning-dessert-remove:${slotId}:${recipeId}`);
+    const savingPersons = usePendingKey(`planning-dessert-persons:${slotId}:${recipeId}`);
 
     if (!recipe?.assets?.mealPhoto) return null;
 
@@ -46,14 +46,7 @@ export const DessertCell = ({ slotId, recipeId, onRemove, isAddMode, onCopy, isC
 
     const confirmPersons = async (e: React.MouseEvent) => {
         e.stopPropagation();
-        if (savingPersons) return;
-        setSavingPersons(true);
-        try {
-            await onSetPersons?.(draft);
-            setIsEditingPersons(false);
-        } finally {
-            setSavingPersons(false);
-        }
+        if (onSetPersons && await onSetPersons(draft)) setIsEditingPersons(false);
     };
 
     const cancelPersons = (e: React.MouseEvent) => {

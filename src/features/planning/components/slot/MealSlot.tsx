@@ -37,7 +37,7 @@ export interface MealSlotProps {
     onSelectDessertAsTarget?: () => void;
     inFreezer?: boolean;
     recipePersons?: Record<string, number>;
-    onSetDessertPersons?: (id: string, n: number) => void;
+    onSetDessertPersons?: (id: string, n: number) => Promise<boolean>;
 }
 
 export const MealSlot = ({

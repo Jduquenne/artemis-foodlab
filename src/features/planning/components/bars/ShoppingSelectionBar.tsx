@@ -1,13 +1,14 @@
-import { ShoppingCart, X, Check, RotateCcw } from 'lucide-react';
+import { ShoppingCart, X, Check, RotateCcw, Loader2 } from 'lucide-react';
 
 export interface ShoppingSelectionBarProps {
     count: number;
+    pending?: boolean;
     onConfirm: () => void;
     onCancel: () => void;
     onReset: () => void;
 }
 
-export const ShoppingSelectionBar = ({ count, onConfirm, onCancel, onReset }: ShoppingSelectionBarProps) => {
+export const ShoppingSelectionBar = ({ count, pending, onConfirm, onCancel, onReset }: ShoppingSelectionBarProps) => {
     const atMax = count >= 10;
 
     return (
@@ -28,7 +29,8 @@ export const ShoppingSelectionBar = ({ count, onConfirm, onCancel, onReset }: Sh
             <div className="flex items-center gap-2 shrink-0">
                 <button
                     onClick={onCancel}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-semibold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-200/20 transition-colors"
+                    disabled={pending}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-semibold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-200/20 transition-colors disabled:opacity-50"
                 >
                     <X className="w-3.5 h-3.5" />
                     <span className="hidden sm:inline">Annuler</span>
@@ -36,7 +38,8 @@ export const ShoppingSelectionBar = ({ count, onConfirm, onCancel, onReset }: Sh
                 {count > 0 && (
                     <button
                         onClick={onReset}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-semibold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-200/20 transition-colors"
+                        disabled={pending}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-semibold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-200/20 transition-colors disabled:opacity-50"
                     >
                         <RotateCcw className="w-3.5 h-3.5" />
                         <span className="hidden sm:inline">Reset</span>
@@ -44,9 +47,10 @@ export const ShoppingSelectionBar = ({ count, onConfirm, onCancel, onReset }: Sh
                 )}
                 <button
                     onClick={onConfirm}
-                    className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-sm font-bold bg-orange-500 hover:bg-orange-600 text-white transition-colors"
+                    disabled={pending}
+                    className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-sm font-bold bg-orange-500 hover:bg-orange-600 text-white transition-colors disabled:opacity-60"
                 >
-                    <Check className="w-3.5 h-3.5" />
+                    {pending ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Check className="w-3.5 h-3.5" />}
                     <span className="hidden sm:inline">Confirmer</span>
                 </button>
             </div>

@@ -37,6 +37,7 @@ Each slot save diffs items (`diffSlotItems`) and sends **one** batch call `PUT /
 
 `RecipePicker` / `DessertPicker` (modals adding a dish/dessert to a slot):
 
+- One click on a row saves directly (no confirmation step); the clicked row shows a spinner and the others are disabled until the save ends; the picker closes only on success.
 - Results capped at `MAX_PICKER_RESULTS = 30` (`useSearchMeals` / `useSearchDesserts`, `searchOutdoorRecipes` with the same `limit`). `useSearchRecipes` (Recipes module) and `useSearchIngredients` remain unlimited on purpose.
 - The search input stays instant; a `useDeferredValue(query)` feeds the search hooks so React prioritises typing.
 - Known limit: filtering/sorting still scans the whole catalogue on each keystroke (no debounce) — acceptable for a few hundred entries; add a debounce if it becomes a hotspot.

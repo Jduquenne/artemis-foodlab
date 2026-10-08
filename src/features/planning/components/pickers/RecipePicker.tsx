@@ -7,7 +7,7 @@ import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
 import { useOutdoorSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 
 export interface RecipePickerProps {
-    onSelect: (recipe: SearchRecipeResult) => void | Promise<void>;
+    onSelect: (recipe: SearchRecipeResult) => Promise<void>;
     onClose: () => void;
     slotName: string;
     existingRecipeIds?: string[];
@@ -18,58 +18,27 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
     const outdoorDb = useOutdoorSnapshot();
     const [query, setQuery] = useState('');
     const deferredQuery = useDeferredValue(query);
-    const [pendingSelection, setPendingSelection] = useState<SearchRecipeResult | null>(null);
     const [isClosing, setIsClosing] = useState(false);
-    const [saving, setSaving] = useState(false);
+    const [savingId, setSavingId] = useState<string | null>(null);
     const results = useSearchMeals(deferredQuery);
 
     const outdoorResults = useMemo(() => searchOutdoorRecipes(outdoorDb, deferredQuery, MAX_PICKER_RESULTS), [outdoorDb, deferredQuery]);
 
     const handleClose = () => { setIsClosing(true); setTimeout(onClose, 300); };
 
-    const confirmSelection = async () => {
-        if (!pendingSelection || saving) return;
-        setSaving(true);
+    const pick = async (recipe: SearchRecipeResult) => {
+        if (savingId) return;
+        setSavingId(recipe.recipeId);
         try {
-            await onSelect(pendingSelection);
+            await onSelect(recipe);
         } finally {
-            setSaving(false);
+            setSavingId(null);
         }
     };
 
     return (
         <div className="fixed inset-0 z-100 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4">
             <div className={`bg-white dark:bg-slate-100 w-full max-w-2xl h-[80vh] rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden ${isClosing ? 'modal-exit sm:modal-center-exit' : 'modal-enter sm:modal-center-enter'}`}>
-                {pendingSelection && (
-                    <div className="absolute inset-0 z-110 bg-black/50 backdrop-blur-md flex items-center justify-center p-6">
-                        <div className="bg-white dark:bg-slate-200 rounded-3xl p-6 shadow-2xl w-full max-w-sm text-center space-y-6 animate-scale-pop">
-                            <div className="space-y-2">
-                                <p className="text-slate-500 font-bold uppercase text-xs tracking-widest">Confirmer l'ajout</p>
-                                <h3 className="text-xl font-black text-slate-900">
-                                    Ajouter "{pendingSelection.name}" au {slotName} ?
-                                </h3>
-                            </div>
-                            <div className="flex gap-3">
-                                <button
-                                    onClick={() => setPendingSelection(null)}
-                                    disabled={saving}
-                                    className="flex-1 py-4 bg-slate-100 dark:bg-slate-300 text-slate-600 font-bold rounded-2xl hover:bg-slate-200 dark:hover:bg-slate-400 transition-colors disabled:opacity-50"
-                                >
-                                    Annuler
-                                </button>
-                                <button
-                                    onClick={confirmSelection}
-                                    disabled={saving}
-                                    className="flex-1 py-4 bg-orange-500 text-white font-bold rounded-2xl shadow-lg shadow-orange-200/50 hover:bg-orange-600 transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
-                                >
-                                    {saving && <Loader2 size={18} className="animate-spin" />}
-                                    Confirmer
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                )}
-
                 <div className="p-6 border-b border-slate-200 flex justify-between items-center bg-orange-50 dark:bg-orange-950/30">
                     <div>
                         <h2 className="text-xl font-black text-slate-900">Ajouter un repas</h2>
@@ -88,13 +57,14 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
                     {results.length > 0 ? (
                         results.map((recipe) => {
                             const alreadyAdded = existingRecipeIds.includes(recipe.recipeId);
+                            const isSaving = savingId === recipe.recipeId;
                             return (
                                 <button
                                     key={recipe.recipeId}
-                                    disabled={alreadyAdded}
-                                    onClick={() => onSelect(recipe)}
+                                    disabled={alreadyAdded || !!savingId}
+                                    onClick={() => pick(recipe)}
                                     className={`w-full flex items-center gap-4 p-3 rounded-2xl border transition-all group text-left ${
-                                        alreadyAdded
+                                        alreadyAdded || (savingId && !isSaving)
                                             ? 'opacity-40 cursor-not-allowed border-slate-200'
                                             : 'border-slate-200 hover:border-orange-200 hover:bg-orange-50 dark:hover:bg-orange-950/20'
                                     }`}
@@ -104,7 +74,11 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
                                         <p className="font-black text-slate-800">{recipe.name}</p>
                                         <p className="text-xs text-slate-400 uppercase font-bold">{recipe.recipeId}</p>
                                     </div>
-                                    {alreadyAdded ? (
+                                    {isSaving ? (
+                                        <div className="bg-orange-500 text-white p-2 rounded-full">
+                                            <Loader2 size={20} className="animate-spin" />
+                                        </div>
+                                    ) : alreadyAdded ? (
                                         <div className="bg-slate-200 dark:bg-slate-300 text-slate-500 p-2 rounded-full">
                                             <Check size={20} />
                                         </div>
@@ -131,6 +105,7 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
                             <div className="space-y-2">
                                 {outdoorResults.map((entry) => {
                                     const alreadyAdded = existingRecipeIds.includes(entry.code);
+                                    const isSaving = savingId === entry.code;
                                     const result: SearchRecipeResult = {
                                         id: entry.code,
                                         recipeId: entry.code,
@@ -140,10 +115,10 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
                                     return (
                                         <button
                                             key={entry.code}
-                                            disabled={alreadyAdded}
-                                            onClick={() => onSelect(result)}
+                                            disabled={alreadyAdded || !!savingId}
+                                            onClick={() => pick(result)}
                                             className={`w-full flex items-center gap-4 p-3 rounded-2xl border transition-all group text-left ${
-                                                alreadyAdded
+                                                alreadyAdded || (savingId && !isSaving)
                                                     ? 'opacity-40 cursor-not-allowed border-slate-200'
                                                     : 'border-slate-200 hover:border-rose-200 hover:bg-rose-50 dark:hover:bg-rose-950/20'
                                             }`}
@@ -159,7 +134,11 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
                                                 <p className="font-black text-slate-800">{entry.name}</p>
                                                 <p className="text-xs text-rose-400 uppercase font-bold">Extérieur</p>
                                             </div>
-                                            {alreadyAdded ? (
+                                            {isSaving ? (
+                                                <div className="bg-rose-500 text-white p-2 rounded-full">
+                                                    <Loader2 size={20} className="animate-spin" />
+                                                </div>
+                                            ) : alreadyAdded ? (
                                                 <div className="bg-slate-200 dark:bg-slate-300 text-slate-500 p-2 rounded-full">
                                                     <Check size={20} />
                                                 </div>

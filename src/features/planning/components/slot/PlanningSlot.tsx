@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { Loader2 } from "lucide-react";
 import { MealSlot } from "../../../../core/domain/planning";
 import { MealSlot as MealSlotComp } from "./MealSlot";
 import { MultiMealSlot } from "./MultiMealSlot";
@@ -6,6 +7,7 @@ import { MealSlotDef } from "../../../../core/domain/planningConfig";
 import { SLOT_DISPLAY } from "../../slotDisplay";
 import { SlotCopyProps } from "../../../../core/logic/planning/planningCopyLogic";
 import { buildRecipeDetailUrl } from "../../../../core/logic/recipe/recipeScalingLogic";
+import { useAnyPendingKey } from "../../../../shared/hooks/useAnyPendingKey";
 
 export interface PlanningSlotProps {
   mealType: MealSlotDef;
@@ -26,11 +28,11 @@ export interface PlanningSlotProps {
   onConfirmPersons: (n: number) => void;
   onCancelPersons: () => void;
   onRemoveRecipe: (id: string) => void;
-  onSaveRecipeMeta: (rid: string, p: number, g: number) => void;
+  onSaveRecipeMeta: (rid: string, p: number, g: number) => Promise<boolean>;
   onCopyRecipe: (id: string) => void;
   onCopyDessert: (id: string) => void;
   onRemoveDessert: (id: string) => void;
-  onSetDessertPersons: (id: string, n: number) => void;
+  onSetDessertPersons: (id: string, n: number) => Promise<boolean>;
   onSelectAsTarget: () => void;
   batchRecipeIds?: Set<string>;
 }
@@ -49,6 +51,7 @@ export const PlanningSlot = ({
   const navigate = useNavigate();
   const recipeIds = savedMeal?.recipeIds ?? [];
   const blocked = isSelectionMode || isAddMode || isCopyMode;
+  const isWriting = useAnyPendingKey([`planning-add-to-slot:${slotId}`, `planning-move:${slotId}`]);
 
   return (
     <div className={`relative h-full w-full min-h-0 min-w-0 transition-opacity ${isDimmed ? "pointer-events-none opacity-30" : ""}`}>
@@ -110,6 +113,11 @@ export const PlanningSlot = ({
           onSelectDessertAsTarget={copyProps.dessertCopyTargetState ? onSelectAsTarget : undefined}
           inFreezer={recipeIds.length > 0 && batchRecipeIds?.has(recipeIds[0])}
         />
+      )}
+      {isWriting && (
+        <div className="absolute inset-0 z-40 flex items-center justify-center rounded-xl bg-black/20 pointer-events-none">
+          <Loader2 size={20} className="text-white animate-spin" />
+        </div>
       )}
     </div>
   );

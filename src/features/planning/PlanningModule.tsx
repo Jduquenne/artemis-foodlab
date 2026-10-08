@@ -30,6 +30,7 @@ import { computeDragMoveSlots } from '../../core/logic/planning/planningDragLogi
 import { ParsedSlot, buildSlotId, parseFullSlotId } from '../../core/logic/planning/planningSlotIdLogic';
 import { buildEmptySlot, placeRecipeInSlot } from '../../core/logic/planning/planningSlotEditLogic';
 import { withPending } from '../../shared/utils/withPending';
+import { usePendingKey } from '../../shared/hooks/usePendingKey';
 import { MoveDessertsPrompt } from './components/MoveDessertsPrompt';
 import { TABLET_WEEK_GRID_COLS } from './planningLayout';
 import {
@@ -94,6 +95,7 @@ export const PlanningModule = () => {
     } | null>(null);
     const [dragMoveChoice, setDragMoveChoice] = useState<'move' | 'keep' | null>(null);
 
+    const isShoppingDaysPending = usePendingKey('planning-shopping-days');
     const isAnyEditing = editingPersonsSlotId !== null;
     const isCopyMode = !!copyState;
 
@@ -223,20 +225,24 @@ export const PlanningModule = () => {
 
     const handleDeleteMeal = async (day: string, slot: SlotType) => {
         const slotId = buildSlotId(year, weekNumber, day, slot);
-        await withPending(`planning-slot-delete:${slotId}`, () => deleteSlot(slotId));
+        await withPending(`planning-slot-delete:${slotId}`, () => deleteSlot(slotId)).catch(() => undefined);
     };
 
-    const handleAddDessert = async (day: string, slot: SlotType, recipeId: string) => {
+    const handleAddDessert = async (day: string, slot: SlotType, recipeId: string): Promise<boolean> => {
         const savedSlot = planningData.find(p => p.day === day && p.slot === slot)
             ?? buildEmptySlot({ year, week: weekNumber, day, slot });
-        await addDessertToSlot(savedSlot, recipeId);
+        const ok = await withPending(`planning-dessert-add:${savedSlot.id}`, async () => {
+            await addDessertToSlot(savedSlot, recipeId);
+            return true;
+        }).catch(() => false);
+        return ok === true;
     };
 
     const handleRemoveDessert = async (day: string, slot: SlotType, recipeId: string) => {
         const savedSlot = planningData.find(p => p.day === day && p.slot === slot);
         if (!savedSlot) return;
         const slotId = buildSlotId(year, weekNumber, day, slot);
-        await withPending(`planning-dessert-remove:${slotId}:${recipeId}`, () => removeDessertFromSlot(savedSlot, recipeId));
+        await withPending(`planning-dessert-remove:${slotId}:${recipeId}`, () => removeDessertFromSlot(savedSlot, recipeId)).catch(() => undefined);
     };
 
     const handleRemoveRecipe = async (day: string, slot: SlotType, recipeIdToRemove: string) => {
@@ -247,7 +253,7 @@ export const PlanningModule = () => {
             const ids = existing.recipeIds.filter(id => id !== recipeIdToRemove);
             if (ids.length === 0) await deleteSlot(existing.id);
             else await saveSlot({ ...existing, recipeIds: ids });
-        });
+        }).catch(() => undefined);
     };
 
     const handleDragStart = ({ active }: DragStartEvent) => {
@@ -294,24 +300,25 @@ export const PlanningModule = () => {
     const executeDragMove = async (
         fromMeal: MealSlot, toMeal: MealSlot | undefined, fromId: string, toId: string,
         from: ParsedSlot, to: ParsedSlot, moveDesserts: boolean,
-    ) => {
+    ): Promise<boolean> => {
         const { toSave, toDelete } = computeDragMoveSlots(fromMeal, toMeal, fromId, toId, from, to, moveDesserts);
-        await Promise.all([
-            ...(toDelete ? [deleteSlot(toDelete)] : []),
-            ...toSave.map(saveSlot),
-        ]);
+        const ok = await withPending([`planning-move:${fromId}`, `planning-move:${toId}`], async () => {
+            await Promise.all([
+                ...(toDelete ? [deleteSlot(toDelete)] : []),
+                ...toSave.map(saveSlot),
+            ]);
+            return true;
+        }).catch(() => false);
+        return ok === true;
     };
 
     const resolveDragMove = async (moveDesserts: boolean) => {
         if (!pendingDragMove) return;
         setDragMoveChoice(moveDesserts ? 'move' : 'keep');
-        try {
-            const { fromMeal, toMeal, fromId, toId, from, to } = pendingDragMove;
-            await executeDragMove(fromMeal, toMeal, fromId, toId, from, to, moveDesserts);
-            setPendingDragMove(null);
-        } finally {
-            setDragMoveChoice(null);
-        }
+        const { fromMeal, toMeal, fromId, toId, from, to } = pendingDragMove;
+        const ok = await executeDragMove(fromMeal, toMeal, fromId, toId, from, to, moveDesserts);
+        setDragMoveChoice(null);
+        if (ok) setPendingDragMove(null);
     };
 
     const cancelDragMove = () => setPendingDragMove(null);
@@ -324,11 +331,15 @@ export const PlanningModule = () => {
         setCopyTargets(new Set());
     };
 
-    const handleSetDessertPersons = async (day: string, slot: SlotType, dessertId: string, persons: number) => {
+    const handleSetDessertPersons = async (day: string, slot: SlotType, dessertId: string, persons: number): Promise<boolean> => {
         const existing = planningData.find(p => p.day === day && p.slot === slot);
-        if (!existing) return;
+        if (!existing) return false;
         const slotId = buildSlotId(year, weekNumber, day, slot);
-        await withPending(`planning-dessert-persons:${slotId}:${dessertId}`, () => setRecipePersonsOnSlot(existing, dessertId, persons));
+        const ok = await withPending(`planning-dessert-persons:${slotId}:${dessertId}`, async () => {
+            await setRecipePersonsOnSlot(existing, dessertId, persons);
+            return true;
+        }).catch(() => false);
+        return ok === true;
     };
 
     const toggleCopyTarget = (day: string, slotType: SlotType) => {
@@ -340,38 +351,39 @@ export const PlanningModule = () => {
         });
     };
 
+    const copyToTargets = async ({ recipeId, sourcePersons, isDessert: isDessertCopy }: CopyState) => {
+        for (const target of copyTargets) {
+            const sep = target.indexOf('|');
+            const targetDay = target.slice(0, sep);
+            const targetSlot = target.slice(sep + 1) as SlotType;
+            const slotId = buildSlotId(year, weekNumber, targetDay, targetSlot);
+            const existing = planningData.find(p => p.day === targetDay && p.slot === targetSlot);
+            const personsUpdate = sourcePersons !== undefined
+                ? { recipePersons: { ...existing?.recipePersons, [recipeId]: sourcePersons } }
+                : {};
+            if (isDessertCopy) {
+                const base = existing ?? { id: slotId, day: targetDay, slot: targetSlot, recipeIds: [], year, week: weekNumber };
+                if (canAddDessert(base) && !base.dessertIds?.includes(recipeId)) {
+                    await saveSlot({ ...base, dessertIds: [...(base.dessertIds ?? []), recipeId], ...personsUpdate });
+                }
+            } else {
+                if (!existing) {
+                    await saveSlot({ id: slotId, day: targetDay, slot: targetSlot, recipeIds: [recipeId], year, week: weekNumber, ...personsUpdate });
+                } else if (!isSlotFull(existing) && !existing.recipeIds.includes(recipeId)) {
+                    await saveSlot({ ...existing, recipeIds: [...existing.recipeIds, recipeId], ...personsUpdate });
+                }
+            }
+        }
+    };
+
     const confirmCopy = async () => {
         if (!copyState || isCopying) return;
         setIsCopying(true);
-        try {
-            const { recipeId, sourcePersons } = copyState;
-            for (const target of copyTargets) {
-                const sep = target.indexOf('|');
-                const targetDay = target.slice(0, sep);
-                const targetSlot = target.slice(sep + 1) as SlotType;
-                const slotId = buildSlotId(year, weekNumber, targetDay, targetSlot);
-                const existing = planningData.find(p => p.day === targetDay && p.slot === targetSlot);
-                const personsUpdate = sourcePersons !== undefined
-                    ? { recipePersons: { ...existing?.recipePersons, [recipeId]: sourcePersons } }
-                    : {};
-                if (copyState.isDessert) {
-                    const base = existing ?? { id: slotId, day: targetDay, slot: targetSlot, recipeIds: [], year, week: weekNumber };
-                    if (canAddDessert(base) && !base.dessertIds?.includes(recipeId)) {
-                        await saveSlot({ ...base, dessertIds: [...(base.dessertIds ?? []), recipeId], ...personsUpdate });
-                    }
-                } else {
-                    if (!existing) {
-                        await saveSlot({ id: slotId, day: targetDay, slot: targetSlot, recipeIds: [recipeId], year, week: weekNumber, ...personsUpdate });
-                    } else if (!isSlotFull(existing) && !existing.recipeIds.includes(recipeId)) {
-                        await saveSlot({ ...existing, recipeIds: [...existing.recipeIds, recipeId], ...personsUpdate });
-                    }
-                }
-            }
-            setCopyState(null);
-            setCopyTargets(new Set());
-        } finally {
-            setIsCopying(false);
-        }
+        const ok = await copyToTargets(copyState).then(() => true).catch(() => false);
+        setIsCopying(false);
+        if (!ok) return;
+        setCopyState(null);
+        setCopyTargets(new Set());
     };
 
     const cancelCopy = () => {
@@ -381,19 +393,30 @@ export const PlanningModule = () => {
 
     const handleConfirmPersons = async (slotId: string, persons: number) => {
         const existing = planningData.find(p => buildSlotId(year, weekNumber, p.day, p.slot) === slotId);
-        if (existing) await withPending(`planning-persons:${slotId}`, () => saveSlot({ ...existing, persons }));
-        setEditingPersonsSlotId(null);
+        if (!existing) {
+            setEditingPersonsSlotId(null);
+            return;
+        }
+        const ok = await withPending(`planning-persons:${slotId}`, async () => {
+            await saveSlot({ ...existing, persons });
+            return true;
+        }).catch(() => false);
+        if (ok) setEditingPersonsSlotId(null);
     };
 
-    const handleSaveRecipeMeta = async (day: string, slot: SlotType, recipeId: string, persons: number, grams: number) => {
+    const handleSaveRecipeMeta = async (day: string, slot: SlotType, recipeId: string, persons: number, grams: number): Promise<boolean> => {
         const existing = planningData.find(p => p.day === day && p.slot === slot);
-        if (!existing) return;
+        if (!existing) return false;
         const slotId = buildSlotId(year, weekNumber, day, slot);
-        await withPending(`planning-recipe-meta:${slotId}:${recipeId}`, () => saveSlot({
-            ...existing,
-            recipePersons: { ...existing.recipePersons, [recipeId]: persons },
-            recipeQuantities: { ...existing.recipeQuantities, [recipeId]: grams },
-        }));
+        const ok = await withPending(`planning-recipe-meta:${slotId}:${recipeId}`, async () => {
+            await saveSlot({
+                ...existing,
+                recipePersons: { ...existing.recipePersons, [recipeId]: persons },
+                recipeQuantities: { ...existing.recipeQuantities, [recipeId]: grams },
+            });
+            return true;
+        }).catch(() => false);
+        return ok === true;
     };
 
     const handleAddToSlot = async (day: string, slot: SlotType) => {
@@ -401,22 +424,44 @@ export const PlanningModule = () => {
         const mealDef = MEAL_SLOTS.find(m => m.id === slot)!;
         const existing = planningData.find(p => p.day === day && p.slot === slot);
         const at = { year, week: weekNumber, day, slot };
-        if (mealDef.hasDessert && isDessert(recipesDb[addRecipeId])) {
-            const base = existing ?? buildEmptySlot(at);
-            if (!canAddDessert(base)) return;
-            await addDessertToSlot(base, addRecipeId);
-            clearAddMode();
-            return;
-        }
-        const next = placeRecipeInSlot(existing, at, mealDef, addRecipeId);
-        if (!next) return;
-        await saveSlot(next);
-        clearAddMode();
+        const base = existing ?? buildEmptySlot(at);
+        const isDessertAdd = mealDef.hasDessert && isDessert(recipesDb[addRecipeId]);
+        if (isDessertAdd && !canAddDessert(base)) return;
+        const next = isDessertAdd ? null : placeRecipeInSlot(existing, at, mealDef, addRecipeId);
+        if (!isDessertAdd && !next) return;
+        const ok = await withPending(`planning-add-to-slot:${base.id}`, async () => {
+            if (next) await saveSlot(next);
+            else await addDessertToSlot(base, addRecipeId);
+            return true;
+        }).catch(() => false);
+        if (ok) clearAddMode();
     };
 
     const enterSelectionMode = () => { setDraftDays([...shoppingDays]); setIsSelectionMode(true); setPickerSlot(null); };
     const cancelSelection = () => setIsSelectionMode(false);
-    const confirmSelection = () => { setShoppingDays(draftDays); setIsSelectionMode(false); };
+    const confirmSelection = async () => {
+        const ok = await withPending('planning-shopping-days', async () => {
+            await setShoppingDays(draftDays);
+            return true;
+        }).catch(() => false);
+        if (ok) setIsSelectionMode(false);
+    };
+
+    const handlePickRecipe = async (recipeId: string) => {
+        if (!pickerSlot) return;
+        const mealDef = MEAL_SLOTS.find(m => m.id === pickerSlot.slot);
+        if (!mealDef) return;
+        const existing = planningData.find(p => p.day === pickerSlot.day && p.slot === pickerSlot.slot);
+        const next = placeRecipeInSlot(existing, { year, week: weekNumber, ...pickerSlot }, mealDef, recipeId);
+        const ok = next ? await saveSlot(next).then(() => true).catch(() => false) : true;
+        if (ok) setPickerSlot(null);
+    };
+
+    const handlePickDessert = async (recipeId: string) => {
+        if (!dessertPickerSlot) return;
+        const ok = await handleAddDessert(dessertPickerSlot.day, dessertPickerSlot.slot, recipeId);
+        if (ok) setDessertPickerSlot(null);
+    };
 
     const toggleDraftDay = (y: number, w: number, day: string) => {
         setDraftDays(prev => {
@@ -617,7 +662,7 @@ export const PlanningModule = () => {
                 </div>
 
                 {isSelectionMode && (
-                    <ShoppingSelectionBar count={draftDays.length} onConfirm={confirmSelection} onCancel={cancelSelection} onReset={() => setDraftDays([])} />
+                    <ShoppingSelectionBar count={draftDays.length} pending={isShoppingDaysPending} onConfirm={confirmSelection} onCancel={cancelSelection} onReset={() => setDraftDays([])} />
                 )}
 
                 {isCopyMode && copyState && (
@@ -632,20 +677,13 @@ export const PlanningModule = () => {
 
                 {!isSelectionMode && pickerSlot && (
                     <RecipePicker
-                        slotName={`${pickerSlot.day} - ${pickerSlot.slot}`}
+                        slotName={`${pickerSlot.day} · ${SLOT_DISPLAY[pickerSlot.slot].label}`}
                         existingRecipeIds={
                             MEAL_SLOTS.find(m => m.id === pickerSlot.slot)?.multi
                                 ? (planningData.find(p => p.day === pickerSlot.day && p.slot === pickerSlot.slot)?.recipeIds ?? [])
                                 : []
                         }
-                        onSelect={async (recipe) => {
-                            const mealDef = MEAL_SLOTS.find(m => m.id === pickerSlot.slot);
-                            if (!mealDef) return;
-                            const existing = planningData.find(p => p.day === pickerSlot.day && p.slot === pickerSlot.slot);
-                            const next = placeRecipeInSlot(existing, { year, week: weekNumber, ...pickerSlot }, mealDef, recipe.recipeId);
-                            if (next) await saveSlot(next);
-                            setPickerSlot(null);
-                        }}
+                        onSelect={(recipe) => handlePickRecipe(recipe.recipeId)}
                         onClose={() => setPickerSlot(null)}
                     />
                 )}
@@ -653,10 +691,7 @@ export const PlanningModule = () => {
                 {dessertPickerSlot && !isSelectionMode && (
                     <DessertPicker
                         existingIds={planningData.find(p => p.day === dessertPickerSlot.day && p.slot === dessertPickerSlot.slot)?.dessertIds ?? []}
-                        onSelect={async (recipeId) => {
-                            await handleAddDessert(dessertPickerSlot.day, dessertPickerSlot.slot, recipeId);
-                            setDessertPickerSlot(null);
-                        }}
+                        onSelect={handlePickDessert}
                         onClose={() => setDessertPickerSlot(null)}
                     />
                 )}

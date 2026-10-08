@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — `features/` review: planning, step 2 (v6.79.8)
+
+- Done: every planning write now has a double-click guard, a loading signal and catches its rejection (the global red notification still shows the API message); modes and editors close only on success. « Ajouter au planning » and drag & drop show a spinner on the slots involved (`planning-add-to-slot:<slotId>`, `planning-move:<slotId>`); copy stays in copy mode on failure; persons, recipe grams and dessert persons editors stay open on failure (local `saving` states replaced by the existing pending keys); the shopping days selection waits for the API (spinner on « Confirmer ») instead of closing before the answer. `RecipePicker`: the never-shown confirmation screen removed (owner's choice), spinner on the clicked row like `DessertPicker`; subtitle « Lundi · Déjeuner » instead of « Lundi - lunch ».
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: steps 3 (local dates) to 6 (theme) of the planning review; dessert choice window when a drag would exceed 3 desserts.
+
 ## 2026-10-08 — `features/` review: planning, step 1 (v6.79.7)
 
 - Done: read-only review of `features/planning` (24 files), findings and owner decisions in `dev/refactoring.md`. Step 1 fixes data loss when placing a dish: « ajouter au planning » on a lunch/dinner slot erased its desserts, slot persons and dessert persons (and on breakfast/snack the persons of the other recipes); replacing the dish from the picker reset the dessert persons; a dessert added in that mode to a slot without a dish became the main dish (now always a dessert); the picker on a full multi slot replaced all recipes. Rules moved to `core/logic/planning/planningSlotEditLogic.ts` (`buildEmptySlot`, `replaceMainRecipe`, `addRecipeToMultiSlot`, `placeRecipeInSlot`).

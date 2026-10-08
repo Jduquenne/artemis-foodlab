@@ -1,5 +1,5 @@
 import { Check, ShoppingCart } from 'lucide-react';
-import { formatDayDate } from '../../../shared/utils/dateUtils';
+import { formatDayDate } from '../../../core/utils/dateUtils';
 
 export interface DayColumnHeaderProps {
     day: string;

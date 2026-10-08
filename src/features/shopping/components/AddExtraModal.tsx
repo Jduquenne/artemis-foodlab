@@ -7,7 +7,7 @@ import { getCodeById, getIdByCode } from "../../../core/catalogue/recipeIdMap";
 import { searchFoods } from "../../../core/logic/recipeBuilder/ingredientSearchLogic";
 import { ApiShoppingExtra } from "../../../core/logic/shopping/shoppingApiMapper";
 import { ExtraInput } from "../../../core/services/shoppingPeriodService";
-import { parseDecimal } from "../../../shared/utils/numberUtils";
+import { parseDecimal } from "../../../core/utils/numberUtils";
 
 export interface AddExtraModalProps {
   extra: ApiShoppingExtra | null;

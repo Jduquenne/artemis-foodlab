@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — `shared/` review, part 1: generic utilities to `core/utils/` (v6.82.7)
+
+- Done: read-only review of `shared/utils/` (findings in `dev/refactoring.md`). Owner's decision D-032: split utilities by nature; generic pure helpers move to `core/utils/` (`numberUtils`, `collectionUtils`, `sortUtils`, `textUtils`, `codeUtils`, `columnUtils`, `dateUtils`, `weekUtils`; 56 files touched, imports rewritten), browser/React-bound ones stay in `shared/utils/`. Dead code removed: `dayLabels.ts`, `getDaysOfWeek`, `formatIsoDateShort`; `dateUtils` uses `DAYS` instead of its own day list. Docs: `AGENTS.md` (map, golden rule 4), `docs/architecture.md`, `docs/conventions.md`, `docs/decisions.md` D-032.
+- Numbers: `npx tsc -b` + `npm run lint` pass; no behaviour change.
+- Still open: `unitUtils` → `core/logic/unit/`, `macroUtils` → `core/logic/nutrition/` + caches → `core/catalogue/` (last `core` → `shared` imports); slot labels (`SLOT_LABELS` vs `SLOT_DISPLAY`) waiting for the owner; `cardAdapter` duplicates (zero macros, rounding); then hooks, stores, components.
+
 ## 2026-10-08 — News + sync migrated to the named theme colours (v6.82.6)
 
 - Done: the 7 `dark:*-slate-*` classes of `features/news` and `features/sync` replaced by the named colours (D-031), all exact pairs, identical rendering. This closes the news + sync review and the whole `features/` review.

@@ -1,5 +1,5 @@
 import { getISOWeek, getISOWeekYear } from "date-fns";
-import { DAYS } from "../../core/domain/planningConfig";
+import { DAYS } from "../domain/planningConfig";
 
 export { getISOWeek as getWeekNumber } from "date-fns";
 

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { getISOWeek, getISOWeekYear } from "date-fns";
-import { getWeekId } from "../utils/dateUtils";
+import { getWeekId } from "../../core/utils/dateUtils";
 import { ShoppingDay } from "../../core/domain/planning";
 import { EMPTY_RECIPE_FILTER, RecipeFilter } from "../../core/domain/recipeFilter";
 import { normalizeRecipeFilter } from "../../core/logic/recipe/recipeFilterLogic";

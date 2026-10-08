@@ -1,6 +1,6 @@
 import { OutdoorEntry, RecipeDetails } from "../../domain/recipe";
 import { isIngredient } from "../../domain/recipePredicates";
-import { includesText, normalizeQuery } from "../../../shared/utils/textUtils";
+import { includesText, normalizeQuery } from "../../utils/textUtils";
 
 export interface CategoryRecipeEntry {
   id: string;

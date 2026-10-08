@@ -3,7 +3,7 @@ import { RotateCcw } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { HOUSEHOLD_CATEGORY_ORDER } from '../../../../core/domain/household';
 import { getRecords, toggleItem, clearAll } from '../../../../core/services/householdService';
-import { distributeToColumns } from '../../../../shared/utils/columnUtils';
+import { distributeToColumns } from '../../../../core/utils/columnUtils';
 import { useHouseholdSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 import { withPending } from '../../../../shared/utils/withPending';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';

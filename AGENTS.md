@@ -61,6 +61,7 @@ src/
   index.css            Tailwind, theme variables, custom variants (dark, tablet)
   core/
     domain/            types, config constants, domain predicates, labels
+    utils/             generic pure helpers (numbers, collections, sort, text, codes, dates, weeks)
     logic/<feature>/   pure business logic (auth, dashboard, freezer, journal, media, news,
                        nutrition, planning, profile, recipe, recipeBuilder, shopping, sync, unit)
     catalogue/         in-memory mutable catalogue + change events + code↔uuid map
@@ -71,7 +72,7 @@ src/
     components/        layout/ (Layout, sidebar, settings, demo banner), ui/ (reusable)
     hooks/             all hooks (snapshots, pending, auth init, refresh, search…)
     store/             Zustand stores
-    utils/             cross-cutting utilities, cards/ (SVG card rendering & export)
+    utils/             browser/React-bound utilities, cards/ (SVG card rendering & export)
     contexts/          ThemeContext
 public/                assets (logo, ui: category images, fonts, icons), manifest, version.json
 docs/                  project documentation (archive/ = pre-migration context)
@@ -87,7 +88,7 @@ Detail and rationale in `docs/conventions.md`, `docs/architecture.md` and `docs/
 1. No `any`, no `as unknown as`, no `eslint-disable`, no suppressed `exhaustive-deps`.
 2. Zero comments in code (except `src/vite-env.d.ts`).
 3. Business logic = named pure functions in `core/logic/<feature>/`; `core/logic` never imports `core/services`; logic > ~5 lines leaves the component.
-4. Hooks in `shared/hooks/`, utils in `shared/utils/`; one component per file; props named `<ComponentName>Props`; routes via `React.lazy`.
+4. Hooks in `shared/hooks/`; generic pure utils in `core/utils/`, browser/React utils in `shared/utils/` (`core/` never imports `shared/`); one component per file; props named `<ComponentName>Props`; routes via `React.lazy`.
 5. Never read `core/catalogue/` from a component or `useMemo` — use the snapshot hooks; logic receives the catalogue as a parameter.
 6. Never modify an existing Dexie `.version(n)`; schema change = new version.
 7. No synchronous `setState` in `useEffect` (reset during render instead).

@@ -1,7 +1,7 @@
 import { Category, RecipeDetails, RecipeKind } from "../../domain/recipe";
 import { isBase, isDessert, isDish, isIngredient } from "../../domain/recipePredicates";
-import { compareByName } from "../../../shared/utils/sortUtils";
-import { includesAnyText, normalizeQuery } from "../../../shared/utils/textUtils";
+import { compareByName } from "../../utils/sortUtils";
+import { includesAnyText, normalizeQuery } from "../../utils/textUtils";
 
 export type RecipeKindFilter = RecipeKind | "all" | "dessert";
 

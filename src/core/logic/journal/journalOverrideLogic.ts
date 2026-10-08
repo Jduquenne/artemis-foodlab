@@ -2,8 +2,8 @@ import { Ingredient, Unit } from "../../domain/ingredient";
 import { RecipeDetails } from "../../domain/recipe";
 import { JournalOverrides } from "../../domain/journal";
 import { ApiJournalOverride } from "../../logic/journal/journalApiMapper";
-import { omitKey } from "../../../shared/utils/collectionUtils";
-import { roundTo } from "../../../shared/utils/numberUtils";
+import { omitKey } from "../../utils/collectionUtils";
+import { roundTo } from "../../utils/numberUtils";
 
 export const EMPTY_JOURNAL_OVERRIDES: JournalOverrides = {
   portionOverrides: {},

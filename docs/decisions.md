@@ -226,3 +226,13 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
 - **Context**: `white` is deliberately not overridden in dark mode (white text on orange must stay readable), so a light background needed a `dark:bg-slate-*` partner (`bg-white dark:bg-slate-100`, ~300 pairs). The rule "never `dark:bg-slate-*`" could not be met without changing the dark rendering.
 - **Decision**: six semantic colours defined as CSS variables in `src/index.css` (light / dark values, mapped in `@theme inline`): `surface`, `surface-raised`, `muted`, `subtle`, `subtle-tint`, `strong` (table in `docs/ui-design.md` § Theming). Each replaces one existing pair with an identical rendering; one-off pairs are mapped to the nearest colour or reported to the owner, no colour is created for a single use. Migration feature by feature during the P4 review, starting with Shopping.
 - **Names chosen by**: the owner, 2026-10-07.
+
+## D-032 — Generic utilities in `core/utils/`, browser utilities in `shared/utils/`
+
+- **Date**: 2026-10-08
+- **Status**: accepted (owner)
+- **Context**: D-001 put every utility in `shared/utils/` "without exception", so `core/logic` and `core/services` imported `shared/utils/` (36 imports), an inversion of the layering. D-001 had removed `core/utils/` because it mixed feature business logic with shared utilities.
+- **Decision**: split utilities by nature. `core/utils/` holds generic pure helpers with no business meaning (`numberUtils`, `collectionUtils`, `sortUtils`, `textUtils`, `codeUtils`, `columnUtils`, `dateUtils`, `weekUtils`): no React, no browser API, no catalogue, no business rule. Business helpers go to `core/logic/<feature>/` (`unitUtils` → `core/logic/unit/`, `macroUtils` → `core/logic/nutrition/`, its caches → `core/catalogue/`). `shared/utils/` keeps what is bound to the browser or React (scroll, theme colour, `withPending`, refresh orchestration, SVG cards, asset URLs). `core/` never imports `shared/`.
+- **Alternatives considered**: a common folder inside `core/logic/` (rejected: generic helpers are not business logic); keeping everything in `shared/utils/` and accepting the inverted dependency (rejected).
+- **Consequences**: supersedes the "utils → `shared/utils/` without exception" part of D-001; the guard against the former mix is the rule above, checked during reviews.
+

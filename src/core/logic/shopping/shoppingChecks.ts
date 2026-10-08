@@ -1,6 +1,6 @@
 import { HouseholdItem } from "../../domain/household";
 import { ConsolidatedIngredient, IngredientSource, RecipeCardIngredient } from "../../domain/shopping";
-import { sumBy } from "../../../shared/utils/collectionUtils";
+import { sumBy } from "../../utils/collectionUtils";
 
 export function buildSourceCheckKey(
   ingredientKey: string,

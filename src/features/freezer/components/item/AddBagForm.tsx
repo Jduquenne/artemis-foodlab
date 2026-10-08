@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FreezerBag } from "../../../../core/domain/freezer";
 import { Unit } from "../../../../core/domain/ingredient";
-import { parseDecimal } from "../../../../shared/utils/numberUtils";
+import { parseDecimal } from "../../../../core/utils/numberUtils";
 import { BagFields } from "./BagFields";
 
 export interface AddBagFormProps {

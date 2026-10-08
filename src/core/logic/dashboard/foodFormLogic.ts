@@ -3,8 +3,8 @@ import { Macronutrients, NUTRIENT_DEFINITIONS, NutrientKey } from "../../domain/
 import { FoodInput } from "../../domain/catalogueInput";
 import { getIngredientCategoryId } from "../../domain/ingredientCategorySlugs";
 import { RecapEntry, diffEntry, recapBool, recapText } from "./recapLogic";
-import { parseDecimal } from "../../../shared/utils/numberUtils";
-import { nextSequentialCode, validateNewCode } from "../../../shared/utils/codeUtils";
+import { parseDecimal } from "../../utils/numberUtils";
+import { nextSequentialCode, validateNewCode } from "../../utils/codeUtils";
 import { atwaterKcal } from "../nutrition/atwaterLogic";
 
 export interface FoodFormDraft {

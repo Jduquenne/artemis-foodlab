@@ -2,12 +2,12 @@ import { IngredientSource } from '../../../core/domain/shopping';
 import { buildSourceCheckKey } from '../../../core/logic/shopping/shoppingChecks';
 import { SlotType } from '../../../core/domain/planning';
 import { pluralizeUnit } from '../../../shared/utils/unitUtils';
-import { formatSourceDayFull, formatSourceDayShort } from '../../../shared/utils/dateUtils';
+import { formatSourceDayFull, formatSourceDayShort } from '../../../core/utils/dateUtils';
 import { SLOT_LABELS } from '../../../shared/utils/slotLabels';
 import { useAnyPendingKey } from '../../../shared/hooks/useAnyPendingKey';
 import { CheckToggleIcon } from '../../../shared/components/ui/CheckToggleIcon';
-import { compareText } from "../../../shared/utils/sortUtils";
-import { sumBy } from '../../../shared/utils/collectionUtils';
+import { compareText } from "../../../core/utils/sortUtils";
+import { sumBy } from '../../../core/utils/collectionUtils';
 
 const formatSourceQty = (quantity: number, unit: string): string =>
   quantity === 0 ? '—' : `${parseFloat(quantity.toFixed(2))}\u00a0${pluralizeUnit(unit, quantity)}`;

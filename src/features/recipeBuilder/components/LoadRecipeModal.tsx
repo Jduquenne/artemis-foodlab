@@ -3,7 +3,7 @@ import { Search, X } from "lucide-react";
 import { useRecipesSnapshot } from "../../../shared/hooks/useCatalogueSnapshot";
 import { recipeToBuilderState } from "../../../core/logic/recipeBuilder/recipeBuilderMapper";
 import { RecipeBuilderState } from "../../../core/domain/recipeBuilderTypes";
-import { includesText, normalizeQuery } from "../../../shared/utils/textUtils";
+import { includesText, normalizeQuery } from "../../../core/utils/textUtils";
 import { RECIPE_KIND_LABELS } from "../../../core/domain/recipeLabels";
 
 export interface LoadRecipeModalProps {

@@ -6,7 +6,7 @@ import { FoodFormModal } from "./FoodFormModal";
 import { DataPanelShell } from "../common/DataPanelShell";
 import { DataList } from "../common/DataList";
 import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
-import { includesAnyText, normalizeQuery } from "../../../../shared/utils/textUtils";
+import { includesAnyText, normalizeQuery } from "../../../../core/utils/textUtils";
 
 export const FoodsTable = () => {
   const { foods, create, save, remove } = useCatalogueFoods();

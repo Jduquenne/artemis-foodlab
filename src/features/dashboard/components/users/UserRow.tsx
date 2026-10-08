@@ -1,6 +1,6 @@
 import { Trash2 } from "lucide-react";
 import { AdminUser, UserRole } from "../../../../core/domain/user";
-import { formatDateMedium } from "../../../../shared/utils/dateUtils";
+import { formatDateMedium } from "../../../../core/utils/dateUtils";
 import { RoleToggle } from "./RoleToggle";
 
 export interface UserRowProps {

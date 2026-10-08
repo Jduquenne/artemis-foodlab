@@ -1,5 +1,5 @@
 import { Food } from "../../domain/ingredient";
-import { normalizeQuery, rankByQuery } from "../../../shared/utils/textUtils";
+import { normalizeQuery, rankByQuery } from "../../utils/textUtils";
 
 const MAX_SUGGESTIONS = 8;
 

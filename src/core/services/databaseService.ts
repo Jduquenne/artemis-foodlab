@@ -1,5 +1,5 @@
 import Dexie, { Table } from "dexie";
-import { getWeekNumber } from "../../shared/utils/weekUtils";
+import { getWeekNumber } from "../utils/weekUtils";
 import { FreezerCategory } from "../domain/freezer";
 import { HouseholdRecord, HouseholdItem } from "../domain/household";
 import { Food } from "../domain/ingredient";

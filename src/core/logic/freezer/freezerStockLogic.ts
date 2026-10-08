@@ -1,8 +1,8 @@
 import { FoodFreezerItem, FreezerBag, FreezerCategory, FreezerItem } from "../../domain/freezer";
 import { isBatchItem, isFoodItem } from "../../domain/freezerPredicates";
 import { formatQty, pluralizeUnit } from "../../../shared/utils/unitUtils";
-import { groupBy, sumBy } from "../../../shared/utils/collectionUtils";
-import { toNumber } from "../../../shared/utils/numberUtils";
+import { groupBy, sumBy } from "../../utils/collectionUtils";
+import { toNumber } from "../../utils/numberUtils";
 
 export function bagQuantity(bag: Pick<FreezerBag, "quantity">): number {
   return toNumber(bag.quantity);

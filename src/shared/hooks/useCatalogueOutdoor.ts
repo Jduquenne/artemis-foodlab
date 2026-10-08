@@ -4,7 +4,7 @@ import { createOutdoorActivity, deleteOutdoorActivity, updateOutdoorActivity, up
 import { OutdoorActivityInput } from "../../core/domain/catalogueInput";
 import { syncCatalogueFromApi } from "../../core/services/catalogueSyncService";
 import { useOutdoorSnapshot } from "./useCatalogueSnapshot";
-import { compareByName } from "../utils/sortUtils";
+import { compareByName } from "../../core/utils/sortUtils";
 
 export interface UseCatalogueOutdoorResult {
   activities: OutdoorEntry[];

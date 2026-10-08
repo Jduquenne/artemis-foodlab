@@ -18,7 +18,7 @@ import { getRecords as getHouseholdRecords } from '../../core/services/household
 import { syncWeekFromApi } from '../../core/services/planningService';
 import { ExtraInput } from '../../core/services/shoppingPeriodService';
 import { markScrolling } from '../../shared/utils/scrollGuard';
-import { distributeToColumns } from '../../shared/utils/columnUtils';
+import { distributeToColumns } from '../../core/utils/columnUtils';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { useAuthStore } from '../../shared/store/useAuthStore';
 import { useColCount } from '../../shared/hooks/useColCount';
@@ -33,7 +33,7 @@ import { HouseholdPanel } from './components/household/HouseholdPanel';
 import { AddExtraModal } from './components/AddExtraModal';
 import { useRefreshStore } from '../../shared/store/useRefreshStore';
 import { useHouseholdSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
-import { sumBy } from '../../shared/utils/collectionUtils';
+import { sumBy } from '../../core/utils/collectionUtils';
 
 const NO_INGREDIENTS: ConsolidatedIngredient[] = [];
 

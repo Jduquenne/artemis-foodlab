@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { X, RotateCcw, Scale } from 'lucide-react';
 import { computePricePerKg } from '../../../core/logic/shopping/shoppingPriceLogic';
-import { parseDecimal } from '../../../shared/utils/numberUtils';
+import { parseDecimal } from '../../../core/utils/numberUtils';
 
 export interface PricePerKgModalProps {
     onClose: () => void;

@@ -1,5 +1,5 @@
 import { FreezerItem } from "../../domain/freezer";
-import { compareText } from "../../../shared/utils/sortUtils";
+import { compareText } from "../../utils/sortUtils";
 
 function getFreezerItemName(item: FreezerItem): string {
   return item.type === 'batch' ? item.recipeName : item.name;

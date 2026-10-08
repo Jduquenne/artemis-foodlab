@@ -1,4 +1,4 @@
-import { padNumber } from "../../../shared/utils/numberUtils";
+import { padNumber } from "../../utils/numberUtils";
 
 export const DEMO_COUNTDOWN_TICK_MS = 15000;
 

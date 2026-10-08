@@ -4,7 +4,7 @@ import { createFood, deleteFood, updateFood } from "../../core/services/catalogu
 import { FoodInput } from "../../core/domain/catalogueInput";
 import { syncCatalogueFromApi } from "../../core/services/catalogueSyncService";
 import { useFoodsSnapshot } from "./useCatalogueSnapshot";
-import { compareByName } from "../utils/sortUtils";
+import { compareByName } from "../../core/utils/sortUtils";
 
 export interface UseCatalogueFoodsResult {
   foods: Food[];

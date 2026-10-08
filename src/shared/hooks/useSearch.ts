@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { RecipeDetails, RecipeKind } from "../../core/domain/recipe";
 import { isDessert } from "../../core/domain/recipePredicates";
 import { useRecipesSnapshot } from "./useCatalogueSnapshot";
-import { includesText, normalizeQuery } from "../utils/textUtils";
+import { includesText, normalizeQuery } from "../../core/utils/textUtils";
 
 export interface SearchRecipeResult {
   id: string;

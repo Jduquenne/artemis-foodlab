@@ -1,7 +1,7 @@
 import { RecipeDetails } from "../../domain/recipe";
-import { compareByName, compareText } from "../../../shared/utils/sortUtils";
-import { groupBy } from "../../../shared/utils/collectionUtils";
-import { padNumber } from "../../../shared/utils/numberUtils";
+import { compareByName, compareText } from "../../utils/sortUtils";
+import { groupBy } from "../../utils/collectionUtils";
+import { padNumber } from "../../utils/numberUtils";
 
 export const RECENT_RECIPE_DAYS = 30;
 

@@ -1,6 +1,6 @@
 import { IngredientCategory, Unit } from "../../../core/domain/ingredient";
 import { DraftIngredient } from "../../../core/domain/recipeBuilderTypes";
-import { groupBy } from "../collectionUtils";
+import { groupBy } from "../../../core/utils/collectionUtils";
 import { IngredientLineItem } from "./cardTypes";
 import { wrapLineAtMaxChars } from "./cardUtils";
 

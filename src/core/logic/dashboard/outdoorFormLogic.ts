@@ -3,7 +3,7 @@ import { OutdoorActivityInput } from "../../domain/catalogueInput";
 import { buildRecipeDbId } from "../recipeBuilder/recipeCodeLogic";
 import { categoryLabel } from "../recipe/categoryLogic";
 import { RecapEntry, diffEntry } from "./recapLogic";
-import { nextSequentialCode, validateNewCode } from "../../../shared/utils/codeUtils";
+import { nextSequentialCode, validateNewCode } from "../../utils/codeUtils";
 
 export interface OutdoorFormDraft {
   name: string;

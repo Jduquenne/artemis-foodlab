@@ -1,6 +1,6 @@
 import { Food, UNIT_WEIGHT_UNITS } from "../../domain/ingredient";
 import { RecipeDetails } from "../../domain/recipe";
-import { roundTo } from "../../../shared/utils/numberUtils";
+import { roundTo } from "../../utils/numberUtils";
 
 export function patchRecipeQuantities(recipe: RecipeDetails, quantities: Record<string, number>): RecipeDetails {
   return {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { X } from "lucide-react";
-import { formatDateMedium } from "../../utils/dateUtils";
+import { formatDateMedium } from "../../../core/utils/dateUtils";
 import { LEGAL_DOCUMENTS, LegalDocument } from "./legalContent";
 
 export interface LegalModalProps {

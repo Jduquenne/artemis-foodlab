@@ -1,6 +1,6 @@
 import { RecipeBuilderState } from "../../domain/recipeBuilderTypes";
-import { highestSequence } from "../../../shared/utils/codeUtils";
-import { padNumber } from "../../../shared/utils/numberUtils";
+import { highestSequence } from "../../utils/codeUtils";
+import { padNumber } from "../../utils/numberUtils";
 
 export const CATEGORY_PREFIX: Record<string, string> = {
   bases: "BASE",

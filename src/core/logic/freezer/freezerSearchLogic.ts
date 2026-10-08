@@ -1,8 +1,8 @@
 import { Food } from "../../domain/ingredient";
 import { RecipeDetails } from "../../domain/recipe";
 import { isBatchCookable } from "../../domain/recipePredicates";
-import { compareByName } from "../../../shared/utils/sortUtils";
-import { includesText, normalizeQuery, rankByQuery } from "../../../shared/utils/textUtils";
+import { compareByName } from "../../utils/sortUtils";
+import { includesText, normalizeQuery, rankByQuery } from "../../utils/textUtils";
 
 export interface BatchRecipeResult {
   id: string;

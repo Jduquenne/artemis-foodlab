@@ -1,5 +1,5 @@
 import { ComponentProps, useState } from "react";
-import { parseDecimal } from "../../utils/numberUtils";
+import { parseDecimal } from "../../../core/utils/numberUtils";
 
 export interface DecimalInputProps
   extends Omit<ComponentProps<"input">, "value" | "onChange" | "type" | "inputMode" | "min"> {

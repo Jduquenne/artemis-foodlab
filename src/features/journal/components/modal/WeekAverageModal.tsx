@@ -9,7 +9,7 @@ import {
   DEFAULT_AVERAGE_DAYS,
   computeWeekAverage,
 } from "../../../../core/logic/journal/weekAverageLogic";
-import { toggleInList } from "../../../../shared/utils/collectionUtils";
+import { toggleInList } from "../../../../core/utils/collectionUtils";
 import { NUTRIENT_DEFINITIONS } from "../../../../core/domain/nutrition";
 
 export interface WeekAverageModalProps {

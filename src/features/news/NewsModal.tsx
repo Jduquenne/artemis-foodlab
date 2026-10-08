@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecipesSnapshot } from "../../shared/hooks/useCatalogueSnapshot";
 import { getNewsGroups } from "../../core/logic/news/newsLogic";
 import { NewsRecipeCard } from "./components/NewsRecipeCard";
-import { formatNewsDate } from "../../shared/utils/dateUtils";
+import { formatNewsDate } from "../../core/utils/dateUtils";
 import { buildRecipeDetailUrl } from "../../core/logic/recipe/recipeScalingLogic";
 
 export interface NewsModalProps {

@@ -32,12 +32,12 @@ Three layers, no exceptions:
 
 - Business logic → `core/logic/<feature>/`, never inline in a component or hook.
 - Every logic function is a **named pure function**, testable in isolation. A logic file does one thing (no catch-all). `core/logic/` never imports `core/services/`; shared types live in `core/domain/`.
-- Cross-cutting utilities → `shared/utils/`.
+- Generic pure utilities with no business meaning (numbers, collections, sorting, text, sequential codes, columns, dates, weeks) → `core/utils/`: no React, no browser API, no catalogue, no business rule. Browser / React-bound utilities (scroll, theme colour, pending, refresh orchestration, SVG cards) → `shared/utils/`. `core/` never imports `shared/` (D-032).
 - Hooks → `shared/hooks/`, without exception (even if only one feature uses them).
 - Static data → a dedicated file in the feature folder, not in the component.
-- Origin of these rules: `docs/decisions.md` D-001.
+- Origin of these rules: `docs/decisions.md` D-001, D-032.
 
-Known deviation: `core/logic/` still imports `shared/utils/` (`macroUtils`, `unitUtils`, `columnUtils`, `dateUtils`, `cards/*`), an inversion of the intended layering. P4 refactoring point (`docs/roadmap.md`), to fix during the `shared/` review; do not add new imports of this kind.
+Known deviation (being fixed, `shared/` review): `core/` still imports `shared/utils/unitUtils` and `shared/utils/macroUtils`, to be moved to `core/logic/unit/` and `core/logic/nutrition/` (caches to `core/catalogue/`). Do not add new imports of this kind.
 
 ### `core/` contents
 

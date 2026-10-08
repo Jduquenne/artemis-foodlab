@@ -11,7 +11,7 @@ import {
   mapApiItem,
 } from "../logic/freezer/freezerApiMapper";
 import { BatchFreezerItem, FoodFreezerItem, FreezerBag, FreezerCategory } from "../domain/freezer";
-import { compareByName } from "../../shared/utils/sortUtils";
+import { compareByName } from "../utils/sortUtils";
 
 const today = () => format(new Date(), "yyyy-MM-dd");
 

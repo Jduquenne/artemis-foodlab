@@ -7,7 +7,7 @@ import { addItemToCategory } from "../../../../core/services/freezerService";
 import { isFreezerFoodNameTaken } from "../../../../core/logic/freezer/freezerItemsLogic";
 import { FoodTab } from "./FoodTab";
 import { BatchTab } from "./BatchTab";
-import { parseDecimal } from "../../../../shared/utils/numberUtils";
+import { parseDecimal } from "../../../../core/utils/numberUtils";
 import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
 import { withPending } from "../../../../shared/utils/withPending";
 

@@ -8,7 +8,7 @@ import {
   filterReviewDishes,
   getReviewFilterOptions,
 } from "../../../../core/logic/dashboard/planningUsage";
-import { formatWeeksAgo, weeksSinceIsoWeek } from "../../../../shared/utils/weekUtils";
+import { formatWeeksAgo, weeksSinceIsoWeek } from "../../../../core/utils/weekUtils";
 import { AsyncImage } from "../../../../shared/components/ui/AsyncImage";
 import { buildRecipeDetailUrl } from "../../../../core/logic/recipe/recipeScalingLogic";
 

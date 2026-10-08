@@ -1,6 +1,6 @@
 import { RecipeDetails, RecipeKind } from "../../domain/recipe";
 import { BaseEntry, ConsolidatedIngredient, IngredientSource, RecipeCard, RecipeCardIngredient } from "../../domain/shopping";
-import { compareByName, compareText } from "../../../shared/utils/sortUtils";
+import { compareByName, compareText } from "../../utils/sortUtils";
 
 export function groupAndSortSources(sources: IngredientSource[]): IngredientSource[][] {
   const seen = new Map<string, IngredientSource[]>();

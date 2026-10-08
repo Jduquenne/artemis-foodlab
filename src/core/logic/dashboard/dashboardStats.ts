@@ -2,7 +2,7 @@ import { Food } from "../../domain/ingredient";
 import { Macronutrients } from "../../domain/nutrition";
 import { Category, RecipeDetails } from "../../domain/recipe";
 import { isBase, isDish, isIngredient } from "../../domain/recipePredicates";
-import { sumBy, countBy } from "../../../shared/utils/collectionUtils";
+import { sumBy, countBy } from "../../utils/collectionUtils";
 
 export interface CatalogueCounts {
   recipes: number;

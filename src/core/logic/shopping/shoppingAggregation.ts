@@ -2,8 +2,8 @@ import { Ingredient, IngredientCategory } from "../../domain/ingredient";
 import { MealSlot, ShoppingDay } from "../../domain/planning";
 import { getAllRecipeIds } from "../../domain/recipePredicates";
 import { BaseEntry, ConsolidatedIngredient, IngredientSource, ShoppingCatalogue } from "../../domain/shopping";
-import { isoDateFromWeekDay } from "../../../shared/utils/dateUtils";
-import { compareByName } from "../../../shared/utils/sortUtils";
+import { isoDateFromWeekDay } from "../../utils/dateUtils";
+import { compareByName } from "../../utils/sortUtils";
 
 function cleanRecipeName(name: string): string {
   return name

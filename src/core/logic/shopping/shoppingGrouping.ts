@@ -1,6 +1,6 @@
 import { IngredientCategory } from "../../domain/ingredient";
 import { ConsolidatedIngredient, IngredientGroup } from "../../domain/shopping";
-import { distributeToColumns } from "../../../shared/utils/columnUtils";
+import { distributeToColumns } from "../../utils/columnUtils";
 import { isIngredientNeeded } from "./shoppingChecks";
 
 const SHOPPING_CATEGORY_ORDER: IngredientCategory[] = [

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { X, Upload, Loader2, RotateCw, AlertTriangle } from "lucide-react";
 import { SyncScope, SyncPayload, detectScopes, SCOPE_LABELS } from "../../core/logic/sync/importPayloadLogic";
-import { importToApi, ImportResult } from "../../core/services/importService";
+import { importToApi } from "../../core/services/importService";
+import { ImportResult, formatImportSummary } from "../../core/logic/sync/importSummaryLogic";
 import { ApiError } from "../../core/services/apiClient";
 import { ScopeSelector } from "./components/scope/ScopeSelector";
 
@@ -11,14 +12,6 @@ export interface ImportModalProps {
 }
 
 type Phase = "select" | "confirm" | "result";
-
-const summaryLine = ({ summary }: ImportResult): string => {
-  const parts: string[] = [];
-  if (summary.planning) parts.push(`${summary.planning.slots} créneaux (${summary.planning.items} plats)`);
-  if (summary.freezer) parts.push(`${summary.freezer.categories} catégories congélateur (${summary.freezer.items} éléments)`);
-  if (summary.household) parts.push(`${summary.household.flags} articles ménagers`);
-  return parts.length > 0 ? parts.join(" · ") : "Aucune donnée importée.";
-};
 
 export const ImportModal = ({ payload, onClose }: ImportModalProps) => {
   const available = detectScopes(payload);
@@ -73,7 +66,7 @@ export const ImportModal = ({ payload, onClose }: ImportModalProps) => {
 
         {phase === "result" && result && (
           <div className="p-5 flex flex-col gap-4 overflow-y-auto">
-            <p className="text-sm text-slate-700 font-medium">{summaryLine(result)}</p>
+            <p className="text-sm text-slate-700 font-medium">{formatImportSummary(result)}</p>
             {result.anomalies.length > 0 && (
               <div className="flex flex-col gap-1.5 px-3 py-2.5 bg-amber-50 dark:bg-amber-900/20 rounded-xl">
                 <span className="flex items-center gap-1.5 text-xs font-bold text-amber-700">

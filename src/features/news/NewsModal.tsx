@@ -5,6 +5,7 @@ import { useRecipesSnapshot } from "../../shared/hooks/useCatalogueSnapshot";
 import { getNewsGroups } from "../../core/logic/news/newsLogic";
 import { NewsRecipeCard } from "./components/NewsRecipeCard";
 import { formatNewsDate } from "../../shared/utils/dateUtils";
+import { buildRecipeDetailUrl } from "../../core/logic/recipe/recipeScalingLogic";
 
 export interface NewsModalProps {
   onClose: () => void;
@@ -26,7 +27,7 @@ export const NewsModal = ({ onClose }: NewsModalProps) => {
       setIsClosing(true);
       setTimeout(() => {
         onClose();
-        navigate(`/recipes/detail/${code}`);
+        navigate(buildRecipeDetailUrl(code, undefined));
       }, 300);
     },
     [onClose, navigate]

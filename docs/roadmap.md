@@ -69,3 +69,4 @@ Future features (including profile food preferences, #20-#24) are tracked in `de
 - API: generate food ids / outdoor codes server-side; allow forcing `announcedAt` (re-announce toggle); media `Cache-Control: immutable` + thumbhash.
 - Real-time sync (SSE / WebSocket) instead of polling.
 - Light category rename (D-014 alternative).
+- Remove the data import (owner, 2026-10-08: obsolete since the API is the source of truth): front `features/sync` (`ImportModal`, `ScopeSelector`), `importService`, `core/logic/sync/importPayloadLogic.ts` + `importSummaryLogic.ts`, the entry in `SettingsPopover`; API side `POST /import` (prompt to relay to the API session). Not scheduled; would also settle the open question of activities created by the import without a photo.

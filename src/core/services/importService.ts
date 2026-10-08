@@ -1,14 +1,6 @@
 import { apiFetchJson } from "./apiClient";
 import { SyncPayload, SyncScope } from "../logic/sync/importPayloadLogic";
-
-export interface ImportResult {
-  summary: {
-    planning?: { slots: number; items: number };
-    household?: { flags: number };
-    freezer?: { categories: number; items: number };
-  };
-  anomalies: string[];
-}
+import { ImportResult } from "../logic/sync/importSummaryLogic";
 
 export function importToApi(
   payload: SyncPayload,

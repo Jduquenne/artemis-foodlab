@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — `features/` review: news + sync, step 2 (v6.82.5)
+
+- Done: import summary sentence and the `ImportResult` type moved from `ImportModal` / `importService` to `core/logic/sync/importSummaryLogic.ts` (`formatImportSummary`); « Nouveautés » navigates with `buildRecipeDetailUrl`. Identical behaviour.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: step 3 (theme, 6 exact pairs).
+
 ## 2026-10-08 — `features/` review: news + sync, step 1 (v6.82.4)
 
 - Done: read-only review of `features/news` and `features/sync` (4 files), findings in `dev/refactoring.md`. Step 1: « Nouveautés » modal height in `dvh`, `aria-label` on its close button; import summary says « éléments » instead of the English « items » (owner's choice). The « no close on backdrop click » convention turned out to come from the doc migration, never explicitly validated: kept as is for now, to revisit if annoying in use (`docs/ui-design.md`); `NewsModal` still closes on backdrop.

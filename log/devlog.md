@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — Outdoor activity photo: decision and API plan (v6.81.3)
+
+- Done: owner's decision: no « activité » mode in the Recipe Builder (creating an activity is very rare); the dashboard activity modal gets a mandatory photo. The API session answered: `POST /recipes/:uuid/photo` rejects activity uuids, so it plans `POST /outdoor-activities/:uuid/photo` (same multipart contract, check before upload, full activity in response); display, bootstrap and media resolve already handle activity photos. Recorded in `docs/api.md` § Planned and `docs/roadmap.md` § Blocked. Then the owner required the photo **server-side too** (every activity is said to have one): revised contract requested from the API session (atomic multipart creation, photo never removable, import, data check: the API session had said existing activities have no `meal_photo_path`). No front code yet.
+- Still open: API deployment + real payloads, then the front (photo field in `OutdoorFormModal`, upload after create/update, « Activités sans photo » health point); next review folder `features/recipes`.
+
 ## 2026-10-08 — Recipe Builder migrated to the named theme colours (v6.81.2)
 
 - Done: the 38 `dark:*-slate-*` classes of `features/recipeBuilder` replaced by the named colours (D-031), all exact pairs, identical rendering (`bg-surface`, `bg-muted`, `bg-subtle` and their `hover:`). This closes the code review of the Recipe Builder.

@@ -5,7 +5,7 @@ The detailed backlog and future features live in `dev/issues.json` and `dev/refa
 
 ## Current focus
 
-1. 🟡 Code review refactoring: `core/services/`, Shopping, Freezer, Journal, Planning, Dashboard and Recipe Builder (code) done; next is the « activité » mode of the Recipe Builder (brainstorm with the owner), then recipes, news + sync, then `shared/` (open points in `dev/refactoring.md`).
+1. 🟡 Code review refactoring: `core/services/`, Shopping, Freezer, Journal, Planning, Dashboard and Recipe Builder (code) done; next is `features/recipes`, news + sync, then `shared/` (open points in `dev/refactoring.md`).
 2. ⬜ Fix the ISO week-year bug (see Known bugs).
 3. 🟡 Tablet portrait pass on the remaining screens.
 
@@ -33,7 +33,7 @@ Milestones reconstructed from history; definitions of done marked "proposed" wer
 
 - ✅ `docs`, `public/`, `scripts/`, repo root, `core/domain`, `core/catalogue` (ex `typed-db`), catalogue change signal + snapshots + cross-device refresh, `core/logic`, shared utilities, macro labels centralised.
 - ✅ `core/services/` (2026-10-07; atomic freezer item + shopping period API calls).
-- 🟡 `features/`: ✅ shopping (incl. household tab, batch source checks), freezer, journal, planning, dashboard; 🟡 recipeBuilder (code reviewed, « activité » mode to design); ⬜ recipes, news, sync.
+- 🟡 `features/`: ✅ shopping (incl. household tab, batch source checks), freezer, journal, planning, dashboard; recipeBuilder; ⬜ recipes, news, sync.
 - ⬜ `shared/`.
 - ⬜ Layering: `core/logic/` imports `shared/utils/` (`docs/architecture.md` § Placement rules); fix during the `shared/` review.
 - 🟡 Theming: replace the pre-existing `dark:*-slate-*` pairs with the named theme colours (D-031), feature by feature, as each folder is reviewed. Done: Shopping (incl. household tab), Freezer, Journal, Planning, Dashboard, Recipe Builder. Remaining: 64 occurrences in 30 files on 2026-10-08 (`docs/development.md` § Golden-rule checks).
@@ -59,6 +59,7 @@ Milestones reconstructed from history; definitions of done marked "proposed" wer
 ## Blocked
 
 - ⏸ Google sign-in (#10): waiting for the API endpoint and the owner's Google Cloud setup (`docs/api.md` § Planned).
+- ⏸ Outdoor activity photo (mandatory, in the dashboard activity modal — owner's decision 2026-10-08, no Recipe Builder « activité » mode): waiting for `POST /outdoor-activities/:uuid/photo` to be deployed and confirmed (`docs/api.md` § Planned).
 
 ## Ideas / later
 

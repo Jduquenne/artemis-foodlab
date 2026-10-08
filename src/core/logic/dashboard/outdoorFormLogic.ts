@@ -1,6 +1,7 @@
 import { Category, OutdoorEntry } from "../../domain/recipe";
 import { OutdoorActivityInput } from "../../domain/catalogueInput";
 import { buildRecipeDbId } from "../recipeBuilder/recipeCodeLogic";
+import { categoryLabel } from "../recipe/categoryLogic";
 import { RecapEntry, diffEntry } from "./recapLogic";
 import { nextSequentialCode, validateNewCode } from "../../../shared/utils/codeUtils";
 
@@ -36,10 +37,6 @@ export function validateNewOutdoorCode(code: string, entries: OutdoorEntry[]): s
 
 export function outdoorFormToBody(code: string, draft: OutdoorFormDraft): OutdoorActivityInput {
   return { code: code.trim(), name: draft.name.trim(), categoryId: draft.categoryId };
-}
-
-function categoryLabel(categories: Category[], id: string): string {
-  return categories.find((c) => c.id === id)?.name ?? id;
 }
 
 export function buildOutdoorRecap(

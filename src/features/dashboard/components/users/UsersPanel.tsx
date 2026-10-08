@@ -1,13 +1,14 @@
 import { useMemo, useState } from "react";
-import { Plus, RotateCw, Users } from "lucide-react";
+import { RotateCw } from "lucide-react";
 import { useUsers } from "../../../../shared/hooks/useUsers";
 import { useAuthStore } from "../../../../shared/store/useAuthStore";
-import { AdminUser } from "../../../../core/domain/user";
-import { UserRole } from "../../../../core/domain/user";
+import { AdminUser, UserRole } from "../../../../core/domain/user";
 import { ROLE_LABELS, buildRoleChangeRecap, excludeDemoAccounts } from "../../../../core/logic/dashboard/userFormLogic";
 import { UserRow } from "./UserRow";
 import { UserFormModal } from "./UserFormModal";
 import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
+import { DataPanelShell } from "../common/DataPanelShell";
+import { DataList } from "../common/DataList";
 
 export const UsersPanel = () => {
   const { users: allUsers, loading, loadError, reload, create, setRole, remove } = useUsers();
@@ -20,21 +21,7 @@ export const UsersPanel = () => {
   const adminCount = users.filter((user) => user.role === "admin").length;
 
   return (
-    <div className="h-full rounded-2xl border border-slate-200 bg-white dark:bg-slate-100 flex flex-col overflow-hidden">
-      <header className="shrink-0 flex items-center gap-3 px-4 py-3 border-b border-slate-100">
-        <h2 className="flex-1 text-sm font-bold text-slate-500">
-          Utilisateurs <span className="text-slate-400">· {users.length}</span>
-        </h2>
-        <button
-          type="button"
-          onClick={() => setCreating(true)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-500 text-white text-xs font-bold hover:bg-orange-600 transition-colors"
-        >
-          <Plus size={14} />
-          Ajouter
-        </button>
-      </header>
-
+    <DataPanelShell title="Utilisateurs" count={users.length} onAdd={() => setCreating(true)}>
       {loadError ? (
         <div className="flex-1 flex flex-col items-center justify-center gap-3 p-6 text-center">
           <p className="text-sm text-slate-500">Impossible de charger les comptes.</p>
@@ -51,13 +38,8 @@ export const UsersPanel = () => {
         <div className="flex-1 flex items-center justify-center">
           <p className="text-sm text-slate-400">Chargement…</p>
         </div>
-      ) : users.length === 0 ? (
-        <div className="flex-1 flex flex-col items-center justify-center gap-2 p-6 text-center text-slate-400">
-          <Users size={28} />
-          <p className="text-sm">Aucun compte pour l'instant.</p>
-        </div>
       ) : (
-        <div className="flex-1 min-h-0 overflow-y-auto divide-y divide-slate-100">
+        <DataList isEmpty={users.length === 0} emptyMessage="Aucun compte pour l'instant.">
           {users.map((user) => (
             <UserRow
               key={user.id}
@@ -68,7 +50,7 @@ export const UsersPanel = () => {
               onAskDelete={setPendingDelete}
             />
           ))}
-        </div>
+        </DataList>
       )}
 
       {creating && <UserFormModal onClose={() => setCreating(false)} onSubmit={create} />}
@@ -116,6 +98,6 @@ export const UsersPanel = () => {
           onCancel={() => setPendingDelete(null)}
         />
       )}
-    </div>
+    </DataPanelShell>
   );
 };

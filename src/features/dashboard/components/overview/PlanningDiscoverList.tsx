@@ -10,6 +10,7 @@ import {
 } from "../../../../core/logic/dashboard/planningUsage";
 import { formatWeeksAgo, weeksSinceIsoWeek } from "../../../../shared/utils/weekUtils";
 import { AsyncImage } from "../../../../shared/components/ui/AsyncImage";
+import { buildRecipeDetailUrl } from "../../../../core/logic/recipe/recipeScalingLogic";
 
 export interface PlanningDiscoverListProps {
   dishes: DishUsage[];
@@ -103,7 +104,7 @@ export const PlanningDiscoverList = ({ dishes }: PlanningDiscoverListProps) => {
                   </span>
                   {dish.photo && (
                     <a
-                      href={`#/recipes/detail/${dish.code}`}
+                      href={`#${buildRecipeDetailUrl(dish.code, undefined)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`Ouvrir ${dish.name} dans un nouvel onglet`}

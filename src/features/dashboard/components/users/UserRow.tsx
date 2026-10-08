@@ -1,6 +1,5 @@
 import { Trash2 } from "lucide-react";
-import { AdminUser } from "../../../../core/domain/user";
-import { UserRole } from "../../../../core/domain/user";
+import { AdminUser, UserRole } from "../../../../core/domain/user";
 import { formatDateMedium } from "../../../../shared/utils/dateUtils";
 import { RoleToggle } from "./RoleToggle";
 

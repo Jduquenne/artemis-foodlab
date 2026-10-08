@@ -1,8 +1,10 @@
-import { Image, ImageOff, Pencil, Trash2, Utensils } from "lucide-react";
+import { Image, ImageOff, Utensils } from "lucide-react";
 import { RecipeDetails } from "../../../../core/domain/recipe";
 import { useCategoriesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { getCardColors } from "../../../../shared/utils/cards/cardColors";
 import { RECIPE_KIND_LABELS } from "../../../../core/domain/recipeLabels";
+import { categoryLabel } from "../../../../core/logic/recipe/categoryLogic";
+import { RowActions } from "../common/RowActions";
 
 export interface RecipeRowProps {
   recipe: RecipeDetails;
@@ -12,7 +14,6 @@ export interface RecipeRowProps {
 
 export const RecipeRow = ({ recipe, onEdit, onAskDelete }: RecipeRowProps) => {
   const categories = useCategoriesSnapshot();
-  const category = categories.find((c) => c.id === recipe.categoryId);
   const hasPhoto = Boolean(recipe.assets?.mealPhoto?.url);
 
   return (
@@ -24,7 +25,7 @@ export const RecipeRow = ({ recipe, onEdit, onAskDelete }: RecipeRowProps) => {
             className="inline-block w-2 h-2 rounded-full shrink-0"
             style={{ backgroundColor: getCardColors(recipe.categoryId).band }}
           />
-          {category?.name ?? recipe.categoryId}
+          {categoryLabel(categories, recipe.categoryId)}
           <span className="text-slate-300">·</span>
           {RECIPE_KIND_LABELS[recipe.kind]}
         </p>
@@ -42,22 +43,7 @@ export const RecipeRow = ({ recipe, onEdit, onAskDelete }: RecipeRowProps) => {
         </span>
       </span>
 
-      <button
-        type="button"
-        aria-label={`Modifier ${recipe.name}`}
-        onClick={() => onEdit(recipe)}
-        className="p-1.5 rounded-lg text-slate-400 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-950/30 transition-colors"
-      >
-        <Pencil size={15} />
-      </button>
-      <button
-        type="button"
-        aria-label={`Supprimer ${recipe.name}`}
-        onClick={() => onAskDelete(recipe)}
-        className="p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
-      >
-        <Trash2 size={15} />
-      </button>
+      <RowActions name={recipe.name} onEdit={() => onEdit(recipe)} onDelete={() => onAskDelete(recipe)} />
     </div>
   );
 };

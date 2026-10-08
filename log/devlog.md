@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — `features/` review: dashboard, step 2 (v6.80.2)
+
+- Done: shared dashboard building blocks in `features/dashboard/components/common/` (`PillTabs`, `DataPanelShell`, `DataList`, `RowActions`, `FormModalShell`, `FormField`, `formStyles.ts`), used by the 4 data panels, the 3 rows and the 3 forms (components 1 760 → ~1 615 lines). `categoryLabel` (`core/logic/recipe/categoryLogic.ts`) replaces 6 copies of the category name lookup (incl. `outdoorFormLogic`, `recipeBuilderValidation`). Duplicate `core/domain/user` imports merged. « À découvrir » link built with `buildRecipeDetailUrl`. The activity id now shows its error while typing, like the food id. Visible changes: account form inputs aligned on the other forms (slightly smaller, modal `max-w-md` instead of `max-w-sm`); every data panel header wraps on narrow widths like the recipes one; the users empty state lost its icon.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: step 3 (theme, 25 classes before this step).
+
 ## 2026-10-08 — `features/` review: dashboard, step 1 (v6.80.1)
 
 - Done: read-only review of `features/dashboard` (23 files), findings in `dev/refactoring.md`. Step 1: food and outdoor writes no longer report a failure when the write succeeded but the follow-up catalogue sync failed (the modal stayed open and a new « Ajouter » duplicated or got a 409); the sync failure is ignored, the next refresh catches up (owner: option A). `useUsers`: no synchronous state reset inside the effect (rule 7), the list stays displayed while it reloads after an account creation (it flashed « Chargement… »), « Chargement… » still shows on the first load and on « Réessayer ». `UserFormDraft.role` is a plain `UserRole` (`""` never happened): two casts and a dead validation removed.

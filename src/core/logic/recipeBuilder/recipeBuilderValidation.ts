@@ -4,13 +4,14 @@ import { RecipeBuilderState } from "../../domain/recipeBuilderTypes";
 import { getIngredientCategoryId } from "../../domain/ingredientCategorySlugs";
 import { getIdByCode } from "../../catalogue/recipeIdMap";
 import { buildRecipeDbId } from "./recipeCodeLogic";
+import { categoryLabel } from "../recipe/categoryLogic";
 
 export function summarizeBuilderState(state: RecipeBuilderState, categories: Category[]): { label: string; value: string }[] {
   const isBase = state.kind === RecipeKind.BASE;
   const rows: { label: string; value: string }[] = [
     { label: "Identifiant", value: buildRecipeDbId(state.categoryId, state.recipeNumber) },
     { label: "Nom", value: state.name.trim() || "—" },
-    { label: "Catégorie", value: categories.find((c) => c.id === state.categoryId)?.name ?? state.categoryId },
+    { label: "Catégorie", value: categoryLabel(categories, state.categoryId) },
     { label: "Type", value: RECIPE_KIND_LABELS[state.kind] },
     { label: "Portions", value: String(state.defaultPortions) },
   ];

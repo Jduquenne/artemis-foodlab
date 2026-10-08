@@ -1,5 +1,6 @@
-import { Pencil, Snowflake, Trash2 } from "lucide-react";
+import { Snowflake } from "lucide-react";
 import { Food } from "../../../../core/domain/ingredient";
+import { RowActions } from "../common/RowActions";
 
 export interface FoodRowProps {
   food: Food;
@@ -19,21 +20,6 @@ export const FoodRow = ({ food, onEdit, onAskDelete }: FoodRowProps) => (
     <span className="shrink-0 text-xs tabular-nums text-slate-500 w-16 text-right">
       {food.macros.kcal} kcal
     </span>
-    <button
-      type="button"
-      aria-label={`Modifier ${food.name}`}
-      onClick={() => onEdit(food)}
-      className="p-1.5 rounded-lg text-slate-400 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-950/30 transition-colors"
-    >
-      <Pencil size={15} />
-    </button>
-    <button
-      type="button"
-      aria-label={`Supprimer ${food.name}`}
-      onClick={() => onAskDelete(food)}
-      className="p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
-    >
-      <Trash2 size={15} />
-    </button>
+    <RowActions name={food.name} onEdit={() => onEdit(food)} onDelete={() => onAskDelete(food)} />
   </div>
 );

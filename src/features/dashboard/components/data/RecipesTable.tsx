@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Plus, Search } from "lucide-react";
 import { RecipeDetails } from "../../../../core/domain/recipe";
 import { RECIPE_KIND_LABELS } from "../../../../core/domain/recipeLabels";
 import {
@@ -13,6 +12,10 @@ import { useCategoriesSnapshot } from "../../../../shared/hooks/useCatalogueSnap
 import { useRecipeBuilderStore } from "../../../../shared/store/useRecipeBuilderStore";
 import { useCatalogueRecipes } from "../../../../shared/hooks/useCatalogueRecipes";
 import { RecipeRow } from "./RecipeRow";
+import { DataPanelShell } from "../common/DataPanelShell";
+import { DataList } from "../common/DataList";
+import { PillTabs } from "../common/PillTabs";
+import { categoryLabel } from "../../../../core/logic/recipe/categoryLogic";
 import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
 
 export const RecipesTable = () => {
@@ -45,72 +48,30 @@ export const RecipesTable = () => {
   };
 
   return (
-    <div className="h-full rounded-2xl border border-slate-200 bg-white dark:bg-slate-100 flex flex-col overflow-hidden">
-      <header className="shrink-0 flex flex-wrap items-center gap-3 px-4 py-3 border-b border-slate-100">
-        <h2 className="text-sm font-bold text-slate-500 shrink-0">
-          Recettes <span className="text-slate-400">· {filtered.length}</span>
-        </h2>
-
-        <div className="flex gap-1">
-          {RECIPE_KIND_FILTERS.map((entry) => (
-            <button
-              key={entry.id}
-              type="button"
-              onClick={() => setKind(entry.id)}
-              className={`px-2.5 py-1 text-xs font-bold rounded-lg transition-colors ${
-                kind === entry.id
-                  ? "text-orange-600 bg-orange-100 dark:bg-orange-900/30"
-                  : "text-slate-500 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900/20"
-              }`}
-            >
-              {entry.label}
-            </button>
-          ))}
-        </div>
-
-        <div className="relative flex-1 min-w-40 max-w-xs ml-auto">
-          <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" />
-          <input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Rechercher"
-            className="w-full pl-8 pr-3 py-1.5 rounded-lg border border-slate-200 bg-white dark:bg-slate-100 text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
+    <DataPanelShell
+      title="Recettes"
+      count={filtered.length}
+      filters={<PillTabs tabs={RECIPE_KIND_FILTERS} value={kind} onChange={setKind} compact />}
+      search={{ value: query, onChange: setQuery }}
+      onAdd={createInBuilder}
+    >
+      <DataList isEmpty={filtered.length === 0} emptyMessage="Aucune recette ne correspond.">
+        {filtered.map((recipe) => (
+          <RecipeRow
+            key={recipe.code}
+            recipe={recipe}
+            onEdit={editInBuilder}
+            onAskDelete={setPendingDelete}
           />
-        </div>
-
-        <button
-          type="button"
-          onClick={createInBuilder}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-500 text-white text-xs font-bold hover:bg-orange-600 transition-colors shrink-0"
-        >
-          <Plus size={14} />
-          Ajouter
-        </button>
-      </header>
-
-      {filtered.length === 0 ? (
-        <div className="flex-1 flex items-center justify-center p-6">
-          <p className="text-sm text-slate-400">Aucune recette ne correspond.</p>
-        </div>
-      ) : (
-        <div className="flex-1 min-h-0 overflow-y-auto divide-y divide-slate-100">
-          {filtered.map((recipe) => (
-            <RecipeRow
-              key={recipe.code}
-              recipe={recipe}
-              onEdit={editInBuilder}
-              onAskDelete={setPendingDelete}
-            />
-          ))}
-        </div>
-      )}
+        ))}
+      </DataList>
 
       {pendingDelete && (
         <ConfirmActionModal
           title="Confirmer la suppression de la recette"
           recap={[
             { label: "Recette", value: pendingDelete.name },
-            { label: "Catégorie", value: categories.find((c) => c.id === pendingDelete.categoryId)?.name ?? pendingDelete.categoryId },
+            { label: "Catégorie", value: categoryLabel(categories, pendingDelete.categoryId) },
             { label: "Type", value: RECIPE_KIND_LABELS[pendingDelete.kind] },
           ]}
           consequence="La recette sera retirée du catalogue. Si un planning l'utilise encore, l'API refusera la suppression."
@@ -124,6 +85,6 @@ export const RecipesTable = () => {
           onCancel={() => setPendingDelete(null)}
         />
       )}
-    </div>
+    </DataPanelShell>
   );
 };

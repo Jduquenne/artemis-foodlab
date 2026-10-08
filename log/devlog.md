@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — Slot labels: single source, « Collation » in the planning grid (v6.82.10)
+
+- Done: slot labels moved from `shared/utils/slotLabels.ts` to `core/domain/slotLabels.ts`: `SLOT_LABELS` (full: « Petit-déjeuner », « Déjeuner », « Dîner », « Collation », journal and shopping) and `SLOT_SHORT_LABELS` (planning grid: « Petit déj. », …), used by `SLOT_DISPLAY` (which keeps the icon and row height). Visible change, owner's choice: the planning grid says « Collation » instead of « Goûter ». The recipe filter type « Goûter » (pastries) is a different concept and is unchanged.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: `shared/` review part 2 (hooks), then stores and components.
+
 ## 2026-10-08 — `shared/` review, part 1: card adapter cleanup (v6.82.9)
 
 - Done: `cardAdapter` no longer rewrites zero macros (uses `ZERO`) nor rounds the 5 macros by hand twice: new `roundMacros` (`core/logic/nutrition/macroLogic.ts`). Identical card rendering.

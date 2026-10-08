@@ -5,7 +5,7 @@ import { getAllRecipeIds, hasDesserts } from "../../../../core/domain/recipePred
 import { computeSlotMacros, ZERO } from "../../../../core/logic/nutrition/macroLogic";
 import { useMacroCatalogue } from "../../../../shared/hooks/useMacroCatalogue";
 import { useActiveJournalOverrides } from "../../../../shared/hooks/useActiveJournalOverrides";
-import { SLOT_LABELS } from "../../../../shared/utils/slotLabels";
+import { SLOT_LABELS } from "../../../../core/domain/slotLabels";
 import { markScrolling } from "../../../../shared/utils/scrollGuard";
 import { RecipePortionRow } from "./RecipePortionRow";
 

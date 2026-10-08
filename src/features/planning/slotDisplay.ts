@@ -1,4 +1,5 @@
 import { SlotType } from "../../core/domain/planning";
+import { SLOT_SHORT_LABELS } from "../../core/domain/slotLabels";
 
 export interface SlotDisplay {
   label: string;
@@ -7,8 +8,8 @@ export interface SlotDisplay {
 }
 
 export const SLOT_DISPLAY: Record<SlotType, SlotDisplay> = {
-  breakfast: { label: "Petit déj.", icon: "☕", flex: 2 },
-  lunch: { label: "Déjeuner", icon: "🍴", flex: 3 },
-  snack: { label: "Goûter", icon: "🍎", flex: 2 },
-  dinner: { label: "Dîner", icon: "🌙", flex: 3 },
+  breakfast: { label: SLOT_SHORT_LABELS.breakfast, icon: "☕", flex: 2 },
+  lunch: { label: SLOT_SHORT_LABELS.lunch, icon: "🍴", flex: 3 },
+  snack: { label: SLOT_SHORT_LABELS.snack, icon: "🍎", flex: 2 },
+  dinner: { label: SLOT_SHORT_LABELS.dinner, icon: "🌙", flex: 3 },
 };

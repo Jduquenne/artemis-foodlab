@@ -3,7 +3,7 @@ import { buildSourceCheckKey } from '../../../core/logic/shopping/shoppingChecks
 import { SlotType } from '../../../core/domain/planning';
 import { pluralizeUnit } from '../../../core/logic/unit/unitFormatLogic';
 import { formatSourceDayFull, formatSourceDayShort } from '../../../core/utils/dateUtils';
-import { SLOT_LABELS } from '../../../shared/utils/slotLabels';
+import { SLOT_LABELS } from '../../../core/domain/slotLabels';
 import { useAnyPendingKey } from '../../../shared/hooks/useAnyPendingKey';
 import { CheckToggleIcon } from '../../../shared/components/ui/CheckToggleIcon';
 import { compareText } from "../../../core/utils/sortUtils";

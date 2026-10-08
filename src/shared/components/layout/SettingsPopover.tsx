@@ -2,6 +2,7 @@ import { lazy, Suspense, useRef, useState } from "react";
 import { Settings, Upload, Bell, UserCircle, ScrollText, Users } from "lucide-react";
 import { isValidSyncPayload, SyncPayload } from "../../../core/logic/sync/importPayloadLogic";
 import { ThemeToggle } from "./ThemeToggle";
+import { SettingsMenuItem } from "./SettingsMenuItem";
 import { useIsDemo } from "../../hooks/useIsDemo";
 
 const ImportModal = lazy(() => import("../../../features/sync/ImportModal").then(m => ({ default: m.ImportModal })));
@@ -63,43 +64,13 @@ export const SettingsPopover = () => {
           <>
             <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
             <div className="absolute bottom-0 left-full ml-3 z-50 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl shadow-xl overflow-hidden w-52">
-              <button
-                onClick={() => { setAccountOpen(true); setOpen(false); }}
-                className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors"
-              >
-                <UserCircle className="w-4 h-4 text-slate-400 shrink-0" />
-                Compte
-              </button>
-              <button
-                onClick={() => { setProfilesOpen(true); setOpen(false); }}
-                className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors border-t border-slate-100"
-              >
-                <Users className="w-4 h-4 text-slate-400 shrink-0" />
-                Profils
-              </button>
+              <SettingsMenuItem icon={<UserCircle className="w-4 h-4 text-slate-400 shrink-0" />} label="Compte" divided={false} onClick={() => { setAccountOpen(true); setOpen(false); }} />
+              <SettingsMenuItem icon={<Users className="w-4 h-4 text-slate-400 shrink-0" />} label="Profils" onClick={() => { setProfilesOpen(true); setOpen(false); }} />
               {!isDemo && (
-                <button
-                  onClick={() => { fileInputRef.current?.click(); setOpen(false); }}
-                  className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors border-t border-slate-100"
-                >
-                  <Upload className="w-4 h-4 text-slate-400 shrink-0" />
-                  Importer des données
-                </button>
+                <SettingsMenuItem icon={<Upload className="w-4 h-4 text-slate-400 shrink-0" />} label="Importer des données" onClick={() => { fileInputRef.current?.click(); setOpen(false); }} />
               )}
-              <button
-                onClick={() => { setNotifSettingsOpen(true); setOpen(false); }}
-                className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors border-t border-slate-100"
-              >
-                <Bell className="w-4 h-4 text-slate-400 shrink-0" />
-                Notifications
-              </button>
-              <button
-                onClick={() => { setLegalOpen(true); setOpen(false); }}
-                className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors border-t border-slate-100"
-              >
-                <ScrollText className="w-4 h-4 text-slate-400 shrink-0" />
-                Informations légales
-              </button>
+              <SettingsMenuItem icon={<Bell className="w-4 h-4 text-slate-400 shrink-0" />} label="Notifications" onClick={() => { setNotifSettingsOpen(true); setOpen(false); }} />
+              <SettingsMenuItem icon={<ScrollText className="w-4 h-4 text-slate-400 shrink-0" />} label="Informations légales" onClick={() => { setLegalOpen(true); setOpen(false); }} />
               <div className="flex items-center justify-between px-4 py-1.5 border-t border-slate-100">
                 <span className="text-sm text-slate-700">Thème</span>
                 <ThemeToggle />

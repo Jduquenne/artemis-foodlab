@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — `shared/` review, part 4: layout duplicates (v6.82.14)
+
+- Done: sidebar links (5 in `SidebarNav` + 2 admin links in `Layout`) → `SidebarLink`; the 5 settings menu buttons → `SettingsMenuItem`; `FORM_INPUT_CLASS` moved from the dashboard to `shared/components/ui/formStyles.ts` and reused by `AccountModal` (identical class). Identical rendering.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: step 3 (last theme classes, end of the code review).
+
 ## 2026-10-08 — `shared/` review, part 4: SVG card escaping (v6.82.13)
 
 - Done: read-only review of `shared/components/` (findings in `dev/refactoring.md`). Fix (security): the food card label (`[[FOOD_LABEL]]`, name of an ingredient-type recipe) was inserted into SVG injected with `dangerouslySetInnerHTML` without `escapeXml`; it is now escaped, image URLs too, and templates are filled by `fillTemplate` (split/join) so `$&`-like sequences in data are no longer interpreted (`shared/utils/cards/cardSvg.ts`). Identical rendering for normal names.

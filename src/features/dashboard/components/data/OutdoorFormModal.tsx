@@ -16,7 +16,7 @@ import {
 import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
 import { FormModalShell } from "../common/FormModalShell";
 import { FormField } from "../common/FormField";
-import { FORM_INPUT_CLASS as INPUT_CLASS } from "../common/formStyles";
+import { FORM_INPUT_CLASS as INPUT_CLASS } from "../../../../shared/components/ui/formStyles";
 import { PhotoField } from "../../../../shared/components/ui/PhotoField";
 
 export interface OutdoorFormModalProps {

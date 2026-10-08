@@ -1,5 +1,6 @@
 import { LayoutDashboard, UtensilsCrossed, CalendarDays, ShoppingCart, Snowflake } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { SidebarLink } from "./SidebarLink";
 
 const navItems = [
   { icon: <LayoutDashboard />, path: "/journal", label: "Journal" },
@@ -15,17 +16,7 @@ export const SidebarNav = () => {
   return (
     <nav className="flex flex-col gap-3 tablet:gap-5">
       {navItems.map((item) => (
-        <Link
-          key={item.path}
-          to={item.path}
-          title={item.label}
-          className={`p-2.5 tablet:p-3 rounded-xl transition-colors ${location.pathname.startsWith(item.path)
-            ? "bg-orange-100 dark:bg-orange-900/40 text-orange-600 dark:text-orange-400"
-            : "text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200"
-            }`}
-        >
-          {item.icon}
-        </Link>
+        <SidebarLink key={item.path} to={item.path} label={item.label} icon={item.icon} active={location.pathname.startsWith(item.path)} />
       ))}
     </nav>
   );

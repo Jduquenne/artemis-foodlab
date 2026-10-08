@@ -13,7 +13,7 @@ import { RoleToggle } from "./RoleToggle";
 import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
 import { FormModalShell } from "../common/FormModalShell";
 import { FormField } from "../common/FormField";
-import { FORM_INPUT_CLASS as INPUT_CLASS } from "../common/formStyles";
+import { FORM_INPUT_CLASS as INPUT_CLASS } from "../../../../shared/components/ui/formStyles";
 
 export interface UserFormModalProps {
   onClose: () => void;

@@ -4,13 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { changePassword, logout, updateMe } from "../../../core/services/authService";
 import { useAuthStore } from "../../store/useAuthStore";
 import { PASSWORD_MIN_LENGTH } from "../../../core/domain/user";
+import { FORM_INPUT_CLASS as INPUT_CLASS } from "./formStyles";
 
 export interface AccountModalProps {
   onClose: () => void;
 }
-
-const INPUT_CLASS =
-  "rounded-lg border border-slate-200 bg-white dark:bg-slate-100 px-2.5 py-1.5 text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400";
 
 const messageOf = (err: unknown): string =>
   err instanceof Error && err.message ? err.message : "Une erreur est survenue.";

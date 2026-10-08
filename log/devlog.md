@@ -16,6 +16,19 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — Session end (« pause test », v6.82.19)
+
+- Done this session (v6.79.7 → 6.82.18, one commit per step): P4 code review finished and closed — `features/planning` (desserts kept on dish replacement, writes with pending + errors, local dates, module split, dessert choice window on drag), `dashboard` (shared building blocks), `recipeBuilder` (locked identity of a loaded recipe, « Variante », mandatory dish photo), `recipes` (not-found page), `news` + `sync`, `shared/` (D-032 utilities split: `core/utils/`, business helpers in `core/logic/`, `core/` no longer imports `shared/`; SVG card escaping fix; safe browser storage), named theme colours everywhere (0 `dark:*-slate-*` left). Also: mandatory outdoor activity photo (API live), ISO week-year fix (no data to migrate), favicon in local dev, « Collation » slot label.
+- Resume here: owner's test results; then P5 tablet portrait pass (Courses, Recettes, Congélateur, Recipe Builder, Dashboard) or fixes from the tests. Deferred items in `docs/roadmap.md` § Ideas / later.
+- Before pushing `master`: `npm run build && grep -n "icon\|manifest" dist/index.html` (single `/artemis-foodlab/` prefix).
+- To test first (all validated by tsc + lint only), light **and** dark mode:
+  1. Planning: replace a dish that has desserts (desserts and their persons kept); « ajouter au planning » from a recipe and from a dessert; drag & drop with desserts, including the dessert choice window (> 3 desserts, unchecked ones deleted); copy; shopping days selection; double-click on a picker row; week navigation around 2025-12-29 (« Sem. 1 »); « Collation » label.
+  2. Recipe Builder: load a recipe (category + N° locked, name editable, update); new recipe with a taken N° (blocked); « Variante » (new name + photo); dish photo mandatory; « Nouvelle recette » confirmation; quantities with a comma; delete confirmation.
+  3. Dashboard: create / edit an outdoor activity with its photo (multipart, API live); foods / users forms; users list no longer flashes.
+  4. Recipes: unknown recipe URL → « Recette introuvable »; nutrition calculator with « 1,5 »; filters.
+  5. Everywhere: theme colours (whole app migrated), theme kept after reload, sidebar and settings menu, notifications.
+- Still open: owner's confirmation of the API demo seeding deployment.
+
 ## 2026-10-08 — P4 code review closed (v6.82.18)
 
 - Done: phase P4 closed with the owner's agreement. Every folder of `src/` reviewed; open points of `dev/refactoring.md` closed or deferred: data import removal, category change of a recipe, ingredient card in search (deferred, `docs/roadmap.md` § Ideas / later); backdrop-close convention kept as is; decimals keep the dot display (owner). Roadmap focus moves to the P5 tablet portrait pass.

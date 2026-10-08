@@ -40,7 +40,7 @@ export const NewsModal = ({ onClose }: NewsModalProps) => {
       }}
     >
       <div
-        className={`bg-white dark:bg-slate-100 w-full max-w-md rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col max-h-[85vh] ${
+        className={`bg-white dark:bg-slate-100 w-full max-w-md rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col max-h-[85dvh] ${
           isClosing ? "modal-exit sm:modal-center-exit" : "modal-enter sm:modal-center-enter"
         }`}
       >
@@ -50,6 +50,7 @@ export const NewsModal = ({ onClose }: NewsModalProps) => {
             <h2 className="text-base font-semibold text-slate-800">Nouveautés</h2>
           </div>
           <button
+            aria-label="Fermer"
             onClick={handleClose}
             className="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
           >

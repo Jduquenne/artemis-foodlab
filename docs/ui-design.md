@@ -51,7 +51,7 @@ Target: iPad Air 820×1180 (DPR 2), used in portrait.
 
 ## Modals and menus
 
-- No modal closes on backdrop click or Escape (project convention).
+- No modal closes on backdrop click or Escape (project convention). Origin: written during the doc migration (2026-10-07), not found in the former `CLAUDE.md`; kept as is by the owner on 2026-10-08, to be revisited if it proves annoying in daily use. Existing modals that still close on backdrop (e.g. `NewsModal`) are left untouched until then.
 - Mobile menus: overlay `fixed inset-0 z-10` + menu `z-20`.
 
 ## Component patterns

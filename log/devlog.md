@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — `features/` review: news + sync, step 1 (v6.82.4)
+
+- Done: read-only review of `features/news` and `features/sync` (4 files), findings in `dev/refactoring.md`. Step 1: « Nouveautés » modal height in `dvh`, `aria-label` on its close button; import summary says « éléments » instead of the English « items » (owner's choice). The « no close on backdrop click » convention turned out to come from the doc migration, never explicitly validated: kept as is for now, to revisit if annoying in use (`docs/ui-design.md`); `NewsModal` still closes on backdrop.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: step 2 (import summary to `core/logic/sync`, recipe link via `buildRecipeDetailUrl`), step 3 (theme, 6 exact pairs).
+
 ## 2026-10-08 — Recipes migrated to the named theme colours (v6.82.3)
 
 - Done: the 23 `dark:*-slate-*` classes of `features/recipes` replaced by the named colours (D-031), all exact pairs, identical rendering (`bg-surface`, `bg-surface-raised`, `bg-muted`, `ring-strong` and their `hover:`). This closes the recipes review.

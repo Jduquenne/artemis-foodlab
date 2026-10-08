@@ -24,7 +24,7 @@ export const ShoppingDaysPicker = ({ days, isDraft, mealCount, atMax, onToggle }
                         onClick={() => !blocked && onToggle(day)}
                         className={[
                             'flex flex-col items-center gap-1 py-3 rounded-2xl transition-all',
-                            draft ? 'bg-orange-500 text-white shadow-lg shadow-orange-200 dark:shadow-orange-900/30' : 'bg-white dark:bg-slate-100 border border-slate-200 text-slate-500',
+                            draft ? 'bg-orange-500 text-white shadow-lg shadow-orange-200 dark:shadow-orange-900/30' : 'bg-surface border border-slate-200 text-slate-500',
                             blocked ? 'opacity-25 pointer-events-none' : '',
                         ].join(' ')}
                     >

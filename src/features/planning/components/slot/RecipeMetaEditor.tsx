@@ -47,7 +47,7 @@ export const RecipeMetaEditor = ({
     };
 
     return (
-        <div className="absolute inset-0 z-30 bg-white/97 dark:bg-slate-100/97 rounded-xl flex flex-col items-center justify-center gap-3 px-3">
+        <div className="absolute inset-0 z-30 bg-surface/97 rounded-xl flex flex-col items-center justify-center gap-3 px-3">
             <div className={`flex gap-4 ${showGrams ? '' : 'justify-center'}`}>
                 <div className="flex flex-col items-center gap-1">
                     <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-0.5">
@@ -61,7 +61,7 @@ export const RecipeMetaEditor = ({
                         disabled={pending}
                         onValueChange={setDraftPersons}
                         onKeyDown={handleKeyDown}
-                        className="w-14 text-center text-xl font-black text-slate-900 bg-slate-100 dark:bg-slate-200 rounded-xl py-1.5 border-0 outline-none focus:ring-2 focus:ring-orange-400 disabled:opacity-50"
+                        className="w-14 text-center text-xl font-black text-slate-900 bg-muted rounded-xl py-1.5 border-0 outline-none focus:ring-2 focus:ring-orange-400 disabled:opacity-50"
                     />
                 </div>
                 {showGrams && (
@@ -74,7 +74,7 @@ export const RecipeMetaEditor = ({
                                 disabled={pending}
                                 onValueChange={setDraftGrams}
                                 onKeyDown={handleKeyDown}
-                                className="w-14 text-center text-xl font-black text-slate-900 bg-slate-100 dark:bg-slate-200 rounded-xl py-1.5 border-0 outline-none focus:ring-2 focus:ring-orange-400 disabled:opacity-50"
+                                className="w-14 text-center text-xl font-black text-slate-900 bg-muted rounded-xl py-1.5 border-0 outline-none focus:ring-2 focus:ring-orange-400 disabled:opacity-50"
                             />
                             <span className="text-xs font-bold text-slate-400">g</span>
                         </div>
@@ -96,7 +96,7 @@ export const RecipeMetaEditor = ({
                     onClick={() => { setDraftPersons(defaultPersons); setDraftGrams(defaultGrams); }}
                     disabled={pending}
                     title="Remettre par défaut"
-                    className="p-2 bg-slate-200 dark:bg-slate-300 text-slate-500 rounded-xl hover:bg-slate-300 transition-colors disabled:opacity-60"
+                    className="p-2 bg-strong text-slate-500 rounded-xl hover:bg-slate-300 transition-colors disabled:opacity-60"
                 >
                     <RotateCcw size={15} />
                 </button>
@@ -105,7 +105,7 @@ export const RecipeMetaEditor = ({
                     onPointerDown={(e) => e.stopPropagation()}
                     onClick={onCancel}
                     disabled={pending}
-                    className="p-2 bg-slate-200 dark:bg-slate-300 text-slate-600 rounded-xl hover:bg-slate-300 transition-colors disabled:opacity-60"
+                    className="p-2 bg-strong text-slate-600 rounded-xl hover:bg-slate-300 transition-colors disabled:opacity-60"
                 >
                     <X size={15} />
                 </button>

@@ -21,7 +21,7 @@ export const DayColumnHeader = ({ day, dayIndex, monday, kcal, isSelectionMode, 
             isSelectionMode ? (blocked ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer') : '',
             selected ? 'text-orange-500 bg-orange-100 dark:bg-orange-900/30' : '',
             confirmed ? 'text-orange-400' : 'text-slate-400',
-            isSelectionMode && !selected && !blocked ? 'hover:bg-slate-100 dark:hover:bg-slate-700/40' : '',
+            isSelectionMode && !selected && !blocked ? 'hover:bg-muted' : '',
         ].join(' ')}
     >
         <div className="flex items-center gap-1 text-xs tablet:flex-col tablet:gap-0">

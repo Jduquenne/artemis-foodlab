@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — Planning migrated to the named theme colours (v6.79.12)
+
+- Done: the 55 `dark:*-slate-*` classes of `features/planning` replaced by the named colours (D-031). 46 exact pairs, identical rendering. 9 one-offs, owner's choices: shopping selection bar hovers and desktop day header hover → `hover:bg-muted`; picker close buttons → `hover:bg-surface-raised/60`; empty dessert / breakfast cells → `bg-muted/50` (more visible in dark mode); edge zones while dragging: text `text-slate-400` only, progress track `bg-strong/60`. This closes the planning review.
+- Numbers: `npx tsc -b` + `npm run lint` pass; theme check 127 occurrences in 56 files left; not checked in a browser (light and dark mode).
+- Still open: next `features/` folder (dashboard); dessert choice window when a drag would exceed 3 desserts (owner: what happens to unchecked desserts?); ISO week-year bug.
+
 ## 2026-10-08 — `features/` review: planning, step 5 (v6.79.11)
 
 - Done: photo + veil + name block (copied 5 times) → `MealPhoto` (`compact`, `showName`, `eager`); drag grip + dnd-kit prop types (2 copies) → `DragHandle`; component `MealSlot` (same name as the domain type, imported as `MealSlotComp`) renamed `SingleMealSlot`; non-null assertions removed (`recipe!`, `savedMeal!`, `displayPersons!`, `MEAL_SLOTS.find(…)!`…); recipe meta editor defaults computed once in `MultiMealSlot`; `vh` → `dvh` (module height, pickers); `MoveDessertsPrompt` no longer closes on backdrop click; « Reset » → « Réinitialiser » and the bar uses `MAX_SHOPPING_DAYS`.

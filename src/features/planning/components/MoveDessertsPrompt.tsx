@@ -13,7 +13,7 @@ export const MoveDessertsPrompt = ({ dessertCount, pendingChoice, onMove, onKeep
 
     return (
         <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="bg-white dark:bg-slate-100 rounded-2xl shadow-2xl w-full max-w-sm p-5">
+            <div className="bg-surface rounded-2xl shadow-2xl w-full max-w-sm p-5">
                 <p className="text-xs font-black text-orange-600 uppercase tracking-widest mb-1.5">Déplacer le repas</p>
                 <p className="text-sm text-slate-600 mb-5">
                     Ce repas a {dessertCount} dessert{dessertCount > 1 ? 's' : ''}. Tu veux les déplacer avec lui, ou les laisser sur place ?
@@ -30,7 +30,7 @@ export const MoveDessertsPrompt = ({ dessertCount, pendingChoice, onMove, onKeep
                     <button
                         onClick={onKeep}
                         disabled={pending}
-                        className="w-full py-2.5 rounded-xl bg-slate-100 dark:bg-slate-200 text-slate-700 text-sm font-bold hover:bg-slate-200 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                        className="w-full py-2.5 rounded-xl bg-muted text-slate-700 text-sm font-bold hover:bg-slate-200 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                     >
                         {pendingChoice === 'keep' && <Loader2 className="w-4 h-4 animate-spin" />}
                         Laisser sur place

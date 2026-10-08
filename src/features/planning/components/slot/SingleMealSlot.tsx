@@ -98,7 +98,7 @@ export const SingleMealSlot = ({
         <>
             <button
                 onClick={handleMainClick}
-                className={`relative w-full h-full rounded-xl border-2 transition-all overflow-hidden bg-white dark:bg-slate-100 ${borderClass} ${hasPhoto && !hasRecipesPage ? 'cursor-default' : ''}`}
+                className={`relative w-full h-full rounded-xl border-2 transition-all overflow-hidden bg-surface ${borderClass} ${hasPhoto && !hasRecipesPage ? 'cursor-default' : ''}`}
             >
                 {recipe && hasPhoto ? (
                     <div className="relative w-full h-full">
@@ -110,7 +110,7 @@ export const SingleMealSlot = ({
                             <span className="text-2xl">{icon}</span>
                             <span className="text-[12px] font-black uppercase tracking-tighter">{label}</span>
                         </div>
-                        <div className="absolute bottom-1 right-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-orange-500 rounded-lg border border-slate-200">
+                        <div className="absolute bottom-1 right-1 p-1.5 bg-surface-raised/90 text-orange-500 rounded-lg border border-slate-200">
                             <Plus size={14} />
                         </div>
                     </>

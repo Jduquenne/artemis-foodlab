@@ -34,18 +34,18 @@ export const DessertPicker = ({ existingIds, onSelect, onClose }: DessertPickerP
 
     return (
         <div className="fixed inset-0 z-100 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4">
-            <div className={`bg-white dark:bg-slate-100 w-full max-w-2xl h-[70dvh] rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden ${isClosing ? 'modal-exit sm:modal-center-exit' : 'modal-enter sm:modal-center-enter'}`}>
+            <div className={`bg-surface w-full max-w-2xl h-[70dvh] rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden ${isClosing ? 'modal-exit sm:modal-center-exit' : 'modal-enter sm:modal-center-enter'}`}>
                 <div className="p-6 border-b border-slate-200 flex justify-between items-center bg-orange-50 dark:bg-orange-950/30 shrink-0">
                     <div>
                         <h2 className="text-xl font-black text-slate-900">Ajouter un dessert</h2>
                         <p className="text-orange-600 dark:text-orange-400 font-bold uppercase text-xs tracking-widest">max {MAX_DESSERTS_PER_SLOT}</p>
                     </div>
-                    <button aria-label="Fermer" onClick={handleClose} className="p-2 hover:bg-white/60 dark:hover:bg-slate-200/40 rounded-full transition-all">
+                    <button aria-label="Fermer" onClick={handleClose} className="p-2 hover:bg-surface-raised/60 rounded-full transition-all">
                         <X size={24} className="text-slate-400" />
                     </button>
                 </div>
 
-                <div className="p-4 bg-white dark:bg-slate-100 shrink-0">
+                <div className="p-4 bg-surface shrink-0">
                     <SearchBar value={query} onChange={setQuery} onClear={() => setQuery('')} />
                 </div>
 
@@ -75,7 +75,7 @@ export const DessertPicker = ({ existingIds, onSelect, onClose }: DessertPickerP
                                             <Loader2 size={20} className="animate-spin" />
                                         </div>
                                     ) : alreadyAdded ? (
-                                        <div className="bg-slate-200 dark:bg-slate-300 text-slate-500 p-2 rounded-full">
+                                        <div className="bg-strong text-slate-500 p-2 rounded-full">
                                             <Check size={20} />
                                         </div>
                                     ) : (

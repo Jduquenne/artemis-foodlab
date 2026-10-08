@@ -61,13 +61,13 @@ export const MultiRecipeGrid = ({
                         key={`add-${idx}`}
                         onPointerDown={(e) => e.stopPropagation()}
                         onClick={(e) => { e.stopPropagation(); onAdd(); }}
-                        className="flex-1 min-w-0 rounded-lg bg-slate-100 dark:bg-slate-200 border border-dashed border-slate-300 flex items-center justify-center hover:bg-orange-50 hover:border-orange-300 transition-colors"
+                        className="flex-1 min-w-0 rounded-lg bg-muted border border-dashed border-slate-300 flex items-center justify-center hover:bg-orange-50 hover:border-orange-300 transition-colors"
                     >
                         <Plus size={10} className="text-slate-400" />
                     </button>
                 );
             }
-            return <div key={`ph-${idx}`} className="flex-1 min-w-0 rounded-lg bg-slate-100/40 dark:bg-slate-200/20" />;
+            return <div key={`ph-${idx}`} className="flex-1 min-w-0 rounded-lg bg-muted/50" />;
         })}
     </div>
 );

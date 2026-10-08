@@ -98,7 +98,7 @@ export const DessertCell = ({ slotId, recipeId, onRemove, isAddMode, onCopy, isC
 
             {isEditingPersons && (
                 <div
-                    className="absolute inset-0 z-20 bg-white/95 dark:bg-slate-100/95 rounded-lg flex flex-col items-center justify-center gap-1 px-1"
+                    className="absolute inset-0 z-20 bg-surface/95 rounded-lg flex flex-col items-center justify-center gap-1 px-1"
                     onPointerDown={(e) => e.stopPropagation()}
                 >
                     <span className="text-[8px] font-black uppercase tracking-widest text-slate-500">Pers.</span>
@@ -106,7 +106,7 @@ export const DessertCell = ({ slotId, recipeId, onRemove, isAddMode, onCopy, isC
                         <button
                             onClick={(e) => { e.stopPropagation(); setDraft(v => Math.max(1, v - 1)); }}
                             disabled={savingPersons}
-                            className="w-5 h-5 flex items-center justify-center rounded bg-slate-100 dark:bg-slate-200 text-slate-600 hover:bg-slate-200 disabled:opacity-50"
+                            className="w-5 h-5 flex items-center justify-center rounded bg-muted text-slate-600 hover:bg-slate-200 disabled:opacity-50"
                         >
                             <Minus size={10} />
                         </button>
@@ -114,7 +114,7 @@ export const DessertCell = ({ slotId, recipeId, onRemove, isAddMode, onCopy, isC
                         <button
                             onClick={(e) => { e.stopPropagation(); setDraft(v => Math.min(10, v + 1)); }}
                             disabled={savingPersons}
-                            className="w-5 h-5 flex items-center justify-center rounded bg-slate-100 dark:bg-slate-200 text-slate-600 hover:bg-slate-200 disabled:opacity-50"
+                            className="w-5 h-5 flex items-center justify-center rounded bg-muted text-slate-600 hover:bg-slate-200 disabled:opacity-50"
                         >
                             <Plus size={10} />
                         </button>
@@ -123,7 +123,7 @@ export const DessertCell = ({ slotId, recipeId, onRemove, isAddMode, onCopy, isC
                         <button onClick={confirmPersons} disabled={savingPersons} className="p-1 bg-orange-500 text-white rounded-md disabled:opacity-60">
                             {savingPersons ? <Loader2 size={10} className="animate-spin" /> : <Check size={10} />}
                         </button>
-                        <button onClick={cancelPersons} disabled={savingPersons} className="p-1 bg-slate-200 dark:bg-slate-300 text-slate-600 rounded-md disabled:opacity-60">
+                        <button onClick={cancelPersons} disabled={savingPersons} className="p-1 bg-strong text-slate-600 rounded-md disabled:opacity-60">
                             <X size={10} />
                         </button>
                     </div>

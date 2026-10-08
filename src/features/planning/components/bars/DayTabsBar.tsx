@@ -19,7 +19,7 @@ export const DayTabsBar = ({
     isDraft, isConfirmed, hasMeals,
     atMax, onSelectDay, onToggleDraft,
 }: DayTabsBarProps) => (
-    <div className="sm:hidden grid grid-cols-7 gap-0.5 shrink-0 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl p-1 shadow-sm">
+    <div className="sm:hidden grid grid-cols-7 gap-0.5 shrink-0 bg-surface border border-slate-200 rounded-2xl p-1 shadow-sm">
         {days.map((day, i) => {
             const isActive = !isSelectionMode && selectedDay === day;
             const draft = isDraft(day);
@@ -40,7 +40,7 @@ export const DayTabsBar = ({
                         'flex flex-col items-center py-1.5 rounded-xl transition-all select-none',
                         isActive ? 'bg-orange-500 text-white shadow-sm' : '',
                         draft ? 'bg-orange-500 text-white shadow-sm' : '',
-                        !isActive && !draft ? 'text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200' : '',
+                        !isActive && !draft ? 'text-slate-400 hover:bg-muted' : '',
                         blocked ? 'opacity-30' : '',
                     ].join(' ')}
                 >

@@ -68,7 +68,7 @@ export const DessertColumn = ({
                 </button>
             )}
             {Array.from({ length: placeholderCount }).map((_, i) => (
-                <div key={`ph-${i}`} className="flex-1 min-h-0 rounded-lg bg-slate-100/50 dark:bg-slate-200/20" />
+                <div key={`ph-${i}`} className="flex-1 min-h-0 rounded-lg bg-muted/50" />
             ))}
             {isTargetMode && (
                 <div className={`absolute inset-0 rounded-lg pointer-events-none flex items-center justify-center ${dessertCopyTargetState === 'selected'

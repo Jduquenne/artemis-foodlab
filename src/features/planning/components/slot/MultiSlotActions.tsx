@@ -32,7 +32,7 @@ export const MultiSlotActions = ({
                 onPointerDown={(e) => e.stopPropagation()}
                 onClick={(e) => { e.stopPropagation(); if (!removePending) onRemoveRecipe(recipeIds[0]); }}
                 disabled={removePending}
-                className={`absolute bottom-1 left-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-red-500 rounded-lg shadow-md border border-slate-200 hover:bg-red-50 dark:hover:bg-red-950/40 z-20 transition-opacity disabled:opacity-60 ${IS_TOUCH || removePending ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+                className={`absolute bottom-1 left-1 p-1.5 bg-surface-raised/90 text-red-500 rounded-lg shadow-md border border-slate-200 hover:bg-red-50 dark:hover:bg-red-950/40 z-20 transition-opacity disabled:opacity-60 ${IS_TOUCH || removePending ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
             >
                 {removePending ? <Loader2 size={14} className="animate-spin" /> : <X size={14} />}
             </button>
@@ -43,7 +43,7 @@ export const MultiSlotActions = ({
                 aria-label="Copier ce repas"
                 onPointerDown={(e) => e.stopPropagation()}
                 onClick={(e) => { e.stopPropagation(); onCopyRecipe(recipeIds[0]); }}
-                className={`absolute top-1 left-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-violet-500 rounded-lg shadow-md border border-slate-200 hover:bg-violet-50 dark:hover:bg-violet-950/40 z-20 transition-opacity ${IS_TOUCH ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+                className={`absolute top-1 left-1 p-1.5 bg-surface-raised/90 text-violet-500 rounded-lg shadow-md border border-slate-200 hover:bg-violet-50 dark:hover:bg-violet-950/40 z-20 transition-opacity ${IS_TOUCH ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
             >
                 <Copy size={14} />
             </button>
@@ -54,7 +54,7 @@ export const MultiSlotActions = ({
                 aria-label="Ajouter un repas"
                 onPointerDown={(e) => e.stopPropagation()}
                 onClick={(e) => { e.stopPropagation(); onAdd(); }}
-                className={`absolute bottom-1 right-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-orange-500 rounded-lg shadow-md border border-slate-200 hover:bg-orange-50 dark:hover:bg-orange-950/40 z-20 transition-opacity ${IS_TOUCH ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+                className={`absolute bottom-1 right-1 p-1.5 bg-surface-raised/90 text-orange-500 rounded-lg shadow-md border border-slate-200 hover:bg-orange-50 dark:hover:bg-orange-950/40 z-20 transition-opacity ${IS_TOUCH ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
             >
                 <Plus size={14} />
             </button>

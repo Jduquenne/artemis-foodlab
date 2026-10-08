@@ -42,7 +42,7 @@ export const WeekNavZone = ({ direction, visible, isActive }: WeekNavZoneProps) 
         ].join(' ')}>
             <div className={[
                 'flex flex-col items-center gap-2 transition-all duration-200',
-                isActive ? 'scale-110 text-orange-500' : 'text-slate-400 dark:text-slate-500',
+                isActive ? 'scale-110 text-orange-500' : 'text-slate-400',
             ].join(' ')}>
                 {isPrev
                     ? <ChevronLeft size={30} strokeWidth={2.5} />
@@ -52,7 +52,7 @@ export const WeekNavZone = ({ direction, visible, isActive }: WeekNavZoneProps) 
                     {isPrev ? <>Sem.<br />préc.</> : <>Sem.<br />suiv.</>}
                 </span>
             </div>
-            <div className="absolute bottom-0 left-0 w-full h-[3px] bg-slate-200/60 dark:bg-slate-700/60">
+            <div className="absolute bottom-0 left-0 w-full h-[3px] bg-strong/60">
                 <div
                     className="h-full w-full bg-orange-500 origin-left"
                     style={{ transform: `scaleX(${progress})` }}

@@ -33,7 +33,7 @@ export const RecipeCell = ({ slotId, recipeId, onNavigate, onRemove, onCopy, hid
         <div className="relative group/cell w-full h-full min-h-0 flex-1 min-w-0">
             <button
                 onClick={hasRecipesPage && !hideRemove ? onNavigate : undefined}
-                className={`w-full h-full rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-200 ${!hasRecipesPage || hideRemove ? 'cursor-default' : ''}`}
+                className={`w-full h-full rounded-lg overflow-hidden bg-muted ${!hasRecipesPage || hideRemove ? 'cursor-default' : ''}`}
             >
                 {hasPhoto && recipe && (
                     <div className="relative w-full h-full">
@@ -66,7 +66,7 @@ export const RecipeCell = ({ slotId, recipeId, onNavigate, onRemove, onCopy, hid
                     onPointerDown={(e) => e.stopPropagation()}
                     onClick={(e) => { e.stopPropagation(); if (!removePending) onRemove(); }}
                     disabled={removePending}
-                    className={`absolute top-0.5 right-0.5 p-0.5 bg-white/90 dark:bg-slate-100/90 text-red-400 rounded transition-opacity z-10 shadow-sm disabled:opacity-60 ${IS_TOUCH || removePending ? 'opacity-100' : 'opacity-0 group-hover/cell:opacity-100'}`}
+                    className={`absolute top-0.5 right-0.5 p-0.5 bg-surface/90 text-red-400 rounded transition-opacity z-10 shadow-sm disabled:opacity-60 ${IS_TOUCH || removePending ? 'opacity-100' : 'opacity-0 group-hover/cell:opacity-100'}`}
                 >
                     {removePending ? <Loader2 size={9} className="animate-spin" /> : <X size={9} />}
                 </button>
@@ -81,7 +81,7 @@ export const RecipeCell = ({ slotId, recipeId, onNavigate, onRemove, onCopy, hid
                     aria-label="Copier ce repas"
                     onPointerDown={(e) => e.stopPropagation()}
                     onClick={(e) => { e.stopPropagation(); onCopy(); }}
-                    className={`absolute bottom-0.5 right-0.5 p-0.5 bg-white/90 dark:bg-slate-100/90 text-violet-400 rounded transition-opacity z-10 shadow-sm ${IS_TOUCH ? 'opacity-100' : 'opacity-0 group-hover/cell:opacity-100'}`}
+                    className={`absolute bottom-0.5 right-0.5 p-0.5 bg-surface/90 text-violet-400 rounded transition-opacity z-10 shadow-sm ${IS_TOUCH ? 'opacity-100' : 'opacity-0 group-hover/cell:opacity-100'}`}
                 >
                     <Copy size={9} />
                 </button>

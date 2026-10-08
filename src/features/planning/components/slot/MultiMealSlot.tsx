@@ -131,7 +131,7 @@ export const MultiMealSlot = ({
             className={`relative w-full h-full group ${isAddMode && isFull ? 'pointer-events-none' : ''}`}
             onClick={handleClick}
         >
-            <div className={`relative w-full h-full rounded-xl border-2 transition-all overflow-hidden bg-white dark:bg-slate-100 ${borderClass}`}>
+            <div className={`relative w-full h-full rounded-xl border-2 transition-all overflow-hidden bg-surface ${borderClass}`}>
 
                 {!hasRecipes && (
                     <>
@@ -142,7 +142,7 @@ export const MultiMealSlot = ({
                             <span className="text-lg">{icon}</span>
                             <span className="text-[12px] font-black uppercase tracking-tighter">{label}</span>
                         </button>
-                        <div className="absolute bottom-1 right-1 p-1.5 bg-white/90 dark:bg-slate-200/90 text-orange-500 rounded-lg border border-slate-200 pointer-events-none">
+                        <div className="absolute bottom-1 right-1 p-1.5 bg-surface-raised/90 text-orange-500 rounded-lg border border-slate-200 pointer-events-none">
                             <Plus size={14} />
                         </div>
                     </>

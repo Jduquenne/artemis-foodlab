@@ -53,7 +53,7 @@ export const ImportModal = ({ payload, onClose }: ImportModalProps) => {
 
   return (
     <div className="fixed inset-0 z-100 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4">
-      <div className={`bg-white dark:bg-slate-100 w-full max-w-sm rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden max-h-[90dvh] ${isClosing ? "modal-exit sm:modal-center-exit" : "modal-enter sm:modal-center-enter"}`}>
+      <div className={`bg-surface w-full max-w-sm rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden max-h-[90dvh] ${isClosing ? "modal-exit sm:modal-center-exit" : "modal-enter sm:modal-center-enter"}`}>
         <div className="p-5 border-b border-slate-200 flex justify-between items-center bg-orange-50 dark:bg-orange-950/30 shrink-0">
           <div>
             <h2 className="text-lg font-black text-slate-900">{title}</h2>
@@ -103,7 +103,7 @@ export const ImportModal = ({ payload, onClose }: ImportModalProps) => {
               <button
                 onClick={() => { setPhase("select"); setConflictMsg(""); }}
                 disabled={submitting}
-                className="flex-1 py-3 bg-slate-100 dark:bg-slate-200 hover:bg-slate-200 text-slate-600 font-bold rounded-2xl transition-colors disabled:opacity-40"
+                className="flex-1 py-3 bg-muted hover:bg-slate-200 text-slate-600 font-bold rounded-2xl transition-colors disabled:opacity-40"
               >
                 Annuler
               </button>

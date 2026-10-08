@@ -34,7 +34,7 @@ export const ScopeSelector = ({ selected, available = ALL_SCOPES, onChange }: Sc
                         className={`flex items-center gap-3 w-full p-3 rounded-xl border-2 transition-colors text-left ${
                             isSelected
                                 ? "border-orange-400 bg-orange-50 dark:bg-orange-950/30"
-                                : "border-slate-200 dark:border-slate-300 bg-white dark:bg-slate-100"
+                                : "border-strong bg-surface"
                         }`}
                     >
                         <div className={`shrink-0 ${isSelected ? "text-orange-500" : "text-slate-400"}`}>

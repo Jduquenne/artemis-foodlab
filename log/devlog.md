@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — News + sync migrated to the named theme colours (v6.82.6)
+
+- Done: the 7 `dark:*-slate-*` classes of `features/news` and `features/sync` replaced by the named colours (D-031), all exact pairs, identical rendering. This closes the news + sync review and the whole `features/` review.
+- Numbers: `npx tsc -b` + `npm run lint` pass; theme check 37 occurrences in 15 files left, none in `features/`; not checked in a browser.
+- Still open: `shared/` review (with the `core` → `shared` layering fix, `SLOT_LABELS` vs `SLOT_DISPLAY`, `DecimalInput` comma display); outdoor activity photo waiting for the API deployment; data import removal (later).
+
 ## 2026-10-08 — `features/` review: news + sync, step 2 (v6.82.5)
 
 - Done: import summary sentence and the `ImportResult` type moved from `ImportModal` / `importService` to `core/logic/sync/importSummaryLogic.ts` (`formatImportSummary`); « Nouveautés » navigates with `buildRecipeDetailUrl`. Identical behaviour.

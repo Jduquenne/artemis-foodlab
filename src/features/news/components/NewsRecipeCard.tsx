@@ -16,7 +16,7 @@ export const NewsRecipeCard = ({ recipe, onClick }: NewsRecipeCardProps) => {
   return (
     <button
       onClick={onClick}
-      className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors text-left"
+      className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-subtle transition-colors text-left"
     >
       <AsyncImage asset={recipe.assets?.mealPhoto} alt={recipe.name} wrapperClassName="w-12 h-12 rounded-lg shrink-0" className="object-cover" />
       <div className="flex-1 min-w-0">

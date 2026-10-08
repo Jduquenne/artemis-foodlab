@@ -41,7 +41,7 @@ export const NewsModal = ({ onClose }: NewsModalProps) => {
       }}
     >
       <div
-        className={`bg-white dark:bg-slate-100 w-full max-w-md rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col max-h-[85dvh] ${
+        className={`bg-surface w-full max-w-md rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col max-h-[85dvh] ${
           isClosing ? "modal-exit sm:modal-center-exit" : "modal-enter sm:modal-center-enter"
         }`}
       >
@@ -53,7 +53,7 @@ export const NewsModal = ({ onClose }: NewsModalProps) => {
           <button
             aria-label="Fermer"
             onClick={handleClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
+            className="p-1.5 rounded-lg text-slate-400 hover:bg-muted transition-colors"
           >
             <X className="w-4 h-4" />
           </button>

@@ -8,7 +8,7 @@ import {
   defaultIngredientOverridesForPortions,
   scaleIngredientsByRatio,
 } from "../../core/logic/journal/journalOverrideLogic";
-import { RECIPE_BASE_GRAMS } from "../utils/macroUtils";
+import { RECIPE_BASE_GRAMS } from "../../core/catalogue/recipeMetrics";
 import { useProfileStore } from "./useProfileStore";
 
 interface JournalState {

@@ -2,7 +2,7 @@ import { HouseholdItem } from "../domain/household";
 import { Food } from "../domain/ingredient";
 import { Category } from "../domain/recipe";
 import { replaceCategories } from "../catalogue/categories";
-import { refreshRecipeMacros } from "../../shared/utils/macroUtils";
+import { refreshRecipeMacros } from "../catalogue/recipeMetrics";
 import { replaceFoods, foodsCatalogue } from "../catalogue/foods";
 import { putRecipe, removeRecipe, replaceRecipes, recipesCatalogue } from "../catalogue/recipes";
 import { replaceOutdoor, outdoorCatalogue } from "../catalogue/outdoor";

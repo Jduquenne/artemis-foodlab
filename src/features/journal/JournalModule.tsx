@@ -3,7 +3,7 @@ import { addDays, subDays } from "date-fns";
 import { getWeekNumber, getMonday, dayNameOf } from "../../core/utils/weekUtils";
 import { getWeekSlots, syncWeekFromApi } from "../../core/services/planningService";
 import { MealSlot } from "../../core/domain/planning";
-import { computeDayMacros } from "../../shared/utils/macroUtils";
+import { computeDayMacros } from "../../core/logic/nutrition/macroLogic";
 import { useMacroCatalogue } from "../../shared/hooks/useMacroCatalogue";
 import { useActiveJournalOverrides } from "../../shared/hooks/useActiveJournalOverrides";
 import { useAuthStore } from "../../shared/store/useAuthStore";

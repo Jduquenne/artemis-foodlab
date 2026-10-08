@@ -3,7 +3,7 @@ import { X, Snowflake, ChevronDown, ChevronUp } from 'lucide-react';
 import { IngredientSource } from '../../../core/domain/shopping';
 import { groupAndSortSources } from '../../../core/logic/shopping/shoppingRecipeCards';
 import { FreezerBag } from '../../../core/domain/freezer';
-import { pluralizeUnit, formatQty } from '../../../shared/utils/unitUtils';
+import { pluralizeUnit, formatQty } from '../../../core/logic/unit/unitFormatLogic';
 import { FreezerBagRow } from './FreezerBagRow';
 import { SourceGroupRow } from './SourceGroupRow';
 import { totalBagQuantity } from '../../../core/logic/freezer/freezerStockLogic';

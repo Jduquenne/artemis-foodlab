@@ -1,7 +1,7 @@
 import { IngredientSource } from '../../../core/domain/shopping';
 import { buildSourceCheckKey } from '../../../core/logic/shopping/shoppingChecks';
 import { SlotType } from '../../../core/domain/planning';
-import { pluralizeUnit } from '../../../shared/utils/unitUtils';
+import { pluralizeUnit } from '../../../core/logic/unit/unitFormatLogic';
 import { formatSourceDayFull, formatSourceDayShort } from '../../../core/utils/dateUtils';
 import { SLOT_LABELS } from '../../../shared/utils/slotLabels';
 import { useAnyPendingKey } from '../../../shared/hooks/useAnyPendingKey';

@@ -1,6 +1,6 @@
 import { FoodFreezerItem, FreezerBag, FreezerCategory, FreezerItem } from "../../domain/freezer";
 import { isBatchItem, isFoodItem } from "../../domain/freezerPredicates";
-import { formatQty, pluralizeUnit } from "../../../shared/utils/unitUtils";
+import { formatQty, pluralizeUnit } from "../unit/unitFormatLogic";
 import { groupBy, sumBy } from "../../utils/collectionUtils";
 import { toNumber } from "../../utils/numberUtils";
 

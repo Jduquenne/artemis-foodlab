@@ -1,6 +1,6 @@
 import { HouseholdItem } from "../../domain/household";
 import { IngredientGroup } from "../../domain/shopping";
-import { formatQty, pluralizeUnit } from "../../../shared/utils/unitUtils";
+import { formatQty, pluralizeUnit } from "../unit/unitFormatLogic";
 import { isIngredientNeeded, remainingToBuy } from "./shoppingChecks";
 
 export function buildShoppingClipboardText(

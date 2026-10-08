@@ -35,7 +35,7 @@ Milestones reconstructed from history; definitions of done marked "proposed" wer
 - ✅ `core/services/` (2026-10-07; atomic freezer item + shopping period API calls).
 - ✅ `features/` (2026-10-08): shopping (incl. household tab, batch source checks), freezer, journal, planning, dashboard, recipeBuilder, recipes, news, sync.
 - ⬜ `shared/`.
-- ⬜ Layering: `core/logic/` imports `shared/utils/` (`docs/architecture.md` § Placement rules); fix during the `shared/` review.
+- ✅ Layering (2026-10-08, D-032): generic utilities in `core/utils/`, business ones in `core/logic/`, caches in `core/catalogue/recipeMetrics.ts`; `core/` no longer imports `shared/`.
 - 🟡 Theming: replace the pre-existing `dark:*-slate-*` pairs with the named theme colours (D-031), feature by feature, as each folder is reviewed. Done: Shopping (incl. household tab), Freezer, Journal, Planning, Dashboard, Recipe Builder, Recipes, News, Sync (all of `features/`). Remaining: 37 occurrences in 15 files on 2026-10-08, outside `features/` (`docs/development.md` § Golden-rule checks).
 
 ### P5 — Tablet portrait

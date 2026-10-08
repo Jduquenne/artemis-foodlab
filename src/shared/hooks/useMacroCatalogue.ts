@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { MacroCatalogue } from "../utils/macroUtils";
+import { MacroCatalogue } from "../../core/logic/nutrition/macroLogic";
 import { useFoodsSnapshot, usePlannableSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from "./useCatalogueSnapshot";
 
 export function useMacroCatalogue(): MacroCatalogue {

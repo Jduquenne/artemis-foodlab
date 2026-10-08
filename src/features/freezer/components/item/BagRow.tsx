@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { MoreVertical, Copy, Trash2, Pencil, AlertTriangle, Loader2 } from "lucide-react";
 import { FreezerBag } from "../../../../core/domain/freezer";
 import { addBagToFoodItem, removeBagFromFoodItem, updateBagInFoodItem } from "../../../../core/services/freezerService";
-import { pluralizeUnit } from "../../../../shared/utils/unitUtils";
+import { pluralizeUnit } from "../../../../core/logic/unit/unitFormatLogic";
 import { freezerItemAge } from "../../../../core/logic/freezer/freezerAgeLogic";
 import { FloatingMenu } from "../../../../shared/components/ui/FloatingMenu";
 import { usePendingKey } from "../../../../shared/hooks/usePendingKey";

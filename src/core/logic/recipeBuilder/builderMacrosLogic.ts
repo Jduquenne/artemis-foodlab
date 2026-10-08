@@ -2,7 +2,7 @@ import { Food } from "../../domain/ingredient";
 import { Macronutrients } from "../../domain/nutrition";
 import { RecipeDetails } from "../../domain/recipe";
 import { DraftIngredient } from "../../domain/recipeBuilderTypes";
-import { ZERO, addMacros, calculateRecipeMacros, scaleMacros, toGrams } from "../../../shared/utils/macroUtils";
+import { ZERO, addMacros, calculateRecipeMacros, scaleMacros, toGrams } from "../nutrition/macroLogic";
 
 export function computeDraftTotal(
   foods: Record<string, Food>,

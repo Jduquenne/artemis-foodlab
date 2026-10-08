@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { NUTRIENT_DEFINITIONS } from "../../../../core/domain/nutrition";
 import { MealSlot, SlotType } from "../../../../core/domain/planning";
 import { getAllRecipeIds, hasDesserts } from "../../../../core/domain/recipePredicates";
-import { computeSlotMacros, ZERO } from "../../../../shared/utils/macroUtils";
+import { computeSlotMacros, ZERO } from "../../../../core/logic/nutrition/macroLogic";
 import { useMacroCatalogue } from "../../../../shared/hooks/useMacroCatalogue";
 import { useActiveJournalOverrides } from "../../../../shared/hooks/useActiveJournalOverrides";
 import { SLOT_LABELS } from "../../../../shared/utils/slotLabels";

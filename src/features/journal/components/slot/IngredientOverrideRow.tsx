@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { RotateCcw } from "lucide-react";
 import { Ingredient } from "../../../../core/domain/ingredient";
-import { pluralizeUnit } from "../../../../shared/utils/unitUtils";
+import { pluralizeUnit } from "../../../../core/logic/unit/unitFormatLogic";
 import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
 
 export interface IngredientOverrideRowProps {

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { RecipeDetails } from "../../../core/domain/recipe";
-import { calculateRecipeMacros } from "../../utils/macroUtils";
+import { calculateRecipeMacros } from "../../../core/logic/nutrition/macroLogic";
 import { recipeToPhotoCardData } from "../../utils/cards/cardAdapter";
 import { buildPhotoSvg } from "../../utils/cards/cardSvg";
 import { useMediaSrc } from "../../hooks/useMediaSrc";

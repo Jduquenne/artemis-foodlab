@@ -16,7 +16,7 @@ import { PlanningSlot } from './components/slot/PlanningSlot';
 import { DayTabsBar } from './components/bars/DayTabsBar';
 import { getWeekNumber, getMonday, getWeekRange, dayNameOf } from '../../core/utils/weekUtils';
 import { toIsoDate } from '../../core/utils/dateUtils';
-import { computeDayMacros } from '../../shared/utils/macroUtils';
+import { computeDayMacros } from '../../core/logic/nutrition/macroLogic';
 import { useMacroCatalogue } from '../../shared/hooks/useMacroCatalogue';
 import { useRefreshStore } from '../../shared/store/useRefreshStore';
 import { useSearchParams } from 'react-router-dom';

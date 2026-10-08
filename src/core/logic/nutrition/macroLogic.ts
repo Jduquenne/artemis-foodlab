@@ -1,10 +1,8 @@
-import { Food, UNIT_WEIGHT_UNITS, Unit } from "../../core/domain/ingredient";
-import { Macronutrients } from "../../core/domain/nutrition";
-import { MealSlot } from "../../core/domain/planning";
-import { PlannableItem, RecipeDetails } from "../../core/domain/recipe";
-import { getAllRecipeIds, isDish, isBase } from "../../core/domain/recipePredicates";
-import { recipesCatalogue } from "../../core/catalogue/recipes";
-import { foodsCatalogue } from "../../core/catalogue/foods";
+import { Food, UNIT_WEIGHT_UNITS, Unit } from "../../domain/ingredient";
+import { Macronutrients } from "../../domain/nutrition";
+import { MealSlot } from "../../domain/planning";
+import { PlannableItem, RecipeDetails } from "../../domain/recipe";
+import { getAllRecipeIds, isDish, isBase } from "../../domain/recipePredicates";
 
 export const ZERO: Macronutrients = {
   kcal: 0,
@@ -90,7 +88,7 @@ export function calculateOverriddenRecipeMacros(
   return calculateRecipeMacros({ ...recipe, ingredients, defaultPortions: 1 }, allRecipes, foodDb);
 }
 
-function calculateRecipeBaseGrams(recipe: RecipeDetails, foodDb: Record<string, Food>): number {
+export function calculateRecipeBaseGrams(recipe: RecipeDetails, foodDb: Record<string, Food>): number {
   let total = 0;
   for (const ing of recipe.ingredients) {
     if (ing.quantity == null) continue;
@@ -100,29 +98,6 @@ function calculateRecipeBaseGrams(recipe: RecipeDetails, foodDb: Record<string, 
   }
   return total > 0 ? total / recipe.defaultPortions : 0;
 }
-
-export const RECIPE_MACROS: Record<string, Macronutrients> = {};
-export const RECIPE_BASE_GRAMS: Record<string, number> = {};
-
-export function refreshRecipeMacros(
-  allRecipes: Record<string, RecipeDetails>,
-  foodDb: Record<string, Food>,
-): void {
-  for (const key of Object.keys(RECIPE_MACROS)) delete RECIPE_MACROS[key];
-  for (const key of Object.keys(RECIPE_BASE_GRAMS)) delete RECIPE_BASE_GRAMS[key];
-
-  for (const [id, recipe] of Object.entries(allRecipes)) {
-    try {
-      RECIPE_MACROS[id] = calculateRecipeMacros(recipe, allRecipes, foodDb);
-    } catch {
-      delete RECIPE_MACROS[id];
-    }
-    const grams = calculateRecipeBaseGrams(recipe, foodDb);
-    if (grams > 0) RECIPE_BASE_GRAMS[id] = grams;
-  }
-}
-
-refreshRecipeMacros(recipesCatalogue, foodsCatalogue);
 
 export interface MacroCatalogue {
   plannable: Record<string, PlannableItem>;

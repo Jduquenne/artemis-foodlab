@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — `shared/` review, part 1: business utilities to `core/` (v6.82.8)
+
+- Done: `unitUtils` → `core/logic/unit/unitFormatLogic.ts`; `macroUtils` → `core/logic/nutrition/macroLogic.ts` (pure computations, no catalogue import any more); the precomputed caches `RECIPE_MACROS` / `RECIPE_BASE_GRAMS` and `refreshRecipeMacros` (filled at module load from the catalogue) → `core/catalogue/recipeMetrics.ts`. `core/` no longer imports anything from `shared/` (D-032 complete). Docs updated (architecture, conventions, spec-journal, decisions).
+- Numbers: `npx tsc -b` + `npm run lint` pass; no behaviour change.
+- Still open: slot labels (owner); `cardAdapter` duplicates; then hooks, stores, components.
+
 ## 2026-10-08 — `shared/` review, part 1: generic utilities to `core/utils/` (v6.82.7)
 
 - Done: read-only review of `shared/utils/` (findings in `dev/refactoring.md`). Owner's decision D-032: split utilities by nature; generic pure helpers move to `core/utils/` (`numberUtils`, `collectionUtils`, `sortUtils`, `textUtils`, `codeUtils`, `columnUtils`, `dateUtils`, `weekUtils`; 56 files touched, imports rewritten), browser/React-bound ones stay in `shared/utils/`. Dead code removed: `dayLabels.ts`, `getDaysOfWeek`, `formatIsoDateShort`; `dateUtils` uses `DAYS` instead of its own day list. Docs: `AGENTS.md` (map, golden rule 4), `docs/architecture.md`, `docs/conventions.md`, `docs/decisions.md` D-032.

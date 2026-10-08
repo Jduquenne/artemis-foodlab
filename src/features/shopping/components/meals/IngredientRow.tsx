@@ -1,6 +1,6 @@
 import { IngredientSource, RecipeCardIngredient } from '../../../../core/domain/shopping';
 import { buildSourceCheckKey, isIngChecked } from '../../../../core/logic/shopping/shoppingChecks';
-import { pluralizeUnit, formatQty } from '../../../../shared/utils/unitUtils';
+import { pluralizeUnit, formatQty } from '../../../../core/logic/unit/unitFormatLogic';
 import { useAnyPendingKey } from '../../../../shared/hooks/useAnyPendingKey';
 import { CheckToggleIcon } from '../../../../shared/components/ui/CheckToggleIcon';
 

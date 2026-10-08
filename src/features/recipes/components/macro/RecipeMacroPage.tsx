@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { useFoodsSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 import { RecipePhotoCard } from '../../../../shared/components/ui/RecipePhotoCard';
-import { calculateRecipeMacros } from '../../../../shared/utils/macroUtils';
+import { calculateRecipeMacros } from '../../../../core/logic/nutrition/macroLogic';
 import { buildUnitWeightOverrides, patchRecipeQuantities, applyUnitWeightOverrides } from '../../../../core/logic/recipe/recipeScalingLogic';
 import { MacroBar } from './MacroBar';
 import { IngredientAdjustRow } from './IngredientAdjustRow';

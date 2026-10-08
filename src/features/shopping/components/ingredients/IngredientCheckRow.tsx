@@ -3,7 +3,7 @@ import { ConsolidatedIngredient, IngredientSource } from '../../../../core/domai
 import { checkedSourcesQuantity, remainingToBuy } from '../../../../core/logic/shopping/shoppingChecks';
 import { FreezerBag } from '../../../../core/domain/freezer';
 import { IngredientTooltip } from './IngredientTooltip';
-import { pluralizeUnit, formatQty } from '../../../../shared/utils/unitUtils';
+import { pluralizeUnit, formatQty } from '../../../../core/logic/unit/unitFormatLogic';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { CheckToggleIcon } from '../../../../shared/components/ui/CheckToggleIcon';
 import { DecimalInput } from '../../../../shared/components/ui/DecimalInput';

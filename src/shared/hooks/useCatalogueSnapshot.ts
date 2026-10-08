@@ -10,7 +10,7 @@ import { householdCatalogue } from "../../core/catalogue/household";
 import { buildPlannableItems } from "../../core/catalogue/plannable";
 import { recipesCatalogue } from "../../core/catalogue/recipes";
 import { Macronutrients } from "../../core/domain/nutrition";
-import { RECIPE_BASE_GRAMS, RECIPE_MACROS } from "../utils/macroUtils";
+import { RECIPE_BASE_GRAMS, RECIPE_MACROS } from "../../core/catalogue/recipeMetrics";
 
 interface SnapshotSource<T> {
   read: () => T;

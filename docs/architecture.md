@@ -37,7 +37,7 @@ Three layers, no exceptions:
 - Static data → a dedicated file in the feature folder, not in the component.
 - Origin of these rules: `docs/decisions.md` D-001, D-032.
 
-Known deviation (being fixed, `shared/` review): `core/` still imports `shared/utils/unitUtils` and `shared/utils/macroUtils`, to be moved to `core/logic/unit/` and `core/logic/nutrition/` (caches to `core/catalogue/`). Do not add new imports of this kind.
+`core/` no longer imports `shared/` (since 2026-10-08, D-032); keep it that way.
 
 ### `core/` contents
 
@@ -65,7 +65,7 @@ Known deviation (being fixed, `shared/` review): `core/` still imports `shared/u
 
 - `core/catalogue/` holds mutable objects refreshed in place (`replaceRecipes`, etc.).
 - **Never read a `core/catalogue/` store from a component or from `useMemo`.** Use `shared/hooks/useCatalogueSnapshot.ts`: `useRecipesSnapshot`, `useFoodsSnapshot`, `useCategoriesSnapshot`, `useOutdoorSnapshot`, `useHouseholdSnapshot`, `usePlannableSnapshot`, `useRecipeMetricsSnapshot`, and `useMacroCatalogue` for macros. Each snapshot changes identity only when its domain changes, which makes `useMemo` dependencies correct (`exhaustive-deps` rejects a "version number" dependency).
-- **`core/logic/` receives the catalogue as a parameter** (`recipes`, `foods`, `MacroCatalogue`, `ShoppingCatalogue`…): pure functions, never a global read. Intended exceptions (reads at action time, not render time): `useJournalStore`, `useRecipeBuilderSave`, `initialRecipeBuilderState`, `suggestNextRecipeNumber`, `catalogueSyncService`, `macroUtils` (recomputation).
+- **`core/logic/` receives the catalogue as a parameter** (`recipes`, `foods`, `MacroCatalogue`, `ShoppingCatalogue`…): pure functions, never a global read. Intended exceptions (reads at action time, not render time): `useJournalStore`, `useRecipeBuilderSave`, `initialRecipeBuilderState`, `suggestNextRecipeNumber`, `catalogueSyncService`, `core/catalogue/recipeMetrics.ts` (precomputed `RECIPE_MACROS` / `RECIPE_BASE_GRAMS`, recomputed by `refreshRecipeMacros` after each catalogue sync; the pure computations live in `core/logic/nutrition/macroLogic.ts`).
 - **Notifications**: only `catalogueSyncService` signals (`notifyCatalogueChange`, after derived data is recomputed), never the `replace…` functions themselves. `useNewsStore` and `useMediaStore` subscribe themselves.
 - Targeted refresh after a builder save: `catalogueSyncService.syncRecipeFromApi(uuid)`; local removal without network: `removeRecipeFromCatalogue(code)`.
 

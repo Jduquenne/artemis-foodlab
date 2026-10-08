@@ -1,5 +1,5 @@
 import { FreezerBag } from '../../../core/domain/freezer';
-import { pluralizeUnit, formatQty } from '../../../shared/utils/unitUtils';
+import { pluralizeUnit, formatQty } from '../../../core/logic/unit/unitFormatLogic';
 import { formatBagDate } from '../../../core/utils/dateUtils';
 import { usePendingKey } from '../../../shared/hooks/usePendingKey';
 import { CheckToggleIcon } from '../../../shared/components/ui/CheckToggleIcon';

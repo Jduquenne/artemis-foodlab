@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ChevronDown, ChevronRight, Minus, Plus } from "lucide-react";
 import { RecipeKind } from "../../../../core/domain/recipe";
-import { computeItemMacros } from "../../../../shared/utils/macroUtils";
+import { computeItemMacros } from "../../../../core/logic/nutrition/macroLogic";
 import { useMacroCatalogue } from "../../../../shared/hooks/useMacroCatalogue";
 import { defaultIngredientOverridesForPortions, isOverridableIngredient } from "../../../../core/logic/journal/journalOverrideLogic";
 import { useJournalStore } from "../../../../shared/store/useJournalStore";

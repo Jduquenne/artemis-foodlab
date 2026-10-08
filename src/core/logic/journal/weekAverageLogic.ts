@@ -1,6 +1,6 @@
 import { Macronutrients } from "../../domain/nutrition";
 import { MealSlot } from "../../domain/planning";
-import { MacroCatalogue, computeDayMacros } from "../../../shared/utils/macroUtils";
+import { MacroCatalogue, computeDayMacros } from "../nutrition/macroLogic";
 
 export interface WeekAverageResult {
   average: Macronutrients;

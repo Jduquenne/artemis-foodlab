@@ -1,11 +1,12 @@
 import { Trash2 } from "lucide-react";
 import { PREPARATION_OPTIONS } from "../../../../core/domain/preparationOptions";
 import { Unit, IngredientCategory, SELECTABLE_UNITS } from "../../../../core/domain/ingredient";
-import { isUnit } from "../../../../core/logic/unit/unitLogic";
 import { IngredientFoodSearch } from "./IngredientFoodSearch";
 import { BaseRecipeSearch } from "./BaseRecipeSearch";
 import { DraftIngredient } from "../../../../core/domain/recipeBuilderTypes";
-import { switchIngredientType } from "../../../../core/logic/recipeBuilder/recipeBuilderMapper";
+import { applyFoodPick } from "../../../../core/logic/recipeBuilder/recipeBuilderMapper";
+import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
+import { IngredientTypeToggle } from "./IngredientTypeToggle";
 
 export interface IngredientBuilderRowProps {
   ingredient: DraftIngredient;
@@ -20,30 +21,7 @@ export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: Ingredi
 
   return (
     <div className="flex items-center gap-2 py-1.5 w-full">
-      <div className="flex rounded-xl overflow-hidden border border-slate-200 shrink-0">
-        <button
-          type="button"
-          onClick={() => onChange(switchIngredientType(ingredient, "food"))}
-          className={`px-2 py-1.5 text-xs font-bold transition-colors ${
-            !isBase
-              ? "bg-orange-500 text-white"
-              : "bg-white dark:bg-slate-100 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-200"
-          }`}
-        >
-          Aliment
-        </button>
-        <button
-          type="button"
-          onClick={() => onChange(switchIngredientType(ingredient, "base"))}
-          className={`px-2 py-1.5 text-xs font-bold transition-colors border-l border-slate-200 ${
-            isBase
-              ? "bg-orange-500 text-white"
-              : "bg-white dark:bg-slate-100 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-200"
-          }`}
-        >
-          Base
-        </button>
-      </div>
+      <IngredientTypeToggle ingredient={ingredient} onChange={onChange} />
 
       {isBase ? (
         <>
@@ -51,12 +29,9 @@ export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: Ingredi
             value={ingredient.name}
             onChange={(name, baseId) => update({ name, baseId })}
           />
-          <input
-            type="number"
-            min={0}
-            step="any"
-            value={ingredient.quantity ?? ""}
-            onChange={e => update({ quantity: e.target.value === "" ? null : Number(e.target.value) })}
+          <DecimalInput
+            value={ingredient.quantity}
+            onValueChange={(quantity) => update({ quantity })}
             placeholder="Portions"
             className="w-20 px-2 py-2 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 text-center"
           />
@@ -67,16 +42,11 @@ export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: Ingredi
           <IngredientFoodSearch
             value={ingredient.name}
             linked={!!ingredient.foodId}
-            onChange={(name, foodId, category, unit) =>
-              update({ name, foodId, category: category ?? ingredient.category, unit: isUnit(unit) ? unit : ingredient.unit })
-            }
+            onChange={(name, foodId, category, unit) => onChange(applyFoodPick(ingredient, name, foodId, category, unit))}
           />
-          <input
-            type="number"
-            min={0}
-            step="any"
-            value={ingredient.quantity ?? ""}
-            onChange={e => update({ quantity: e.target.value === "" ? null : Number(e.target.value) })}
+          <DecimalInput
+            value={ingredient.quantity}
+            onValueChange={(quantity) => update({ quantity })}
             placeholder="Qté"
             className="w-14 px-2 py-2 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 text-center"
           />
@@ -92,7 +62,7 @@ export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: Ingredi
           </select>
           <select
             value={ingredient.preparation ?? ""}
-            onChange={e => update({ preparation: e.target.value as string })}
+            onChange={e => update({ preparation: e.target.value })}
             className="w-32 px-1 py-2 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
           >
             <option value="">—</option>

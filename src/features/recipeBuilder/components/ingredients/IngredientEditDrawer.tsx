@@ -2,11 +2,12 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import { PREPARATION_OPTIONS } from "../../../../core/domain/preparationOptions";
 import { Unit, IngredientCategory, SELECTABLE_UNITS } from "../../../../core/domain/ingredient";
-import { isUnit } from "../../../../core/logic/unit/unitLogic";
 import { IngredientFoodSearch } from "./IngredientFoodSearch";
 import { BaseRecipeSearch } from "./BaseRecipeSearch";
 import { DraftIngredient } from "../../../../core/domain/recipeBuilderTypes";
-import { switchIngredientType } from "../../../../core/logic/recipeBuilder/recipeBuilderMapper";
+import { applyFoodPick } from "../../../../core/logic/recipeBuilder/recipeBuilderMapper";
+import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
+import { IngredientTypeToggle } from "./IngredientTypeToggle";
 
 export interface IngredientEditDrawerProps {
   ingredient: DraftIngredient;
@@ -34,7 +35,7 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
 
   return (
     <div className="fixed inset-0 z-50 bg-black/50 flex items-end sm:hidden">
-      <div className={`w-full bg-white dark:bg-slate-100 rounded-t-2xl shadow-2xl flex flex-col max-h-[85vh] ${isExiting ? "modal-exit" : "modal-enter"}`}>
+      <div className={`w-full bg-white dark:bg-slate-100 rounded-t-2xl shadow-2xl flex flex-col max-h-[85dvh] ${isExiting ? "modal-exit" : "modal-enter"}`}>
         <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-slate-100 shrink-0">
           <p className="text-sm font-black text-slate-800 truncate max-w-[75%]">
             {ingredient.name || <span className="text-slate-400 font-normal italic">Nouvel ingrédient</span>}
@@ -52,30 +53,7 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
         <div className="flex-1 min-h-0 overflow-y-auto px-4 py-4 flex flex-col gap-4">
           <div>
             <label className={LABEL_CLASS}>Type</label>
-            <div className="flex rounded-xl overflow-hidden border border-slate-200">
-              <button
-                type="button"
-                onClick={() => onChange(switchIngredientType(ingredient, "food"))}
-                className={`flex-1 py-2.5 text-xs font-bold transition-colors ${
-                  !isBase
-                    ? "bg-orange-500 text-white"
-                    : "bg-white dark:bg-slate-100 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-200"
-                }`}
-              >
-                Aliment
-              </button>
-              <button
-                type="button"
-                onClick={() => onChange(switchIngredientType(ingredient, "base"))}
-                className={`flex-1 py-2.5 text-xs font-bold transition-colors border-l border-slate-200 ${
-                  isBase
-                    ? "bg-orange-500 text-white"
-                    : "bg-white dark:bg-slate-100 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-200"
-                }`}
-              >
-                Base
-              </button>
-            </div>
+            <IngredientTypeToggle ingredient={ingredient} onChange={onChange} wide />
           </div>
 
           <div>
@@ -89,9 +67,7 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
               <IngredientFoodSearch
                 value={ingredient.name}
                 linked={!!ingredient.foodId}
-                onChange={(name, foodId, category, unit) =>
-                  update({ name, foodId, category: category ?? ingredient.category, unit: isUnit(unit) ? unit : ingredient.unit })
-                }
+                onChange={(name, foodId, category, unit) => onChange(applyFoodPick(ingredient, name, foodId, category, unit))}
               />
             )}
             {!isBase && ingredient.name.trim().length > 0 && !ingredient.foodId && (
@@ -101,12 +77,9 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
 
           <div>
             <label className={LABEL_CLASS}>{isBase ? "Portions" : "Quantité"}</label>
-            <input
-              type="number"
-              min={0}
-              step="any"
-              value={ingredient.quantity ?? ""}
-              onChange={e => update({ quantity: e.target.value === "" ? null : Number(e.target.value) })}
+            <DecimalInput
+              value={ingredient.quantity}
+              onValueChange={(quantity) => update({ quantity })}
               placeholder={isBase ? "Nombre de portions…" : "Quantité…"}
               className={FIELD_CLASS}
             />
@@ -132,7 +105,7 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
                 <label className={LABEL_CLASS}>Préparation</label>
                 <select
                   value={ingredient.preparation ?? ""}
-                  onChange={e => update({ preparation: e.target.value as string })}
+                  onChange={e => update({ preparation: e.target.value })}
                   className={FIELD_CLASS}
                 >
                   <option value="">—</option>

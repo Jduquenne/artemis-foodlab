@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { ImagePlus } from "lucide-react";
-
-const MAX_PHOTO_SIZE = 10 * 1024 * 1024;
+import { validatePhotoFile } from "../../../../core/logic/media/mediaLogic";
 
 export interface PhotoFieldProps {
   label: string;
@@ -18,16 +17,9 @@ export const PhotoField = ({ label, file, hasExisting, onPick }: PhotoFieldProps
     const picked = e.target.files?.[0] ?? null;
     e.target.value = "";
     if (!picked) return;
-    if (!picked.type.startsWith("image/")) {
-      setError("Le fichier doit être une image.");
-      return;
-    }
-    if (picked.size > MAX_PHOTO_SIZE) {
-      setError("Image trop lourde (10 Mo max).");
-      return;
-    }
-    setError("");
-    onPick(picked);
+    const invalid = validatePhotoFile(picked);
+    setError(invalid ?? "");
+    if (!invalid) onPick(picked);
   };
 
   return (

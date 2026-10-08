@@ -105,7 +105,7 @@ export const RecipeBuilderModule = () => {
             <MacroPreview ingredients={draft.ingredients} defaultPortions={draft.defaultPortions} />
           </div>
 
-          <div className={`${cardClass} p-4 flex flex-col min-h-[40vh] lg:min-h-0 lg:flex-1 lg:overflow-hidden`}>
+          <div className={`${cardClass} p-4 flex flex-col min-h-[40dvh] lg:min-h-0 lg:flex-1 lg:overflow-hidden`}>
             <IngredientBuilderList ingredients={draft.ingredients} onChange={patchIngredients} />
           </div>
         </div>

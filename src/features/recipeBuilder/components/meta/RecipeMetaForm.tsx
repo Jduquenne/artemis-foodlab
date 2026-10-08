@@ -86,12 +86,12 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
           <label className={labelClass}>N°</label>
           <div className="flex items-center gap-1.5 px-2 border border-slate-200 rounded-xl bg-white dark:bg-slate-100 focus-within:border-orange-400 focus-within:ring-1 focus-within:ring-orange-400">
             <span className="text-xs font-mono font-bold text-slate-400">{prefix}_</span>
-            <input
-              type="number"
+            <DecimalInput
+              integer
               min={1}
-              value={state.recipeNumber}
+              value={state.recipeNumber ? Number(state.recipeNumber) : null}
               disabled={isExisting}
-              onChange={(e) => onChange({ recipeNumber: e.target.value })}
+              onValueChange={(v) => onChange({ recipeNumber: v === null ? "" : String(v) })}
               placeholder="16"
               className="w-12 py-2 bg-transparent text-sm text-slate-800 font-mono placeholder-slate-400 focus:outline-none text-center"
             />
@@ -169,13 +169,11 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
       {state.isFromBook && (
         <div>
           <label className={labelClass}>Page du livre</label>
-          <input
-            type="number"
+          <DecimalInput
+            integer
             min={1}
-            value={state.bookPage ?? ""}
-            onChange={(e) =>
-              onChange({ bookPage: e.target.value === "" ? null : Math.max(1, Number(e.target.value)) })
-            }
+            value={state.bookPage}
+            onValueChange={(bookPage) => onChange({ bookPage })}
             placeholder="ex. 42"
             className={inputClass}
           />

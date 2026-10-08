@@ -3,6 +3,7 @@ import { Search } from "lucide-react";
 import { useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { isBase } from "../../../../core/domain/recipePredicates";
 import { searchBases } from "../../../../core/logic/recipeBuilder/ingredientSearchLogic";
+import { SuggestionList } from "./SuggestionList";
 
 export interface BaseRecipeSearchProps {
   value: string;
@@ -36,23 +37,14 @@ export const BaseRecipeSearch = ({ value, onChange }: BaseRecipeSearchProps) => 
         />
       </div>
       {open && suggestions.length > 0 && (
-        <div className="absolute z-30 top-full left-0 right-0 mt-1 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl shadow-lg overflow-hidden">
-          {suggestions.map(base => (
-            <button
-              key={base.id}
-              type="button"
-              onMouseDown={e => e.preventDefault()}
-              onClick={() => {
-                onChange(base.name, base.id);
-                setOpen(false);
-              }}
-              className="flex items-center justify-between w-full px-3 py-2 text-left hover:bg-slate-50 dark:hover:bg-slate-200 transition-colors border-b border-slate-100 last:border-0"
-            >
-              <span className="text-sm font-semibold text-slate-800">{base.name}</span>
-              <span className="text-xs text-slate-400 ml-2 shrink-0">base</span>
-            </button>
-          ))}
-        </div>
+        <SuggestionList
+          suggestions={suggestions.map((base) => ({ id: base.id, label: base.name, hint: "base" }))}
+          onPick={(id) => {
+            const base = suggestions.find((candidate) => candidate.id === id);
+            if (base) onChange(base.name, base.id);
+            setOpen(false);
+          }}
+        />
       )}
     </div>
   );

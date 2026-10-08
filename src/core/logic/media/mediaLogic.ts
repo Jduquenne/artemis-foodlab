@@ -43,3 +43,11 @@ export function isMediaRefreshDue(expiresAt: string, now: number = Date.now()): 
 export function isMediaExpired(expiresAt: string | null, now: number = Date.now()): boolean {
   return expiresAt !== null && now >= new Date(expiresAt).getTime();
 }
+
+export const MAX_PHOTO_SIZE = 10 * 1024 * 1024;
+
+export function validatePhotoFile(file: Pick<File, "type" | "size">): string | null {
+  if (!file.type.startsWith("image/")) return "Le fichier doit être une image.";
+  if (file.size > MAX_PHOTO_SIZE) return "Image trop lourde (10 Mo max).";
+  return null;
+}

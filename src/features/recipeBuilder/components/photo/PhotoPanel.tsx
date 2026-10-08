@@ -7,8 +7,7 @@ import { AsyncImage } from "../../../../shared/components/ui/AsyncImage";
 import { builderStateToRecetteCardData, builderStateToBookCardData } from "../../../../shared/utils/cards/cardAdapter";
 import { downloadRecetteCard, downloadRecetteBookCard } from "../../../../shared/utils/cards/cardExport";
 import { PhotoField } from "../output/PhotoField";
-
-const MAX_PHOTO_SIZE = 10 * 1024 * 1024;
+import { validatePhotoFile } from "../../../../core/logic/media/mediaLogic";
 
 export interface PhotoPanelProps {
   state: RecipeBuilderState;
@@ -37,10 +36,9 @@ export const PhotoPanel = ({ state, mealPhoto, onPickMeal, bookPhoto, onPickBook
     const picked = e.target.files?.[0] ?? null;
     e.target.value = "";
     if (!picked) return;
-    if (!picked.type.startsWith("image/")) return setError("Le fichier doit être une image.");
-    if (picked.size > MAX_PHOTO_SIZE) return setError("Image trop lourde (10 Mo max).");
-    setError("");
-    onPickMeal(picked);
+    const invalid = validatePhotoFile(picked);
+    setError(invalid ?? "");
+    if (!invalid) onPickMeal(picked);
   };
 
   const handleDownload = async () => {
@@ -70,7 +68,7 @@ export const PhotoPanel = ({ state, mealPhoto, onPickMeal, bookPhoto, onPickBook
           {localUrl ? (
             <img src={localUrl} alt="Aperçu" className="absolute inset-0 w-full h-full object-cover" />
           ) : existingUrl ? (
-            <AsyncImage src={existingUrl} alt={state.name} fill className="object-cover" />
+            <AsyncImage asset={existing?.assets?.mealPhoto} alt={state.name} fill className="object-cover" />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center text-slate-300">
               <ImageOff className="w-6 h-6" />

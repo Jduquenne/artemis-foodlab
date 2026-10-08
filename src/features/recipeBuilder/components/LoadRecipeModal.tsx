@@ -4,6 +4,7 @@ import { useRecipesSnapshot } from "../../../shared/hooks/useCatalogueSnapshot";
 import { recipeToBuilderState } from "../../../core/logic/recipeBuilder/recipeBuilderMapper";
 import { RecipeBuilderState } from "../../../core/domain/recipeBuilderTypes";
 import { includesText, normalizeQuery } from "../../../shared/utils/textUtils";
+import { RECIPE_KIND_LABELS } from "../../../core/domain/recipeLabels";
 
 export interface LoadRecipeModalProps {
   onLoad: (state: RecipeBuilderState) => void;
@@ -77,7 +78,7 @@ export const LoadRecipeModal = ({ onLoad, onClose }: LoadRecipeModalProps) => {
                     <p className="text-xs text-slate-400 mt-0.5">{id}</p>
                   </div>
                   <span className="text-xs font-bold text-slate-400 bg-slate-100 dark:bg-slate-200 px-2 py-0.5 rounded-lg shrink-0">
-                    {recipe.kind}
+                    {RECIPE_KIND_LABELS[recipe.kind]}
                   </span>
                 </button>
               ))}

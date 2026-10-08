@@ -5,6 +5,7 @@ import { getIngredientCategoryId } from "../../domain/ingredientCategorySlugs";
 import { getIdByCode } from "../../catalogue/recipeIdMap";
 import { ApiIngredientInput, ApiRecipeInput } from "../recipe/recipeApiMapper";
 import { getBuilderRecipeCode } from "./recipeCodeLogic";
+import { isUnit } from "../unit/unitLogic";
 
 export function switchIngredientType(
   ing: DraftIngredient,
@@ -20,6 +21,22 @@ export function switchIngredientType(
     unit: type === "base" ? Unit.PORTION : Unit.NONE,
     preparation: "",
     category: type === "base" ? IngredientCategory.RECIPE : IngredientCategory.FRUIT_VEGETABLE,
+  };
+}
+
+export function applyFoodPick(
+  ingredient: DraftIngredient,
+  name: string,
+  foodId?: string,
+  category?: IngredientCategory,
+  unit?: string,
+): DraftIngredient {
+  return {
+    ...ingredient,
+    name,
+    foodId,
+    category: category ?? ingredient.category,
+    unit: isUnit(unit) ? unit : ingredient.unit,
   };
 }
 

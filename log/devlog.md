@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — `features/` review: recipeBuilder, step 3 (v6.81.1)
+
+- Done: numeric fields on `DecimalInput` (ingredient quantities in the desktop row and the mobile drawer, recipe N°, book page; rule 10). Save modal no longer closes on a backdrop click; recipe deletion confirmed with `ConfirmActionModal` (recap name + id). `vh` → `dvh` (drawer, ingredient list). Existing dish photo shown through `asset` (batch media resolution) instead of its raw URL. « Charger une recette » shows the French kind label. Duplicates: photo file check → `validatePhotoFile` (`core/logic/media/mediaLogic.ts`), food pick → `applyFoodPick` (`recipeBuilderMapper.ts`), Aliment / Base switch → `IngredientTypeToggle`, search dropdown → `SuggestionList`; useless `as string` casts removed.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: step 4 (theme), step 5 (« activité » builder brainstorm); category change of an existing recipe to design.
+
 ## 2026-10-08 — Recipe variants and mandatory dish photo (v6.81.0)
 
 - Done: « Variante » button in the builder header when an existing recipe is loaded: `VariantModal` asks for a new name (different from the source) and a dish photo, then the draft becomes a new recipe (`toVariantDraft`: no `sourceCode`, next free N° of the category, category editable, ingredients without API ids). The dish photo is now mandatory for every recipe type (`validateBuilderPhoto`, checked live in the save panel and again in `useRecipeBuilderSave`); the photo panel title says « obligatoire ».

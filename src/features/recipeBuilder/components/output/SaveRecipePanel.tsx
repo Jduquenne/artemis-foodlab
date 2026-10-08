@@ -6,6 +6,7 @@ import { getBuilderRecipeCode } from "../../../../core/logic/recipeBuilder/recip
 import { useCategoriesSnapshot, useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { useRecipeBuilderSave } from "../../../../shared/hooks/useRecipeBuilderSave";
 import { useRecipeBuilderStore } from "../../../../shared/store/useRecipeBuilderStore";
+import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
 import { useBuilderSourceRecipe } from "../../../../shared/hooks/useBuilderSourceRecipe";
 
 export interface SaveRecipePanelProps {
@@ -45,12 +46,13 @@ export const SaveRecipePanel = ({ state, mealPhoto, bookPhoto, onSaved }: SaveRe
   };
 
   const handleDelete = async () => {
-    if (!state.sourceCode) return;
+    if (!state.sourceCode) return false;
     const ok = await remove(state.sourceCode);
     if (ok) {
       resetBuilder();
       close();
     }
+    return ok;
   };
 
   return (
@@ -65,11 +67,8 @@ export const SaveRecipePanel = ({ state, mealPhoto, bookPhoto, onSaved }: SaveRe
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4" onClick={close}>
-          <div
-            className="w-full max-w-lg bg-white dark:bg-slate-100 rounded-2xl shadow-2xl flex flex-col overflow-hidden modal-center-enter"
-            onClick={(e) => e.stopPropagation()}
-          >
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-lg bg-white dark:bg-slate-100 rounded-2xl shadow-2xl flex flex-col overflow-hidden modal-center-enter">
             <div className="flex items-center justify-between px-5 pt-5 pb-4 border-b border-slate-100">
               <div>
                 <p className="text-xs font-black text-orange-600 uppercase tracking-widest">
@@ -121,35 +120,14 @@ export const SaveRecipePanel = ({ state, mealPhoto, bookPhoto, onSaved }: SaveRe
 
             <div className="px-5 py-4 border-t border-slate-100 flex items-center gap-2">
               {isExisting && (
-                confirmDelete ? (
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={handleDelete}
-                      disabled={status === "saving"}
-                      className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-red-500 hover:bg-red-600 rounded-xl transition-colors disabled:opacity-60"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                      Confirmer
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setConfirmDelete(false)}
-                      className="px-3 py-2 text-xs font-bold text-slate-500 hover:text-slate-700 rounded-xl transition-colors"
-                    >
-                      Annuler
-                    </button>
-                  </div>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => setConfirmDelete(true)}
-                    className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                    Supprimer
-                  </button>
-                )
+                <button
+                  type="button"
+                  onClick={() => setConfirmDelete(true)}
+                  className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  Supprimer
+                </button>
               )}
 
               <button
@@ -179,6 +157,21 @@ export const SaveRecipePanel = ({ state, mealPhoto, bookPhoto, onSaved }: SaveRe
               </button>
             </div>
           </div>
+
+          {confirmDelete && (
+            <ConfirmActionModal
+              title="Confirmer la suppression de la recette"
+              recap={[
+                { label: "Recette", value: state.name },
+                { label: "Identifiant", value: code },
+              ]}
+              consequence="La recette sera retirée du catalogue. Si un planning l'utilise encore, l'API refusera la suppression."
+              confirmLabel="Supprimer"
+              danger
+              onConfirm={handleDelete}
+              onCancel={() => setConfirmDelete(false)}
+            />
+          )}
         </div>
       )}
     </>

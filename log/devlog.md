@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — Favicon missing in local dev (v6.82.16)
+
+- Done: since `1b3dd4a` (2026-09-09) `index.html` wrote favicon / apple-touch-icon / manifest links as `%BASE_URL%assets/…`; the Vite dev server replaced `%BASE_URL%` and then prefixed the base again (`/artemis-foodlab/artemis-foodlab/…`), so no favicon in local; prod was correct. Links are back to root paths (`/assets/ui/icon/…`, `/manifest.webmanifest`), which Vite prefixes once. Checked on the running dev server: single `/artemis-foodlab/` prefix.
+- Numbers: `npx tsc -b` + `npm run lint` not affected (HTML only). **Build output not checked** (agents never run `npm run build`): the owner must check `dist/index.html` before pushing.
+- Still open: owner's build check; P4 closure (owner's agreement).
+
 ## 2026-10-08 — `shared/` migrated to the named theme colours, code review done (v6.82.15)
 
 - Done: the last 31 `dark:*-slate-*` classes (all in `shared/components/`) replaced by the named colours (D-031): 30 exact pairs, one one-off (`ConfirmActionModal` recap list `bg-slate-50 dark:bg-slate-200/60` → `bg-subtle-tint`, 40 % instead of 60 % in dark mode, same mapping the owner accepted for the journal). The theme check now finds 0 occurrence in `src/`. This closes the `shared/` review and every folder of the P4 code review.

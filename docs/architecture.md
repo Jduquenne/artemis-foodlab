@@ -145,4 +145,4 @@ Persisted keys: `theme`, `last_recipe_search`, `cipe_shopping_price_calc`, `cipe
 
 ## Public assets
 
-`public/assets/` → served at `/artemis-foodlab/assets/…`; contains `logo/` and `ui/` (category images, fonts, icons). Recipe photos are served by the API (bundled webp purged). Always build asset URLs with `shared/utils/assetUrl.ts` (`buildAssetUrl`, `LOGO_URL`, based on `BASE_URL`). `index.html` uses `%BASE_URL%` for favicons/manifest.
+`public/assets/` → served at `/artemis-foodlab/assets/…`; contains `logo/` and `ui/` (category images, fonts, icons). Recipe photos are served by the API (bundled webp purged). Always build asset URLs with `shared/utils/assetUrl.ts` (`buildAssetUrl`, `LOGO_URL`, based on `BASE_URL`). `index.html` references favicons/manifest with root paths (`/assets/ui/icon/…`, `/manifest.webmanifest`): Vite adds the base itself. Do not write `%BASE_URL%` there: the dev server then prefixes the base a second time (`/artemis-foodlab/artemis-foodlab/…`, broken favicon in local, 2026-09-09 → 2026-10-08).

@@ -3,6 +3,13 @@ import { Layers, Plus } from 'lucide-react';
 import { isScrollingActive } from '../../../shared/utils/scrollGuard';
 import { IS_TOUCH } from '../../../shared/utils/deviceUtils';
 
+const NO_INGREDIENTS = (
+    <div className="w-full h-full flex flex-col items-center justify-center text-[10px] text-orange-400 font-bold p-4 text-center gap-2">
+        <span className="text-2xl">🤷‍♂️</span>
+        Pas d'ingrédients
+    </div>
+);
+
 export interface FlipCardProps {
     name: string;
     frontContent: React.ReactNode;
@@ -39,12 +46,7 @@ export const FlipCard = ({ name, frontContent, backContent, recipeUrl, onClick, 
 
                 {showBack && (
                     <div className="absolute inset-0 bg-orange-50 dark:bg-orange-950/40 border-2 border-orange-200 dark:border-orange-800 rounded-2xl overflow-hidden">
-                        {backMounted && backContent ? backContent : (
-                            <div className="w-full h-full flex flex-col items-center justify-center text-[10px] text-orange-400 font-bold p-4 text-center gap-2">
-                                <span className="text-2xl">🤷‍♂️</span>
-                                Pas d'ingrédients
-                            </div>
-                        )}
+                        {backMounted && backContent ? backContent : NO_INGREDIENTS}
                     </div>
                 )}
 
@@ -92,12 +94,7 @@ export const FlipCard = ({ name, frontContent, backContent, recipeUrl, onClick, 
                     {frontContent}
                 </div>
                 <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 z-10 bg-orange-50 dark:bg-orange-950/40 rounded-xl overflow-hidden border-2 border-orange-200 dark:border-orange-800">
-                    {backMounted && backContent ? backContent : (
-                        <div className="w-full h-full flex flex-col items-center justify-center text-[10px] text-orange-400 font-bold p-4 text-center gap-2">
-                            <span className="text-2xl">🤷‍♂️</span>
-                            Pas d'ingrédients
-                        </div>
-                    )}
+                    {backMounted && backContent ? backContent : NO_INGREDIENTS}
                 </div>
             </div>
             {onAddToPlanning && (

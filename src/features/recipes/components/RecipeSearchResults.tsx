@@ -42,8 +42,8 @@ export const RecipeSearchResults = ({ results, searchQuery, scrollKey }: RecipeS
                                 frontContent={<RecipePhotoCard recipeId={recipe.recipeId} recipe={recipesDb[recipe.recipeId]} fill />}
                                 backContent={<RecipeIngredientsCard recipeId={recipe.recipeId} recipe={recipesDb[recipe.recipeId]} fill />}
                                 recipeUrl={recipe.recipeUrl}
-                                onClick={() => navigate(`/recipes/detail/${recipe.recipeId || recipe.id}`)}
-                                onAddToPlanning={isPlannable(recipesDb[recipe.recipeId || recipe.id]) ? () => navigate(`/planning?addRecipe=${recipe.recipeId || recipe.id}`) : undefined}
+                                onClick={() => navigate(`/recipes/detail/${recipe.recipeId}`)}
+                                onAddToPlanning={isPlannable(recipesDb[recipe.recipeId]) ? () => navigate(`/planning?addRecipe=${recipe.recipeId}`) : undefined}
                             />
                         </LazyRender>
                     ))}

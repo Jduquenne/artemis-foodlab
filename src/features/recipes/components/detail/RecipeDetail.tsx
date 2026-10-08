@@ -5,14 +5,13 @@ import { useFoodsSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/u
 import { calculateRecipeMacros } from '../../../../shared/utils/macroUtils';
 import { getLinkedBases, getCategoryRecipeIds } from '../../../../core/logic/recipe/recipeListLogic';
 import { resolveInitialPortions, scaleRecipeToPortions } from '../../../../core/logic/recipe/recipeScalingLogic';
-import { RecipePhotoCard } from '../../../../shared/components/ui/RecipePhotoCard';
 import { PortionsStepper } from './PortionsStepper';
 import { RecipeNotFound } from './RecipeNotFound';
 import { recipeToBuilderState } from '../../../../core/logic/recipeBuilder/recipeBuilderMapper';
 import { useIsAdmin } from '../../../../shared/hooks/useIsAdmin';
 import { useRecipeBuilderStore } from '../../../../shared/store/useRecipeBuilderStore';
-import { MacroColumn } from '../macro/MacroColumn';
-import { MacroRow } from '../macro/MacroRow';
+import { MacroCircles } from '../macro/MacroCircles';
+import { LinkedBaseLink } from './LinkedBaseLink';
 import { RecipeRecetteCard } from '../../../../shared/components/ui/RecipeRecetteCard';
 import { RecipeBookCard } from '../../../../shared/components/ui/RecipeBookCard';
 import { useModalBack } from '../../../../shared/hooks/useModalBack';
@@ -75,7 +74,7 @@ export const RecipeDetail = () => {
   if (!scaledRecipe || (!mealPhotoUrl && !instructionsPhotoUrl)) return null;
 
   const handleEditInBuilder = () => {
-    loadFromRecipe(recipeToBuilderState(recipeId!, recipe));
+    loadFromRecipe(recipeToBuilderState(recipe.code, recipe));
     navigate('/recipe-builder');
   };
 
@@ -135,18 +134,7 @@ export const RecipeDetail = () => {
           <div className="hidden sm:flex flex-1 min-h-0 items-center justify-end pr-3">
             <div className="flex flex-col items-center gap-3">
               {linkedBases.map(({ id, name }) => (
-                <a
-                  key={id}
-                  href={`#/recipes/detail/${id}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex flex-col items-center gap-2 group"
-                >
-                  <div className="h-28 md:h-32 aspect-[189/208] rounded-2xl overflow-hidden shadow-md ring-1 ring-slate-200 dark:ring-slate-300 group-hover:opacity-75 group-hover:ring-orange-300 transition-all">
-                    <RecipePhotoCard recipeId={id} recipe={recipes[id]} fill />
-                  </div>
-                  <span className="text-xs font-semibold text-slate-500 text-center w-20 leading-tight line-clamp-2">{name}</span>
-                </a>
+                <LinkedBaseLink key={id} id={id} name={name} recipe={recipes[id]} />
               ))}
             </div>
           </div>
@@ -155,8 +143,8 @@ export const RecipeDetail = () => {
         {mealPhotoUrl ? (
           <div className="flex-[3] min-w-0 self-stretch overflow-hidden">
             {recipe.assets.bookPhoto
-              ? <RecipeBookCard recipeId={recipeId!} recipe={scaledRecipe} fill />
-              : <RecipeRecetteCard recipeId={recipeId!} recipe={scaledRecipe} fill />
+              ? <RecipeBookCard recipeId={recipe.code} recipe={scaledRecipe} fill />
+              : <RecipeRecetteCard recipeId={recipe.code} recipe={scaledRecipe} fill />
             }
           </div>
         ) : (
@@ -169,7 +157,7 @@ export const RecipeDetail = () => {
         )}
 
         <div className="hidden sm:flex flex-1 min-h-0 items-center justify-start pl-3">
-          {macros && <MacroColumn macros={macros} />}
+          {macros && <MacroCircles macros={macros} />}
         </div>
 
         {categoryId && (
@@ -187,22 +175,11 @@ export const RecipeDetail = () => {
 
       {(macros || linkedBases.length > 0) && (
         <div className="flex sm:hidden shrink-0 pt-3 items-center gap-4">
-          {macros && <MacroRow macros={macros} />}
+          {macros && <MacroCircles macros={macros} compact />}
           {linkedBases.length > 0 && (
             <div className="flex gap-3 items-center">
               {linkedBases.map(({ id, name }) => (
-                <a
-                  key={id}
-                  href={`#/recipes/detail/${id}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex flex-col items-center gap-1 group"
-                >
-                  <div className="h-14 aspect-[189/208] rounded-xl overflow-hidden shadow-md ring-1 ring-slate-200 dark:ring-slate-300 group-hover:opacity-75 group-hover:ring-orange-300 transition-all">
-                    <RecipePhotoCard recipeId={id} recipe={recipes[id]} fill />
-                  </div>
-                  <span className="text-[10px] font-semibold text-slate-500 text-center w-14 leading-tight line-clamp-2">{name}</span>
-                </a>
+                <LinkedBaseLink key={id} id={id} name={name} recipe={recipes[id]} compact />
               ))}
             </div>
           )}

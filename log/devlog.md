@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — `features/` review: recipes, step 2 (v6.82.2)
+
+- Done: filter type counting moved out of `RecipeFilterModal` to `countFilterTypes` + `candidateRecipeId` (`core/logic/recipe/recipeFilterTypeLogic.ts`, also used by `filterRecipesByFilter`). Linked base thumbnails of `RecipeDetail` (desktop + mobile copies) → `LinkedBaseLink`, link built with `buildRecipeDetailUrl`. `MacroColumn` + `MacroRow` (identical but size) → `MacroCircles` (`compact`). « Pas d'ingrédients » fallback of `FlipCard` defined once. `recipeId!` assertions replaced by `recipe.code`; `recipe.recipeId || recipe.id` → `recipe.recipeId`; category title via `categoryLabel`. Identical rendering.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: step 3 (theme); `DecimalInput` shows « 1.5 » with a dot after blur (to look at in the `shared/` review).
+
 ## 2026-10-08 — `features/` review: recipes, step 1 (v6.82.1)
 
 - Done: read-only review of `features/recipes` (16 files), findings in `dev/refactoring.md`. Step 1: an unknown recipe id (stale link, deleted recipe) shows a simple « Recette introuvable » page with a « Retour au catalogue » button (`RecipeNotFound`) instead of an empty screen, in the recipe detail and the nutrition calculator. Calculator quantities and unit weights on `DecimalInput` (rule 10, « 1,5 » now possible). The filter modal no longer closes on a backdrop click. Owner's decision: the different card of an ingredient-type recipe in search vs category view is left as is (not a bug).

@@ -17,6 +17,7 @@ import { RecipePhotoCard } from '../../../../shared/components/ui/RecipePhotoCar
 import { FoodPhotoCard } from '../../../../shared/components/ui/FoodPhotoCard';
 import { RecipeIngredientsCard } from '../../../../shared/components/ui/RecipeIngredientsCard';
 import { LazyRender } from '../../../../shared/components/ui/LazyRender';
+import { categoryLabel } from '../../../../core/logic/recipe/categoryLogic';
 
 export const CategoryDetail = () => {
     const { categoryId } = useParams();
@@ -28,7 +29,6 @@ export const CategoryDetail = () => {
     const medians = useTypeMedians();
     const categories = useCategoriesSnapshot();
 
-    const categoryInfo = categories.find(cat => cat.id === categoryId);
     const recipes = useMemo(() => getCategoryRecipes(recipesDb, categoryId ?? ''), [recipesDb, categoryId]);
 
     const filteredRecipes = useMemo(
@@ -81,7 +81,7 @@ export const CategoryDetail = () => {
                         <ArrowLeft className="w-5 h-5" />
                     </button>
                     <h1 className="text-xl sm:text-2xl tablet:text-3xl font-black text-slate-900 truncate">
-                        {categoryInfo ? categoryInfo.name : categoryId}
+                        {categoryLabel(categories, categoryId ?? '')}
                     </h1>
                     <span className="shrink-0 text-sm font-bold text-slate-400">
                         {isRecipeFilterActive(recipeFilter)

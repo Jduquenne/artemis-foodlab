@@ -9,7 +9,7 @@ import {
 import { MACRO_DISPLAYS, MacroDisplay, Macronutrients } from "../../domain/nutrition";
 import { RecipeDetails } from "../../domain/recipe";
 import { TypeMedians } from "./macroReferenceLogic";
-import { matchesFilterType } from "./recipeFilterTypeLogic";
+import { candidateRecipeId, matchesFilterType } from "./recipeFilterTypeLogic";
 
 export function normalizeRecipeFilter(raw: Partial<RecipeFilter> | null): RecipeFilter {
   const type = Object.values(RecipeFilterType).find((value) => value === raw?.type) ?? null;
@@ -75,7 +75,7 @@ export function filterRecipesByFilter<T extends FilterCandidate>(
 ): T[] {
   if (!isRecipeFilterActive(filter)) return items;
   return items.filter((item) => {
-    const id = item.recipeId ?? item.id;
+    const id = candidateRecipeId(item);
     const recipe = recipes[id];
     return recipe !== undefined && matchesRecipeFilter(recipe, recipeMacros[id], filter, medians);
   });

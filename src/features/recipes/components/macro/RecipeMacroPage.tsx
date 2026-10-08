@@ -84,7 +84,7 @@ export const RecipeMacroPage = () => {
 
           {recipe.assets?.mealPhoto ? (
             <div className="w-16 h-16 rounded-xl overflow-hidden shrink-0 border border-slate-200">
-              <RecipePhotoCard recipeId={recipeId!} recipe={recipe} fill />
+              <RecipePhotoCard recipeId={recipe.code} recipe={recipe} fill />
             </div>
           ) : (
             <div className="w-16 h-16 rounded-xl bg-slate-200 shrink-0" />

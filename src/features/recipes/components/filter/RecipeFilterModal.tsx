@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { X, Check, RotateCcw, SlidersHorizontal } from 'lucide-react';
-import { EMPTY_RECIPE_FILTER, FILTER_TYPE_DEFINITIONS, FilterCandidate, RecipeFilter, RecipeFilterType } from '../../../../core/domain/recipeFilter';
+import { EMPTY_RECIPE_FILTER, FilterCandidate, RecipeFilter } from '../../../../core/domain/recipeFilter';
 import { MACRO_DISPLAYS } from '../../../../core/domain/nutrition';
 import {
   filterRecipesByFilter,
@@ -8,7 +8,7 @@ import {
   setFilterType,
   setFilterMacro,
 } from '../../../../core/logic/recipe/recipeFilterLogic';
-import { getFilterTypeLabel, matchesFilterType } from '../../../../core/logic/recipe/recipeFilterTypeLogic';
+import { countFilterTypes, getFilterTypeLabel } from '../../../../core/logic/recipe/recipeFilterTypeLogic';
 import { useTypeMedians } from '../../../../shared/hooks/useTypeMedians';
 import { useRecipesSnapshot, useRecipeMetricsSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 import { FilterTypeSelector } from './FilterTypeSelector';
@@ -30,17 +30,7 @@ export const RecipeFilterModal = ({ filter, candidates, onSubmit, onClose }: Rec
 
   const handleClose = () => { setIsClosing(true); setTimeout(onClose, 220); };
 
-  const typeCounts = useMemo(() => {
-    const counts = { [RecipeFilterType.DISH]: 0, [RecipeFilterType.BREAKFAST]: 0, [RecipeFilterType.SNACK]: 0 };
-    for (const candidate of candidates) {
-      const recipe = recipes[candidate.recipeId ?? candidate.id];
-      if (!recipe) continue;
-      for (const { type } of FILTER_TYPE_DEFINITIONS) {
-        if (matchesFilterType(recipe, type)) counts[type] += 1;
-      }
-    }
-    return counts;
-  }, [candidates, recipes]);
+  const typeCounts = useMemo(() => countFilterTypes(candidates, recipes), [candidates, recipes]);
 
   const matchCount = useMemo(
     () => filterRecipesByFilter(candidates, recipes, macros, draft, medians).length,

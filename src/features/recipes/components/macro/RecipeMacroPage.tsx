@@ -8,6 +8,7 @@ import { buildUnitWeightOverrides, patchRecipeQuantities, applyUnitWeightOverrid
 import { MacroBar } from './MacroBar';
 import { IngredientAdjustRow } from './IngredientAdjustRow';
 import { useModalBack } from '../../../../shared/hooks/useModalBack';
+import { RecipeNotFound } from '../detail/RecipeNotFound';
 
 export const RecipeMacroPage = () => {
   const { recipeId } = useParams();
@@ -41,16 +42,14 @@ export const RecipeMacroPage = () => {
     catch { return null; }
   }, [patchedRecipe, recipes, patchedFoods]);
 
-  if (!recipe) return null;
+  if (!recipe) return <RecipeNotFound />;
 
-  const handleQuantityChange = (id: string, value: string) => {
-    const num = parseFloat(value);
-    setQuantities(prev => ({ ...prev, [id]: isNaN(num) ? 0 : num }));
+  const handleQuantityChange = (id: string, value: number | null) => {
+    setQuantities(prev => ({ ...prev, [id]: value ?? 0 }));
   };
 
-  const handleUnitWeightChange = (foodId: string, value: string) => {
-    const num = parseFloat(value);
-    setUnitWeights(prev => ({ ...prev, [foodId]: isNaN(num) ? 0 : num }));
+  const handleUnitWeightChange = (foodId: string, value: number | null) => {
+    setUnitWeights(prev => ({ ...prev, [foodId]: value ?? 0 }));
   };
 
   const resetUnitWeight = (foodId: string) => {

@@ -22,6 +22,7 @@ Model `RecipeFilter { type: RecipeFilterType | null; macros: Partial<Record<kcal
 - Opening from the planning: see `docs/spec-planning.md`. Planning `persons` ≡ portions (`persons / defaultPortions`). Gram overrides (`recipeQuantities`) are not portions → ignored here.
 - **Macros are per portion, hence invariant under scaling**: `macros` and `handleEditInBuilder` use the **unscaled** recipe; only the card receives `scaledRecipe`.
 - Limits: `RecipeMacroPage` (calculator, separate route `/recipes/detail/:id/macros`, editable per-ingredient quantities, not persisted) is not portion-aware and does not receive `?portions`; coming back from it resets portions to the default. For a recipe with only an instructions photo (no SVG card) the stepper shows but has no visual effect. `RecipeDetail` renders `null` if there is neither meal photo nor instructions photo.
+- Unknown recipe id (stale link, deleted recipe): `RecipeDetail` and `RecipeMacroPage` show `RecipeNotFound` (« Recette introuvable », « Cette recette n'existe peut-être plus. », button back to `/recipes`). The calculator inputs are `DecimalInput`s (comma accepted, emptied field = 0). The filter modal does not close on a backdrop click.
 
 ## News (« Nouveautés »)
 

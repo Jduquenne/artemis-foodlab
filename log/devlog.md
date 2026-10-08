@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — `features/` review: recipes, step 1 (v6.82.1)
+
+- Done: read-only review of `features/recipes` (16 files), findings in `dev/refactoring.md`. Step 1: an unknown recipe id (stale link, deleted recipe) shows a simple « Recette introuvable » page with a « Retour au catalogue » button (`RecipeNotFound`) instead of an empty screen, in the recipe detail and the nutrition calculator. Calculator quantities and unit weights on `DecimalInput` (rule 10, « 1,5 » now possible). The filter modal no longer closes on a backdrop click. Owner's decision: the different card of an ingredient-type recipe in search vs category view is left as is (not a bug).
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: step 2 (type counting to `core/logic`, duplicates, `recipeId!`), step 3 (theme).
+
 ## 2026-10-08 — Mandatory outdoor activity photo, front side (v6.82.0)
 
 - Done: the dashboard activity modal gets a photo field (`PhotoField`, moved from the Recipe Builder to `shared/components/ui/`), mandatory (`validateOutdoorPhoto`: chosen file or existing photo). Creation sends the activity and its photo in one `multipart` call (`createOutdoorActivity(body, photo)`), edit does the JSON `PUT` then `POST /outdoor-activities/:uuid/photo` when a new photo is chosen (`uploadOutdoorActivityPhoto`); the confirmation recap shows the photo (creation) or the photo change (edit). Contract from the API session's real payloads, recorded in `docs/api.md` § Planned.

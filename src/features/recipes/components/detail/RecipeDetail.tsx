@@ -7,6 +7,7 @@ import { getLinkedBases, getCategoryRecipeIds } from '../../../../core/logic/rec
 import { resolveInitialPortions, scaleRecipeToPortions } from '../../../../core/logic/recipe/recipeScalingLogic';
 import { RecipePhotoCard } from '../../../../shared/components/ui/RecipePhotoCard';
 import { PortionsStepper } from './PortionsStepper';
+import { RecipeNotFound } from './RecipeNotFound';
 import { recipeToBuilderState } from '../../../../core/logic/recipeBuilder/recipeBuilderMapper';
 import { useIsAdmin } from '../../../../shared/hooks/useIsAdmin';
 import { useRecipeBuilderStore } from '../../../../shared/store/useRecipeBuilderStore';
@@ -70,7 +71,8 @@ export const RecipeDetail = () => {
 
   const linkedBases = useMemo(() => (recipe ? getLinkedBases(recipes, recipe) : []), [recipes, recipe]);
 
-  if (!recipe || !scaledRecipe || (!mealPhotoUrl && !instructionsPhotoUrl)) return null;
+  if (!recipe) return <RecipeNotFound />;
+  if (!scaledRecipe || (!mealPhotoUrl && !instructionsPhotoUrl)) return null;
 
   const handleEditInBuilder = () => {
     loadFromRecipe(recipeToBuilderState(recipeId!, recipe));

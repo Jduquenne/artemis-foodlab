@@ -2,15 +2,16 @@ import { ChevronDown, RotateCcw } from 'lucide-react';
 import { Ingredient } from '../../../../core/domain/ingredient';
 import { useFoodsSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 import { UNIT_WEIGHT_UNITS } from '../../../../core/domain/ingredient';
+import { DecimalInput } from '../../../../shared/components/ui/DecimalInput';
 
 export interface IngredientAdjustRowProps {
   ingredient: Ingredient;
   currentQty: number;
   currentUnitWeight: number | null;
   isExpanded: boolean;
-  onQuantityChange: (value: string) => void;
+  onQuantityChange: (value: number | null) => void;
   onResetQuantity: () => void;
-  onUnitWeightChange: (value: string) => void;
+  onUnitWeightChange: (value: number | null) => void;
   onResetUnitWeight: () => void;
   onToggleExpand: () => void;
 }
@@ -76,13 +77,10 @@ export const IngredientAdjustRow = ({
                 <RotateCcw size={11} />
               </button>
             )}
-            <input
-              type="number"
-              min="0"
-              step="any"
+            <DecimalInput
               disabled={!hasData}
               value={currentQty}
-              onChange={(e) => onQuantityChange(e.target.value)}
+              onValueChange={onQuantityChange}
               className={`w-20 text-right text-sm font-medium bg-white dark:bg-slate-100 border rounded-lg px-2 py-1 focus:outline-none disabled:cursor-not-allowed transition-colors ${isQtyModified ? 'border-orange-400 text-orange-600' : 'border-slate-200 text-slate-800 focus:border-orange-400'}`}
             />
             <span className="text-xs text-slate-400 w-10">
@@ -107,12 +105,9 @@ export const IngredientAdjustRow = ({
                   <RotateCcw size={11} />
                 </button>
               )}
-              <input
-                type="number"
-                min="0"
-                step="1"
-                value={currentUnitWeight ?? ''}
-                onChange={(e) => onUnitWeightChange(e.target.value)}
+              <DecimalInput
+                value={currentUnitWeight}
+                onValueChange={onUnitWeightChange}
                 placeholder="—"
                 className={`w-20 text-right text-xs bg-white dark:bg-slate-100 border rounded-lg px-2 py-1 focus:outline-none transition-colors ${isUnitWeightModified ? 'border-orange-400 text-orange-500' : 'border-slate-200 text-slate-500 focus:border-orange-400'}`}
               />

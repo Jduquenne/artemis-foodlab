@@ -51,10 +51,7 @@ export const RecipeFilterModal = ({ filter, candidates, onSubmit, onClose }: Rec
   const typeMedians = draft.type === null ? null : medians[draft.type];
 
   return (
-    <div
-      className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center sm:p-4"
-      onClick={(e) => { if (e.target === e.currentTarget) handleClose(); }}
-    >
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center sm:p-4">
       <div className={`w-full sm:max-w-md bg-slate-50 rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden max-h-[90dvh] ${isClosing ? 'modal-exit sm:modal-center-exit' : 'modal-enter sm:modal-center-enter'}`}>
 
         <div className="flex items-center justify-between gap-3 px-5 pt-5 pb-4 border-b border-slate-200 shrink-0">

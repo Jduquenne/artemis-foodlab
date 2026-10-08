@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — `features/` review: recipeBuilder, step 1 (v6.80.4)
+
+- Done: read-only review of `features/recipeBuilder` (14 files), findings and owner decisions in `dev/refactoring.md`. Step 1 fixes: the builder now remembers the loaded recipe (`sourceCode`); its category and N° are locked (name editable) and Save always updates it, so changing the N° of a loaded recipe can no longer overwrite another recipe or silently create a copy; a new draft whose code is taken is blocked (`validateBuilderIdentity`); draft store v4 with migration. « Nouvelle recette » always asks for confirmation (`ConfirmActionModal`). Mobile ingredient drawer no longer closes on backdrop click (it bypassed the disabled « Terminé »), its close button follows the same rule. « Télécharger la recette » shows an error message on failure.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: step 2 (`feature:` « Variante » button + mandatory dish photo for every type), step 3 (rules + duplicates), step 4 (theme), step 5 (« activité » builder brainstorm); category change of an existing recipe to design.
+
 ## 2026-10-08 — Dashboard migrated to the named theme colours (v6.80.3)
 
 - Done: the 12 `dark:*-slate-*` classes left in `features/dashboard` (25 before step 2) replaced by the named colours (D-031), all exact pairs, identical rendering: `bg-surface`, `bg-muted`, `hover:bg-subtle`. This closes the dashboard review.

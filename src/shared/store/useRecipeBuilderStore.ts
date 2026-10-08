@@ -3,7 +3,7 @@ import { recipesCatalogue } from "../../core/catalogue/recipes";
 import { persist } from "zustand/middleware";
 import { RecipeBuilderState, DraftIngredient } from "../../core/domain/recipeBuilderTypes";
 import { initialRecipeBuilderState } from "../../core/logic/recipeBuilder/recipeBuilderState";
-import { migrateDraftV2ToV3 } from "../../core/logic/recipeBuilder/recipeBuilderMigration";
+import { migrateDraftV2ToV3, migrateDraftV3ToV4 } from "../../core/logic/recipeBuilder/recipeBuilderMigration";
 import { suggestNextRecipeNumber } from "../../core/logic/recipeBuilder/recipeCodeLogic";
 
 function freshDraft(): RecipeBuilderState {
@@ -30,10 +30,11 @@ export const useRecipeBuilderStore = create<RecipeBuilderStore>()(
     }),
     {
       name: "cipe_recipe_builder",
-      version: 3,
-      migrate: (persisted, version) => ({
-        draft: (version === 2 ? migrateDraftV2ToV3(persisted) : null) ?? freshDraft(),
-      }),
+      version: 4,
+      migrate: (persisted, version) => {
+        const v3 = version === 2 ? { draft: migrateDraftV2ToV3(persisted) } : persisted;
+        return { draft: (version <= 3 ? migrateDraftV3ToV4(v3) : null) ?? freshDraft() };
+      },
     }
   )
 );

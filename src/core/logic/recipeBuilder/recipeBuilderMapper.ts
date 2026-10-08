@@ -41,6 +41,7 @@ export function recipeToBuilderState(
     category: (ing.category as IngredientCategory) ?? IngredientCategory.UNKNOWN,
   }));
   return {
+    sourceCode: recipeId,
     recipeNumber,
     name: recipe.name,
     categoryId: recipe.categoryId,

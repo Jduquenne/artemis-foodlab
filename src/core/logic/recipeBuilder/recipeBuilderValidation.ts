@@ -1,4 +1,4 @@
-import { Category, RecipeKind } from "../../domain/recipe";
+import { Category, RecipeDetails, RecipeKind } from "../../domain/recipe";
 import { MEAL_TYPE_LABELS, RECIPE_KIND_LABELS } from "../../domain/recipeLabels";
 import { RecipeBuilderState } from "../../domain/recipeBuilderTypes";
 import { getIngredientCategoryId } from "../../domain/ingredientCategorySlugs";
@@ -55,4 +55,17 @@ export function validateBuilderState(state: RecipeBuilderState): string[] {
     errors.push("Une sous-recette (base) est introuvable dans le catalogue.");
   }
   return errors;
+}
+
+export function validateBuilderIdentity(state: RecipeBuilderState, recipes: Record<string, RecipeDetails>): string[] {
+  const code = buildRecipeDbId(state.categoryId, state.recipeNumber);
+  const source = state.sourceCode ? recipes[state.sourceCode] : undefined;
+  if (source?.apiId && code !== state.sourceCode) {
+    return ["L'identifiant d'une recette existante ne peut pas changer."];
+  }
+  const taken = recipes[code];
+  if (taken && code !== state.sourceCode) {
+    return [`Le N° ${state.recipeNumber} est déjà utilisé par « ${taken.name} ».`];
+  }
+  return [];
 }

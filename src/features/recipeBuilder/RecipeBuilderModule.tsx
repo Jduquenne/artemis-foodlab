@@ -7,22 +7,25 @@ import { SaveRecipePanel } from "./components/output/SaveRecipePanel";
 import { MacroPreview } from "./components/output/MacroPreview";
 import { PhotoPanel } from "./components/photo/PhotoPanel";
 import { LoadRecipeModal } from "./components/LoadRecipeModal";
+import { ConfirmActionModal } from "../../shared/components/ui/ConfirmActionModal";
 
 export const RecipeBuilderModule = () => {
   const { draft, patch, patchIngredients, reset, loadFromRecipe } = useRecipeBuilderStore();
   const [loadModalOpen, setLoadModalOpen] = useState(false);
   const [mealPhoto, setMealPhoto] = useState<File | null>(null);
   const [bookPhoto, setBookPhoto] = useState<File | null>(null);
+  const [confirmReset, setConfirmReset] = useState(false);
 
   const clearPhotos = () => {
     setMealPhoto(null);
     setBookPhoto(null);
   };
 
-  const handleReset = () => {
-    if (!draft.name && draft.ingredients.length === 0) return;
+  const handleReset = async () => {
     reset();
     clearPhotos();
+    setConfirmReset(false);
+    return true;
   };
 
   const cardClass = "bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl";
@@ -43,7 +46,7 @@ export const RecipeBuilderModule = () => {
           </button>
           <button
             type="button"
-            onClick={handleReset}
+            onClick={() => setConfirmReset(true)}
             title="Nouvelle recette"
             className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-slate-500 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors"
           >
@@ -80,6 +83,17 @@ export const RecipeBuilderModule = () => {
           </div>
         </div>
       </div>
+
+      {confirmReset && (
+        <ConfirmActionModal
+          title="Nouvelle recette"
+          consequence="Le formulaire sera entièrement vidé : nom, ingrédients, instructions et photos choisies. Les recettes déjà enregistrées ne sont pas touchées."
+          confirmLabel="Vider le formulaire"
+          danger
+          onConfirm={handleReset}
+          onCancel={() => setConfirmReset(false)}
+        />
+      )}
 
       {loadModalOpen && (
         <LoadRecipeModal onLoad={loadFromRecipe} onClose={() => setLoadModalOpen(false)} />

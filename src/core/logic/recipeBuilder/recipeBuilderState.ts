@@ -3,6 +3,7 @@ import { MealType, RecipeKind } from "../../domain/recipe";
 import { categoriesCatalogue } from "../../catalogue/categories";
 
 export const initialRecipeBuilderState = (): RecipeBuilderState => ({
+  sourceCode: null,
   recipeNumber: "",
   name: "",
   categoryId: categoriesCatalogue[0]?.id ?? "",

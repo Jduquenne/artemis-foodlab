@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Download, Loader2, ImageOff, ImagePlus } from "lucide-react";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
-import { buildImageName, getBuilderRecipeCode } from "../../../../core/logic/recipeBuilder/recipeCodeLogic";
-import { useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
+import { buildImageName } from "../../../../core/logic/recipeBuilder/recipeCodeLogic";
+import { useBuilderSourceRecipe } from "../../../../shared/hooks/useBuilderSourceRecipe";
 import { AsyncImage } from "../../../../shared/components/ui/AsyncImage";
 import { builderStateToRecetteCardData, builderStateToBookCardData } from "../../../../shared/utils/cards/cardAdapter";
 import { downloadRecetteCard, downloadRecetteBookCard } from "../../../../shared/utils/cards/cardExport";
@@ -23,9 +23,7 @@ export const PhotoPanel = ({ state, mealPhoto, onPickMeal, bookPhoto, onPickBook
   const [downloading, setDownloading] = useState(false);
   const [error, setError] = useState("");
 
-  const code = getBuilderRecipeCode(state);
-  const recipes = useRecipesSnapshot();
-  const existing = recipes[code];
+  const existing = useBuilderSourceRecipe(state);
   const existingUrl = existing?.assets?.mealPhoto?.url;
 
   const localUrl = useMemo(() => (mealPhoto ? URL.createObjectURL(mealPhoto) : null), [mealPhoto]);
@@ -48,6 +46,7 @@ export const PhotoPanel = ({ state, mealPhoto, onPickMeal, bookPhoto, onPickBook
   const handleDownload = async () => {
     if (!source) return;
     setDownloading(true);
+    setError("");
     try {
       const filename = buildImageName(state.categoryId, state.recipeNumber, state.name || "recette");
       if (state.isFromBook && bookSource) {
@@ -55,6 +54,8 @@ export const PhotoPanel = ({ state, mealPhoto, onPickMeal, bookPhoto, onPickBook
       } else {
         await downloadRecetteCard(builderStateToRecetteCardData(state, ""), source, filename);
       }
+    } catch {
+      setError("Le téléchargement de la recette a échoué.");
     } finally {
       setDownloading(false);
     }

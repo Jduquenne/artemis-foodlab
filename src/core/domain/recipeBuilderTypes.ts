@@ -15,6 +15,7 @@ export interface DraftIngredient {
 }
 
 export interface RecipeBuilderState {
+  sourceCode: string | null;
   recipeNumber: string;
   name: string;
   categoryId: string;

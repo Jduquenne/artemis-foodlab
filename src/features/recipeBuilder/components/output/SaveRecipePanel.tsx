@@ -1,11 +1,12 @@
 import { useMemo, useState } from "react";
 import { Save, X, Check, Loader2, Trash2, AlertTriangle } from "lucide-react";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
-import { summarizeBuilderState, validateBuilderState } from "../../../../core/logic/recipeBuilder/recipeBuilderValidation";
+import { summarizeBuilderState, validateBuilderIdentity, validateBuilderState } from "../../../../core/logic/recipeBuilder/recipeBuilderValidation";
 import { getBuilderRecipeCode } from "../../../../core/logic/recipeBuilder/recipeCodeLogic";
 import { useCategoriesSnapshot, useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { useRecipeBuilderSave } from "../../../../shared/hooks/useRecipeBuilderSave";
 import { useRecipeBuilderStore } from "../../../../shared/store/useRecipeBuilderStore";
+import { useBuilderSourceRecipe } from "../../../../shared/hooks/useBuilderSourceRecipe";
 
 export interface SaveRecipePanelProps {
   state: RecipeBuilderState;
@@ -23,9 +24,11 @@ export const SaveRecipePanel = ({ state, mealPhoto, bookPhoto, onSaved }: SaveRe
   const code = getBuilderRecipeCode(state);
   const recipes = useRecipesSnapshot();
   const categories = useCategoriesSnapshot();
-  const existing = recipes[code];
-  const isExisting = Boolean(existing?.apiId);
-  const liveErrors = useMemo(() => validateBuilderState(state), [state]);
+  const isExisting = Boolean(useBuilderSourceRecipe(state));
+  const liveErrors = useMemo(
+    () => [...validateBuilderState(state), ...validateBuilderIdentity(state, recipes)],
+    [state, recipes],
+  );
   const recap = useMemo(() => summarizeBuilderState(state, categories), [state, categories]);
 
   const close = () => {
@@ -40,7 +43,8 @@ export const SaveRecipePanel = ({ state, mealPhoto, bookPhoto, onSaved }: SaveRe
   };
 
   const handleDelete = async () => {
-    const ok = await remove(code);
+    if (!state.sourceCode) return;
+    const ok = await remove(state.sourceCode);
     if (ok) {
       resetBuilder();
       close();

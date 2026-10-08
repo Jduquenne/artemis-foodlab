@@ -33,14 +33,8 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
   const canClose = isBase ? !!ingredient.baseId || !ingredient.name.trim() : !!ingredient.foodId || !ingredient.name.trim();
 
   return (
-    <div
-      className="fixed inset-0 z-50 bg-black/50 flex items-end sm:hidden"
-      onClick={close}
-    >
-      <div
-        className={`w-full bg-white dark:bg-slate-100 rounded-t-2xl shadow-2xl flex flex-col max-h-[85vh] ${isExiting ? "modal-exit" : "modal-enter"}`}
-        onClick={e => e.stopPropagation()}
-      >
+    <div className="fixed inset-0 z-50 bg-black/50 flex items-end sm:hidden">
+      <div className={`w-full bg-white dark:bg-slate-100 rounded-t-2xl shadow-2xl flex flex-col max-h-[85vh] ${isExiting ? "modal-exit" : "modal-enter"}`}>
         <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-slate-100 shrink-0">
           <p className="text-sm font-black text-slate-800 truncate max-w-[75%]">
             {ingredient.name || <span className="text-slate-400 font-normal italic">Nouvel ingrédient</span>}
@@ -48,7 +42,8 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
           <button
             type="button"
             onClick={close}
-            className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
+            disabled={!canClose}
+            className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors disabled:opacity-40"
           >
             <X className="w-4 h-4" />
           </button>

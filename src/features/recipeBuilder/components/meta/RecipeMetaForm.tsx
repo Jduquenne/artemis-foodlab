@@ -4,7 +4,8 @@ import { MealType, RecipeKind } from "../../../../core/domain/recipe";
 import { MEAL_TYPE_LABELS, RECIPE_KIND_LABELS } from "../../../../core/domain/recipeLabels";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
 import { useCategoriesSnapshot, useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
-import { CATEGORY_PREFIX, buildRecipeDbId, buildRecipeId, suggestNextRecipeNumber } from "../../../../core/logic/recipeBuilder/recipeCodeLogic";
+import { CATEGORY_PREFIX, buildRecipeId, suggestNextRecipeNumber } from "../../../../core/logic/recipeBuilder/recipeCodeLogic";
+import { useBuilderSourceRecipe } from "../../../../shared/hooks/useBuilderSourceRecipe";
 import { InstructionsModal } from "./InstructionsModal";
 import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
 
@@ -32,13 +33,10 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
   const isBase = state.kind === RecipeKind.BASE;
   const recipes = useRecipesSnapshot();
   const categories = useCategoriesSnapshot();
-  const isExisting = Boolean(recipes[buildRecipeDbId(state.categoryId, state.recipeNumber)]?.apiId);
+  const isExisting = Boolean(useBuilderSourceRecipe(state));
 
   const changeCategory = (categoryId: string) => {
-    onChange({
-      categoryId,
-      recipeNumber: isExisting ? state.recipeNumber : suggestNextRecipeNumber(Object.keys(recipes), categoryId),
-    });
+    onChange({ categoryId, recipeNumber: suggestNextRecipeNumber(Object.keys(recipes), categoryId) });
   };
 
   const toggleMealType = (type: MealType) => {
@@ -76,7 +74,7 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
       <div className="flex gap-2 items-end">
         <div className="flex-1 min-w-0">
           <label className={labelClass}>Catégorie</label>
-          <select value={state.categoryId} onChange={(e) => changeCategory(e.target.value)} className={inputClass}>
+          <select value={state.categoryId} onChange={(e) => changeCategory(e.target.value)} disabled={isExisting} className={`${inputClass} disabled:opacity-60`}>
             {categories.map((c) => (
               <option key={c.id} value={c.id}>
                 {c.name}
@@ -92,6 +90,7 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
               type="number"
               min={1}
               value={state.recipeNumber}
+              disabled={isExisting}
               onChange={(e) => onChange({ recipeNumber: e.target.value })}
               placeholder="16"
               className="w-12 py-2 bg-transparent text-sm text-slate-800 font-mono placeholder-slate-400 focus:outline-none text-center"
@@ -105,7 +104,7 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
           <span className="px-2 py-0.5 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 text-xs font-mono font-bold rounded-lg">
             {computedId}
           </span>
-          {isExisting && <span className="text-[10px] text-slate-400">recette existante</span>}
+          {isExisting && <span className="text-[10px] text-slate-400">recette existante, identifiant figé</span>}
         </div>
       )}
 

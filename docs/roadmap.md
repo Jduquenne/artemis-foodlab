@@ -59,7 +59,6 @@ Milestones reconstructed from history; definitions of done marked "proposed" wer
 ## Blocked
 
 - ⏸ Google sign-in (#10): waiting for the API endpoint and the owner's Google Cloud setup (`docs/api.md` § Planned).
-- ⏸ Outdoor activity photo (mandatory, client + server, dashboard activity modal — owner's decision 2026-10-08): front done in v6.82.0, **push only after the owner confirms the API is live** (breaking change on `POST /outdoor-activities`, `docs/api.md` § Planned).
 
 ## Ideas / later
 

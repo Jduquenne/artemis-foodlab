@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — Recipe Builder migrated to the named theme colours (v6.81.2)
+
+- Done: the 38 `dark:*-slate-*` classes of `features/recipeBuilder` replaced by the named colours (D-031), all exact pairs, identical rendering (`bg-surface`, `bg-muted`, `bg-subtle` and their `hover:`). This closes the code review of the Recipe Builder.
+- Numbers: `npx tsc -b` + `npm run lint` pass; theme check 64 occurrences in 30 files left; not checked in a browser.
+- Still open: « activité » mode of the Recipe Builder (outdoor activities with a photo), brainstorm with the owner before any code; category change of an existing recipe to design; then `features/recipes`, `news` + `sync`, `shared/`.
+
 ## 2026-10-08 — `features/` review: recipeBuilder, step 3 (v6.81.1)
 
 - Done: numeric fields on `DecimalInput` (ingredient quantities in the desktop row and the mobile drawer, recipe N°, book page; rule 10). Save modal no longer closes on a backdrop click; recipe deletion confirmed with `ConfirmActionModal` (recap name + id). `vh` → `dvh` (drawer, ingredient list). Existing dish photo shown through `asset` (batch media resolution) instead of its raw URL. « Charger une recette » shows the French kind label. Duplicates: photo file check → `validatePhotoFile` (`core/logic/media/mediaLogic.ts`), food pick → `applyFoodPick` (`recipeBuilderMapper.ts`), Aliment / Base switch → `IngredientTypeToggle`, search dropdown → `SuggestionList`; useless `as string` casts removed.

@@ -16,7 +16,7 @@ export interface IngredientEditDrawerProps {
 }
 
 const FIELD_CLASS =
-  "w-full px-3 py-2.5 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400";
+  "w-full px-3 py-2.5 bg-surface border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400";
 
 const LABEL_CLASS = "block text-[10px] font-black text-slate-400 uppercase tracking-wide mb-1";
 
@@ -35,7 +35,7 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
 
   return (
     <div className="fixed inset-0 z-50 bg-black/50 flex items-end sm:hidden">
-      <div className={`w-full bg-white dark:bg-slate-100 rounded-t-2xl shadow-2xl flex flex-col max-h-[85dvh] ${isExiting ? "modal-exit" : "modal-enter"}`}>
+      <div className={`w-full bg-surface rounded-t-2xl shadow-2xl flex flex-col max-h-[85dvh] ${isExiting ? "modal-exit" : "modal-enter"}`}>
         <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-slate-100 shrink-0">
           <p className="text-sm font-black text-slate-800 truncate max-w-[75%]">
             {ingredient.name || <span className="text-slate-400 font-normal italic">Nouvel ingrédient</span>}
@@ -44,7 +44,7 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
             type="button"
             onClick={close}
             disabled={!canClose}
-            className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors disabled:opacity-40"
+            className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-muted transition-colors disabled:opacity-40"
           >
             <X className="w-4 h-4" />
           </button>

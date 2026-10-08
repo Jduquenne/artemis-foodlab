@@ -33,7 +33,7 @@ export const BaseRecipeSearch = ({ value, onChange }: BaseRecipeSearchProps) => 
           onFocus={() => setOpen(true)}
           onBlur={() => setOpen(false)}
           placeholder="Rechercher une base…"
-          className="w-full pl-8 pr-3 py-2 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
+          className="w-full pl-8 pr-3 py-2 bg-surface border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
         />
       </div>
       {open && suggestions.length > 0 && (

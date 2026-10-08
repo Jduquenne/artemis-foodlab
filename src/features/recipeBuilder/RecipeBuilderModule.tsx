@@ -44,7 +44,7 @@ export const RecipeBuilderModule = () => {
     return true;
   };
 
-  const cardClass = "bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl";
+  const cardClass = "bg-surface border border-slate-200 rounded-2xl";
 
   return (
     <div className="flex flex-col gap-3 lg:h-full lg:overflow-hidden">

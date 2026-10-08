@@ -42,7 +42,7 @@ export const MacroPreview = ({ ingredients, defaultPortions }: MacroPreviewProps
               className={`px-2 py-0.5 text-[10px] font-bold transition-colors ${
                 mode === m
                   ? "bg-orange-500 text-white"
-                  : "bg-white dark:bg-slate-100 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-200"
+                  : "bg-surface text-slate-500 hover:bg-subtle"
               }`}
             >
               {m === "portion" ? "Portion" : `Total ×${portions}`}
@@ -58,7 +58,7 @@ export const MacroPreview = ({ ingredients, defaultPortions }: MacroPreviewProps
           {MACRO_DISPLAYS.map(({ key, label, unit }) => (
             <div
               key={key}
-              className="flex-1 flex flex-col items-center gap-0.5 bg-slate-100 dark:bg-slate-200 rounded-xl px-1 py-1.5"
+              className="flex-1 flex flex-col items-center gap-0.5 bg-muted rounded-xl px-1 py-1.5"
             >
               <span className="text-[9px] font-medium text-slate-400 uppercase tracking-wide leading-none">{label}</span>
               <span className="text-base font-bold text-slate-800 leading-none tabular-nums">

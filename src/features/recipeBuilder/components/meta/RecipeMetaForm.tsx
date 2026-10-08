@@ -16,13 +16,13 @@ export interface RecipeMetaFormProps {
 
 const labelClass = "block text-[10px] font-black text-slate-400 uppercase tracking-wide mb-1";
 const inputClass =
-  "w-full px-3 py-2 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400";
+  "w-full px-3 py-2 bg-surface border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400";
 
 const chipClass = (active: boolean) =>
   `flex-1 py-1.5 rounded-lg text-xs font-bold border transition-colors ${
     active
       ? "bg-orange-500 text-white border-orange-500"
-      : "bg-white dark:bg-slate-100 text-slate-500 border-slate-200 hover:border-orange-300"
+      : "bg-surface text-slate-500 border-slate-200 hover:border-orange-300"
   }`;
 
 export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
@@ -84,7 +84,7 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
         </div>
         <div className="shrink-0">
           <label className={labelClass}>N°</label>
-          <div className="flex items-center gap-1.5 px-2 border border-slate-200 rounded-xl bg-white dark:bg-slate-100 focus-within:border-orange-400 focus-within:ring-1 focus-within:ring-orange-400">
+          <div className="flex items-center gap-1.5 px-2 border border-slate-200 rounded-xl bg-surface focus-within:border-orange-400 focus-within:ring-1 focus-within:ring-orange-400">
             <span className="text-xs font-mono font-bold text-slate-400">{prefix}_</span>
             <DecimalInput
               integer

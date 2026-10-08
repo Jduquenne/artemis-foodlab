@@ -29,7 +29,7 @@ export const PhotoField = ({ label, file, hasExisting, onPick }: PhotoFieldProps
       <button
         type="button"
         onClick={() => inputRef.current?.click()}
-        className="flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 dark:bg-slate-200 text-sm text-slate-600 hover:border-orange-300 transition-colors"
+        className="flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-200 bg-subtle text-sm text-slate-600 hover:border-orange-300 transition-colors"
       >
         <ImagePlus className="w-4 h-4 shrink-0 text-slate-400" />
         <span className="truncate">

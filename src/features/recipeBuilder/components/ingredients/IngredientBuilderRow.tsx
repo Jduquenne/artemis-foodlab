@@ -33,7 +33,7 @@ export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: Ingredi
             value={ingredient.quantity}
             onValueChange={(quantity) => update({ quantity })}
             placeholder="Portions"
-            className="w-20 px-2 py-2 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 text-center"
+            className="w-20 px-2 py-2 bg-surface border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 text-center"
           />
           <span className="text-xs text-slate-400 shrink-0">portion</span>
         </>
@@ -48,12 +48,12 @@ export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: Ingredi
             value={ingredient.quantity}
             onValueChange={(quantity) => update({ quantity })}
             placeholder="Qté"
-            className="w-14 px-2 py-2 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 text-center"
+            className="w-14 px-2 py-2 bg-surface border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 text-center"
           />
           <select
             value={ingredient.unit ?? Unit.NONE}
             onChange={e => update({ unit: e.target.value as Unit })}
-            className="w-20 px-1 py-2 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
+            className="w-20 px-1 py-2 bg-surface border border-slate-200 rounded-xl text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
           >
             <option value={Unit.NONE}>—</option>
             {SELECTABLE_UNITS.map(u => (
@@ -63,7 +63,7 @@ export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: Ingredi
           <select
             value={ingredient.preparation ?? ""}
             onChange={e => update({ preparation: e.target.value })}
-            className="w-32 px-1 py-2 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
+            className="w-32 px-1 py-2 bg-surface border border-slate-200 rounded-xl text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
           >
             <option value="">—</option>
             {PREPARATION_OPTIONS.map(p => (
@@ -73,7 +73,7 @@ export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: Ingredi
           <select
             value={ingredient.category ?? IngredientCategory.UNKNOWN}
             onChange={e => update({ category: e.target.value as IngredientCategory })}
-            className="w-28 px-1 py-2 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-xs text-slate-600 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
+            className="w-28 px-1 py-2 bg-surface border border-slate-200 rounded-xl text-xs text-slate-600 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
           >
             {Object.values(IngredientCategory).map(c => (
               <option key={c} value={c}>{c}</option>

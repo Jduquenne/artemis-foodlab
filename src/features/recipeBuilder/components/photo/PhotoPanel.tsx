@@ -64,7 +64,7 @@ export const PhotoPanel = ({ state, mealPhoto, onPickMeal, bookPhoto, onPickBook
       <h2 className="text-[10px] font-black text-slate-400 uppercase tracking-wide">Photo du plat <span className="text-orange-500">· obligatoire</span></h2>
 
       <div className="flex gap-3">
-        <div className="relative w-16 h-16 shrink-0 rounded-lg overflow-hidden border border-slate-200 bg-slate-100 dark:bg-slate-200">
+        <div className="relative w-16 h-16 shrink-0 rounded-lg overflow-hidden border border-slate-200 bg-muted">
           {localUrl ? (
             <img src={localUrl} alt="Aperçu" className="absolute inset-0 w-full h-full object-cover" />
           ) : existingUrl ? (
@@ -81,7 +81,7 @@ export const PhotoPanel = ({ state, mealPhoto, onPickMeal, bookPhoto, onPickBook
           <button
             type="button"
             onClick={() => inputRef.current?.click()}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-slate-200 bg-slate-50 dark:bg-slate-200 text-xs font-semibold text-slate-600 hover:border-orange-300 transition-colors"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-slate-200 bg-subtle text-xs font-semibold text-slate-600 hover:border-orange-300 transition-colors"
           >
             <ImagePlus className="w-3.5 h-3.5 shrink-0 text-slate-400" />
             <span className="truncate">{mealPhoto ? mealPhoto.name : existingUrl ? "Remplacer" : "Choisir une image"}</span>
@@ -90,7 +90,7 @@ export const PhotoPanel = ({ state, mealPhoto, onPickMeal, bookPhoto, onPickBook
             type="button"
             onClick={handleDownload}
             disabled={!source || downloading}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-slate-200 bg-slate-50 dark:bg-slate-200 text-xs font-semibold text-slate-600 hover:border-orange-300 transition-colors disabled:opacity-40"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-slate-200 bg-subtle text-xs font-semibold text-slate-600 hover:border-orange-300 transition-colors disabled:opacity-40"
           >
             {downloading ? (
               <Loader2 className="w-3.5 h-3.5 shrink-0 animate-spin text-slate-400" />

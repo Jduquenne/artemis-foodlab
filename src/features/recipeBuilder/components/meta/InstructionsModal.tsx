@@ -79,7 +79,7 @@ export const InstructionsModal = ({ instructions, onChange, onClose }: Instructi
           <button
             aria-label="Fermer"
             onClick={onClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
+            className="p-2 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-muted transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -105,7 +105,7 @@ export const InstructionsModal = ({ instructions, onChange, onClose }: Instructi
                 onPaste={(e) => handlePaste(e, i)}
                 placeholder="Décris cette étape…"
                 rows={1}
-                className="flex-1 min-w-0 resize-none px-3 py-2 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 leading-relaxed"
+                className="flex-1 min-w-0 resize-none px-3 py-2 bg-surface border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 leading-relaxed"
               />
               <div className="shrink-0 flex flex-col gap-0.5 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity">
                 <button

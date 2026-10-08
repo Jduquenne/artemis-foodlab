@@ -15,7 +15,7 @@ export const VariantModal = ({ sourceName, onConfirm, onCancel }: VariantModalPr
 
   return (
     <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="w-full max-w-sm bg-white dark:bg-slate-100 rounded-2xl shadow-2xl p-5 flex flex-col gap-4 modal-center-enter">
+      <div className="w-full max-w-sm bg-surface rounded-2xl shadow-2xl p-5 flex flex-col gap-4 modal-center-enter">
         <div>
           <p className="text-xs font-black text-orange-600 uppercase tracking-widest">Créer une variante</p>
           <p className="text-sm text-slate-600 mt-1.5">
@@ -29,7 +29,7 @@ export const VariantModal = ({ sourceName, onConfirm, onCancel }: VariantModalPr
             value={name}
             onChange={(e) => setName(e.target.value)}
             autoFocus
-            className="w-full px-3 py-2 bg-white dark:bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
+            className="w-full px-3 py-2 bg-surface border border-slate-200 rounded-xl text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
           />
           {nameError && <span className="text-xs text-red-500">{nameError}</span>}
         </label>
@@ -40,7 +40,7 @@ export const VariantModal = ({ sourceName, onConfirm, onCancel }: VariantModalPr
           <button
             type="button"
             onClick={onCancel}
-            className="flex-1 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-200 text-slate-600 text-sm font-bold hover:bg-slate-200 transition-colors"
+            className="flex-1 py-2.5 rounded-xl bg-muted text-slate-600 text-sm font-bold hover:bg-slate-200 transition-colors"
           >
             Annuler
           </button>

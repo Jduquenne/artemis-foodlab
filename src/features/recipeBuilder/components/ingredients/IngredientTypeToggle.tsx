@@ -22,7 +22,7 @@ export const IngredientTypeToggle = ({ ingredient, onChange, wide = false }: Ing
         className={`${wide ? "flex-1 py-2.5" : "px-2 py-1.5"} text-xs font-bold transition-colors ${index > 0 ? "border-l border-slate-200" : ""} ${
           ingredient.ingredientType === option.type
             ? "bg-orange-500 text-white"
-            : "bg-white dark:bg-slate-100 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-200"
+            : "bg-surface text-slate-500 hover:bg-subtle"
         }`}
       >
         {option.label}

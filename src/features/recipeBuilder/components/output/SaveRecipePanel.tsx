@@ -68,7 +68,7 @@ export const SaveRecipePanel = ({ state, mealPhoto, bookPhoto, onSaved }: SaveRe
 
       {isOpen && (
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-lg bg-white dark:bg-slate-100 rounded-2xl shadow-2xl flex flex-col overflow-hidden modal-center-enter">
+          <div className="w-full max-w-lg bg-surface rounded-2xl shadow-2xl flex flex-col overflow-hidden modal-center-enter">
             <div className="flex items-center justify-between px-5 pt-5 pb-4 border-b border-slate-100">
               <div>
                 <p className="text-xs font-black text-orange-600 uppercase tracking-widest">
@@ -79,7 +79,7 @@ export const SaveRecipePanel = ({ state, mealPhoto, bookPhoto, onSaved }: SaveRe
               <button
                 type="button"
                 onClick={close}
-                className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
+                className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-muted transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -107,7 +107,7 @@ export const SaveRecipePanel = ({ state, mealPhoto, bookPhoto, onSaved }: SaveRe
               </dl>
 
               {(mealPhoto || bookPhoto) && (
-                <div className="flex flex-col gap-1 px-3 py-2.5 bg-slate-50 dark:bg-slate-200 rounded-xl text-xs text-slate-500">
+                <div className="flex flex-col gap-1 px-3 py-2.5 bg-subtle rounded-xl text-xs text-slate-500">
                   {mealPhoto && <span>Nouvelle photo du plat : {mealPhoto.name}</span>}
                   {bookPhoto && <span>Nouvelle photo du livre : {bookPhoto.name}</span>}
                 </div>

@@ -38,7 +38,7 @@ export const LoadRecipeModal = ({ onLoad, onClose }: LoadRecipeModalProps) => {
           <button
             aria-label="Fermer"
             onClick={onClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
+            className="p-2 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-muted transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -53,7 +53,7 @@ export const LoadRecipeModal = ({ onLoad, onClose }: LoadRecipeModalProps) => {
               onChange={e => setQuery(e.target.value)}
               autoFocus
               placeholder="Rechercher une recette…"
-              className="w-full pl-9 pr-4 py-3 bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
+              className="w-full pl-9 pr-4 py-3 bg-surface border border-slate-200 rounded-2xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
             />
           </div>
         </div>
@@ -69,7 +69,7 @@ export const LoadRecipeModal = ({ onLoad, onClose }: LoadRecipeModalProps) => {
                 <button
                   key={id}
                   onClick={() => handleSelect(id)}
-                  className="flex items-center justify-between gap-3 px-4 py-3 rounded-2xl text-left hover:bg-white dark:hover:bg-slate-100 transition-colors group"
+                  className="flex items-center justify-between gap-3 px-4 py-3 rounded-2xl text-left hover:bg-surface transition-colors group"
                 >
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-semibold text-slate-800 truncate group-hover:text-orange-600 transition-colors">
@@ -77,7 +77,7 @@ export const LoadRecipeModal = ({ onLoad, onClose }: LoadRecipeModalProps) => {
                     </p>
                     <p className="text-xs text-slate-400 mt-0.5">{id}</p>
                   </div>
-                  <span className="text-xs font-bold text-slate-400 bg-slate-100 dark:bg-slate-200 px-2 py-0.5 rounded-lg shrink-0">
+                  <span className="text-xs font-bold text-slate-400 bg-muted px-2 py-0.5 rounded-lg shrink-0">
                     {RECIPE_KIND_LABELS[recipe.kind]}
                   </span>
                 </button>

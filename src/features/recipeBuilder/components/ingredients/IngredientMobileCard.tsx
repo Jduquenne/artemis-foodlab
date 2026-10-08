@@ -20,7 +20,7 @@ export const IngredientMobileCard = ({ ingredient, onEdit, onRemove }: Ingredien
         className={`text-[10px] font-bold px-1.5 py-0.5 rounded shrink-0 ${
           isBase
             ? "bg-orange-100 dark:bg-orange-900/30 text-orange-600"
-            : "bg-slate-100 dark:bg-slate-200 text-slate-500"
+            : "bg-muted text-slate-500"
         }`}
       >
         {isBase ? "Base" : "Alim."}

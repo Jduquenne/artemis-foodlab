@@ -49,4 +49,6 @@ Always `navigate(buildRecipeDetailUrl(recipeId, portions))`: single slot = `save
 
 ## Weeks
 
+The URL holds the selected day (`day`, « Lundi »…) and a date of the displayed week (`d`, local `yyyy-MM-dd` via `toIsoDate`); without `day`, today is computed at render time (`dayNameOf(new Date())`).
+
 Planning and Journal compute `year = monday.getFullYear()` instead of the ISO week-year — known bug, see `docs/roadmap.md` § Known bugs.

@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — `features/` review: planning, step 3 (v6.79.9)
+
+- Done: planning dates in local time. The `d` URL parameter and the date shown in the header were written with `toISOString()` (UTC): between midnight and 2 am (summer time), the header date was one day behind and « semaine suivante » could stay on the same week. New `toIsoDate` (`shared/utils/dateUtils.ts`, `format(date, "yyyy-MM-dd")`). « Aujourd'hui » (no `day` in the URL) was computed once when the app loaded, so it stayed on the previous day after midnight; now `dayNameOf(new Date())` at render time.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: steps 4 (`PlanningModule` split) to 6 (theme); `freezerService` / `AddFreezerItemModal` still call `format(…, "yyyy-MM-dd")` directly (could use `toIsoDate`, `shared/` review); ISO week-year bug unchanged.
+
 ## 2026-10-08 — `features/` review: planning, step 2 (v6.79.8)
 
 - Done: every planning write now has a double-click guard, a loading signal and catches its rejection (the global red notification still shows the API message); modes and editors close only on success. « Ajouter au planning » and drag & drop show a spinner on the slots involved (`planning-add-to-slot:<slotId>`, `planning-move:<slotId>`); copy stays in copy mode on failure; persons, recipe grams and dessert persons editors stay open on failure (local `saving` states replaced by the existing pending keys); the shopping days selection waits for the API (spinner on « Confirmer ») instead of closing before the answer. `RecipePicker`: the never-shown confirmation screen removed (owner's choice), spinner on the clicked row like `DessertPicker`; subtitle « Lundi · Déjeuner » instead of « Lundi - lunch ».

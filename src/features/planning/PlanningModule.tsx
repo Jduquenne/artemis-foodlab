@@ -13,8 +13,8 @@ import { ShoppingSelectionBar } from './components/bars/ShoppingSelectionBar';
 import { PlanningHeader } from './components/PlanningHeader';
 import { PlanningSlot } from './components/slot/PlanningSlot';
 import { DayTabsBar } from './components/bars/DayTabsBar';
-import { getWeekNumber, getMonday, getWeekRange } from '../../shared/utils/weekUtils';
-import { formatDayDate } from '../../shared/utils/dateUtils';
+import { getWeekNumber, getMonday, getWeekRange, dayNameOf } from '../../shared/utils/weekUtils';
+import { formatDayDate, toIsoDate } from '../../shared/utils/dateUtils';
 import { computeDayMacros } from '../../shared/utils/macroUtils';
 import { useMacroCatalogue } from '../../shared/hooks/useMacroCatalogue';
 import { useRefreshStore } from '../../shared/store/useRefreshStore';
@@ -45,11 +45,6 @@ import {
     closestCenter,
 } from '@dnd-kit/core';
 
-const todayDayName = (() => {
-    const d = new Date().getDay();
-    return DAYS[d === 0 ? 6 : d - 1];
-})();
-
 export const PlanningModule = () => {
     const plannable = usePlannableSnapshot();
     const recipesDb = useRecipesSnapshot();
@@ -67,7 +62,7 @@ export const PlanningModule = () => {
     const swipeStartX = useRef<number | null>(null);
     const swipeStartY = useRef<number | null>(null);
 
-    const selectedDay = searchParams.get('day') ?? todayDayName;
+    const selectedDay = searchParams.get('day') ?? dayNameOf(new Date());
     const selectedDate = useMemo(() => {
         const d = searchParams.get('d');
         return d ? new Date(d + 'T12:00:00') : new Date();
@@ -76,7 +71,7 @@ export const PlanningModule = () => {
     const setSelectedDay = (day: string) =>
         setSearchParams(p => { p.set('day', day); return p; }, { replace: true });
     const setSelectedDate = (date: Date) =>
-        setSearchParams(p => { p.set('d', date.toISOString().slice(0, 10)); return p; }, { replace: true });
+        setSearchParams(p => { p.set('d', toIsoDate(date)); return p; }, { replace: true });
 
     const addRecipeId = searchParams.get('addRecipe');
     const isAddMode = !!addRecipeId;
@@ -106,7 +101,7 @@ export const PlanningModule = () => {
     const selectedDayDate = useMemo(() => {
         const d = new Date(monday);
         d.setDate(d.getDate() + (DAYS as readonly string[]).indexOf(selectedDay));
-        return d.toISOString().slice(0, 10);
+        return toIsoDate(d);
     }, [monday, selectedDay]);
 
     const sensors = useSensors(
@@ -195,7 +190,7 @@ export const PlanningModule = () => {
             } else {
                 const next = new Date(selectedDate);
                 next.setDate(next.getDate() + 7);
-                setSearchParams(p => { p.set('day', DAYS[0]); p.set('d', next.toISOString().slice(0, 10)); return p; }, { replace: true });
+                setSearchParams(p => { p.set('day', DAYS[0]); p.set('d', toIsoDate(next)); return p; }, { replace: true });
             }
         } else {
             if (currentIndex > 0) {
@@ -203,7 +198,7 @@ export const PlanningModule = () => {
             } else {
                 const prev = new Date(selectedDate);
                 prev.setDate(prev.getDate() - 7);
-                setSearchParams(p => { p.set('day', DAYS[6]); p.set('d', prev.toISOString().slice(0, 10)); return p; }, { replace: true });
+                setSearchParams(p => { p.set('day', DAYS[6]); p.set('d', toIsoDate(prev)); return p; }, { replace: true });
             }
         }
     };

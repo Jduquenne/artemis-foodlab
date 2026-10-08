@@ -11,6 +11,8 @@ import { padNumber } from "./numberUtils";
 
 const WEEK_DAY_ORDER = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 
+export const toIsoDate = (date: Date): string => format(date, "yyyy-MM-dd");
+
 export function isoDateFromWeekDay(year: number, week: number, dayName: string): string {
   const dayIndex = WEEK_DAY_ORDER.indexOf(dayName);
   const week1Monday = startOfISOWeek(new Date(year, 0, 4));

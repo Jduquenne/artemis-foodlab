@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — `shared/` review, part 4: SVG card escaping (v6.82.13)
+
+- Done: read-only review of `shared/components/` (findings in `dev/refactoring.md`). Fix (security): the food card label (`[[FOOD_LABEL]]`, name of an ingredient-type recipe) was inserted into SVG injected with `dangerouslySetInnerHTML` without `escapeXml`; it is now escaped, image URLs too, and templates are filled by `fillTemplate` (split/join) so `$&`-like sequences in data are no longer interpreted (`shared/utils/cards/cardSvg.ts`). Identical rendering for normal names.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open (resume here): `shared/components` step 2 (sidebar link, settings menu items, shared input class), step 3 (last 38 theme classes, which ends the code review); outdoor activity photo waiting for the API deployment.
+
 ## 2026-10-08 — `shared/` review, part 3: stores (v6.82.12)
 
 - Done: read-only review of `shared/store/` (11 stores), findings in `dev/refactoring.md`, no data bug. Fix: `localStorage` writes/reads that could throw when storage is blocked (strict private mode, full quota) now go through `readStorage` / `writeStorage` (`shared/utils/safeStorage.ts`): theme (read at startup, could prevent the app from rendering) and recipe filter save. Dead code removed: `useMenuStore.currentWeek` / `currentYear` / `currentWeekId` (never read) and `getWeekId`.

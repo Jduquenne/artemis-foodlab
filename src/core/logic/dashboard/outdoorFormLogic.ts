@@ -31,6 +31,10 @@ export function validateOutdoorForm(draft: OutdoorFormDraft, categories: Categor
   return errors;
 }
 
+export function validateOutdoorPhoto(hasPhoto: boolean): string[] {
+  return hasPhoto ? [] : ["La photo de l'activité est obligatoire."];
+}
+
 export function validateNewOutdoorCode(code: string, entries: OutdoorEntry[]): string | null {
   return validateNewCode(code, entries.map((entry) => entry.code), "od-001");
 }
@@ -44,17 +48,20 @@ export function buildOutdoorRecap(
   code: string,
   draft: OutdoorFormDraft,
   categories: Category[],
+  photo: File | null,
 ): RecapEntry[] {
   if (original === null) {
     return [
       { label: "Identifiant", value: code.trim() },
       { label: "Nom", value: draft.name.trim() },
       { label: "Catégorie", value: categoryLabel(categories, draft.categoryId) },
+      { label: "Photo", value: photo?.name ?? "—" },
     ];
   }
   const changes: RecapEntry[] = [];
   const add = (entry: RecapEntry | null) => { if (entry) changes.push(entry); };
   add(diffEntry("Nom", original.name.trim(), draft.name.trim()));
   add(diffEntry("Catégorie", categoryLabel(categories, original.categoryId), categoryLabel(categories, draft.categoryId)));
+  if (photo) changes.push({ label: "Photo", from: original.assets?.mealPhoto ? "photo actuelle" : "aucune", to: photo.name });
   return changes;
 }

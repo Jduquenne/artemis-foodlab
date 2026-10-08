@@ -11,17 +11,19 @@ import {
   suggestOutdoorCode,
   validateNewOutdoorCode,
   validateOutdoorForm,
+  validateOutdoorPhoto,
 } from "../../../../core/logic/dashboard/outdoorFormLogic";
 import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
 import { FormModalShell } from "../common/FormModalShell";
 import { FormField } from "../common/FormField";
 import { FORM_INPUT_CLASS as INPUT_CLASS } from "../common/formStyles";
+import { PhotoField } from "../../../../shared/components/ui/PhotoField";
 
 export interface OutdoorFormModalProps {
   activity: OutdoorEntry | null;
   activities: OutdoorEntry[];
   onClose: () => void;
-  onSubmit: (body: OutdoorActivityInput) => Promise<boolean>;
+  onSubmit: (body: OutdoorActivityInput, photo: File | null) => Promise<boolean>;
 }
 
 export const OutdoorFormModal = ({ activity, activities, onClose, onSubmit }: OutdoorFormModalProps) => {
@@ -34,6 +36,8 @@ export const OutdoorFormModal = ({ activity, activities, onClose, onSubmit }: Ou
   const [codeTouched, setCodeTouched] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
   const [confirming, setConfirming] = useState(false);
+  const [photo, setPhoto] = useState<File | null>(null);
+  const hasExistingPhoto = Boolean(activity?.assets?.mealPhoto);
 
   const suggestedCode = useMemo(
     () => (isCreate ? suggestOutdoorCode(activities) : ""),
@@ -45,7 +49,7 @@ export const OutdoorFormModal = ({ activity, activities, onClose, onSubmit }: Ou
   const patch = (update: Partial<OutdoorFormDraft>) => setDraft((prev) => ({ ...prev, ...update }));
 
   const review = () => {
-    const found = validateOutdoorForm(draft, categories);
+    const found = [...validateOutdoorForm(draft, categories), ...validateOutdoorPhoto(Boolean(photo) || hasExistingPhoto)];
     if (isCreate) {
       const codeError = validateNewOutdoorCode(effectiveCode, activities);
       if (codeError) found.unshift(codeError);
@@ -54,7 +58,7 @@ export const OutdoorFormModal = ({ activity, activities, onClose, onSubmit }: Ou
       setErrors(found);
       return;
     }
-    if (!isCreate && buildOutdoorRecap(activity, effectiveCode, draft, categories).length === 0) {
+    if (!isCreate && buildOutdoorRecap(activity, effectiveCode, draft, categories, photo).length === 0) {
       setErrors(["Aucune modification à enregistrer."]);
       return;
     }
@@ -63,7 +67,7 @@ export const OutdoorFormModal = ({ activity, activities, onClose, onSubmit }: Ou
   };
 
   const confirmed = async () => {
-    const ok = await onSubmit(outdoorFormToBody(effectiveCode, draft));
+    const ok = await onSubmit(outdoorFormToBody(effectiveCode, draft), photo);
     if (ok) onClose();
     return ok;
   };
@@ -79,7 +83,7 @@ export const OutdoorFormModal = ({ activity, activities, onClose, onSubmit }: Ou
         <ConfirmActionModal
           title={isCreate ? "Confirmer l'ajout de l'activité" : "Confirmer la modification"}
           intro={isCreate ? undefined : "Modifications à appliquer :"}
-          recap={buildOutdoorRecap(activity, effectiveCode, draft, categories)}
+          recap={buildOutdoorRecap(activity, effectiveCode, draft, categories, photo)}
           confirmLabel={isCreate ? "Ajouter" : "Enregistrer"}
           onConfirm={confirmed}
           onCancel={() => setConfirming(false)}
@@ -115,6 +119,8 @@ export const OutdoorFormModal = ({ activity, activities, onClose, onSubmit }: Ou
           ))}
         </select>
       </FormField>
+
+      <PhotoField label="Photo" file={photo} hasExisting={hasExistingPhoto} onPick={setPhoto} />
     </FormModalShell>
   );
 };

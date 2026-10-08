@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { ImagePlus } from "lucide-react";
-import { validatePhotoFile } from "../../../../core/logic/media/mediaLogic";
+import { validatePhotoFile } from "../../../core/logic/media/mediaLogic";
 
 export interface PhotoFieldProps {
   label: string;

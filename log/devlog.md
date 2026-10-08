@@ -16,6 +16,13 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — Mandatory outdoor activity photo, front side (v6.82.0)
+
+- Done: the dashboard activity modal gets a photo field (`PhotoField`, moved from the Recipe Builder to `shared/components/ui/`), mandatory (`validateOutdoorPhoto`: chosen file or existing photo). Creation sends the activity and its photo in one `multipart` call (`createOutdoorActivity(body, photo)`), edit does the JSON `PUT` then `POST /outdoor-activities/:uuid/photo` when a new photo is chosen (`uploadOutdoorActivityPhoto`); the confirmation recap shows the photo (creation) or the photo change (edit). Contract from the API session's real payloads, recorded in `docs/api.md` § Planned.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser nor against the API (endpoint not deployed).
+- Problems: **breaking change** — once the API is deployed, the current prod front cannot create an activity until this commit is pushed. Push this commit only after the owner confirms the API is live on Render.
+- Still open: API deployment + owner confirmation; API session still has to answer how many activities lack `meal_photo_path` and what `POST /import` does with activities; next review folder `features/recipes`.
+
 ## 2026-10-08 — Outdoor activity photo: decision and API plan (v6.81.3)
 
 - Done: owner's decision: no « activité » mode in the Recipe Builder (creating an activity is very rare); the dashboard activity modal gets a mandatory photo. The API session answered: `POST /recipes/:uuid/photo` rejects activity uuids, so it plans `POST /outdoor-activities/:uuid/photo` (same multipart contract, check before upload, full activity in response); display, bootstrap and media resolve already handle activity photos. Recorded in `docs/api.md` § Planned and `docs/roadmap.md` § Blocked. Then the owner required the photo **server-side too** (every activity is said to have one): revised contract requested from the API session (atomic multipart creation, photo never removable, import, data check: the API session had said existing activities have no `meal_photo_path`). No front code yet.

@@ -6,7 +6,7 @@ import { useBuilderSourceRecipe } from "../../../../shared/hooks/useBuilderSourc
 import { AsyncImage } from "../../../../shared/components/ui/AsyncImage";
 import { builderStateToRecetteCardData, builderStateToBookCardData } from "../../../../shared/utils/cards/cardAdapter";
 import { downloadRecetteCard, downloadRecetteBookCard } from "../../../../shared/utils/cards/cardExport";
-import { PhotoField } from "../output/PhotoField";
+import { PhotoField } from "../../../../shared/components/ui/PhotoField";
 import { validatePhotoFile } from "../../../../core/logic/media/mediaLogic";
 
 export interface PhotoPanelProps {

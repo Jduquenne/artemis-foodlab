@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { validateVariantName } from "../../../core/logic/recipeBuilder/recipeVariantLogic";
-import { PhotoField } from "./output/PhotoField";
+import { PhotoField } from "../../../shared/components/ui/PhotoField";
 
 export interface VariantModalProps {
   sourceName: string;

@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { OutdoorEntry } from "../../core/domain/recipe";
-import { createOutdoorActivity, deleteOutdoorActivity, updateOutdoorActivity } from "../../core/services/catalogueWriteService";
+import { createOutdoorActivity, deleteOutdoorActivity, updateOutdoorActivity, uploadOutdoorActivityPhoto } from "../../core/services/catalogueWriteService";
 import { OutdoorActivityInput } from "../../core/domain/catalogueInput";
 import { syncCatalogueFromApi } from "../../core/services/catalogueSyncService";
 import { useOutdoorSnapshot } from "./useCatalogueSnapshot";
@@ -8,8 +8,8 @@ import { compareByName } from "../utils/sortUtils";
 
 export interface UseCatalogueOutdoorResult {
   activities: OutdoorEntry[];
-  create: (body: OutdoorActivityInput) => Promise<boolean>;
-  save: (uuid: string, body: OutdoorActivityInput) => Promise<boolean>;
+  create: (body: OutdoorActivityInput, photo: File) => Promise<boolean>;
+  save: (uuid: string, body: OutdoorActivityInput, photo: File | null) => Promise<boolean>;
   remove: (code: string) => Promise<boolean>;
 }
 
@@ -20,9 +20,9 @@ export function useCatalogueOutdoor(): UseCatalogueOutdoorResult {
     [outdoorDb],
   );
 
-  const create = useCallback(async (body: OutdoorActivityInput) => {
+  const create = useCallback(async (body: OutdoorActivityInput, photo: File) => {
     try {
-      await createOutdoorActivity(body);
+      await createOutdoorActivity(body, photo);
       await syncCatalogueFromApi().catch(() => undefined);
       return true;
     } catch {
@@ -30,9 +30,10 @@ export function useCatalogueOutdoor(): UseCatalogueOutdoorResult {
     }
   }, []);
 
-  const save = useCallback(async (uuid: string, body: OutdoorActivityInput) => {
+  const save = useCallback(async (uuid: string, body: OutdoorActivityInput, photo: File | null) => {
     try {
       await updateOutdoorActivity(uuid, body);
+      if (photo) await uploadOutdoorActivityPhoto(uuid, photo);
       await syncCatalogueFromApi().catch(() => undefined);
       return true;
     } catch {

@@ -50,7 +50,7 @@ export const OutdoorActivitiesTable = () => {
           activity={null}
           activities={activities}
           onClose={() => setCreating(false)}
-          onSubmit={(body) => create(body)}
+          onSubmit={(body, photo) => (photo ? create(body, photo) : Promise.resolve(false))}
         />
       )}
       {editing && (
@@ -58,7 +58,7 @@ export const OutdoorActivitiesTable = () => {
           activity={editing}
           activities={activities}
           onClose={() => setEditing(null)}
-          onSubmit={(body) => save(editing.apiId, body)}
+          onSubmit={(body, photo) => save(editing.apiId, body, photo)}
         />
       )}
       {pendingDelete && (

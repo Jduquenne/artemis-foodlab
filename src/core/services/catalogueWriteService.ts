@@ -28,8 +28,19 @@ export async function deleteRecipe(uuid: string): Promise<void> {
   await apiFetch(`/recipes/${uuid}`, { method: "DELETE" });
 }
 
-export function createOutdoorActivity(body: OutdoorActivityInput): Promise<ApiOutdoorActivity> {
-  return apiFetchJson<ApiOutdoorActivity>("/outdoor-activities", { method: "POST", body });
+export function createOutdoorActivity(body: OutdoorActivityInput, photo: File): Promise<ApiOutdoorActivity> {
+  const form = new FormData();
+  form.append("code", body.code);
+  form.append("name", body.name);
+  form.append("categoryId", body.categoryId);
+  form.append("photo", photo);
+  return apiFetchJson<ApiOutdoorActivity>("/outdoor-activities", { method: "POST", body: form });
+}
+
+export function uploadOutdoorActivityPhoto(uuid: string, photo: File): Promise<ApiOutdoorActivity> {
+  const form = new FormData();
+  form.append("photo", photo);
+  return apiFetchJson<ApiOutdoorActivity>(`/outdoor-activities/${uuid}/photo`, { method: "POST", body: form });
 }
 
 export function updateOutdoorActivity(

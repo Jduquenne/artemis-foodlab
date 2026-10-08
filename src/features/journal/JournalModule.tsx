@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { addDays, subDays } from "date-fns";
-import { getWeekNumber, getMonday, dayNameOf } from "../../core/utils/weekUtils";
+import { getWeekNumber, getWeekYear, getMonday, dayNameOf } from "../../core/utils/weekUtils";
 import { getWeekSlots, syncWeekFromApi } from "../../core/services/planningService";
 import { MealSlot } from "../../core/domain/planning";
 import { computeDayMacros } from "../../core/logic/nutrition/macroLogic";
@@ -24,7 +24,7 @@ export const JournalModule = () => {
   const refreshTick = useRefreshStore((s) => s.tick);
   const monday = getMonday(selectedDate);
   const week = getWeekNumber(monday);
-  const year = monday.getFullYear();
+  const year = getWeekYear(monday);
   const weekKey = `${year}-${week}`;
   const dayKey = dayNameOf(selectedDate);
 

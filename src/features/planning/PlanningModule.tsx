@@ -14,7 +14,7 @@ import { ShoppingSelectionBar } from './components/bars/ShoppingSelectionBar';
 import { PlanningHeader } from './components/PlanningHeader';
 import { PlanningSlot } from './components/slot/PlanningSlot';
 import { DayTabsBar } from './components/bars/DayTabsBar';
-import { getWeekNumber, getMonday, getWeekRange, dayNameOf } from '../../core/utils/weekUtils';
+import { getWeekNumber, getWeekYear, getMonday, getWeekRange, dayNameOf } from '../../core/utils/weekUtils';
 import { toIsoDate } from '../../core/utils/dateUtils';
 import { computeDayMacros } from '../../core/logic/nutrition/macroLogic';
 import { useMacroCatalogue } from '../../shared/hooks/useMacroCatalogue';
@@ -92,7 +92,7 @@ export const PlanningModule = () => {
 
     const monday = useMemo(() => getMonday(selectedDate), [selectedDate]);
     const weekNumber = useMemo(() => getWeekNumber(monday), [monday]);
-    const year = monday.getFullYear();
+    const year = getWeekYear(monday);
     const weekRange = useMemo(() => getWeekRange(monday), [monday]);
     const selectedDayDate = useMemo(
         () => toIsoDate(addDays(monday, (DAYS as readonly string[]).indexOf(selectedDay))),

@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — ISO week-year bug fixed (v6.82.17)
+
+- Done: Planning and Journal now key a week by the ISO week-year (`getWeekYear`, re-export of `getISOWeekYear` in `core/utils/weekUtils.ts`) instead of the calendar year of the Monday (wrong only when the Monday falls on Dec 29-31, e.g. 2024-12-30 → was (2024, 1), is (2025, 1)). Shopping days and drag & drop follow (they take year/week from the module). Prod inventory by the API session (read-only): no slot and no shopping day in week 1/52/53, planned range 2026-W09 → W42, so no data migration. Also from the API session: 0/9 outdoor activities without photo; `POST /import` never creates catalogue items (unknown codes skipped as anomalies).
+- Numbers: `npx tsc -b` + `npm run lint` pass; `getISOWeekYear` checked on 2024-12-30, 2025-12-29, 2026-01-05, 2026-10-05; not checked in a browser.
+- Still open: API demo seeding fix (same bug, `planningWeekOf`) to relay; comma display question (owner); P4 closure.
+
 ## 2026-10-08 — Favicon missing in local dev (v6.82.16)
 
 - Done: since `1b3dd4a` (2026-09-09) `index.html` wrote favicon / apple-touch-icon / manifest links as `%BASE_URL%assets/…`; the Vite dev server replaced `%BASE_URL%` and then prefixed the base again (`/artemis-foodlab/artemis-foodlab/…`), so no favicon in local; prod was correct. Links are back to root paths (`/assets/ui/icon/…`, `/manifest.webmanifest`), which Vite prefixes once. Checked on the running dev server: single `/artemis-foodlab/` prefix.

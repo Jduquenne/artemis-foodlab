@@ -6,7 +6,7 @@ The detailed backlog and future features live in `dev/issues.json` and `dev/refa
 ## Current focus
 
 1. 🟡 Code review refactoring: `core/services/` and all of `features/` done (Shopping, Freezer, Journal, Planning, Dashboard, Recipe Builder, Recipes, News, Sync); next is `shared/` (open points in `dev/refactoring.md`).
-2. ⬜ Fix the ISO week-year bug (see Known bugs).
+2. ✅ ISO week-year bug fixed (2026-10-08, v6.82.17); the API demo seeding has the same bug (fix proposed by the API session).
 3. 🟡 Tablet portrait pass on the remaining screens.
 
 ## Honest status (2026-10-07)
@@ -45,7 +45,7 @@ Milestones reconstructed from history; definitions of done marked "proposed" wer
 
 ## Known bugs
 
-- ⬜ **ISO week-year**: `PlanningModule.tsx` and `JournalModule.tsx` use `year = monday.getFullYear()` instead of the ISO week-year, so some weeks collide (e.g. 2024-W01 and the week of 2024-12-30 both map to (2024, 1)). Fixing it requires handling data already stored.
+- ✅ **ISO week-year** (fixed 2026-10-08, v6.82.17): Planning and Journal stored weeks under the calendar year of the Monday instead of the ISO week-year (only weeks whose Monday is Dec 29-31: 2024-12-30, 2025-12-29, next 2029-12-31). Now `getWeekYear` (`core/utils/weekUtils.ts`). Prod inventory by the API session: no slot nor shopping day in week 1/52/53, no migration needed. API side: demo seeding (`planningWeekOf`) has the same bug, fix proposed to the owner; `POST /import` copies year/week verbatim (old buggy backups would bring the old keys back).
 - ⏸ **Unexpected logouts in prod**: front fix shipped (token kept on transient refresh failures, retries); a 401 « Session expirée » with a valid-looking refresh token remained unexplained on 2026-09-30. Diagnosis procedure in `docs/development.md` § Debugging. A local trace of refresh failures was proposed, not accepted.
 
 ## Open items (owner actions)

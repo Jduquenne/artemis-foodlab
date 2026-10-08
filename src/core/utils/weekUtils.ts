@@ -1,7 +1,7 @@
 import { getISOWeek, getISOWeekYear } from "date-fns";
 import { DAYS } from "../domain/planningConfig";
 
-export { getISOWeek as getWeekNumber } from "date-fns";
+export { getISOWeek as getWeekNumber, getISOWeekYear as getWeekYear } from "date-fns";
 
 export const parseIsoWeek = (value: string): { year: number; week: number } | null => {
   const match = /^(\d{4})-W(\d{1,2})$/.exec(value);

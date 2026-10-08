@@ -19,7 +19,7 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 ## 2026-10-08 — P4 code review closed (v6.82.18)
 
 - Done: phase P4 closed with the owner's agreement. Every folder of `src/` reviewed; open points of `dev/refactoring.md` closed or deferred: data import removal, category change of a recipe, ingredient card in search (deferred, `docs/roadmap.md` § Ideas / later); backdrop-close convention kept as is; decimals keep the dot display (owner). Roadmap focus moves to the P5 tablet portrait pass.
-- Still open: owner's browser tests and build check before pushing; demo seeding week fix on the API side.
+- Still open: owner's browser tests and build check before pushing; API demo seeding now keys weeks by the ISO week-year (done API-side, deployment to confirm by the owner).
 
 ## 2026-10-08 — ISO week-year bug fixed (v6.82.17)
 

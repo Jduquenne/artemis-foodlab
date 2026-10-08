@@ -6,7 +6,7 @@ The detailed backlog and future features live in `dev/issues.json` and `dev/refa
 ## Current focus
 
 1. 🟡 Tablet portrait pass (P5) on the remaining screens: Courses, Recettes, Congélateur, Recipe Builder, Dashboard.
-2. ⬜ Owner: browser tests of the 2026-10-07 / 2026-10-08 changes (list in `log/devlog.md`), build check before pushing, relay the demo seeding week fix to the API session.
+2. ⬜ Owner: browser tests of the 2026-10-07 / 2026-10-08 changes (list in `log/devlog.md`), build check before pushing, confirm the deployment of the API demo seeding week fix (done API-side 2026-10-08, not deployed).
 3. ✅ P4 code review closed on 2026-10-08 (deferred points in § P4).
 
 ## Honest status (2026-10-08)
@@ -46,7 +46,7 @@ Milestones reconstructed from history; definitions of done marked "proposed" wer
 
 ## Known bugs
 
-- ✅ **ISO week-year** (fixed 2026-10-08, v6.82.17): Planning and Journal stored weeks under the calendar year of the Monday instead of the ISO week-year (only weeks whose Monday is Dec 29-31: 2024-12-30, 2025-12-29, next 2029-12-31). Now `getWeekYear` (`core/utils/weekUtils.ts`). Prod inventory by the API session: no slot nor shopping day in week 1/52/53, no migration needed. API side: demo seeding (`planningWeekOf`) has the same bug, fix proposed to the owner; `POST /import` copies year/week verbatim (old buggy backups would bring the old keys back).
+- ✅ **ISO week-year** (fixed 2026-10-08, v6.82.17): Planning and Journal stored weeks under the calendar year of the Monday instead of the ISO week-year (only weeks whose Monday is Dec 29-31: 2024-12-30, 2025-12-29, next 2029-12-31). Now `getWeekYear` (`core/utils/weekUtils.ts`). Prod inventory by the API session: no slot nor shopping day in week 1/52/53, no migration needed. API side: demo seeding (`planningWeekOf`) had the same bug, fixed by the API session on 2026-10-08 (ISO week-year, not deployed yet, owner to confirm); `POST /import` copies year/week verbatim (old buggy backups would bring the old keys back).
 - ⏸ **Unexpected logouts in prod**: front fix shipped (token kept on transient refresh failures, retries); a 401 « Session expirée » with a valid-looking refresh token remained unexplained on 2026-09-30. Diagnosis procedure in `docs/development.md` § Debugging. A local trace of refresh failures was proposed, not accepted.
 
 ## Open items (owner actions)

@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { createUser, deleteUser, listUsers, updateUserRole } from "../../core/services/usersService";
-import { AdminUser, CreateUserInput } from "../../core/domain/user";
-import { UserRole } from "../../core/domain/user";
+import { AdminUser, CreateUserInput, UserRole } from "../../core/domain/user";
 
 export interface UseUsersResult {
   users: AdminUser[];
@@ -13,31 +12,32 @@ export interface UseUsersResult {
   remove: (id: string) => Promise<boolean>;
 }
 
+interface UsersLoad {
+  key: number;
+  users: AdminUser[];
+  error: boolean;
+}
+
 export function useUsers(): UseUsersResult {
-  const [users, setUsers] = useState<AdminUser[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [loadError, setLoadError] = useState(false);
   const [reloadKey, setReloadKey] = useState(0);
+  const [load, setLoad] = useState<UsersLoad | null>(null);
 
   const reload = useCallback(() => setReloadKey((key) => key + 1), []);
 
   useEffect(() => {
     let active = true;
-    const load = async () => {
-      setLoading(true);
-      setLoadError(false);
-      try {
-        const list = await listUsers();
-        if (active) setUsers(list);
-      } catch {
-        if (active) setLoadError(true);
-      } finally {
-        if (active) setLoading(false);
-      }
-    };
-    load();
+    listUsers()
+      .then((users) => {
+        if (active) setLoad({ key: reloadKey, users, error: false });
+      })
+      .catch(() => {
+        if (active) setLoad((prev) => ({ key: reloadKey, users: prev?.users ?? [], error: true }));
+      });
     return () => { active = false; };
   }, [reloadKey]);
+
+  const updateUsers = (update: (users: AdminUser[]) => AdminUser[]) =>
+    setLoad((prev) => (prev ? { ...prev, users: update(prev.users) } : prev));
 
   const create = useCallback(async (input: CreateUserInput) => {
     try {
@@ -52,7 +52,7 @@ export function useUsers(): UseUsersResult {
   const setRole = useCallback(async (id: string, role: UserRole) => {
     try {
       const updated = await updateUserRole(id, role);
-      setUsers((prev) => prev.map((user) => (user.id === id ? updated : user)));
+      updateUsers((users) => users.map((user) => (user.id === id ? updated : user)));
       return true;
     } catch {
       return false;
@@ -62,12 +62,22 @@ export function useUsers(): UseUsersResult {
   const remove = useCallback(async (id: string) => {
     try {
       await deleteUser(id);
-      setUsers((prev) => prev.filter((user) => user.id !== id));
+      updateUsers((users) => users.filter((user) => user.id !== id));
       return true;
     } catch {
       return false;
     }
   }, []);
 
-  return { users, loading, loadError, reload, create, setRole, remove };
+  const retrying = load !== null && load.error && load.key !== reloadKey;
+
+  return {
+    users: load?.users ?? [],
+    loading: load === null || retrying,
+    loadError: load !== null && load.error && !retrying,
+    reload,
+    create,
+    setRole,
+    remove,
+  };
 }

@@ -23,7 +23,7 @@ export function useCatalogueOutdoor(): UseCatalogueOutdoorResult {
   const create = useCallback(async (body: OutdoorActivityInput) => {
     try {
       await createOutdoorActivity(body);
-      await syncCatalogueFromApi();
+      await syncCatalogueFromApi().catch(() => undefined);
       return true;
     } catch {
       return false;
@@ -33,7 +33,7 @@ export function useCatalogueOutdoor(): UseCatalogueOutdoorResult {
   const save = useCallback(async (uuid: string, body: OutdoorActivityInput) => {
     try {
       await updateOutdoorActivity(uuid, body);
-      await syncCatalogueFromApi();
+      await syncCatalogueFromApi().catch(() => undefined);
       return true;
     } catch {
       return false;
@@ -45,7 +45,7 @@ export function useCatalogueOutdoor(): UseCatalogueOutdoorResult {
     if (!target?.apiId) return false;
     try {
       await deleteOutdoorActivity(target.apiId);
-      await syncCatalogueFromApi();
+      await syncCatalogueFromApi().catch(() => undefined);
       return true;
     } catch {
       return false;

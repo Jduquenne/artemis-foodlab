@@ -1,5 +1,4 @@
-import { AdminUser, CreateUserInput, PASSWORD_MIN_LENGTH } from "../../domain/user";
-import { UserRole } from "../../domain/user";
+import { AdminUser, CreateUserInput, PASSWORD_MIN_LENGTH, UserRole } from "../../domain/user";
 import { RecapEntry } from "./recapLogic";
 
 export const ROLE_LABELS: Record<UserRole, string> = {
@@ -10,7 +9,7 @@ export const ROLE_LABELS: Record<UserRole, string> = {
 export interface UserFormDraft {
   email: string;
   password: string;
-  role: UserRole | "";
+  role: UserRole;
   displayName: string;
 }
 
@@ -24,7 +23,6 @@ export function validateUserForm(draft: UserFormDraft): string[] {
   if (draft.password.length < PASSWORD_MIN_LENGTH) {
     errors.push(`Le mot de passe doit faire au moins ${PASSWORD_MIN_LENGTH} caractères.`);
   }
-  if (draft.role !== "admin" && draft.role !== "guest") errors.push("Choisis un rôle.");
   return errors;
 }
 
@@ -32,7 +30,7 @@ export function userFormToInput(draft: UserFormDraft): CreateUserInput {
   return {
     email: draft.email.trim(),
     password: draft.password,
-    role: draft.role as UserRole,
+    role: draft.role,
     displayName: draft.displayName.trim() || null,
   };
 }
@@ -40,7 +38,7 @@ export function userFormToInput(draft: UserFormDraft): CreateUserInput {
 export function buildUserCreateRecap(draft: UserFormDraft): RecapEntry[] {
   const recap: RecapEntry[] = [
     { label: "Adresse e-mail", value: draft.email.trim() },
-    { label: "Rôle", value: draft.role === "admin" ? ROLE_LABELS.admin : ROLE_LABELS.guest },
+    { label: "Rôle", value: ROLE_LABELS[draft.role] },
     { label: "Mot de passe", value: draft.password },
   ];
   if (draft.displayName.trim()) recap.splice(1, 0, { label: "Nom affiché", value: draft.displayName.trim() });

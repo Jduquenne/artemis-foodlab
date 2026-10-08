@@ -23,7 +23,7 @@ export function useCatalogueFoods(): UseCatalogueFoodsResult {
   const create = useCallback(async (body: FoodInput) => {
     try {
       await createFood(body);
-      await syncCatalogueFromApi();
+      await syncCatalogueFromApi().catch(() => undefined);
       return true;
     } catch {
       return false;
@@ -33,7 +33,7 @@ export function useCatalogueFoods(): UseCatalogueFoodsResult {
   const save = useCallback(async (id: string, body: FoodInput) => {
     try {
       await updateFood(id, body);
-      await syncCatalogueFromApi();
+      await syncCatalogueFromApi().catch(() => undefined);
       return true;
     } catch {
       return false;
@@ -43,7 +43,7 @@ export function useCatalogueFoods(): UseCatalogueFoodsResult {
   const remove = useCallback(async (id: string) => {
     try {
       await deleteFood(id);
-      await syncCatalogueFromApi();
+      await syncCatalogueFromApi().catch(() => undefined);
       return true;
     } catch {
       return false;

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { X, RefreshCw } from "lucide-react";
 import { CreateUserInput } from "../../../../core/domain/user";
-import { UserRole } from "../../../../core/domain/user";
 import {
   EMPTY_USER_FORM,
   UserFormDraft,
@@ -97,7 +96,7 @@ export const UserFormModal = ({ onClose, onSubmit }: UserFormModalProps) => {
 
           <div className="flex flex-col gap-1">
             <span className="text-xs font-bold text-slate-500">Rôle</span>
-            <RoleToggle value={(draft.role || "guest") as UserRole} onChange={(role) => patch({ role })} />
+            <RoleToggle value={draft.role} onChange={(role) => patch({ role })} />
           </div>
 
           {errors.length > 0 && (

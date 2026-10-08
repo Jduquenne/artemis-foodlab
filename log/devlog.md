@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — `features/` review: dashboard, step 1 (v6.80.1)
+
+- Done: read-only review of `features/dashboard` (23 files), findings in `dev/refactoring.md`. Step 1: food and outdoor writes no longer report a failure when the write succeeded but the follow-up catalogue sync failed (the modal stayed open and a new « Ajouter » duplicated or got a 409); the sync failure is ignored, the next refresh catches up (owner: option A). `useUsers`: no synchronous state reset inside the effect (rule 7), the list stays displayed while it reloads after an account creation (it flashed « Chargement… »), « Chargement… » still shows on the first load and on « Réessayer ». `UserFormDraft.role` is a plain `UserRole` (`""` never happened): two casts and a dead validation removed.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: steps 2 (shared dashboard components, category name helper, imports, recipe link, live activity id error) and 3 (theme).
+
 ## 2026-10-08 — Dessert choice when a drag would exceed 3 desserts (v6.80.0)
 
 - Done: dragging a meal with its desserts onto a dessert-only slot used to silently drop the desserts beyond 3. Now « Déplacer aussi » opens a window listing every dessert (destination + moved, deduplicated) when the total would exceed 3; the user checks 1 to 3 to keep, the others are deleted (owner's decision). Pure `incomingDessertChoice` + `keptDessertIds` parameter of `computeDragMoveSlots` (`planningDragLogic.ts`), new `DessertChoiceModal` (no close on backdrop, spinner during the move).

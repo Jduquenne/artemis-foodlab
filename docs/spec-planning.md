@@ -4,11 +4,11 @@ Weekly grid of meal slots: breakfast, lunch, snack, dinner. Lunch and dinner acc
 
 ## Desserts are independent from the main dish
 
-`MealSlot.dessertIds` has **no dependency** on `recipeIds`: a lunch/dinner slot can have desserts without a main dish (`recipeIds: []`). Any UI or logic touching slots must respect this invariant — never gate the display or addition of a dessert on the presence of a recipe. (Pitfall already met: `showDessertColumn` in `MealSlot.tsx` was gated on `hasPhoto`; fixed.)
+`MealSlot.dessertIds` has **no dependency** on `recipeIds`: a lunch/dinner slot can have desserts without a main dish (`recipeIds: []`). Any UI or logic touching slots must respect this invariant — never gate the display or addition of a dessert on the presence of a recipe. (Pitfall already met: `showDessertColumn` in `SingleMealSlot.tsx` was gated on `hasPhoto`; fixed.)
 
 - `PlanningModule.handleAddDessert` and the dessert branch of `confirmCopy` build a slot on the fly (`recipeIds: []`) when none exists. `computeSlotCopyProps` allows an empty slot as a dessert copy target.
 - The API model supported this already (`plannable_items`); it was a front-only rendering limit.
-- Clicking a `DessertCell` opens the recipe detail, like the main dish in `MealSlot`.
+- Clicking a `DessertCell` opens the recipe detail, like the main dish in `SingleMealSlot`.
 
 ## Adding or replacing a dish
 

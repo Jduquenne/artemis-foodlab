@@ -12,8 +12,8 @@ export const MoveDessertsPrompt = ({ dessertCount, pendingChoice, onMove, onKeep
     const pending = pendingChoice !== null;
 
     return (
-        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => !pending && onCancel()}>
-            <div className="bg-white dark:bg-slate-100 rounded-2xl shadow-2xl w-full max-w-sm p-5" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
+            <div className="bg-white dark:bg-slate-100 rounded-2xl shadow-2xl w-full max-w-sm p-5">
                 <p className="text-xs font-black text-orange-600 uppercase tracking-widest mb-1.5">Déplacer le repas</p>
                 <p className="text-sm text-slate-600 mb-5">
                     Ce repas a {dessertCount} dessert{dessertCount > 1 ? 's' : ''}. Tu veux les déplacer avec lui, ou les laisser sur place ?

@@ -297,7 +297,8 @@ export const PlanningModule = () => {
 
     const handleAddToSlot = async (day: string, slot: SlotType) => {
         if (!addRecipeId) return;
-        const mealDef = MEAL_SLOTS.find(m => m.id === slot)!;
+        const mealDef = MEAL_SLOTS.find(m => m.id === slot);
+        if (!mealDef) return;
         const existing = planningData.find(p => p.day === day && p.slot === slot);
         const at = { year, week: weekNumber, day, slot };
         const base = existing ?? buildEmptySlot(at);
@@ -379,7 +380,7 @@ export const PlanningModule = () => {
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
         >
-            <div className="w-full h-[calc(100vh-2rem)] tablet:h-[calc(100dvh-4rem)] flex flex-col gap-2 overflow-hidden tablet:overflow-visible">
+            <div className="w-full h-[calc(100dvh-2rem)] tablet:h-[calc(100dvh-4rem)] flex flex-col gap-2 overflow-hidden tablet:overflow-visible">
 
                 <PlanningHeader
                     weekNumber={weekNumber}

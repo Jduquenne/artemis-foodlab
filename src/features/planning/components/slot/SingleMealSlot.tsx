@@ -6,11 +6,11 @@ import { isOutdoor } from '../../../../core/domain/recipePredicates';
 import { SlotPersonsBadge } from './SlotPersonsBadge';
 import { SlotActions } from './SlotActions';
 import { DessertColumn } from './DessertColumn';
-import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
+import { MealPhoto } from './MealPhoto';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { usePlannableSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 
-export interface MealSlotProps {
+export interface SingleMealSlotProps {
     label: string;
     icon: string;
     slotId: string;
@@ -40,7 +40,7 @@ export interface MealSlotProps {
     onSetDessertPersons?: (id: string, n: number) => Promise<boolean>;
 }
 
-export const MealSlot = ({
+export const SingleMealSlot = ({
     label, icon, slotId, recipeIds, persons,
     isEditingPersons, isAnyEditing,
     onNavigate, onOpenPicker, onModify, onDelete,
@@ -49,7 +49,7 @@ export const MealSlot = ({
     hasDessert, dessertIds, onAddDessert, onRemoveDessert,
     onCopyDessert, copySourceDessertId, dessertCopyTargetState, onSelectDessertAsTarget,
     inFreezer, recipePersons, onSetDessertPersons,
-}: MealSlotProps) => {
+}: SingleMealSlotProps) => {
     const plannable = usePlannableSnapshot();
     const firstId = recipeIds[0];
     const recipe = firstId ? plannable[firstId] : undefined;
@@ -100,13 +100,9 @@ export const MealSlot = ({
                 onClick={handleMainClick}
                 className={`relative w-full h-full rounded-xl border-2 transition-all overflow-hidden bg-white dark:bg-slate-100 ${borderClass} ${hasPhoto && !hasRecipesPage ? 'cursor-default' : ''}`}
             >
-                {hasPhoto ? (
+                {recipe && hasPhoto ? (
                     <div className="relative w-full h-full">
-                        <AsyncImage asset={recipe!.assets.mealPhoto} alt={recipe!.name} className="object-cover" fill />
-                        <div className="absolute inset-0 bg-white/40 dark:bg-black/50 transition-colors" />
-                        <div className="absolute inset-0 flex items-center justify-center p-2">
-                            <span className="bg-white/90 dark:bg-black/75 text-slate-900 text-[14px] font-bold px-1.5 py-0.5 rounded-md leading-tight line-clamp-4 text-center">{recipe!.name}</span>
-                        </div>
+                        <MealPhoto asset={recipe.assets.mealPhoto} name={recipe.name} />
                     </div>
                 ) : (
                     <>

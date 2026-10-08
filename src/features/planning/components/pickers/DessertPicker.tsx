@@ -34,7 +34,7 @@ export const DessertPicker = ({ existingIds, onSelect, onClose }: DessertPickerP
 
     return (
         <div className="fixed inset-0 z-100 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4">
-            <div className={`bg-white dark:bg-slate-100 w-full max-w-2xl h-[70vh] rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden ${isClosing ? 'modal-exit sm:modal-center-exit' : 'modal-enter sm:modal-center-enter'}`}>
+            <div className={`bg-white dark:bg-slate-100 w-full max-w-2xl h-[70dvh] rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden ${isClosing ? 'modal-exit sm:modal-center-exit' : 'modal-enter sm:modal-center-enter'}`}>
                 <div className="p-6 border-b border-slate-200 flex justify-between items-center bg-orange-50 dark:bg-orange-950/30 shrink-0">
                     <div>
                         <h2 className="text-xl font-black text-slate-900">Ajouter un dessert</h2>

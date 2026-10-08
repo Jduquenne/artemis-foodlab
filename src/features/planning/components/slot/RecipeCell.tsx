@@ -1,7 +1,7 @@
 import { X, Copy, Users, Snowflake, Loader2 } from 'lucide-react';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 import { isDish, isBase } from '../../../../core/domain/recipePredicates';
-import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
+import { MealPhoto } from './MealPhoto';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { usePlannableSnapshot, useRecipeMetricsSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 
@@ -37,11 +37,7 @@ export const RecipeCell = ({ slotId, recipeId, onNavigate, onRemove, onCopy, hid
             >
                 {hasPhoto && recipe && (
                     <div className="relative w-full h-full">
-                        <AsyncImage asset={recipe.assets.mealPhoto} alt={recipe.name} className="object-cover" fill />
-                        <div className="absolute inset-0 bg-white/40 dark:bg-black/50 transition-colors" />
-                        <div className="absolute inset-0 flex items-center justify-center p-1.5">
-                            <span className="bg-white/90 dark:bg-black/75 text-slate-900 text-[13px] font-bold px-1 py-0.5 rounded leading-tight line-clamp-4 text-center">{recipe.name}</span>
-                        </div>
+                        <MealPhoto asset={recipe.assets.mealPhoto} name={recipe.name} compact />
                     </div>
                 )}
             </button>

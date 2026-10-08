@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { X, Copy, Users, Minus, Plus, Check, Loader2 } from 'lucide-react';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
-import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
+import { MealPhoto } from './MealPhoto';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { buildRecipeDetailUrl } from '../../../../core/logic/recipe/recipeScalingLogic';
 import { usePlannableSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
@@ -59,8 +59,7 @@ export const DessertCell = ({ slotId, recipeId, onRemove, isAddMode, onCopy, isC
             onClick={handleClick}
             className={`relative flex-1 min-h-0 rounded-lg overflow-hidden group ${isCopySource ? 'ring-2 ring-violet-500' : ''} ${canNavigate ? 'cursor-pointer' : ''}`}
         >
-            <AsyncImage asset={recipe!.assets.mealPhoto} alt={recipe!.name} className="object-cover" fill />
-            <div className="absolute inset-0 bg-white/40 dark:bg-black/50 transition-colors" />
+            <MealPhoto asset={recipe.assets.mealPhoto} name={recipe.name} showName={false} />
 
             {!isAddMode && !hideActions && !isEditingPersons && (
                 <button

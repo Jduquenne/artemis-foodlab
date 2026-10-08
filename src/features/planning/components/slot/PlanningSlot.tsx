@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { MealSlot } from "../../../../core/domain/planning";
-import { MealSlot as MealSlotComp } from "./MealSlot";
+import { SingleMealSlot } from "./SingleMealSlot";
 import { MultiMealSlot } from "./MultiMealSlot";
 import { MealSlotDef } from "../../../../core/domain/planningConfig";
 import { SLOT_DISPLAY } from "../../slotDisplay";
@@ -84,7 +84,7 @@ export const PlanningSlot = ({
           onCancelPersons={onCancelPersons}
         />
       ) : (
-        <MealSlotComp
+        <SingleMealSlot
           label={SLOT_DISPLAY[mealType.id].label}
           icon={SLOT_DISPLAY[mealType.id].icon}
           slotId={slotId}
@@ -92,7 +92,7 @@ export const PlanningSlot = ({
           persons={savedMeal?.persons}
           isEditingPersons={isEditingPersons}
           isAnyEditing={isAnyEditing || isCopyMode}
-          onNavigate={() => navigate(buildRecipeDetailUrl(savedMeal!.recipeIds[0], savedMeal?.persons))}
+          onNavigate={() => { if (recipeIds[0]) navigate(buildRecipeDetailUrl(recipeIds[0], savedMeal?.persons)); }}
           onOpenPicker={blocked ? () => {} : onOpenPicker}
           onModify={blocked ? () => {} : onOpenPicker}
           onDelete={blocked ? () => {} : onDelete}

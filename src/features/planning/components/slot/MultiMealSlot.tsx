@@ -8,7 +8,7 @@ import { hasRecipes as slotHasRecipes, isSlotFull, isDish, isBase } from '../../
 import { MultiRecipeGrid } from './MultiRecipeGrid';
 import { MultiSlotActions } from './MultiSlotActions';
 import { RecipeMetaEditor } from './RecipeMetaEditor';
-import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
+import { MealPhoto } from './MealPhoto';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { usePlannableSnapshot, useRecipeMetricsSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 
@@ -63,6 +63,10 @@ export const MultiMealSlot = ({
     const { baseGrams } = useRecipeMetricsSnapshot();
     const [editingMetaId, setEditingMetaId] = useState<string | null>(null);
     const isMetaPending = usePendingKey(`planning-recipe-meta:${slotId}:${editingMetaId ?? ''}`);
+    const editingRecipe = editingMetaId ? plannable[editingMetaId] : undefined;
+    const editingIsDish = isDish(editingRecipe) || isBase(editingRecipe);
+    const editingDefaultPersons = editingIsDish ? 1 : editingRecipe?.defaultPortions ?? 1;
+    const editingDefaultGrams = editingMetaId ? Math.round(baseGrams[editingMetaId] ?? 0) : 0;
     const isPersonsPending = usePendingKey(`planning-persons:${slotId}`);
     const isSingleRemovePending = usePendingKey(`planning-recipe-remove:${slotId}:${recipeIds[0] ?? ''}`);
 
@@ -151,11 +155,7 @@ export const MultiMealSlot = ({
                     >
                         {singleHasPhoto && firstRecipe && (
                             <div className="relative w-full h-full">
-                                <AsyncImage asset={firstRecipe.assets.mealPhoto} alt={firstRecipe.name} className="object-cover" fill />
-                                <div className="absolute inset-0 bg-white/40 dark:bg-black/50 transition-colors" />
-                                <div className="absolute inset-0 flex items-center justify-center p-2">
-                                    <span className="bg-white/90 dark:bg-black/75 text-slate-900 text-[14px] font-bold px-1.5 py-0.5 rounded-md leading-tight line-clamp-4 text-center">{firstRecipe.name}</span>
-                                </div>
+                                <MealPhoto asset={firstRecipe.assets.mealPhoto} name={firstRecipe.name} />
                             </div>
                         )}
                     </button>
@@ -196,12 +196,12 @@ export const MultiMealSlot = ({
                             <Snowflake size={10} />
                         </div>
                     )}
-                    {showPersonsBadge && (
+                    {showPersonsBadge && displayPersons !== undefined && onOpenPersonsEditor && (
                         <SlotPersonsBadge
-                            persons={displayPersons!}
+                            persons={displayPersons}
                             isCustom={isPersonsCustom}
                             isAnyEditing={false}
-                            onEdit={onOpenPersonsEditor!}
+                            onEdit={onOpenPersonsEditor}
                         />
                     )}
                 </div>
@@ -210,7 +210,7 @@ export const MultiMealSlot = ({
             {showSingleBadge && !editingMetaId && (
                 <button
                     onPointerDown={(e) => e.stopPropagation()}
-                    onClick={(e) => { e.stopPropagation(); setEditingMetaId(singleRecipeId!); }}
+                    onClick={(e) => { e.stopPropagation(); setEditingMetaId(singleRecipeId); }}
                     className={`absolute top-1 right-1 z-30 flex items-center gap-1 text-[10px] font-black px-1.5 py-0.5 rounded-lg shadow ${singleIsCustom ? 'bg-orange-500 text-white' : 'bg-black/30 text-white'}`}
                 >
                     {singleIsDish ? (
@@ -251,11 +251,11 @@ export const MultiMealSlot = ({
 
             {editingMetaId && onSaveRecipeMeta && (
                 <RecipeMetaEditor
-                    initialPersons={recipePersons?.[editingMetaId] ?? (isDish(plannable[editingMetaId]) || isBase(plannable[editingMetaId]) ? 1 : plannable[editingMetaId]?.defaultPortions ?? 1)}
-                    defaultPersons={isDish(plannable[editingMetaId]) || isBase(plannable[editingMetaId]) ? 1 : plannable[editingMetaId]?.defaultPortions ?? 1}
-                    initialGrams={recipeQuantities?.[editingMetaId] ?? Math.round(baseGrams[editingMetaId] ?? 0)}
-                    defaultGrams={Math.round(baseGrams[editingMetaId] ?? 0)}
-                    isDish={isDish(plannable[editingMetaId]) || isBase(plannable[editingMetaId])}
+                    initialPersons={recipePersons?.[editingMetaId] ?? editingDefaultPersons}
+                    defaultPersons={editingDefaultPersons}
+                    initialGrams={recipeQuantities?.[editingMetaId] ?? editingDefaultGrams}
+                    defaultGrams={editingDefaultGrams}
+                    isDish={editingIsDish}
                     pending={isMetaPending}
                     onConfirm={async (persons, grams) => {
                         if (await onSaveRecipeMeta(editingMetaId, persons, grams)) setEditingMetaId(null);

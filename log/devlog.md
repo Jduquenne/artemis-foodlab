@@ -16,6 +16,13 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-08 — `features/` review: planning, step 5 (v6.79.11)
+
+- Done: photo + veil + name block (copied 5 times) → `MealPhoto` (`compact`, `showName`, `eager`); drag grip + dnd-kit prop types (2 copies) → `DragHandle`; component `MealSlot` (same name as the domain type, imported as `MealSlotComp`) renamed `SingleMealSlot`; non-null assertions removed (`recipe!`, `savedMeal!`, `displayPersons!`, `MEAL_SLOTS.find(…)!`…); recipe meta editor defaults computed once in `MultiMealSlot`; `vh` → `dvh` (module height, pickers); `MoveDessertsPrompt` no longer closes on backdrop click; « Reset » → « Réinitialiser » and the bar uses `MAX_SHOPPING_DAYS`.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Problems: the rename was done with `git mv` (agent mistake: git commands that modify the repo are owner-only); the rename is already staged.
+- Still open: step 6 (theme); meals without photo (owner: photo mandatory, handled in the `recipeBuilder` review and the outdoor « activité » builder brainstorm).
+
 ## 2026-10-08 — `features/` review: planning, step 4 (v6.79.10)
 
 - Done: `PlanningModule` 697 → 539 lines, same behaviour. Copy mode → `usePlanningCopy` + pure `buildCopiedSlot` / `copyTargetKey` / `parseCopyTargetKey` (`planningCopyLogic.ts`, no more `as SlotType` cast on the target key); shopping days selection → `useShoppingDaysSelection` + `MAX_SHOPPING_DAYS` (`planningConfig.ts`); swipe between days → `useHorizontalSwipe` + pure `shiftDay` (`planningDayNavLogic.ts`); week change while holding a dragged meal against an edge → `useDragEdgeWeekNav`; mobile « Jours de courses » grid → `ShoppingDaysPicker`; desktop day headers → `DayColumnHeader`.

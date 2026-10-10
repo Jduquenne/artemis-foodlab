@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-10 — Weekly menu generator brainstorm recorded (v6.84.2)
+
+- Done: brainstorm of a weekly menu generator (criteria, UX, engine, missing data, possible V1 → V4 split, open questions) and the proposed `Dev` / `master` branch workflow recorded in `docs/roadmap.md` § Ideas / later. Not scheduled (owner: « pour plus tard »); P5 tablet pass postponed too.
+- Still open: owner's answers to the open questions before any scheduling.
+
 ## 2026-10-10 — Recipe Builder: `outdoor` excluded from the category select (v6.84.1)
 
 - Done: the creation select of `RecipeMetaForm` no longer offers the `outdoor` category (reserved to outdoor activities, `isRecipeCategory`); a persisted draft still on `outdoor` shows « À définir » and `validateBuilderState` blocks Save with « La catégorie est obligatoire. ».

@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-10 — Recipe Builder: category change of an existing recipe (v6.84.0)
+
+- Done: the locked category field opens, after 5 clicks within 3 s, a confirmation window (new category, recap of category and code `avant → après`, consequences, demo warning, « Confirmer »). Dedicated API route `PATCH /recipes/:id/category` (API D-051, prod confirmed by the owner); after success: full catalogue resync, draft patched to the new code, freezer resync, `useRefreshStore` bump. `ConfirmActionModal` gains `children` and `confirmDisabled`; new predicate `isRecipeCategory`. Details `docs/spec-recipes.md`, contract `docs/api.md`.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser, real payloads of the route not captured by the front session (contract taken from the API docs `spec-catalogue.md` / D-051).
+- Still open: the builder's creation select still lists `outdoor` (pre-existing, not changed).
+
 ## 2026-10-10 — Recipe Builder: category « À définir » by default (v6.83.0)
 
 - Done: a new draft and « Nouvelle recette » start without category (`initialRecipeBuilderState` → `categoryId: ""`, no longer reads the catalogue); `RecipeMetaForm` shows a disabled « À définir » option, the N° field (empty) is disabled and the ID badge hidden until a category is chosen; choosing one suggests the next free N° as before. Save blocked by the existing « La catégorie est obligatoire. ».

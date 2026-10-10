@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { AlertTriangle } from "lucide-react";
 import { RecapEntry, isRecapChange } from "../../../core/logic/dashboard/recapLogic";
 
@@ -12,6 +12,8 @@ export interface ConfirmActionModalProps {
   danger?: boolean;
   requireText?: string;
   requireTextLabel?: string;
+  confirmDisabled?: boolean;
+  children?: ReactNode;
   onConfirm: () => Promise<boolean>;
   onCancel: () => void;
 }
@@ -26,13 +28,15 @@ export const ConfirmActionModal = ({
   danger = false,
   requireText,
   requireTextLabel,
+  confirmDisabled = false,
+  children,
   onConfirm,
   onCancel,
 }: ConfirmActionModalProps) => {
   const [typed, setTyped] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  const gateOpen = !requireText || typed.trim() === requireText;
+  const gateOpen = !confirmDisabled && (!requireText || typed.trim() === requireText);
   const disabled = submitting || !gateOpen;
 
   const confirm = async () => {
@@ -58,6 +62,7 @@ export const ConfirmActionModal = ({
         </div>
 
         <div className="px-5 flex flex-col gap-3 overflow-y-auto">
+          {children}
           {recap !== undefined && (
             recap.length === 0 ? (
               <p className="text-sm text-slate-400">{emptyRecapText}</p>

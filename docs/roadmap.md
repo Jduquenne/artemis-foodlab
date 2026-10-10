@@ -69,7 +69,7 @@ Future features (including profile food preferences, #20-#24) are tracked in `de
 - API: generate food ids / outdoor codes server-side; allow forcing `announcedAt` (re-announce toggle); media `Cache-Control: immutable` + thumbhash.
 - Real-time sync (SSE / WebSocket) instead of polling.
 - Light category rename (D-014 alternative).
-- 🟡 Change the category of an existing recipe (owner, 2026-10-10): designed — locked field, 5 clicks within 3 s open a confirmation window (« Confirmer », no text to retype), new N° = next free of the new category, `outdoor` excluded, warning for the demo hard-coded codes (`char-041`, `char-047`, `pv-017`). Dedicated API route `PATCH /recipes/:id/category { categoryId, code }` validated, waiting for the API implementation, real payloads and prod deployment. Every API link uses the uuid (photos included); the front resyncs the whole catalogue and the planning after the change.
+- ✅ Change the category of an existing recipe (2026-10-10, v6.84.0, `docs/spec-recipes.md` § Recipe Builder).
 - Search results show an ingredient-type recipe with the recipe card (flippable) instead of the food card used in its category view — not a bug, to think about.
 - Revisit the « no modal closes on backdrop click » convention after daily use.
 - Remove the data import (owner, 2026-10-08: obsolete since the API is the source of truth): front `features/sync` (`ImportModal`, `ScopeSelector`), `importService`, `core/logic/sync/importPayloadLogic.ts` + `importSummaryLogic.ts`, the entry in `SettingsPopover`; API side `POST /import` (prompt to relay to the API session). Not scheduled; would also settle the open question of activities created by the import without a photo.

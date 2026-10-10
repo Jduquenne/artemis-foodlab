@@ -24,6 +24,10 @@ export function updateRecipe(uuid: string, body: ApiRecipeInput): Promise<ApiRec
   return apiFetchJson<ApiRecipe>(`/recipes/${uuid}`, { method: "PUT", body });
 }
 
+export function changeRecipeCategory(uuid: string, body: { categoryId: string; code: string }): Promise<ApiRecipe> {
+  return apiFetchJson<ApiRecipe>(`/recipes/${uuid}/category`, { method: "PATCH", body });
+}
+
 export async function deleteRecipe(uuid: string): Promise<void> {
   await apiFetch(`/recipes/${uuid}`, { method: "DELETE" });
 }

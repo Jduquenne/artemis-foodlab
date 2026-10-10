@@ -29,6 +29,10 @@ export function isOutdoor(recipe: Pick<PlannableItem, "categoryId"> | undefined 
   return recipe?.categoryId === "outdoor";
 }
 
+export function isRecipeCategory(category: Pick<Category, "id">): boolean {
+  return category.id !== "outdoor";
+}
+
 export function isBrowsableCategory(category: Pick<Category, "id">): boolean {
   return !NON_BROWSABLE_CATEGORY_IDS.includes(category.id);
 }

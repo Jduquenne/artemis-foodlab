@@ -6,7 +6,10 @@ import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
 import { useCategoriesSnapshot, useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { CATEGORY_PREFIX, buildRecipeId, suggestNextRecipeNumber } from "../../../../core/logic/recipeBuilder/recipeCodeLogic";
 import { useBuilderSourceRecipe } from "../../../../shared/hooks/useBuilderSourceRecipe";
+import { isCategoryUnlocked, registerUnlockClick } from "../../../../core/logic/recipeBuilder/recipeCategoryChangeLogic";
+import { categoryLabel } from "../../../../core/logic/recipe/categoryLogic";
 import { InstructionsModal } from "./InstructionsModal";
+import { CategoryChangeModal } from "./CategoryChangeModal";
 import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
 
 export interface RecipeMetaFormProps {
@@ -34,7 +37,16 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
   const isBase = state.kind === RecipeKind.BASE;
   const recipes = useRecipesSnapshot();
   const categories = useCategoriesSnapshot();
-  const isExisting = Boolean(useBuilderSourceRecipe(state));
+  const source = useBuilderSourceRecipe(state);
+  const isExisting = Boolean(source);
+  const [unlockClicks, setUnlockClicks] = useState<number[]>([]);
+  const [categoryChangeOpen, setCategoryChangeOpen] = useState(false);
+
+  const handleLockedCategoryClick = () => {
+    const next = registerUnlockClick(unlockClicks, Date.now());
+    setUnlockClicks(isCategoryUnlocked(next) ? [] : next);
+    if (isCategoryUnlocked(next)) setCategoryChangeOpen(true);
+  };
 
   const changeCategory = (categoryId: string) => {
     onChange({ categoryId, recipeNumber: suggestNextRecipeNumber(Object.keys(recipes), categoryId) });
@@ -75,18 +87,33 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
       <div className="flex gap-2 items-end">
         <div className="flex-1 min-w-0">
           <label className={labelClass}>Catégorie</label>
-          <select value={state.categoryId} onChange={(e) => changeCategory(e.target.value)} disabled={isExisting} className={`${inputClass} disabled:opacity-60`}>
-            {!hasCategory && (
-              <option value="" disabled>
-                À définir
-              </option>
-            )}
-            {categories.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.name}
-              </option>
-            ))}
-          </select>
+          {isExisting ? (
+            <button type="button" onClick={handleLockedCategoryClick} className={`${inputClass} opacity-60 text-left truncate cursor-default select-none`}>
+              {categoryLabel(categories, state.categoryId)}
+            </button>
+          ) : (
+            <select value={state.categoryId} onChange={(e) => changeCategory(e.target.value)} className={inputClass}>
+              {!hasCategory && (
+                <option value="" disabled>
+                  À définir
+                </option>
+              )}
+              {categories.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+          )}
+          {categoryChangeOpen && source?.apiId && state.sourceCode && (
+            <CategoryChangeModal
+              apiId={source.apiId}
+              sourceCode={state.sourceCode}
+              recipeName={source.name}
+              currentCategoryId={source.categoryId}
+              onClose={() => setCategoryChangeOpen(false)}
+            />
+          )}
         </div>
         <div className="shrink-0">
           <label className={labelClass}>N°</label>

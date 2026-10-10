@@ -5,6 +5,7 @@ import { getIngredientCategoryId } from "../../domain/ingredientCategorySlugs";
 import { getIdByCode } from "../../catalogue/recipeIdMap";
 import { buildRecipeDbId } from "./recipeCodeLogic";
 import { categoryLabel } from "../recipe/categoryLogic";
+import { isRecipeCategory } from "../../domain/recipePredicates";
 
 export function summarizeBuilderState(state: RecipeBuilderState, categories: Category[]): { label: string; value: string }[] {
   const isBase = state.kind === RecipeKind.BASE;
@@ -38,7 +39,7 @@ export function validateBuilderState(state: RecipeBuilderState): string[] {
   const errors: string[] = [];
   if (!state.name.trim()) errors.push("Le nom est obligatoire.");
   if (!state.recipeNumber.trim()) errors.push("Le numéro de recette est obligatoire.");
-  if (!state.categoryId) errors.push("La catégorie est obligatoire.");
+  if (!state.categoryId || !isRecipeCategory({ id: state.categoryId })) errors.push("La catégorie est obligatoire.");
   if (state.defaultPortions <= 0) errors.push("Le nombre de portions doit être supérieur à 0.");
   if (state.kind !== RecipeKind.BASE && state.mealTypes.length === 0) {
     errors.push("Sélectionne au moins un type de repas.");

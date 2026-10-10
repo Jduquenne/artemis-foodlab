@@ -8,6 +8,7 @@ import { CATEGORY_PREFIX, buildRecipeId, suggestNextRecipeNumber } from "../../.
 import { useBuilderSourceRecipe } from "../../../../shared/hooks/useBuilderSourceRecipe";
 import { isCategoryUnlocked, registerUnlockClick } from "../../../../core/logic/recipeBuilder/recipeCategoryChangeLogic";
 import { categoryLabel } from "../../../../core/logic/recipe/categoryLogic";
+import { isRecipeCategory } from "../../../../core/domain/recipePredicates";
 import { InstructionsModal } from "./InstructionsModal";
 import { CategoryChangeModal } from "./CategoryChangeModal";
 import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
@@ -31,7 +32,7 @@ const chipClass = (active: boolean) =>
 export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
   const [instructionsOpen, setInstructionsOpen] = useState(false);
   const instructions = state.instructions ?? [];
-  const hasCategory = Boolean(state.categoryId);
+  const hasCategory = isRecipeCategory({ id: state.categoryId }) && Boolean(state.categoryId);
   const prefix = CATEGORY_PREFIX[state.categoryId] ?? state.categoryId.toUpperCase();
   const computedId = buildRecipeId(state.categoryId, state.recipeNumber);
   const isBase = state.kind === RecipeKind.BASE;
@@ -92,13 +93,13 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
               {categoryLabel(categories, state.categoryId)}
             </button>
           ) : (
-            <select value={state.categoryId} onChange={(e) => changeCategory(e.target.value)} className={inputClass}>
+            <select value={hasCategory ? state.categoryId : ""} onChange={(e) => changeCategory(e.target.value)} className={inputClass}>
               {!hasCategory && (
                 <option value="" disabled>
                   À définir
                 </option>
               )}
-              {categories.map((c) => (
+              {categories.filter(isRecipeCategory).map((c) => (
                 <option key={c.id} value={c.id}>
                   {c.name}
                 </option>

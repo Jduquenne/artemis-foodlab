@@ -1,12 +1,11 @@
 import { RecipeBuilderState } from "../../domain/recipeBuilderTypes";
 import { MealType, RecipeKind } from "../../domain/recipe";
-import { categoriesCatalogue } from "../../catalogue/categories";
 
 export const initialRecipeBuilderState = (): RecipeBuilderState => ({
   sourceCode: null,
   recipeNumber: "",
   name: "",
-  categoryId: categoriesCatalogue[0]?.id ?? "",
+  categoryId: "",
   kind: RecipeKind.DISH,
   mealTypes: [MealType.LUNCH, MealType.DINNER],
   defaultPortions: 2,

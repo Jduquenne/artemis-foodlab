@@ -28,6 +28,7 @@ const chipClass = (active: boolean) =>
 export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
   const [instructionsOpen, setInstructionsOpen] = useState(false);
   const instructions = state.instructions ?? [];
+  const hasCategory = Boolean(state.categoryId);
   const prefix = CATEGORY_PREFIX[state.categoryId] ?? state.categoryId.toUpperCase();
   const computedId = buildRecipeId(state.categoryId, state.recipeNumber);
   const isBase = state.kind === RecipeKind.BASE;
@@ -75,6 +76,11 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
         <div className="flex-1 min-w-0">
           <label className={labelClass}>Catégorie</label>
           <select value={state.categoryId} onChange={(e) => changeCategory(e.target.value)} disabled={isExisting} className={`${inputClass} disabled:opacity-60`}>
+            {!hasCategory && (
+              <option value="" disabled>
+                À définir
+              </option>
+            )}
             {categories.map((c) => (
               <option key={c.id} value={c.id}>
                 {c.name}
@@ -85,12 +91,12 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
         <div className="shrink-0">
           <label className={labelClass}>N°</label>
           <div className="flex items-center gap-1.5 px-2 border border-slate-200 rounded-xl bg-surface focus-within:border-orange-400 focus-within:ring-1 focus-within:ring-orange-400">
-            <span className="text-xs font-mono font-bold text-slate-400">{prefix}_</span>
+            <span className="text-xs font-mono font-bold text-slate-400">{hasCategory ? `${prefix}_` : "—"}</span>
             <DecimalInput
               integer
               min={1}
               value={state.recipeNumber ? Number(state.recipeNumber) : null}
-              disabled={isExisting}
+              disabled={isExisting || !hasCategory}
               onValueChange={(v) => onChange({ recipeNumber: v === null ? "" : String(v) })}
               placeholder="16"
               className="w-12 py-2 bg-transparent text-sm text-slate-800 font-mono placeholder-slate-400 focus:outline-none text-center"
@@ -98,7 +104,7 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
           </div>
         </div>
       </div>
-      {state.recipeNumber && (
+      {hasCategory && state.recipeNumber && (
         <div className="flex items-center gap-2 -mt-1.5">
           <span className="text-[10px] text-slate-400 uppercase tracking-wide">ID</span>
           <span className="px-2 py-0.5 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 text-xs font-mono font-bold rounded-lg">

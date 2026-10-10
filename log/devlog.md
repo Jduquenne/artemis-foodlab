@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-10 — Recipe Builder: category « À définir » by default (v6.83.0)
+
+- Done: a new draft and « Nouvelle recette » start without category (`initialRecipeBuilderState` → `categoryId: ""`, no longer reads the catalogue); `RecipeMetaForm` shows a disabled « À définir » option, the N° field (empty) is disabled and the ID badge hidden until a category is chosen; choosing one suggests the next free N° as before. Save blocked by the existing « La catégorie est obligatoire. ».
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: category change of an existing recipe (step 2), waiting for the API route `PATCH /recipes/:id/category` (contract validated, see `docs/roadmap.md` § Ideas / later) and its prod deployment.
+
 ## 2026-10-08 — Session end (« pause test », v6.82.19)
 
 - Done this session (v6.79.7 → 6.82.18, one commit per step): P4 code review finished and closed — `features/planning` (desserts kept on dish replacement, writes with pending + errors, local dates, module split, dessert choice window on drag), `dashboard` (shared building blocks), `recipeBuilder` (locked identity of a loaded recipe, « Variante », mandatory dish photo), `recipes` (not-found page), `news` + `sync`, `shared/` (D-032 utilities split: `core/utils/`, business helpers in `core/logic/`, `core/` no longer imports `shared/`; SVG card escaping fix; safe browser storage), named theme colours everywhere (0 `dark:*-slate-*` left). Also: mandatory outdoor activity photo (API live), ISO week-year fix (no data to migrate), favicon in local dev, « Collation » slot label.

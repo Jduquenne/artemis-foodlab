@@ -52,6 +52,9 @@ export function validateBuilderState(state: RecipeBuilderState): string[] {
   if (named.some((ing) => !getIngredientCategoryId(ing.category))) {
     errors.push("Un ingrédient a une catégorie inconnue de l'API — resynchronise le catalogue.");
   }
+  if (state.kind === RecipeKind.BASE && named.some((ing) => ing.foodGroupId)) {
+    errors.push("Une recette de base ne peut pas contenir d'ingrédient au choix.");
+  }
   if (named.some((ing) => ing.ingredientType === "base" && ing.baseId && !getIdByCode(ing.baseId))) {
     errors.push("Une sous-recette (base) est introuvable dans le catalogue.");
   }

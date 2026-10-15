@@ -46,6 +46,7 @@ export interface ApiIngredientInput {
   categoryId: string;
   foodId: string | null;
   baseId: string | null;
+  foodGroupId: string | null;
   quantity: number | null;
   unit: string | null;
   preparation: string | null;

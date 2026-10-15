@@ -1,14 +1,14 @@
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
 import { useFoodsSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
-import { Food, IngredientCategory } from "../../../../core/domain/ingredient";
+import { Food } from "../../../../core/domain/ingredient";
 import { searchFoods } from "../../../../core/logic/recipeBuilder/ingredientSearchLogic";
 import { SuggestionList } from "./SuggestionList";
 
 export interface IngredientFoodSearchProps {
   value: string;
   linked?: boolean;
-  onChange: (name: string, foodId?: string, category?: IngredientCategory, unit?: string) => void;
+  onChange: (name: string, food?: Food) => void;
 }
 
 export const IngredientFoodSearch = ({ value, linked, onChange }: IngredientFoodSearchProps) => {
@@ -29,7 +29,7 @@ export const IngredientFoodSearch = ({ value, linked, onChange }: IngredientFood
         <input
           type="text"
           value={value}
-          onChange={e => onChange(e.target.value, undefined, undefined)}
+          onChange={e => onChange(e.target.value)}
           onFocus={() => setOpen(true)}
           onBlur={() => setOpen(false)}
           placeholder="Aliment…"
@@ -45,7 +45,7 @@ export const IngredientFoodSearch = ({ value, linked, onChange }: IngredientFood
           suggestions={suggestions.map((food) => ({ id: food.id, label: food.name, hint: food.category }))}
           onPick={(id) => {
             const food = foodsDb[id];
-            if (food) onChange(food.name, food.id, food.category, food.unit ?? undefined);
+            if (food) onChange(food.name, food);
             setOpen(false);
           }}
         />

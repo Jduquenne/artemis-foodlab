@@ -53,9 +53,13 @@ function formatUnitSuffix(quantity: number, unit: Unit): string {
   return unit;
 }
 
+function formatNameWithNotes(ing: DraftIngredient): string {
+  const notes = [ing.preparation, ing.foodGroupId ? "au choix" : ""].filter(Boolean);
+  return notes.length > 0 ? `${ing.name} (${notes.join(", ")})` : ing.name;
+}
+
 function formatIngredientText(ing: DraftIngredient): string {
-  const prep = ing.preparation ? ` (${ing.preparation})` : "";
-  const name = `${ing.name}${prep}`;
+  const name = formatNameWithNotes(ing);
   if (ing.quantity == null) return name;
   return `${name} - ${ing.quantity}${formatUnitSuffix(ing.quantity, ing.unit)}`;
 }
@@ -86,11 +90,6 @@ function wrapJoined(items: string[], maxChars: number, sep: string): string[] {
   return lines;
 }
 
-function formatPlainName(ing: DraftIngredient): string {
-  const prep = ing.preparation ? ` (${ing.preparation})` : "";
-  return `${ing.name}${prep}`;
-}
-
 function buildCategoryLines(withQuantity: DraftIngredient[], withoutQuantity: string[]): IngredientLineItem[] {
   const lines: IngredientLineItem[] = [];
   for (const ing of withQuantity) {
@@ -114,12 +113,12 @@ function layoutCategory(
 ): IngredientLineItem[] {
   if (EPICERIE_CATEGORIES.has(category)) {
     const withQuantity = items.filter((i) => i.quantity != null);
-    const names = items.filter((i) => i.quantity == null).map(formatPlainName);
+    const names = items.filter((i) => i.quantity == null).map(formatNameWithNotes);
     return buildCategoryLines(withQuantity, wrapJoined(names, CARD_LINE_MAX_CHARS, ", "));
   }
   if (COMMA_JOIN_CATEGORIES.has(category)) {
     const withQuantity = items.filter((i) => i.quantity != null);
-    const names = items.filter((i) => i.quantity == null).map(formatPlainName);
+    const names = items.filter((i) => i.quantity == null).map(formatNameWithNotes);
     return buildCategoryLines(withQuantity, wrapJoined(names, CARD_LINE_MAX_CHARS, " - "));
   }
   return buildCategoryLines(items, []);

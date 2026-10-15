@@ -8,6 +8,7 @@ export interface DraftIngredient {
   name: string;
   foodId?: string;
   baseId?: string;
+  foodGroupId?: string;
   quantity: number | null;
   unit: Unit;
   preparation: string;

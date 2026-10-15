@@ -14,6 +14,7 @@ import {
   validateNewFoodId,
 } from "../../../../core/logic/dashboard/foodFormLogic";
 import { atwaterKcal } from "../../../../core/logic/nutrition/atwaterLogic";
+import { useFoodGroupsSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
 import { FormModalShell } from "../common/FormModalShell";
 import { FormField } from "../common/FormField";
@@ -29,6 +30,7 @@ export interface FoodFormModalProps {
 
 export const FoodFormModal = ({ food, foods, onClose, onSubmit }: FoodFormModalProps) => {
   const isCreate = food === null;
+  const groups = useFoodGroupsSnapshot();
   const [draft, setDraft] = useState<FoodFormDraft>(() => (food ? foodToDraft(food) : emptyFoodDraft()));
   const [id, setId] = useState("");
   const [idTouched, setIdTouched] = useState(false);
@@ -53,7 +55,7 @@ export const FoodFormModal = ({ food, foods, onClose, onSubmit }: FoodFormModalP
   );
 
   const review = () => {
-    const found = validateFoodForm(draft);
+    const found = validateFoodForm(draft, groups);
     if (isCreate) {
       const idError = validateNewFoodId(effectiveId, foods);
       if (idError) found.unshift(idError);
@@ -62,7 +64,7 @@ export const FoodFormModal = ({ food, foods, onClose, onSubmit }: FoodFormModalP
       setErrors(found);
       return;
     }
-    if (!isCreate && buildFoodRecap(food, effectiveId, draft).length === 0) {
+    if (!isCreate && buildFoodRecap(food, effectiveId, draft, groups).length === 0) {
       setErrors(["Aucune modification à enregistrer."]);
       return;
     }
@@ -87,7 +89,7 @@ export const FoodFormModal = ({ food, foods, onClose, onSubmit }: FoodFormModalP
         <ConfirmActionModal
           title={isCreate ? "Confirmer l'ajout de l'aliment" : "Confirmer la modification"}
           intro={isCreate ? undefined : "Modifications à appliquer :"}
-          recap={buildFoodRecap(food, effectiveId, draft)}
+          recap={buildFoodRecap(food, effectiveId, draft, groups)}
           confirmLabel={isCreate ? "Ajouter" : "Enregistrer"}
           onConfirm={confirmed}
           onCancel={() => setConfirming(false)}
@@ -159,6 +161,19 @@ export const FoodFormModal = ({ food, foods, onClose, onSubmit }: FoodFormModalP
           <span className="text-sm text-slate-700">Congelable</span>
         </label>
       </div>
+
+      <FormField label="Famille" hint="Aliments interchangeables dans une recette (ex. Fromages).">
+        <select
+          value={draft.groupId}
+          onChange={(e) => patch({ groupId: e.target.value })}
+          className={INPUT_CLASS}
+        >
+          <option value="">Aucune</option>
+          {groups.map((group) => (
+            <option key={group.id} value={group.id}>{group.name}</option>
+          ))}
+        </select>
+      </FormField>
 
       <div className="flex flex-col gap-1.5">
         <span className="text-xs font-bold text-slate-500">Valeurs pour 100 g / 100 ml</span>

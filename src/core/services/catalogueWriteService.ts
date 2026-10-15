@@ -1,6 +1,7 @@
 import { apiFetch, apiFetchJson } from "./apiClient";
 import { ApiOutdoorActivity, ApiRecipe, ApiRecipeInput } from "../logic/recipe/recipeApiMapper";
-import { FoodInput, OutdoorActivityInput } from "../domain/catalogueInput";
+import { FoodGroupInput, FoodInput, OutdoorActivityInput } from "../domain/catalogueInput";
+import { FoodGroup } from "../domain/foodGroup";
 import { Food } from "../domain/ingredient";
 import { RecipeAssetKey } from "../domain/recipe";
 
@@ -14,6 +15,18 @@ export function updateFood(id: string, body: FoodInput): Promise<Food> {
 
 export async function deleteFood(id: string): Promise<void> {
   await apiFetch(`/foods/${id}`, { method: "DELETE" });
+}
+
+export function createFoodGroup(body: FoodGroupInput): Promise<FoodGroup> {
+  return apiFetchJson<FoodGroup>("/food-groups", { method: "POST", body });
+}
+
+export function updateFoodGroup(id: string, name: string): Promise<FoodGroup> {
+  return apiFetchJson<FoodGroup>(`/food-groups/${encodeURIComponent(id)}`, { method: "PUT", body: { name } });
+}
+
+export async function deleteFoodGroup(id: string): Promise<void> {
+  await apiFetch(`/food-groups/${encodeURIComponent(id)}`, { method: "DELETE" });
 }
 
 export function createRecipe(body: ApiRecipeInput): Promise<ApiRecipe> {

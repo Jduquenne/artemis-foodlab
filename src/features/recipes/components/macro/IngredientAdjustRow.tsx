@@ -64,6 +64,9 @@ export const IngredientAdjustRow = ({
           {ing.preparation && (
             <span className="text-slate-400 text-xs ml-1">({ing.preparation})</span>
           )}
+          {ing.foodGroupId && (
+            <span className="text-orange-500 text-xs font-bold ml-1">au choix</span>
+          )}
         </span>
 
         <div className="flex flex-col items-end gap-1 shrink-0">

@@ -5,11 +5,13 @@ import { FoodRow } from "./FoodRow";
 import { FoodFormModal } from "./FoodFormModal";
 import { DataPanelShell } from "../common/DataPanelShell";
 import { DataList } from "../common/DataList";
+import { useFoodGroupsSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
 import { includesAnyText, normalizeQuery } from "../../../../core/utils/textUtils";
 
 export const FoodsTable = () => {
   const { foods, create, save, remove } = useCatalogueFoods();
+  const groups = useFoodGroupsSnapshot();
   const [query, setQuery] = useState("");
   const [creating, setCreating] = useState(false);
   const [editing, setEditing] = useState<Food | null>(null);
@@ -30,7 +32,13 @@ export const FoodsTable = () => {
     >
       <DataList isEmpty={filtered.length === 0} emptyMessage="Aucun aliment ne correspond.">
         {filtered.map((food) => (
-          <FoodRow key={food.id} food={food} onEdit={setEditing} onAskDelete={setPendingDelete} />
+          <FoodRow
+            key={food.id}
+            food={food}
+            groupName={groups.find((group) => group.id === food.groupId)?.name ?? null}
+            onEdit={setEditing}
+            onAskDelete={setPendingDelete}
+          />
         ))}
       </DataList>
 

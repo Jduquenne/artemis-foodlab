@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { DATA_SECTIONS, DataSectionId } from "../../data/dataSections";
 import { FoodsTable } from "./FoodsTable";
+import { FoodGroupsTable } from "./FoodGroupsTable";
 import { RecipesTable } from "./RecipesTable";
 import { OutdoorActivitiesTable } from "./OutdoorActivitiesTable";
 import { UsersPanel } from "../users/UsersPanel";
@@ -17,6 +18,7 @@ export const DataPanel = () => {
 
       <div className="flex-1 min-h-0">
         {section === "foods" && <FoodsTable />}
+        {section === "foodGroups" && <FoodGroupsTable />}
         {section === "recipes" && <RecipesTable />}
         {section === "outdoor" && <OutdoorActivitiesTable />}
         {section === "users" && <UsersPanel />}

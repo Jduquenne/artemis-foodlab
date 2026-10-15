@@ -4,6 +4,11 @@ export interface OutdoorActivityInput {
   categoryId: string;
 }
 
+export interface FoodGroupInput {
+  id: string;
+  name: string;
+}
+
 export interface FoodInput {
   id: string;
   name: string;
@@ -11,5 +16,6 @@ export interface FoodInput {
   unit: string | null;
   unitWeight: number | null;
   isFreezable: boolean;
+  groupId: string | null;
   macros: { kcal: number; proteins: number; lipids: number; carbohydrates: number; fibers: number };
 }

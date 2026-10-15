@@ -1,3 +1,4 @@
+import { FoodGroup } from "../../domain/foodGroup";
 import { Food, IngredientCategory } from "../../domain/ingredient";
 import { Macronutrients, NUTRIENT_DEFINITIONS, NutrientKey } from "../../domain/nutrition";
 import { FoodInput } from "../../domain/catalogueInput";
@@ -6,6 +7,7 @@ import { RecapEntry, diffEntry, recapBool, recapText } from "./recapLogic";
 import { parseDecimal } from "../../utils/numberUtils";
 import { nextSequentialCode, validateNewCode } from "../../utils/codeUtils";
 import { atwaterKcal } from "../nutrition/atwaterLogic";
+import { foodGroupLabel } from "./foodGroupFormLogic";
 
 export interface FoodFormDraft {
   name: string;
@@ -13,6 +15,7 @@ export interface FoodFormDraft {
   unit: string;
   unitWeight: string;
   isFreezable: boolean;
+  groupId: string;
   macros: Record<keyof Macronutrients, string>;
 }
 
@@ -36,6 +39,7 @@ export function emptyFoodDraft(): FoodFormDraft {
     unit: "",
     unitWeight: "",
     isFreezable: false,
+    groupId: "",
     macros: { kcal: "", proteins: "", lipids: "", carbohydrates: "", fibers: "" },
   };
 }
@@ -58,6 +62,7 @@ export function foodToDraft(food: Food): FoodFormDraft {
     unit: food.unit ?? "",
     unitWeight: food.unitWeight != null ? String(food.unitWeight) : "",
     isFreezable: Boolean(food.isFreezable),
+    groupId: food.groupId ?? "",
     macros: {
       kcal: String(food.macros.kcal),
       proteins: String(food.macros.proteins),
@@ -68,9 +73,10 @@ export function foodToDraft(food: Food): FoodFormDraft {
   };
 }
 
-export function validateFoodForm(draft: FoodFormDraft): string[] {
+export function validateFoodForm(draft: FoodFormDraft, groups: readonly FoodGroup[]): string[] {
   const errors: string[] = [];
   if (!draft.name.trim()) errors.push("Le nom est requis.");
+  if (draft.groupId && !groups.some((group) => group.id === draft.groupId)) errors.push("Famille inconnue.");
   if (!getIngredientCategoryId(draft.category)) errors.push("Catégorie inconnue de l'API.");
   if (draft.unitWeight.trim() && parseDecimal(draft.unitWeight) === null) {
     errors.push("Le poids unitaire doit être un nombre.");
@@ -89,7 +95,12 @@ const MACRO_LABELS: Record<NutrientKey, string> = Object.fromEntries(
   NUTRIENT_DEFINITIONS.map((definition) => [definition.key, definition.label]),
 ) as Record<NutrientKey, string>;
 
-export function buildFoodRecap(original: Food | null, id: string, draft: FoodFormDraft): RecapEntry[] {
+export function buildFoodRecap(
+  original: Food | null,
+  id: string,
+  draft: FoodFormDraft,
+  groups: readonly FoodGroup[],
+): RecapEntry[] {
   const draftKcal = String(atwaterKcal(parseEditableMacros(draft.macros)));
   if (original === null) {
     return [
@@ -99,6 +110,7 @@ export function buildFoodRecap(original: Food | null, id: string, draft: FoodFor
       { label: "Unité", value: recapText(draft.unit) },
       { label: "Poids unitaire (g)", value: recapText(draft.unitWeight) },
       { label: "Congelable", value: recapBool(draft.isFreezable) },
+      { label: "Famille", value: foodGroupLabel(groups, draft.groupId) },
       ...EDITABLE_MACRO_KEYS.map((key) => ({ label: MACRO_LABELS[key], value: recapText(draft.macros[key]) })),
       { label: "Kcal (Atwater)", value: draftKcal },
     ];
@@ -111,6 +123,7 @@ export function buildFoodRecap(original: Food | null, id: string, draft: FoodFor
   add(diffEntry("Unité", recapText(before.unit), recapText(draft.unit)));
   add(diffEntry("Poids unitaire (g)", recapText(before.unitWeight), recapText(draft.unitWeight)));
   add(diffEntry("Congelable", recapBool(before.isFreezable), recapBool(draft.isFreezable)));
+  add(diffEntry("Famille", foodGroupLabel(groups, before.groupId), foodGroupLabel(groups, draft.groupId)));
   for (const key of EDITABLE_MACRO_KEYS) {
     add(diffEntry(MACRO_LABELS[key], recapText(before.macros[key]), recapText(draft.macros[key])));
   }
@@ -128,6 +141,7 @@ export function foodFormToBody(id: string, draft: FoodFormDraft): FoodInput {
     unit: draft.unit.trim() || null,
     unitWeight: parseDecimal(draft.unitWeight),
     isFreezable: draft.isFreezable,
+    groupId: draft.groupId || null,
     macros: (() => {
       const editable = parseEditableMacros(draft.macros);
       return { kcal: atwaterKcal(editable), ...editable };

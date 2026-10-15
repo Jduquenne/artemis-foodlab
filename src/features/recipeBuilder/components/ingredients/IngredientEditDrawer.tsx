@@ -8,6 +8,7 @@ import { DraftIngredient } from "../../../../core/domain/recipeBuilderTypes";
 import { applyFoodPick } from "../../../../core/logic/recipeBuilder/recipeBuilderMapper";
 import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
 import { IngredientTypeToggle } from "./IngredientTypeToggle";
+import { IngredientChoiceToggle } from "./IngredientChoiceToggle";
 
 export interface IngredientEditDrawerProps {
   ingredient: DraftIngredient;
@@ -67,11 +68,16 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
               <IngredientFoodSearch
                 value={ingredient.name}
                 linked={!!ingredient.foodId}
-                onChange={(name, foodId, category, unit) => onChange(applyFoodPick(ingredient, name, foodId, category, unit))}
+                onChange={(name, food) => onChange(applyFoodPick(ingredient, name, food))}
               />
             )}
             {!isBase && ingredient.name.trim().length > 0 && !ingredient.foodId && (
               <p className="text-xs text-orange-500 mt-1">Sélectionne un aliment dans la liste pour le lier à la base</p>
+            )}
+            {!isBase && (
+              <div className="mt-2">
+                <IngredientChoiceToggle ingredient={ingredient} onChange={onChange} wide />
+              </div>
             )}
           </div>
 

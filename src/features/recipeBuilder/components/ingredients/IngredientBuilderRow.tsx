@@ -7,6 +7,7 @@ import { DraftIngredient } from "../../../../core/domain/recipeBuilderTypes";
 import { applyFoodPick } from "../../../../core/logic/recipeBuilder/recipeBuilderMapper";
 import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
 import { IngredientTypeToggle } from "./IngredientTypeToggle";
+import { IngredientChoiceToggle } from "./IngredientChoiceToggle";
 
 export interface IngredientBuilderRowProps {
   ingredient: DraftIngredient;
@@ -42,8 +43,9 @@ export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: Ingredi
           <IngredientFoodSearch
             value={ingredient.name}
             linked={!!ingredient.foodId}
-            onChange={(name, foodId, category, unit) => onChange(applyFoodPick(ingredient, name, foodId, category, unit))}
+            onChange={(name, food) => onChange(applyFoodPick(ingredient, name, food))}
           />
+          <IngredientChoiceToggle ingredient={ingredient} onChange={onChange} />
           <DecimalInput
             value={ingredient.quantity}
             onValueChange={(quantity) => update({ quantity })}

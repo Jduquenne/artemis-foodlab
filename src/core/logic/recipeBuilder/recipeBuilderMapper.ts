@@ -1,4 +1,4 @@
-import { IngredientCategory, Unit } from "../../domain/ingredient";
+import { Food, IngredientCategory, Unit } from "../../domain/ingredient";
 import { RecipeDetails, RecipeKind } from "../../domain/recipe";
 import { DraftIngredient, RecipeBuilderState } from "../../domain/recipeBuilderTypes";
 import { getIngredientCategoryId } from "../../domain/ingredientCategorySlugs";
@@ -17,6 +17,7 @@ export function switchIngredientType(
     name: "",
     foodId: undefined,
     baseId: undefined,
+    foodGroupId: undefined,
     quantity: null,
     unit: type === "base" ? Unit.PORTION : Unit.NONE,
     preparation: "",
@@ -24,20 +25,23 @@ export function switchIngredientType(
   };
 }
 
-export function applyFoodPick(
-  ingredient: DraftIngredient,
-  name: string,
-  foodId?: string,
-  category?: IngredientCategory,
-  unit?: string,
-): DraftIngredient {
+export function applyFoodPick(ingredient: DraftIngredient, name: string, food?: Food): DraftIngredient {
+  const keepsGroup = Boolean(food?.groupId) && food?.groupId === ingredient.foodGroupId;
+  const unit = food?.unit;
   return {
     ...ingredient,
     name,
-    foodId,
-    category: category ?? ingredient.category,
+    foodId: food?.id,
+    category: food?.category ?? ingredient.category,
     unit: isUnit(unit) ? unit : ingredient.unit,
+    foodGroupId: keepsGroup ? ingredient.foodGroupId : undefined,
   };
+}
+
+export function toggleFoodChoice(ingredient: DraftIngredient, food: Food | undefined): DraftIngredient {
+  if (ingredient.foodGroupId) return { ...ingredient, foodGroupId: undefined };
+  if (!food?.groupId || food.id !== ingredient.foodId) return ingredient;
+  return { ...ingredient, foodGroupId: food.groupId };
 }
 
 export function recipeToBuilderState(
@@ -52,6 +56,7 @@ export function recipeToBuilderState(
     name: ing.name,
     foodId: ing.foodId,
     baseId: ing.baseId,
+    foodGroupId: ing.foodGroupId,
     quantity: ing.quantity,
     unit: ing.unit,
     preparation: ing.preparation ?? "",
@@ -86,6 +91,7 @@ export function builderStateToApiBody(state: RecipeBuilderState): ApiRecipeInput
         categoryId: getIngredientCategoryId(ing.category) ?? "",
         foodId: !isBaseIngredient ? (ing.foodId ?? null) : null,
         baseId: isBaseIngredient && ing.baseId ? (getIdByCode(ing.baseId) ?? null) : null,
+        foodGroupId: !isBaseIngredient && ing.foodId ? (ing.foodGroupId ?? null) : null,
         quantity: ing.quantity,
         unit: ing.unit === Unit.NONE ? null : ing.unit,
         preparation: ing.preparation || null,

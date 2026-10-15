@@ -16,6 +16,18 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-15 — Food groups, step 3: Recipe Builder (v6.87.0)
+
+- Done: ingredient « au choix » in the Recipe Builder (`IngredientChoiceToggle`, shown when the linked food belongs to a family; desktop row, mobile drawer, mobile card badge); `DraftIngredient.foodGroupId`, loaded by `recipeToBuilderState`, sent by `builderStateToApiBody` (`ApiIngredientInput.foodGroupId`); `applyFoodPick` takes the picked `Food` and keeps the family only within the same family; base recipes refused by `validateBuilderState`. « (au choix) » on recipe cards, « au choix » in the nutrition calculator. Spec `docs/spec-recipes.md`.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser. Depends on API D-052 (not deployed): `foodGroupId` is sent on every recipe save.
+- Still open: step 4 (meal slot UI rework in the planning, mock-up first).
+
+## 2026-10-15 — Food groups, step 2: Dashboard (v6.86.0)
+
+- Done: « Familles » section in the Dashboard data panel (list with member count, create with a slug id suggested from the name, rename, delete with confirmation); « Famille » select on the food form (`FoodInput.groupId`, recap entry), family shown in the foods list. `syncCatalogueFromApi` now also fetches `/food-groups`. Spec `docs/spec-admin.md`.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser. **Depends on API D-052 (not deployed)**: against the current prod API, the catalogue sync fails on `/food-groups` (404) — test only against an API that has D-052 (local API), never push before the API session confirms prod.
+- Still open: step 3 (Recipe Builder: group ingredient with its default food, recipe detail display).
+
 ## 2026-10-15 — Food groups, step 1: read layer (v6.85.0)
 
 - Done: API contract of food groups and per-profile choices (API D-052, captured in dev, **not deployed**) recorded in `docs/api.md` § Planned. Front read layer: `FoodGroup` / `FoodGroupDefault` / `FoodChoice` (`core/domain/foodGroup.ts`); `Food.groupId`, `Ingredient.foodGroupId`, `Profile.foodGroupDefaults`, `MealSlot.foodChoices` (per recipe code, like `recipePersons`) read by the API mappers, absent fields treated as empty; food groups catalogue (`core/catalogue/foodGroups.ts`, scope `foodGroups`, `useFoodGroupsSnapshot`) filled from `/bootstrap` only, cached in Dexie v14 (`foodGroups` table); `resolveIngredientFood` (`core/logic/foodGroup/foodChoiceLogic.ts`): meal choice → profile default → recipe default. No new route called, no UI change.

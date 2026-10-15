@@ -3,7 +3,7 @@ import { FoodGroup } from "../domain/foodGroup";
 import { Food } from "../domain/ingredient";
 import { Category } from "../domain/recipe";
 import { replaceCategories } from "../catalogue/categories";
-import { foodGroupsCatalogue, replaceFoodGroups } from "../catalogue/foodGroups";
+import { replaceFoodGroups } from "../catalogue/foodGroups";
 import { refreshRecipeMacros } from "../catalogue/recipeMetrics";
 import { replaceFoods, foodsCatalogue } from "../catalogue/foods";
 import { putRecipe, removeRecipe, replaceRecipes, recipesCatalogue } from "../catalogue/recipes";
@@ -93,15 +93,16 @@ export interface SyncCatalogueOptions {
 async function fetchAndApplyCatalogue(silent: boolean): Promise<void> {
   const options = { suppressGlobalError: silent };
   try {
-    const [apiRecipes, apiOutdoor, apiFoods, apiHouseholdItems, apiCategories] = await Promise.all([
+    const [apiRecipes, apiOutdoor, apiFoods, apiHouseholdItems, apiCategories, apiFoodGroups] = await Promise.all([
       apiFetchJson<ApiRecipe[]>("/recipes", options),
       apiFetchJson<ApiOutdoorActivity[]>("/outdoor-activities", options),
       apiFetchJson<Food[]>("/foods", options),
       apiFetchJson<HouseholdItem[]>("/household-items", options),
       apiFetchJson<Category[]>("/recipe-categories", options),
+      apiFetchJson<FoodGroup[]>("/food-groups", options),
     ]);
 
-    await applyCatalogueData(apiRecipes, apiOutdoor, apiFoods, apiHouseholdItems, apiCategories, [...foodGroupsCatalogue]);
+    await applyCatalogueData(apiRecipes, apiOutdoor, apiFoods, apiHouseholdItems, apiCategories, apiFoodGroups);
   } catch {
     return;
   }

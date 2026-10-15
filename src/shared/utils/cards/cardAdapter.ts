@@ -25,6 +25,7 @@ function ingredientsToDraft(recipe: Pick<RecipeDetails, "ingredients">): DraftIn
     name: ing.name,
     foodId: ing.foodId,
     baseId: ing.baseId,
+    foodGroupId: ing.foodGroupId,
     quantity: ing.quantity,
     unit: ing.unit,
     preparation: ing.preparation ?? "",

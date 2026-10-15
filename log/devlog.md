@@ -16,6 +16,13 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-15 — Food groups, step 7: journal per profile (v6.92.0)
+
+- Done: `personalizeRecipe` (recipe with the active profile's resolved food and quantity per portion for each ingredient au choix); `computeItemMacros` / `computeSlotMacros` / `computeDayMacros` / `computeWeekAverage` take the profile (meal choices read from `slot.foodChoices`); Journal day, slot cards, week average and `RecipePortionRow` use it; `useJournalStore` actions now receive the (personalized) recipe instead of reading `recipesCatalogue`. Spec `docs/spec-journal.md`, `docs/architecture.md` (exception list).
+- Numbers: `npx tsc -b` + `npm run lint` pass; macros checked with a throwaway `tsx` script (per portion: comté default 470 kcal, mozzarella 60 g 500 kcal, mozzarella without quantity 425 kcal); not checked in a browser. Depends on API D-052 (not deployed).
+- Known limit: per-day ingredient overrides saved before a choice keep their grams (reset the ingredient to take the choice quantity).
+- Resume here: API deployment confirmation → owner's end-to-end test (create « Fromages », members, recipe au choix, planning choices with quantities, shopping, journal per profile) → push `master`. Not started: UI for the profile default per family.
+
 ## 2026-10-15 — Food groups, step 6: shopping list (v6.91.0)
 
 - Done: `splitGroupIngredient` shares the parts of an ingredient au choix equally between profiles, each with its resolved food and quantity per portion; `aggregateSlots` turns each share into a line of that food (merged with the same food elsewhere), « à préciser » when resolved by the recipe default (`ConsolidatedIngredient.toSpecify`: badge + clipboard), profile names on the sources. `ShoppingCatalogue` gains `foods` and `profiles`. Spec `docs/spec-shopping.md` § Ingredients « au choix ».

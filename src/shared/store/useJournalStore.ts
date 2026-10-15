@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { saveJournalOverride } from "../../core/services/journalService";
 import { JournalOverrideInput, JournalOverrides, JournalOverridesByProfile } from "../../core/domain/journal";
-import { recipesCatalogue } from "../../core/catalogue/recipes";
+import { RecipeDetails } from "../../core/domain/recipe";
 import {
   EMPTY_JOURNAL_OVERRIDES,
   applyOverrideResult,
@@ -13,10 +13,10 @@ import { useProfileStore } from "./useProfileStore";
 
 interface JournalState {
   overridesByProfile: JournalOverridesByProfile;
-  setPortionOverride: (planningSlotItemId: string, recipeId: string, value: number) => Promise<void>;
-  setGramOverride: (planningSlotItemId: string, recipeId: string, value: number) => Promise<void>;
-  setIngredientOverride: (planningSlotItemId: string, recipeId: string, ingredientId: string, grams: number) => Promise<void>;
-  resetIngredientOverride: (planningSlotItemId: string, recipeId: string, ingredientId: string) => Promise<void>;
+  setPortionOverride: (planningSlotItemId: string, recipe: RecipeDetails | undefined, value: number) => Promise<void>;
+  setGramOverride: (planningSlotItemId: string, recipeId: string, recipe: RecipeDetails | undefined, value: number) => Promise<void>;
+  setIngredientOverride: (planningSlotItemId: string, recipe: RecipeDetails | undefined, ingredientId: string, grams: number) => Promise<void>;
+  resetIngredientOverride: (planningSlotItemId: string, recipe: RecipeDetails | undefined, ingredientId: string) => Promise<void>;
   replaceOverrides: (overridesByProfile: JournalOverridesByProfile) => void;
 }
 
@@ -74,42 +74,39 @@ export const useJournalStore = create<JournalState>((set, get) => {
 
   const defaultIngredientQuantities = (
     current: JournalOverrides,
-    recipeId: string,
+    recipe: RecipeDetails | undefined,
     planningSlotItemId: string,
   ): Record<string, number> => {
-    const recipe = recipesCatalogue[recipeId];
     const portions = current.portionOverrides[planningSlotItemId] ?? 1;
     return defaultIngredientOverridesForPortions(recipe, portions);
   };
 
   return {
     overridesByProfile: {},
-    setPortionOverride: async (planningSlotItemId, recipeId, value) => {
-      const recipe = recipesCatalogue[recipeId];
+    setPortionOverride: async (planningSlotItemId, recipe, value) => {
       const ratio = recipe && recipe.defaultPortions > 0 ? value / recipe.defaultPortions : 1;
       const ingredientOverrides = recipe ? scaleIngredientsByRatio(recipe, ratio) : {};
       await persistOverride(planningSlotItemId, () => ({ portionsOverride: value, gramsOverride: null, ingredientOverrides }));
     },
-    setGramOverride: async (planningSlotItemId, recipeId, value) => {
-      const recipe = recipesCatalogue[recipeId];
+    setGramOverride: async (planningSlotItemId, recipeId, recipe, value) => {
       const baseGrams = RECIPE_BASE_GRAMS[recipeId] ?? 0;
       const ratio = baseGrams > 0 ? value / baseGrams : 1;
       const ingredientOverrides = recipe ? scaleIngredientsByRatio(recipe, ratio) : {};
       await persistOverride(planningSlotItemId, () => ({ portionsOverride: null, gramsOverride: value, ingredientOverrides }));
     },
-    setIngredientOverride: async (planningSlotItemId, recipeId, ingredientId, grams) => {
+    setIngredientOverride: async (planningSlotItemId, recipe, ingredientId, grams) => {
       await persistOverride(planningSlotItemId, (current) => {
         const existing = current.ingredientOverrides[planningSlotItemId];
         const baseline =
-          existing && Object.keys(existing).length > 0 ? existing : defaultIngredientQuantities(current, recipeId, planningSlotItemId);
+          existing && Object.keys(existing).length > 0 ? existing : defaultIngredientQuantities(current, recipe, planningSlotItemId);
         return { ingredientOverrides: { ...baseline, [ingredientId]: grams } };
       });
     },
-    resetIngredientOverride: async (planningSlotItemId, recipeId, ingredientId) => {
+    resetIngredientOverride: async (planningSlotItemId, recipe, ingredientId) => {
       await persistOverride(planningSlotItemId, (current) => {
         const existing = current.ingredientOverrides[planningSlotItemId];
         if (!existing) return null;
-        const defaults = defaultIngredientQuantities(current, recipeId, planningSlotItemId);
+        const defaults = defaultIngredientQuantities(current, recipe, planningSlotItemId);
         return { ingredientOverrides: { ...existing, [ingredientId]: defaults[ingredientId] ?? 0 } };
       });
     },

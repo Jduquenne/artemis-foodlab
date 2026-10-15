@@ -1,3 +1,4 @@
+import { Profile } from "../../domain/profile";
 import { Macronutrients } from "../../domain/nutrition";
 import { MealSlot } from "../../domain/planning";
 import { MacroCatalogue, computeDayMacros } from "../nutrition/macroLogic";
@@ -22,6 +23,7 @@ export function computeWeekAverage(
   portionOverrides: Record<string, number>,
   gramOverrides: Record<string, number>,
   ingredientOverrides: Record<string, Record<string, number>>,
+  profile?: Pick<Profile, "id" | "foodGroupDefaults">,
 ): WeekAverageResult {
   const filledDays = days
     .map((day) => weekSlots.filter((s) => s.day === day))
@@ -30,7 +32,7 @@ export function computeWeekAverage(
   if (filledDays.length === 0) return { average: { ...EMPTY_MACROS }, countedDays: 0 };
 
   const total = filledDays.reduce<Macronutrients>((sum, slots) => {
-    const m = computeDayMacros(catalogue, slots, portionOverrides, gramOverrides, ingredientOverrides);
+    const m = computeDayMacros(catalogue, slots, portionOverrides, gramOverrides, ingredientOverrides, profile);
     return {
       kcal: sum.kcal + m.kcal,
       proteins: sum.proteins + m.proteins,

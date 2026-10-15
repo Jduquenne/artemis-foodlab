@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ChevronDown, ChevronRight, Minus, Plus } from "lucide-react";
 import { RecipeKind } from "../../../../core/domain/recipe";
 import { computeItemMacros } from "../../../../core/logic/nutrition/macroLogic";
@@ -10,13 +10,17 @@ import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
 import { withPending } from "../../../../shared/utils/withPending";
 import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
 import { IngredientOverrideRow } from "./IngredientOverrideRow";
+import { FoodChoice } from "../../../../core/domain/foodGroup";
+import { personalizeRecipe } from "../../../../core/logic/foodGroup/foodChoiceLogic";
+import { useActiveProfile } from "../../../../shared/hooks/useActiveProfile";
 
 export interface RecipePortionRowProps {
   recipeId: string;
   planningSlotItemId?: string;
+  mealChoices?: FoodChoice[];
 }
 
-export const RecipePortionRow = ({ recipeId, planningSlotItemId }: RecipePortionRowProps) => {
+export const RecipePortionRow = ({ recipeId, planningSlotItemId, mealChoices }: RecipePortionRowProps) => {
   const { portionOverrides, gramOverrides, ingredientOverrides } = useActiveJournalOverrides();
   const { setPortionOverride, setGramOverride, setIngredientOverride, resetIngredientOverride } = useJournalStore();
   const [expanded, setExpanded] = useState(false);
@@ -24,20 +28,29 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId }: RecipePortion
   const key = planningSlotItemId ?? "";
   const pending = usePendingKey(`journal-override:${key}`);
   const catalogue = useMacroCatalogue();
-  const recipe = catalogue.recipes[recipeId];
+  const activeProfile = useActiveProfile();
+  const personalization = useMemo(
+    () => (activeProfile ? { profile: activeProfile, mealChoices: mealChoices ?? [] } : undefined),
+    [activeProfile, mealChoices],
+  );
+  const catalogueRecipe = catalogue.recipes[recipeId];
+  const recipe = useMemo(
+    () => (catalogueRecipe && personalization ? personalizeRecipe(catalogueRecipe, personalization, catalogue.foods) : catalogueRecipe),
+    [catalogueRecipe, personalization, catalogue.foods],
+  );
   const name = recipe?.name ?? recipeId;
   const isIngredient = recipe?.kind === RecipeKind.INGREDIENT;
   const baseGrams = catalogue.baseGrams[recipeId] ?? 0;
   const useGrams = isIngredient && baseGrams > 0;
   const itemIngredientOverrides = ingredientOverrides[key];
-  const kcal = computeItemMacros(catalogue, recipeId, key, portionOverrides, gramOverrides, ingredientOverrides).kcal;
+  const kcal = computeItemMacros(catalogue, recipeId, key, portionOverrides, gramOverrides, ingredientOverrides, personalization).kcal;
 
   if (useGrams) {
     const defaultGrams = Math.round(baseGrams);
     const grams = gramOverrides[key] ?? defaultGrams;
     const commitGrams = () => {
       if (planningSlotItemId && gramsDraft !== null && gramsDraft > 0 && gramsDraft !== grams) {
-        setGramOverride(planningSlotItemId, recipeId, gramsDraft).catch(() => undefined);
+        setGramOverride(planningSlotItemId, recipeId, recipe, gramsDraft).catch(() => undefined);
       }
       setGramsDraft(null);
     };
@@ -92,7 +105,7 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId }: RecipePortion
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-0.5">
           <button
-            onClick={() => planningSlotItemId && withPending(`journal-override:${key}`, () => setPortionOverride(planningSlotItemId, recipeId, Math.max(1, portions - 1))).catch(() => undefined)}
+            onClick={() => planningSlotItemId && withPending(`journal-override:${key}`, () => setPortionOverride(planningSlotItemId, recipe, Math.max(1, portions - 1))).catch(() => undefined)}
             disabled={!planningSlotItemId || pending}
             aria-label={`Réduire les portions — ${name}`}
             className="w-5 h-5 flex items-center justify-center rounded text-slate-400 hover:text-orange-500 transition-colors disabled:opacity-40"
@@ -103,7 +116,7 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId }: RecipePortion
             {portions}×
           </span>
           <button
-            onClick={() => planningSlotItemId && withPending(`journal-override:${key}`, () => setPortionOverride(planningSlotItemId, recipeId, Math.min(10, portions + 1))).catch(() => undefined)}
+            onClick={() => planningSlotItemId && withPending(`journal-override:${key}`, () => setPortionOverride(planningSlotItemId, recipe, Math.min(10, portions + 1))).catch(() => undefined)}
             disabled={!planningSlotItemId || pending}
             aria-label={`Augmenter les portions — ${name}`}
             className="w-5 h-5 flex items-center justify-center rounded text-slate-400 hover:text-orange-500 transition-colors disabled:opacity-40"
@@ -124,8 +137,8 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId }: RecipePortion
               ingredient={ingredient}
               defaultQuantity={scaledDefaults[ingredient.id] ?? 0}
               overrideQuantity={itemIngredientOverrides?.[ingredient.id]}
-              onChange={(value) => setIngredientOverride(planningSlotItemId, recipeId, ingredient.id, value).catch(() => undefined)}
-              onReset={() => resetIngredientOverride(planningSlotItemId, recipeId, ingredient.id).catch(() => undefined)}
+              onChange={(value) => setIngredientOverride(planningSlotItemId, recipe, ingredient.id, value).catch(() => undefined)}
+              onReset={() => resetIngredientOverride(planningSlotItemId, recipe, ingredient.id).catch(() => undefined)}
             />
           ))}
         </div>

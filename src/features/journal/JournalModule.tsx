@@ -6,6 +6,7 @@ import { MealSlot } from "../../core/domain/planning";
 import { computeDayMacros } from "../../core/logic/nutrition/macroLogic";
 import { useMacroCatalogue } from "../../shared/hooks/useMacroCatalogue";
 import { useActiveJournalOverrides } from "../../shared/hooks/useActiveJournalOverrides";
+import { useActiveProfile } from "../../shared/hooks/useActiveProfile";
 import { useAuthStore } from "../../shared/store/useAuthStore";
 import { useRefreshStore } from "../../shared/store/useRefreshStore";
 import { markScrolling } from "../../shared/utils/scrollGuard";
@@ -18,6 +19,7 @@ const SLOT_ORDER = ["breakfast", "lunch", "snack", "dinner"] as const;
 export const JournalModule = () => {
   const { portionOverrides, gramOverrides, ingredientOverrides } = useActiveJournalOverrides();
   const catalogue = useMacroCatalogue();
+  const activeProfile = useActiveProfile();
   const authStatus = useAuthStore((s) => s.status);
   const [selectedDate, setSelectedDate] = useState(() => new Date());
   const [loaded, setLoaded] = useState<{ weekKey: string; slots: MealSlot[] } | null>(null);
@@ -54,8 +56,8 @@ export const JournalModule = () => {
   }, [daySlots]);
 
   const totalMacros = useMemo(
-    () => computeDayMacros(catalogue, daySlots, portionOverrides, gramOverrides, ingredientOverrides),
-    [catalogue, daySlots, portionOverrides, gramOverrides, ingredientOverrides]
+    () => computeDayMacros(catalogue, daySlots, portionOverrides, gramOverrides, ingredientOverrides, activeProfile ?? undefined),
+    [catalogue, daySlots, portionOverrides, gramOverrides, ingredientOverrides, activeProfile]
   );
 
   const goToPrev = useCallback(() => setSelectedDate((d) => subDays(d, 1)), []);

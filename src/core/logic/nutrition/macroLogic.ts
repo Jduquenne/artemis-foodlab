@@ -3,6 +3,8 @@ import { Macronutrients } from "../../domain/nutrition";
 import { MealSlot } from "../../domain/planning";
 import { PlannableItem, RecipeDetails } from "../../domain/recipe";
 import { getAllRecipeIds, isDish, isBase } from "../../domain/recipePredicates";
+import { Profile } from "../../domain/profile";
+import { FoodPersonalization, personalizeRecipe } from "../foodGroup/foodChoiceLogic";
 
 export const ZERO: Macronutrients = {
   kcal: 0,
@@ -124,16 +126,20 @@ export function computeItemMacros(
   portionOverrides: Record<string, number>,
   gramOverrides: Record<string, number>,
   ingredientOverrides: Record<string, Record<string, number>> = {},
+  personalization?: FoodPersonalization,
 ): Macronutrients {
   const recipe = catalogue.plannable[recipeId];
   const itemIngredientOverrides = ingredientOverrides[itemKey];
-  const fullRecipe = catalogue.recipes[recipeId];
+  const catalogueRecipe = catalogue.recipes[recipeId];
+  const fullRecipe =
+    catalogueRecipe && personalization ? personalizeRecipe(catalogueRecipe, personalization, catalogue.foods) : catalogueRecipe;
   if (fullRecipe && itemIngredientOverrides && Object.keys(itemIngredientOverrides).length > 0) {
     return calculateOverriddenRecipeMacros(fullRecipe, itemIngredientOverrides, catalogue.recipes, catalogue.foods);
   }
-  const m = catalogue.recipeMacros[recipeId];
+  const isPersonalized = !!fullRecipe && fullRecipe !== catalogueRecipe;
+  const m = isPersonalized ? calculateRecipeMacros(fullRecipe, catalogue.recipes, catalogue.foods) : catalogue.recipeMacros[recipeId];
   if (!m) return { ...ZERO };
-  const baseGrams = catalogue.baseGrams[recipeId];
+  const baseGrams = isPersonalized ? calculateRecipeBaseGrams(fullRecipe, catalogue.foods) : catalogue.baseGrams[recipeId];
   if (!isDish(recipe) && !isBase(recipe) && baseGrams) {
     return scaleMacros(m, (gramOverrides[itemKey] ?? baseGrams) / baseGrams);
   }
@@ -146,12 +152,21 @@ export function computeSlotMacros(
   portionOverrides: Record<string, number>,
   gramOverrides: Record<string, number>,
   ingredientOverrides: Record<string, Record<string, number>> = {},
+  profile?: Pick<Profile, "id" | "foodGroupDefaults">,
 ): Macronutrients {
   return getAllRecipeIds(slot).reduce(
     (sum, id) =>
       addMacros(
         sum,
-        computeItemMacros(catalogue, id, slot.itemApiIds?.[id] ?? "", portionOverrides, gramOverrides, ingredientOverrides),
+        computeItemMacros(
+          catalogue,
+          id,
+          slot.itemApiIds?.[id] ?? "",
+          portionOverrides,
+          gramOverrides,
+          ingredientOverrides,
+          profile ? { profile, mealChoices: slot.foodChoices?.[id] ?? [] } : undefined,
+        ),
       ),
     { ...ZERO },
   );
@@ -163,9 +178,10 @@ export function computeDayMacros(
   portionOverrides: Record<string, number>,
   gramOverrides: Record<string, number>,
   ingredientOverrides: Record<string, Record<string, number>> = {},
+  profile?: Pick<Profile, "id" | "foodGroupDefaults">,
 ): Macronutrients {
   return slots.reduce(
-    (total, slot) => addMacros(total, computeSlotMacros(catalogue, slot, portionOverrides, gramOverrides, ingredientOverrides)),
+    (total, slot) => addMacros(total, computeSlotMacros(catalogue, slot, portionOverrides, gramOverrides, ingredientOverrides, profile)),
     { ...ZERO },
   );
 }

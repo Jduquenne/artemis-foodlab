@@ -1,11 +1,17 @@
 import { FoodChoice, FoodGroupDefault, ResolvedFood } from "../../domain/foodGroup";
 import { Food, Ingredient } from "../../domain/ingredient";
 import { Profile } from "../../domain/profile";
+import { RecipeDetails } from "../../domain/recipe";
 import { compareByName } from "../../utils/sortUtils";
 
 export type FoodChoiceStatus = "none" | "partial" | "complete";
 
 export type FoodChoicesByCode = Record<string, FoodChoice[]>;
+
+export interface FoodPersonalization {
+  profile: Pick<Profile, "id" | "foodGroupDefaults">;
+  mealChoices: readonly FoodChoice[];
+}
 
 export interface FoodChoiceShare {
   foodId: string;
@@ -124,6 +130,26 @@ export function splitGroupIngredient(
     }
   }
   return [...shares.values()];
+}
+
+export function personalizeRecipe(
+  recipe: RecipeDetails,
+  personalization: FoodPersonalization,
+  foods: Record<string, Food>,
+): RecipeDetails {
+  const { profile, mealChoices } = personalization;
+  let changed = false;
+  const ingredients = recipe.ingredients.map((ingredient) => {
+    if (!ingredient.foodGroupId) return ingredient;
+    const resolved = resolveIngredientFood(ingredient, profile.id, profile.foodGroupDefaults, mealChoices);
+    if (!resolved) return ingredient;
+    const quantity =
+      resolved.quantityPerPortion !== null ? resolved.quantityPerPortion * recipe.defaultPortions : ingredient.quantity;
+    if (resolved.foodId === ingredient.foodId && quantity === ingredient.quantity) return ingredient;
+    changed = true;
+    return { ...ingredient, foodId: resolved.foodId, name: foods[resolved.foodId]?.name ?? ingredient.name, quantity };
+  });
+  return changed ? { ...recipe, ingredients } : recipe;
 }
 
 function choiceKey(choice: FoodChoice): string {

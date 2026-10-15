@@ -5,6 +5,7 @@ import { getAllRecipeIds, hasDesserts } from "../../../../core/domain/recipePred
 import { computeSlotMacros, ZERO } from "../../../../core/logic/nutrition/macroLogic";
 import { useMacroCatalogue } from "../../../../shared/hooks/useMacroCatalogue";
 import { useActiveJournalOverrides } from "../../../../shared/hooks/useActiveJournalOverrides";
+import { useActiveProfile } from "../../../../shared/hooks/useActiveProfile";
 import { SLOT_LABELS } from "../../../../core/domain/slotLabels";
 import { markScrolling } from "../../../../shared/utils/scrollGuard";
 import { RecipePortionRow } from "./RecipePortionRow";
@@ -17,11 +18,12 @@ export interface MealSlotCardProps {
 export const MealSlotCard = ({ slotType, slot }: MealSlotCardProps) => {
   const { portionOverrides, gramOverrides, ingredientOverrides } = useActiveJournalOverrides();
   const catalogue = useMacroCatalogue();
+  const activeProfile = useActiveProfile();
 
   const allIds = slot ? getAllRecipeIds(slot) : [];
   const totalMacros = useMemo(
-    () => (slot ? computeSlotMacros(catalogue, slot, portionOverrides, gramOverrides, ingredientOverrides) : { ...ZERO }),
-    [catalogue, slot, portionOverrides, gramOverrides, ingredientOverrides],
+    () => (slot ? computeSlotMacros(catalogue, slot, portionOverrides, gramOverrides, ingredientOverrides, activeProfile ?? undefined) : { ...ZERO }),
+    [catalogue, slot, portionOverrides, gramOverrides, ingredientOverrides, activeProfile],
   );
 
   const hasContent = allIds.length > 0;
@@ -54,14 +56,14 @@ export const MealSlotCard = ({ slotType, slot }: MealSlotCardProps) => {
         {hasContent ? (
           <div className="flex flex-col">
             {slot?.recipeIds.map((id) => (
-              <RecipePortionRow key={id} recipeId={id} planningSlotItemId={slot.itemApiIds?.[id]} />
+              <RecipePortionRow key={id} recipeId={id} planningSlotItemId={slot.itemApiIds?.[id]} mealChoices={slot.foodChoices?.[id]} />
             ))}
 
             {slot && hasDesserts(slot) && (
               <>
                 <div className="my-1 border-t border-dashed border-slate-100" />
                 {(slot.dessertIds ?? []).map((id) => (
-                  <RecipePortionRow key={id} recipeId={id} planningSlotItemId={slot.itemApiIds?.[id]} />
+                  <RecipePortionRow key={id} recipeId={id} planningSlotItemId={slot.itemApiIds?.[id]} mealChoices={slot.foodChoices?.[id]} />
                 ))}
               </>
             )}

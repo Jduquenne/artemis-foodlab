@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-15 — Owner tests validated, priorities reset (v6.84.4)
+
+- Done: owner reports all browser tests of the changes up to v6.84.3 as passed (2026-10-08 and 2026-10-10 lists). Roadmap updated with the owner's decisions: P5 tablet pass paused (no longer a priority); unexpected logouts considered fixed (no recurrence); Google sign-in (#10) set aside; menu generator stays for later. Also: `_private` deny rules moved from the versioned `.claude/settings.json` to the owner's user-level settings after the folder rename (`Développement` → `Developpement`).
+- Resume here: the owner's new ideas preparing the profile tastes feature (#20-#24).
+- Still open: API demo seeding week fix deployment (from 2026-10-08), not re-confirmed.
+
 ## 2026-10-10 — Session end (v6.84.3)
 
 - Done this session (v6.83.0 → 6.84.2): Recipe Builder category « À définir » by default; category change of an existing recipe (5 clicks within 3 s on the locked field, confirmation window, API `PATCH /recipes/:id/category`, API D-051 live); `outdoor` excluded from the builder category select; weekly menu generator brainstorm + branch workflow proposal recorded in `docs/roadmap.md` § Ideas / later (not scheduled).

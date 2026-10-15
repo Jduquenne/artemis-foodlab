@@ -15,6 +15,7 @@ export interface DessertColumnProps {
     recipePersons?: Record<string, number>;
     slotPersons?: number;
     onSetDessertPersons?: (id: string, n: number) => Promise<boolean>;
+    onChooseFood?: (id: string) => void;
 }
 
 export const DessertColumn = ({
@@ -30,6 +31,7 @@ export const DessertColumn = ({
     recipePersons,
     slotPersons,
     onSetDessertPersons,
+    onChooseFood,
 }: DessertColumnProps) => {
     const isTargetMode = dessertCopyTargetState === 'selectable' || dessertCopyTargetState === 'selected';
     const addButtonShown = dessertIds.length < MAX_DESSERTS_PER_SLOT && !isAddMode && !isTargetMode && !!onAddDessert;
@@ -56,6 +58,7 @@ export const DessertColumn = ({
                         persons={effectivePersons}
                         isPersonsCustom={isPersonsCustom}
                         onSetPersons={onSetDessertPersons ? (n) => onSetDessertPersons(rid, n) : undefined}
+                        onChooseFood={onChooseFood ? () => onChooseFood(rid) : undefined}
                     />
                 );
             })}

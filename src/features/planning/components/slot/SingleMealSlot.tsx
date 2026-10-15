@@ -9,6 +9,11 @@ import { DessertColumn } from './DessertColumn';
 import { MealPhoto } from './MealPhoto';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { usePlannableSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
+import { useGroupIngredients } from '../../../../shared/hooks/useGroupIngredients';
+import { useProfileStore } from '../../../../shared/store/useProfileStore';
+import { foodChoiceStatus } from '../../../../core/logic/foodGroup/foodChoiceLogic';
+import { FoodChoice } from '../../../../core/domain/foodGroup';
+import { FoodChoiceBadge } from './FoodChoiceBadge';
 
 export interface SingleMealSlotProps {
     label: string;
@@ -38,6 +43,8 @@ export interface SingleMealSlotProps {
     inFreezer?: boolean;
     recipePersons?: Record<string, number>;
     onSetDessertPersons?: (id: string, n: number) => Promise<boolean>;
+    foodChoices?: Record<string, FoodChoice[]>;
+    onChooseFood?: (recipeId: string) => void;
 }
 
 export const SingleMealSlot = ({
@@ -49,6 +56,7 @@ export const SingleMealSlot = ({
     hasDessert, dessertIds, onAddDessert, onRemoveDessert,
     onCopyDessert, copySourceDessertId, dessertCopyTargetState, onSelectDessertAsTarget,
     inFreezer, recipePersons, onSetDessertPersons,
+    foodChoices, onChooseFood,
 }: SingleMealSlotProps) => {
     const plannable = usePlannableSnapshot();
     const firstId = recipeIds[0];
@@ -58,6 +66,12 @@ export const SingleMealSlot = ({
     const defaultPortion = recipe?.defaultPortions;
     const isDeletePending = usePendingKey(`planning-slot-delete:${slotId}`);
     const isPersonsPending = usePendingKey(`planning-persons:${slotId}`);
+    const groupIngredients = useGroupIngredients(firstId);
+    const profiles = useProfileStore((s) => s.profiles);
+    const choiceStatus = groupIngredients.length > 0 && firstId
+        ? foodChoiceStatus(groupIngredients, profiles, foodChoices?.[firstId] ?? [])
+        : null;
+    const chooseMainFood = choiceStatus && firstId && onChooseFood ? () => onChooseFood(firstId) : undefined;
 
     const { setNodeRef: setDropRef, isOver } = useDroppable({ id: slotId });
     const { setNodeRef: setDragRef, listeners, attributes, isDragging } = useDraggable({
@@ -141,9 +155,14 @@ export const SingleMealSlot = ({
                     attributes={attributes}
                     onModify={onModify}
                     onEditPersons={displayPersons !== undefined && !isAnyEditing ? onOpenPersonsEditor : undefined}
+                    onChooseFood={!isAnyEditing ? chooseMainFood : undefined}
                     onDelete={onDelete}
                     pending={isDeletePending}
                 />
+            )}
+
+            {hasPhoto && !isDragging && !isEditingPersons && !isAddMode && !isAnyEditing && choiceStatus && chooseMainFood && (
+                <FoodChoiceBadge status={choiceStatus} onOpen={chooseMainFood} />
             )}
 
             {isEditingPersons && (
@@ -178,6 +197,7 @@ export const SingleMealSlot = ({
                         recipePersons={recipePersons}
                         slotPersons={displayPersons}
                         onSetDessertPersons={onSetDessertPersons}
+                        onChooseFood={onChooseFood}
                     />
                 </div>
             </div>

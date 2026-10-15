@@ -1,4 +1,5 @@
-import { X, Copy, Users, Snowflake, Scale } from 'lucide-react';
+import { X, Copy, Users, Snowflake, Scale, Shuffle } from 'lucide-react';
+import { useGroupIngredients } from '../../../../shared/hooks/useGroupIngredients';
 import { ItemAction, ItemActionsMenu } from './ItemActionsMenu';
 import { isDish, isBase } from '../../../../core/domain/recipePredicates';
 import { MealPhoto } from './MealPhoto';
@@ -15,10 +16,11 @@ export interface RecipeCellProps {
     persons?: number;
     grams?: number;
     onEditMeta?: () => void;
+    onChooseFood?: () => void;
     inFreezer?: boolean;
 }
 
-export const RecipeCell = ({ slotId, recipeId, onNavigate, onRemove, onCopy, hideRemove, persons, grams, onEditMeta, inFreezer }: RecipeCellProps) => {
+export const RecipeCell = ({ slotId, recipeId, onNavigate, onRemove, onCopy, hideRemove, persons, grams, onEditMeta, onChooseFood, inFreezer }: RecipeCellProps) => {
     const plannable = usePlannableSnapshot();
     const { baseGrams } = useRecipeMetricsSnapshot();
     const recipe = plannable[recipeId];
@@ -28,10 +30,12 @@ export const RecipeCell = ({ slotId, recipeId, onNavigate, onRemove, onCopy, hid
     const recipeIsDish = isDish(recipe) || isBase(recipe);
     const isCustom = persons !== undefined || (!recipeIsDish && grams !== undefined);
     const removePending = usePendingKey(`planning-recipe-remove:${slotId}:${recipeId}`);
+    const hasFoodChoice = useGroupIngredients(recipeId).length > 0;
     const metaEditable = !!onEditMeta && (recipeIsDish || defaultGrams > 0 || persons !== undefined);
 
     const actions: ItemAction[] = [];
     if (!hideRemove) {
+        if (hasFoodChoice && onChooseFood) actions.push({ id: 'food-choice', label: 'Ingrédients au choix', icon: Shuffle, onSelect: onChooseFood });
         if (metaEditable && onEditMeta) actions.push({ id: 'quantity', label: 'Quantité', icon: Scale, onSelect: onEditMeta });
         if (onCopy) actions.push({ id: 'copy', label: 'Copier', icon: Copy, onSelect: onCopy });
         actions.push({ id: 'remove', label: 'Retirer', icon: X, onSelect: onRemove, danger: true });

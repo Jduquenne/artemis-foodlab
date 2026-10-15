@@ -7,7 +7,7 @@ export function buildEmptySlot(at: ParsedSlot): MealSlot {
   return { id: buildSlotId(at.year, at.week, at.day, at.slot), day: at.day, slot: at.slot, recipeIds: [], year: at.year, week: at.week };
 }
 
-function keepKeys(values: Record<string, number> | undefined, keys: Set<string>): Record<string, number> | undefined {
+function keepKeys<T>(values: Record<string, T> | undefined, keys: Set<string>): Record<string, T> | undefined {
   if (!values) return undefined;
   const kept = Object.fromEntries(Object.entries(values).filter(([key]) => keys.has(key)));
   return Object.keys(kept).length > 0 ? kept : undefined;
@@ -22,6 +22,7 @@ export function replaceMainRecipe(existing: MealSlot | undefined, at: ParsedSlot
     recipeIds: [recipeId],
     recipePersons: keepKeys(slot.recipePersons, dessertIds),
     recipeQuantities: keepKeys(slot.recipeQuantities, dessertIds),
+    foodChoices: keepKeys(slot.foodChoices, dessertIds),
   };
 }
 

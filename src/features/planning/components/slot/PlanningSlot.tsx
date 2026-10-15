@@ -34,6 +34,7 @@ export interface PlanningSlotProps {
   onRemoveDessert: (id: string) => void;
   onSetDessertPersons: (id: string, n: number) => Promise<boolean>;
   onSelectAsTarget: () => void;
+  onChooseFood: (recipeId: string) => void;
   batchRecipeIds?: Set<string>;
 }
 
@@ -46,6 +47,7 @@ export const PlanningSlot = ({
   onEditPersons, onConfirmPersons, onCancelPersons,
   onRemoveRecipe, onSaveRecipeMeta,
   onCopyRecipe, onCopyDessert, onRemoveDessert, onSetDessertPersons, onSelectAsTarget,
+  onChooseFood,
   batchRecipeIds,
 }: PlanningSlotProps) => {
   const navigate = useNavigate();
@@ -82,6 +84,7 @@ export const PlanningSlot = ({
           onOpenPersonsEditor={isAddMode || isCopyMode ? () => {} : onEditPersons}
           onConfirmPersons={onConfirmPersons}
           onCancelPersons={onCancelPersons}
+          onChooseFood={!blocked ? onChooseFood : undefined}
         />
       ) : (
         <SingleMealSlot
@@ -112,6 +115,8 @@ export const PlanningSlot = ({
           dessertCopyTargetState={copyProps.dessertCopyTargetState}
           onSelectDessertAsTarget={copyProps.dessertCopyTargetState ? onSelectAsTarget : undefined}
           inFreezer={recipeIds.length > 0 && batchRecipeIds?.has(recipeIds[0])}
+          foodChoices={savedMeal?.foodChoices}
+          onChooseFood={!blocked ? onChooseFood : undefined}
         />
       )}
       {isWriting && (

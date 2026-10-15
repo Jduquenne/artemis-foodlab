@@ -16,6 +16,13 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-15 — Food groups, step 5: per-profile choice on a planned meal (v6.89.0)
+
+- Done: `FoodChoiceModal` (select per ingredient au choix × profile, fallback shown with its source), opened from « Ingrédients au choix » in the « ⋯ » menu (dish, breakfast/snack, grid cell, dessert) and from `FoodChoiceBadge` on a dish (« à préciser » / complete). Choices written through the existing slot diff and batch (`add[].foodChoices`, `update[].foodChoices` only when changed), carried on copy and drag & drop, dropped with a replaced dish. Pure helpers in `core/logic/foodGroup/foodChoiceLogic.ts`; hook `useGroupIngredients`. Spec `docs/spec-planning.md` § Ingredients « au choix ».
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser. Depends on API D-052 (not deployed): `foodChoices` is only sent once a choice exists, so the current prod API is unaffected until someone chooses.
+- To test (local API with D-052): choose per profile, save, reload (choices back from the API); badge states; copy a meal with choices; drag A→B and swap; replace the dish (choices gone, desserts' kept); dessert with an ingredient au choix.
+- Still open: step 6 (shopping list: pro rata split by resolved food, « à préciser »).
+
 ## 2026-10-15 — Planning: meal actions menu (v6.88.0)
 
 - Done: step 4 of D-033. Every planned item (dish, breakfast/snack recipe, grid cell, dessert) now groups its actions in one « ⋯ » menu (`ItemActionsMenu` on `FloatingMenu`) instead of 2 to 4 corner buttons; badges (persons / grams, freezer) stay visible; drag handle unchanged. No behaviour change, the bottom-left corner of the dish is now free for the food choice badge. Spec `docs/spec-planning.md` § Meal actions menu.

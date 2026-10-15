@@ -10,6 +10,9 @@ import { MealDragOverlay } from './components/MealDragOverlay';
 import { WeekNavZone } from './components/WeekNavZone';
 import { RecipePicker } from './components/pickers/RecipePicker';
 import { DessertPicker } from './components/pickers/DessertPicker';
+import { FoodChoiceModal } from './components/FoodChoiceModal';
+import { FoodChoice } from '../../core/domain/foodGroup';
+import { withFoodChoices } from '../../core/logic/foodGroup/foodChoiceLogic';
 import { ShoppingSelectionBar } from './components/bars/ShoppingSelectionBar';
 import { PlanningHeader } from './components/PlanningHeader';
 import { PlanningSlot } from './components/slot/PlanningSlot';
@@ -59,6 +62,7 @@ export const PlanningModule = () => {
 
     const [pickerSlot, setPickerSlot] = useState<{ day: string; slot: SlotType } | null>(null);
     const [dessertPickerSlot, setDessertPickerSlot] = useState<{ day: string; slot: SlotType } | null>(null);
+    const [foodChoiceTarget, setFoodChoiceTarget] = useState<{ day: string; slot: SlotType; recipeId: string } | null>(null);
     const [activeDragId, setActiveDragId] = useState<string | null>(null);
     const [dragSourceSlot, setDragSourceSlot] = useState<MealSlot | null>(null);
     const [slideKey, setSlideKey] = useState(0);
@@ -279,6 +283,17 @@ export const PlanningModule = () => {
         return ok === true;
     };
 
+    const handleSaveFoodChoices = async (day: string, slot: SlotType, recipeId: string, choices: FoodChoice[]): Promise<boolean> => {
+        const existing = planningData.find(p => p.day === day && p.slot === slot);
+        if (!existing) return false;
+        const slotId = buildSlotId(year, weekNumber, day, slot);
+        const ok = await withPending(`planning-food-choice:${slotId}:${recipeId}`, async () => {
+            await saveSlot({ ...existing, foodChoices: withFoodChoices(existing.foodChoices, recipeId, choices) });
+            return true;
+        }).catch(() => false);
+        return ok === true;
+    };
+
     const handleConfirmPersons = async (slotId: string, persons: number) => {
         const existing = planningData.find(p => buildSlotId(year, weekNumber, p.day, p.slot) === slotId);
         if (!existing) {
@@ -380,6 +395,7 @@ export const PlanningModule = () => {
                 onRemoveDessert={(rid) => handleRemoveDessert(day, mealType.id, rid)}
                 onSetDessertPersons={(rid, n) => handleSetDessertPersons(day, mealType.id, rid, n)}
                 onSelectAsTarget={() => copy.toggleTarget(day, mealType.id)}
+                onChooseFood={(rid) => setFoodChoiceTarget({ day, slot: mealType.id, recipeId: rid })}
                 batchRecipeIds={batchRecipeIds}
             />
         );
@@ -525,6 +541,16 @@ export const PlanningModule = () => {
                         existingIds={planningData.find(p => p.day === dessertPickerSlot.day && p.slot === dessertPickerSlot.slot)?.dessertIds ?? []}
                         onSelect={handlePickDessert}
                         onClose={() => setDessertPickerSlot(null)}
+                    />
+                )}
+
+                {foodChoiceTarget && !isSelectionMode && (
+                    <FoodChoiceModal
+                        recipeId={foodChoiceTarget.recipeId}
+                        pendingKey={`planning-food-choice:${buildSlotId(year, weekNumber, foodChoiceTarget.day, foodChoiceTarget.slot)}:${foodChoiceTarget.recipeId}`}
+                        initialChoices={planningData.find(p => p.day === foodChoiceTarget.day && p.slot === foodChoiceTarget.slot)?.foodChoices?.[foodChoiceTarget.recipeId] ?? []}
+                        onSave={(choices) => handleSaveFoodChoices(foodChoiceTarget.day, foodChoiceTarget.slot, foodChoiceTarget.recipeId, choices)}
+                        onClose={() => setFoodChoiceTarget(null)}
                     />
                 )}
 

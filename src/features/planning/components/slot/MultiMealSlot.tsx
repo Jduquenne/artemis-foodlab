@@ -11,6 +11,7 @@ import { RecipeMetaEditor } from './RecipeMetaEditor';
 import { MealPhoto } from './MealPhoto';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { usePlannableSnapshot, useRecipeMetricsSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
+import { useGroupIngredients } from '../../../../shared/hooks/useGroupIngredients';
 
 export interface MultiMealSlotProps {
     label: string;
@@ -34,6 +35,7 @@ export interface MultiMealSlotProps {
     onOpenPersonsEditor?: () => void;
     onConfirmPersons?: (n: number) => void;
     onCancelPersons?: () => void;
+    onChooseFood?: (recipeId: string) => void;
 }
 
 export const MultiMealSlot = ({
@@ -58,6 +60,7 @@ export const MultiMealSlot = ({
     onOpenPersonsEditor,
     onConfirmPersons,
     onCancelPersons,
+    onChooseFood,
 }: MultiMealSlotProps) => {
     const plannable = usePlannableSnapshot();
     const { baseGrams } = useRecipeMetricsSnapshot();
@@ -74,6 +77,7 @@ export const MultiMealSlot = ({
     const singleHasPhoto = Boolean(firstRecipe?.assets?.mealPhoto);
     const singleHasRecipesPage = Boolean(firstRecipe?.assets?.mealPhoto || firstRecipe?.assets?.instructionsPhoto);
     const singleIsDish = isDish(firstRecipe) || isBase(firstRecipe);
+    const singleHasFoodChoice = useGroupIngredients(recipeIds.length === 1 ? recipeIds[0] : undefined).length > 0;
 
     const hasRecipes = slotHasRecipes({ recipeIds });
     const isFull = isSlotFull({ recipeIds });
@@ -177,6 +181,7 @@ export const MultiMealSlot = ({
                         recipePersons={recipePersons}
                         recipeQuantities={recipeQuantities}
                         onEditMeta={onSaveRecipeMeta ? (rid) => setEditingMetaId(rid) : undefined}
+                        onChooseFood={onChooseFood}
                         batchRecipeIds={batchRecipeIds}
                     />
                 )}
@@ -239,6 +244,7 @@ export const MultiMealSlot = ({
                     onEditQuantity={singleMetaEditable && singleRecipeId
                         ? () => setEditingMetaId(singleRecipeId)
                         : displayPersons !== undefined ? onOpenPersonsEditor : undefined}
+                    onChooseFood={singleHasFoodChoice ? onChooseFood : undefined}
                     removePending={isSingleRemovePending}
                 />
             )}

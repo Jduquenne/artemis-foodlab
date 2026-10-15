@@ -19,6 +19,7 @@ export function usePlanningCopy(planningData: MealSlot[], year: number, week: nu
       isDessert,
       recipeName: plannable[recipeId]?.name ?? "",
       sourcePersons: sourceSlot?.recipePersons?.[recipeId],
+      sourceFoodChoices: sourceSlot?.foodChoices?.[recipeId],
     });
     setCopyTargets(new Set());
   };

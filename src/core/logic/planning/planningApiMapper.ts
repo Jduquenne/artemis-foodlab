@@ -80,12 +80,14 @@ export interface SlotItemAddPayload {
   isDessert: boolean;
   personsOverride: number | null;
   gramsOverride: number | null;
+  foodChoices?: FoodChoice[];
 }
 
 export interface SlotItemUpdatePayload {
   id: string;
   personsOverride: number | null;
   gramsOverride: number | null;
+  foodChoices?: FoodChoice[];
 }
 
 export interface SlotItemsBatchPayload {
@@ -99,9 +101,20 @@ export function buildSlotItemsBatchPayload(diff: SlotDiff): SlotItemsBatchPayloa
   for (const item of diff.itemsToAdd) {
     const itemId = getIdByCode(item.code);
     if (!itemId) continue;
-    add.push({ itemId, isDessert: item.isDessert, personsOverride: item.personsOverride, gramsOverride: item.gramsOverride });
+    add.push({
+      itemId,
+      isDessert: item.isDessert,
+      personsOverride: item.personsOverride,
+      gramsOverride: item.gramsOverride,
+      ...(item.foodChoices.length > 0 ? { foodChoices: item.foodChoices } : {}),
+    });
   }
-  const update = diff.itemsToUpdate.map(u => ({ id: u.itemApiId, personsOverride: u.personsOverride, gramsOverride: u.gramsOverride }));
+  const update = diff.itemsToUpdate.map((u) => ({
+    id: u.itemApiId,
+    personsOverride: u.personsOverride,
+    gramsOverride: u.gramsOverride,
+    ...(u.foodChoices ? { foodChoices: u.foodChoices } : {}),
+  }));
   const remove = diff.itemsToRemoveApiIds;
 
   if (add.length === 0 && remove.length === 0 && update.length === 0) return null;

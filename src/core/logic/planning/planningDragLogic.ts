@@ -1,6 +1,7 @@
 import { MealSlot } from "../../domain/planning";
 import { MAX_DESSERTS_PER_SLOT } from "../../domain/planningConfig";
 import { ParsedSlot } from "./planningSlotIdLogic";
+import { pickFoodChoices } from "../foodGroup/foodChoiceLogic";
 
 export interface DragMoveResult {
   toSave: MealSlot[];
@@ -13,6 +14,7 @@ function placeMeal(
   at: ParsedSlot,
   recipeIds: string[],
   dessertIds: string[] | undefined,
+  choiceSources: readonly MealSlot[],
 ): MealSlot {
   return {
     ...base,
@@ -26,6 +28,7 @@ function placeMeal(
     persons: undefined,
     recipePersons: undefined,
     recipeQuantities: undefined,
+    foodChoices: pickFoodChoices(choiceSources.map((source) => source.foodChoices), [...recipeIds, ...(dessertIds ?? [])]),
   };
 }
 
@@ -50,8 +53,8 @@ export function computeDragMoveSlots(
   if (toMeal && toHasRecipe) {
     return {
       toSave: [
-        placeMeal(fromMeal, fromId, from, toMeal.recipeIds, moveDesserts ? toMeal.dessertIds : fromMeal.dessertIds),
-        placeMeal(toMeal, toId, to, fromMeal.recipeIds, moveDesserts ? fromMeal.dessertIds : toMeal.dessertIds),
+        placeMeal(fromMeal, fromId, from, toMeal.recipeIds, moveDesserts ? toMeal.dessertIds : fromMeal.dessertIds, [toMeal, fromMeal]),
+        placeMeal(toMeal, toId, to, fromMeal.recipeIds, moveDesserts ? fromMeal.dessertIds : toMeal.dessertIds, [fromMeal, toMeal]),
       ],
     };
   }
@@ -65,6 +68,7 @@ export function computeDragMoveSlots(
     to,
     fromMeal.recipeIds,
     mergedDessertIds.length > 0 ? mergedDessertIds : undefined,
+    toMeal ? [fromMeal, toMeal] : [fromMeal],
   );
 
   if (moveDesserts) {

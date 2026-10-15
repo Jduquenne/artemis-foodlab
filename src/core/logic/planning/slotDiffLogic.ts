@@ -1,16 +1,20 @@
+import { FoodChoice } from "../../domain/foodGroup";
 import { MealSlot } from "../../domain/planning";
+import { sameFoodChoices } from "../foodGroup/foodChoiceLogic";
 
 export interface ItemToAdd {
   code: string;
   isDessert: boolean;
   personsOverride: number | null;
   gramsOverride: number | null;
+  foodChoices: FoodChoice[];
 }
 
 export interface ItemToUpdate {
   itemApiId: string;
   personsOverride: number | null;
   gramsOverride: number | null;
+  foodChoices?: FoodChoice[];
 }
 
 export interface SlotDiff {
@@ -35,16 +39,18 @@ export function diffSlotItems(previous: MealSlot | undefined, next: MealSlot): S
   for (const code of nextCombined) {
     const personsOverride = next.recipePersons?.[code] ?? null;
     const gramsOverride = next.recipeQuantities?.[code] ?? null;
+    const foodChoices = next.foodChoices?.[code] ?? [];
     if (!previousSet.has(code)) {
-      itemsToAdd.push({ code, isDessert: nextDessertSet.has(code), personsOverride, gramsOverride });
+      itemsToAdd.push({ code, isDessert: nextDessertSet.has(code), personsOverride, gramsOverride, foodChoices });
       continue;
     }
     const itemApiId = previous?.itemApiIds?.[code];
     if (itemApiId) carryOverItemApiIds[code] = itemApiId;
     const prevPersons = previous?.recipePersons?.[code] ?? null;
     const prevGrams = previous?.recipeQuantities?.[code] ?? null;
-    if (itemApiId && (prevPersons !== personsOverride || prevGrams !== gramsOverride)) {
-      itemsToUpdate.push({ itemApiId, personsOverride, gramsOverride });
+    const choicesChanged = !sameFoodChoices(previous?.foodChoices?.[code], foodChoices);
+    if (itemApiId && (prevPersons !== personsOverride || prevGrams !== gramsOverride || choicesChanged)) {
+      itemsToUpdate.push({ itemApiId, personsOverride, gramsOverride, ...(choicesChanged ? { foodChoices } : {}) });
     }
   }
 

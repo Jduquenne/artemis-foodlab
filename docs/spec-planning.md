@@ -38,11 +38,20 @@ Each slot save diffs items (`diffSlotItems`) and sends **one** batch call `PUT /
 
 Every planned item keeps its **information badges** visible (persons / grams, freezer) and groups its **actions** in one « ⋯ » button (`ItemActionsMenu`, built on `FloatingMenu`; revealed on hover on desktop, always shown on touch; spinner while a removal is pending). The menu wrapper stops click and pointer propagation, so opening it never starts a drag nor opens the recipe. Owner's decision 2026-10-15 (room for the food choice of D-033).
 
-- Lunch / dinner dish (`SlotActions`, bottom right): « Changer le repas », « Personnes », « Supprimer ». The drag handle stays top left; the persons badge stays a shortcut.
+- Lunch / dinner dish (`SlotActions`, bottom right): « Changer le repas », « Ingrédients au choix » (when relevant), « Personnes », « Supprimer ». The drag handle stays top left; the persons badge stays a shortcut.
 - Breakfast / snack with one recipe (`MultiSlotActions`, bottom right): « Quantité » (meta editor, or slot persons), « Copier », « Ajouter un repas », « Retirer ».
 - Breakfast / snack grid cell (`RecipeCell`, top right, compact, revealed on cell hover): « Quantité », « Copier », « Retirer ».
 - Dessert (`DessertCell`, top right, compact): « Personnes », « Copier », « Retirer ».
 - Hidden in add mode, copy mode and while editing persons (same conditions as the former buttons).
+
+## Ingredients « au choix » (food choices per profile)
+
+D-033. A recipe whose ingredients carry a `foodGroupId` (Recipe Builder « au choix ») lets each profile choose its food for **that planned meal**.
+
+- Model: `MealSlot.foodChoices: Record<recipeCode, FoodChoice[]>` (`{ recipeIngredientId, profileId, foodId }`), read from each planning item. Resolution for a profile (`resolveIngredientFood`, `core/logic/foodGroup/foodChoiceLogic.ts`): meal choice → profile default (`Profile.foodGroupDefaults`) → recipe default (`Ingredient.foodId`).
+- UI: `FoodChoiceModal` (one select per ingredient au choix × profile; the empty option shows the fallback food and where it comes from: « préférence du profil » / « défaut de la recette »). Opened from « Ingrédients au choix » in the « ⋯ » menu of any planned item having such ingredients (dish, breakfast/snack recipe or cell, dessert), and from the `FoodChoiceBadge` (bottom left of a dish: amber « à préciser » while at least one profile falls back to the recipe default, orange icon only when every profile has a meal choice or a profile default). Save = one `withPending` key `planning-food-choice:<slotId>:<code>`, closes on success.
+- Writes: the existing slot diff carries choices (`diffSlotItems`): `add[].foodChoices` for a new item (only when non-empty), `update[].foodChoices` (full replacement) only when the item's choices changed — absent means untouched (`docs/api.md`). The local cache is rebuilt from the batch response as before.
+- Follow the meal: copy (`CopyState.sourceFoodChoices`, `buildCopiedSlot`) and drag & drop (`placeMeal` picks the choices of the moved codes, `pickFoodChoices`) carry them; replacing the dish (`replaceMainRecipe`) drops the old dish's choices and keeps the desserts'. Note: persons / grams overrides still do **not** follow a drag (unchanged behaviour), choices do (owner's decision).
 
 ## Recipe / dessert pickers
 

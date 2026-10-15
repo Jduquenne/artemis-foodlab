@@ -26,6 +26,7 @@ export interface CopyState {
   isDessert: boolean;
   recipeName: string;
   sourcePersons?: number;
+  sourceFoodChoices?: FoodChoice[];
 }
 
 export interface ShoppingDay {

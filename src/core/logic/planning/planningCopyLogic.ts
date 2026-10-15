@@ -3,6 +3,7 @@ import { MEAL_SLOTS, MealSlotDef } from "../../domain/planningConfig";
 import { canAddDessert, isSlotFull } from "../../domain/recipePredicates";
 import { ParsedSlot } from "./planningSlotIdLogic";
 import { buildEmptySlot } from "./planningSlotEditLogic";
+import { withFoodChoices } from "../foodGroup/foodChoiceLogic";
 
 export interface SlotCopyProps {
   multiCopyTargetState?: "source" | "selectable" | "selected";
@@ -24,18 +25,19 @@ export function parseCopyTargetKey(key: string): { day: string; slot: SlotType }
 export function buildCopiedSlot(
   existing: MealSlot | undefined,
   at: ParsedSlot,
-  copy: Pick<CopyState, "recipeId" | "sourcePersons" | "isDessert">,
+  copy: Pick<CopyState, "recipeId" | "sourcePersons" | "sourceFoodChoices" | "isDessert">,
 ): MealSlot | null {
   const slot = existing ?? buildEmptySlot(at);
   const { recipeId, sourcePersons } = copy;
   const recipePersons = sourcePersons !== undefined ? { ...slot.recipePersons, [recipeId]: sourcePersons } : slot.recipePersons;
+  const foodChoices = withFoodChoices(slot.foodChoices, recipeId, copy.sourceFoodChoices ?? []);
   if (copy.isDessert) {
     const dessertIds = slot.dessertIds ?? [];
     if (!canAddDessert(slot) || dessertIds.includes(recipeId)) return null;
-    return { ...slot, dessertIds: [...dessertIds, recipeId], recipePersons };
+    return { ...slot, dessertIds: [...dessertIds, recipeId], recipePersons, foodChoices };
   }
   if (isSlotFull(slot) || slot.recipeIds.includes(recipeId)) return null;
-  return { ...slot, recipeIds: [...slot.recipeIds, recipeId], recipePersons };
+  return { ...slot, recipeIds: [...slot.recipeIds, recipeId], recipePersons, foodChoices };
 }
 
 export function computeSlotCopyProps(

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { X, Copy, Users, Minus, Plus, Check, Loader2 } from 'lucide-react';
+import { X, Copy, Users, Minus, Plus, Check, Loader2, Shuffle } from 'lucide-react';
+import { useGroupIngredients } from '../../../../shared/hooks/useGroupIngredients';
 import { ItemAction, ItemActionsMenu } from './ItemActionsMenu';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 import { MealPhoto } from './MealPhoto';
@@ -19,9 +20,10 @@ export interface DessertCellProps {
     persons?: number;
     isPersonsCustom?: boolean;
     onSetPersons?: (n: number) => Promise<boolean>;
+    onChooseFood?: () => void;
 }
 
-export const DessertCell = ({ slotId, recipeId, onRemove, isAddMode, onCopy, isCopySource, hideActions, persons, isPersonsCustom, onSetPersons }: DessertCellProps) => {
+export const DessertCell = ({ slotId, recipeId, onRemove, isAddMode, onCopy, isCopySource, hideActions, persons, isPersonsCustom, onSetPersons, onChooseFood }: DessertCellProps) => {
     const plannable = usePlannableSnapshot();
     const recipe = plannable[recipeId];
     const navigate = useNavigate();
@@ -29,6 +31,7 @@ export const DessertCell = ({ slotId, recipeId, onRemove, isAddMode, onCopy, isC
     const [draft, setDraft] = useState(persons ?? 1);
     const removePending = usePendingKey(`planning-dessert-remove:${slotId}:${recipeId}`);
     const savingPersons = usePendingKey(`planning-dessert-persons:${slotId}:${recipeId}`);
+    const hasFoodChoice = useGroupIngredients(recipeId).length > 0;
 
     if (!recipe?.assets?.mealPhoto) return null;
 
@@ -46,6 +49,7 @@ export const DessertCell = ({ slotId, recipeId, onRemove, isAddMode, onCopy, isC
 
     const actions: ItemAction[] = [];
     if (!isAddMode && !hideActions && !isEditingPersons) {
+        if (hasFoodChoice && onChooseFood) actions.push({ id: 'food-choice', label: 'Ingrédients au choix', icon: Shuffle, onSelect: onChooseFood });
         if (onSetPersons) actions.push({ id: 'persons', label: 'Personnes', icon: Users, onSelect: openEditor });
         if (onCopy) actions.push({ id: 'copy', label: 'Copier', icon: Copy, onSelect: onCopy });
         actions.push({ id: 'remove', label: 'Retirer', icon: X, onSelect: onRemove, danger: true });

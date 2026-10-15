@@ -23,7 +23,6 @@ const CARD_CATEGORY_ORDER: IngredientCategory[] = [
   IngredientCategory.NON_PURCHASE,
   IngredientCategory.FROZEN,
   IngredientCategory.INTERNET,
-  IngredientCategory.UNKNOWN,
 ];
 
 const EPICERIE_CATEGORIES = new Set<IngredientCategory>([
@@ -134,7 +133,12 @@ export function formatIngredientsForIngredientCard(ingredients: DraftIngredient[
   const result: IngredientLineItem[] = [];
   let epicerieDone = false;
 
-  for (const category of CARD_CATEGORY_ORDER) {
+  const orderedCategories = [
+    ...CARD_CATEGORY_ORDER,
+    ...[...groups.keys()].filter((category) => !CARD_CATEGORY_ORDER.includes(category)),
+  ];
+
+  for (const category of orderedCategories) {
     let items: DraftIngredient[] | undefined;
     if (EPICERIE_CATEGORIES.has(category)) {
       if (epicerieDone) continue;

@@ -52,7 +52,7 @@ A separate Claude Code session owns `meals-planning-api` (sibling repo). Collabo
 
 - **Categories** — `POST/PUT/DELETE` on `/recipe-categories` (`{ id, name, color }`), `/ingredient-categories` and `/household-categories` (`{ id, label }`). `id` = stable slug chosen by the client, never changed by `PUT`; taken → 409; referenced → 409.
   - recipe: `bases, cereal-products, charcuterie, dairy-products, dry-food, fish, fruits, outdoor, pastries, plant-proteins, red-meat, sweet-grocery, veggies, white-meat`
-  - ingredient: `aromatic-herb, bakery, canned, condiment, dairy, deli, dried-fruit, farm, fish, frozen, fruit-vegetable, internet, meat, non-purchase, recipe, spice, starch, sweet-grocery, unknown` (front: hard-coded `INGREDIENT_CATEGORY_ID` table, `core/domain/ingredientCategorySlugs.ts`)
+  - ingredient: `aromatic-herb, bakery, canned, condiment, dairy, deli, dried-fruit, farm, fish, frozen, fruit-vegetable, internet, meat, non-purchase, recipe, spice, starch, sweet-grocery, unknown` — `unknown` (« Inconnu ») removed from the front on 2026-10-16 (0 reference in prod), to be deleted API-side (front: hard-coded `INGREDIENT_CATEGORY_ID` table, `core/domain/ingredientCategorySlugs.ts`)
   - household: `hygiene, maintenance, pantry, pets, pharmacy` (not wired in the front)
 
 ## Media

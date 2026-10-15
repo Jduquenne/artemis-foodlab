@@ -73,7 +73,7 @@ export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: Ingredi
             ))}
           </select>
           <select
-            value={ingredient.category ?? IngredientCategory.UNKNOWN}
+            value={ingredient.category}
             onChange={e => update({ category: e.target.value as IngredientCategory })}
             className="w-28 px-1 py-2 bg-surface border border-slate-200 rounded-xl text-xs text-slate-600 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
           >

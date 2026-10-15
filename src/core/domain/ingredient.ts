@@ -41,7 +41,6 @@ export enum IngredientCategory {
   NON_PURCHASE = "Hors achat",
   FROZEN = "Surgelés",
   INTERNET = "Internet",
-  UNKNOWN = "Inconnu",
 }
 
 export interface Ingredient {

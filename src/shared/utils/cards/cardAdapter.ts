@@ -1,4 +1,3 @@
-import { IngredientCategory } from "../../../core/domain/ingredient";
 import { Macronutrients } from "../../../core/domain/nutrition";
 import { ZERO, roundMacros } from "../../../core/logic/nutrition/macroLogic";
 import { RecipeDetails } from "../../../core/domain/recipe";
@@ -29,7 +28,7 @@ function ingredientsToDraft(recipe: Pick<RecipeDetails, "ingredients">): DraftIn
     quantity: ing.quantity,
     unit: ing.unit,
     preparation: ing.preparation ?? "",
-    category: (ing.category as IngredientCategory) ?? IngredientCategory.UNKNOWN,
+    category: ing.category,
   }));
 }
 

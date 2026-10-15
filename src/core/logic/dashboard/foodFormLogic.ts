@@ -11,7 +11,7 @@ import { foodGroupLabel } from "./foodGroupFormLogic";
 
 export interface FoodFormDraft {
   name: string;
-  category: IngredientCategory;
+  category: IngredientCategory | "";
   unit: string;
   unitWeight: string;
   isFreezable: boolean;
@@ -35,7 +35,7 @@ export function parseEditableMacros(
 export function emptyFoodDraft(): FoodFormDraft {
   return {
     name: "",
-    category: IngredientCategory.UNKNOWN,
+    category: "",
     unit: "",
     unitWeight: "",
     isFreezable: false,
@@ -44,7 +44,8 @@ export function emptyFoodDraft(): FoodFormDraft {
   };
 }
 
-export function suggestFoodId(category: IngredientCategory, foods: Food[]): string {
+export function suggestFoodId(category: IngredientCategory | "", foods: Food[]): string {
+  if (!category) return "";
   const siblings = foods.filter((food) => food.category === category && /^[a-z]+-\d+$/.test(food.id));
   if (siblings.length === 0) return "";
   const prefix = siblings[0].id.split("-")[0];
@@ -77,7 +78,8 @@ export function validateFoodForm(draft: FoodFormDraft, groups: readonly FoodGrou
   const errors: string[] = [];
   if (!draft.name.trim()) errors.push("Le nom est requis.");
   if (draft.groupId && !groups.some((group) => group.id === draft.groupId)) errors.push("Famille inconnue.");
-  if (!getIngredientCategoryId(draft.category)) errors.push("Catégorie inconnue de l'API.");
+  if (!draft.category) errors.push("La catégorie est obligatoire.");
+  else if (!getIngredientCategoryId(draft.category)) errors.push("Catégorie inconnue de l'API.");
   if (draft.unitWeight.trim() && parseDecimal(draft.unitWeight) === null) {
     errors.push("Le poids unitaire doit être un nombre.");
   }
@@ -106,7 +108,7 @@ export function buildFoodRecap(
     return [
       { label: "Identifiant", value: id.trim() },
       { label: "Nom", value: draft.name.trim() },
-      { label: "Catégorie", value: draft.category },
+      { label: "Catégorie", value: recapText(draft.category) },
       { label: "Unité", value: recapText(draft.unit) },
       { label: "Poids unitaire (g)", value: recapText(draft.unitWeight) },
       { label: "Congelable", value: recapBool(draft.isFreezable) },
@@ -132,7 +134,7 @@ export function buildFoodRecap(
 }
 
 export function foodFormToBody(id: string, draft: FoodFormDraft): FoodInput {
-  const categoryId = getIngredientCategoryId(draft.category);
+  const categoryId = draft.category ? getIngredientCategoryId(draft.category) : undefined;
   if (!categoryId) throw new Error("Catégorie inconnue de l'API.");
   return {
     id,

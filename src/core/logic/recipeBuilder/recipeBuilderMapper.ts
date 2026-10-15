@@ -60,7 +60,7 @@ export function recipeToBuilderState(
     quantity: ing.quantity,
     unit: ing.unit,
     preparation: ing.preparation ?? "",
-    category: (ing.category as IngredientCategory) ?? IngredientCategory.UNKNOWN,
+    category: ing.category,
   }));
   return {
     sourceCode: recipeId,

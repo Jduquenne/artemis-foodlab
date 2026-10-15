@@ -57,5 +57,5 @@ Target: iPad Air 820×1180 (DPR 2), used in portrait.
 ## Component patterns
 
 - `markScrolling` on `onScroll` of scrollable lists.
-- `<select>` null guards: `value={x ?? Unit.NONE}` / `?? ""` / `?? IngredientCategory.UNKNOWN`.
+- `<select>` null guards: `value={x ?? Unit.NONE}` / `?? ""`.
 - `AsyncImage`: with `fill` the wrapper is `absolute inset-0` (parent `relative`); otherwise `wrapperClassName` carries the size. Pass `asset` (preferred over `src`).

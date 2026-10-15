@@ -22,7 +22,6 @@ const SHOPPING_CATEGORY_ORDER: IngredientCategory[] = [
   IngredientCategory.RECIPE,
   IngredientCategory.INTERNET,
   IngredientCategory.NON_PURCHASE,
-  IngredientCategory.UNKNOWN,
 ];
 
 function groupByCategory(

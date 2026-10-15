@@ -124,6 +124,7 @@ export const FoodFormModal = ({ food, foods, onClose, onSubmit }: FoodFormModalP
             }}
             className={INPUT_CLASS}
           >
+            <option value="" disabled>À définir</option>
             {Object.values(IngredientCategory).map((category) => (
               <option key={category} value={category}>{category}</option>
             ))}

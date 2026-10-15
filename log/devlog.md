@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-16 — Ingredient category « Inconnu » removed from the front (v6.92.2)
+
+- Done: owner's decision, « Inconnu » is not a store aisle. API session read-only check: 0 food, 0 recipe ingredient, 0 shopping extra use `unknown`. Front: `IngredientCategory.UNKNOWN` and its slug removed; a new food starts with « À définir » (mandatory, `validateFoodForm`); no more `?? UNKNOWN` fallbacks; recipe cards append any category missing from their order instead of dropping it. Shopping order and recipe card order lose « Inconnu ».
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser.
+- Still open: delete the category API-side (`DELETE /ingredient-categories/unknown`, no front UI — D-014; API session or curl). Shopping category order feature: API step (a) waiting for the owner's go; front waiting for the owner's answers (`@dnd-kit/sortable@10.0.0`, « Articles du quotidien » / « Autres » kept last in V1).
+
 ## 2026-10-15 — Food groups in prod (v6.92.1)
 
 - Done: owner deployed API D-052 (+ quantity addition) and pushed the front (steps 1-7). `docs/api.md`: contract moved from « Planned » to its own section; D-033 status and roadmap updated.

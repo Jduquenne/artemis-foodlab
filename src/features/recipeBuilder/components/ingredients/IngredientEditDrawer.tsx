@@ -124,7 +124,7 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
               <div>
                 <label className={LABEL_CLASS}>Catégorie</label>
                 <select
-                  value={ingredient.category ?? IngredientCategory.UNKNOWN}
+                  value={ingredient.category}
                   onChange={e => update({ category: e.target.value as IngredientCategory })}
                   className={FIELD_CLASS}
                 >

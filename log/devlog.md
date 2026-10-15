@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-16 — Dependency: `@dnd-kit/sortable` (v6.92.3)
+
+- Done: `@dnd-kit/sortable@10.0.0` added (owner's go; peer `@dnd-kit/core ^6.3.0`, we have 6.3.1, deduped) for the « Rayons » order window of the shopping list (not coded yet, waiting for API step (a) `shoppingCategoryOrder`). Owner's answers: « Articles du quotidien » and « Autres » stay apart, at the end, outside the order.
+- Numbers: `npx tsc -b` + `npm run lint` pass. `npm audit` reports 15 pre-existing vulnerabilities (vite, esbuild, react-router, postcss, …), none from `@dnd-kit` — not addressed here.
+
 ## 2026-10-16 — Ingredient category « Inconnu » removed from the front (v6.92.2)
 
 - Done: owner's decision, « Inconnu » is not a store aisle. API session read-only check: 0 food, 0 recipe ingredient, 0 shopping extra use `unknown`. Front: `IngredientCategory.UNKNOWN` and its slug removed; a new food starts with « À définir » (mandatory, `validateFoodForm`); no more `?? UNKNOWN` fallbacks; recipe cards append any category missing from their order instead of dropping it. Shopping order and recipe card order lose « Inconnu ».

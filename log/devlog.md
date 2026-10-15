@@ -16,6 +16,18 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-10 — Session end (v6.84.3)
+
+- Done this session (v6.83.0 → 6.84.2): Recipe Builder category « À définir » by default; category change of an existing recipe (5 clicks within 3 s on the locked field, confirmation window, API `PATCH /recipes/:id/category`, API D-051 live); `outdoor` excluded from the builder category select; weekly menu generator brainstorm + branch workflow proposal recorded in `docs/roadmap.md` § Ideas / later (not scheduled).
+- Resume here: owner's test results (this session and the 2026-10-08 list, still pending); then P5 tablet pass (Courses first) or the menu generator once its open questions are answered.
+- Before pushing `master`: `npm run build && grep -n "icon\|manifest" dist/index.html` (single `/artemis-foodlab/` prefix).
+- To test first (all validated by tsc + lint only), light and dark mode:
+  1. Builder « Nouvelle recette »: « À définir » shown, N° empty and disabled, Save blocked; choosing a category suggests the N° and shows the ID; no « Activités extérieures » in the list.
+  2. Load an existing recipe: 4 clicks on the category do nothing, 5 quick clicks open « Changer la catégorie »; « Confirmer » disabled until a category is chosen; recap `avant → après`; after confirm the builder shows the new ID, still locked.
+  3. After a change: recipe in its new category (Recettes), still in the planning and the journal, photo shown, freezer batch still named, recipes using it as a base still linked.
+  4. Dashboard `ConfirmActionModal` (deletions, users) unchanged.
+- Still open: Current focus of the roadmap still points to P5 (owner to decide); API demo seeding deployment confirmation (from 2026-10-08).
+
 ## 2026-10-10 — Weekly menu generator brainstorm recorded (v6.84.2)
 
 - Done: brainstorm of a weekly menu generator (criteria, UX, engine, missing data, possible V1 → V4 split, open questions) and the proposed `Dev` / `master` branch workflow recorded in `docs/roadmap.md` § Ideas / later. Not scheduled (owner: « pour plus tard »); P5 tablet pass postponed too.

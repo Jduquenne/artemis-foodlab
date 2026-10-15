@@ -23,7 +23,7 @@ Read this file first, then the relevant files in `docs/`.
 - **Git is owner-only.** Read commands (`status`, `diff`, `log`, `show`) are allowed; never run commands that modify the repo. When the owner asks for "a commit", reply with **the commit message only** (format in `docs/conventions.md` § Commits), after bumping the version.
 - **Never run `npm run build`.** Verify with `npx tsc -b` + `npm run lint`.
 - **Never edit `.env` or any `.env*` file**, even "just to test" or fix a formatting detail. To test against a local API, use `curl`. If an env change is needed, ask the owner.
-- **Never read, copy or quote `../_private/`** (owner's private folder, outside every repo). Access is denied in `.claude/settings.json`; do not work around it with shell commands.
+- **Never read, copy or quote `../_private/`** (owner's private folder, outside every repo). Access is denied in the owner's user-level Claude Code settings (not versioned); do not work around it with shell commands.
 - **Project knowledge lives in the repo** (`docs/`, `log/devlog.md`), never in Claude Code's auto-memory.
 - Architecture decisions are proposed, validated by the owner, then recorded in `docs/decisions.md`. No phase change in `docs/roadmap.md` without the owner's agreement.
 - Never invent a dependency version, an API contract or a fact: verify in the code, the real data or the docs, and mark gaps `TODO(owner)`.

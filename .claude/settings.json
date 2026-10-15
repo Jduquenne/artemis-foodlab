@@ -45,11 +45,7 @@
       "PowerShell(git branch *)",
       "PowerShell(git clean *)",
       "PowerShell(git restore *)",
-      "PowerShell(git remote *)",
-      "Read(//e/Développement/Jason/_private/**)",
-      "Read(//mnt/e/Développement/Jason/_private/**)",
-      "Edit(//e/Développement/Jason/_private/**)",
-      "Edit(//mnt/e/Développement/Jason/_private/**)"
+      "PowerShell(git remote *)"
     ]
   }
 }

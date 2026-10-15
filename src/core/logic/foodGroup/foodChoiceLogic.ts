@@ -7,6 +7,14 @@ export type FoodChoiceStatus = "none" | "partial" | "complete";
 
 export type FoodChoicesByCode = Record<string, FoodChoice[]>;
 
+export function findMealChoice(
+  choices: readonly FoodChoice[],
+  recipeIngredientId: string,
+  profileId: string,
+): FoodChoice | undefined {
+  return choices.find((c) => c.recipeIngredientId === recipeIngredientId && c.profileId === profileId);
+}
+
 export function resolveIngredientFood(
   ingredient: Ingredient,
   profileId: string,
@@ -14,15 +22,15 @@ export function resolveIngredientFood(
   mealChoices: readonly FoodChoice[],
 ): ResolvedFood | null {
   if (!ingredient.foodId) return null;
-  if (!ingredient.foodGroupId) return { foodId: ingredient.foodId, source: "recipe" };
+  if (!ingredient.foodGroupId) return { foodId: ingredient.foodId, source: "recipe", quantityPerPortion: null };
 
-  const choice = mealChoices.find((c) => c.recipeIngredientId === ingredient.id && c.profileId === profileId);
-  if (choice) return { foodId: choice.foodId, source: "meal" };
+  const choice = findMealChoice(mealChoices, ingredient.id, profileId);
+  if (choice) return { foodId: choice.foodId, source: "meal", quantityPerPortion: choice.quantity ?? null };
 
   const profileDefault = profileDefaults.find((d) => d.foodGroupId === ingredient.foodGroupId);
-  if (profileDefault) return { foodId: profileDefault.foodId, source: "profile" };
+  if (profileDefault) return { foodId: profileDefault.foodId, source: "profile", quantityPerPortion: null };
 
-  return { foodId: ingredient.foodId, source: "recipe" };
+  return { foodId: ingredient.foodId, source: "recipe", quantityPerPortion: null };
 }
 
 export function groupIngredientsOf(recipe: { ingredients: Ingredient[] } | undefined): Ingredient[] {
@@ -57,12 +65,30 @@ export function setMealFoodChoice(
   profileId: string,
   foodId: string | null,
 ): FoodChoice[] {
-  const others = choices.filter((c) => !(c.recipeIngredientId === recipeIngredientId && c.profileId === profileId));
-  return foodId ? [...others, { recipeIngredientId, profileId, foodId }] : others;
+  const current = findMealChoice(choices, recipeIngredientId, profileId);
+  const others = choices.filter((c) => c !== current);
+  return foodId ? [...others, { recipeIngredientId, profileId, foodId, quantity: current?.quantity ?? null }] : others;
+}
+
+export function setMealFoodQuantity(
+  choices: readonly FoodChoice[],
+  recipeIngredientId: string,
+  profileId: string,
+  quantity: number | null,
+): FoodChoice[] {
+  const normalized = quantity !== null && quantity > 0 ? quantity : null;
+  return choices.map((c) =>
+    c.recipeIngredientId === recipeIngredientId && c.profileId === profileId ? { ...c, quantity: normalized } : c,
+  );
+}
+
+export function recipeQuantityPerPortion(ingredient: Ingredient, defaultPortions: number): number | null {
+  if (ingredient.quantity === null) return null;
+  return ingredient.quantity / Math.max(defaultPortions, 1);
 }
 
 function choiceKey(choice: FoodChoice): string {
-  return `${choice.recipeIngredientId}|${choice.profileId}|${choice.foodId}`;
+  return `${choice.recipeIngredientId}|${choice.profileId}|${choice.foodId}|${choice.quantity ?? ""}`;
 }
 
 export function sameFoodChoices(a: readonly FoodChoice[] | undefined, b: readonly FoodChoice[] | undefined): boolean {

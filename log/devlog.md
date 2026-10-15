@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-15 — Food groups, step 5b: quantity per profile (v6.90.0)
+
+- Done: owner's addition to D-033 (30 g of comté ≠ 30 g of mozzarella): optional quantity per portion on each meal choice (`FoodChoice.quantity`, API migration `20261015140000_add_food_choice_quantity`, contract in `docs/api.md`). `FoodChoiceModal` gets a « g / pers. » field per profile (enabled once a food is chosen, placeholder = recipe quantity per portion); `setMealFoodQuantity`, `recipeQuantityPerPortion`, `ResolvedFood.quantityPerPortion`; the quantity is part of the choice comparison, so changing it alone sends `update[].foodChoices`. API also answered: `PUT /recipes/:id` keeps an ingredient's group when the field is absent (old prod front safe).
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser. Depends on API D-052 + quantity addition (not deployed).
+- Still open: step 6 (shopping), step 7 (journal).
+
 ## 2026-10-15 — Food groups, step 5: per-profile choice on a planned meal (v6.89.0)
 
 - Done: `FoodChoiceModal` (select per ingredient au choix × profile, fallback shown with its source), opened from « Ingrédients au choix » in the « ⋯ » menu (dish, breakfast/snack, grid cell, dessert) and from `FoodChoiceBadge` on a dish (« à préciser » / complete). Choices written through the existing slot diff and batch (`add[].foodChoices`, `update[].foodChoices` only when changed), carried on copy and drag & drop, dropped with a replaced dish. Pure helpers in `core/logic/foodGroup/foodChoiceLogic.ts`; hook `useGroupIngredients`. Spec `docs/spec-planning.md` § Ingredients « au choix ».

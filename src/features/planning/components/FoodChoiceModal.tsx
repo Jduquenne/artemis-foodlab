@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react';
 import { Loader2, Shuffle } from 'lucide-react';
 import { FoodChoice } from '../../../core/domain/foodGroup';
-import { foodsOfGroupSorted, groupIngredientsOf, resolveIngredientFood, setMealFoodChoice } from '../../../core/logic/foodGroup/foodChoiceLogic';
+import { findMealChoice, foodsOfGroupSorted, groupIngredientsOf, recipeQuantityPerPortion, resolveIngredientFood, setMealFoodChoice, setMealFoodQuantity } from '../../../core/logic/foodGroup/foodChoiceLogic';
+import { formatQty } from '../../../core/logic/unit/unitFormatLogic';
+import { DecimalInput } from '../../../shared/components/ui/DecimalInput';
 import { getProfileColorHex } from '../../../core/logic/profile/profileLogic';
 import { foodGroupLabel } from '../../../core/logic/dashboard/foodGroupFormLogic';
 import { useFoodGroupsSnapshot, useFoodsSnapshot, useRecipesSnapshot } from '../../../shared/hooks/useCatalogueSnapshot';
@@ -38,7 +40,7 @@ export const FoodChoiceModal = ({ recipeId, pendingKey, initialChoices, onSave, 
 
     return (
         <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="bg-surface rounded-2xl shadow-2xl w-full max-w-sm p-5 flex flex-col max-h-[90dvh]">
+            <div className="bg-surface rounded-2xl shadow-2xl w-full max-w-md p-5 flex flex-col max-h-[90dvh]">
                 <p className="text-xs font-black text-orange-600 uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
                     <Shuffle size={12} /> Ingrédients au choix
                 </p>
@@ -47,6 +49,8 @@ export const FoodChoiceModal = ({ recipeId, pendingKey, initialChoices, onSave, 
                 <div className="flex flex-col gap-4 overflow-y-auto min-h-0 mb-4">
                     {ingredients.map((ingredient) => {
                         const options = ingredient.foodGroupId ? foodsOfGroupSorted(foods, ingredient.foodGroupId) : [];
+                        const perPortion = recipe ? recipeQuantityPerPortion(ingredient, recipe.defaultPortions) : null;
+                        const unit = ingredient.unit || '';
                         return (
                             <section key={ingredient.id} className="flex flex-col gap-2">
                                 <p className="text-xs font-bold text-slate-500">
@@ -54,7 +58,7 @@ export const FoodChoiceModal = ({ recipeId, pendingKey, initialChoices, onSave, 
                                     <span className="font-normal text-slate-400"> · {foodGroupLabel(groups, ingredient.foodGroupId)}</span>
                                 </p>
                                 {profiles.map((profile) => {
-                                    const mealChoice = choices.find((c) => c.recipeIngredientId === ingredient.id && c.profileId === profile.id);
+                                    const mealChoice = findMealChoice(choices, ingredient.id, profile.id);
                                     const fallback = resolveIngredientFood(ingredient, profile.id, profile.foodGroupDefaults, []);
                                     const fallbackName = fallback ? (foods[fallback.foodId]?.name ?? fallback.foodId) : '—';
                                     const fallbackSource = fallback && fallback.source !== 'meal' ? SOURCE_LABELS[fallback.source] : '';
@@ -73,6 +77,15 @@ export const FoodChoiceModal = ({ recipeId, pendingKey, initialChoices, onSave, 
                                                     <option key={food.id} value={food.id}>{food.name}</option>
                                                 ))}
                                             </select>
+                                            <DecimalInput
+                                                value={mealChoice?.quantity ?? null}
+                                                disabled={pending || !mealChoice}
+                                                onValueChange={(quantity) => setChoices((prev) => setMealFoodQuantity(prev, ingredient.id, profile.id, quantity))}
+                                                placeholder={perPortion !== null ? formatQty(perPortion) : '—'}
+                                                aria-label={`Quantité par personne pour ${profile.name}`}
+                                                className="w-16 shrink-0 px-2 py-2 bg-surface border border-slate-200 rounded-xl text-sm text-slate-800 text-center placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 disabled:opacity-40"
+                                            />
+                                            <span className="w-10 shrink-0 text-[10px] text-slate-400 leading-tight">{unit} / pers.</span>
                                         </label>
                                     );
                                 })}

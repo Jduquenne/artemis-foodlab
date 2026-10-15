@@ -1,4 +1,4 @@
-export type CatalogueScope = "recipes" | "foods" | "categories" | "outdoor" | "household";
+export type CatalogueScope = "recipes" | "foods" | "categories" | "outdoor" | "household" | "foodGroups";
 
 const versions: Record<CatalogueScope, number> = {
   recipes: 0,
@@ -6,6 +6,7 @@ const versions: Record<CatalogueScope, number> = {
   categories: 0,
   outdoor: 0,
   household: 0,
+  foodGroups: 0,
 };
 
 const listeners = new Set<() => void>();

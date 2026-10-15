@@ -52,6 +52,7 @@ export interface Ingredient {
   category: IngredientCategory;
   foodId?: string;
   baseId?: string;
+  foodGroupId?: string;
   preparation?: string;
 }
 
@@ -64,4 +65,5 @@ export interface Food {
   unit: string | null;
   unitWeight: number | null;
   isFreezable?: boolean;
+  groupId?: string | null;
 }

@@ -1,3 +1,4 @@
+import { FoodChoice } from "./foodGroup";
 import { MealType } from "./recipe";
 
 export type SlotType = `${MealType}`;
@@ -15,6 +16,7 @@ export interface MealSlot {
   persons?: number;
   recipePersons?: Record<string, number>;
   recipeQuantities?: Record<string, number>;
+  foodChoices?: Record<string, FoodChoice[]>;
 }
 
 export interface CopyState {

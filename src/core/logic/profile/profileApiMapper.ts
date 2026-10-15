@@ -1,3 +1,4 @@
+import { FoodGroupDefault } from "../../domain/foodGroup";
 import { Profile } from "../../domain/profile";
 import { sortProfilesByPosition } from "./profileLogic";
 
@@ -11,6 +12,7 @@ export interface ApiProfile {
   lipidsTarget: number;
   carbohydratesTarget: number;
   fibersTarget: number;
+  foodGroupDefaults?: FoodGroupDefault[];
 }
 
 export function mapProfile(api: ApiProfile): Profile {
@@ -26,6 +28,7 @@ export function mapProfile(api: ApiProfile): Profile {
       carbohydrates: api.carbohydratesTarget,
       fibers: api.fibersTarget,
     },
+    foodGroupDefaults: api.foodGroupDefaults ?? [],
   };
 }
 

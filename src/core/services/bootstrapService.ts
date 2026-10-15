@@ -1,3 +1,4 @@
+import { FoodGroup } from "../domain/foodGroup";
 import { HouseholdItem } from "../domain/household";
 import { Food } from "../domain/ingredient";
 import { Profile } from "../domain/profile";
@@ -23,6 +24,7 @@ interface ApiBootstrap {
   foods: Food[];
   householdItems: HouseholdItem[];
   recipeCategories: Category[];
+  foodGroups?: FoodGroup[];
   householdShoppingFlags: ApiBootstrapHouseholdFlag[];
   profiles: ApiProfile[];
   journalOverrides: ApiJournalOverride[];
@@ -49,6 +51,7 @@ export async function syncBootstrapFromApi(options: SyncBootstrapOptions = {}): 
       data.foods,
       data.householdItems,
       data.recipeCategories,
+      data.foodGroups ?? [],
     );
 
     await applyHouseholdFlags(

@@ -1,5 +1,6 @@
 import Dexie, { Table } from "dexie";
 import { getWeekNumber } from "../utils/weekUtils";
+import { FoodGroup } from "../domain/foodGroup";
 import { FreezerCategory } from "../domain/freezer";
 import { HouseholdRecord, HouseholdItem } from "../domain/household";
 import { Food } from "../domain/ingredient";
@@ -15,6 +16,7 @@ class AppDatabase extends Dexie {
   outdoorActivities!: Table<OutdoorEntry & { id: string }>;
   householdItems!: Table<HouseholdItem>;
   recipeCategories!: Table<Category>;
+  foodGroups!: Table<FoodGroup>;
 
   constructor() {
     super("CipeDatabase");
@@ -152,6 +154,17 @@ class AppDatabase extends Dexie {
       outdoorActivities: "id",
       householdItems: "id",
       recipeCategories: "id",
+    });
+    this.version(14).stores({
+      planning: "id, [year+week], year, week",
+      household: "id",
+      freezerCategories: "id, position",
+      recipes: "id",
+      foods: "id",
+      outdoorActivities: "id",
+      householdItems: "id",
+      recipeCategories: "id",
+      foodGroups: "id",
     });
   }
 }

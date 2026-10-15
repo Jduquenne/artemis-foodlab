@@ -18,6 +18,7 @@ export interface ApiIngredient {
   category: string;
   foodId: string | null;
   baseId: string | null;
+  foodGroupId?: string | null;
   preparation: string | null;
 }
 
@@ -91,6 +92,7 @@ function mapApiIngredient(ing: ApiIngredient, codeByApiId: Map<string, string>):
     category: ing.category as IngredientCategory,
     foodId: ing.foodId ?? undefined,
     baseId: ing.baseId ? (codeByApiId.get(ing.baseId) ?? ing.baseId) : undefined,
+    foodGroupId: ing.foodGroupId ?? undefined,
     preparation: ing.preparation ?? undefined,
   };
 }

@@ -1,7 +1,9 @@
 import { HouseholdItem } from "../domain/household";
+import { FoodGroup } from "../domain/foodGroup";
 import { Food } from "../domain/ingredient";
 import { Category } from "../domain/recipe";
 import { replaceCategories } from "../catalogue/categories";
+import { foodGroupsCatalogue, replaceFoodGroups } from "../catalogue/foodGroups";
 import { refreshRecipeMacros } from "../catalogue/recipeMetrics";
 import { replaceFoods, foodsCatalogue } from "../catalogue/foods";
 import { putRecipe, removeRecipe, replaceRecipes, recipesCatalogue } from "../catalogue/recipes";
@@ -34,15 +36,16 @@ function applyRecipeIdMap(): void {
 }
 
 export async function hydrateFromCache(): Promise<void> {
-  const { recipes, foods, outdoor, householdItems, categories } = await readCatalogueCache();
+  const { recipes, foods, outdoor, householdItems, categories, foodGroups } = await readCatalogueCache();
   if (Object.keys(recipes).length > 0) replaceRecipes(recipes);
   if (Object.keys(foods).length > 0) replaceFoods(foods);
   if (Object.keys(outdoor).length > 0) replaceOutdoor(outdoor);
   if (Object.keys(householdItems).length > 0) replaceHousehold(householdItems);
   if (categories.length > 0) replaceCategories(categories);
+  if (foodGroups.length > 0) replaceFoodGroups(foodGroups);
   if (Object.keys(recipes).length > 0 || Object.keys(outdoor).length > 0) applyRecipeIdMap();
   refreshDerivedData();
-  notifyCatalogueChange("recipes", "foods", "categories", "outdoor", "household");
+  notifyCatalogueChange("recipes", "foods", "categories", "outdoor", "household", "foodGroups");
 }
 
 export async function applyCatalogueData(
@@ -51,6 +54,7 @@ export async function applyCatalogueData(
   apiFoods: Food[],
   apiHouseholdItems: HouseholdItem[],
   apiCategories: Category[],
+  apiFoodGroups: FoodGroup[],
 ): Promise<void> {
   const signatures: Record<CatalogueScope, string> = {
     recipes: JSON.stringify(apiRecipes),
@@ -58,6 +62,7 @@ export async function applyCatalogueData(
     foods: JSON.stringify(apiFoods),
     household: JSON.stringify(apiHouseholdItems),
     categories: JSON.stringify(apiCategories),
+    foodGroups: JSON.stringify(apiFoodGroups),
   };
   const changed = changedScopes(lastSignatures, signatures);
   lastSignatures = signatures;
@@ -68,13 +73,14 @@ export async function applyCatalogueData(
   const foods = Object.fromEntries(apiFoods.map((f) => [f.id, f]));
   const householdItems = Object.fromEntries(apiHouseholdItems.map((h) => [h.id, h]));
 
-  await writeCatalogueCache({ recipes, foods, outdoor, householdItems, categories: apiCategories });
+  await writeCatalogueCache({ recipes, foods, outdoor, householdItems, categories: apiCategories, foodGroups: apiFoodGroups });
 
   replaceRecipes(recipes);
   replaceOutdoor(outdoor);
   replaceFoods(foods);
   replaceHousehold(householdItems);
   replaceCategories(apiCategories);
+  replaceFoodGroups(apiFoodGroups);
   applyRecipeIdMap();
   refreshDerivedData();
   notifyCatalogueChange(...changed);
@@ -95,7 +101,7 @@ async function fetchAndApplyCatalogue(silent: boolean): Promise<void> {
       apiFetchJson<Category[]>("/recipe-categories", options),
     ]);
 
-    await applyCatalogueData(apiRecipes, apiOutdoor, apiFoods, apiHouseholdItems, apiCategories);
+    await applyCatalogueData(apiRecipes, apiOutdoor, apiFoods, apiHouseholdItems, apiCategories, [...foodGroupsCatalogue]);
   } catch {
     return;
   }

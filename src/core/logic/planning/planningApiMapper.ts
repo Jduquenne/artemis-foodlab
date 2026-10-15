@@ -1,3 +1,4 @@
+import { FoodChoice } from "../../domain/foodGroup";
 import { MealSlot, SlotType } from "../../domain/planning";
 import { getCodeById, getIdByCode } from "../../catalogue/recipeIdMap";
 import { buildSlotId } from "./planningSlotIdLogic";
@@ -10,6 +11,7 @@ export interface ApiPlanningSlotItem {
   personsOverride: number | null;
   gramsOverride: number | null;
   position: number;
+  foodChoices?: FoodChoice[];
 }
 
 export interface ApiPlanningSlot {
@@ -27,6 +29,7 @@ export interface SlotItemFields {
   dessertIds?: string[];
   recipePersons?: Record<string, number>;
   recipeQuantities?: Record<string, number>;
+  foodChoices?: Record<string, FoodChoice[]>;
   itemApiIds: Record<string, string>;
 }
 
@@ -35,6 +38,7 @@ export function mapApiItemsToSlotFields(items: ApiPlanningSlotItem[]): SlotItemF
   const dessertIds: string[] = [];
   const recipePersons: Record<string, number> = {};
   const recipeQuantities: Record<string, number> = {};
+  const foodChoices: Record<string, FoodChoice[]> = {};
   const itemApiIds: Record<string, string> = {};
 
   const sorted = [...items].sort((a, b) => a.position - b.position);
@@ -45,6 +49,7 @@ export function mapApiItemsToSlotFields(items: ApiPlanningSlotItem[]): SlotItemF
     else recipeIds.push(code);
     if (item.personsOverride != null) recipePersons[code] = item.personsOverride;
     if (item.gramsOverride != null) recipeQuantities[code] = item.gramsOverride;
+    if (item.foodChoices && item.foodChoices.length > 0) foodChoices[code] = item.foodChoices;
   }
 
   return {
@@ -52,6 +57,7 @@ export function mapApiItemsToSlotFields(items: ApiPlanningSlotItem[]): SlotItemF
     dessertIds: dessertIds.length > 0 ? dessertIds : undefined,
     recipePersons: Object.keys(recipePersons).length > 0 ? recipePersons : undefined,
     recipeQuantities: Object.keys(recipeQuantities).length > 0 ? recipeQuantities : undefined,
+    foodChoices: Object.keys(foodChoices).length > 0 ? foodChoices : undefined,
     itemApiIds,
   };
 }

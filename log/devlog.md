@@ -16,6 +16,13 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-15 — Food groups, step 1: read layer (v6.85.0)
+
+- Done: API contract of food groups and per-profile choices (API D-052, captured in dev, **not deployed**) recorded in `docs/api.md` § Planned. Front read layer: `FoodGroup` / `FoodGroupDefault` / `FoodChoice` (`core/domain/foodGroup.ts`); `Food.groupId`, `Ingredient.foodGroupId`, `Profile.foodGroupDefaults`, `MealSlot.foodChoices` (per recipe code, like `recipePersons`) read by the API mappers, absent fields treated as empty; food groups catalogue (`core/catalogue/foodGroups.ts`, scope `foodGroups`, `useFoodGroupsSnapshot`) filled from `/bootstrap` only, cached in Dexie v14 (`foodGroups` table); `resolveIngredientFood` (`core/logic/foodGroup/foodChoiceLogic.ts`): meal choice → profile default → recipe default. No new route called, no UI change.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser (nothing visible).
+- Owner: commit without pushing `master` until the API session confirms D-052 is live in prod.
+- Still open: step 2 (Dashboard: food groups CRUD + « Famille » on the food form), which will also fetch `/food-groups` in `syncCatalogueFromApi` (step 1 keeps the current groups there).
+
 ## 2026-10-15 — Food groups and per-profile choices: design (v6.84.5)
 
 - Done: user feedback (« Pâtes au fromage » too generic) turned into D-033 with the owner: food groups, group ingredient with a recipe default, profile default per group, choice per profile on the planned meal, pro rata split in shopping, journal per profile. Tracked as `dev/issues.json` #25. API prompt written for the owner to relay.

@@ -1,9 +1,11 @@
 import { useSyncExternalStore } from "react";
+import { FoodGroup } from "../../core/domain/foodGroup";
 import { HouseholdItem } from "../../core/domain/household";
 import { Food } from "../../core/domain/ingredient";
 import { Category, OutdoorEntry, PlannableItem, RecipeDetails } from "../../core/domain/recipe";
 import { CatalogueScope, getCatalogueVersion, subscribeCatalogue } from "../../core/catalogue/catalogueEvents";
 import { categoriesCatalogue } from "../../core/catalogue/categories";
+import { foodGroupsCatalogue } from "../../core/catalogue/foodGroups";
 import { foodsCatalogue } from "../../core/catalogue/foods";
 import { outdoorCatalogue } from "../../core/catalogue/outdoor";
 import { householdCatalogue } from "../../core/catalogue/household";
@@ -34,6 +36,7 @@ function useCatalogueSnapshot<T>(source: SnapshotSource<T>): T {
 const recipesSource = createSnapshotSource(["recipes"], () => ({ ...recipesCatalogue }));
 const foodsSource = createSnapshotSource(["foods"], () => ({ ...foodsCatalogue }));
 const categoriesSource = createSnapshotSource(["categories"], () => [...categoriesCatalogue]);
+const foodGroupsSource = createSnapshotSource(["foodGroups"], () => [...foodGroupsCatalogue]);
 const householdSource = createSnapshotSource(["household"], () => ({ ...householdCatalogue }));
 const outdoorSource = createSnapshotSource(["outdoor"], () => ({ ...outdoorCatalogue }));
 const plannableSource = createSnapshotSource(["recipes", "outdoor"], buildPlannableItems);
@@ -52,5 +55,6 @@ export const useFoodsSnapshot = (): Record<string, Food> => useCatalogueSnapshot
 export const useHouseholdSnapshot = (): Record<string, HouseholdItem> => useCatalogueSnapshot(householdSource);
 export const useOutdoorSnapshot = (): Record<string, OutdoorEntry> => useCatalogueSnapshot(outdoorSource);
 export const useCategoriesSnapshot = (): Category[] => useCatalogueSnapshot(categoriesSource);
+export const useFoodGroupsSnapshot = (): FoodGroup[] => useCatalogueSnapshot(foodGroupsSource);
 export const usePlannableSnapshot = (): Record<string, PlannableItem> => useCatalogueSnapshot(plannableSource);
 export const useRecipeMetricsSnapshot = (): RecipeMetricsSnapshot => useCatalogueSnapshot(recipeMetricsSource);

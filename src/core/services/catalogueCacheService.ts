@@ -1,4 +1,5 @@
 import { Table } from "dexie";
+import { FoodGroup } from "../domain/foodGroup";
 import { HouseholdItem } from "../domain/household";
 import { Food } from "../domain/ingredient";
 import { Category, OutdoorEntry, RecipeDetails } from "../domain/recipe";
@@ -10,6 +11,7 @@ export interface CachedCatalogue {
   outdoor: Record<string, OutdoorEntry>;
   householdItems: Record<string, HouseholdItem>;
   categories: Category[];
+  foodGroups: FoodGroup[];
 }
 
 async function replaceTable<T>(table: Table<T>, rows: T[]): Promise<void> {
@@ -20,12 +22,13 @@ async function replaceTable<T>(table: Table<T>, rows: T[]): Promise<void> {
 }
 
 export async function readCatalogueCache(): Promise<CachedCatalogue> {
-  const [recipes, foods, outdoor, householdItems, categories] = await Promise.all([
+  const [recipes, foods, outdoor, householdItems, categories, foodGroups] = await Promise.all([
     db.recipes.toArray(),
     db.foods.toArray(),
     db.outdoorActivities.toArray(),
     db.householdItems.toArray(),
     db.recipeCategories.toArray(),
+    db.foodGroups.toArray(),
   ]);
   return {
     recipes: Object.fromEntries(recipes.map((row) => [row.id, row])),
@@ -33,6 +36,7 @@ export async function readCatalogueCache(): Promise<CachedCatalogue> {
     outdoor: Object.fromEntries(outdoor.map((row) => [row.code, row])),
     householdItems: Object.fromEntries(householdItems.map((row) => [row.id, row])),
     categories,
+    foodGroups,
   };
 }
 
@@ -43,6 +47,7 @@ export async function writeCatalogueCache(catalogue: CachedCatalogue): Promise<v
     replaceTable(db.outdoorActivities, Object.entries(catalogue.outdoor).map(([code, entry]) => ({ ...entry, id: code }))),
     replaceTable(db.householdItems, Object.values(catalogue.householdItems)),
     replaceTable(db.recipeCategories, catalogue.categories),
+    replaceTable(db.foodGroups, catalogue.foodGroups),
   ]);
 }
 

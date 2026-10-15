@@ -12,7 +12,7 @@ flowchart LR
   UI -->|actions| Store[shared/store Zustand]
   Store --> Svc[core/services]
   Svc -->|apiFetch| API[(meals-planning-api)]
-  Svc -->|cache after success| IDB[(IndexedDB / Dexie v13)]
+  Svc -->|cache after success| IDB[(IndexedDB / Dexie v14)]
   Svc --> Cat[core/catalogue in-memory]
   Cat -->|notify| Snap
   Snap --> Logic[core/logic pure functions]
@@ -44,7 +44,7 @@ Three layers, no exceptions:
 - `core/domain/` — types, configuration constants and domain predicates (`recipePredicates.ts`, `freezerPredicates.ts`), labels (`nutrition.ts`, `recipeLabels.ts`), `profileConfig.ts`, `ingredientCategorySlugs.ts`, etc.
 - `core/logic/<feature>/` — `auth`, `dashboard`, `freezer`, `journal`, `media`, `news`, `nutrition`, `planning`, `profile`, `recipe`, `recipeBuilder`, `shopping`, `sync`, `unit`.
 - `core/services/` — API access (`apiClient.ts` and one service per resource), `databaseService.ts` (Dexie), `catalogueCacheService.ts` (Dexie cache of the catalogue: read, replace, single recipe put/remove), `catalogueSyncService.ts`, `refreshTokenStore.ts`. API ↔ domain mappers live in `core/logic/<feature>/xxxApiMapper.ts`, not in services.
-- `core/catalogue/` — in-memory mutable catalogue (`recipes.ts`, `foods.ts`, `outdoor.ts`, `household.ts`, `categories.ts`, `plannable.ts`), `recipeIdMap.ts`, `catalogueEvents.ts`.
+- `core/catalogue/` — in-memory mutable catalogue (`recipes.ts`, `foods.ts`, `outdoor.ts`, `household.ts`, `categories.ts`, `foodGroups.ts`, `plannable.ts`), `recipeIdMap.ts`, `catalogueEvents.ts`.
 
 ## Data flow
 
@@ -64,7 +64,7 @@ Three layers, no exceptions:
 ## Catalogue in memory, snapshots and synchronisation
 
 - `core/catalogue/` holds mutable objects refreshed in place (`replaceRecipes`, etc.).
-- **Never read a `core/catalogue/` store from a component or from `useMemo`.** Use `shared/hooks/useCatalogueSnapshot.ts`: `useRecipesSnapshot`, `useFoodsSnapshot`, `useCategoriesSnapshot`, `useOutdoorSnapshot`, `useHouseholdSnapshot`, `usePlannableSnapshot`, `useRecipeMetricsSnapshot`, and `useMacroCatalogue` for macros. Each snapshot changes identity only when its domain changes, which makes `useMemo` dependencies correct (`exhaustive-deps` rejects a "version number" dependency).
+- **Never read a `core/catalogue/` store from a component or from `useMemo`.** Use `shared/hooks/useCatalogueSnapshot.ts`: `useRecipesSnapshot`, `useFoodsSnapshot`, `useCategoriesSnapshot`, `useFoodGroupsSnapshot`, `useOutdoorSnapshot`, `useHouseholdSnapshot`, `usePlannableSnapshot`, `useRecipeMetricsSnapshot`, and `useMacroCatalogue` for macros. Each snapshot changes identity only when its domain changes, which makes `useMemo` dependencies correct (`exhaustive-deps` rejects a "version number" dependency).
 - **`core/logic/` receives the catalogue as a parameter** (`recipes`, `foods`, `MacroCatalogue`, `ShoppingCatalogue`…): pure functions, never a global read. Intended exceptions (reads at action time, not render time): `useJournalStore`, `useRecipeBuilderSave`, `suggestNextRecipeNumber`, `catalogueSyncService`, `core/catalogue/recipeMetrics.ts` (precomputed `RECIPE_MACROS` / `RECIPE_BASE_GRAMS`, recomputed by `refreshRecipeMacros` after each catalogue sync; the pure computations live in `core/logic/nutrition/macroLogic.ts`).
 - **Notifications**: only `catalogueSyncService` signals (`notifyCatalogueChange`, after derived data is recomputed), never the `replace…` functions themselves. `useNewsStore` and `useMediaStore` subscribe themselves.
 - Targeted refresh after a builder save: `catalogueSyncService.syncRecipeFromApi(uuid)`; local removal without network: `removeRecipeFromCatalogue(code)`.
@@ -106,10 +106,10 @@ Three layers, no exceptions:
 
 ## IndexedDB (Dexie)
 
-- Schema and current version: `src/core/services/databaseService.ts` (**version 13**). Tables: `planning`, `household`, `freezerCategories`, `recipes`, `foods`, `outdoorActivities`, `householdItems`, `recipeCategories`.
+- Schema and current version: `src/core/services/databaseService.ts` (**version 14**). Tables: `planning`, `household`, `freezerCategories`, `recipes`, `foods`, `outdoorActivities`, `householdItems`, `recipeCategories`, `foodGroups`.
 - Never modify an existing `.version(n)` block; any schema change = new `.version(n+1)`.
 - Adding a non-indexed field does **not** need a new version (Dexie versions indexes only).
-- A v14 (categories enum → slug) was tried then abandoned — do not revive it without a new scoping (D-014).
+- A first v14 (categories enum → slug) was reverted before any commit (D-014); the current v14 (2026-10-15) only adds `foodGroups`.
 
 ## Client storage (localStorage)
 

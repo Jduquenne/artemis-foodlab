@@ -1,3 +1,4 @@
+import { FoodGroupDefault } from "./foodGroup";
 import { MacroTargets } from "./nutrition";
 
 export interface Profile {
@@ -7,4 +8,5 @@ export interface Profile {
   position: number;
   kcalTarget: number;
   macroTargets: MacroTargets;
+  foodGroupDefaults: FoodGroupDefault[];
 }

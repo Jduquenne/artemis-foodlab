@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-15 — Food groups in prod (v6.92.1)
+
+- Done: owner deployed API D-052 (+ quantity addition) and pushed the front (steps 1-7). `docs/api.md`: contract moved from « Planned » to its own section; D-033 status and roadmap updated.
+- Resume here: owner's feedback on the feature in use. Not started: UI for the profile default per family (`PUT /profiles/:id/food-group-defaults/:groupId`).
+
 ## 2026-10-15 — Food groups, step 7: journal per profile (v6.92.0)
 
 - Done: `personalizeRecipe` (recipe with the active profile's resolved food and quantity per portion for each ingredient au choix); `computeItemMacros` / `computeSlotMacros` / `computeDayMacros` / `computeWeekAverage` take the profile (meal choices read from `slot.foodChoices`); Journal day, slot cards, week average and `RecipePortionRow` use it; `useJournalStore` actions now receive the (personalized) recipe instead of reading `recipesCatalogue`. Spec `docs/spec-journal.md`, `docs/architecture.md` (exception list).

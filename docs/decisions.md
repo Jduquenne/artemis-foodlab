@@ -240,7 +240,7 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
 ## D-033 — Food groups and per-profile choices on planned meals
 
 - **Date**: 2026-10-15
-- **Status**: accepted in principle (owner); API contract pending
+- **Status**: accepted (owner); live in prod 2026-10-15
 - **Context**: users find recipes such as « Pâtes au fromage » too generic: the cheese should be chosen when the meal is planned, per profile (each person of the household has their own preference), and follow into the shopping list and the journal. First and only case for now: cheese. Prepares the profile tastes feature (`dev/issues.json` #20-#24) on an easy case (substitution inside one food group, where grams are a meaningful equivalence).
 - **Decision**:
   - **Food group** (catalogue, admin): new resource; a food belongs to at most one group (`groupId`, optional).

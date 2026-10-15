@@ -5,7 +5,7 @@ The detailed backlog and future features live in `dev/issues.json` and `dev/refa
 
 ## Current focus
 
-1. ⬜ New ideas from the owner to prepare the profile tastes feature (#20-#24), to be proposed in the next session.
+1. 🟡 Food groups and per-profile cheese choice on planned meals (D-033, `dev/issues.json` #25), first step toward the profile tastes feature (#20-#24). Waiting for the API contract (prompt relayed 2026-10-15); front plan: read layer → Dashboard groups → Recipe Builder → meal slot UI rework → planning choice → shopping → journal → profile defaults.
 2. ✅ Owner browser tests of everything delivered up to v6.84.3: all validated (2026-10-15).
 3. ⏸ Tablet portrait pass (P5) paused by the owner on 2026-10-15 (no longer a priority).
 

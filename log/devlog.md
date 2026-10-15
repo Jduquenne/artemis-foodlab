@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-15 — Food groups and per-profile choices: design (v6.84.5)
+
+- Done: user feedback (« Pâtes au fromage » too generic) turned into D-033 with the owner: food groups, group ingredient with a recipe default, profile default per group, choice per profile on the planned meal, pro rata split in shopping, journal per profile. Tracked as `dev/issues.json` #25. API prompt written for the owner to relay.
+- Resume here: real payloads from the API session, then front step 1 (read layer).
+- Still open: interpretation of « le choix par défaut peut être défini par un user » as a per-profile default per group, to confirm by the owner.
+
 ## 2026-10-15 — Owner tests validated, priorities reset (v6.84.4)
 
 - Done: owner reports all browser tests of the changes up to v6.84.3 as passed (2026-10-08 and 2026-10-10 lists). Roadmap updated with the owner's decisions: P5 tablet pass paused (no longer a priority); unexpected logouts considered fixed (no recurrence); Google sign-in (#10) set aside; menu generator stays for later. Also: `_private` deny rules moved from the versioned `.claude/settings.json` to the owner's user-level settings after the folder rename (`Développement` → `Developpement`).

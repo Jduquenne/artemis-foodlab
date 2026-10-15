@@ -236,3 +236,19 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
 - **Alternatives considered**: a common folder inside `core/logic/` (rejected: generic helpers are not business logic); keeping everything in `shared/utils/` and accepting the inverted dependency (rejected).
 - **Consequences**: supersedes the "utils → `shared/utils/` without exception" part of D-001; the guard against the former mix is the rule above, checked during reviews.
 
+
+## D-033 — Food groups and per-profile choices on planned meals
+
+- **Date**: 2026-10-15
+- **Status**: accepted in principle (owner); API contract pending
+- **Context**: users find recipes such as « Pâtes au fromage » too generic: the cheese should be chosen when the meal is planned, per profile (each person of the household has their own preference), and follow into the shopping list and the journal. First and only case for now: cheese. Prepares the profile tastes feature (`dev/issues.json` #20-#24) on an easy case (substitution inside one food group, where grams are a meaningful equivalence).
+- **Decision**:
+  - **Food group** (catalogue, admin): new resource; a food belongs to at most one group (`groupId`, optional).
+  - **Group ingredient**: a recipe ingredient may carry a `foodGroupId`; its `foodId` stays required and is the **recipe default** (member of the group). Nothing changes when no choice exists: recipe macros, shopping and journal use the default, journal ingredient overrides stay keyed by ingredient id.
+  - **Profile default** (user data): each profile may set its preferred food per group.
+  - **Choice per planned meal** (user data): per planning item × group ingredient × profile, a chosen food. Resolution for a profile: meal choice → profile default → recipe default.
+  - **Shopping**: the scaled quantity is split pro rata across the account's profiles by resolved food (e.g. 4 parts, 2 profiles Comté + 1 Chèvre → Comté 4 × 2/3, Chèvre 4 × 1/3); works with any number of parts without knowing who eats (#23). A line resolved only by the recipe default shows « à préciser ».
+  - **Journal**: a profile's macros use its resolved food.
+  - **Planning**: choices follow the meal on move and copy; replacing the dish drops them.
+  - **V1 limits**: no group ingredient inside a base recipe; allowed in demo (user data, cascades with the profile and the planning item).
+- **Alternatives considered**: recipe variants per cheese (catalogue explosion, no per-profile choice); choice only in the shopping list (journal wrong, no per-profile choice); a candidate list per recipe ingredient instead of a reusable group (to re-enter in every recipe).

@@ -4,6 +4,7 @@ import { getAllRecipeIds } from "../../domain/recipePredicates";
 import { BaseEntry, ConsolidatedIngredient, IngredientSource, ShoppingCatalogue } from "../../domain/shopping";
 import { isoDateFromWeekDay } from "../../utils/dateUtils";
 import { compareByName } from "../../utils/sortUtils";
+import { splitGroupIngredient } from "../foodGroup/foodChoiceLogic";
 
 function cleanRecipeName(name: string): string {
   return name
@@ -44,8 +45,21 @@ function buildIngredientSource(
   ingredient: Ingredient,
   quantity: number,
   fromBaseId?: string,
+  profileNames?: string[],
 ): IngredientSource {
   const persons = slot.recipePersons?.[recipeId] ?? slot.persons;
+  if (profileNames) {
+    return {
+      recipeId,
+      recipeName,
+      day: slot.day,
+      isoDate: isoDateFromWeekDay(slot.year, slot.week, slot.day),
+      slot: slot.slot,
+      quantity,
+      unit: ingredient.unit,
+      profileNames,
+    };
+  }
   return {
     recipeId,
     recipeName,
@@ -71,12 +85,14 @@ export function aggregateSlots(
     ing: Ingredient,
     qty: number,
     source: IngredientSource,
+    toSpecify = false,
   ) {
     const key = `${ing.name.toLowerCase()}-${ing.unit}`;
     const existing = map.get(key);
     if (existing) {
       existing.totalQuantity += qty;
       if (!existing.foodId && ing.foodId) existing.foodId = ing.foodId;
+      if (toSpecify) existing.toSpecify = true;
       const alreadyListed = existing.sources.some(
         (s) =>
           s.recipeId === source.recipeId &&
@@ -93,6 +109,7 @@ export function aggregateSlots(
         unit: ing.unit,
         category: ing.category as IngredientCategory | undefined,
         sources: [source],
+        ...(toSpecify && { toSpecify }),
       });
     }
     if (ing.preparation) {
@@ -122,6 +139,22 @@ export function aggregateSlots(
             }
             continue;
           }
+        }
+
+        if (ing.foodGroupId) {
+          const choices = slot.foodChoices?.[recipeId] ?? [];
+          for (const share of splitGroupIngredient(ing, details.defaultPortions, scaleFactor, catalogue.profiles, choices)) {
+            const isDefault = share.foodId === ing.foodId;
+            const shareIng = isDefault ? ing : { ...ing, foodId: share.foodId, name: catalogue.foods[share.foodId]?.name ?? ing.name };
+            const names = share.profileIds.map((id) => catalogue.profiles.find((p) => p.id === id)?.name ?? "");
+            addIngredientToMap(
+              shareIng,
+              share.quantity,
+              buildIngredientSource(slot, recipeId, recipeName, shareIng, share.quantity, undefined, names.filter(Boolean)),
+              share.byRecipeDefault,
+            );
+          }
+          continue;
         }
 
         const qty = (ing.quantity ?? 0) * scaleFactor;

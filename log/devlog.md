@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-15 — Food groups, step 6: shopping list (v6.91.0)
+
+- Done: `splitGroupIngredient` shares the parts of an ingredient au choix equally between profiles, each with its resolved food and quantity per portion; `aggregateSlots` turns each share into a line of that food (merged with the same food elsewhere), « à préciser » when resolved by the recipe default (`ConsolidatedIngredient.toSpecify`: badge + clipboard), profile names on the sources. `ShoppingCatalogue` gains `foods` and `profiles`. Spec `docs/spec-shopping.md` § Ingredients « au choix ».
+- Numbers: `npx tsc -b` + `npm run lint` pass; split checked with a throwaway `tsx` script on the D-033 example (mozzarella 120 g + comté 60 g; no choice → one « à préciser » line of 120 g; profile default → chèvre 60 g + default 60 g); not checked in a browser. Depends on API D-052 (not deployed).
+- Still open: step 7 (journal macros per profile).
+
 ## 2026-10-15 — Food groups, step 5b: quantity per profile (v6.90.0)
 
 - Done: owner's addition to D-033 (30 g of comté ≠ 30 g of mozzarella): optional quantity per portion on each meal choice (`FoodChoice.quantity`, API migration `20261015140000_add_food_choice_quantity`, contract in `docs/api.md`). `FoodChoiceModal` gets a « g / pers. » field per profile (enabled once a food is chosen, placeholder = recipe quantity per portion); `setMealFoodQuantity`, `recipeQuantityPerPortion`, `ResolvedFood.quantityPerPortion`; the quantity is part of the choice comparison, so changing it alone sends `update[].foodChoices`. API also answered: `PUT /recipes/:id` keeps an ingredient's group when the field is absent (old prod front safe).

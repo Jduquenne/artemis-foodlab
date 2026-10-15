@@ -66,6 +66,9 @@ export const IngredientCheckRow = ({
                     {item.preparation && (
                         <span className="font-normal text-slate-400 ml-1">· {item.preparation}</span>
                     )}
+                    {item.toSpecify && (
+                        <span className="ml-1.5 text-[10px] font-bold text-amber-600 bg-amber-50 dark:bg-amber-900/20 px-1 py-0.5 rounded">à préciser</span>
+                    )}
                 </span>
             </div>
 

@@ -1,4 +1,5 @@
-import { IngredientCategory } from "./ingredient";
+import { Food, IngredientCategory } from "./ingredient";
+import { Profile } from "./profile";
 import { RecipeDetails } from "./recipe";
 
 export interface IngredientSource {
@@ -12,6 +13,7 @@ export interface IngredientSource {
   persons?: number;
   baseQuantity?: number;
   fromBaseId?: string;
+  profileNames?: string[];
 }
 
 export interface ConsolidatedIngredient {
@@ -25,6 +27,7 @@ export interface ConsolidatedIngredient {
   sources: IngredientSource[];
   isExtra?: boolean;
   extraId?: string;
+  toSpecify?: boolean;
 }
 
 export interface BaseEntry {
@@ -37,6 +40,8 @@ export interface BaseEntry {
 export interface ShoppingCatalogue {
   recipes: Record<string, RecipeDetails>;
   baseGrams: Record<string, number>;
+  foods: Record<string, Food>;
+  profiles: Pick<Profile, "id" | "name" | "foodGroupDefaults">[];
 }
 
 export interface RecipeCardIngredient {

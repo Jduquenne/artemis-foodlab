@@ -7,6 +7,13 @@ export type FoodChoiceStatus = "none" | "partial" | "complete";
 
 export type FoodChoicesByCode = Record<string, FoodChoice[]>;
 
+export interface FoodChoiceShare {
+  foodId: string;
+  quantity: number;
+  byRecipeDefault: boolean;
+  profileIds: string[];
+}
+
 export function findMealChoice(
   choices: readonly FoodChoice[],
   recipeIngredientId: string,
@@ -85,6 +92,38 @@ export function setMealFoodQuantity(
 export function recipeQuantityPerPortion(ingredient: Ingredient, defaultPortions: number): number | null {
   if (ingredient.quantity === null) return null;
   return ingredient.quantity / Math.max(defaultPortions, 1);
+}
+
+export function splitGroupIngredient(
+  ingredient: Ingredient,
+  defaultPortions: number,
+  scaleFactor: number,
+  profiles: readonly Pick<Profile, "id" | "foodGroupDefaults">[],
+  mealChoices: readonly FoodChoice[],
+): FoodChoiceShare[] {
+  const recipePerPortion = recipeQuantityPerPortion(ingredient, defaultPortions) ?? 0;
+  const portions = scaleFactor * Math.max(defaultPortions, 1);
+  if (!ingredient.foodId) return [];
+  if (profiles.length === 0) {
+    return [{ foodId: ingredient.foodId, quantity: recipePerPortion * portions, byRecipeDefault: true, profileIds: [] }];
+  }
+  const portionsPerProfile = portions / profiles.length;
+  const shares = new Map<string, FoodChoiceShare>();
+  for (const profile of profiles) {
+    const resolved = resolveIngredientFood(ingredient, profile.id, profile.foodGroupDefaults, mealChoices);
+    if (!resolved) continue;
+    const quantity = (resolved.quantityPerPortion ?? recipePerPortion) * portionsPerProfile;
+    const byRecipeDefault = resolved.source === "recipe";
+    const existing = shares.get(resolved.foodId);
+    if (existing) {
+      existing.quantity += quantity;
+      existing.byRecipeDefault = existing.byRecipeDefault || byRecipeDefault;
+      existing.profileIds.push(profile.id);
+    } else {
+      shares.set(resolved.foodId, { foodId: resolved.foodId, quantity, byRecipeDefault, profileIds: [profile.id] });
+    }
+  }
+  return [...shares.values()];
 }
 
 function choiceKey(choice: FoodChoice): string {

@@ -28,6 +28,7 @@ export function buildShoppingClipboardText(
 
       let part = item.name;
       if (item.preparation) part += ` (${item.preparation})`;
+      if (item.toSpecify) part += " (à préciser)";
       if (item.totalQuantity > 0) part += ` ${formatQty(needed)}${fmtUnit(item.unit, needed)}`;
       return part;
     });

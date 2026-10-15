@@ -37,7 +37,8 @@ import { HouseholdShoppingCard } from './components/HouseholdShoppingCard';
 import { HouseholdPanel } from './components/household/HouseholdPanel';
 import { AddExtraModal } from './components/AddExtraModal';
 import { useRefreshStore } from '../../shared/store/useRefreshStore';
-import { useHouseholdSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
+import { useFoodsSnapshot, useHouseholdSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
+import { useProfileStore } from '../../shared/store/useProfileStore';
 import { sumBy } from '../../core/utils/collectionUtils';
 
 const NO_INGREDIENTS: ConsolidatedIngredient[] = [];
@@ -49,6 +50,8 @@ export const ShoppingModule = () => {
     const authStatus = useAuthStore((s) => s.status);
     const recipes = useRecipesSnapshot();
     const { baseGrams } = useRecipeMetricsSnapshot();
+    const foods = useFoodsSnapshot();
+    const profiles = useProfileStore(s => s.profiles);
     const householdDb = useHouseholdSnapshot();
     const allHouseholdItems = useMemo(() => Object.values(householdDb), [householdDb]);
     const refreshTick = useRefreshStore((s) => s.tick);
@@ -72,13 +75,13 @@ export const ShoppingModule = () => {
     }, [authStatus, shoppingDays, refreshTick]);
 
     const ingredients = useLiveQuery(
-        () => getShoppingListForDays(shoppingDays, { recipes, baseGrams }),
-        [shoppingDays, recipes, baseGrams]
+        () => getShoppingListForDays(shoppingDays, { recipes, baseGrams, foods, profiles }),
+        [shoppingDays, recipes, baseGrams, foods, profiles]
     );
 
     const basesRaw = useLiveQuery(
-        () => getBasesForDays(shoppingDays, { recipes, baseGrams }),
-        [shoppingDays, recipes, baseGrams]
+        () => getBasesForDays(shoppingDays, { recipes, baseGrams, foods, profiles }),
+        [shoppingDays, recipes, baseGrams, foods, profiles]
     );
     const bases = useMemo(() => basesRaw ?? [], [basesRaw]);
 

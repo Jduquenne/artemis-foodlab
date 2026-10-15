@@ -89,6 +89,12 @@ export const SourceGroupRow = ({ ingredientKey, group, sourceChecked, onToggleSo
           <span className="text-orange-500 font-medium">
             {formatSourceQty(src.quantity, src.unit)}
           </span>
+          {src.profileNames && src.profileNames.length > 0 && (
+            <>
+              <span className="mx-1 text-slate-300">·</span>
+              <span className="text-slate-500 font-semibold">{src.profileNames.join(", ")}</span>
+            </>
+          )}
           {src.persons !== undefined && src.baseQuantity !== undefined && (
             <>
               <span className="mx-1 text-slate-300">·</span>

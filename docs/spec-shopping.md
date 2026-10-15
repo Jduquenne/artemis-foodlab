@@ -12,6 +12,14 @@ The Shopping view (`/shopping`) has three modes (`viewMode: 'meals' | 'ingredien
 - Freezer bag units must not include `Unit.NONE` (the API requires a unit).
 - Pending feedback on every check (see `docs/conventions.md` § Loading feedback).
 
+## Ingredients « au choix » (D-033)
+
+`aggregateSlots` splits an ingredient carrying a `foodGroupId` with `splitGroupIngredient` (`core/logic/foodGroup/foodChoiceLogic.ts`): the planned parts are shared equally between the account's profiles (`ShoppingCatalogue.profiles`, no notion of who eats yet, #23); each profile's share uses its resolved food (meal choice → profile default → recipe default) and its quantity per portion (meal choice `quantity`, else the recipe's). Shares of the same food are merged. Example: recipe 30 g / portion, 4 parts, Léa mozzarella 60 g, Tom comté → mozzarella 120 g, comté 60 g.
+
+- A share of another food becomes an ingredient named after that food (`ShoppingCatalogue.foods`) with its `foodId`, so it groups with the same food from other recipes and is checked like any food; the recipe default keeps the ingredient's own name.
+- A share resolved by the recipe default sets `ConsolidatedIngredient.toSpecify`: « à préciser » badge in the ingredients list (`IngredientCheckRow`) and « (à préciser) » in the clipboard text.
+- Sources of a split share carry `profileNames` (shown in the sources sheet instead of « ×persons · base »).
+
 ## Manual items (« extras »)
 
 Need: add a manual line (e.g. a specific cheese wanted on top of a recipe) that follows from one phone to another — hence stored in the API, on the shopping period.

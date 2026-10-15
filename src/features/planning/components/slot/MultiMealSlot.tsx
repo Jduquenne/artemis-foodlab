@@ -118,6 +118,7 @@ export const MultiMealSlot = ({
     const singleCurrentGrams = singleRecipeId ? recipeQuantities?.[singleRecipeId] : undefined;
     const singleCurrentPersons = singleRecipeId ? recipePersons?.[singleRecipeId] : undefined;
     const singleIsCustom = singleCurrentPersons !== undefined || (!singleIsDish && singleCurrentGrams !== undefined);
+    const singleMetaEditable = !!singleRecipeId && !!onSaveRecipeMeta && (singleIsDish || singleBaseGrams > 0 || singleCurrentPersons !== undefined);
     const showSingleBadge = !!singleRecipeId && !isAddMode && !copyTargetState && !!onSaveRecipeMeta && !isEditingPersons && (singleIsDish || singleBaseGrams > 0 || singleCurrentPersons !== undefined);
 
     const inFreezer = recipeIds.length === 1 && (batchRecipeIds?.has(recipeIds[0]) ?? false);
@@ -235,6 +236,9 @@ export const MultiMealSlot = ({
                     onCopyRecipe={onCopyRecipe}
                     onRemoveRecipe={onRemoveRecipe}
                     onAdd={onAdd}
+                    onEditQuantity={singleMetaEditable && singleRecipeId
+                        ? () => setEditingMetaId(singleRecipeId)
+                        : displayPersons !== undefined ? onOpenPersonsEditor : undefined}
                     removePending={isSingleRemovePending}
                 />
             )}

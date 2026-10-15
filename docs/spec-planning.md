@@ -34,6 +34,16 @@ A dessert-only destination must never give its own dessert to the origin slot (p
 
 Each slot save diffs items (`diffSlotItems`) and sends **one** batch call `PUT /planning-slots/:id/items/batch`; the local cache is rebuilt from the full response. A move A→B is two batch calls (not atomic). Decision: D-009.
 
+## Meal actions menu
+
+Every planned item keeps its **information badges** visible (persons / grams, freezer) and groups its **actions** in one « ⋯ » button (`ItemActionsMenu`, built on `FloatingMenu`; revealed on hover on desktop, always shown on touch; spinner while a removal is pending). The menu wrapper stops click and pointer propagation, so opening it never starts a drag nor opens the recipe. Owner's decision 2026-10-15 (room for the food choice of D-033).
+
+- Lunch / dinner dish (`SlotActions`, bottom right): « Changer le repas », « Personnes », « Supprimer ». The drag handle stays top left; the persons badge stays a shortcut.
+- Breakfast / snack with one recipe (`MultiSlotActions`, bottom right): « Quantité » (meta editor, or slot persons), « Copier », « Ajouter un repas », « Retirer ».
+- Breakfast / snack grid cell (`RecipeCell`, top right, compact, revealed on cell hover): « Quantité », « Copier », « Retirer ».
+- Dessert (`DessertCell`, top right, compact): « Personnes », « Copier », « Retirer ».
+- Hidden in add mode, copy mode and while editing persons (same conditions as the former buttons).
+
 ## Recipe / dessert pickers
 
 `RecipePicker` / `DessertPicker` (modals adding a dish/dessert to a slot):

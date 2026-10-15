@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { X, Copy, Users, Minus, Plus, Check, Loader2 } from 'lucide-react';
+import { ItemAction, ItemActionsMenu } from './ItemActionsMenu';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 import { MealPhoto } from './MealPhoto';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
@@ -38,11 +39,17 @@ export const DessertCell = ({ slotId, recipeId, onRemove, isAddMode, onCopy, isC
         if (canNavigate) navigate(buildRecipeDetailUrl(recipeId, persons));
     };
 
-    const openEditor = (e: React.MouseEvent | React.PointerEvent) => {
-        e.stopPropagation();
+    const openEditor = () => {
         setDraft(persons ?? 1);
         setIsEditingPersons(true);
     };
+
+    const actions: ItemAction[] = [];
+    if (!isAddMode && !hideActions && !isEditingPersons) {
+        if (onSetPersons) actions.push({ id: 'persons', label: 'Personnes', icon: Users, onSelect: openEditor });
+        if (onCopy) actions.push({ id: 'copy', label: 'Copier', icon: Copy, onSelect: onCopy });
+        actions.push({ id: 'remove', label: 'Retirer', icon: X, onSelect: onRemove, danger: true });
+    }
 
     const confirmPersons = async (e: React.MouseEvent) => {
         e.stopPropagation();
@@ -61,33 +68,12 @@ export const DessertCell = ({ slotId, recipeId, onRemove, isAddMode, onCopy, isC
         >
             <MealPhoto asset={recipe.assets.mealPhoto} name={recipe.name} showName={false} />
 
-            {!isAddMode && !hideActions && !isEditingPersons && (
-                <button
-                    aria-label="Retirer le dessert"
-                    onPointerDown={(e) => e.stopPropagation()}
-                    onClick={(e) => { e.stopPropagation(); if (!removePending) onRemove(); }}
-                    disabled={removePending}
-                    className={`absolute top-0.5 right-0.5 p-0.5 bg-black/50 text-white rounded-md z-10 transition-opacity ${IS_TOUCH || removePending ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
-                >
-                    {removePending ? <Loader2 size={10} className="animate-spin" /> : <X size={10} />}
-                </button>
-            )}
-
-            {!isAddMode && !hideActions && onCopy && !isEditingPersons && (
-                <button
-                    aria-label="Copier ce dessert"
-                    onPointerDown={(e) => e.stopPropagation()}
-                    onClick={(e) => { e.stopPropagation(); onCopy(); }}
-                    className={`absolute bottom-0.5 right-0.5 p-0.5 bg-black/50 text-violet-200 rounded-md z-10 transition-opacity ${IS_TOUCH ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
-                >
-                    <Copy size={10} />
-                </button>
-            )}
+            <ItemActionsMenu actions={actions} pending={removePending} compact className="top-0.5 right-0.5" />
 
             {!isAddMode && !hideActions && onSetPersons && !isEditingPersons && (
                 <button
                     aria-label="Modifier le nombre de personnes"
-                    onPointerDown={openEditor}
+                    onPointerDown={(e) => { e.stopPropagation(); openEditor(); }}
                     onClick={(e) => e.stopPropagation()}
                     className={`absolute bottom-0.5 left-0.5 flex items-center gap-0.5 text-[9px] font-black px-1 py-0.5 rounded-md z-10 shadow transition-opacity ${isPersonsCustom ? 'bg-orange-500 text-white' : 'bg-black/40 text-white'} ${IS_TOUCH ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
                 >

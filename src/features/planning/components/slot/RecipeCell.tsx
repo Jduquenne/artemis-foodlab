@@ -1,5 +1,5 @@
-import { X, Copy, Users, Snowflake, Loader2 } from 'lucide-react';
-import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
+import { X, Copy, Users, Snowflake, Scale } from 'lucide-react';
+import { ItemAction, ItemActionsMenu } from './ItemActionsMenu';
 import { isDish, isBase } from '../../../../core/domain/recipePredicates';
 import { MealPhoto } from './MealPhoto';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
@@ -28,6 +28,14 @@ export const RecipeCell = ({ slotId, recipeId, onNavigate, onRemove, onCopy, hid
     const recipeIsDish = isDish(recipe) || isBase(recipe);
     const isCustom = persons !== undefined || (!recipeIsDish && grams !== undefined);
     const removePending = usePendingKey(`planning-recipe-remove:${slotId}:${recipeId}`);
+    const metaEditable = !!onEditMeta && (recipeIsDish || defaultGrams > 0 || persons !== undefined);
+
+    const actions: ItemAction[] = [];
+    if (!hideRemove) {
+        if (metaEditable && onEditMeta) actions.push({ id: 'quantity', label: 'Quantité', icon: Scale, onSelect: onEditMeta });
+        if (onCopy) actions.push({ id: 'copy', label: 'Copier', icon: Copy, onSelect: onCopy });
+        actions.push({ id: 'remove', label: 'Retirer', icon: X, onSelect: onRemove, danger: true });
+    }
 
     return (
         <div className="relative group/cell w-full h-full min-h-0 flex-1 min-w-0">
@@ -42,7 +50,7 @@ export const RecipeCell = ({ slotId, recipeId, onNavigate, onRemove, onCopy, hid
                 )}
             </button>
 
-            {!hideRemove && onEditMeta && (recipeIsDish || defaultGrams > 0 || persons !== undefined) && (
+            {!hideRemove && metaEditable && onEditMeta && (
                 <button
                     aria-label="Modifier la quantité"
                     onPointerDown={(e) => e.stopPropagation()}
@@ -60,31 +68,11 @@ export const RecipeCell = ({ slotId, recipeId, onNavigate, onRemove, onCopy, hid
                 </button>
             )}
 
-            {!hideRemove && (
-                <button
-                    aria-label="Retirer ce repas"
-                    onPointerDown={(e) => e.stopPropagation()}
-                    onClick={(e) => { e.stopPropagation(); if (!removePending) onRemove(); }}
-                    disabled={removePending}
-                    className={`absolute top-0.5 right-0.5 p-0.5 bg-surface/90 text-red-400 rounded transition-opacity z-10 shadow-sm disabled:opacity-60 ${IS_TOUCH || removePending ? 'opacity-100' : 'opacity-0 group-hover/cell:opacity-100'}`}
-                >
-                    {removePending ? <Loader2 size={9} className="animate-spin" /> : <X size={9} />}
-                </button>
-            )}
+            <ItemActionsMenu actions={actions} pending={removePending} compact hoverScope="cell" className="top-0.5 right-0.5" />
             {inFreezer && (
                 <div className="absolute top-0.5 left-0.5 p-0.5 bg-cyan-500/80 text-white rounded z-10 shadow-sm pointer-events-none">
                     <Snowflake size={8} />
                 </div>
-            )}
-            {!hideRemove && onCopy && (
-                <button
-                    aria-label="Copier ce repas"
-                    onPointerDown={(e) => e.stopPropagation()}
-                    onClick={(e) => { e.stopPropagation(); onCopy(); }}
-                    className={`absolute bottom-0.5 right-0.5 p-0.5 bg-surface/90 text-violet-400 rounded transition-opacity z-10 shadow-sm ${IS_TOUCH ? 'opacity-100' : 'opacity-0 group-hover/cell:opacity-100'}`}
-                >
-                    <Copy size={9} />
-                </button>
             )}
         </div>
     );

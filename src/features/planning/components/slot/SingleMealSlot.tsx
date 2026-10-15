@@ -140,6 +140,7 @@ export const SingleMealSlot = ({
                     listeners={listeners}
                     attributes={attributes}
                     onModify={onModify}
+                    onEditPersons={displayPersons !== undefined && !isAnyEditing ? onOpenPersonsEditor : undefined}
                     onDelete={onDelete}
                     pending={isDeletePending}
                 />

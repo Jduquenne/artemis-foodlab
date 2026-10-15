@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-15 — Planning: meal actions menu (v6.88.0)
+
+- Done: step 4 of D-033. Every planned item (dish, breakfast/snack recipe, grid cell, dessert) now groups its actions in one « ⋯ » menu (`ItemActionsMenu` on `FloatingMenu`) instead of 2 to 4 corner buttons; badges (persons / grams, freezer) stay visible; drag handle unchanged. No behaviour change, the bottom-left corner of the dish is now free for the food choice badge. Spec `docs/spec-planning.md` § Meal actions menu.
+- Numbers: `npx tsc -b` + `npm run lint` pass; **not checked in a browser** — owner to test with `npm run dev` (desktop hover, touch, dark mode, tablet portrait; menu must not start a drag nor open the recipe; copy / add / shopping selection modes hide it).
+- Still open: step 5 (per-profile food choice on a planned meal).
+
 ## 2026-10-15 — Food groups, step 3: Recipe Builder (v6.87.0)
 
 - Done: ingredient « au choix » in the Recipe Builder (`IngredientChoiceToggle`, shown when the linked food belongs to a family; desktop row, mobile drawer, mobile card badge); `DraftIngredient.foodGroupId`, loaded by `recipeToBuilderState`, sent by `builderStateToApiBody` (`ApiIngredientInput.foodGroupId`); `applyFoodPick` takes the picked `Food` and keeps the family only within the same family; base recipes refused by `validateBuilderState`. « (au choix) » on recipe cards, « au choix » in the nutrition calculator. Spec `docs/spec-recipes.md`.

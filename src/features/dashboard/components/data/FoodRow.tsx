@@ -1,6 +1,7 @@
 import { Snowflake } from "lucide-react";
 import { Food } from "../../../../core/domain/ingredient";
 import { RowActions } from "../common/RowActions";
+import { formatMonths, hasSeason } from "../../../../core/logic/season/seasonLogic";
 
 export interface FoodRowProps {
   food: Food;
@@ -19,6 +20,7 @@ export const FoodRow = ({ food, groupName, onEdit, onAskDelete }: FoodRowProps) 
       <p className="text-xs text-slate-400 truncate">
         {food.category}
         {groupName && ` · ${groupName}`}
+        {hasSeason(food.months) && ` · ${formatMonths(food.months)}`}
       </p>
     </div>
     <span className="shrink-0 text-xs tabular-nums text-slate-500 w-16 text-right">

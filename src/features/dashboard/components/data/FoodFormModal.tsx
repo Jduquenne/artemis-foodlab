@@ -18,6 +18,7 @@ import { useFoodGroupsSnapshot } from "../../../../shared/hooks/useCatalogueSnap
 import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
 import { FormModalShell } from "../common/FormModalShell";
 import { FormField } from "../common/FormField";
+import { SeasonMonthsField } from "./SeasonMonthsField";
 import { FORM_INPUT_CLASS as INPUT_CLASS } from "../../../../shared/components/ui/formStyles";
 
 export interface FoodFormModalProps {
@@ -73,7 +74,7 @@ export const FoodFormModal = ({ food, foods, onClose, onSubmit }: FoodFormModalP
   };
 
   const confirmed = async () => {
-    const ok = await onSubmit(foodFormToBody(effectiveId.trim(), draft));
+    const ok = await onSubmit(foodFormToBody(effectiveId.trim(), draft, food));
     if (ok) onClose();
     return ok;
   };
@@ -175,6 +176,8 @@ export const FoodFormModal = ({ food, foods, onClose, onSubmit }: FoodFormModalP
           ))}
         </select>
       </FormField>
+
+      <SeasonMonthsField months={draft.months} onChange={(months) => patch({ months })} />
 
       <div className="flex flex-col gap-1.5">
         <span className="text-xs font-bold text-slate-500">Valeurs pour 100 g / 100 ml</span>

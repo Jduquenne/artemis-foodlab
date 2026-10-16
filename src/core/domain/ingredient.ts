@@ -65,4 +65,5 @@ export interface Food {
   unitWeight: number | null;
   isFreezable?: boolean;
   groupId?: string | null;
+  months?: number[];
 }

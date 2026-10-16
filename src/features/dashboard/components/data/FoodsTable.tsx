@@ -8,25 +8,30 @@ import { DataList } from "../common/DataList";
 import { useFoodGroupsSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
 import { includesAnyText, normalizeQuery } from "../../../../core/utils/textUtils";
+import { FOOD_SEASON_FILTERS, FoodSeasonFilter, filterFoodsBySeason } from "../../../../core/logic/dashboard/foodTableLogic";
+import { PillTabs } from "../common/PillTabs";
 
 export const FoodsTable = () => {
   const { foods, create, save, remove } = useCatalogueFoods();
   const groups = useFoodGroupsSnapshot();
   const [query, setQuery] = useState("");
+  const [season, setSeason] = useState<FoodSeasonFilter>("all");
   const [creating, setCreating] = useState(false);
   const [editing, setEditing] = useState<Food | null>(null);
   const [pendingDelete, setPendingDelete] = useState<Food | null>(null);
 
   const filtered = useMemo(() => {
     const needle = normalizeQuery(query);
-    if (!needle) return foods;
-    return foods.filter((food) => includesAnyText([food.name, food.category], needle));
-  }, [foods, query]);
+    const bySeason = filterFoodsBySeason(foods, season);
+    if (!needle) return bySeason;
+    return bySeason.filter((food) => includesAnyText([food.name, food.category], needle));
+  }, [foods, query, season]);
 
   return (
     <DataPanelShell
       title="Aliments"
       count={filtered.length}
+      filters={<PillTabs tabs={FOOD_SEASON_FILTERS} value={season} onChange={setSeason} compact />}
       search={{ value: query, onChange: setQuery }}
       onAdd={() => setCreating(true)}
     >

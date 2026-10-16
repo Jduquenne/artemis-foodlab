@@ -19,7 +19,7 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 ## 2026-10-16 — Per-profile default per food family (v6.98.0)
 - Done: « Préférences par famille » section in « Profils du foyer » (`FoodGroupDefaultsSection`, `FoodGroupDefaultSelect`, `shared/components/ui/profiles/`): every family with foods × every profile, select « Défaut de la recette » or a food of the family, saved on change. `profileService` `setProfileFoodGroupDefaultApi` / `deleteProfileFoodGroupDefaultApi`, `useProfileStore.setFoodGroupDefault` (API first), logic `foodGroupsWithFoods`, `findFoodGroupDefault`, `withoutFoodGroupDefault`. The modal body now scrolls (`max-h-[90dvh]`). Docs: spec-accounts, spec-planning, roadmap.
 - Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser. API endpoints already live (D-052, 2026-10-15).
-- Still open: owner tests (set a default, check the planning modal shows « préférence du profil », shopping split and journal follow it; back to « Défaut de la recette »; reload), then close #25.
+- Still open: none; tested and in prod (owner, 2026-10-16), #25 closed. Waiting for user feedback on food groups and aisles.
 
 ## 2026-10-16 — Shopping aisles live in prod (v6.97.1)
 - Done: the owner confirmed API D-053 + D-054 and the front (up to v6.97.0) in prod. `docs/api.md`: custom shopping categories moved from « Planned » to « Shopping and household » (live); roadmap focus item 2 closed.

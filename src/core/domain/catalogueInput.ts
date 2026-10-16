@@ -17,5 +17,6 @@ export interface FoodInput {
   unitWeight: number | null;
   isFreezable: boolean;
   groupId: string | null;
+  months?: number[];
   macros: { kcal: number; proteins: number; lipids: number; carbohydrates: number; fibers: number };
 }

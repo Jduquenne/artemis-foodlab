@@ -8,6 +8,7 @@ import { parseDecimal } from "../../utils/numberUtils";
 import { nextSequentialCode, validateNewCode } from "../../utils/codeUtils";
 import { atwaterKcal } from "../nutrition/atwaterLogic";
 import { foodGroupLabel } from "./foodGroupFormLogic";
+import { formatMonths, normalizeMonths, sameMonths } from "../season/seasonLogic";
 
 export interface FoodFormDraft {
   name: string;
@@ -16,6 +17,7 @@ export interface FoodFormDraft {
   unitWeight: string;
   isFreezable: boolean;
   groupId: string;
+  months: number[];
   macros: Record<keyof Macronutrients, string>;
 }
 
@@ -40,6 +42,7 @@ export function emptyFoodDraft(): FoodFormDraft {
     unitWeight: "",
     isFreezable: false,
     groupId: "",
+    months: [],
     macros: { kcal: "", proteins: "", lipids: "", carbohydrates: "", fibers: "" },
   };
 }
@@ -64,6 +67,7 @@ export function foodToDraft(food: Food): FoodFormDraft {
     unitWeight: food.unitWeight != null ? String(food.unitWeight) : "",
     isFreezable: Boolean(food.isFreezable),
     groupId: food.groupId ?? "",
+    months: normalizeMonths(food.months ?? []),
     macros: {
       kcal: String(food.macros.kcal),
       proteins: String(food.macros.proteins),
@@ -113,6 +117,7 @@ export function buildFoodRecap(
       { label: "Poids unitaire (g)", value: recapText(draft.unitWeight) },
       { label: "Congelable", value: recapBool(draft.isFreezable) },
       { label: "Famille", value: foodGroupLabel(groups, draft.groupId) },
+      { label: "Saison", value: formatMonths(draft.months) },
       ...EDITABLE_MACRO_KEYS.map((key) => ({ label: MACRO_LABELS[key], value: recapText(draft.macros[key]) })),
       { label: "Kcal (Atwater)", value: draftKcal },
     ];
@@ -126,6 +131,7 @@ export function buildFoodRecap(
   add(diffEntry("Poids unitaire (g)", recapText(before.unitWeight), recapText(draft.unitWeight)));
   add(diffEntry("Congelable", recapBool(before.isFreezable), recapBool(draft.isFreezable)));
   add(diffEntry("Famille", foodGroupLabel(groups, before.groupId), foodGroupLabel(groups, draft.groupId)));
+  add(diffEntry("Saison", formatMonths(before.months), formatMonths(draft.months)));
   for (const key of EDITABLE_MACRO_KEYS) {
     add(diffEntry(MACRO_LABELS[key], recapText(before.macros[key]), recapText(draft.macros[key])));
   }
@@ -133,7 +139,13 @@ export function buildFoodRecap(
   return changes;
 }
 
-export function foodFormToBody(id: string, draft: FoodFormDraft): FoodInput {
+function monthsField(original: Food | null, draft: FoodFormDraft): Pick<FoodInput, "months"> {
+  const months = normalizeMonths(draft.months);
+  const unchanged = original ? sameMonths(original.months ?? [], months) : months.length === 0;
+  return unchanged ? {} : { months };
+}
+
+export function foodFormToBody(id: string, draft: FoodFormDraft, original: Food | null): FoodInput {
   const categoryId = draft.category ? getIngredientCategoryId(draft.category) : undefined;
   if (!categoryId) throw new Error("Catégorie inconnue de l'API.");
   return {
@@ -144,6 +156,7 @@ export function foodFormToBody(id: string, draft: FoodFormDraft): FoodInput {
     unitWeight: parseDecimal(draft.unitWeight),
     isFreezable: draft.isFreezable,
     groupId: draft.groupId || null,
+    ...monthsField(original, draft),
     macros: (() => {
       const editable = parseEditableMacros(draft.macros);
       return { kcal: atwaterKcal(editable), ...editable };

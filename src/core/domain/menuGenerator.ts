@@ -31,3 +31,22 @@ export interface RecipeDietProfile {
   hasMeat: boolean;
   hasFish: boolean;
 }
+
+export const KCAL_SLOT_SHARE: Record<GeneratedSlotType, number> = {
+  [MealType.LUNCH]: 0.35,
+  [MealType.DINNER]: 0.3,
+};
+
+export const KCAL_TOLERANCE = 0.15;
+
+export const RECENT_HISTORY_WEEKS = 3;
+
+export interface GeneratedMeal {
+  key: string;
+  day: PeriodDay;
+  slot: GeneratedSlotType;
+  recipeCode: string | null;
+  kept: boolean;
+  locked: boolean;
+  reasons: string[];
+}

@@ -1,4 +1,4 @@
-import { FoodChoice, FoodGroupDefault, ResolvedFood } from "../../domain/foodGroup";
+import { FoodChoice, FoodGroup, FoodGroupDefault, ResolvedFood } from "../../domain/foodGroup";
 import { Food, Ingredient } from "../../domain/ingredient";
 import { Profile } from "../../domain/profile";
 import { RecipeDetails } from "../../domain/recipe";
@@ -7,6 +7,11 @@ import { compareByName } from "../../utils/sortUtils";
 export type FoodChoiceStatus = "none" | "partial" | "complete";
 
 export type FoodChoicesByCode = Record<string, FoodChoice[]>;
+
+export interface FoodGroupWithFoods {
+  group: FoodGroup;
+  foods: Food[];
+}
 
 export interface FoodPersonalization {
   profile: Pick<Profile, "id" | "foodGroupDefaults">;
@@ -52,6 +57,21 @@ export function groupIngredientsOf(recipe: { ingredients: Ingredient[] } | undef
 
 export function foodsOfGroupSorted(foods: Record<string, Food>, groupId: string): Food[] {
   return Object.values(foods).filter((food) => food.groupId === groupId).sort(compareByName);
+}
+
+export function foodGroupsWithFoods(groups: readonly FoodGroup[], foods: Record<string, Food>): FoodGroupWithFoods[] {
+  return [...groups]
+    .sort(compareByName)
+    .map((group) => ({ group, foods: foodsOfGroupSorted(foods, group.id) }))
+    .filter((entry) => entry.foods.length > 0);
+}
+
+export function findFoodGroupDefault(defaults: readonly FoodGroupDefault[], groupId: string): string | null {
+  return defaults.find((d) => d.foodGroupId === groupId)?.foodId ?? null;
+}
+
+export function withoutFoodGroupDefault<T extends Pick<Profile, "foodGroupDefaults">>(profile: T, groupId: string): T {
+  return { ...profile, foodGroupDefaults: profile.foodGroupDefaults.filter((d) => d.foodGroupId !== groupId) };
 }
 
 export function foodChoiceStatus(

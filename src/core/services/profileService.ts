@@ -41,6 +41,16 @@ export async function updateProfileApi(id: string, input: UpdateProfileInput): P
   );
 }
 
+export async function setProfileFoodGroupDefaultApi(profileId: string, groupId: string, foodId: string): Promise<Profile> {
+  return mapProfile(
+    await apiFetchJson<ApiProfile>(`/profiles/${profileId}/food-group-defaults/${groupId}`, { method: "PUT", body: { foodId } }),
+  );
+}
+
+export async function deleteProfileFoodGroupDefaultApi(profileId: string, groupId: string): Promise<void> {
+  await apiFetch(`/profiles/${profileId}/food-group-defaults/${groupId}`, { method: "DELETE" });
+}
+
 export async function deleteProfileApi(id: string): Promise<void> {
   await apiFetch(`/profiles/${id}`, { method: "DELETE" });
 }

@@ -6,8 +6,11 @@ import {
   UpdateProfileInput,
   createProfileApi,
   deleteProfileApi,
+  deleteProfileFoodGroupDefaultApi,
+  setProfileFoodGroupDefaultApi,
   updateProfileApi,
 } from "../../core/services/profileService";
+import { withoutFoodGroupDefault } from "../../core/logic/foodGroup/foodChoiceLogic";
 import {
   replaceProfileInList,
   resolveActiveProfileId,
@@ -22,6 +25,7 @@ interface ProfileState {
   createProfile: (input: CreateProfileInput) => Promise<Profile>;
   updateProfile: (id: string, input: UpdateProfileInput) => Promise<void>;
   deleteProfile: (id: string) => Promise<void>;
+  setFoodGroupDefault: (profileId: string, groupId: string, foodId: string | null) => Promise<void>;
 }
 
 export const useProfileStore = create<ProfileState>()(
@@ -49,6 +53,15 @@ export const useProfileStore = create<ProfileState>()(
         await deleteProfileApi(id);
         const remaining = get().profiles.filter((p) => p.id !== id);
         set({ profiles: remaining, activeProfileId: resolveActiveProfileId(remaining, get().activeProfileId) });
+      },
+      setFoodGroupDefault: async (profileId, groupId, foodId) => {
+        if (foodId) {
+          const updated = await setProfileFoodGroupDefaultApi(profileId, groupId, foodId);
+          set({ profiles: replaceProfileInList(get().profiles, updated) });
+          return;
+        }
+        await deleteProfileFoodGroupDefaultApi(profileId, groupId);
+        set({ profiles: get().profiles.map((p) => (p.id === profileId ? withoutFoodGroupDefault(p, groupId) : p)) });
       },
     }),
     {

@@ -5,6 +5,7 @@ import { canAddProfile } from "../../../../core/logic/profile/profileLogic";
 import { useProfileStore } from "../../../store/useProfileStore";
 import { ProfileRow } from "./ProfileRow";
 import { NewProfileForm } from "./NewProfileForm";
+import { FoodGroupDefaultsSection } from "./FoodGroupDefaultsSection";
 
 export interface ProfilesModalProps {
   onClose: () => void;
@@ -22,7 +23,7 @@ export const ProfilesModal = ({ onClose }: ProfilesModalProps) => {
       onClick={(e) => { if (e.target === e.currentTarget) handleClose(); }}
     >
       <div
-        className={`w-full max-w-sm bg-surface rounded-2xl shadow-2xl flex flex-col overflow-hidden ${
+        className={`w-full max-w-sm max-h-[90dvh] bg-surface rounded-2xl shadow-2xl flex flex-col overflow-hidden ${
           isClosing ? "modal-center-exit" : "modal-center-enter"
         }`}
       >
@@ -42,7 +43,7 @@ export const ProfilesModal = ({ onClose }: ProfilesModalProps) => {
           </button>
         </div>
 
-        <div className="px-5 py-4 flex flex-col gap-3">
+        <div className="px-5 py-4 flex flex-col gap-3 overflow-y-auto min-h-0">
           {profiles.map((profile) => (
             <ProfileRow key={profile.id} profile={profile} canDelete={profiles.length > 1} />
           ))}
@@ -53,6 +54,7 @@ export const ProfilesModal = ({ onClose }: ProfilesModalProps) => {
               Maximum de {MAX_PROFILES} profils atteint.
             </p>
           )}
+          <FoodGroupDefaultsSection profiles={profiles} />
         </div>
       </div>
     </div>

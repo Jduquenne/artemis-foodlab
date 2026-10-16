@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-16 — Shopping aisles live in prod (v6.97.1)
+- Done: the owner confirmed API D-053 + D-054 and the front (up to v6.97.0) in prod. `docs/api.md`: custom shopping categories moved from « Planned » to « Shopping and household » (live); roadmap focus item 2 closed.
+- Still open: user feedback on aisles and on food groups; UI for the per-profile food-group default (`PUT /profiles/:id/food-group-defaults/:groupId`, #25).
+
 ## 2026-10-16 — Custom aisles, step 3: aisle in the extra form (v6.97.0)
 
 - Done: `AddExtraModal` « Rayon » select lists the household's aisles in path order (shared + custom « · perso »); `extraAisleId` / `extraAisleFields` (`shoppingCategoryOrderLogic.ts`) map the choice to `categoryId` or `customShoppingCategoryId` (exclusive); picking a catalogue food still selects its shared category. `ExtraInput.customShoppingCategoryId`. Spec `docs/spec-shopping.md`, roadmap focus.

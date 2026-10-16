@@ -6,7 +6,7 @@ The detailed backlog and future features live in `dev/issues.json` and `dev/refa
 ## Current focus
 
 1. 🟡 Food groups and per-profile cheese choice on planned meals (D-033, `dev/issues.json` #25), first step toward the profile tastes feature (#20-#24). **In prod (API + front, 2026-10-15)**: Dashboard « Familles », Recipe Builder « au choix », meal actions menu, per-profile choice + quantity, shopping split, journal (v6.85.0 → v6.92.0). Owner feedback pending. Remaining: profile default per family UI (`PUT /profiles/:id/food-group-defaults/:groupId`, not started).
-2. 🟡 Shopping aisles (owner, 2026-10-15/16): per-account aisle order (API D-053, **live in prod**; front v6.93.0-6.94.0) and custom per-account aisles (API D-054, **not deployed**; front v6.95.0-6.97.0: grouping, management in « Ordre des rayons », aisle choice in the extra form). Push `master` only once the API session confirms D-054 in prod; owner tests pending.
+2. ✅ Shopping aisles (owner, 2026-10-15/16): per-account aisle order (API D-053, **live in prod**; front v6.93.0-6.94.0) and custom per-account aisles (API D-054; front v6.95.0-6.97.0: grouping, management in « Ordre des rayons », aisle choice in the extra form). **In prod (API + front, 2026-10-16)**; awaiting user feedback.
 3. ✅ Owner browser tests of everything delivered up to v6.84.3: all validated (2026-10-15).
 4. ⏸ Tablet portrait pass (P5) paused by the owner on 2026-10-15 (no longer a priority).
 

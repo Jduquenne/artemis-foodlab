@@ -252,3 +252,14 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
   - **Planning**: choices follow the meal on move and copy; replacing the dish drops them.
   - **V1 limits**: no group ingredient inside a base recipe; allowed in demo (user data, cascades with the profile and the planning item).
 - **Alternatives considered**: recipe variants per cheese (catalogue explosion, no per-profile choice); choice only in the shopping list (journal wrong, no per-profile choice); a candidate list per recipe ingredient instead of a reusable group (to re-enter in every recipe).
+
+## D-034 — Food seasons by month
+
+- **Date**: 2026-10-16
+- **Status**: accepted (owner); API D-055 not deployed yet
+- **Context**: the weekly menu generator (roadmap § Ideas) should favour seasonal recipes from the first generation. Nothing in the catalogue said when a fruit or vegetable is in season.
+- **Decision**:
+  - **Data**: `Food.months` (1..12, `[]` = all year), on foods only, any category; mostly filled for « Fruits et légumes ». Months rather than 4 seasons (more precise, covers the seasons).
+  - **Source**: ADEME Impact CO2 calendar (France), plus common sense for staples kept all year (garlic, onions, shallot, carrots, lemon) so that most savoury recipes are not blocked out of season; foods missing from ADEME (processed, imported, potatoes…) set by hand. Imported once by an API script, then edited in the Dashboard.
+  - **Recipe season**: derived client-side, never stored: a recipe is in season for a month when every seasonal food it uses (bases included) is.
+- **Alternatives considered**: 4 seasons (too coarse: strawberries vs squash); a season on recipes (redundant with their foods, drifts when a recipe changes); a server-side month filter (the catalogue is already in memory).

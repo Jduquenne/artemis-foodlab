@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-16 — Food seasons, step 1: months in the Dashboard (v6.99.0)
+- Done: `Food.months?` / `FoodInput.months?` (D-034, API D-055). `core/logic/season/seasonLogic.ts`: `normalizeMonths` (sorted, 12 → `[]` like the API), `toggleMonth`, `sameMonths`, `formatMonths` (ranges across the year end, « Toute l'année »), `hasSeason`. Food form « Saison » (`SeasonMonthsField`), recap line, `months` sent only when changed. Foods list: season next to the category, filter « Tous / De saison / F&L toute l'année » (`foodTableLogic.ts`). Season data: ADEME-based file validated by the owner (94 foods, 70 seasonal), dev dry-run OK (70 changes, 24 unchanged, 0 unknown). Docs: decisions D-034, api (Planned), spec-admin.
+- Numbers: `npx tsc -b` + `npm run lint` pass; `formatMonths` checked with a throwaway `tsx` script (« sept. → févr. », « avr., juin → nov. », 12 months → « Toute l'année »); not checked in a browser. **Depends on API D-055 (not deployed)** to store a season; editing a food without touching the season is unchanged on the current prod API.
+- Still open: owner pushes the API (D-054 + D-055, neither applied in prod on 2026-10-16 13:34 UTC; the prod front already exposes custom aisle management, which gets 404 until then) → prod dry-run of the seasons import → owner's go → `--apply`. Next front step: recipe season logic for the generator.
+
 ## 2026-10-16 — Per-profile default per food family (v6.98.0)
 - Done: « Préférences par famille » section in « Profils du foyer » (`FoodGroupDefaultsSection`, `FoodGroupDefaultSelect`, `shared/components/ui/profiles/`): every family with foods × every profile, select « Défaut de la recette » or a food of the family, saved on change. `profileService` `setProfileFoodGroupDefaultApi` / `deleteProfileFoodGroupDefaultApi`, `useProfileStore.setFoodGroupDefault` (API first), logic `foodGroupsWithFoods`, `findFoodGroupDefault`, `withoutFoodGroupDefault`. The modal body now scrolls (`max-h-[90dvh]`). Docs: spec-accounts, spec-planning, roadmap.
 - Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser. API endpoints already live (D-052, 2026-10-15).

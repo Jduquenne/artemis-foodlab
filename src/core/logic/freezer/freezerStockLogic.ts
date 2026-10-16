@@ -1,4 +1,4 @@
-import { FoodFreezerItem, FreezerBag, FreezerCategory, FreezerItem } from "../../domain/freezer";
+import { BatchFreezerItem, FoodFreezerItem, FreezerBag, FreezerCategory, FreezerItem } from "../../domain/freezer";
 import { isBatchItem, isFoodItem } from "../../domain/freezerPredicates";
 import { formatQty, pluralizeUnit } from "../unit/unitFormatLogic";
 import { groupBy, sumBy } from "../../utils/collectionUtils";
@@ -33,6 +33,23 @@ export function getFoodBagsSummary(item: FoodFreezerItem): string {
     return `${bagsLabel} · ${formatQty(total)}${unit ? " " + pluralizeUnit(unit, total) : ""}`;
   }
   return bagsLabel;
+}
+
+export interface FreezerBatchStock {
+  recipeCode: string;
+  portions: number;
+  addedDate: string;
+}
+
+export function freezerBatchStocks(categories: FreezerCategory[]): FreezerBatchStock[] {
+  const batches = flattenFreezerItems(categories).filter(isBatchItem).filter((item) => item.portions > 0);
+  return [...groupBy(batches, (item: BatchFreezerItem) => item.recipeId).entries()]
+    .map(([recipeCode, items]) => ({
+      recipeCode,
+      portions: sumBy(items, (item) => item.portions),
+      addedDate: items.map((item) => item.addedDate).sort()[0],
+    }))
+    .sort((a, b) => a.addedDate.localeCompare(b.addedDate) || a.recipeCode.localeCompare(b.recipeCode));
 }
 
 export function getBatchRecipeIdsInFreezer(categories: FreezerCategory[]): Set<string> {

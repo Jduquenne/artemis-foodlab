@@ -5,6 +5,8 @@ import { RecipeDetails } from "../../domain/recipe";
 import { createSeededRandom, pickRandom } from "../../utils/randomUtils";
 import { weeksSinceIsoWeek } from "../../utils/weekUtils";
 import { MenuCatalogue, dayCandidates, slotCandidates } from "./candidateLogic";
+import { FreezerBatchStock } from "../freezer/freezerStockLogic";
+import { FreezerPlan, createFreezerPlan, takeFreezerMeal } from "./freezerPlanLogic";
 import { scoreCandidate } from "./mealScoreLogic";
 
 export interface MenuEngineInput {
@@ -16,6 +18,8 @@ export interface MenuEngineInput {
   weeksSinceEaten: Record<string, number>;
   existing: Record<string, string[]>;
   locked: Record<string, string>;
+  freezer: readonly FreezerBatchStock[];
+  householdSize: number;
   seed: number;
 }
 
@@ -54,6 +58,9 @@ export function generateMenu(input: MenuEngineInput): GeneratedMeal[] {
   for (const code of Object.values(input.locked)) used.add(code);
   const meals: GeneratedMeal[] = [];
   let previousCategoryId: string | null = null;
+  const freezerPlan: FreezerPlan | null = settings.freezerFirst
+    ? createFreezerPlan(input.freezer, input.householdSize, Object.values(input.existing).flat())
+    : null;
 
   for (const day of days) {
     const sameDayCategoryIds: string[] = [];
@@ -74,6 +81,22 @@ export function generateMenu(input: MenuEngineInput): GeneratedMeal[] {
         meals.push({ key, day, slot, recipeCode: lockedCode, kept: false, locked: true, reasons: ["Gardée par toi"] });
         previousCategoryId = categoryOf(lockedCode);
         if (previousCategoryId) sameDayCategoryIds.push(previousCategoryId);
+        continue;
+      }
+
+      const frozen = freezerPlan
+        ? takeFreezerMeal(freezerPlan, {
+            candidates: candidatesBySlot.get(slot) ?? [],
+            index: meals.length,
+            previousCategoryId,
+            sameDayCategoryIds,
+          })
+        : null;
+      if (frozen) {
+        used.add(frozen.recipe.code);
+        meals.push({ key, day, slot, recipeCode: frozen.recipe.code, kept: false, locked: false, reasons: [frozen.reason] });
+        previousCategoryId = frozen.recipe.categoryId;
+        sameDayCategoryIds.push(frozen.recipe.categoryId);
         continue;
       }
 

@@ -17,6 +17,7 @@ export interface MenuGeneratorSettings {
   diet: DietFilter;
   excludedFoodIds: string[];
   season: SeasonMode;
+  freezerFirst: boolean;
 }
 
 export interface PeriodDay {

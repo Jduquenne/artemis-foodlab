@@ -3,6 +3,8 @@ import { DndContext, DragEndEvent, KeyboardSensor, PointerSensor, TouchSensor, c
 import { SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { ListOrdered, Loader2, RotateCcw } from 'lucide-react';
 import { ShoppingAisle } from '../../../../core/domain/shopping';
+import { ConfirmActionModal } from '../../../../shared/components/ui/ConfirmActionModal';
+import { AddAisleForm } from './AddAisleForm';
 import {
     defaultShoppingAisles,
     moveShoppingAisle,
@@ -26,7 +28,12 @@ export const CategoryOrderModal = ({ initialOrder, onClose }: CategoryOrderModal
     const setUser = useAuthStore((s) => s.setUser);
     const pending = usePendingKey(PENDING_KEY);
     const customCategories = useCustomShoppingCategoryStore((s) => s.categories);
-    const [order, setOrder] = useState<ShoppingAisle[]>(initialOrder);
+    const renameCategory = useCustomShoppingCategoryStore((s) => s.renameCategory);
+    const deleteCategory = useCustomShoppingCategoryStore((s) => s.deleteCategory);
+    const [orderIds, setOrderIds] = useState<string[]>(() => initialOrder.map((aisle) => aisle.id));
+    const [pendingDelete, setPendingDelete] = useState<ShoppingAisle | null>(null);
+    const aislesById = new Map(defaultShoppingAisles(customCategories).map((aisle) => [aisle.id, aisle]));
+    const order = orderIds.map((id) => aislesById.get(id)).filter((aisle): aisle is ShoppingAisle => aisle !== undefined);
     const sensors = useSensors(
         useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
         useSensor(TouchSensor, { activationConstraint: { delay: 150, tolerance: 5 } }),
@@ -35,19 +42,30 @@ export const CategoryOrderModal = ({ initialOrder, onClose }: CategoryOrderModal
 
     const handleDragEnd = ({ active, over }: DragEndEvent) => {
         if (!over || active.id === over.id) return;
-        setOrder((prev) => moveShoppingAisle(
+        setOrderIds((prev) => moveShoppingAisle(
             prev,
-            prev.findIndex((a) => a.id === active.id),
-            prev.findIndex((a) => a.id === over.id),
+            prev.findIndex((id) => id === active.id),
+            prev.findIndex((id) => id === over.id),
         ));
     };
 
     const save = async () => {
         const ok = await withPending(PENDING_KEY, async () => {
-            setUser(await updateMe({ shoppingCategoryOrder: shoppingAisleOrderPayload(order, customCategories) }));
+            setUser(await updateMe({ shoppingCategoryOrder: shoppingAisleOrderPayload(orderIds, customCategories) }));
             return true;
         }).catch(() => false);
         if (ok) onClose();
+    };
+
+    const confirmDelete = async (aisle: ShoppingAisle) => {
+        const ok = await withPending(`shopping-aisle-delete:${aisle.id}`, async () => {
+            await deleteCategory(aisle.id);
+            return true;
+        }).catch(() => false);
+        if (!ok) return false;
+        setOrderIds((prev) => prev.filter((id) => id !== aisle.id));
+        setPendingDelete(null);
+        return true;
     };
 
     return (
@@ -61,6 +79,9 @@ export const CategoryOrderModal = ({ initialOrder, onClose }: CategoryOrderModal
                     <p className="text-xs text-slate-500 mt-1">
                         Range les rayons dans l'ordre de ton parcours en magasin. « Autres » et « Articles du quotidien » restent à la fin.
                     </p>
+                    <div className="mt-3">
+                        <AddAisleForm disabled={pending} onCreated={(id) => setOrderIds((prev) => [...prev, id])} />
+                    </div>
                 </div>
 
                 <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
@@ -74,7 +95,9 @@ export const CategoryOrderModal = ({ initialOrder, onClose }: CategoryOrderModal
                                     isFirst={index === 0}
                                     isLast={index === order.length - 1}
                                     disabled={pending}
-                                    onMove={(delta) => setOrder((prev) => moveShoppingAisle(prev, index, index + delta))}
+                                    onMove={(delta) => setOrderIds((prev) => moveShoppingAisle(prev, index, index + delta))}
+                                    onRename={aisle.kind === 'custom' ? (label) => renameCategory(aisle.id, label) : undefined}
+                                    onAskDelete={aisle.kind === 'custom' ? () => setPendingDelete(aisle) : undefined}
                                 />
                             ))}
                         </ul>
@@ -84,7 +107,7 @@ export const CategoryOrderModal = ({ initialOrder, onClose }: CategoryOrderModal
                 <div className="px-5 pt-3 pb-5 flex flex-col gap-2 shrink-0">
                     <button
                         type="button"
-                        onClick={() => setOrder(defaultShoppingAisles(customCategories))}
+                        onClick={() => setOrderIds(defaultShoppingAisles(customCategories).map((aisle) => aisle.id))}
                         disabled={pending}
                         className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl border border-slate-200 text-slate-500 text-sm font-semibold hover:text-orange-600 hover:border-orange-300 transition-colors disabled:opacity-50"
                     >
@@ -110,6 +133,18 @@ export const CategoryOrderModal = ({ initialOrder, onClose }: CategoryOrderModal
                     </button>
                 </div>
             </div>
+
+            {pendingDelete && (
+                <ConfirmActionModal
+                    title="Supprimer ce rayon ?"
+                    recap={[{ label: 'Rayon', value: pendingDelete.label }]}
+                    consequence="Le rayon disparaît de ton parcours. Les articles ajoutés dans ce rayon passent dans « Autres »."
+                    confirmLabel="Supprimer"
+                    danger
+                    onConfirm={() => confirmDelete(pendingDelete)}
+                    onCancel={() => setPendingDelete(null)}
+                />
+            )}
         </div>
     );
 };

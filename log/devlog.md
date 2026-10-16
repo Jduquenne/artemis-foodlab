@@ -16,6 +16,13 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-16 — Custom aisles, step 2: manage aisles in the window (v6.96.0)
+
+- Done: `customShoppingCategoryService` (create / rename / delete) and store actions (API first, no optimistic update); « Ordre des rayons » window: `AddAisleForm` (cap 30, `MAX_CUSTOM_SHOPPING_CATEGORIES`), inline rename on tap, delete with `ConfirmActionModal` (extras to « Autres »), « perso » badge; the draft order is now a list of ids (`shoppingAisleOrderPayload` takes ids and drops unknown ones). Spec `docs/spec-shopping.md`.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser. **Depends on API D-054 (not deployed)** — do not push before the API session confirms prod.
+- To test (local API with D-054): create (Enter and ＋), duplicate label in another case (409 toast), 30 limit, rename (Enter, blur, Escape), delete then check an extra of that aisle in « Autres », reorder with a custom aisle and save, reload.
+- Still open: step 3 (aisle choice in the extra form).
+
 ## 2026-10-16 — Custom aisles, step 1: read and group (v6.95.0)
 
 - Done: API D-053 live in prod (contract moved to `docs/api.md` § Shopping and household); D-054 (custom categories) recorded in § Planned (captured in dev, **not deployed**). Front: `CustomShoppingCategory`, `ShoppingAisle` (shared | custom), `useCustomShoppingCategoryStore` filled from `/bootstrap` (`customShoppingCategories ?? []`); `resolveShoppingAisles` / `defaultShoppingAisles` / `shoppingAisleOrderPayload` / `moveShoppingAisle` replace the category-only helpers; grouping by aisle (`IngredientGroup.key`, extras with `customShoppingCategoryId` under their aisle); « Ordre des rayons » window lists custom aisles too. Spec `docs/spec-shopping.md`.

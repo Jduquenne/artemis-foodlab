@@ -31,6 +31,8 @@ export interface ConsolidatedIngredient {
   customCategoryId?: string;
 }
 
+export const MAX_CUSTOM_SHOPPING_CATEGORIES = 30;
+
 export interface CustomShoppingCategory {
   id: string;
   label: string;

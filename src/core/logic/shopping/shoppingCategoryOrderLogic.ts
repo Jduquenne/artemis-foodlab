@@ -73,10 +73,12 @@ export function moveShoppingAisle<T>(order: readonly T[], from: number, to: numb
 }
 
 export function shoppingAisleOrderPayload(
-  order: readonly ShoppingAisle[],
+  orderIds: readonly string[],
   customCategories: readonly CustomShoppingCategory[],
 ): string[] | null {
   const defaults = defaultShoppingAisles(customCategories);
-  const isDefault = order.length === defaults.length && order.every((aisle, index) => aisle.id === defaults[index].id);
-  return isDefault ? null : order.map((aisle) => aisle.id);
+  const knownIds = new Set(defaults.map((aisle) => aisle.id));
+  const ids = orderIds.filter((id) => knownIds.has(id));
+  const isDefault = ids.length === defaults.length && ids.every((id, index) => id === defaults[index].id);
+  return isDefault ? null : ids;
 }

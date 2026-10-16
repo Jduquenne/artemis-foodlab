@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-16 — Recipe Builder: no default meal types (v6.100.1)
+- Done: a new draft starts with no meal type checked (was lunch + dinner); the existing validation already makes at least one mandatory for a non-base recipe. Context: the API data audit (2026-10-16, read-only) showed 668 of 685 dishes with lunch, pastries and cereal products included, inherited from the old default; the menu generator relies on meal types. Spec `docs/spec-recipes.md`.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser (« Nouvelle recette »: no chip selected, save without one → « Sélectionne au moins un type de repas. »).
+- Still open: per-recipe meal types review: API export `recipes-meal-types.json` → pre-filled proposal + local HTML review page (front) → owner review → API `import:recipe-meal-types` dry-run → `--apply`. Data fixes from the audit pending the owner's answers: vm-011 « Protéines de soja texturées » filed as meat (target ingredient category to choose, API script for the food and the recipe ingredient rows), 4 `base-*` dishes in the « Bases » category (base-043, base-046, base-047, base-049), 3 foods used per piece / portion without unit weight (fs-002, ha-008, pl-023). Menu generator paused until meal types are clean.
+
 ## 2026-10-16 — Menu generator, step 4: settings window and preview (v6.100.0)
 - Done: « Générer » button in the Planning header (admins only, `useIsAdmin`), `MenuGeneratorModal` with `GeneratorSettingsForm` (period, meals, diet, season, excluded foods, freezer first), `ChoicePills`, `ExcludedFoodsField`, read-only `GeneratorPreview` (per day, reasons, kept slots « Déjà prévu »), « Autre proposition » (new seed) and « Réglages ». Logic `generatorSettingsLogic.ts` (`defaultGeneratorSettings`, `validateGeneratorSettings`, toggles, `existingMealsByKey`) and `menuPreviewLogic.ts` (`groupMealsByDay`, `countGeneratedMeals`). Hook `useMenuGenerator` loads the period weeks, history, freezer and profile, then runs `generateMenu`. Spec `docs/spec-planning.md` § Menu generator.
 - Numbers: `npx tsc -b` + `npm run lint` pass; **not checked in a browser** (to test with `npm run dev` as an admin).

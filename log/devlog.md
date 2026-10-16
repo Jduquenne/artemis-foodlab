@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-16 — API D-054 and D-055 live, food seasons imported (v6.99.1)
+- Done: the API session confirmed D-054 (custom shopping categories) and D-055 (food seasons) in prod (migrations applied 2026-10-16 13:54 UTC, `CHECK`s present). Before that, the prod front (v6.95.0+) showed custom aisle management against an API without the route (404). Seasons: prod dry-run checked line by line against the validated file, then `--apply` with the owner's go: 70 foods written, 0 mismatch. `docs/api.md`: food seasons moved from « Planned » to « Catalogue writes »; D-034 and roadmap updated.
+- Still open: owner checks in the app (Dashboard › Aliments « De saison » = 70 foods; « Ordre des rayons »: create a custom aisle); authenticated API checks not run (no prod demo account, owner's choice). Next front step: recipe season logic for the menu generator.
+
 ## 2026-10-16 — Food seasons, step 1: months in the Dashboard (v6.99.0)
 - Done: `Food.months?` / `FoodInput.months?` (D-034, API D-055). `core/logic/season/seasonLogic.ts`: `normalizeMonths` (sorted, 12 → `[]` like the API), `toggleMonth`, `sameMonths`, `formatMonths` (ranges across the year end, « Toute l'année »), `hasSeason`. Food form « Saison » (`SeasonMonthsField`), recap line, `months` sent only when changed. Foods list: season next to the category, filter « Tous / De saison / F&L toute l'année » (`foodTableLogic.ts`). Season data: ADEME-based file validated by the owner (94 foods, 70 seasonal), dev dry-run OK (70 changes, 24 unchanged, 0 unknown). Docs: decisions D-034, api (Planned), spec-admin.
 - Numbers: `npx tsc -b` + `npm run lint` pass; `formatMonths` checked with a throwaway `tsx` script (« sept. → févr. », « avr., juin → nov. », 12 months → « Toute l'année »); not checked in a browser. **Depends on API D-055 (not deployed)** to store a season; editing a food without touching the season is unchanged on the current prod API.

@@ -256,7 +256,7 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
 ## D-034 — Food seasons by month
 
 - **Date**: 2026-10-16
-- **Status**: accepted (owner); API D-055 not deployed yet
+- **Status**: accepted (owner); API D-055 live in prod 2026-10-16, seasons imported (70 foods)
 - **Context**: the weekly menu generator (roadmap § Ideas) should favour seasonal recipes from the first generation. Nothing in the catalogue said when a fruit or vegetable is in season.
 - **Decision**:
   - **Data**: `Food.months` (1..12, `[]` = all year), on foods only, any category; mostly filled for « Fruits et légumes ». Months rather than 4 seasons (more precise, covers the seasons).

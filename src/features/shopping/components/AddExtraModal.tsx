@@ -1,8 +1,11 @@
 import { useMemo, useState } from "react";
 import { X, Search } from "lucide-react";
-import { Food, IngredientCategory, Unit } from "../../../core/domain/ingredient";
+import { Food, Unit } from "../../../core/domain/ingredient";
 import { useFoodsSnapshot } from "../../../shared/hooks/useCatalogueSnapshot";
-import { getIngredientCategoryFromSlug, getIngredientCategoryId } from "../../../core/domain/ingredientCategorySlugs";
+import { getIngredientCategoryId } from "../../../core/domain/ingredientCategorySlugs";
+import { extraAisleFields, extraAisleId, resolveShoppingAisles } from "../../../core/logic/shopping/shoppingCategoryOrderLogic";
+import { useAuthStore } from "../../../shared/store/useAuthStore";
+import { useCustomShoppingCategoryStore } from "../../../shared/store/useCustomShoppingCategoryStore";
 import { getCodeById, getIdByCode } from "../../../core/catalogue/recipeIdMap";
 import { searchFoods } from "../../../core/logic/recipeBuilder/ingredientSearchLogic";
 import { ApiShoppingExtra } from "../../../core/logic/shopping/shoppingApiMapper";
@@ -25,9 +28,10 @@ export const AddExtraModal = ({ extra, plannedRecipes, onClose, onSubmit }: AddE
   const [name, setName] = useState(extra?.name ?? "");
   const [quantity, setQuantity] = useState(extra?.quantity != null ? String(extra.quantity) : "");
   const [unit, setUnit] = useState<string>(extra?.unit ?? "");
-  const [category, setCategory] = useState<IngredientCategory | "">(
-    extra?.categoryId ? getIngredientCategoryFromSlug(extra.categoryId) ?? "" : "",
-  );
+  const savedOrder = useAuthStore((s) => s.user?.shoppingCategoryOrder);
+  const customCategories = useCustomShoppingCategoryStore((s) => s.categories);
+  const aisles = useMemo(() => resolveShoppingAisles(savedOrder, customCategories), [savedOrder, customCategories]);
+  const [aisleId, setAisleId] = useState<string>(() => extraAisleId(extra));
   const [foodId, setFoodId] = useState<string | null>(extra?.foodId ?? null);
   const [recipeCode, setRecipeCode] = useState<string>(
     extra?.recipeId ? getCodeById(extra.recipeId) ?? "" : "",
@@ -45,7 +49,7 @@ export const AddExtraModal = ({ extra, plannedRecipes, onClose, onSubmit }: AddE
     setFoodId(food.id);
     setName(food.name);
     if (food.unit) setUnit(food.unit);
-    setCategory(food.category);
+    setAisleId(getIngredientCategoryId(food.category) ?? "");
     setFoodQuery("");
   };
 
@@ -67,7 +71,7 @@ export const AddExtraModal = ({ extra, plannedRecipes, onClose, onSubmit }: AddE
       name: name.trim(),
       quantity: qty,
       unit: unit.trim() || null,
-      categoryId: category ? getIngredientCategoryId(category) ?? null : null,
+      ...extraAisleFields(aisles.find((aisle) => aisle.id === aisleId), Boolean(extra?.customShoppingCategoryId)),
       foodId,
       recipeId: recipeCode ? getIdByCode(recipeCode) ?? null : null,
     };
@@ -156,13 +160,15 @@ export const AddExtraModal = ({ extra, plannedRecipes, onClose, onSubmit }: AddE
           <label className="flex flex-col gap-1">
             <span className="text-xs font-bold text-slate-500">Rayon</span>
             <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value as IngredientCategory | "")}
+              value={aisleId}
+              onChange={(e) => setAisleId(e.target.value)}
               className={INPUT_CLASS}
             >
               <option value="">— Autre —</option>
-              {Object.values(IngredientCategory).map((c) => (
-                <option key={c} value={c}>{c}</option>
+              {aisles.map((aisle) => (
+                <option key={aisle.id} value={aisle.id}>
+                  {aisle.kind === "custom" ? `${aisle.label} · perso` : aisle.label}
+                </option>
               ))}
             </select>
           </label>

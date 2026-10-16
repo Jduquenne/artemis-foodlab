@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-16 — Custom aisles, step 3: aisle in the extra form (v6.97.0)
+
+- Done: `AddExtraModal` « Rayon » select lists the household's aisles in path order (shared + custom « · perso »); `extraAisleId` / `extraAisleFields` (`shoppingCategoryOrderLogic.ts`) map the choice to `categoryId` or `customShoppingCategoryId` (exclusive); picking a catalogue food still selects its shared category. `ExtraInput.customShoppingCategoryId`. Spec `docs/spec-shopping.md`, roadmap focus.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser. Depends on API D-054 (not deployed) for custom aisles; shared-only use is unchanged against the current prod API.
+- Resume here: API session confirmation of D-054 in prod → owner's tests (custom aisle on an extra, switch custom ↔ shared, delete the aisle) → push `master`.
+
 ## 2026-10-16 — Custom aisles, step 2: manage aisles in the window (v6.96.0)
 
 - Done: `customShoppingCategoryService` (create / rename / delete) and store actions (API first, no optimistic update); « Ordre des rayons » window: `AddAisleForm` (cap 30, `MAX_CUSTOM_SHOPPING_CATEGORIES`), inline rename on tap, delete with `ConfirmActionModal` (extras to « Autres »), « perso » badge; the draft order is now a list of ids (`shoppingAisleOrderPayload` takes ids and drops unknown ones). Spec `docs/spec-shopping.md`.

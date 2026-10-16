@@ -82,3 +82,18 @@ export function shoppingAisleOrderPayload(
   const isDefault = ids.length === defaults.length && ids.every((id, index) => id === defaults[index].id);
   return isDefault ? null : ids;
 }
+
+export interface ExtraAisleFields {
+  categoryId: string | null;
+  customShoppingCategoryId?: string | null;
+}
+
+export function extraAisleId(extra: { categoryId: string | null; customShoppingCategoryId?: string | null } | null): string {
+  return extra?.customShoppingCategoryId ?? extra?.categoryId ?? "";
+}
+
+export function extraAisleFields(aisle: ShoppingAisle | undefined, hadCustomCategory: boolean): ExtraAisleFields {
+  if (aisle?.kind === "custom") return { categoryId: null, customShoppingCategoryId: aisle.id };
+  const categoryId = aisle?.kind === "shared" ? aisle.id : null;
+  return hadCustomCategory ? { categoryId, customShoppingCategoryId: null } : { categoryId };
+}

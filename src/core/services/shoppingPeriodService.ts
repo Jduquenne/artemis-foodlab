@@ -36,6 +36,7 @@ export interface ExtraInput {
   quantity?: number | null;
   unit?: string | null;
   categoryId?: string | null;
+  customShoppingCategoryId?: string | null;
   foodId?: string | null;
   recipeId?: string | null;
   isChecked?: boolean;

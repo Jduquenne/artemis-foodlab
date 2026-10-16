@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-16 — Shopping category order, step 1: read and apply (v6.93.0)
+
+- Done: API D-053 contract recorded in `docs/api.md` § Planned (captured in dev, **not deployed**); « Inconnu » confirmed deleted in prod. `AuthUser` / `UpdateMeInput.shoppingCategoryOrder`; `core/logic/shopping/shoppingCategoryOrderLogic.ts` (`DEFAULT_SHOPPING_CATEGORY_ORDER` moved from `shoppingGrouping.ts`, `resolveShoppingCategoryOrder`, `toShoppingCategoryOrderSlugs`, `isDefaultShoppingCategoryOrder`); `groupIngredients` / `filterGroupedIngredients` take the order; `ShoppingModule` resolves it from the user. Absent field (current prod API) = default order, so nothing changes until the API ships. Spec `docs/spec-shopping.md`.
+- Numbers: `npx tsc -b` + `npm run lint` pass; resolution checked with a throwaway `tsx` script (default, partial with duplicate and unknown slug, empty list); not checked in a browser.
+- Still open: step 2 (« Rayons » window: sortable list, ↑ ↓, reset, save via `PUT /me`).
+
 ## 2026-10-16 — Dependency: `@dnd-kit/sortable` (v6.92.3)
 
 - Done: `@dnd-kit/sortable@10.0.0` added (owner's go; peer `@dnd-kit/core ^6.3.0`, we have 6.3.1, deduped) for the « Rayons » order window of the shopping list (not coded yet, waiting for API step (a) `shoppingCategoryOrder`). Owner's answers: « Articles du quotidien » and « Autres » stay apart, at the end, outside the order.

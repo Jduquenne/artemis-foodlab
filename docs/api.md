@@ -52,7 +52,7 @@ A separate Claude Code session owns `meals-planning-api` (sibling repo). Collabo
 
 - **Categories** — `POST/PUT/DELETE` on `/recipe-categories` (`{ id, name, color }`), `/ingredient-categories` and `/household-categories` (`{ id, label }`). `id` = stable slug chosen by the client, never changed by `PUT`; taken → 409; referenced → 409.
   - recipe: `bases, cereal-products, charcuterie, dairy-products, dry-food, fish, fruits, outdoor, pastries, plant-proteins, red-meat, sweet-grocery, veggies, white-meat`
-  - ingredient: `aromatic-herb, bakery, canned, condiment, dairy, deli, dried-fruit, farm, fish, frozen, fruit-vegetable, internet, meat, non-purchase, recipe, spice, starch, sweet-grocery, unknown` — `unknown` (« Inconnu ») removed from the front on 2026-10-16 (0 reference in prod), to be deleted API-side (front: hard-coded `INGREDIENT_CATEGORY_ID` table, `core/domain/ingredientCategorySlugs.ts`)
+  - ingredient: `aromatic-herb, bakery, canned, condiment, dairy, deli, dried-fruit, farm, fish, frozen, fruit-vegetable, internet, meat, non-purchase, recipe, spice, starch, sweet-grocery` (`unknown` « Inconnu » deleted in prod on 2026-10-16, 0 reference) (front: hard-coded `INGREDIENT_CATEGORY_ID` table, `core/domain/ingredientCategorySlugs.ts`)
   - household: `hygiene, maintenance, pantry, pets, pharmacy` (not wired in the front)
 
 ## Media
@@ -132,6 +132,7 @@ D-033, API D-052 + quantity addition; **live in prod** (owner, 2026-10-15). Reso
 ## Planned (not live — do not code against it)
 
 - **Google sign-in** (`dev/issues.json` #10): `POST /auth/google { credential }` (Google Identity Services ID token), response identical to login; 401 if the token is invalid or the e-mail unverified; 429 rate limit. New accounts are `guest`. Requires the owner's Google Cloud setup (OAuth client "Web application", origins `http://localhost:5173` and `https://jduquenne.github.io`, no redirect URI) and the same client id in `VITE_GOOGLE_CLIENT_ID` (front) and `GOOGLE_CLIENT_ID` (API). Wait for the API session to confirm it is live and send real payloads.
+- **Shopping category order** (API D-053, migration `20261016120000_add_shopping_category_order`; captured on the dev API 2026-10-16, **not deployed**). `AuthUser.shoppingCategoryOrder`: array of ingredient category slugs or `null` (default), everywhere `AuthUser` is returned (also in admin `/users`, read-only there). `PUT /me { shoppingCategoryOrder }` (alone or with other fields; absent = unchanged; `null` = reset; partial lists and `[]` accepted) → 200 full `AuthUser`. 400 `VALIDATION_ERROR`, nothing applied (other fields of the body included): not an array / non-string or empty entry « L'ordre des rayons doit être une liste d'identifiants de catégories. »; duplicate « La catégorie "x" apparaît plusieurs fois dans l'ordre des rayons. »; > 50 « L'ordre des rayons ne peut pas dépasser 50 catégories. »; unknown « La catégorie d'ingrédients "x" n'existe pas. » / « Les catégories d'ingrédients "a", "b" n'existent pas. ». Demo allowed. `DELETE /ingredient-categories/:id` removes the id from every stored order in the same transaction (an order left empty becomes `[]`). Not read by `POST /import`; custom per-account categories (step b) not built.
 - Optional `id` (foods) and `code` (outdoor) generated server-side: proposed by the API, not merged; the client still provides them.
 
 

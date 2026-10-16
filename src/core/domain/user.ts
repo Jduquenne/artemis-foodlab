@@ -8,12 +8,14 @@ export interface AuthUser {
   displayName: string | null;
   isDemo: boolean;
   demoExpiresAt: string | null;
+  shoppingCategoryOrder?: string[] | null;
 }
 
 export interface UpdateMeInput {
   freezerName?: string;
   displayName?: string | null;
   email?: string;
+  shoppingCategoryOrder?: string[] | null;
 }
 
 export interface AdminUser {

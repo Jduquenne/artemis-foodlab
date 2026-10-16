@@ -21,6 +21,7 @@ import { markScrolling } from '../../shared/utils/scrollGuard';
 import { distributeToColumns } from '../../core/utils/columnUtils';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { useAuthStore } from '../../shared/store/useAuthStore';
+import { resolveShoppingCategoryOrder } from '../../core/logic/shopping/shoppingCategoryOrderLogic';
 import { ColBreakpoint, useColCount } from '../../shared/hooks/useColCount';
 
 const SHOPPING_COLUMNS: readonly ColBreakpoint[] = [
@@ -48,6 +49,8 @@ export const ShoppingModule = () => {
     const shoppingDays = useMenuStore((s) => s.shoppingDays);
     const currentPeriodId = useMenuStore((s) => s.currentPeriodId);
     const authStatus = useAuthStore((s) => s.status);
+    const savedCategoryOrder = useAuthStore((s) => s.user?.shoppingCategoryOrder);
+    const categoryOrder = useMemo(() => resolveShoppingCategoryOrder(savedCategoryOrder), [savedCategoryOrder]);
     const recipes = useRecipesSnapshot();
     const { baseGrams } = useRecipeMetricsSnapshot();
     const foods = useFoodsSnapshot();
@@ -134,13 +137,13 @@ export const ShoppingModule = () => {
     };
 
     const allGroupedItems = useMemo(
-        () => displayIngredients ? groupIngredients(displayIngredients) : [],
-        [displayIngredients]
+        () => displayIngredients ? groupIngredients(displayIngredients, categoryOrder) : [],
+        [displayIngredients, categoryOrder]
     );
 
     const groupedItems = useMemo(
-        () => displayIngredients ? filterGroupedIngredients(displayIngredients, ingredientFilter, checked, stocks, sourceChecked) : [],
-        [displayIngredients, ingredientFilter, checked, stocks, sourceChecked]
+        () => displayIngredients ? filterGroupedIngredients(displayIngredients, categoryOrder, ingredientFilter, checked, stocks, sourceChecked) : [],
+        [displayIngredients, categoryOrder, ingredientFilter, checked, stocks, sourceChecked]
     );
 
     const visibleHouseholdItems = useMemo(() => {

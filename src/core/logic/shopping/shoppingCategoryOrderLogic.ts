@@ -47,3 +47,19 @@ export function isDefaultShoppingCategoryOrder(order: readonly IngredientCategor
     order.every((category, index) => category === DEFAULT_SHOPPING_CATEGORY_ORDER[index])
   );
 }
+
+export function moveShoppingCategory(
+  order: readonly IngredientCategory[],
+  from: number,
+  to: number,
+): IngredientCategory[] {
+  if (from === to || from < 0 || to < 0 || from >= order.length || to >= order.length) return [...order];
+  const next = [...order];
+  const [moved] = next.splice(from, 1);
+  next.splice(to, 0, moved);
+  return next;
+}
+
+export function shoppingCategoryOrderPayload(order: readonly IngredientCategory[]): string[] | null {
+  return isDefaultShoppingCategoryOrder(order) ? null : toShoppingCategoryOrderSlugs(order);
+}

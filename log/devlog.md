@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-16 — Shopping category order, step 2: « Ordre des rayons » window (v6.94.0)
+
+- Done: `CategoryOrderModal` + `SortableCategoryRow` (`@dnd-kit/sortable`, grip handle, ↑ ↓, position numbers), « Ordre par défaut », save through `PUT /me` (`null` when default), user updated from the response. Toolbar button (`ListOrdered`, ingredients view). Pure helpers `moveShoppingCategory`, `shoppingCategoryOrderPayload`. `@dnd-kit/utilities` is only transitive, so the row builds its `translate3d` itself. Spec `docs/spec-shopping.md`.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser. **Depends on API D-053 (not deployed)**: saving against the current prod API is expected to fail (unknown field or ignored) — do not push before the API session confirms prod.
+- To test: reorder by drag (mouse, touch on phone), by ↑ ↓, reset, save, reload (order kept, list follows it on phone), a second device sees the same order; demo account.
+
 ## 2026-10-16 — Shopping category order, step 1: read and apply (v6.93.0)
 
 - Done: API D-053 contract recorded in `docs/api.md` § Planned (captured in dev, **not deployed**); « Inconnu » confirmed deleted in prod. `AuthUser` / `UpdateMeInput.shoppingCategoryOrder`; `core/logic/shopping/shoppingCategoryOrderLogic.ts` (`DEFAULT_SHOPPING_CATEGORY_ORDER` moved from `shoppingGrouping.ts`, `resolveShoppingCategoryOrder`, `toShoppingCategoryOrderSlugs`, `isDefaultShoppingCategoryOrder`); `groupIngredients` / `filterGroupedIngredients` take the order; `ShoppingModule` resolves it from the user. Absent field (current prod API) = default order, so nothing changes until the API ships. Spec `docs/spec-shopping.md`.

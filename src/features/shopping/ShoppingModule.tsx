@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { ShoppingCart, CalendarDays, Clipboard, Check, Scale, Plus } from 'lucide-react';
+import { ShoppingCart, CalendarDays, Clipboard, Check, Scale, Plus, ListOrdered } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useNavigate } from 'react-router-dom';
 import { FreezerBag } from '../../core/domain/freezer';
@@ -22,6 +22,7 @@ import { distributeToColumns } from '../../core/utils/columnUtils';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { useAuthStore } from '../../shared/store/useAuthStore';
 import { resolveShoppingCategoryOrder } from '../../core/logic/shopping/shoppingCategoryOrderLogic';
+import { CategoryOrderModal } from './components/order/CategoryOrderModal';
 import { ColBreakpoint, useColCount } from '../../shared/hooks/useColCount';
 
 const SHOPPING_COLUMNS: readonly ColBreakpoint[] = [
@@ -65,6 +66,7 @@ export const ShoppingModule = () => {
     const [ingredientFilter, setIngredientFilter] = useState<'all' | 'missing'>('all');
     const [copied, setCopied] = useState(false);
     const [showPriceCalc, setShowPriceCalc] = useState(false);
+    const [showCategoryOrder, setShowCategoryOrder] = useState(false);
     const [activeSources, setActiveSources] = useState<{ key: string; sources: IngredientSource[]; freezerBags: FreezerBag[] } | null>(null);
     const [extraModal, setExtraModal] = useState<{ open: boolean; extra: ApiShoppingExtra | null }>({ open: false, extra: null });
 
@@ -206,6 +208,15 @@ export const ShoppingModule = () => {
                                 >
                                     <Plus className="w-4 h-4" />
                                     <span className="hidden sm:inline">Article</span>
+                                </button>
+                            )}
+                            {viewMode === 'ingredients' && (
+                                <button
+                                    onClick={() => setShowCategoryOrder(true)}
+                                    title="Ordre des rayons"
+                                    className="shrink-0 p-2 rounded-xl border bg-surface border-slate-200 text-slate-400 hover:text-orange-600 hover:border-orange-300 transition-colors"
+                                >
+                                    <ListOrdered className="w-4 h-4" />
                                 </button>
                             )}
                             <button
@@ -407,6 +418,10 @@ export const ShoppingModule = () => {
                     selectedBagIds={freezerSelection[activeSources.key] ?? []}
                     onToggleBag={handleToggleFreezerBag}
                 />
+            )}
+
+            {showCategoryOrder && (
+                <CategoryOrderModal initialOrder={categoryOrder} onClose={() => setShowCategoryOrder(false)} />
             )}
 
             {showPriceCalc && (

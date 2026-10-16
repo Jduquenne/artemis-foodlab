@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-16 — Menu generator, step 1: candidates and hard filters (v6.99.3)
+- Done: owner decisions recorded (D-035: front-only engine, free period ≤ 14 days, lunch + dinner, keep filled slots, kcal of the active profile 35 % / 30 % ±15 %, admin only on `master` until validated, no food tags). `core/domain/menuGenerator.ts` (settings, `PeriodDay`, `MAX_GENERATION_DAYS`). `core/logic/menuGenerator/periodLogic.ts`: `validatePeriod`, `buildPeriodDays` (ISO week-year, French day name, month), `periodWeeks`. `candidateLogic.ts`: `isGeneratableDish` (dish, not dessert / outdoor, meal type), `recipeDietProfile` (meat / fish from ingredient and recipe categories, bases included, cycle-safe), `matchesDiet`, `usesExcludedFood` (group ingredient excluded only when its whole family is), `slotCandidates`, `seasonAllows` / `dayCandidates` (strict season only; « preferred » is for scoring).
+- Numbers: `npx tsc -b` + `npm run lint` pass; checked with a throwaway `tsx` script (carbonara with a lardons base → meat; pescatarian keeps tuna, vegetarian keeps only the cheese pasta; excluding comté alone keeps the cheese pasta, excluding the whole family removes it; strict May drops the tomato dish; period 2026-12-25 → 2027-01-03 = 10 days over 2026-W52 / W53; period errors). No UI yet.
+- Still open: API data quality report; next step: engine (seeded fill + scoring).
+
 ## 2026-10-16 — Food seasons, step 2: recipe season logic (v6.99.2)
 - Done: `core/logic/season/recipeSeasonLogic.ts`: `recipeSeasonalFoods` (seasonal foods of a recipe, bases included, cycle-safe), `isFoodInSeason`, `outOfSeasonFoods`, `isRecipeInSeason`, `recipeSeasonMonths`; catalogue as a parameter (`SeasonCatalogue`). No UI consumer yet (menu generator later). Spec `docs/spec-recipes.md` § Recipe season, roadmap.
 - Numbers: `npx tsc -b` + `npm run lint` pass; checked with a throwaway `tsx` script (ratatouille courgette + base sauce tomate/oignon with a base cycle → in season June-September, out in May because of « Tomates »; velouté potiron + oignon → January, September-December; a recipe with only all-year foods → 12 months).

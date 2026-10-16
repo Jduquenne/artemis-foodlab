@@ -7,9 +7,10 @@ The detailed backlog and future features live in `dev/issues.json` and `dev/refa
 
 1. ✅ Food groups and per-profile cheese choice on planned meals (D-033, `dev/issues.json` #25), first step toward the profile tastes feature (#20-#24). **In prod (API + front, 2026-10-15)**: Dashboard « Familles », Recipe Builder « au choix », meal actions menu, per-profile choice + quantity, shopping split, journal (v6.85.0 → v6.92.0). Owner feedback pending. Profile default per family: « Préférences par famille » in « Profils du foyer » (v6.98.0, every family). Tested and in prod (owner, 2026-10-16); #25 closed.
 2. ✅ Shopping aisles (owner, 2026-10-15/16): per-account aisle order (API D-053, **live in prod**; front v6.93.0-6.94.0) and custom per-account aisles (API D-054; front v6.95.0-6.97.0: grouping, management in « Ordre des rayons », aisle choice in the extra form). **In prod (API + front, 2026-10-16)**; awaiting user feedback.
-3. 🟡 Food seasons (D-034, API D-055 **live in prod** 2026-10-16, 70 seasonal foods imported from the ADEME-based file): months on foods, step 1 Dashboard (v6.99.0), step 2 recipe season logic (v6.99.2, `recipeSeasonLogic.ts`, no UI yet). Done for the data side; used by the menu generator when it starts.
-4. ✅ Owner browser tests of everything delivered up to v6.84.3: all validated (2026-10-15).
-5. ⏸ Tablet portrait pass (P5) paused by the owner on 2026-10-15 (no longer a priority).
+3. ✅ Food seasons (D-034, API D-055 **live in prod** 2026-10-16, 70 seasonal foods imported from the ADEME-based file): months on foods, step 1 Dashboard (v6.99.0), step 2 recipe season logic (v6.99.2, `recipeSeasonLogic.ts`, no UI yet). Done for the data side; used by the menu generator when it starts.
+4. 🟡 Weekly menu generator V1 (D-035, admin only until validated): step 1 candidates and hard filters (v6.99.3, `core/logic/menuGenerator/`); next: engine and scoring, freezer first, settings window, preview, write. Data quality check requested from the API session (2026-10-16).
+5. ✅ Owner browser tests of everything delivered up to v6.84.3: all validated (2026-10-15).
+6. ⏸ Tablet portrait pass (P5) paused by the owner on 2026-10-15 (no longer a priority).
 
 ## Honest status (2026-10-15)
 
@@ -66,7 +67,7 @@ Milestones reconstructed from history; definitions of done marked "proposed" wer
 
 Future features (including profile food preferences, #20-#24) are tracked in `dev/issues.json`. Technical ideas noted along the way:
 
-- **Weekly menu generator** (owner, 2026-10-10, big project, not scheduled; brainstorm only, nothing decided):
+- **Weekly menu generator** (owner, 2026-10-10; brainstorm below, V1 scope decided on 2026-10-16 in D-035 and in progress, see Current focus; the open questions below are answered there):
   - Scope: free period (e.g. Friday → Friday, across ISO weeks), slots to generate (lunch + dinner only, or all, per day), keep or replace already filled slots, profiles / persons, desserts or not.
   - Hard constraints vs scored preferences. Diet per slot or global (vegetarian, pescatarian, no pork…), derivable without new data from ingredient categories (`meat`, `fish`, `deli`) and recipe categories (`red-meat`, `white-meat`, `fish`, `charcuterie`); quotas per category (« fish ≥ 2 / week »); kcal per day under the profile target with a tolerance (or week average), macro floors / ceilings, optionally portion adjustment; season (strict or preferred); variety (no duplicate, no same category two days in a row, avoid recipes eaten in the last N weeks via `GET /planning-slots/recipe-usage`, share of untested recipes); batch cooking (one cook, two meals), freezer first (bags ≥ 90 days), shared ingredients / fewer shopping items, book recipes only or excluded.
   - UX: step wizard → preview with lock / regenerate one slot or the rest / swap, « why » per recipe, period summary (kcal per day vs target, categories, estimated shopping items) → batch write to the planning + offer to set the shopping days; saved presets; clear message when no solution.

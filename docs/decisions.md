@@ -263,3 +263,16 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
   - **Source**: ADEME Impact CO2 calendar (France), plus common sense for staples kept all year (garlic, onions, shallot, carrots, lemon) so that most savoury recipes are not blocked out of season; foods missing from ADEME (processed, imported, potatoes…) set by hand. Imported once by an API script, then edited in the Dashboard.
   - **Recipe season**: derived client-side, never stored: a recipe is in season for a month when every seasonal food it uses (bases included) is.
 - **Alternatives considered**: 4 seasons (too coarse: strawberries vs squash); a season on recipes (redundant with their foods, drifts when a recipe changes); a server-side month filter (the catalogue is already in memory).
+
+## D-035 — Weekly menu generator V1: front-only engine, scope
+
+- **Date**: 2026-10-16
+- **Status**: accepted (owner); in progress
+- **Context**: households want a first menu proposal for a period that is good from the first generation. Everything needed already exists: recipes (meal types, categories, ingredients, bases, batch cooking), foods (categories, macros, seasons D-034), profiles (targets), freezer, per-account history (`GET /planning-slots/recipe-usage`) and the planning write path.
+- **Decision**:
+  - **Engine**: pure front logic in `core/logic/menuGenerator/`, catalogue passed as a parameter, seeded randomness (regenerate = new seed); no new API endpoint. Writes go through the existing slot path (`saveSlot`, one batch per slot), not atomic: a failure reports the written meals, rerunning only fills the slots still empty.
+  - **Scope V1** (owner): free period (start → end, max 14 days, may cross ISO weeks); lunch and dinner only (no desserts, no breakfast: the household adds them by hand); filled slots are kept, only empty ones are filled; hard filters: diet all / pescatarian / vegetarian (derived from ingredient categories meat, deli, fish and recipe categories, bases included), excluded foods (a group ingredient is excluded only when every food of its family is), season strict / preferred / off; scoring: no duplicate, no same category on consecutive meals, history (recently eaten recipes penalised), kcal of the meal near the active profile's target share (lunch 35 %, dinner 30 %, ±15 %); freezer batch portions placed first.
+  - **UX**: settings window → preview (reason per meal, lock, regenerate a slot or the rest, kcal per day vs target) → write → offer to set the shopping days when the period has ≤ 10 days.
+  - **Access**: built on `master` behind an admin guard (`useIsAdmin`), opened to everyone once validated by the owner.
+  - **Not in V1**: food tags (pork, gluten…; owner: not useful for now), per-profile kcal (needs « who eats which meal », #23), presets, preparation time, cost.
+- **Alternatives considered**: a `Dev` branch for the whole feature (merges and version conflicts); a server-side generator (catalogue already in memory on the client, no benefit); the displayed week only (owner wants a free period).

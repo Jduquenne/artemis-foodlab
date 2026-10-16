@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react";
+import { ChevronLeft, ChevronRight, ShoppingCart, Sparkles } from "lucide-react";
 
 export interface PlanningHeaderProps {
   weekNumber: number;
@@ -13,12 +13,13 @@ export interface PlanningHeaderProps {
   onNextWeek: () => void;
   onDateChange: (dateStr: string, dayIndex: number) => void;
   onEnterSelectionMode: () => void;
+  onOpenGenerator?: () => void;
 }
 
 export const PlanningHeader = ({
   weekNumber, weekRange, selectedDayDate,
   isAnyEditing, isSelectionMode, isAddMode, hasShoppingDays,
-  onPrevWeek, onNextWeek, onDateChange, onEnterSelectionMode,
+  onPrevWeek, onNextWeek, onDateChange, onEnterSelectionMode, onOpenGenerator,
 }: PlanningHeaderProps) => {
   const dateInputRef = useRef<HTMLInputElement>(null);
 
@@ -63,6 +64,18 @@ export const PlanningHeader = ({
             <ChevronRight size={18} className="text-slate-600" />
           </button>
         </div>
+
+        {onOpenGenerator && !isSelectionMode && !isAddMode && (
+          <button
+            onClick={isAnyEditing ? undefined : onOpenGenerator}
+            aria-label="Générer des menus"
+            title="Générer des menus"
+            className={`flex items-center gap-1.5 px-3 py-2 rounded-2xl shadow-sm border border-slate-200 bg-surface font-bold text-sm text-slate-600 hover:bg-muted transition-colors ${isAnyEditing ? "opacity-40 pointer-events-none" : ""}`}
+          >
+            <Sparkles size={15} className="text-orange-500" />
+            <span className="hidden lg:inline">Générer</span>
+          </button>
+        )}
 
         {!isSelectionMode && !isAddMode && (
           <button

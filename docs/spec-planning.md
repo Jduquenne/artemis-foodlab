@@ -67,6 +67,13 @@ D-033. A recipe whose ingredients carry a `foodGroupId` (Recipe Builder « au ch
 
 Always `navigate(buildRecipeDetailUrl(recipeId, portions))`: single slot = `savedMeal.persons`; multi = `recipePersons?.[rid] ?? persons`; dessert = effective `persons` of `DessertColumn` (`recipePersons?.[rid] ?? slotPersons ?? 1`). See `docs/spec-recipes.md` § Portions.
 
+## Menu generator (D-035, admin only until validated)
+
+- Entry: « Générer » button (`Sparkles`) in `PlanningHeader`, passed only when `useIsAdmin()`; hidden in selection / add mode, disabled while editing. Opens `MenuGeneratorModal` (`features/planning/components/generator/`) with the selected day as start date.
+- Settings (`GeneratorSettingsForm`, defaults `defaultGeneratorSettings`: selected day + 6 days, lunch + dinner, diet « Tout », season « De préférence », freezer first on): period (two date inputs, ≤ `MAX_GENERATION_DAYS` = 14, `validateGeneratorSettings`), meals (`ChoicePills`: Déjeuner / Dîner), diet (Tout / Pescétarien / Végétarien), season (De préférence / Uniquement / Ignorer), « Aliments à éviter » (`ExcludedFoodsField`: catalogue search via `searchFoods`, red chips), « Utiliser d'abord les plats du congélateur ». Settings live in the modal only (not persisted).
+- Run (`useMenuGenerator`, `shared/hooks/`, `withPending` key `menu-generator-run`): `syncWeekFromApi` + `getWeekSlots` for every ISO week of the period (`periodWeeks`), `existingMealsByKey` (lunch / dinner slots with a dish are kept), `GET /planning-slots/recipe-usage` (failure → no history), freezer categories from Dexie (`freezerBatchStocks`), active profile `kcalTarget`, household size = number of profiles, then `generateMenu` with a new seed.
+- Preview (`GeneratorPreview`, `groupMealsByDay`): per day (« Vendredi 23 octobre »), each meal with its reasons; kept slots shown dashed « Déjà prévu ». « Autre proposition » = same settings, new seed; « Réglages » goes back. Nothing is written yet (lock / regenerate one slot, kcal summary and the write come next).
+
 ## Weeks
 
 The URL holds the selected day (`day`, « Lundi »…) and a date of the displayed week (`d`, local `yyyy-MM-dd` via `toIsoDate`); without `day`, today is computed at render time (`dayNameOf(new Date())`).

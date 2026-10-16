@@ -11,6 +11,8 @@ import { WeekNavZone } from './components/WeekNavZone';
 import { RecipePicker } from './components/pickers/RecipePicker';
 import { DessertPicker } from './components/pickers/DessertPicker';
 import { FoodChoiceModal } from './components/FoodChoiceModal';
+import { MenuGeneratorModal } from './components/generator/MenuGeneratorModal';
+import { useIsAdmin } from '../../shared/hooks/useIsAdmin';
 import { FoodChoice } from '../../core/domain/foodGroup';
 import { withFoodChoices } from '../../core/logic/foodGroup/foodChoiceLogic';
 import { ShoppingSelectionBar } from './components/bars/ShoppingSelectionBar';
@@ -63,6 +65,8 @@ export const PlanningModule = () => {
     const [pickerSlot, setPickerSlot] = useState<{ day: string; slot: SlotType } | null>(null);
     const [dessertPickerSlot, setDessertPickerSlot] = useState<{ day: string; slot: SlotType } | null>(null);
     const [foodChoiceTarget, setFoodChoiceTarget] = useState<{ day: string; slot: SlotType; recipeId: string } | null>(null);
+    const [generatorOpen, setGeneratorOpen] = useState(false);
+    const isAdmin = useIsAdmin();
     const [activeDragId, setActiveDragId] = useState<string | null>(null);
     const [dragSourceSlot, setDragSourceSlot] = useState<MealSlot | null>(null);
     const [slideKey, setSlideKey] = useState(0);
@@ -422,6 +426,7 @@ export const PlanningModule = () => {
                     onNextWeek={() => changeWeek(1)}
                     onDateChange={(dateStr, dayIndex) => setSearchParams(p => { p.set('d', dateStr); p.set('day', DAYS[dayIndex]); return p; }, { replace: true })}
                     onEnterSelectionMode={enterSelectionMode}
+                    onOpenGenerator={isAdmin ? () => setGeneratorOpen(true) : undefined}
                 />
 
                 {isAddMode && addRecipeName && (
@@ -552,6 +557,10 @@ export const PlanningModule = () => {
                         onSave={(choices) => handleSaveFoodChoices(foodChoiceTarget.day, foodChoiceTarget.slot, foodChoiceTarget.recipeId, choices)}
                         onClose={() => setFoodChoiceTarget(null)}
                     />
+                )}
+
+                {generatorOpen && (
+                    <MenuGeneratorModal startDate={selectedDayDate} onClose={() => setGeneratorOpen(false)} />
                 )}
 
                 {pendingDragMove && dessertChoiceIds && (

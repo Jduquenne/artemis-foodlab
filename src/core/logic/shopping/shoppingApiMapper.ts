@@ -38,6 +38,7 @@ export interface ApiShoppingExtra {
   quantity: number | null;
   unit: string | null;
   categoryId: string | null;
+  customShoppingCategoryId?: string | null;
   foodId: string | null;
   recipeId: string | null;
   isChecked: boolean;
@@ -55,5 +56,6 @@ export function extrasToIngredients(extras: ApiShoppingExtra[]): ConsolidatedIng
     sources: [],
     isExtra: true,
     extraId: extra.id,
+    ...(extra.customShoppingCategoryId ? { customCategoryId: extra.customShoppingCategoryId } : {}),
   }));
 }

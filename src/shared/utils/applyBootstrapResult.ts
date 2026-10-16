@@ -2,11 +2,13 @@ import { BootstrapResult } from "../../core/services/bootstrapService";
 import { useJournalStore } from "../store/useJournalStore";
 import { useMenuStore } from "../store/useMenuStore";
 import { useProfileStore } from "../store/useProfileStore";
+import { useCustomShoppingCategoryStore } from "../store/useCustomShoppingCategoryStore";
 
 interface AppliedSignatures {
   profiles: string;
   overrides: string;
   period: string;
+  customCategories: string;
 }
 
 let applied: AppliedSignatures | null = null;
@@ -17,6 +19,7 @@ export function applyBootstrapResult(result: BootstrapResult): void {
     profiles: JSON.stringify(result.profiles),
     overrides: JSON.stringify(result.journalOverrides),
     period: JSON.stringify(period),
+    customCategories: JSON.stringify(result.customShoppingCategories),
   };
   if (applied === null || applied.profiles !== next.profiles) {
     useProfileStore.getState().replaceProfiles(result.profiles);
@@ -26,6 +29,9 @@ export function applyBootstrapResult(result: BootstrapResult): void {
   }
   if (applied === null || applied.period !== next.period) {
     useMenuStore.getState().replaceShoppingPeriod(period);
+  }
+  if (applied === null || applied.customCategories !== next.customCategories) {
+    useCustomShoppingCategoryStore.getState().replaceCategories(result.customShoppingCategories);
   }
   applied = next;
 }

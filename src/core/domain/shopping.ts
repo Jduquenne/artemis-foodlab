@@ -28,7 +28,17 @@ export interface ConsolidatedIngredient {
   isExtra?: boolean;
   extraId?: string;
   toSpecify?: boolean;
+  customCategoryId?: string;
 }
+
+export interface CustomShoppingCategory {
+  id: string;
+  label: string;
+}
+
+export type ShoppingAisle =
+  | { kind: "shared"; id: string; category: IngredientCategory; label: string }
+  | { kind: "custom"; id: string; label: string };
 
 export interface BaseEntry {
   baseId: string;
@@ -65,4 +75,4 @@ export interface RecipeCard {
   baseGroups: RecipeBaseGroup[];
 }
 
-export type IngredientGroup = { label: string; list: ConsolidatedIngredient[] };
+export type IngredientGroup = { key: string; label: string; list: ConsolidatedIngredient[] };

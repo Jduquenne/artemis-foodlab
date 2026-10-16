@@ -21,7 +21,8 @@ import { markScrolling } from '../../shared/utils/scrollGuard';
 import { distributeToColumns } from '../../core/utils/columnUtils';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { useAuthStore } from '../../shared/store/useAuthStore';
-import { resolveShoppingCategoryOrder } from '../../core/logic/shopping/shoppingCategoryOrderLogic';
+import { resolveShoppingAisles } from '../../core/logic/shopping/shoppingCategoryOrderLogic';
+import { useCustomShoppingCategoryStore } from '../../shared/store/useCustomShoppingCategoryStore';
 import { CategoryOrderModal } from './components/order/CategoryOrderModal';
 import { ColBreakpoint, useColCount } from '../../shared/hooks/useColCount';
 
@@ -51,7 +52,11 @@ export const ShoppingModule = () => {
     const currentPeriodId = useMenuStore((s) => s.currentPeriodId);
     const authStatus = useAuthStore((s) => s.status);
     const savedCategoryOrder = useAuthStore((s) => s.user?.shoppingCategoryOrder);
-    const categoryOrder = useMemo(() => resolveShoppingCategoryOrder(savedCategoryOrder), [savedCategoryOrder]);
+    const customCategories = useCustomShoppingCategoryStore((s) => s.categories);
+    const categoryOrder = useMemo(
+        () => resolveShoppingAisles(savedCategoryOrder, customCategories),
+        [savedCategoryOrder, customCategories]
+    );
     const recipes = useRecipesSnapshot();
     const { baseGrams } = useRecipeMetricsSnapshot();
     const foods = useFoodsSnapshot();
@@ -366,7 +371,7 @@ export const ShoppingModule = () => {
                                     {ingredientColumns.map((col, ci) => (
                                         <div key={ci} className="flex flex-col gap-4">
                                             {col.map((group, i) => (
-                                                <div key={group.label} className="animate-fade-in-up" style={{ animationDelay: `${(ci + i) * 60}ms` }}>
+                                                <div key={group.key} className="animate-fade-in-up" style={{ animationDelay: `${(ci + i) * 60}ms` }}>
                                                     <ShoppingCategoryCard
                                                         label={group.label}
                                                         items={group.list}

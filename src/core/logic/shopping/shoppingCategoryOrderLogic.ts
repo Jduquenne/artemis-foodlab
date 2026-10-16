@@ -1,5 +1,6 @@
 import { IngredientCategory } from "../../domain/ingredient";
-import { getIngredientCategoryFromSlug, getIngredientCategoryId } from "../../domain/ingredientCategorySlugs";
+import { getIngredientCategoryId } from "../../domain/ingredientCategorySlugs";
+import { CustomShoppingCategory, ShoppingAisle } from "../../domain/shopping";
 
 export const DEFAULT_SHOPPING_CATEGORY_ORDER: readonly IngredientCategory[] = [
   IngredientCategory.FRUIT_VEGETABLE,
@@ -22,37 +23,48 @@ export const DEFAULT_SHOPPING_CATEGORY_ORDER: readonly IngredientCategory[] = [
   IngredientCategory.NON_PURCHASE,
 ];
 
-export function resolveShoppingCategoryOrder(saved: readonly string[] | null | undefined): IngredientCategory[] {
-  if (!saved) return [...DEFAULT_SHOPPING_CATEGORY_ORDER];
-  const result: IngredientCategory[] = [];
-  for (const slug of saved) {
-    const category = getIngredientCategoryFromSlug(slug);
-    if (category && DEFAULT_SHOPPING_CATEGORY_ORDER.includes(category) && !result.includes(category)) result.push(category);
+function sharedAisle(category: IngredientCategory): ShoppingAisle | null {
+  const slug = getIngredientCategoryId(category);
+  return slug ? { kind: "shared", id: slug, category, label: category } : null;
+}
+
+function customAisle(category: CustomShoppingCategory): ShoppingAisle {
+  return { kind: "custom", id: category.id, label: category.label };
+}
+
+export function defaultShoppingAisles(customCategories: readonly CustomShoppingCategory[]): ShoppingAisle[] {
+  const shared = DEFAULT_SHOPPING_CATEGORY_ORDER.map(sharedAisle).filter((a): a is ShoppingAisle => a !== null);
+  return [...shared, ...customCategories.map(customAisle)];
+}
+
+export function resolveShoppingAisles(
+  saved: readonly string[] | null | undefined,
+  customCategories: readonly CustomShoppingCategory[],
+): ShoppingAisle[] {
+  if (!saved) return defaultShoppingAisles(customCategories);
+  const known = new Map<string, ShoppingAisle>(defaultShoppingAisles(customCategories).map((a) => [a.id, a]));
+  const result: ShoppingAisle[] = [];
+  const has = (id: string) => result.some((a) => a.id === id);
+  for (const id of saved) {
+    const aisle = known.get(id);
+    if (aisle && !has(aisle.id)) result.push(aisle);
   }
   DEFAULT_SHOPPING_CATEGORY_ORDER.forEach((category, index) => {
-    if (result.includes(category)) return;
-    const previous = DEFAULT_SHOPPING_CATEGORY_ORDER.slice(0, index).reverse().find((c) => result.includes(c));
-    result.splice(previous ? result.indexOf(previous) + 1 : 0, 0, category);
+    const aisle = sharedAisle(category);
+    if (!aisle || has(aisle.id)) return;
+    const previous = DEFAULT_SHOPPING_CATEGORY_ORDER.slice(0, index)
+      .reverse()
+      .map(getIngredientCategoryId)
+      .find((slug) => slug !== undefined && has(slug));
+    result.splice(previous ? result.findIndex((a) => a.id === previous) + 1 : 0, 0, aisle);
   });
+  for (const category of customCategories) {
+    if (!has(category.id)) result.push(customAisle(category));
+  }
   return result;
 }
 
-export function toShoppingCategoryOrderSlugs(order: readonly IngredientCategory[]): string[] {
-  return order.map(getIngredientCategoryId).filter((slug): slug is string => Boolean(slug));
-}
-
-export function isDefaultShoppingCategoryOrder(order: readonly IngredientCategory[]): boolean {
-  return (
-    order.length === DEFAULT_SHOPPING_CATEGORY_ORDER.length &&
-    order.every((category, index) => category === DEFAULT_SHOPPING_CATEGORY_ORDER[index])
-  );
-}
-
-export function moveShoppingCategory(
-  order: readonly IngredientCategory[],
-  from: number,
-  to: number,
-): IngredientCategory[] {
+export function moveShoppingAisle<T>(order: readonly T[], from: number, to: number): T[] {
   if (from === to || from < 0 || to < 0 || from >= order.length || to >= order.length) return [...order];
   const next = [...order];
   const [moved] = next.splice(from, 1);
@@ -60,6 +72,11 @@ export function moveShoppingCategory(
   return next;
 }
 
-export function shoppingCategoryOrderPayload(order: readonly IngredientCategory[]): string[] | null {
-  return isDefaultShoppingCategoryOrder(order) ? null : toShoppingCategoryOrderSlugs(order);
+export function shoppingAisleOrderPayload(
+  order: readonly ShoppingAisle[],
+  customCategories: readonly CustomShoppingCategory[],
+): string[] | null {
+  const defaults = defaultShoppingAisles(customCategories);
+  const isDefault = order.length === defaults.length && order.every((aisle, index) => aisle.id === defaults[index].id);
+  return isDefault ? null : order.map((aisle) => aisle.id);
 }

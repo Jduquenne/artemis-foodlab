@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-16 — Custom aisles, step 1: read and group (v6.95.0)
+
+- Done: API D-053 live in prod (contract moved to `docs/api.md` § Shopping and household); D-054 (custom categories) recorded in § Planned (captured in dev, **not deployed**). Front: `CustomShoppingCategory`, `ShoppingAisle` (shared | custom), `useCustomShoppingCategoryStore` filled from `/bootstrap` (`customShoppingCategories ?? []`); `resolveShoppingAisles` / `defaultShoppingAisles` / `shoppingAisleOrderPayload` / `moveShoppingAisle` replace the category-only helpers; grouping by aisle (`IngredientGroup.key`, extras with `customShoppingCategoryId` under their aisle); « Ordre des rayons » window lists custom aisles too. Spec `docs/spec-shopping.md`.
+- Numbers: `npx tsc -b` + `npm run lint` pass; resolution checked with a throwaway `tsx` script (default with customs at the end, saved order with a custom first and an unknown id, default payload `null`); not checked in a browser. Nothing changes against the current prod API (no custom category yet).
+- Still open: step 2 (create / rename / delete aisles in the window), step 3 (aisle choice in the extra form).
+
 ## 2026-10-16 — Shopping category order, step 2: « Ordre des rayons » window (v6.94.0)
 
 - Done: `CategoryOrderModal` + `SortableCategoryRow` (`@dnd-kit/sortable`, grip handle, ↑ ↓, position numbers), « Ordre par défaut », save through `PUT /me` (`null` when default), user updated from the response. Toolbar button (`ListOrdered`, ingredients view). Pure helpers `moveShoppingCategory`, `shoppingCategoryOrderPayload`. `@dnd-kit/utilities` is only transitive, so the row builds its `translate3d` itself. Spec `docs/spec-shopping.md`.

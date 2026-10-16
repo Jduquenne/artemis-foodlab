@@ -1,5 +1,6 @@
 import { FoodGroup } from "../domain/foodGroup";
 import { HouseholdItem } from "../domain/household";
+import { CustomShoppingCategory } from "../domain/shopping";
 import { Food } from "../domain/ingredient";
 import { Profile } from "../domain/profile";
 import { Category } from "../domain/recipe";
@@ -25,6 +26,7 @@ interface ApiBootstrap {
   householdItems: HouseholdItem[];
   recipeCategories: Category[];
   foodGroups?: FoodGroup[];
+  customShoppingCategories?: CustomShoppingCategory[];
   householdShoppingFlags: ApiBootstrapHouseholdFlag[];
   profiles: ApiProfile[];
   journalOverrides: ApiJournalOverride[];
@@ -35,6 +37,7 @@ export interface BootstrapResult {
   profiles: Profile[];
   journalOverrides: JournalOverridesByProfile;
   shoppingPeriod: CurrentPeriod | null;
+  customShoppingCategories: CustomShoppingCategory[];
 }
 
 export interface SyncBootstrapOptions {
@@ -62,6 +65,7 @@ export async function syncBootstrapFromApi(options: SyncBootstrapOptions = {}): 
       profiles: mapProfiles(data.profiles),
       journalOverrides: mapJournalOverrides(data.journalOverrides),
       shoppingPeriod: await mapApiPeriod(data.currentShoppingPeriod),
+      customShoppingCategories: data.customShoppingCategories ?? [],
     };
   } catch {
     return null;

@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-16 — Meal types review applied in prod (v6.100.2)
+- Done: owner's per-recipe review (`meal-types-review.html`, local) exported 168 changes; front check of the API dry-run (same counts, 57 desserts of which 55 lose lunch / dinner, intended); API `import:recipe-meal-types --apply` in prod, one transaction, 0 errors, 0 mismatch. Recount over 685 dishes: breakfast 172, lunch 509, dinner 507, snack 176, none empty. Rule written in `docs/spec-recipes.md` (meal types vs dessert). Docs only.
+- Numbers: no code change; `npx tsc -b` + `npm run lint` pass.
+- Still open: Recipe Builder fixes by the owner: untick « dessert » on savory dishes (base-046, pat-061, pat-077, pat-080, pat-081, pc-066, pc-067; pc-067 is lunch / dinner but ignored by the generator while flagged dessert), recategorize base-043, base-047, base-049 (and base-046); apéritif decision (category « Apéritifs » and / or planning slot, options A / B / C given to the owner); vm-011 category; unit weights fs-002, ha-008, pl-023. Menu generator resumes: step 5 preview actions.
+
 ## 2026-10-16 — Recipe Builder: no default meal types (v6.100.1)
 - Done: a new draft starts with no meal type checked (was lunch + dinner); the existing validation already makes at least one mandatory for a non-base recipe. Context: the API data audit (2026-10-16, read-only) showed 668 of 685 dishes with lunch, pastries and cereal products included, inherited from the old default; the menu generator relies on meal types. Spec `docs/spec-recipes.md`.
 - Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser (« Nouvelle recette »: no chip selected, save without one → « Sélectionne au moins un type de repas. »).

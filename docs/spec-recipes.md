@@ -24,6 +24,10 @@ Model `RecipeFilter { type: RecipeFilterType | null; macros: Partial<Record<kcal
 - Limits: `RecipeMacroPage` (calculator, separate route `/recipes/detail/:id/macros`, editable per-ingredient quantities, not persisted) is not portion-aware and does not receive `?portions`; coming back from it resets portions to the default. For a recipe with only an instructions photo (no SVG card) the stepper shows but has no visual effect. `RecipeDetail` renders `null` if there is neither meal photo nor instructions photo.
 - Unknown recipe id (stale link, deleted recipe): `RecipeDetail` and `RecipeMacroPage` show `RecipeNotFound` (« Recette introuvable », « Cette recette n'existe peut-être plus. », button back to `/recipes`). The calculator inputs are `DecimalInput`s (comma accepted, emptied field = 0). The filter modal does not close on a backdrop click.
 
+## Recipe season (D-034)
+
+Derived client-side from the foods, never stored (`core/logic/season/recipeSeasonLogic.ts`, catalogue passed as `SeasonCatalogue { recipes, foods }`). `recipeSeasonalFoods` = the foods with a season (`Food.months` non-empty) used by the recipe, **bases included** (recursive through `baseId`, cycle-safe), deduplicated, sorted by name. A recipe is in season for a month when every one of them is (`isRecipeInSeason`); `outOfSeasonFoods` lists the culprits (for a « why » in the generator); `recipeSeasonMonths` = the months where it is in season (12 entries = all year, empty = never fully in season). An ingredient « au choix » counts with its recipe default; pass the recipe through `personalizeRecipe` first to use a profile's choice. Not shown in the UI yet: first consumer = the weekly menu generator.
+
 ## News (« Nouveautés »)
 
 Based on `announcedAt` (`docs/api.md` § Catalogue reads): `core/logic/news/newsLogic.ts` (`RECENT_RECIPE_DAYS = 30`, `getNewsGroups` → groups by local day, desc; recipes sorted by name; `latestNewsDate`). `useNewsStore` persists `lastSeenDate` only, `hasNew` is transient (`syncHasNew()` after hydration, bootstrap and builder save; `markAsSeen()`), and subscribes to catalogue changes. `NewsModal` navigates by `recipe.code`.

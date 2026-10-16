@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-16 — Food seasons, step 2: recipe season logic (v6.99.2)
+- Done: `core/logic/season/recipeSeasonLogic.ts`: `recipeSeasonalFoods` (seasonal foods of a recipe, bases included, cycle-safe), `isFoodInSeason`, `outOfSeasonFoods`, `isRecipeInSeason`, `recipeSeasonMonths`; catalogue as a parameter (`SeasonCatalogue`). No UI consumer yet (menu generator later). Spec `docs/spec-recipes.md` § Recipe season, roadmap.
+- Numbers: `npx tsc -b` + `npm run lint` pass; checked with a throwaway `tsx` script (ratatouille courgette + base sauce tomate/oignon with a base cycle → in season June-September, out in May because of « Tomates »; velouté potiron + oignon → January, September-December; a recipe with only all-year foods → 12 months).
+- Still open: menu generator decisions pending (owner): V1 filters, data additions (e.g. food tags such as pork / gluten), data quality check by the API session.
+
 ## 2026-10-16 — API D-054 and D-055 live, food seasons imported (v6.99.1)
 - Done: the API session confirmed D-054 (custom shopping categories) and D-055 (food seasons) in prod (migrations applied 2026-10-16 13:54 UTC, `CHECK`s present). Before that, the prod front (v6.95.0+) showed custom aisle management against an API without the route (404). Seasons: prod dry-run checked line by line against the validated file, then `--apply` with the owner's go: 70 foods written, 0 mismatch. `docs/api.md`: food seasons moved from « Planned » to « Catalogue writes »; D-034 and roadmap updated.
 - Still open: owner checks in the app (Dashboard › Aliments « De saison » = 70 foods; « Ordre des rayons »: create a custom aisle); authenticated API checks not run (no prod demo account, owner's choice). Next front step: recipe season logic for the menu generator.

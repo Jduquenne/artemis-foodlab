@@ -20,6 +20,10 @@ export interface MenuGeneratorSettings {
   useFreezer: boolean;
 }
 
+export type SavedGeneratorSettings = Omit<MenuGeneratorSettings, "startDate" | "endDate"> & {
+  periodDays: number;
+};
+
 export interface PeriodDay {
   date: string;
   year: number;

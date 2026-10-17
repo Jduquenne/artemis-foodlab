@@ -1,15 +1,18 @@
 import { useState } from "react";
-import { CalendarPlus, Loader2, RefreshCw, Sparkles, X } from "lucide-react";
+import { CalendarPlus, Loader2, RefreshCw, RotateCcw, Sparkles, X } from "lucide-react";
 import { MenuGeneratorSettings } from "../../../../core/domain/menuGenerator";
 import { BulkPlanningResult } from "../../../../core/domain/planning";
 import {
   defaultGeneratorSettings,
+  restoreGeneratorSettings,
   sameGeneratorSettings,
+  toSavedSettings,
   validateGeneratorSettings,
 } from "../../../../core/logic/menuGenerator/generatorSettingsLogic";
 import { countGeneratedMeals } from "../../../../core/logic/menuGenerator/menuPreviewLogic";
 import { MENU_GENERATOR_PENDING_KEY, MENU_GENERATOR_WRITE_PENDING_KEY, useMenuGenerator } from "../../../../shared/hooks/useMenuGenerator";
 import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
+import { useMenuGeneratorSettingsStore } from "../../../../shared/store/useMenuGeneratorSettingsStore";
 import { ChoicePills } from "./ChoicePills";
 import { GeneratorPreview } from "./GeneratorPreview";
 import { GeneratorSettingsForm } from "./GeneratorSettingsForm";
@@ -28,7 +31,10 @@ const MOBILE_VIEWS: readonly { id: MobileView; label: string }[] = [
 ];
 
 export const MenuGeneratorModal = ({ startDate, onClose, onAdded }: MenuGeneratorModalProps) => {
-  const [settings, setSettings] = useState<MenuGeneratorSettings>(() => defaultGeneratorSettings(startDate));
+  const savedSettings = useMenuGeneratorSettingsStore((s) => s.saved);
+  const saveSettings = useMenuGeneratorSettingsStore((s) => s.save);
+  const clearSettings = useMenuGeneratorSettingsStore((s) => s.clear);
+  const [settings, setSettings] = useState<MenuGeneratorSettings>(() => restoreGeneratorSettings(savedSettings, startDate));
   const [error, setError] = useState<string | null>(null);
   const [mobileView, setMobileView] = useState<MobileView>("settings");
   const { run, generate, reshuffle, regenerateMeal, toggleLock, write } = useMenuGenerator();
@@ -37,6 +43,16 @@ export const MenuGeneratorModal = ({ startDate, onClose, onAdded }: MenuGenerato
   const mealCount = run ? countGeneratedMeals(run.meals) : 0;
   const stale = run !== null && !sameGeneratorSettings(run.settings, settings);
   const busy = pending || writing;
+
+  const updateSettings = (next: MenuGeneratorSettings) => {
+    setSettings(next);
+    saveSettings(toSavedSettings(next));
+  };
+
+  const resetSettings = () => {
+    setSettings(defaultGeneratorSettings(settings.startDate));
+    clearSettings();
+  };
 
   const launch = async () => {
     const problem = validateGeneratorSettings(settings);
@@ -77,9 +93,20 @@ export const MenuGeneratorModal = ({ startDate, onClose, onAdded }: MenuGenerato
             className={`${mobileView === "settings" ? "flex" : "hidden"} sm:flex w-full sm:w-80 lg:w-96 shrink-0 flex-col gap-3 p-4 sm:border-r border-slate-100 tablet:w-full tablet:border-r-0 tablet:border-b tablet:max-h-[45dvh]`}
           >
             <div className="flex-1 min-h-0">
-              <GeneratorSettingsForm settings={settings} disabled={busy} onChange={setSettings} />
+              <GeneratorSettingsForm settings={settings} disabled={busy} onChange={updateSettings} />
             </div>
             {error && <p className="text-xs font-semibold text-red-500">{error}</p>}
+            <div className="shrink-0 flex items-center justify-between gap-2">
+              <span className="text-[11px] text-slate-400">Réglages gardés sur cet appareil</span>
+              <button
+                type="button"
+                onClick={resetSettings}
+                disabled={busy}
+                className="flex items-center gap-1 px-2 py-1 rounded-lg text-[11px] font-bold text-slate-500 hover:text-orange-600 hover:bg-muted transition-colors disabled:opacity-50"
+              >
+                <RotateCcw size={12} /> Réinitialiser
+              </button>
+            </div>
             <button
               onClick={launch}
               disabled={busy}

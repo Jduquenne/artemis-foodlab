@@ -113,11 +113,11 @@ Three layers, no exceptions:
 
 ## Client storage (localStorage)
 
-Persisted keys: `theme`, `last_recipe_search`, `cipe_shopping_price_calc`, `cipe_notification_settings`, `cipe_news_last_seen`, `cipe_recipe_filter`, `cipe_recipe_builder` (builder draft), `cipe_active_profile`, `cipe_media_overrides`, `cipe_refresh_token`. Journal targets/overrides and shopping days are **not** stored locally any more (D-027).
+Persisted keys: `theme`, `last_recipe_search`, `cipe_shopping_price_calc`, `cipe_notification_settings`, `cipe_news_last_seen`, `cipe_recipe_filter`, `cipe_recipe_builder` (builder draft), `cipe_active_profile`, `cipe_media_overrides`, `cipe_refresh_token`, `cipe_menu_generator_settings` (menu generator settings, D-036). Journal targets/overrides and shopping days are **not** stored locally any more (D-027).
 
 ## Stores (`shared/store/`)
 
-`useAuthStore`, `useMenuStore` (active week, recipe filter, shopping days, current period), `useJournalStore` (`overridesByProfile`, `persistOverride` always sends the 3 fields), `useProfileStore`, `useMediaStore`, `useNewsStore` (`lastSeenDate`), `useRecipeBuilderStore` (persisted draft), `usePendingStore`, `useRefreshStore`, `useNotificationStore`, `useNotificationSettingsStore` (`versionCheckEnabled`).
+`useAuthStore`, `useMenuStore` (active week, recipe filter, shopping days, current period), `useJournalStore` (`overridesByProfile`, `persistOverride` always sends the 3 fields), `useProfileStore`, `useMediaStore`, `useNewsStore` (`lastSeenDate`), `useRecipeBuilderStore` (persisted draft), `usePendingStore`, `useRefreshStore`, `useNotificationStore`, `useNotificationSettingsStore` (`versionCheckEnabled`), `useMenuGeneratorSettingsStore` (persisted menu generator settings, D-036).
 
 ## Media (recipe photos)
 

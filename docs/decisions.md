@@ -289,7 +289,7 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
   - **Foods to use** (leftovers, freezer products), the mirror of « Aliments à éviter », each food « bonus » or « at least once ».
   - **Freezer**: one checkbox, meals spread at random (no modes).
   - **Advanced**: repeat delay, same category in a row, kcal mode / tolerance / shares, favourite and banned recipes.
-  - **Saved on the device** (local storage), not through the API: the owner wants the settings kept between openings; the period is not saved.
+  - **Saved on the device** (local storage), not through the API: the owner wants the settings kept between openings; the period length is saved, not its dates (the start stays the selected day).
   - **Window**: full screen, settings and preview side by side, no scroll on desktop (`docs/ui-design.md`).
   - **Later** (roadmap ideas): leftovers « dinner served again at the next lunch », several setting sets (« Semaine normale », « Vacances »).
 - **Alternatives considered**: settings per account through the API (shared by the household on every device; owner chose the device); freezer modes ignore / prefer / use up (owner: a single checkbox).

@@ -1,9 +1,18 @@
 import { addDays, parseISO } from "date-fns";
-import { DietFilter, GENERATED_SLOTS, GeneratedSlotType, MenuGeneratorSettings, PeriodDay, SeasonMode } from "../../domain/menuGenerator";
+import {
+  DietFilter,
+  GENERATED_SLOTS,
+  GeneratedSlotType,
+  MAX_GENERATION_DAYS,
+  MenuGeneratorSettings,
+  PeriodDay,
+  SavedGeneratorSettings,
+  SeasonMode,
+} from "../../domain/menuGenerator";
 import { MealSlot } from "../../domain/planning";
 import { toIsoDate, isoDateFromWeekDay } from "../../utils/dateUtils";
 import { mealKey } from "./menuEngineLogic";
-import { validatePeriod } from "./periodLogic";
+import { periodLength, validatePeriod } from "./periodLogic";
 
 export const DIET_OPTIONS: { id: DietFilter; label: string }[] = [
   { id: "all", label: "Tout" },
@@ -22,10 +31,16 @@ export const GENERATED_SLOT_LABELS: Record<GeneratedSlotType, string> = {
   dinner: "Dîner",
 };
 
+const DEFAULT_PERIOD_DAYS = 7;
+
+function endDateFor(startDate: string, periodDays: number): string {
+  return toIsoDate(addDays(parseISO(startDate), periodDays - 1));
+}
+
 export function defaultGeneratorSettings(startDate: string): MenuGeneratorSettings {
   return {
     startDate,
-    endDate: toIsoDate(addDays(parseISO(startDate), 6)),
+    endDate: endDateFor(startDate, DEFAULT_PERIOD_DAYS),
     slots: [...GENERATED_SLOTS],
     diet: "all",
     excludedFoodIds: [],
@@ -65,4 +80,31 @@ function settingsSignature(settings: MenuGeneratorSettings): string {
 
 export function sameGeneratorSettings(a: MenuGeneratorSettings, b: MenuGeneratorSettings): boolean {
   return settingsSignature(a) === settingsSignature(b);
+}
+
+export function toSavedSettings(settings: MenuGeneratorSettings): SavedGeneratorSettings {
+  const { startDate, endDate, ...rest } = settings;
+  return { ...rest, periodDays: periodLength(startDate, endDate) ?? DEFAULT_PERIOD_DAYS };
+}
+
+function oneOf<T extends string>(value: unknown, options: readonly { id: T }[], fallback: T): T {
+  return options.find((option) => option.id === value)?.id ?? fallback;
+}
+
+export function restoreGeneratorSettings(saved: Partial<SavedGeneratorSettings> | null, startDate: string): MenuGeneratorSettings {
+  const defaults = defaultGeneratorSettings(startDate);
+  if (!saved) return defaults;
+  const periodDays = typeof saved.periodDays === "number" && Number.isInteger(saved.periodDays)
+    ? Math.min(MAX_GENERATION_DAYS, Math.max(1, saved.periodDays))
+    : DEFAULT_PERIOD_DAYS;
+  const slots = Array.isArray(saved.slots) ? GENERATED_SLOTS.filter((slot) => saved.slots?.includes(slot)) : defaults.slots;
+  return {
+    ...defaults,
+    endDate: endDateFor(startDate, periodDays),
+    slots: slots.length > 0 ? slots : defaults.slots,
+    diet: oneOf(saved.diet, DIET_OPTIONS, defaults.diet),
+    season: oneOf(saved.season, SEASON_OPTIONS, defaults.season),
+    excludedFoodIds: Array.isArray(saved.excludedFoodIds) ? saved.excludedFoodIds.filter((id) => typeof id === "string") : [],
+    useFreezer: typeof saved.useFreezer === "boolean" ? saved.useFreezer : defaults.useFreezer,
+  };
 }

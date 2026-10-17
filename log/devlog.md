@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-17 — Menu generator settings V2, step 3: settings saved on the device (v6.106.0)
+- Done: `useMenuGeneratorSettingsStore` (Zustand `persist`, `cipe_menu_generator_settings`, version 1); `SavedGeneratorSettings` (settings without dates + `periodDays`); `toSavedSettings`, `restoreGeneratorSettings` (start = selected day, saved length clamped 1..14, field-by-field fallback to defaults). The modal saves on every change and restores on opening; « Réinitialiser » (defaults + clear) with « Réglages gardés sur cet appareil ». Docs: architecture (storage keys, stores), spec-planning, D-036.
+- Numbers: `npx tsc -b` + `npm run lint` pass; `tsx` check (`_claude/tmp/menu-settings-restore-check.ts`): 10-day dinner-only vegetarian strict settings restored on another start day (23 oct. → 1 nov.); `null` → defaults; garbage (99 days, unknown slot / diet, number in the food ids, string boolean) → 14 days, defaults, the valid id kept; an old shape with only `diet` → defaults + that diet. **Not checked in a browser**.
+- To test: change settings, close, reopen → same settings, period starting on the selected day with the same length; reload the page → still there; « Réinitialiser » → defaults, and after reopening too.
+- Still open: next step: foods to use (bonus / at least once). Step 6 (`bulk-items`) still not pushable before the API confirms prod.
+
 ## 2026-10-17 — Menu generator settings V2, step 2: full-screen window without scroll (v6.105.0)
 - Done: `MenuGeneratorModal` rebuilt: near full screen (`92dvh`, max 1600 px, full screen on mobile), settings left (tabs « Période et repas » / « Aliments », `GeneralSettingsPanel`, `FoodsSettingsPanel`, `SettingsSection`; only the tab content may scroll), « Générer » / « Régénérer » under them, preview right filling the height (`GeneratorWeekGrid` rows stretch, `xl:` larger text), actions under the preview; stale notice when the settings changed since the run (`sameGeneratorSettings`); empty state before the first run; mobile « Réglages » / « Aperçu » pills; tablet portrait stacked. The « Réglages » back button and the hook's `reset` are gone (no consumer left).
 - Numbers: `npx tsc -b` + `npm run lint` pass. **Not checked in a browser** (layout only: to test with `npm run dev`).

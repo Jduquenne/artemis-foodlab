@@ -1,5 +1,8 @@
 import { addDays, parseISO } from "date-fns";
 import {
+  AdvancedMode,
+  AdvancedSettings,
+  DEFAULT_ADVANCED_SETTINGS,
   DietFilter,
   GENERATED_SLOTS,
   GeneratedSlotType,
@@ -22,6 +25,7 @@ import {
 } from "../../domain/menuGenerator";
 import { MealSlot } from "../../domain/planning";
 import { DAYS } from "../../domain/planningConfig";
+import { toggleInList } from "../../utils/collectionUtils";
 import { toIsoDate, isoDateFromWeekDay } from "../../utils/dateUtils";
 import { mealKey } from "./menuEngineLogic";
 import { periodLength, validatePeriod } from "./periodLogic";
@@ -57,6 +61,9 @@ export function defaultGeneratorSettings(startDate: string): MenuGeneratorSettin
     useFreezer: true,
     habits: [],
     quotas: [],
+    favoriteRecipeCodes: [],
+    bannedRecipeCodes: [],
+    advanced: DEFAULT_ADVANCED_SETTINGS,
   };
 }
 
@@ -187,6 +194,64 @@ function restoreHabit(value: unknown): HabitRule | null {
   return { id: value.id, enabled: value.enabled !== false, days, slots, target, strength };
 }
 
+export const ADVANCED_LIMITS = {
+  repeatWeeks: { min: 1, max: 8, step: 1 },
+  kcalTolerance: { min: 5, max: 30, step: 5 },
+  kcalShare: { min: 15, max: 60, step: 5 },
+} as const;
+
+const ADVANCED_MODES: readonly AdvancedMode[] = ["off", "preferred", "strict"];
+
+function clampInteger(value: unknown, min: number, max: number, fallback: number): number {
+  return typeof value === "number" && Number.isInteger(value) ? Math.min(max, Math.max(min, value)) : fallback;
+}
+
+function restoreMode(value: unknown, fallback: AdvancedMode): AdvancedMode {
+  return ADVANCED_MODES.find((mode) => mode === value) ?? fallback;
+}
+
+function restoreAdvanced(value: unknown): AdvancedSettings {
+  const defaults = DEFAULT_ADVANCED_SETTINGS;
+  if (!isRecord(value)) return defaults;
+  const shares = isRecord(value.kcalShares) ? value.kcalShares : {};
+  const { kcalShare } = ADVANCED_LIMITS;
+  return {
+    repeatWeeks: clampInteger(value.repeatWeeks, ADVANCED_LIMITS.repeatWeeks.min, ADVANCED_LIMITS.repeatWeeks.max, defaults.repeatWeeks),
+    repeatMode: restoreMode(value.repeatMode, defaults.repeatMode),
+    categoryInRow: restoreMode(value.categoryInRow, defaults.categoryInRow),
+    kcalMode: restoreMode(value.kcalMode, defaults.kcalMode),
+    kcalTolerance: clampInteger(value.kcalTolerance, ADVANCED_LIMITS.kcalTolerance.min, ADVANCED_LIMITS.kcalTolerance.max, defaults.kcalTolerance),
+    kcalShares: {
+      lunch: clampInteger(shares.lunch, kcalShare.min, kcalShare.max, defaults.kcalShares.lunch),
+      dinner: clampInteger(shares.dinner, kcalShare.min, kcalShare.max, defaults.kcalShares.dinner),
+    },
+  };
+}
+
+function restoreCodes(value: unknown): string[] {
+  return Array.isArray(value) ? [...new Set(value.filter((code): code is string => typeof code === "string"))] : [];
+}
+
+export function toggleFavoriteRecipe(
+  settings: Pick<MenuGeneratorSettings, "favoriteRecipeCodes" | "bannedRecipeCodes">,
+  code: string,
+): Pick<MenuGeneratorSettings, "favoriteRecipeCodes" | "bannedRecipeCodes"> {
+  return {
+    favoriteRecipeCodes: toggleInList(settings.favoriteRecipeCodes, code),
+    bannedRecipeCodes: settings.bannedRecipeCodes.filter((item) => item !== code),
+  };
+}
+
+export function toggleBannedRecipe(
+  settings: Pick<MenuGeneratorSettings, "favoriteRecipeCodes" | "bannedRecipeCodes">,
+  code: string,
+): Pick<MenuGeneratorSettings, "favoriteRecipeCodes" | "bannedRecipeCodes"> {
+  return {
+    favoriteRecipeCodes: settings.favoriteRecipeCodes.filter((item) => item !== code),
+    bannedRecipeCodes: toggleInList(settings.bannedRecipeCodes, code),
+  };
+}
+
 const QUOTA_COMPARATORS: readonly QuotaComparator[] = ["atLeast", "atMost"];
 
 const QUOTA_STRICTNESSES: readonly QuotaStrictness[] = ["strict", "preferred"];
@@ -230,5 +295,8 @@ export function restoreGeneratorSettings(saved: Partial<SavedGeneratorSettings> 
     useFreezer: typeof saved.useFreezer === "boolean" ? saved.useFreezer : defaults.useFreezer,
     habits: restoreHabits(saved.habits),
     quotas: restoreQuotas(saved.quotas),
+    favoriteRecipeCodes: restoreCodes(saved.favoriteRecipeCodes),
+    bannedRecipeCodes: restoreCodes(saved.bannedRecipeCodes),
+    advanced: restoreAdvanced(saved.advanced),
   };
 }

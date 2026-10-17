@@ -22,10 +22,6 @@ export function emptyQuota(id: string): WeeklyQuota {
   return { id, enabled: true, target: { kind: "protein", protein: "fish" }, comparator: "atLeast", count: 2, strictness: "strict" };
 }
 
-export function stepQuotaCount(count: number, delta: number): number {
-  return Math.min(MAX_QUOTA_COUNT, Math.max(0, count + delta));
-}
-
 export function validateQuota(quota: WeeklyQuota): string | null {
   if (quota.comparator === "atLeast" && quota.count === 0) return "« Au moins 0 » n'a pas d'effet : choisis au moins 1.";
   return validateHabitTarget(quota.target);

@@ -1,8 +1,7 @@
 import {
   GeneratedMeal,
   GeneratedSlotType,
-  KCAL_SLOT_SHARE,
-  KCAL_TOLERANCE,
+  AdvancedSettings,
   MealReason,
   MealReasonKind,
   PeriodDay,
@@ -24,7 +23,7 @@ export interface PreviewWeek {
   columns: PreviewColumn[];
 }
 
-const BADGE_KINDS: readonly MealReasonKind[] = ["freezer", "preferred", "habit", "quota", "offSeason", "repeat", "recent", "season"];
+const BADGE_KINDS: readonly MealReasonKind[] = ["freezer", "preferred", "habit", "quota", "favorite", "offSeason", "repeat", "recent", "season"];
 
 const MAX_BADGES = 2;
 
@@ -94,6 +93,7 @@ export function dayKcalSummary(
   existing: Record<string, string[]>,
   macros: Record<string, Macronutrients>,
   dailyTarget: number | null,
+  advanced: AdvancedSettings,
 ): DayKcalSummary {
   const values = slots.flatMap((slot) => {
     const key = mealKey(date, slot);
@@ -102,8 +102,8 @@ export function dayKcalSummary(
     return codes.map((code) => macros[code]?.kcal).filter((kcal): kcal is number => kcal !== undefined && kcal > 0);
   });
   const kcal = values.length > 0 ? Math.round(values.reduce((sum, value) => sum + value, 0)) : null;
-  const share = slots.reduce((sum, slot) => sum + KCAL_SLOT_SHARE[slot], 0);
-  const target = dailyTarget && dailyTarget > 0 && share > 0 ? Math.round(dailyTarget * share) : null;
-  const onTarget = kcal !== null && target !== null ? Math.abs(kcal - target) / target <= KCAL_TOLERANCE : null;
+  const share = slots.reduce((sum, slot) => sum + advanced.kcalShares[slot], 0);
+  const target = dailyTarget && dailyTarget > 0 && share > 0 ? Math.round((dailyTarget * share) / 100) : null;
+  const onTarget = kcal !== null && target !== null ? Math.abs(kcal - target) / target <= advanced.kcalTolerance / 100 : null;
   return { kcal, target, onTarget };
 }

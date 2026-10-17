@@ -1,4 +1,4 @@
-import { AlertTriangle, Ban, CalendarCheck, CalendarClock, Flame, History, Leaf, Recycle, Repeat, Scale, Snowflake, Sparkles } from "lucide-react";
+import { AlertTriangle, Ban, CalendarCheck, CalendarClock, Flame, Heart, History, Leaf, Recycle, Repeat, Scale, Snowflake, Sparkles } from "lucide-react";
 import { MealReasonKind } from "../../../../core/domain/menuGenerator";
 
 export interface MealReasonIconProps {
@@ -18,6 +18,8 @@ export const MealReasonIcon = ({ kind, size = 12 }: MealReasonIconProps) => {
       return <Recycle size={size} className="shrink-0 text-green-600" />;
     case "habit":
       return <CalendarClock size={size} className="shrink-0 text-violet-500" />;
+    case "favorite":
+      return <Heart size={size} className="shrink-0 text-pink-500" />;
     case "quota":
       return <Scale size={size} className="shrink-0 text-violet-500" />;
     case "recent":

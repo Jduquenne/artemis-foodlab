@@ -1,11 +1,14 @@
 import { MenuGeneratorSettings } from "../../../../core/domain/menuGenerator";
 import {
   setPreferredFoodMode,
+  toggleBannedRecipe,
   toggleExcludedFood,
+  toggleFavoriteRecipe,
   togglePreferredFood,
 } from "../../../../core/logic/menuGenerator/generatorSettingsLogic";
 import { ExcludedFoodsField } from "./ExcludedFoodsField";
 import { PreferredFoodsField } from "./PreferredFoodsField";
+import { RecipeListField } from "./RecipeListField";
 import { SettingsSection } from "./SettingsSection";
 
 export interface FoodsSettingsPanelProps {
@@ -33,6 +36,24 @@ export const FoodsSettingsPanel = ({ settings, disabled, onPatch }: FoodsSetting
         foodIds={settings.excludedFoodIds}
         disabled={disabled}
         onToggle={(foodId) => onPatch(toggleExcludedFood(settings, foodId))}
+      />
+    </SettingsSection>
+
+    <SettingsSection title="Recettes favorites" hint="Favorisées une fois sur un repas tiré au hasard de la période.">
+      <RecipeListField
+        codes={settings.favoriteRecipeCodes}
+        tone="favorite"
+        disabled={disabled}
+        onToggle={(code) => onPatch(toggleFavoriteRecipe(settings, code))}
+      />
+    </SettingsSection>
+
+    <SettingsSection title="Recettes interdites" hint="Jamais proposées.">
+      <RecipeListField
+        codes={settings.bannedRecipeCodes}
+        tone="banned"
+        disabled={disabled}
+        onToggle={(code) => onPatch(toggleBannedRecipe(settings, code))}
       />
     </SettingsSection>
   </div>

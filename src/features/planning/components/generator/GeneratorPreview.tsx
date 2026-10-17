@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { AlertTriangle } from "lucide-react";
-import { GeneratedMeal, GeneratedSlotType, PeriodDay } from "../../../../core/domain/menuGenerator";
+import { AdvancedSettings, GeneratedMeal, GeneratedSlotType, PeriodDay } from "../../../../core/domain/menuGenerator";
 import { dayKcalSummary, mealsByKey, previewWeeks } from "../../../../core/logic/menuGenerator/menuPreviewLogic";
 import { useActiveProfile } from "../../../../shared/hooks/useActiveProfile";
 import { useRecipeMetricsSnapshot, useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
@@ -15,11 +15,12 @@ export interface GeneratorPreviewProps {
   meals: GeneratedMeal[];
   existing: Record<string, string[]>;
   warnings: string[];
+  advanced: AdvancedSettings;
   onToggleLock: (key: string) => void;
   onRegenerate: (key: string) => void;
 }
 
-export const GeneratorPreview = ({ days, slots, meals, existing, warnings, onToggleLock, onRegenerate }: GeneratorPreviewProps) => {
+export const GeneratorPreview = ({ days, slots, meals, existing, warnings, advanced, onToggleLock, onRegenerate }: GeneratorPreviewProps) => {
   const recipes = useRecipesSnapshot();
   const { macros } = useRecipeMetricsSnapshot();
   const kcalTarget = useActiveProfile()?.kcalTarget ?? null;
@@ -30,7 +31,7 @@ export const GeneratorPreview = ({ days, slots, meals, existing, warnings, onTog
   const week = weeks.find((w) => w.key === chosenWeek) ?? weeks[0];
   const recipeNameOf = (code: string | null) => (code ? (recipes[code]?.name ?? code) : null);
   const selected = selectedKey ? (byKey[selectedKey] ?? null) : null;
-  const kcalOf = (date: string) => dayKcalSummary(date, slots, byKey, existing, macros, kcalTarget);
+  const kcalOf = (date: string) => dayKcalSummary(date, slots, byKey, existing, macros, kcalTarget, advanced);
 
   if (!week) return null;
 

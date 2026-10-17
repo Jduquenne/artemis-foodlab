@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { MenuGeneratorSettings } from "../../../../core/domain/menuGenerator";
+import { AdvancedSettingsPanel } from "./AdvancedSettingsPanel";
 import { ChoicePills } from "./ChoicePills";
 import { FoodsSettingsPanel } from "./FoodsSettingsPanel";
 import { GeneralSettingsPanel } from "./GeneralSettingsPanel";
@@ -12,13 +13,14 @@ export interface GeneratorSettingsFormProps {
   onChange: (settings: MenuGeneratorSettings) => void;
 }
 
-type SettingsTab = "general" | "habits" | "quotas" | "foods";
+type SettingsTab = "general" | "habits" | "quotas" | "foods" | "advanced";
 
 const TABS: readonly { id: SettingsTab; label: string }[] = [
   { id: "general", label: "Période et repas" },
   { id: "habits", label: "Habitudes" },
   { id: "quotas", label: "Quotas" },
-  { id: "foods", label: "Aliments" },
+  { id: "foods", label: "Aliments et recettes" },
+  { id: "advanced", label: "Avancé" },
 ];
 
 export const GeneratorSettingsForm = ({ settings, disabled, onChange }: GeneratorSettingsFormProps) => {
@@ -34,6 +36,7 @@ export const GeneratorSettingsForm = ({ settings, disabled, onChange }: Generato
         {tab === "habits" && <HabitsSettingsPanel {...panelProps} />}
         {tab === "quotas" && <QuotasSettingsPanel {...panelProps} />}
         {tab === "foods" && <FoodsSettingsPanel {...panelProps} />}
+        {tab === "advanced" && <AdvancedSettingsPanel {...panelProps} />}
       </div>
     </div>
   );

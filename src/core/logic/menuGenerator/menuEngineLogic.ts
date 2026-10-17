@@ -19,8 +19,8 @@ import { MenuCatalogue, dayCandidates, recipeDietProfile, slotCandidates } from 
 import { HabitMatcher, SlotHabits, habitLabel, respectsStrictHabits, slotHabits } from "./habitLogic";
 import { FreezerBatchStock } from "../freezer/freezerStockLogic";
 import { FreezerReservation, OpenSlot, createFreezerPlan, reserveFreezerSlots } from "./freezerPlanLogic";
-import { scoreCandidate } from "./mealScoreLogic";
-import { assignPreferredFoods, createFoodIndex, preferredFoodReason } from "./preferredFoodLogic";
+import { kcalDeviation, scoreCandidate, slotKcalTarget } from "./mealScoreLogic";
+import { assignToRandomSlots, createFoodIndex, preferredFoodReason } from "./preferredFoodLogic";
 import {
   QuotaBlock,
   assignQuotaSlots,
@@ -138,14 +138,19 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
   const toPlace = settings.preferredFoods.filter((item) => !covered.has(item.foodId)).map((item) => item.foodId);
   const eligibleOf = (day: PeriodDay, slot: GeneratedSlotType, key: string) =>
     dayCandidates(slotPoolOf(slot, key), day.month, settings.season, catalogue);
-  const preferredFoodBySlot = assignPreferredFoods(
-    toPlace,
-    sequence
-      .filter(({ key }) => !isKept(key) && !fixedOf(key) && !reservations[key] && !habitsOf(key).noMeal)
-      .map(({ day, slot, key }) => ({ key, candidates: eligibleOf(day, slot, key) })),
-    (code) => foodsOf(code),
+  const freeSlots = sequence
+    .filter(({ key }) => !isKept(key) && !fixedOf(key) && !reservations[key] && !habitsOf(key).noMeal)
+    .map(({ day, slot, key }) => ({ key, candidates: eligibleOf(day, slot, key) }));
+  const preferredFoodBySlot = assignToRandomSlots(toPlace, freeSlots, (recipe, foodId) => foodsOf(recipe.code).has(foodId), random);
+  const favoriteCodes = new Set(settings.favoriteRecipeCodes);
+  const placedCodes = new Set([...existingCodes, ...fixedCodes, ...Object.values(reservations).map((r) => r.recipeCode)]);
+  const favoriteBySlot = assignToRandomSlots(
+    settings.favoriteRecipeCodes.filter((code) => !placedCodes.has(code)),
+    freeSlots,
+    (recipe, code) => recipe.code === code,
     random,
   );
+  const advanced = settings.advanced;
   const quotas = settings.quotas.filter((quota) => quota.enabled);
   const codesOfKey = (key: string): string[] => {
     if (isKept(key)) return input.existing[key] ?? [];
@@ -249,13 +254,39 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
 
     const targetFood = preferredFoodBySlot[key];
     const pendingFood = targetFood && !covered.has(targetFood) ? targetFood : null;
+    const nextCategoryId = knownCategoryOf(sequence[index + 1]?.key);
+    const kcalTarget = slotKcalTarget(input.kcalTarget, slot, advanced);
+    const strictFilters: { label: string; keep: (recipe: RecipeDetails) => boolean }[] = [
+      ...(advanced.repeatMode === "strict"
+        ? [{
+            label: `pas de recette planifiée il y a moins de ${advanced.repeatWeeks} sem.`,
+            keep: (recipe: RecipeDetails) => (input.weeksSinceEaten[recipe.code] ?? Infinity) >= advanced.repeatWeeks,
+          }]
+        : []),
+      ...(advanced.categoryInRow === "strict"
+        ? [{
+            label: "pas deux fois la même catégorie à la suite",
+            keep: (recipe: RecipeDetails) => recipe.categoryId !== previousCategoryId && recipe.categoryId !== nextCategoryId,
+          }]
+        : []),
+      ...(advanced.kcalMode === "strict" && kcalTarget
+        ? [{
+            label: `kcal à ±${advanced.kcalTolerance} % de ${kcalTarget}`,
+            keep: (recipe: RecipeDetails) => (kcalDeviation(input.macros[recipe.code]?.kcal, kcalTarget) ?? 0) <= advanced.kcalTolerance / 100,
+          }]
+        : []),
+    ];
     const cappedQuotas = quotas.filter((quota) =>
       quota.comparator === "atMost"
       && quota.strictness === "strict"
       && !forcedQuotaIds.get(key)?.has(quota.id)
       && countOf(quota.id) + forcedAfter(quota.id, blockKey, index) >= quota.count,
     );
-    const allEligible = eligibleOf(day, slot, key).filter((recipe) => cappedQuotas.every((quota) => !matchesQuota(recipe, quota, matcher)));
+    const quotaEligible = eligibleOf(day, slot, key).filter((recipe) => cappedQuotas.every((quota) => !matchesQuota(recipe, quota, matcher)));
+    const blockingFilter = strictFilters.find((_filter, position) =>
+      quotaEligible.filter((recipe) => strictFilters.slice(0, position + 1).every((f) => f.keep(recipe))).length === 0,
+    );
+    const allEligible = quotaEligible.filter((recipe) => strictFilters.every((filter) => filter.keep(recipe)));
     const requiredPool = pendingFood && required.has(pendingFood)
       ? allEligible.filter((recipe) => foodsOf(recipe.code).has(pendingFood))
       : [];
@@ -277,7 +308,7 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
       month: day.month,
       slot,
       previousCategoryId,
-      nextCategoryId: knownCategoryOf(sequence[index + 1]?.key),
+      nextCategoryId,
       sameDayCategoryIds,
       preferredFoods: settings.preferredFoods,
       bonusFoodId: pendingFood,
@@ -285,6 +316,9 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
       habits,
       matcher,
       names,
+      advanced,
+      favoriteCodes,
+      bonusFavoriteCode: favoriteBySlot[key] ?? null,
       quotaAdjust: (recipe: RecipeDetails) => quotaScore(recipe, quotas, pendingQuota?.id ?? null, countOf, matcher, names),
     };
     const choice = chooseRecipe(pool, (recipe) => scoreCandidate(recipe, context), random);
@@ -296,9 +330,14 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
       if (strict.length === 0 && cappedQuotas.length > 0) {
         warnings.push(`${formatSourceDayFull(day.date)}, ${GENERATED_SLOT_LABELS[slot].toLowerCase()} : aucune recette possible sans dépasser ${cappedLabel}.`);
       }
+      if (strict.length === 0 && cappedQuotas.length === 0 && blockingFilter && quotaEligible.length > 0) {
+        warnings.push(`${formatSourceDayFull(day.date)}, ${GENERATED_SLOT_LABELS[slot].toLowerCase()} : aucune recette ne respecte le réglage strict « ${blockingFilter.label} ».`);
+      }
       const label = strict.length > 0
         ? `Aucune recette ne respecte les habitudes : ${strictLabel}`
-        : cappedQuotas.length > 0
+        : blockingFilter && quotaEligible.length > 0
+          ? `Aucune recette ne respecte : ${blockingFilter.label}`
+          : cappedQuotas.length > 0
           ? `Aucune recette possible sans dépasser : ${cappedLabel}`
           : (input.rejected[key] ?? []).length > 0
           ? "Aucune autre recette ne respecte les filtres"

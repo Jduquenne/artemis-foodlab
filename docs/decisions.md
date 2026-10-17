@@ -288,7 +288,7 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
   - **Weekly quotas** with the same targets (« red meat ≤ 2 », « fish ≥ 2 »), strict or preferred, per block of 7 days from the period start (owner 2026-10-17; the period is 7 to 14 days, « the generator is not meant for 2 days »), planned meals included; only an incomplete last block (8-13-day period) prorates « at least » (round(N × days / 7)), « at most » unchanged; a mandatory habit wins over a strict « at most » (warning).
   - **Foods to use** (leftovers, freezer products), the mirror of « Aliments à éviter », each food « bonus » or « at least once », placed on a random slot (not first); a strict request that cannot be met is reported as a warning.
   - **Freezer**: one checkbox, meals spread at random (no modes).
-  - **Advanced**: repeat delay, same category in a row, kcal mode / tolerance / shares, favourite and banned recipes.
+  - **Advanced**: repeat delay, same category in a row, kcal mode / tolerance / shares (each off / preferred / strict, defaults = V1 behaviour), favourite (bonus on one random slot) and banned recipes.
   - **Saved on the device** (local storage), not through the API: the owner wants the settings kept between openings; the period length is saved, not its dates (the start stays the selected day).
   - **Window**: full screen, settings and preview side by side, no scroll on desktop (`docs/ui-design.md`).
   - **Later** (roadmap ideas): leftovers « dinner served again at the next lunch », several setting sets (« Semaine normale », « Vacances »).

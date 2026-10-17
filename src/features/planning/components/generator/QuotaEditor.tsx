@@ -1,16 +1,15 @@
 import { useState } from "react";
-import { Minus, Plus } from "lucide-react";
 import { QuotaComparator, QuotaStrictness, WeeklyQuota } from "../../../../core/domain/menuGenerator";
 import { HABIT_TARGET_KIND_LABELS, HabitTargetKind, defaultHabitTarget } from "../../../../core/logic/menuGenerator/habitLogic";
 import {
   MAX_QUOTA_COUNT,
   QUOTA_COMPARATOR_LABELS,
   QUOTA_STRICTNESS_LABELS,
-  stepQuotaCount,
   validateQuota,
 } from "../../../../core/logic/menuGenerator/quotaLogic";
 import { ChoicePills } from "./ChoicePills";
 import { HabitTargetField } from "./HabitTargetField";
+import { NumberStepper } from "./NumberStepper";
 import { SettingsSection } from "./SettingsSection";
 
 export interface QuotaEditorProps {
@@ -25,8 +24,6 @@ const KIND_OPTIONS = (Object.keys(HABIT_TARGET_KIND_LABELS) as HabitTargetKind[]
   .map((id) => ({ id, label: HABIT_TARGET_KIND_LABELS[id] }));
 const COMPARATOR_OPTIONS = (Object.keys(QUOTA_COMPARATOR_LABELS) as QuotaComparator[]).map((id) => ({ id, label: QUOTA_COMPARATOR_LABELS[id] }));
 const STRICTNESS_OPTIONS = (Object.keys(QUOTA_STRICTNESS_LABELS) as QuotaStrictness[]).map((id) => ({ id, label: QUOTA_STRICTNESS_LABELS[id] }));
-
-const STEP_CLASS = "p-1.5 rounded-lg border border-slate-200 text-slate-600 hover:bg-muted disabled:opacity-30";
 
 export const QuotaEditor = ({ initial, disabled, onSave, onCancel }: QuotaEditorProps) => {
   const [draft, setDraft] = useState<WeeklyQuota>(initial);
@@ -61,15 +58,7 @@ export const QuotaEditor = ({ initial, disabled, onSave, onCancel }: QuotaEditor
       <SettingsSection title="Combien par semaine">
         <div className="flex flex-wrap items-center gap-2">
           <ChoicePills options={COMPARATOR_OPTIONS} isActive={(id) => id === draft.comparator} onToggle={(comparator) => patch({ comparator })} disabled={disabled} />
-          <div className="flex items-center gap-1.5">
-            <button type="button" aria-label="Moins" disabled={disabled || draft.count === 0} onClick={() => patch({ count: stepQuotaCount(draft.count, -1) })} className={STEP_CLASS}>
-              <Minus size={12} />
-            </button>
-            <span className="w-6 text-center text-sm font-black text-slate-800">{draft.count}</span>
-            <button type="button" aria-label="Plus" disabled={disabled || draft.count === MAX_QUOTA_COUNT} onClick={() => patch({ count: stepQuotaCount(draft.count, 1) })} className={STEP_CLASS}>
-              <Plus size={12} />
-            </button>
-          </div>
+          <NumberStepper value={draft.count} min={0} max={MAX_QUOTA_COUNT} step={1} disabled={disabled} onChange={(count) => patch({ count })} />
         </div>
       </SettingsSection>
 

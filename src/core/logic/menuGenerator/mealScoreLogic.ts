@@ -1,4 +1,4 @@
-import { KCAL_SLOT_SHARE, KCAL_TOLERANCE, RECENT_HISTORY_WEEKS, GeneratedSlotType, MealReason, PreferredFood, SeasonMode } from "../../domain/menuGenerator";
+import { AdvancedSettings, GeneratedSlotType, MealReason, PreferredFood, SeasonMode } from "../../domain/menuGenerator";
 import { Macronutrients } from "../../domain/nutrition";
 import { RecipeDetails } from "../../domain/recipe";
 import { outOfSeasonFoods, recipeSeasonalFoods } from "../season/recipeSeasonLogic";
@@ -24,30 +24,53 @@ export interface ScoreContext {
   matcher: HabitMatcher;
   names: HabitNames;
   quotaAdjust: (recipe: RecipeDetails) => CandidateScore;
+  advanced: AdvancedSettings;
+  favoriteCodes: ReadonlySet<string>;
+  bonusFavoriteCode: string | null;
 }
+
+export const FAVORITE_BONUS = 2;
 
 export interface CandidateScore {
   score: number;
   reasons: MealReason[];
 }
 
-export function slotKcalTarget(dailyTarget: number | null, slot: GeneratedSlotType): number | null {
-  return dailyTarget && dailyTarget > 0 ? Math.round(dailyTarget * KCAL_SLOT_SHARE[slot]) : null;
+export function slotKcalTarget(dailyTarget: number | null, slot: GeneratedSlotType, advanced: AdvancedSettings): number | null {
+  return dailyTarget && dailyTarget > 0 ? Math.round((dailyTarget * advanced.kcalShares[slot]) / 100) : null;
 }
 
-function kcalScore(kcal: number | undefined, target: number | null): CandidateScore {
-  if (!target || !kcal) return { score: 0, reasons: [] };
-  const deviation = Math.abs(kcal - target) / target;
+export function kcalDeviation(kcal: number | undefined, target: number | null): number | null {
+  return target && kcal ? Math.abs(kcal - target) / target : null;
+}
+
+function kcalScore(kcal: number | undefined, target: number | null, advanced: AdvancedSettings): CandidateScore {
+  const deviation = kcalDeviation(kcal, target);
+  if (deviation === null || kcal === undefined) return { score: 0, reasons: [] };
   const reason: MealReason = { kind: "kcal", label: `${Math.round(kcal)} kcal / portion (cible ${target})` };
-  if (deviation <= KCAL_TOLERANCE) return { score: 2, reasons: [reason] };
-  return { score: -Math.min(4, (deviation - KCAL_TOLERANCE) * 10), reasons: [reason] };
+  if (advanced.kcalMode === "off") return { score: 0, reasons: [reason] };
+  const tolerance = advanced.kcalTolerance / 100;
+  if (deviation <= tolerance) return { score: 2, reasons: [reason] };
+  return { score: -Math.min(4, (deviation - tolerance) * 10), reasons: [reason] };
 }
 
-function historyScore(weeks: number | undefined): CandidateScore {
-  if (weeks === undefined) return { score: 0.5, reasons: [{ kind: "history", label: "Jamais planifiée" }] };
-  if (weeks <= 1) return { score: -4, reasons: [{ kind: "recent", label: weeks <= 0 ? "Déjà planifiée cette semaine" : "Planifiée la semaine dernière" }] };
-  if (weeks < RECENT_HISTORY_WEEKS) return { score: -2, reasons: [{ kind: "recent", label: `Planifiée il y a ${weeks} sem.` }] };
-  return { score: 1, reasons: [{ kind: "history", label: `Pas planifiée depuis ${weeks} sem.` }] };
+function historyScore(weeks: number | undefined, advanced: AdvancedSettings): CandidateScore {
+  const off = advanced.repeatMode === "off";
+  if (weeks === undefined) return { score: off ? 0 : 0.5, reasons: [{ kind: "history", label: "Jamais planifiée" }] };
+  if (weeks <= 1) {
+    const label = weeks <= 0 ? "Déjà planifiée cette semaine" : "Planifiée la semaine dernière";
+    return { score: off ? 0 : -4, reasons: [{ kind: "recent", label }] };
+  }
+  if (weeks < advanced.repeatWeeks) return { score: off ? 0 : -2, reasons: [{ kind: "recent", label: `Planifiée il y a ${weeks} sem.` }] };
+  return { score: off ? 0 : 1, reasons: [{ kind: "history", label: `Pas planifiée depuis ${weeks} sem.` }] };
+}
+
+function favoriteScore(recipe: RecipeDetails, context: ScoreContext): CandidateScore {
+  if (!context.favoriteCodes.has(recipe.code)) return { score: 0, reasons: [] };
+  return {
+    score: context.bonusFavoriteCode === recipe.code ? FAVORITE_BONUS : 0,
+    reasons: [{ kind: "favorite", label: "Recette favorite" }],
+  };
 }
 
 function seasonScore(recipe: RecipeDetails, context: ScoreContext): CandidateScore {
@@ -62,6 +85,7 @@ function seasonScore(recipe: RecipeDetails, context: ScoreContext): CandidateSco
 }
 
 function varietyScore(recipe: RecipeDetails, context: ScoreContext): CandidateScore {
+  if (context.advanced.categoryInRow === "off") return { score: 0, reasons: [] };
   let score = 0;
   if (context.previousCategoryId === recipe.categoryId) score -= 3;
   if (context.nextCategoryId === recipe.categoryId) score -= 3;
@@ -83,8 +107,9 @@ export function scoreCandidate(recipe: RecipeDetails, context: ScoreContext): Ca
     context.quotaAdjust(recipe),
     preferredScore(recipe, context),
     seasonScore(recipe, context),
-    historyScore(context.weeksSinceEaten[recipe.code]),
-    kcalScore(context.macros[recipe.code]?.kcal, slotKcalTarget(context.kcalTarget, context.slot)),
+    favoriteScore(recipe, context),
+    historyScore(context.weeksSinceEaten[recipe.code], context.advanced),
+    kcalScore(context.macros[recipe.code]?.kcal, slotKcalTarget(context.kcalTarget, context.slot, context.advanced), context.advanced),
     varietyScore(recipe, context),
   ];
   return {

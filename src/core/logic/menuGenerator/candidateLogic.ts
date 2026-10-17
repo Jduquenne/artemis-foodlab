@@ -71,10 +71,11 @@ export function usesExcludedFood(recipe: RecipeDetails, excludedFoodIds: readonl
 export function slotCandidates(
   catalogue: MenuCatalogue,
   slot: GeneratedSlotType,
-  settings: Pick<MenuGeneratorSettings, "diet" | "excludedFoodIds">,
+  settings: Pick<MenuGeneratorSettings, "diet" | "excludedFoodIds" | "bannedRecipeCodes">,
 ): RecipeDetails[] {
   return Object.values(catalogue.recipes)
     .filter((recipe) => isGeneratableDish(recipe, slot))
+    .filter((recipe) => !settings.bannedRecipeCodes.includes(recipe.code))
     .filter((recipe) => matchesDiet(recipeDietProfile(recipe, catalogue.recipes), settings.diet))
     .filter((recipe) => !usesExcludedFood(recipe, settings.excludedFoodIds, catalogue))
     .sort(compareByName);

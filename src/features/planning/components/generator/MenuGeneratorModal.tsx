@@ -126,6 +126,7 @@ export const MenuGeneratorModal = ({ startDate, onClose, onAdded }: MenuGenerato
                   meals={run.meals}
                   existing={run.context.existing}
                   warnings={run.warnings}
+                  advanced={run.settings.advanced}
                   onToggleLock={toggleLock}
                   onRegenerate={regenerateMeal}
                 />

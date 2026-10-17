@@ -61,6 +61,26 @@ export interface WeeklyQuota {
   strictness: QuotaStrictness;
 }
 
+export type AdvancedMode = "off" | "preferred" | "strict";
+
+export interface AdvancedSettings {
+  repeatWeeks: number;
+  repeatMode: AdvancedMode;
+  categoryInRow: AdvancedMode;
+  kcalMode: AdvancedMode;
+  kcalTolerance: number;
+  kcalShares: Record<GeneratedSlotType, number>;
+}
+
+export const DEFAULT_ADVANCED_SETTINGS: AdvancedSettings = {
+  repeatWeeks: 3,
+  repeatMode: "preferred",
+  categoryInRow: "preferred",
+  kcalMode: "preferred",
+  kcalTolerance: 15,
+  kcalShares: { [MealType.LUNCH]: 35, [MealType.DINNER]: 30 },
+};
+
 export interface MenuGeneratorSettings {
   startDate: string;
   endDate: string;
@@ -72,6 +92,9 @@ export interface MenuGeneratorSettings {
   useFreezer: boolean;
   habits: HabitRule[];
   quotas: WeeklyQuota[];
+  favoriteRecipeCodes: string[];
+  bannedRecipeCodes: string[];
+  advanced: AdvancedSettings;
 }
 
 export type SavedGeneratorSettings = Omit<MenuGeneratorSettings, "startDate" | "endDate"> & {
@@ -94,15 +117,6 @@ export interface RecipeDietProfile {
   hasDeli: boolean;
 }
 
-export const KCAL_SLOT_SHARE: Record<GeneratedSlotType, number> = {
-  [MealType.LUNCH]: 0.35,
-  [MealType.DINNER]: 0.3,
-};
-
-export const KCAL_TOLERANCE = 0.15;
-
-export const RECENT_HISTORY_WEEKS = 3;
-
 export type MealReasonKind =
   | "season"
   | "offSeason"
@@ -110,6 +124,7 @@ export type MealReasonKind =
   | "preferred"
   | "habit"
   | "quota"
+  | "favorite"
   | "history"
   | "recent"
   | "kcal"

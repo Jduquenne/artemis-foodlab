@@ -49,17 +49,17 @@ export function preferredFoodReason(foodIds: ReadonlySet<string>, preferred: rea
   return names.length > 0 ? { kind: "preferred", label: `Utilise : ${names.join(", ")}` } : null;
 }
 
-export function assignPreferredFoods(
-  foodIds: readonly string[],
+export function assignToRandomSlots(
+  targetIds: readonly string[],
   slots: readonly RequirementSlot[],
-  foodsOf: (code: string) => ReadonlySet<string>,
+  matches: (recipe: RecipeDetails, targetId: string) => boolean,
   random: () => number,
 ): Record<string, string> {
   const assigned: Record<string, string> = {};
-  for (const foodId of foodIds) {
-    const options = slots.filter((slot) => !assigned[slot.key] && slot.candidates.some((recipe) => foodsOf(recipe.code).has(foodId)));
+  for (const targetId of targetIds) {
+    const options = slots.filter((slot) => !assigned[slot.key] && slot.candidates.some((recipe) => matches(recipe, targetId)));
     const picked = pickRandom(options, random);
-    if (picked) assigned[picked.key] = foodId;
+    if (picked) assigned[picked.key] = targetId;
   }
   return assigned;
 }

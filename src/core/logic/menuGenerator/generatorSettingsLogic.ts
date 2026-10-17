@@ -3,8 +3,11 @@ import {
   AdvancedMode,
   AdvancedSettings,
   DEFAULT_ADVANCED_SETTINGS,
+  DayNutritionLimits,
   DietFilter,
   FoodList,
+  NUTRIENT_KEYS,
+  NutrientRange,
   GENERATED_SLOTS,
   GeneratedSlotType,
   HabitProtein,
@@ -242,7 +245,35 @@ function restoreAdvanced(value: unknown): AdvancedSettings {
       lunch: clampInteger(shares.lunch, kcalShare.min, kcalShare.max, defaults.kcalShares.lunch),
       dinner: clampInteger(shares.dinner, kcalShare.min, kcalShare.max, defaults.kcalShares.dinner),
     },
+    dayNutrition: restoreDayNutrition(value.dayNutrition),
   };
+}
+
+const MAX_NUTRIENT_VALUE = 10000;
+
+function restoreBound(value: unknown): number | null {
+  return typeof value === "number" && Number.isFinite(value) && value >= 0 ? Math.min(MAX_NUTRIENT_VALUE, value) : null;
+}
+
+function restoreRange(value: unknown): NutrientRange {
+  if (!isRecord(value)) return { min: null, max: null };
+  const min = restoreBound(value.min);
+  const max = restoreBound(value.max);
+  return min !== null && max !== null && min > max ? { min: null, max: null } : { min, max };
+}
+
+function restoreDayNutrition(value: unknown): DayNutritionLimits {
+  const defaults = DEFAULT_ADVANCED_SETTINGS.dayNutrition;
+  if (!isRecord(value)) return defaults;
+  const ranges = isRecord(value.ranges) ? value.ranges : {};
+  return {
+    mode: value.mode === "preferred" ? "preferred" : "strict",
+    ranges: Object.fromEntries(NUTRIENT_KEYS.map((key) => [key, restoreRange(ranges[key])])) as DayNutritionLimits["ranges"],
+  };
+}
+
+export function validateNutrientRange(range: NutrientRange): string | null {
+  return range.min !== null && range.max !== null && range.min > range.max ? "Le minimum dépasse le maximum." : null;
 }
 
 function restoreCodes(value: unknown): string[] {

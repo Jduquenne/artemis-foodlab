@@ -21,6 +21,18 @@ import { FreezerBatchStock } from "../freezer/freezerStockLogic";
 import { FreezerReservation, OpenSlot, createFreezerPlan, reserveFreezerSlots } from "./freezerPlanLogic";
 import { kcalDeviation, scoreCandidate, slotKcalTarget } from "./mealScoreLogic";
 import { STARCH_SCORE, starchFoodIds, starchRunViolations } from "./starchLogic";
+import {
+  DAY_NUTRITION_SCORE_CAP,
+  DayNutrients,
+  EMPTY_NUTRIENTS,
+  addNutrients,
+  bestDayDeviation,
+  formatDayLimits,
+  formatNutrients,
+  hasDayLimits,
+  nutrientsOutOfLimits,
+  recipeNutrients,
+} from "./dayNutritionLogic";
 import { assignToRandomSlots, createFoodIndex, preferredFoodReason } from "./preferredFoodLogic";
 import {
   QuotaBlock,
@@ -179,6 +191,13 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
     random,
   );
   const advanced = settings.advanced;
+  const dayLimits = advanced.dayNutrition;
+  const dayLimitsActive = hasDayLimits(dayLimits);
+  const nutrientsOf = (code: string | null | undefined) => recipeNutrients(code, input.macros);
+  const sumCodes = (codes: readonly string[]): DayNutrients | null => {
+    const values = codes.map(nutrientsOf);
+    return values.every((value): value is DayNutrients => value !== null) ? values.reduce(addNutrients, EMPTY_NUTRIENTS) : null;
+  };
   const quotas = settings.quotas.filter((quota) => quota.enabled);
   const codesOfKey = (key: string): string[] => {
     if (isKept(key)) return input.existing[key] ?? [];
@@ -239,6 +258,12 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
 
   const meals: GeneratedMeal[] = [];
   const warnings: string[] = [...oneMealWarnings];
+  if (dayLimitsActive && dayLimits.mode === "strict") {
+    const withoutData = new Set([...candidatesBySlot.values()].flat().filter((recipe) => !nutrientsOf(recipe.code)).map((recipe) => recipe.code));
+    if (withoutData.size > 0) {
+      warnings.push(`${withoutData.size} recette${withoutData.size > 1 ? "s" : ""} sans valeurs nutritionnelles ${withoutData.size > 1 ? "ne sont" : "n'est"} pas proposée${withoutData.size > 1 ? "s" : ""} (limites nutritionnelles strictes).`);
+    }
+  }
   let previousCategoryId: string | null = null;
   let sameDayCategoryIds: string[] = [];
 
@@ -305,6 +330,29 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
       if (!code) break;
       upcomingStarches.push(starchesOf(isKept(entry.key) ? (input.existing[entry.key] ?? []) : [code]));
     }
+    const dayEntries = sequence.filter((entry) => entry.day.date === day.date);
+    let dayPartial: DayNutrients = EMPTY_NUTRIENTS;
+    let dayComplete = dayEntries.length > 1;
+    let laterOptions: DayNutrients[] | null = null;
+    for (const entry of dayEntries.filter((item) => item.key !== key)) {
+      const placed = meals.find((meal) => meal.key === entry.key);
+      const placedCodes = placed ? (placed.kept ? (input.existing[entry.key] ?? []) : placed.recipeCode ? [placed.recipeCode] : []) : null;
+      const knownCode = knownCodeOf(entry.key);
+      const knownCodes = placedCodes ?? (isKept(entry.key) ? (input.existing[entry.key] ?? []) : knownCode ? [knownCode] : null);
+      if (placed?.noMeal || (!placed && habitsOf(entry.key).noMeal)) {
+        dayComplete = false;
+      } else if (knownCodes !== null) {
+        const known = knownCodes.length > 0 ? sumCodes(knownCodes) : null;
+        if (known) dayPartial = addNutrients(dayPartial, known);
+        else dayComplete = false;
+      } else if (dayLimitsActive) {
+        laterOptions = eligibleOf(entry.day, entry.slot, entry.key).map((recipe) => nutrientsOf(recipe.code)).filter((value): value is DayNutrients => value !== null);
+      }
+    }
+    const dayDeviation = (recipe: RecipeDetails) => {
+      const own = nutrientsOf(recipe.code);
+      return own ? bestDayDeviation(addNutrients(dayPartial, own), laterOptions, dayLimits, dayComplete) : Infinity;
+    };
     const starchViolations = (recipe: RecipeDetails) =>
       advanced.starchInRow === "off" ? [] : starchRunViolations(starchesOf([recipe.code]), starchHistory, upcomingStarches, advanced.starchMax);
     const strictFilters: { label: string; keep: (recipe: RecipeDetails) => boolean }[] = [
@@ -326,7 +374,13 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
             keep: (recipe: RecipeDetails) => starchViolations(recipe).length === 0,
           }]
         : []),
-      ...(advanced.kcalMode === "strict" && kcalTarget
+      ...(dayLimitsActive && dayLimits.mode === "strict"
+        ? [{
+            label: `nutrition de la journée (${formatDayLimits(dayLimits)}${dayComplete ? "" : ", maximums seulement"})`,
+            keep: (recipe: RecipeDetails) => dayDeviation(recipe) < 1e-9,
+          }]
+        : []),
+      ...(!dayLimitsActive && advanced.kcalMode === "strict" && kcalTarget
         ? [{
             label: `kcal à ±${advanced.kcalTolerance} % de ${kcalTarget}`,
             keep: (recipe: RecipeDetails) => (kcalDeviation(input.macros[recipe.code]?.kcal, kcalTarget) ?? 0) <= advanced.kcalTolerance / 100,
@@ -400,6 +454,19 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
       advanced,
       favoriteCodes,
       bonusFavoriteCode: favoriteBySlot[key] ?? null,
+      dayLimitsActive,
+      dayNutritionAdjust: (recipe: RecipeDetails) => {
+        if (!dayLimitsActive) return { score: 0, reasons: [] };
+        const own = nutrientsOf(recipe.code);
+        if (!own) return { score: -2 * DAY_NUTRITION_SCORE_CAP, reasons: [{ kind: "kcal", label: "Pas de valeurs nutritionnelles" } satisfies MealReason] };
+        const deviation = dayDeviation(recipe);
+        const score = dayLimits.mode === "preferred" ? -Math.min(DAY_NUTRITION_SCORE_CAP, deviation * 60) : 0;
+        if (laterOptions !== null) return { score, reasons: [] };
+        const total = addNutrients(dayPartial, own);
+        const out = nutrientsOutOfLimits(total, dayLimits, dayComplete);
+        const label = `Journée : ${formatNutrients(total)}${out.length > 0 ? " (hors limites)" : ""}`;
+        return { score, reasons: [{ kind: "kcal", label } satisfies MealReason] };
+      },
       starchAdjust: (recipe: RecipeDetails) => {
         if (advanced.starchInRow !== "preferred") return { score: 0, reasons: [] };
         const repeated = starchViolations(recipe);

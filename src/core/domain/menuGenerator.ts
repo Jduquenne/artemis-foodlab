@@ -76,6 +76,20 @@ export interface WeeklyQuota {
 
 export type AdvancedMode = "off" | "preferred" | "strict";
 
+export type NutrientKey = "kcal" | "proteins" | "carbohydrates" | "lipids";
+
+export const NUTRIENT_KEYS: readonly NutrientKey[] = ["kcal", "proteins", "carbohydrates", "lipids"];
+
+export interface NutrientRange {
+  min: number | null;
+  max: number | null;
+}
+
+export interface DayNutritionLimits {
+  mode: Exclude<AdvancedMode, "off">;
+  ranges: Record<NutrientKey, NutrientRange>;
+}
+
 export interface AdvancedSettings {
   repeatWeeks: number;
   repeatMode: AdvancedMode;
@@ -85,6 +99,7 @@ export interface AdvancedSettings {
   kcalMode: AdvancedMode;
   kcalTolerance: number;
   kcalShares: Record<GeneratedSlotType, number>;
+  dayNutrition: DayNutritionLimits;
 }
 
 export const DEFAULT_ADVANCED_SETTINGS: AdvancedSettings = {
@@ -96,6 +111,15 @@ export const DEFAULT_ADVANCED_SETTINGS: AdvancedSettings = {
   kcalMode: "preferred",
   kcalTolerance: 15,
   kcalShares: { [MealType.LUNCH]: 35, [MealType.DINNER]: 30 },
+  dayNutrition: {
+    mode: "strict",
+    ranges: {
+      kcal: { min: null, max: null },
+      proteins: { min: null, max: null },
+      carbohydrates: { min: null, max: null },
+      lipids: { min: null, max: null },
+    },
+  },
 };
 
 export interface MenuGeneratorSettings {

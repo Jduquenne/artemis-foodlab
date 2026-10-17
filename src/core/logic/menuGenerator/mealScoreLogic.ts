@@ -25,6 +25,8 @@ export interface ScoreContext {
   names: HabitNames;
   quotaAdjust: (recipe: RecipeDetails) => CandidateScore;
   starchAdjust: (recipe: RecipeDetails) => CandidateScore;
+  dayNutritionAdjust: (recipe: RecipeDetails) => CandidateScore;
+  dayLimitsActive: boolean;
   advanced: AdvancedSettings;
   favoriteCodes: ReadonlySet<string>;
   bonusFavoriteCode: string | null;
@@ -45,7 +47,8 @@ export function kcalDeviation(kcal: number | undefined, target: number | null): 
   return target && kcal ? Math.abs(kcal - target) / target : null;
 }
 
-function kcalScore(kcal: number | undefined, target: number | null, advanced: AdvancedSettings): CandidateScore {
+function kcalScore(kcal: number | undefined, target: number | null, advanced: AdvancedSettings, dayLimitsActive: boolean): CandidateScore {
+  if (dayLimitsActive) return { score: 0, reasons: [] };
   const deviation = kcalDeviation(kcal, target);
   if (deviation === null || kcal === undefined) return { score: 0, reasons: [] };
   const reason: MealReason = { kind: "kcal", label: `${Math.round(kcal)} kcal / portion (cible ${target})` };
@@ -115,7 +118,8 @@ export function scoreCandidate(recipe: RecipeDetails, context: ScoreContext): Ca
     seasonScore(recipe, context),
     favoriteScore(recipe, context),
     historyScore(context.weeksSinceEaten[recipe.code], context.advanced),
-    kcalScore(context.macros[recipe.code]?.kcal, slotKcalTarget(context.kcalTarget, context.slot, context.advanced), context.advanced),
+    kcalScore(context.macros[recipe.code]?.kcal, slotKcalTarget(context.kcalTarget, context.slot, context.advanced), context.advanced, context.dayLimitsActive),
+    context.dayNutritionAdjust(recipe),
     varietyScore(recipe, context),
   ];
   return {

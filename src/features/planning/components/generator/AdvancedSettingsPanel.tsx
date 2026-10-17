@@ -1,6 +1,8 @@
 import { AdvancedMode, AdvancedSettings, GENERATED_SLOTS, GENERATED_SLOT_LABELS, MenuGeneratorSettings } from "../../../../core/domain/menuGenerator";
+import { hasDayLimits } from "../../../../core/logic/menuGenerator/dayNutritionLogic";
 import { ADVANCED_LIMITS } from "../../../../core/logic/menuGenerator/generatorSettingsLogic";
 import { ChoicePills } from "./ChoicePills";
+import { DayNutritionField } from "./DayNutritionField";
 import { NumberStepper } from "./NumberStepper";
 import { SettingsSection } from "./SettingsSection";
 
@@ -19,6 +21,7 @@ const MODE_OPTIONS: readonly { id: AdvancedMode; label: string }[] = [
 export const AdvancedSettingsPanel = ({ settings, disabled, onPatch }: AdvancedSettingsPanelProps) => {
   const { advanced } = settings;
   const patch = (update: Partial<AdvancedSettings>) => onPatch({ advanced: { ...advanced, ...update } });
+  const dayLimitsActive = hasDayLimits(advanced.dayNutrition);
 
   return (
     <div className="flex flex-col gap-4">
@@ -55,15 +58,27 @@ export const AdvancedSettingsPanel = ({ settings, disabled, onPatch }: AdvancedS
         </div>
       </SettingsSection>
 
-      <SettingsSection title="Calories" hint="Cible d'un repas = objectif du profil actif × part du repas. Strict : hors tolérance, la recette n'est pas proposée.">
-        <ChoicePills options={MODE_OPTIONS} isActive={(id) => id === advanced.kcalMode} onToggle={(kcalMode) => patch({ kcalMode })} disabled={disabled} />
+      <SettingsSection
+        title="Nutrition de la journée (déjeuner + dîner)"
+        hint="Valeurs d'une portion, desserts non comptés. Laisser vide = pas de limite. Si un des repas du jour n'est pas généré (pas de repas, extérieur), seuls les maximums comptent. En strict, les recettes sans valeurs nutritionnelles ne sont pas proposées."
+      >
+        <DayNutritionField limits={advanced.dayNutrition} disabled={disabled} onChange={(dayNutrition) => patch({ dayNutrition })} />
+      </SettingsSection>
+
+      <SettingsSection
+        title="Calories par repas"
+        hint={dayLimitsActive
+          ? "Remplacé par la nutrition de la journée tant qu'une limite y est renseignée."
+          : "Cible d'un repas = objectif du profil actif × part du repas. Strict : hors tolérance, la recette n'est pas proposée."}
+      >
+        <ChoicePills options={MODE_OPTIONS} isActive={(id) => id === advanced.kcalMode} onToggle={(kcalMode) => patch({ kcalMode })} disabled={disabled || dayLimitsActive} />
         <div className="grid grid-cols-[auto_1fr] items-center gap-x-3 gap-y-1.5 text-xs text-slate-600">
           <span>Tolérance ±</span>
           <NumberStepper
             value={advanced.kcalTolerance}
             {...ADVANCED_LIMITS.kcalTolerance}
             unit="%"
-            disabled={disabled || advanced.kcalMode === "off"}
+            disabled={disabled || dayLimitsActive || advanced.kcalMode === "off"}
             onChange={(kcalTolerance) => patch({ kcalTolerance })}
           />
           {GENERATED_SLOTS.map((slot) => (
@@ -73,7 +88,7 @@ export const AdvancedSettingsPanel = ({ settings, disabled, onPatch }: AdvancedS
                 value={advanced.kcalShares[slot]}
                 {...ADVANCED_LIMITS.kcalShare}
                 unit="%"
-                disabled={disabled || advanced.kcalMode === "off"}
+                disabled={disabled || dayLimitsActive || advanced.kcalMode === "off"}
                 onChange={(share) => patch({ kcalShares: { ...advanced.kcalShares, [slot]: share } })}
               />
             </div>

@@ -4,12 +4,14 @@ import {
   AdvancedSettings,
   MealReason,
   MealReasonKind,
+  NutrientKey,
   PeriodDay,
 } from "../../domain/menuGenerator";
 import { Macronutrients } from "../../domain/nutrition";
 import { DAYS } from "../../domain/planningConfig";
 import { formatSourceDayShort, formatWeekdayShort, isoDateFromWeekDay } from "../../utils/dateUtils";
 import { mealKey } from "./menuEngineLogic";
+import { DayNutrients, EMPTY_NUTRIENTS, addNutrients, hasDayLimits, nutrientsOutOfLimits, recipeNutrients } from "./dayNutritionLogic";
 
 export interface PreviewColumn {
   date: string;
@@ -31,6 +33,7 @@ export interface DayKcalSummary {
   kcal: number | null;
   target: number | null;
   onTarget: boolean | null;
+  nutrition: { total: DayNutrients; out: NutrientKey[] } | null;
 }
 
 export function countGeneratedMeals(meals: readonly GeneratedMeal[]): number {
@@ -105,5 +108,34 @@ export function dayKcalSummary(
   const share = slots.reduce((sum, slot) => sum + advanced.kcalShares[slot], 0);
   const target = dailyTarget && dailyTarget > 0 && share > 0 ? Math.round((dailyTarget * share) / 100) : null;
   const onTarget = kcal !== null && target !== null ? Math.abs(kcal - target) / target <= advanced.kcalTolerance / 100 : null;
-  return { kcal, target, onTarget };
+  return { kcal, target, onTarget, nutrition: dayNutrition(date, slots, meals, existing, macros, advanced) };
+}
+
+function dayNutrition(
+  date: string,
+  slots: readonly GeneratedSlotType[],
+  meals: Record<string, GeneratedMeal>,
+  existing: Record<string, string[]>,
+  macros: Record<string, Macronutrients>,
+  advanced: AdvancedSettings,
+): DayKcalSummary["nutrition"] {
+  const limits = advanced.dayNutrition;
+  if (!hasDayLimits(limits)) return null;
+  let total = EMPTY_NUTRIENTS;
+  let complete = slots.length > 1;
+  for (const slot of slots) {
+    const key = mealKey(date, slot);
+    const meal = meals[key];
+    const codes = meal?.kept ? (existing[key] ?? []) : meal?.recipeCode ? [meal.recipeCode] : [];
+    if (!meal || meal.noMeal || codes.length === 0) {
+      complete = false;
+      continue;
+    }
+    for (const code of codes) {
+      const values = recipeNutrients(code, macros);
+      if (values) total = addNutrients(total, values);
+      else complete = false;
+    }
+  }
+  return { total, out: nutrientsOutOfLimits(total, limits, complete) };
 }

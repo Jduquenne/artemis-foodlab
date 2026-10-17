@@ -25,11 +25,14 @@ export interface PlanningItemEntry {
   day: string;
   slot: SlotType;
   code: string;
+  isDessert: boolean;
 }
 
 export interface BulkPlanningResult {
   written: number;
   skipped: number;
+  writtenDesserts: number;
+  skippedDesserts: number;
 }
 
 export interface CopyState {

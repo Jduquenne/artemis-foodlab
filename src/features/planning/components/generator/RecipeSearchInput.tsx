@@ -1,18 +1,21 @@
 import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
+import { RecipeDetails } from "../../../../core/domain/recipe";
 import { searchHabitRecipes } from "../../../../core/logic/menuGenerator/habitLogic";
 import { useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 
 export interface RecipeSearchInputProps {
   disabled: boolean;
   onPick: (recipeCode: string) => void;
+  search?: (query: string, recipes: Record<string, RecipeDetails>) => RecipeDetails[];
+  placeholder?: string;
 }
 
-export const RecipeSearchInput = ({ disabled, onPick }: RecipeSearchInputProps) => {
+export const RecipeSearchInput = ({ disabled, onPick, search = searchHabitRecipes, placeholder = "Ex : pizza, lasagnes…" }: RecipeSearchInputProps) => {
   const recipes = useRecipesSnapshot();
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
-  const suggestions = useMemo(() => (query.trim() ? searchHabitRecipes(query, recipes) : []), [query, recipes]);
+  const suggestions = useMemo(() => (query.trim() ? search(query, recipes) : []), [query, recipes, search]);
 
   return (
     <div className="relative">
@@ -23,7 +26,7 @@ export const RecipeSearchInput = ({ disabled, onPick }: RecipeSearchInputProps) 
         onChange={(e) => { setQuery(e.target.value); setOpen(true); }}
         onFocus={() => setOpen(true)}
         onBlur={() => setOpen(false)}
-        placeholder="Ex : pizza, lasagnes…"
+        placeholder={placeholder}
         className="w-full pl-9 pr-3 py-2 bg-surface border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 disabled:opacity-50"
       />
       {open && suggestions.length > 0 && (

@@ -122,6 +122,18 @@ export const DEFAULT_ADVANCED_SETTINGS: AdvancedSettings = {
   },
 };
 
+export type DessertPick =
+  | { kind: "recipe"; recipeCode: string }
+  | { kind: "pick"; target: QuotaTarget };
+
+export interface DessertRule {
+  id: string;
+  enabled: boolean;
+  days: string[];
+  slots: GeneratedSlotType[];
+  items: DessertPick[];
+}
+
 export interface MenuGeneratorSettings {
   startDate: string;
   endDate: string;
@@ -134,6 +146,7 @@ export interface MenuGeneratorSettings {
   habits: HabitRule[];
   quotas: WeeklyQuota[];
   foodLists: FoodList[];
+  dessertRules: DessertRule[];
   favoriteRecipeCodes: string[];
   bannedRecipeCodes: string[];
   advanced: AdvancedSettings;
@@ -187,6 +200,7 @@ export interface GeneratedMeal {
   kept: boolean;
   locked: boolean;
   noMeal: boolean;
+  dessertCodes: string[];
   reasons: MealReason[];
 }
 

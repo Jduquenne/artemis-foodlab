@@ -6,13 +6,14 @@ import { MealReasonIcon } from "./MealReasonIcon";
 export interface GeneratedMealCellProps {
   meal: GeneratedMeal;
   recipeName: string | null;
+  dessertNames: string[];
   selected: boolean;
   onSelect: (key: string) => void;
   onToggleLock: (key: string) => void;
   onRegenerate: (key: string) => void;
 }
 
-export const GeneratedMealCell = ({ meal, recipeName, selected, onSelect, onToggleLock, onRegenerate }: GeneratedMealCellProps) => {
+export const GeneratedMealCell = ({ meal, recipeName, dessertNames, selected, onSelect, onToggleLock, onRegenerate }: GeneratedMealCellProps) => {
   if (meal.kept || meal.noMeal) {
     return (
       <button
@@ -21,7 +22,10 @@ export const GeneratedMealCell = ({ meal, recipeName, selected, onSelect, onTogg
         disabled={meal.kept}
         className="h-full min-h-20 flex items-center justify-center rounded-xl border border-dashed border-slate-200 px-2 text-[11px] font-semibold text-slate-400"
       >
-        {meal.kept ? "Déjà prévu" : "Pas de repas"}
+        <span className="flex flex-col items-center gap-0.5">
+          {meal.kept ? "Déjà prévu" : "Pas de repas"}
+          {dessertNames.length > 0 && <span className="text-[10px] font-normal text-pink-500 line-clamp-2">+ {dessertNames.join(", ")}</span>}
+        </span>
       </button>
     );
   }
@@ -41,6 +45,9 @@ export const GeneratedMealCell = ({ meal, recipeName, selected, onSelect, onTogg
         <span className={`block text-xs xl:text-sm font-semibold leading-snug line-clamp-3 xl:line-clamp-4 ${recipeName ? "text-slate-800" : "text-slate-400"}`}>
           {recipeName ?? "Aucune recette"}
         </span>
+        {dessertNames.length > 0 && (
+          <span className="mt-0.5 block text-[10px] leading-snug text-pink-500 line-clamp-2">Desserts : {dessertNames.join(", ")}</span>
+        )}
       </button>
       <div className="flex items-center gap-0.5 px-1 pb-1">
         <button

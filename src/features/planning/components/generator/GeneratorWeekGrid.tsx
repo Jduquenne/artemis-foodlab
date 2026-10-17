@@ -44,6 +44,7 @@ export const GeneratorWeekGrid = ({ week, slots, meals, recipeNameOf, kcalOf, se
                 key={column.date}
                 meal={meal}
                 recipeName={recipeNameOf(meal.recipeCode)}
+                dessertNames={meal.dessertCodes.map((code) => recipeNameOf(code) ?? code)}
                 selected={selectedKey === meal.key}
                 onSelect={onSelect}
                 onToggleLock={onToggleLock}

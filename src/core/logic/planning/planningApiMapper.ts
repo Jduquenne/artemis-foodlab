@@ -30,6 +30,7 @@ export interface ApiBulkItemEntry {
   day: string;
   slot: SlotType;
   itemId: string;
+  isDessert?: boolean;
 }
 
 export interface ApiBulkItemsPayload {
@@ -39,7 +40,7 @@ export interface ApiBulkItemsPayload {
 
 export interface ApiBulkItemsResponse {
   slots: ApiPlanningSlot[];
-  skipped: { year: number; week: number; day: string; slot: string }[];
+  skipped: { year: number; week: number; day: string; slot: string; itemId?: string; isDessert?: boolean; reason?: string }[];
 }
 
 export interface SlotItemFields {
@@ -145,9 +146,9 @@ export function buildSlotItemsBatchPayload(diff: SlotDiff): SlotItemsBatchPayloa
 }
 
 export function buildBulkItemsPayload(entries: readonly PlanningItemEntry[]): ApiBulkItemsPayload | null {
-  const apiEntries = entries.flatMap(({ year, week, day, slot, code }) => {
+  const apiEntries = entries.flatMap(({ year, week, day, slot, code, isDessert }) => {
     const itemId = getIdByCode(code);
-    return itemId ? [{ year, week, day, slot, itemId }] : [];
+    return itemId ? [{ year, week, day, slot, itemId, ...(isDessert ? { isDessert: true } : {}) }] : [];
   });
   return apiEntries.length > 0 ? { entries: apiEntries, onConflict: "skip" } : null;
 }

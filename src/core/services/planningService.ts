@@ -47,13 +47,21 @@ export async function saveSlot(slot: MealSlot): Promise<void> {
 
 export async function bulkAddPlanningItems(entries: readonly PlanningItemEntry[]): Promise<BulkPlanningResult> {
   const payload = buildBulkItemsPayload(entries);
-  if (!payload) return { written: 0, skipped: 0 };
+  if (!payload) return { written: 0, skipped: 0, writtenDesserts: 0, skippedDesserts: 0 };
   const { slots, skipped } = await apiFetchJson<ApiBulkItemsResponse>("/planning-slots/bulk-items", {
     method: "POST",
     body: payload,
   });
   await db.planning.bulkPut(slots.map(mapApiSlotToMealSlot));
-  return { written: payload.entries.length - skipped.length, skipped: skipped.length };
+  const sentDesserts = payload.entries.filter((entry) => entry.isDessert).length;
+  const skippedDesserts = skipped.filter((entry) => entry.isDessert).length;
+  const skippedDishes = skipped.length - skippedDesserts;
+  return {
+    written: payload.entries.length - sentDesserts - skippedDishes,
+    skipped: skippedDishes,
+    writtenDesserts: sentDesserts - skippedDesserts,
+    skippedDesserts,
+  };
 }
 
 export async function deleteSlot(id: string): Promise<void> {

@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { GeneratedMeal, MenuGeneratorSettings, PeriodDay } from "../../core/domain/menuGenerator";
 import { BulkPlanningResult } from "../../core/domain/planning";
 import { FreezerBatchStock, freezerBatchStocks, getFoodIdsInFreezer } from "../../core/logic/freezer/freezerStockLogic";
-import { existingMealsByKey } from "../../core/logic/menuGenerator/generatorSettingsLogic";
+import { existingDessertsByKey, existingMealsByKey } from "../../core/logic/menuGenerator/generatorSettingsLogic";
 import { generateMenu, weeksSinceEatenMap } from "../../core/logic/menuGenerator/menuEngineLogic";
 import {
   lockedMealsByKey,
@@ -28,6 +28,7 @@ export const MENU_GENERATOR_WRITE_PENDING_KEY = "menu-generator-write";
 export interface MenuGeneratorContext {
   days: PeriodDay[];
   existing: Record<string, string[]>;
+  existingDesserts: Record<string, string[]>;
   weeksSinceEaten: Record<string, number>;
   freezer: FreezerBatchStock[];
   frozenFoodIds: string[];
@@ -53,6 +54,7 @@ async function loadGeneratorContext(settings: MenuGeneratorSettings): Promise<Me
   return {
     days,
     existing: existingMealsByKey(slots, days),
+    existingDesserts: existingDessertsByKey(slots, days),
     weeksSinceEaten: weeksSinceEatenMap(usage, new Date()),
     freezer: freezerBatchStocks(freezerCategories),
     frozenFoodIds: [...getFoodIdsInFreezer(freezerCategories)],
@@ -89,6 +91,7 @@ export function useMenuGenerator() {
       kcalTarget: activeProfile?.kcalTarget ?? null,
       weeksSinceEaten: context.weeksSinceEaten,
       existing: context.existing,
+      existingDesserts: context.existingDesserts,
       fixed,
       rejected,
       freezer: context.freezer,

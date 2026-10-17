@@ -21,6 +21,7 @@ import { FreezerBatchStock } from "../freezer/freezerStockLogic";
 import { FreezerReservation, OpenSlot, createFreezerPlan, reserveFreezerSlots } from "./freezerPlanLogic";
 import { kcalDeviation, scoreCandidate, slotKcalTarget } from "./mealScoreLogic";
 import { STARCH_SCORE, starchFoodIds, starchRunViolations } from "./starchLogic";
+import { dessertCandidates, dessertPickLabel, dessertRuleFor, pickDessert, seasonalDessertPool } from "./dessertLogic";
 import {
   DAY_NUTRITION_SCORE_CAP,
   DayNutrients,
@@ -57,6 +58,7 @@ export interface MenuEngineInput {
   kcalTarget: number | null;
   weeksSinceEaten: Record<string, number>;
   existing: Record<string, string[]>;
+  existingDesserts: Record<string, string[]>;
   fixed: Record<string, GeneratedMeal>;
   rejected: Record<string, string[]>;
   freezer: readonly FreezerBatchStock[];
@@ -283,7 +285,7 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
 
     if (isKept(key)) {
       place(
-        { key, day, slot, recipeCode: null, kept: true, locked: true, noMeal: false, reasons: [{ kind: "kept", label: "Déjà rempli dans le planning" }] },
+        { key, day, slot, recipeCode: null, kept: true, locked: true, noMeal: false, dessertCodes: [], reasons: [{ kind: "kept", label: "Déjà rempli dans le planning" }] },
         categoryOf(input.existing[key]?.[0]),
       );
       continue;
@@ -298,7 +300,7 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
     const habits = habitsOf(key);
     if (habits.noMeal) {
       const reason: MealReason = { kind: "habit", label: `Habitude : ${habitLabel(habits.noMeal, names)}` };
-      place({ key, day, slot, recipeCode: null, kept: false, locked: false, noMeal: true, reasons: [reason] }, null);
+      place({ key, day, slot, recipeCode: null, kept: false, locked: false, noMeal: true, dessertCodes: [], reasons: [reason] }, null);
       continue;
     }
 
@@ -313,6 +315,7 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
           kept: false,
           locked: false,
           noMeal: false,
+          dessertCodes: [],
           reasons: [reservation.reason, ...(preferredReasonOf(reservation.recipeCode) ?? [])],
         },
         categoryOf(reservation.recipeCode),
@@ -500,14 +503,38 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
       if (strict.length > 0) {
         warnings.push(`${formatSourceDayFull(day.date)}, ${GENERATED_SLOT_LABELS[slot].toLowerCase()} : aucune recette ne respecte les habitudes ${strictLabel}.`);
       }
-      place({ key, day, slot, recipeCode: null, kept: false, locked: false, noMeal: false, reasons: [{ kind: "empty", label }] }, null);
+      place({ key, day, slot, recipeCode: null, kept: false, locked: false, noMeal: false, dessertCodes: [], reasons: [{ kind: "empty", label }] }, null);
       continue;
     }
 
     used.add(choice.recipe.code);
     const reasons = fresh.length > 0 ? choice.reasons : [{ kind: "repeat", label: "Répétée faute d'autre recette" } satisfies MealReason, ...choice.reasons];
-    place({ key, day, slot, recipeCode: choice.recipe.code, kept: false, locked: false, noMeal: false, reasons }, choice.recipe.categoryId);
+    place({ key, day, slot, recipeCode: choice.recipe.code, kept: false, locked: false, noMeal: false, dessertCodes: [], reasons }, choice.recipe.categoryId);
   }
+  const dessertPool = dessertCandidates(catalogue, settings.excludedFoodIds, settings.bannedRecipeCodes);
+  const lastDesserts = new Map<string, Set<string>>();
+  const missingDessertWarnings = new Set<string>();
+  for (const meal of meals) {
+    const fixed = fixedOf(meal.key);
+    if (fixed) {
+      meal.dessertCodes = [...fixed.dessertCodes];
+      lastDesserts.set(meal.slot, new Set(meal.dessertCodes));
+      continue;
+    }
+    const rule = meal.noMeal || (input.existingDesserts[meal.key]?.length ?? 0) > 0 ? null : dessertRuleFor(settings.dessertRules, meal.day.day, meal.slot);
+    if (!rule) continue;
+    const pool = seasonalDessertPool(dessertPool, meal.day.month, settings.season, catalogue);
+    const avoid = new Set(lastDesserts.get(meal.slot) ?? []);
+    const chosen: string[] = [];
+    for (const item of rule.items) {
+      const code = pickDessert(item, pool.filter((recipe) => !chosen.includes(recipe.code)), avoid, matcher, random);
+      if (code && catalogue.recipes[code] && !chosen.includes(code)) chosen.push(code);
+      else missingDessertWarnings.add(`Aucun dessert possible pour « ${dessertPickLabel(item, names)} » certains jours (filtres, saison ou recette introuvable).`);
+    }
+    meal.dessertCodes = chosen;
+    lastDesserts.set(meal.slot, new Set(chosen));
+  }
+  warnings.push(...missingDessertWarnings);
   for (const quota of quotas.filter((item) => item.strictness === "strict")) {
     for (const block of quotaBlocks) {
       const count = counts.get(quotaCounterKey(quota.id, block.blockKey)) ?? 0;

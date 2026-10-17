@@ -38,6 +38,7 @@ export const GeneratorDayList = ({ week, slots, meals, recipeNameOf, kcalOf, sel
             <GeneratedMealCell
               meal={meal}
               recipeName={recipeNameOf(meal.recipeCode)}
+              dessertNames={meal.dessertCodes.map((code) => recipeNameOf(code) ?? code)}
               selected={selectedKey === meal.key}
               onSelect={onSelect}
               onToggleLock={onToggleLock}

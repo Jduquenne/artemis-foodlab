@@ -5,10 +5,11 @@ import { MealReasonIcon } from "./MealReasonIcon";
 export interface GeneratedMealDetailProps {
   meal: GeneratedMeal | null;
   recipeName: string | null;
+  dessertNames: string[];
 }
 
-export const GeneratedMealDetail = ({ meal, recipeName }: GeneratedMealDetailProps) => {
-  if (!meal || meal.kept) {
+export const GeneratedMealDetail = ({ meal, recipeName, dessertNames }: GeneratedMealDetailProps) => {
+  if (!meal || (meal.kept && meal.dessertCodes.length === 0)) {
     return <p className="text-[11px] text-slate-400">Touche un repas pour voir pourquoi il est proposé.</p>;
   }
 
@@ -17,7 +18,8 @@ export const GeneratedMealDetail = ({ meal, recipeName }: GeneratedMealDetailPro
       <p className="text-[11px] font-bold text-orange-600">
         {formatSourceDayFull(meal.day.date)} · {GENERATED_SLOT_LABELS[meal.slot]}
       </p>
-      <p className="text-sm font-semibold text-slate-800">{recipeName ?? "Aucune recette"}</p>
+      <p className="text-sm font-semibold text-slate-800">{meal.kept ? "Déjà prévu" : (recipeName ?? "Aucune recette")}</p>
+      {dessertNames.length > 0 && <p className="text-[11px] font-semibold text-pink-500">Desserts : {dessertNames.join(", ")}</p>}
       <ul className="flex flex-wrap gap-x-3 gap-y-1">
         {meal.reasons.map((reason) => (
           <li key={`${reason.kind}-${reason.label}`} className="flex items-center gap-1 text-[11px] text-slate-500">

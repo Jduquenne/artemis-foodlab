@@ -4,6 +4,8 @@ import {
   AdvancedSettings,
   DEFAULT_ADVANCED_SETTINGS,
   DayNutritionLimits,
+  DessertPick,
+  DessertRule,
   DietFilter,
   FoodList,
   NUTRIENT_KEYS,
@@ -65,6 +67,7 @@ export function defaultGeneratorSettings(startDate: string): MenuGeneratorSettin
     habits: [],
     quotas: [],
     foodLists: [],
+    dessertRules: [],
     favoriteRecipeCodes: [],
     bannedRecipeCodes: [],
     advanced: DEFAULT_ADVANCED_SETTINGS,
@@ -133,6 +136,17 @@ export function existingMealsByKey(slots: readonly MealSlot[], days: readonly Pe
     if ((slot.slot !== "lunch" && slot.slot !== "dinner") || slot.recipeIds.length === 0) continue;
     const date = isoDateFromWeekDay(slot.year, slot.week, slot.day);
     if (dates.has(date)) result[mealKey(date, slot.slot as GeneratedSlotType)] = [...slot.recipeIds];
+  }
+  return result;
+}
+
+export function existingDessertsByKey(slots: readonly MealSlot[], days: readonly PeriodDay[]): Record<string, string[]> {
+  const dates = new Set(days.map((day) => day.date));
+  const result: Record<string, string[]> = {};
+  for (const slot of slots) {
+    if ((slot.slot !== "lunch" && slot.slot !== "dinner") || (slot.dessertIds ?? []).length === 0) continue;
+    const date = isoDateFromWeekDay(slot.year, slot.week, slot.day);
+    if (dates.has(date)) result[mealKey(date, slot.slot as GeneratedSlotType)] = [...(slot.dessertIds ?? [])];
   }
   return result;
 }
@@ -330,6 +344,27 @@ function restoreQuotas(value: unknown): WeeklyQuota[] {
   return value.map(restoreQuota).filter((quota): quota is WeeklyQuota => quota !== null);
 }
 
+function restoreDessertPick(value: unknown): DessertPick | null {
+  if (!isRecord(value)) return null;
+  if (value.kind === "recipe") return typeof value.recipeCode === "string" && value.recipeCode ? { kind: "recipe", recipeCode: value.recipeCode } : null;
+  if (value.kind !== "pick") return null;
+  const target = restoreHabitTarget(value.target);
+  return target && target.kind !== "noMeal" ? { kind: "pick", target } : null;
+}
+
+function restoreDessertRules(value: unknown): DessertRule[] {
+  if (!Array.isArray(value)) return [];
+  return value.flatMap((item): DessertRule[] => {
+    if (!isRecord(item) || typeof item.id !== "string") return [];
+    const rawDays = Array.isArray(item.days) ? item.days : [];
+    const rawSlots = Array.isArray(item.slots) ? item.slots : [];
+    const days = DAYS.filter((day) => rawDays.includes(day));
+    const slots = GENERATED_SLOTS.filter((slot) => rawSlots.includes(slot));
+    const items = (Array.isArray(item.items) ? item.items : []).map(restoreDessertPick).filter((pick): pick is DessertPick => pick !== null).slice(0, 3);
+    return days.length > 0 && slots.length > 0 && items.length > 0 ? [{ id: item.id, enabled: item.enabled !== false, days, slots, items }] : [];
+  });
+}
+
 function restoreFoodLists(value: unknown): FoodList[] {
   if (!Array.isArray(value)) return [];
   return value.flatMap((item): FoodList[] => {
@@ -363,6 +398,7 @@ export function restoreGeneratorSettings(saved: Partial<SavedGeneratorSettings> 
     habits: restoreHabits(saved.habits),
     quotas: restoreQuotas(saved.quotas),
     foodLists: restoreFoodLists(saved.foodLists),
+    dessertRules: restoreDessertRules(saved.dessertRules),
     favoriteRecipeCodes: restoreCodes(saved.favoriteRecipeCodes),
     bannedRecipeCodes: restoreCodes(saved.bannedRecipeCodes),
     advanced: restoreAdvanced(saved.advanced),

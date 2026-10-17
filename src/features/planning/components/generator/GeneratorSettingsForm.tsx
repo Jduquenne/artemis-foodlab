@@ -2,6 +2,7 @@ import { useState } from "react";
 import { MenuGeneratorSettings } from "../../../../core/domain/menuGenerator";
 import { AdvancedSettingsPanel } from "./AdvancedSettingsPanel";
 import { ChoicePills } from "./ChoicePills";
+import { DessertsSettingsPanel } from "./DessertsSettingsPanel";
 import { FoodsSettingsPanel } from "./FoodsSettingsPanel";
 import { GeneralSettingsPanel } from "./GeneralSettingsPanel";
 import { HabitsSettingsPanel } from "./HabitsSettingsPanel";
@@ -13,12 +14,13 @@ export interface GeneratorSettingsFormProps {
   onChange: (settings: MenuGeneratorSettings) => void;
 }
 
-type SettingsTab = "general" | "habits" | "quotas" | "foods" | "advanced";
+type SettingsTab = "general" | "habits" | "quotas" | "desserts" | "foods" | "advanced";
 
 const TABS: readonly { id: SettingsTab; label: string }[] = [
   { id: "general", label: "Période et repas" },
   { id: "habits", label: "Habitudes" },
   { id: "quotas", label: "Quotas" },
+  { id: "desserts", label: "Desserts" },
   { id: "foods", label: "Aliments et recettes" },
   { id: "advanced", label: "Avancé" },
 ];
@@ -35,6 +37,7 @@ export const GeneratorSettingsForm = ({ settings, disabled, onChange }: Generato
         {tab === "general" && <GeneralSettingsPanel {...panelProps} />}
         {tab === "habits" && <HabitsSettingsPanel {...panelProps} />}
         {tab === "quotas" && <QuotasSettingsPanel {...panelProps} />}
+        {tab === "desserts" && <DessertsSettingsPanel {...panelProps} />}
         {tab === "foods" && <FoodsSettingsPanel {...panelProps} />}
         {tab === "advanced" && <AdvancedSettingsPanel {...panelProps} />}
       </div>

@@ -32,18 +32,30 @@ export type HabitTarget =
   | { kind: "protein"; protein: HabitProtein }
   | { kind: "category"; categoryId: string }
   | { kind: "food"; foodIds: string[] }
+  | { kind: "family"; groupId: string }
+  | { kind: "list"; listId: string }
   | { kind: "recipe"; recipeCode: string }
   | { kind: "noMeal" };
 
 export type HabitStrength = "mandatory" | "preferred" | "avoid" | "forbidden";
+
+export type HabitScope = "eachMeal" | "oneMeal";
 
 export interface HabitRule {
   id: string;
   enabled: boolean;
   days: string[];
   slots: GeneratedSlotType[];
+  scope: HabitScope;
   target: HabitTarget;
+  exceptFoodIds: string[];
   strength: HabitStrength;
+}
+
+export interface FoodList {
+  id: string;
+  name: string;
+  foodIds: string[];
 }
 
 export type QuotaComparator = "atLeast" | "atMost";
@@ -92,6 +104,7 @@ export interface MenuGeneratorSettings {
   useFreezer: boolean;
   habits: HabitRule[];
   quotas: WeeklyQuota[];
+  foodLists: FoodList[];
   favoriteRecipeCodes: string[];
   bannedRecipeCodes: string[];
   advanced: AdvancedSettings;

@@ -16,7 +16,7 @@ import { createSeededRandom, pickRandom } from "../../utils/randomUtils";
 import { formatSourceDayFull } from "../../utils/dateUtils";
 import { weeksSinceIsoWeek } from "../../utils/weekUtils";
 import { MenuCatalogue, dayCandidates, recipeDietProfile, slotCandidates } from "./candidateLogic";
-import { HabitMatcher, SlotHabits, habitLabel, respectsStrictHabits, slotHabits } from "./habitLogic";
+import { HabitMatcher, SlotHabits, habitLabel, isOneMealHabit, matchesHabitRule, respectsStrictHabits, slotHabits } from "./habitLogic";
 import { FreezerBatchStock } from "../freezer/freezerStockLogic";
 import { FreezerReservation, OpenSlot, createFreezerPlan, reserveFreezerSlots } from "./freezerPlanLogic";
 import { kcalDeviation, scoreCandidate, slotKcalTarget } from "./mealScoreLogic";
@@ -37,6 +37,7 @@ export interface MenuEngineInput {
   settings: MenuGeneratorSettings;
   catalogue: MenuCatalogue;
   categoryNames: Record<string, string>;
+  groupNames: Record<string, string>;
   macros: Record<string, Macronutrients>;
   kcalTarget: number | null;
   weeksSinceEaten: Record<string, number>;
@@ -99,11 +100,40 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
       dietCache.set(code, diet);
       return diet;
     },
+    foodGroupOf: (foodId) => catalogue.foods[foodId]?.groupId ?? null,
+    listFoods: (listId) => settings.foodLists.find((list) => list.id === listId)?.foodIds ?? [],
   };
-  const names = { catalogue, categoryNames: input.categoryNames };
+  const names = { catalogue, categoryNames: input.categoryNames, groupNames: input.groupNames, lists: settings.foodLists };
+  const oneMealWarnings: string[] = [];
 
   const sequence = days.flatMap((day) => settings.slots.map((slot) => ({ day, slot, key: mealKey(day.date, slot) })));
-  const habitsByKey = new Map<string, SlotHabits>(sequence.map(({ day, slot, key }) => [key, slotHabits(settings.habits, day.day, slot)]));
+  const isKept = (key: string) => (input.existing[key]?.length ?? 0) > 0;
+  const fixedOf = (key: string) => {
+    const fixed = input.fixed[key];
+    return fixed && (fixed.recipeCode === null || catalogue.recipes[fixed.recipeCode]) ? fixed : null;
+  };
+  const baseHabitsByKey = new Map<string, SlotHabits>(sequence.map(({ day, slot, key }) => [key, slotHabits(settings.habits, day.day, slot)]));
+  const assignedHabits = new Map<string, typeof settings.habits>();
+  for (const rule of settings.habits.filter((item) => item.enabled && isOneMealHabit(item))) {
+    for (const day of days.filter((item) => rule.days.includes(item.day))) {
+      const daySlots = sequence.filter((entry) => entry.day.date === day.date && rule.slots.includes(entry.slot));
+      const placedCodes = daySlots.flatMap(({ key }) =>
+        isKept(key) ? (input.existing[key] ?? []) : [fixedOf(key)?.recipeCode].filter((code): code is string => Boolean(code)),
+      );
+      if (placedCodes.some((code) => catalogue.recipes[code] && matchesHabitRule(catalogue.recipes[code], rule, matcher))) continue;
+      const options = daySlots.filter(({ slot, key }) => {
+        const base = baseHabitsByKey.get(key);
+        if (isKept(key) || fixedOf(key) || !base || base.noMeal) return false;
+        return (candidatesBySlot.get(slot) ?? []).some((recipe) => respectsStrictHabits(recipe, base, matcher) && matchesHabitRule(recipe, rule, matcher));
+      });
+      const picked = pickRandom(options, random);
+      if (picked) assignedHabits.set(picked.key, [...(assignedHabits.get(picked.key) ?? []), rule]);
+      else if (rule.strength === "mandatory") oneMealWarnings.push(`${formatSourceDayFull(day.date)} : aucun repas ne peut respecter l'habitude ${habitLabel(rule, names)}.`);
+    }
+  }
+  const habitsByKey = new Map<string, SlotHabits>(
+    sequence.map(({ day, slot, key }) => [key, slotHabits(settings.habits, day.day, slot, assignedHabits.get(key) ?? [])]),
+  );
   const noHabits = slotHabits([], "", GENERATED_SLOTS[0]);
   const habitsOf = (key: string) => habitsByKey.get(key) ?? noHabits;
   const slotPoolOf = (slot: GeneratedSlotType, key: string) => {
@@ -112,11 +142,6 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
     return (candidatesBySlot.get(slot) ?? []).filter(
       (recipe) => !rejected.includes(recipe.code) && respectsStrictHabits(recipe, habits, matcher),
     );
-  };
-  const isKept = (key: string) => (input.existing[key]?.length ?? 0) > 0;
-  const fixedOf = (key: string) => {
-    const fixed = input.fixed[key];
-    return fixed && (fixed.recipeCode === null || catalogue.recipes[fixed.recipeCode]) ? fixed : null;
   };
   const openSlots: OpenSlot[] = sequence.flatMap(({ day, slot, key }, index) =>
     !isKept(key) && !fixedOf(key) && !habitsOf(key).noMeal
@@ -197,7 +222,7 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
     key ? (categoryOf(input.existing[key]?.[0]) ?? categoryOf(fixedOf(key)?.recipeCode) ?? categoryOf(reservations[key]?.recipeCode)) : null;
 
   const meals: GeneratedMeal[] = [];
-  const warnings: string[] = [];
+  const warnings: string[] = [...oneMealWarnings];
   let previousCategoryId: string | null = null;
   let sameDayCategoryIds: string[] = [];
 

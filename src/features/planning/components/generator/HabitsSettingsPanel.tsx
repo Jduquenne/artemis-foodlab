@@ -1,9 +1,9 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Plus } from "lucide-react";
 import { HabitRule, MenuGeneratorSettings } from "../../../../core/domain/menuGenerator";
 import { emptyHabit } from "../../../../core/logic/menuGenerator/habitLogic";
 import { removeById, setEnabledById, upsertById } from "../../../../core/utils/collectionUtils";
-import { useCategoriesSnapshot, useFoodsSnapshot, useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
+import { useHabitNames } from "../../../../shared/hooks/useHabitNames";
 import { HabitEditor } from "./HabitEditor";
 import { HabitRow } from "./HabitRow";
 
@@ -14,13 +14,7 @@ export interface HabitsSettingsPanelProps {
 }
 
 export const HabitsSettingsPanel = ({ settings, disabled, onPatch }: HabitsSettingsPanelProps) => {
-  const recipes = useRecipesSnapshot();
-  const foods = useFoodsSnapshot();
-  const categories = useCategoriesSnapshot();
-  const names = useMemo(
-    () => ({ catalogue: { recipes, foods }, categoryNames: Object.fromEntries(categories.map((category) => [category.id, category.name])) }),
-    [recipes, foods, categories],
-  );
+  const names = useHabitNames(settings.foodLists);
   const [editing, setEditing] = useState<HabitRule | null>(null);
 
   const save = (rule: HabitRule) => {
@@ -45,12 +39,12 @@ export const HabitsSettingsPanel = ({ settings, disabled, onPatch }: HabitsSetti
       </div>
 
       {editing && !settings.habits.some((rule) => rule.id === editing.id) && (
-        <HabitEditor key={editing.id} initial={editing} disabled={disabled} onSave={save} onCancel={() => setEditing(null)} />
+        <HabitEditor key={editing.id} initial={editing} lists={settings.foodLists} disabled={disabled} onSave={save} onCancel={() => setEditing(null)} />
       )}
 
       {settings.habits.map((rule) =>
         editing?.id === rule.id ? (
-          <HabitEditor key={rule.id} initial={rule} disabled={disabled} onSave={save} onCancel={() => setEditing(null)} />
+          <HabitEditor key={rule.id} initial={rule} lists={settings.foodLists} disabled={disabled} onSave={save} onCancel={() => setEditing(null)} />
         ) : (
           <HabitRow
             key={rule.id}

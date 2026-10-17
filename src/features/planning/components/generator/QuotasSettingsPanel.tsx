@@ -1,9 +1,9 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Plus } from "lucide-react";
 import { MenuGeneratorSettings, WeeklyQuota } from "../../../../core/domain/menuGenerator";
 import { emptyQuota } from "../../../../core/logic/menuGenerator/quotaLogic";
 import { removeById, setEnabledById, upsertById } from "../../../../core/utils/collectionUtils";
-import { useCategoriesSnapshot, useFoodsSnapshot, useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
+import { useHabitNames } from "../../../../shared/hooks/useHabitNames";
 import { QuotaEditor } from "./QuotaEditor";
 import { QuotaRow } from "./QuotaRow";
 
@@ -14,13 +14,7 @@ export interface QuotasSettingsPanelProps {
 }
 
 export const QuotasSettingsPanel = ({ settings, disabled, onPatch }: QuotasSettingsPanelProps) => {
-  const recipes = useRecipesSnapshot();
-  const foods = useFoodsSnapshot();
-  const categories = useCategoriesSnapshot();
-  const names = useMemo(
-    () => ({ catalogue: { recipes, foods }, categoryNames: Object.fromEntries(categories.map((category) => [category.id, category.name])) }),
-    [recipes, foods, categories],
-  );
+  const names = useHabitNames(settings.foodLists);
   const [editing, setEditing] = useState<WeeklyQuota | null>(null);
 
   const save = (quota: WeeklyQuota) => {
@@ -47,12 +41,12 @@ export const QuotasSettingsPanel = ({ settings, disabled, onPatch }: QuotasSetti
       </div>
 
       {editing && !settings.quotas.some((quota) => quota.id === editing.id) && (
-        <QuotaEditor key={editing.id} initial={editing} disabled={disabled} onSave={save} onCancel={() => setEditing(null)} />
+        <QuotaEditor key={editing.id} initial={editing} lists={settings.foodLists} disabled={disabled} onSave={save} onCancel={() => setEditing(null)} />
       )}
 
       {settings.quotas.map((quota) =>
         editing?.id === quota.id ? (
-          <QuotaEditor key={quota.id} initial={quota} disabled={disabled} onSave={save} onCancel={() => setEditing(null)} />
+          <QuotaEditor key={quota.id} initial={quota} lists={settings.foodLists} disabled={disabled} onSave={save} onCancel={() => setEditing(null)} />
         ) : (
           <QuotaRow
             key={quota.id}

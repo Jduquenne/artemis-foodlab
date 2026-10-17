@@ -18,7 +18,7 @@ import { getRecipeUsage } from "../../core/services/planningUsageService";
 import { newSeed } from "../../core/utils/randomUtils";
 import { useProfileStore } from "../store/useProfileStore";
 import { withPending } from "../utils/withPending";
-import { useCategoriesSnapshot, useFoodsSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from "./useCatalogueSnapshot";
+import { useCategoriesSnapshot, useFoodGroupsSnapshot, useFoodsSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from "./useCatalogueSnapshot";
 import { useActiveProfile } from "./useActiveProfile";
 
 export const MENU_GENERATOR_PENDING_KEY = "menu-generator-run";
@@ -61,6 +61,7 @@ export function useMenuGenerator() {
   const recipes = useRecipesSnapshot();
   const foods = useFoodsSnapshot();
   const categories = useCategoriesSnapshot();
+  const groups = useFoodGroupsSnapshot();
   const { macros } = useRecipeMetricsSnapshot();
   const householdSize = useProfileStore((s) => s.profiles.length);
   const activeProfile = useActiveProfile();
@@ -81,6 +82,7 @@ export function useMenuGenerator() {
       settings,
       catalogue: { recipes, foods },
       categoryNames: Object.fromEntries(categories.map((category) => [category.id, category.name])),
+      groupNames: Object.fromEntries(groups.map((group) => [group.id, group.name])),
       macros,
       kcalTarget: activeProfile?.kcalTarget ?? null,
       weeksSinceEaten: context.weeksSinceEaten,
@@ -91,7 +93,7 @@ export function useMenuGenerator() {
       householdSize,
       seed,
     }),
-  }), [recipes, foods, categories, macros, activeProfile, householdSize]);
+  }), [recipes, foods, categories, groups, macros, activeProfile, householdSize]);
 
   const generate = useCallback(async (settings: MenuGeneratorSettings) => {
     await withPending(MENU_GENERATOR_PENDING_KEY, async () => {

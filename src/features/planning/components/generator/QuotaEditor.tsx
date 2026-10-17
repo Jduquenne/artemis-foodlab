@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { QuotaComparator, QuotaStrictness, WeeklyQuota } from "../../../../core/domain/menuGenerator";
+import { FoodList, QuotaComparator, QuotaStrictness, WeeklyQuota } from "../../../../core/domain/menuGenerator";
 import { HABIT_TARGET_KIND_LABELS, HabitTargetKind, defaultHabitTarget } from "../../../../core/logic/menuGenerator/habitLogic";
 import {
   MAX_QUOTA_COUNT,
@@ -14,6 +14,7 @@ import { SettingsSection } from "./SettingsSection";
 
 export interface QuotaEditorProps {
   initial: WeeklyQuota;
+  lists: readonly FoodList[];
   disabled: boolean;
   onSave: (quota: WeeklyQuota) => void;
   onCancel: () => void;
@@ -25,7 +26,7 @@ const KIND_OPTIONS = (Object.keys(HABIT_TARGET_KIND_LABELS) as HabitTargetKind[]
 const COMPARATOR_OPTIONS = (Object.keys(QUOTA_COMPARATOR_LABELS) as QuotaComparator[]).map((id) => ({ id, label: QUOTA_COMPARATOR_LABELS[id] }));
 const STRICTNESS_OPTIONS = (Object.keys(QUOTA_STRICTNESS_LABELS) as QuotaStrictness[]).map((id) => ({ id, label: QUOTA_STRICTNESS_LABELS[id] }));
 
-export const QuotaEditor = ({ initial, disabled, onSave, onCancel }: QuotaEditorProps) => {
+export const QuotaEditor = ({ initial, lists, disabled, onSave, onCancel }: QuotaEditorProps) => {
   const [draft, setDraft] = useState<WeeklyQuota>(initial);
   const [error, setError] = useState<string | null>(null);
   const patch = (update: Partial<WeeklyQuota>) => setDraft((current) => ({ ...current, ...update }));
@@ -48,6 +49,7 @@ export const QuotaEditor = ({ initial, disabled, onSave, onCancel }: QuotaEditor
         <ChoicePills options={KIND_OPTIONS} isActive={(kind) => kind === draft.target.kind} onToggle={changeKind} disabled={disabled} />
         <HabitTargetField
           target={draft.target}
+          lists={lists}
           disabled={disabled}
           onChange={(target) => {
             if (target.kind !== "noMeal") patch({ target });

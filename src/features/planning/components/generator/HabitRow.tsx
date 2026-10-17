@@ -4,8 +4,10 @@ import {
   HABIT_STRENGTH_LABELS,
   HabitNames,
   formatHabitDays,
+  habitExceptLabel,
   habitSlotsLabel,
   habitTargetLabel,
+  isOneMealHabit,
 } from "../../../../core/logic/menuGenerator/habitLogic";
 
 export interface HabitRowProps {
@@ -30,10 +32,12 @@ export const HabitRow = ({ rule, names, disabled, onToggle, onEdit, onDelete }: 
     <div className="flex-1 min-w-0">
       <p className="text-xs font-bold text-slate-800">
         {habitTargetLabel(rule.target, names)}
+        {habitExceptLabel(rule, names)}
         {rule.target.kind !== "noMeal" && <span className="ml-1.5 font-semibold text-orange-600">{HABIT_STRENGTH_LABELS[rule.strength]}</span>}
       </p>
       <p className="text-[11px] text-slate-500 first-letter:uppercase">
         {formatHabitDays(rule.days)} · {habitSlotsLabel(rule.slots).toLowerCase()}
+        {isOneMealHabit(rule) && " · un seul des repas"}
       </p>
     </div>
     <button type="button" onClick={onEdit} disabled={disabled} aria-label="Modifier l'habitude" className="p-1 rounded-lg text-slate-400 hover:text-orange-600 hover:bg-muted disabled:opacity-50">

@@ -7,6 +7,7 @@ import {
   togglePreferredFood,
 } from "../../../../core/logic/menuGenerator/generatorSettingsLogic";
 import { ExcludedFoodsField } from "./ExcludedFoodsField";
+import { FoodListsField } from "./FoodListsField";
 import { PreferredFoodsField } from "./PreferredFoodsField";
 import { RecipeListField } from "./RecipeListField";
 import { SettingsSection } from "./SettingsSection";
@@ -37,6 +38,13 @@ export const FoodsSettingsPanel = ({ settings, disabled, onPatch }: FoodsSetting
         disabled={disabled}
         onToggle={(foodId) => onPatch(toggleExcludedFood(settings, foodId))}
       />
+    </SettingsSection>
+
+    <SettingsSection
+      title="Listes d'aliments"
+      hint="Ex : « Poisson blanc » = cabillaud, colin, merlu. Utilisables comme cible dans les habitudes et les quotas ; un aliment peut être dans plusieurs listes."
+    >
+      <FoodListsField settings={settings} disabled={disabled} onPatch={onPatch} />
     </SettingsSection>
 
     <SettingsSection title="Recettes favorites" hint="Favorisées une fois sur un repas tiré au hasard de la période.">

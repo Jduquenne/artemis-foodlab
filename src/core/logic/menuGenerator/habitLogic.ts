@@ -1,6 +1,7 @@
 import {
   GENERATED_SLOTS,
   GENERATED_SLOT_LABELS,
+  FoodList,
   GeneratedSlotType,
   HabitProtein,
   HabitRule,
@@ -35,12 +36,21 @@ export const HABIT_STRENGTH_LABELS: Record<HabitStrength, string> = {
 export interface HabitMatcher {
   dietOf: (code: string) => RecipeDietProfile;
   foodsOf: (code: string) => ReadonlySet<string>;
+  foodGroupOf: (foodId: string) => string | null;
+  listFoods: (listId: string) => readonly string[];
 }
 
 export interface HabitNames {
   catalogue: MenuCatalogue;
   categoryNames: Record<string, string>;
+  groupNames: Record<string, string>;
+  lists: readonly FoodList[];
 }
+
+export const HABIT_SCOPE_LABELS: Record<HabitRule["scope"], string> = {
+  eachMeal: "Chaque repas coché",
+  oneMeal: "Un seul des repas du jour",
+};
 
 export interface SlotHabits {
   noMeal: HabitRule | null;
@@ -75,6 +85,10 @@ export function matchesHabitTarget(recipe: RecipeDetails, target: HabitTarget, m
       return recipe.categoryId === target.categoryId;
     case "food":
       return target.foodIds.some((foodId) => matcher.foodsOf(recipe.code).has(foodId));
+    case "family":
+      return [...matcher.foodsOf(recipe.code)].some((foodId) => matcher.foodGroupOf(foodId) === target.groupId);
+    case "list":
+      return matcher.listFoods(target.listId).some((foodId) => matcher.foodsOf(recipe.code).has(foodId));
     case "recipe":
       return recipe.code === target.recipeCode;
     case "noMeal":
@@ -82,8 +96,21 @@ export function matchesHabitTarget(recipe: RecipeDetails, target: HabitTarget, m
   }
 }
 
-export function slotHabits(habits: readonly HabitRule[], dayName: string, slot: GeneratedSlotType): SlotHabits {
-  const rules = habits.filter((rule) => rule.enabled && rule.days.includes(dayName) && rule.slots.includes(slot));
+export function matchesHabitRule(recipe: RecipeDetails, rule: HabitRule, matcher: HabitMatcher): boolean {
+  if (!matchesHabitTarget(recipe, rule.target, matcher)) return false;
+  const foods = matcher.foodsOf(recipe.code);
+  return !rule.exceptFoodIds.some((foodId) => foods.has(foodId));
+}
+
+export function isOneMealHabit(rule: HabitRule): boolean {
+  return rule.scope === "oneMeal" && rule.slots.length > 1 && (rule.strength === "mandatory" || rule.strength === "preferred");
+}
+
+export function slotHabits(habits: readonly HabitRule[], dayName: string, slot: GeneratedSlotType, extra: readonly HabitRule[] = []): SlotHabits {
+  const rules = [
+    ...habits.filter((rule) => rule.enabled && !isOneMealHabit(rule) && rule.days.includes(dayName) && rule.slots.includes(slot)),
+    ...extra,
+  ];
   const real = rules.filter((rule) => rule.target.kind !== "noMeal");
   return {
     noMeal: rules.find((rule) => rule.target.kind === "noMeal") ?? null,
@@ -95,8 +122,8 @@ export function slotHabits(habits: readonly HabitRule[], dayName: string, slot: 
 }
 
 export function respectsStrictHabits(recipe: RecipeDetails, habits: SlotHabits, matcher: HabitMatcher): boolean {
-  return habits.mandatory.every((rule) => matchesHabitTarget(recipe, rule.target, matcher))
-    && habits.forbidden.every((rule) => !matchesHabitTarget(recipe, rule.target, matcher));
+  return habits.mandatory.every((rule) => matchesHabitRule(recipe, rule, matcher))
+    && habits.forbidden.every((rule) => !matchesHabitRule(recipe, rule, matcher));
 }
 
 function dayIndexes(days: readonly string[]): number[] {
@@ -125,6 +152,10 @@ export function habitTargetLabel(target: HabitTarget, names: HabitNames): string
       return names.categoryNames[target.categoryId] ?? target.categoryId;
     case "food":
       return target.foodIds.map((foodId) => names.catalogue.foods[foodId]?.name ?? foodId).join(" ou ");
+    case "family":
+      return `Famille ${names.groupNames[target.groupId] ?? target.groupId}`;
+    case "list":
+      return `Liste ${names.lists.find((list) => list.id === target.listId)?.name ?? "supprimée"}`;
     case "recipe":
       return names.catalogue.recipes[target.recipeCode]?.name ?? target.recipeCode;
     case "noMeal":
@@ -132,9 +163,15 @@ export function habitTargetLabel(target: HabitTarget, names: HabitNames): string
   }
 }
 
+export function habitExceptLabel(rule: HabitRule, names: HabitNames): string {
+  if (rule.exceptFoodIds.length === 0) return "";
+  return ` sauf ${rule.exceptFoodIds.map((foodId) => names.catalogue.foods[foodId]?.name ?? foodId).join(", ")}`;
+}
+
 export function habitLabel(rule: HabitRule, names: HabitNames): string {
   const strength = rule.target.kind === "noMeal" ? "" : ` (${HABIT_STRENGTH_LABELS[rule.strength].toLowerCase()})`;
-  return `${habitTargetLabel(rule.target, names)} · ${formatHabitDays(rule.days)}${strength}`;
+  const scope = isOneMealHabit(rule) ? ", un des repas" : "";
+  return `${habitTargetLabel(rule.target, names)}${habitExceptLabel(rule, names)} · ${formatHabitDays(rule.days)}${scope}${strength}`;
 }
 
 export function habitScore(
@@ -147,12 +184,12 @@ export function habitScore(
   const reasons: MealReason[] = [];
   for (const rule of habits.mandatory) reasons.push({ kind: "habit", label: `Habitude : ${habitLabel(rule, names)}` });
   for (const rule of habits.preferred) {
-    if (!matchesHabitTarget(recipe, rule.target, matcher)) continue;
+    if (!matchesHabitRule(recipe, rule, matcher)) continue;
     score += HABIT_SCORE;
     reasons.push({ kind: "habit", label: `Habitude : ${habitLabel(rule, names)}` });
   }
   for (const rule of habits.avoid) {
-    if (!matchesHabitTarget(recipe, rule.target, matcher)) continue;
+    if (!matchesHabitRule(recipe, rule, matcher)) continue;
     score -= HABIT_SCORE;
     reasons.push({ kind: "habit", label: `Malgré l'habitude : ${habitLabel(rule, names)}` });
   }
@@ -165,6 +202,8 @@ export const HABIT_TARGET_KIND_LABELS: Record<HabitTargetKind, string> = {
   protein: "Protéine",
   category: "Catégorie",
   food: "Aliment",
+  family: "Famille",
+  list: "Liste",
   recipe: "Recette",
   noMeal: "Pas de repas",
 };
@@ -172,7 +211,16 @@ export const HABIT_TARGET_KIND_LABELS: Record<HabitTargetKind, string> = {
 const MAX_RECIPE_SUGGESTIONS = 8;
 
 export function emptyHabit(id: string): HabitRule {
-  return { id, enabled: true, days: [], slots: [...GENERATED_SLOTS], target: { kind: "protein", protein: "fish" }, strength: "mandatory" };
+  return {
+    id,
+    enabled: true,
+    days: [],
+    slots: [...GENERATED_SLOTS],
+    scope: "eachMeal",
+    target: { kind: "protein", protein: "fish" },
+    exceptFoodIds: [],
+    strength: "mandatory",
+  };
 }
 
 export function defaultHabitTarget(kind: HabitTargetKind): HabitTarget {
@@ -183,6 +231,10 @@ export function defaultHabitTarget(kind: HabitTargetKind): HabitTarget {
       return { kind, categoryId: "" };
     case "food":
       return { kind, foodIds: [] };
+    case "family":
+      return { kind, groupId: "" };
+    case "list":
+      return { kind, listId: "" };
     case "recipe":
       return { kind, recipeCode: "" };
     case "noMeal":
@@ -207,6 +259,8 @@ export function habitDayRange(from: string, to: string): string[] {
 export function validateHabitTarget(target: HabitTarget): string | null {
   if (target.kind === "category" && !target.categoryId) return "Choisis une catégorie.";
   if (target.kind === "food" && target.foodIds.length === 0) return "Choisis au moins un aliment.";
+  if (target.kind === "family" && !target.groupId) return "Choisis une famille.";
+  if (target.kind === "list" && !target.listId) return "Choisis une liste.";
   if (target.kind === "recipe" && !target.recipeCode) return "Choisis une recette.";
   return null;
 }
@@ -224,4 +278,25 @@ export function habitSlotsLabel(slots: readonly GeneratedSlotType[]): string {
 export function searchHabitRecipes(query: string, recipes: Record<string, RecipeDetails>): RecipeDetails[] {
   const dishes = Object.values(recipes).filter((recipe) => GENERATED_SLOTS.some((slot) => isGeneratableDish(recipe, slot)));
   return rankByQuery(dishes, normalizeQuery(query), (recipe) => recipe.name).slice(0, MAX_RECIPE_SUGGESTIONS);
+}
+
+export function emptyFoodList(id: string): FoodList {
+  return { id, name: "", foodIds: [] };
+}
+
+export function validateFoodList(list: FoodList, lists: readonly FoodList[]): string | null {
+  const name = list.name.trim();
+  if (!name) return "Donne un nom à la liste.";
+  if (lists.some((other) => other.id !== list.id && other.name.trim().toLowerCase() === name.toLowerCase())) return "Une liste porte déjà ce nom.";
+  if (list.foodIds.length === 0) return "Ajoute au moins un aliment.";
+  return null;
+}
+
+function targetUsesList(target: HabitTarget, listId: string): boolean {
+  return target.kind === "list" && target.listId === listId;
+}
+
+export function foodListUsage(listId: string, habits: readonly HabitRule[], quotas: readonly { target: HabitTarget }[]): number {
+  return habits.filter((rule) => targetUsesList(rule.target, listId)).length
+    + quotas.filter((quota) => targetUsesList(quota.target, listId)).length;
 }

@@ -4,6 +4,7 @@ import {
   AdvancedSettings,
   DEFAULT_ADVANCED_SETTINGS,
   DietFilter,
+  FoodList,
   GENERATED_SLOTS,
   GeneratedSlotType,
   HabitProtein,
@@ -61,6 +62,7 @@ export function defaultGeneratorSettings(startDate: string): MenuGeneratorSettin
     useFreezer: true,
     habits: [],
     quotas: [],
+    foodLists: [],
     favoriteRecipeCodes: [],
     bannedRecipeCodes: [],
     advanced: DEFAULT_ADVANCED_SETTINGS,
@@ -177,6 +179,10 @@ function restoreHabitTarget(value: unknown): HabitTarget | null {
       const foodIds = [...new Set(typeof value.foodId === "string" ? [value.foodId, ...listed] : listed)];
       return foodIds.length > 0 ? { kind: "food", foodIds } : null;
     }
+    case "family":
+      return typeof value.groupId === "string" && value.groupId ? { kind: "family", groupId: value.groupId } : null;
+    case "list":
+      return typeof value.listId === "string" && value.listId ? { kind: "list", listId: value.listId } : null;
     case "recipe":
       return typeof value.recipeCode === "string" ? { kind: "recipe", recipeCode: value.recipeCode } : null;
     case "noMeal":
@@ -195,7 +201,8 @@ function restoreHabit(value: unknown): HabitRule | null {
   const days = DAYS.filter((day) => rawDays.includes(day));
   const slots = GENERATED_SLOTS.filter((slot) => rawSlots.includes(slot));
   if (!target || !strength || days.length === 0 || slots.length === 0) return null;
-  return { id: value.id, enabled: value.enabled !== false, days, slots, target, strength };
+  const scope = value.scope === "oneMeal" ? "oneMeal" : "eachMeal";
+  return { id: value.id, enabled: value.enabled !== false, days, slots, scope, target, exceptFoodIds: restoreCodes(value.exceptFoodIds), strength };
 }
 
 export const ADVANCED_LIMITS = {
@@ -276,6 +283,15 @@ function restoreQuotas(value: unknown): WeeklyQuota[] {
   return value.map(restoreQuota).filter((quota): quota is WeeklyQuota => quota !== null);
 }
 
+function restoreFoodLists(value: unknown): FoodList[] {
+  if (!Array.isArray(value)) return [];
+  return value.flatMap((item): FoodList[] => {
+    if (!isRecord(item) || typeof item.id !== "string" || typeof item.name !== "string") return [];
+    const foodIds = restoreCodes(item.foodIds);
+    return item.name.trim() && foodIds.length > 0 ? [{ id: item.id, name: item.name.trim(), foodIds }] : [];
+  });
+}
+
 function restoreHabits(value: unknown): HabitRule[] {
   if (!Array.isArray(value)) return [];
   return value.map(restoreHabit).filter((rule): rule is HabitRule => rule !== null);
@@ -299,6 +315,7 @@ export function restoreGeneratorSettings(saved: Partial<SavedGeneratorSettings> 
     useFreezer: typeof saved.useFreezer === "boolean" ? saved.useFreezer : defaults.useFreezer,
     habits: restoreHabits(saved.habits),
     quotas: restoreQuotas(saved.quotas),
+    foodLists: restoreFoodLists(saved.foodLists),
     favoriteRecipeCodes: restoreCodes(saved.favoriteRecipeCodes),
     bannedRecipeCodes: restoreCodes(saved.bannedRecipeCodes),
     advanced: restoreAdvanced(saved.advanced),

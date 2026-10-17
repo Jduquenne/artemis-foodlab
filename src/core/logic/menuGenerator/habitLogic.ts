@@ -74,7 +74,7 @@ export function matchesHabitTarget(recipe: RecipeDetails, target: HabitTarget, m
     case "category":
       return recipe.categoryId === target.categoryId;
     case "food":
-      return matcher.foodsOf(recipe.code).has(target.foodId);
+      return target.foodIds.some((foodId) => matcher.foodsOf(recipe.code).has(foodId));
     case "recipe":
       return recipe.code === target.recipeCode;
     case "noMeal":
@@ -124,7 +124,7 @@ export function habitTargetLabel(target: HabitTarget, names: HabitNames): string
     case "category":
       return names.categoryNames[target.categoryId] ?? target.categoryId;
     case "food":
-      return names.catalogue.foods[target.foodId]?.name ?? target.foodId;
+      return target.foodIds.map((foodId) => names.catalogue.foods[foodId]?.name ?? foodId).join(" ou ");
     case "recipe":
       return names.catalogue.recipes[target.recipeCode]?.name ?? target.recipeCode;
     case "noMeal":
@@ -182,7 +182,7 @@ export function defaultHabitTarget(kind: HabitTargetKind): HabitTarget {
     case "category":
       return { kind, categoryId: "" };
     case "food":
-      return { kind, foodId: "" };
+      return { kind, foodIds: [] };
     case "recipe":
       return { kind, recipeCode: "" };
     case "noMeal":
@@ -206,7 +206,7 @@ export function habitDayRange(from: string, to: string): string[] {
 
 export function validateHabitTarget(target: HabitTarget): string | null {
   if (target.kind === "category" && !target.categoryId) return "Choisis une catégorie.";
-  if (target.kind === "food" && !target.foodId) return "Choisis un aliment.";
+  if (target.kind === "food" && target.foodIds.length === 0) return "Choisis au moins un aliment.";
   if (target.kind === "recipe" && !target.recipeCode) return "Choisis une recette.";
   return null;
 }

@@ -31,7 +31,7 @@ export type HabitProtein = "fish" | "meat" | "redMeat" | "whiteMeat" | "deli" | 
 export type HabitTarget =
   | { kind: "protein"; protein: HabitProtein }
   | { kind: "category"; categoryId: string }
-  | { kind: "food"; foodId: string }
+  | { kind: "food"; foodIds: string[] }
   | { kind: "recipe"; recipeCode: string }
   | { kind: "noMeal" };
 

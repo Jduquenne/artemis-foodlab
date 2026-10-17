@@ -1,6 +1,8 @@
+import { X } from "lucide-react";
 import { HabitProtein, HabitTarget } from "../../../../core/domain/menuGenerator";
 import { isRecipeCategory } from "../../../../core/domain/recipePredicates";
 import { HABIT_PROTEIN_LABELS } from "../../../../core/logic/menuGenerator/habitLogic";
+import { toggleInList } from "../../../../core/utils/collectionUtils";
 import { useCategoriesSnapshot, useFoodsSnapshot, useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { ChoicePills } from "./ChoicePills";
 import { FoodSearchInput } from "./FoodSearchInput";
@@ -49,13 +51,34 @@ export const HabitTargetField = ({ target, disabled, onChange }: HabitTargetFiel
     case "food":
       return (
         <div className="flex flex-col gap-1.5">
-          {target.foodId && <span className="text-xs font-semibold text-slate-700">{foods[target.foodId]?.name ?? target.foodId}</span>}
+          {target.foodIds.length > 0 && (
+            <div className="flex flex-wrap items-center gap-1.5">
+              {target.foodIds.map((foodId, index) => (
+                <span key={foodId} className="flex items-center gap-1.5">
+                  {index > 0 && <span className="text-[11px] font-semibold text-slate-400">ou</span>}
+                  <span className="flex items-center gap-1 pl-2.5 pr-1 py-1 rounded-lg bg-muted text-xs font-semibold text-slate-700">
+                    {foods[foodId]?.name ?? foodId}
+                    <button
+                      type="button"
+                      disabled={disabled}
+                      aria-label={`Retirer ${foods[foodId]?.name ?? foodId}`}
+                      onClick={() => onChange({ kind: "food", foodIds: toggleInList(target.foodIds, foodId) })}
+                      className="p-0.5 rounded hover:bg-black/5 disabled:opacity-50"
+                    >
+                      <X size={12} />
+                    </button>
+                  </span>
+                </span>
+              ))}
+            </div>
+          )}
           <FoodSearchInput
-            hiddenIds={target.foodId ? [target.foodId] : []}
+            hiddenIds={target.foodIds}
             disabled={disabled}
-            placeholder={target.foodId ? "Changer d'aliment…" : "Ex : pâtes, saumon…"}
-            onPick={(foodId) => onChange({ kind: "food", foodId })}
+            placeholder={target.foodIds.length > 0 ? "Ajouter un autre aliment…" : "Ex : saumon, cabillaud…"}
+            onPick={(foodId) => onChange({ kind: "food", foodIds: toggleInList(target.foodIds, foodId) })}
           />
+          <p className="text-[11px] text-slate-400">Le repas contient au moins un aliment de la liste, peu importe lequel.</p>
         </div>
       );
     case "recipe":

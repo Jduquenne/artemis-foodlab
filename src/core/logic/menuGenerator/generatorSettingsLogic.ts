@@ -172,7 +172,11 @@ function restoreHabitTarget(value: unknown): HabitTarget | null {
     case "category":
       return typeof value.categoryId === "string" ? { kind: "category", categoryId: value.categoryId } : null;
     case "food":
-      return typeof value.foodId === "string" ? { kind: "food", foodId: value.foodId } : null;
+    {
+      const listed = Array.isArray(value.foodIds) ? value.foodIds.filter((id): id is string => typeof id === "string") : [];
+      const foodIds = [...new Set(typeof value.foodId === "string" ? [value.foodId, ...listed] : listed)];
+      return foodIds.length > 0 ? { kind: "food", foodIds } : null;
+    }
     case "recipe":
       return typeof value.recipeCode === "string" ? { kind: "recipe", recipeCode: value.recipeCode } : null;
     case "noMeal":

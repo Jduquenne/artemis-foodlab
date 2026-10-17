@@ -2,6 +2,10 @@ export function normalizeQuery(query: string): string {
   return query.toLowerCase().trim();
 }
 
+export function foldText(text: string): string {
+  return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[’']/g, "'").toLowerCase().trim();
+}
+
 export function includesText(text: string, normalizedQuery: string): boolean {
   return text.toLowerCase().includes(normalizedQuery);
 }

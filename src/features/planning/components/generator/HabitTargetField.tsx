@@ -4,6 +4,7 @@ import { HABIT_PROTEIN_LABELS } from "../../../../core/logic/menuGenerator/habit
 import { useCategoriesSnapshot, useFoodGroupsSnapshot, useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { ChoicePills } from "./ChoicePills";
 import { FoodChipsField } from "./FoodChipsField";
+import { KeywordsField } from "./KeywordsField";
 import { RecipeSearchInput } from "./RecipeSearchInput";
 
 export interface HabitTargetFieldProps {
@@ -84,6 +85,8 @@ export const HabitTargetField = ({ target, lists, disabled, onChange }: HabitTar
           <p className="text-[11px] text-slate-400">Listes créées dans l'onglet « Aliments et recettes ». Le repas contient au moins un aliment de la liste.</p>
         </div>
       );
+    case "name":
+      return <KeywordsField keywords={target.keywords} disabled={disabled} onChange={(keywords) => onChange({ kind: "name", keywords })} />;
     case "recipe":
       return (
         <div className="flex flex-col gap-1.5">

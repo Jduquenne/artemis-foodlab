@@ -1,11 +1,15 @@
 import { useState } from "react";
-import { FoodList, QuotaComparator, QuotaStrictness, WeeklyQuota } from "../../../../core/domain/menuGenerator";
+import { FoodList, QuotaStrictness, WeeklyQuota } from "../../../../core/domain/menuGenerator";
 import { HABIT_TARGET_KIND_LABELS, HabitTargetKind, defaultHabitTarget } from "../../../../core/logic/menuGenerator/habitLogic";
 import {
   MAX_QUOTA_COUNT,
-  QUOTA_COMPARATOR_LABELS,
+  QUOTA_MODE_LABELS,
   QUOTA_STRICTNESS_LABELS,
+  QuotaMode,
+  quotaMode,
+  supportsDistinctFoods,
   validateQuota,
+  withQuotaMode,
 } from "../../../../core/logic/menuGenerator/quotaLogic";
 import { ChoicePills } from "./ChoicePills";
 import { HabitTargetField } from "./HabitTargetField";
@@ -23,18 +27,19 @@ export interface QuotaEditorProps {
 const KIND_OPTIONS = (Object.keys(HABIT_TARGET_KIND_LABELS) as HabitTargetKind[])
   .filter((id) => id !== "noMeal")
   .map((id) => ({ id, label: HABIT_TARGET_KIND_LABELS[id] }));
-const COMPARATOR_OPTIONS = (Object.keys(QUOTA_COMPARATOR_LABELS) as QuotaComparator[]).map((id) => ({ id, label: QUOTA_COMPARATOR_LABELS[id] }));
+const MODE_OPTIONS = (Object.keys(QUOTA_MODE_LABELS) as QuotaMode[]).map((id) => ({ id, label: QUOTA_MODE_LABELS[id] }));
 const STRICTNESS_OPTIONS = (Object.keys(QUOTA_STRICTNESS_LABELS) as QuotaStrictness[]).map((id) => ({ id, label: QUOTA_STRICTNESS_LABELS[id] }));
 
 export const QuotaEditor = ({ initial, lists, disabled, onSave, onCancel }: QuotaEditorProps) => {
   const [draft, setDraft] = useState<WeeklyQuota>(initial);
   const [error, setError] = useState<string | null>(null);
   const patch = (update: Partial<WeeklyQuota>) => setDraft((current) => ({ ...current, ...update }));
+  const mode = quotaMode(draft);
 
   const save = () => {
     const problem = validateQuota(draft);
     setError(problem);
-    if (!problem) onSave(draft);
+    if (!problem) onSave({ ...draft, distinctFoods: draft.distinctFoods && supportsDistinctFoods(draft.target) });
   };
 
   const changeKind = (kind: HabitTargetKind) => {
@@ -58,10 +63,35 @@ export const QuotaEditor = ({ initial, lists, disabled, onSave, onCancel }: Quot
       </SettingsSection>
 
       <SettingsSection title="Combien par semaine">
-        <div className="flex flex-wrap items-center gap-2">
-          <ChoicePills options={COMPARATOR_OPTIONS} isActive={(id) => id === draft.comparator} onToggle={(comparator) => patch({ comparator })} disabled={disabled} />
-          <NumberStepper value={draft.count} min={0} max={MAX_QUOTA_COUNT} step={1} disabled={disabled} onChange={(count) => patch({ count })} />
+        <ChoicePills options={MODE_OPTIONS} isActive={(id) => id === mode} onToggle={(next) => setDraft((current) => withQuotaMode(current, next))} disabled={disabled} />
+        <div className="flex flex-wrap items-center gap-2 text-xs text-slate-600">
+          {draft.min !== null && (
+            <>
+              {mode === "between" && <span>de</span>}
+              <NumberStepper value={draft.min} min={0} max={MAX_QUOTA_COUNT} step={1} disabled={disabled} onChange={(min) => patch({ min })} />
+            </>
+          )}
+          {draft.max !== null && (
+            <>
+              {mode === "between" && <span>à</span>}
+              <NumberStepper value={draft.max} min={0} max={MAX_QUOTA_COUNT} step={1} disabled={disabled} onChange={(max) => patch({ max })} />
+            </>
+          )}
+          <span>repas</span>
         </div>
+      </SettingsSection>
+
+      <SettingsSection title="Options">
+        {supportsDistinctFoods(draft.target) && (
+          <label className="flex items-center gap-2 text-xs text-slate-700">
+            <input type="checkbox" checked={draft.distinctFoods} disabled={disabled} onChange={(e) => patch({ distinctFoods: e.target.checked })} className="accent-orange-500" />
+            Pas deux fois le même aliment (ex : lentilles puis pois chiches)
+          </label>
+        )}
+        <label className="flex items-center gap-2 text-xs text-slate-700">
+          <input type="checkbox" checked={draft.noConsecutive} disabled={disabled} onChange={(e) => patch({ noConsecutive: e.target.checked })} className="accent-orange-500" />
+          Pas deux repas de suite
+        </label>
       </SettingsSection>
 
       <SettingsSection title="Force">

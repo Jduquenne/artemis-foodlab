@@ -12,7 +12,7 @@ import {
 } from "../../domain/menuGenerator";
 import { DAYS } from "../../domain/planningConfig";
 import { RecipeDetails } from "../../domain/recipe";
-import { normalizeQuery, rankByQuery } from "../../utils/textUtils";
+import { foldText, normalizeQuery, rankByQuery } from "../../utils/textUtils";
 import { MenuCatalogue, isGeneratableDish } from "./candidateLogic";
 
 export const HABIT_SCORE = 3;
@@ -89,6 +89,10 @@ export function matchesHabitTarget(recipe: RecipeDetails, target: HabitTarget, m
       return [...matcher.foodsOf(recipe.code)].some((foodId) => matcher.foodGroupOf(foodId) === target.groupId);
     case "list":
       return matcher.listFoods(target.listId).some((foodId) => matcher.foodsOf(recipe.code).has(foodId));
+    case "name": {
+      const name = foldText(recipe.name);
+      return target.keywords.some((keyword) => foldText(keyword) !== "" && name.includes(foldText(keyword)));
+    }
     case "recipe":
       return recipe.code === target.recipeCode;
     case "noMeal":
@@ -156,6 +160,8 @@ export function habitTargetLabel(target: HabitTarget, names: HabitNames): string
       return `Famille ${names.groupNames[target.groupId] ?? target.groupId}`;
     case "list":
       return `Liste ${names.lists.find((list) => list.id === target.listId)?.name ?? "supprimée"}`;
+    case "name":
+      return `Nom contient ${target.keywords.map((keyword) => `« ${keyword} »`).join(" ou ")}`;
     case "recipe":
       return names.catalogue.recipes[target.recipeCode]?.name ?? target.recipeCode;
     case "noMeal":
@@ -204,6 +210,7 @@ export const HABIT_TARGET_KIND_LABELS: Record<HabitTargetKind, string> = {
   food: "Aliment",
   family: "Famille",
   list: "Liste",
+  name: "Nom de recette",
   recipe: "Recette",
   noMeal: "Pas de repas",
 };
@@ -235,6 +242,8 @@ export function defaultHabitTarget(kind: HabitTargetKind): HabitTarget {
       return { kind, groupId: "" };
     case "list":
       return { kind, listId: "" };
+    case "name":
+      return { kind, keywords: [] };
     case "recipe":
       return { kind, recipeCode: "" };
     case "noMeal":
@@ -261,6 +270,7 @@ export function validateHabitTarget(target: HabitTarget): string | null {
   if (target.kind === "food" && target.foodIds.length === 0) return "Choisis au moins un aliment.";
   if (target.kind === "family" && !target.groupId) return "Choisis une famille.";
   if (target.kind === "list" && !target.listId) return "Choisis une liste.";
+  if (target.kind === "name" && target.keywords.length === 0) return "Ajoute au moins un mot.";
   if (target.kind === "recipe" && !target.recipeCode) return "Choisis une recette.";
   return null;
 }

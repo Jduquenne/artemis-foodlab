@@ -1,7 +1,7 @@
 import { Pencil, Trash2 } from "lucide-react";
 import { WeeklyQuota } from "../../../../core/domain/menuGenerator";
 import { HabitNames, habitTargetLabel } from "../../../../core/logic/menuGenerator/habitLogic";
-import { QUOTA_COMPARATOR_LABELS, QUOTA_STRICTNESS_LABELS } from "../../../../core/logic/menuGenerator/quotaLogic";
+import { QUOTA_STRICTNESS_LABELS, quotaSummary } from "../../../../core/logic/menuGenerator/quotaLogic";
 
 export interface QuotaRowProps {
   quota: WeeklyQuota;
@@ -27,9 +27,7 @@ export const QuotaRow = ({ quota, names, disabled, onToggle, onEdit, onDelete }:
         {habitTargetLabel(quota.target, names)}
         <span className="ml-1.5 font-semibold text-orange-600">{QUOTA_STRICTNESS_LABELS[quota.strictness]}</span>
       </p>
-      <p className="text-[11px] text-slate-500">
-        {QUOTA_COMPARATOR_LABELS[quota.comparator]} {quota.count} par semaine
-      </p>
+      <p className="text-[11px] text-slate-500 first-letter:uppercase">{quotaSummary(quota)}</p>
     </div>
     <button type="button" onClick={onEdit} disabled={disabled} aria-label="Modifier le quota" className="p-1 rounded-lg text-slate-400 hover:text-orange-600 hover:bg-muted disabled:opacity-50">
       <Pencil size={13} />

@@ -34,6 +34,7 @@ export type HabitTarget =
   | { kind: "food"; foodIds: string[] }
   | { kind: "family"; groupId: string }
   | { kind: "list"; listId: string }
+  | { kind: "name"; keywords: string[] }
   | { kind: "recipe"; recipeCode: string }
   | { kind: "noMeal" };
 
@@ -58,8 +59,6 @@ export interface FoodList {
   foodIds: string[];
 }
 
-export type QuotaComparator = "atLeast" | "atMost";
-
 export type QuotaStrictness = "strict" | "preferred";
 
 export type QuotaTarget = Exclude<HabitTarget, { kind: "noMeal" }>;
@@ -68,9 +67,11 @@ export interface WeeklyQuota {
   id: string;
   enabled: boolean;
   target: QuotaTarget;
-  comparator: QuotaComparator;
-  count: number;
+  min: number | null;
+  max: number | null;
   strictness: QuotaStrictness;
+  distinctFoods: boolean;
+  noConsecutive: boolean;
 }
 
 export type AdvancedMode = "off" | "preferred" | "strict";

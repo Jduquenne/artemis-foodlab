@@ -13,7 +13,6 @@ import {
   HabitTarget,
   MAX_GENERATION_DAYS,
   MIN_GENERATION_DAYS,
-  QuotaComparator,
   QuotaStrictness,
   QuotaTarget,
   WeeklyQuota,
@@ -183,6 +182,10 @@ function restoreHabitTarget(value: unknown): HabitTarget | null {
       return typeof value.groupId === "string" && value.groupId ? { kind: "family", groupId: value.groupId } : null;
     case "list":
       return typeof value.listId === "string" && value.listId ? { kind: "list", listId: value.listId } : null;
+    case "name": {
+      const keywords = restoreCodes(value.keywords).map((keyword) => keyword.trim()).filter(Boolean);
+      return keywords.length > 0 ? { kind: "name", keywords } : null;
+    }
     case "recipe":
       return typeof value.recipeCode === "string" ? { kind: "recipe", recipeCode: value.recipeCode } : null;
     case "noMeal":
@@ -263,19 +266,29 @@ export function toggleBannedRecipe(
   };
 }
 
-const QUOTA_COMPARATORS: readonly QuotaComparator[] = ["atLeast", "atMost"];
-
 const QUOTA_STRICTNESSES: readonly QuotaStrictness[] = ["strict", "preferred"];
 
 function restoreQuota(value: unknown): WeeklyQuota | null {
   if (!isRecord(value) || typeof value.id !== "string") return null;
   const target = restoreHabitTarget(value.target);
-  const comparator = QUOTA_COMPARATORS.find((item) => item === value.comparator);
   const strictness = QUOTA_STRICTNESSES.find((item) => item === value.strictness);
-  const count = typeof value.count === "number" && Number.isInteger(value.count) ? Math.min(MAX_QUOTA_COUNT, Math.max(0, value.count)) : null;
-  if (!target || target.kind === "noMeal" || !comparator || !strictness || count === null) return null;
+  const bound = (raw: unknown) => (typeof raw === "number" && Number.isInteger(raw) ? Math.min(MAX_QUOTA_COUNT, Math.max(0, raw)) : null);
+  const legacy = bound(value.count);
+  const min = "min" in value ? bound(value.min) : value.comparator === "atLeast" ? legacy : null;
+  const max = "max" in value ? bound(value.max) : value.comparator === "atMost" ? legacy : null;
+  if (!target || target.kind === "noMeal" || !strictness || (min === null && max === null)) return null;
+  if (min !== null && max !== null && min > max) return null;
   const quotaTarget: QuotaTarget = target;
-  return { id: value.id, enabled: value.enabled !== false, target: quotaTarget, comparator, count, strictness };
+  return {
+    id: value.id,
+    enabled: value.enabled !== false,
+    target: quotaTarget,
+    min,
+    max,
+    strictness,
+    distinctFoods: value.distinctFoods === true,
+    noConsecutive: value.noConsecutive === true,
+  };
 }
 
 function restoreQuotas(value: unknown): WeeklyQuota[] {

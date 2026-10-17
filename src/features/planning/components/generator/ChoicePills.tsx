@@ -1,3 +1,5 @@
+import { Check } from "lucide-react";
+
 export interface ChoicePillsProps<T extends string> {
   options: readonly { id: T; label: string }[];
   isActive: (id: T) => boolean;
@@ -16,12 +18,13 @@ export const ChoicePills = <T extends string>({ options, isActive, onToggle, dis
           aria-pressed={active}
           disabled={disabled}
           onClick={() => onToggle(option.id)}
-          className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-colors disabled:opacity-50 ${
+          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold border transition-colors disabled:opacity-50 ${
             active
-              ? "bg-orange-500 border-orange-500 text-white"
-              : "bg-surface border-slate-200 text-slate-600 hover:border-orange-300 hover:text-orange-600"
+              ? "bg-orange-50 border-orange-300 text-orange-700 dark:bg-orange-900/20 dark:border-orange-800 dark:text-orange-300"
+              : "bg-surface border-slate-200 text-slate-600 hover:border-orange-200 hover:text-orange-600"
           }`}
         >
+          {active && <Check size={11} />}
           {option.label}
         </button>
       );

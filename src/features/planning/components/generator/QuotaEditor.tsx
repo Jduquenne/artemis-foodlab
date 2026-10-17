@@ -14,6 +14,8 @@ import {
 import { ChoicePills } from "./ChoicePills";
 import { HabitTargetField } from "./HabitTargetField";
 import { NumberStepper } from "./NumberStepper";
+import { SegmentedControl } from "./SegmentedControl";
+import { Switch } from "./Switch";
 import { SettingsSection } from "./SettingsSection";
 
 export interface QuotaEditorProps {
@@ -49,7 +51,7 @@ export const QuotaEditor = ({ initial, lists, disabled, onSave, onCancel }: Quot
   };
 
   return (
-    <div className="flex flex-col gap-3 rounded-xl border border-orange-200 dark:border-orange-900 p-3">
+    <div className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-surface p-3.5">
       <SettingsSection title="Quoi">
         <ChoicePills options={KIND_OPTIONS} isActive={(kind) => kind === draft.target.kind} onToggle={changeKind} disabled={disabled} />
         <HabitTargetField
@@ -63,7 +65,7 @@ export const QuotaEditor = ({ initial, lists, disabled, onSave, onCancel }: Quot
       </SettingsSection>
 
       <SettingsSection title="Combien par semaine">
-        <ChoicePills options={MODE_OPTIONS} isActive={(id) => id === mode} onToggle={(next) => setDraft((current) => withQuotaMode(current, next))} disabled={disabled} />
+        <SegmentedControl options={MODE_OPTIONS} value={mode} onChange={(next) => setDraft((current) => withQuotaMode(current, next))} disabled={disabled} ariaLabel="Combien" />
         <div className="flex flex-wrap items-center gap-2 text-xs text-slate-600">
           {draft.min !== null && (
             <>
@@ -83,19 +85,19 @@ export const QuotaEditor = ({ initial, lists, disabled, onSave, onCancel }: Quot
 
       <SettingsSection title="Options">
         {supportsDistinctFoods(draft.target) && (
-          <label className="flex items-center gap-2 text-xs text-slate-700">
-            <input type="checkbox" checked={draft.distinctFoods} disabled={disabled} onChange={(e) => patch({ distinctFoods: e.target.checked })} className="accent-orange-500" />
-            Pas deux fois le même aliment (ex : lentilles puis pois chiches)
-          </label>
+          <div className="flex items-center justify-between gap-3 text-xs text-slate-700">
+            <span>Pas deux fois le même aliment <span className="text-slate-400">(ex : lentilles puis pois chiches)</span></span>
+            <Switch checked={draft.distinctFoods} disabled={disabled} onChange={(distinctFoods) => patch({ distinctFoods })} label="Pas deux fois le même aliment" />
+          </div>
         )}
-        <label className="flex items-center gap-2 text-xs text-slate-700">
-          <input type="checkbox" checked={draft.noConsecutive} disabled={disabled} onChange={(e) => patch({ noConsecutive: e.target.checked })} className="accent-orange-500" />
-          Pas deux repas de suite
-        </label>
+        <div className="flex items-center justify-between gap-3 text-xs text-slate-700">
+          <span>Pas deux repas de suite</span>
+          <Switch checked={draft.noConsecutive} disabled={disabled} onChange={(noConsecutive) => patch({ noConsecutive })} label="Pas deux repas de suite" />
+        </div>
       </SettingsSection>
 
       <SettingsSection title="Force">
-        <ChoicePills options={STRICTNESS_OPTIONS} isActive={(id) => id === draft.strictness} onToggle={(strictness) => patch({ strictness })} disabled={disabled} />
+        <SegmentedControl options={STRICTNESS_OPTIONS} value={draft.strictness} onChange={(strictness) => patch({ strictness })} disabled={disabled} ariaLabel="Force" />
       </SettingsSection>
 
       {error && <p className="text-xs font-semibold text-red-500">{error}</p>}

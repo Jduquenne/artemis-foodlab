@@ -1,7 +1,9 @@
-import { Pencil, Trash2 } from "lucide-react";
 import { WeeklyQuota } from "../../../../core/domain/menuGenerator";
 import { HabitNames, habitTargetLabel } from "../../../../core/logic/menuGenerator/habitLogic";
 import { QUOTA_STRICTNESS_LABELS, quotaSummary } from "../../../../core/logic/menuGenerator/quotaLogic";
+import { RuleCard } from "./RuleCard";
+import { StrengthBadge } from "./StrengthBadge";
+import { TargetKindIcon } from "./TargetKindIcon";
 
 export interface QuotaRowProps {
   quota: WeeklyQuota;
@@ -13,27 +15,15 @@ export interface QuotaRowProps {
 }
 
 export const QuotaRow = ({ quota, names, disabled, onToggle, onEdit, onDelete }: QuotaRowProps) => (
-  <div className={`flex items-start gap-2 rounded-xl border border-slate-200 px-2.5 py-2 ${quota.enabled ? "" : "opacity-50"}`}>
-    <input
-      type="checkbox"
-      checked={quota.enabled}
-      disabled={disabled}
-      onChange={(e) => onToggle(e.target.checked)}
-      aria-label={quota.enabled ? "Désactiver le quota" : "Activer le quota"}
-      className="mt-0.5 accent-orange-500"
-    />
-    <div className="flex-1 min-w-0">
-      <p className="text-xs font-bold text-slate-800">
-        {habitTargetLabel(quota.target, names)}
-        <span className="ml-1.5 font-semibold text-orange-600">{QUOTA_STRICTNESS_LABELS[quota.strictness]}</span>
-      </p>
-      <p className="text-[11px] text-slate-500 first-letter:uppercase">{quotaSummary(quota)}</p>
-    </div>
-    <button type="button" onClick={onEdit} disabled={disabled} aria-label="Modifier le quota" className="p-1 rounded-lg text-slate-400 hover:text-orange-600 hover:bg-muted disabled:opacity-50">
-      <Pencil size={13} />
-    </button>
-    <button type="button" onClick={onDelete} disabled={disabled} aria-label="Supprimer le quota" className="p-1 rounded-lg text-slate-400 hover:text-red-500 hover:bg-muted disabled:opacity-50">
-      <Trash2 size={13} />
-    </button>
-  </div>
+  <RuleCard
+    icon={<TargetKindIcon kind={quota.target.kind} />}
+    title={habitTargetLabel(quota.target, names)}
+    subtitle={quotaSummary(quota)}
+    badge={<StrengthBadge tone={quota.strictness === "strict" ? "mandatory" : "preferred"} label={QUOTA_STRICTNESS_LABELS[quota.strictness]} />}
+    enabled={quota.enabled}
+    disabled={disabled}
+    onToggle={onToggle}
+    onEdit={onEdit}
+    onDelete={onDelete}
+  />
 );

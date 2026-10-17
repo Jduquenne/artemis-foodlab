@@ -234,6 +234,12 @@ export const ADVANCED_LIMITS = {
 
 const ADVANCED_MODES: readonly AdvancedMode[] = ["off", "preferred", "strict"];
 
+export const ADVANCED_MODE_OPTIONS: readonly { id: AdvancedMode; label: string }[] = [
+  { id: "off", label: "Ignorer" },
+  { id: "preferred", label: "De préférence" },
+  { id: "strict", label: "Strict" },
+];
+
 function clampInteger(value: unknown, min: number, max: number, fallback: number): number {
   return typeof value === "number" && Number.isInteger(value) ? Math.min(max, Math.max(min, value)) : fallback;
 }

@@ -1,3 +1,4 @@
+import { Ban, CircleSlash, Heart, ListChecks, Recycle } from "lucide-react";
 import { MenuGeneratorSettings } from "../../../../core/domain/menuGenerator";
 import {
   setPreferredFoodMode,
@@ -10,7 +11,7 @@ import { ExcludedFoodsField } from "./ExcludedFoodsField";
 import { FoodListsField } from "./FoodListsField";
 import { PreferredFoodsField } from "./PreferredFoodsField";
 import { RecipeListField } from "./RecipeListField";
-import { SettingsSection } from "./SettingsSection";
+import { SettingsCard } from "./SettingsCard";
 
 export interface FoodsSettingsPanelProps {
   settings: MenuGeneratorSettings;
@@ -19,50 +20,30 @@ export interface FoodsSettingsPanelProps {
 }
 
 export const FoodsSettingsPanel = ({ settings, disabled, onPatch }: FoodsSettingsPanelProps) => (
-  <div className="flex flex-col gap-4">
-    <SettingsSection
-      title="Aliments à utiliser"
-      hint="Restes, produits à finir. « Bonus » : favorisé. « Au moins 1× » : utilisé au moins une fois sur la période."
-    >
+  <div className="flex flex-col gap-3">
+    <SettingsCard icon={Recycle} title="Aliments à utiliser" description="Restes, produits à finir. « Bonus » : favorisé. « Au moins 1× » : utilisé au moins une fois.">
       <PreferredFoodsField
         foods={settings.preferredFoods}
         disabled={disabled}
         onToggle={(foodId) => onPatch(togglePreferredFood(settings, foodId))}
         onModeChange={(foodId, mode) => onPatch({ preferredFoods: setPreferredFoodMode(settings.preferredFoods, foodId, mode) })}
       />
-    </SettingsSection>
+    </SettingsCard>
 
-    <SettingsSection title="Aliments à éviter" hint="Aucune recette proposée ne les contient.">
-      <ExcludedFoodsField
-        foodIds={settings.excludedFoodIds}
-        disabled={disabled}
-        onToggle={(foodId) => onPatch(toggleExcludedFood(settings, foodId))}
-      />
-    </SettingsSection>
+    <SettingsCard icon={Ban} title="Aliments à éviter" description="Aucune recette proposée ne les contient.">
+      <ExcludedFoodsField foodIds={settings.excludedFoodIds} disabled={disabled} onToggle={(foodId) => onPatch(toggleExcludedFood(settings, foodId))} />
+    </SettingsCard>
 
-    <SettingsSection
-      title="Listes d'aliments"
-      hint="Ex : « Poisson blanc » = cabillaud, colin, merlu. Utilisables comme cible dans les habitudes et les quotas ; un aliment peut être dans plusieurs listes."
-    >
+    <SettingsCard icon={ListChecks} title="Listes d'aliments" description="Ex : « Poisson blanc » = cabillaud, colin, merlu. À utiliser comme cible des habitudes, quotas et desserts.">
       <FoodListsField settings={settings} disabled={disabled} onPatch={onPatch} />
-    </SettingsSection>
+    </SettingsCard>
 
-    <SettingsSection title="Recettes favorites" hint="Favorisées une fois sur un repas tiré au hasard de la période.">
-      <RecipeListField
-        codes={settings.favoriteRecipeCodes}
-        tone="favorite"
-        disabled={disabled}
-        onToggle={(code) => onPatch(toggleFavoriteRecipe(settings, code))}
-      />
-    </SettingsSection>
+    <SettingsCard icon={Heart} title="Recettes favorites" description="Favorisées une fois, sur un repas tiré au hasard.">
+      <RecipeListField codes={settings.favoriteRecipeCodes} tone="favorite" disabled={disabled} onToggle={(code) => onPatch(toggleFavoriteRecipe(settings, code))} />
+    </SettingsCard>
 
-    <SettingsSection title="Recettes interdites" hint="Jamais proposées.">
-      <RecipeListField
-        codes={settings.bannedRecipeCodes}
-        tone="banned"
-        disabled={disabled}
-        onToggle={(code) => onPatch(toggleBannedRecipe(settings, code))}
-      />
-    </SettingsSection>
+    <SettingsCard icon={CircleSlash} title="Recettes interdites" description="Jamais proposées.">
+      <RecipeListField codes={settings.bannedRecipeCodes} tone="banned" disabled={disabled} onToggle={(code) => onPatch(toggleBannedRecipe(settings, code))} />
+    </SettingsCard>
   </div>
 );

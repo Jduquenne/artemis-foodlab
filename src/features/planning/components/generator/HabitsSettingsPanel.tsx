@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { Plus } from "lucide-react";
-import { HabitRule, MenuGeneratorSettings } from "../../../../core/domain/menuGenerator";
+import { CalendarClock } from "lucide-react";
+import { MenuGeneratorSettings } from "../../../../core/domain/menuGenerator";
 import { emptyHabit } from "../../../../core/logic/menuGenerator/habitLogic";
 import { removeById, setEnabledById, upsertById } from "../../../../core/utils/collectionUtils";
 import { useHabitNames } from "../../../../shared/hooks/useHabitNames";
 import { HabitEditor } from "./HabitEditor";
 import { HabitRow } from "./HabitRow";
+import { RuleListPanel } from "./RuleListPanel";
 
 export interface HabitsSettingsPanelProps {
   settings: MenuGeneratorSettings;
@@ -15,52 +15,32 @@ export interface HabitsSettingsPanelProps {
 
 export const HabitsSettingsPanel = ({ settings, disabled, onPatch }: HabitsSettingsPanelProps) => {
   const names = useHabitNames(settings.foodLists);
-  const [editing, setEditing] = useState<HabitRule | null>(null);
-
-  const save = (rule: HabitRule) => {
-    onPatch({ habits: upsertById(settings.habits, rule) });
-    setEditing(null);
-  };
 
   return (
-    <div className="flex flex-col gap-2">
-      <div className="flex items-center justify-between gap-2">
-        <p className="text-[11px] text-slate-400">Tes règles par jour et par repas. « Obligatoire » et « Interdit » ne sont jamais contournés.</p>
-        {!editing && (
-          <button
-            type="button"
-            onClick={() => setEditing(emptyHabit(crypto.randomUUID()))}
-            disabled={disabled}
-            className="shrink-0 flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-orange-500 text-xs font-bold text-white hover:bg-orange-600 disabled:opacity-50"
-          >
-            <Plus size={13} /> Ajouter
-          </button>
-        )}
-      </div>
-
-      {editing && !settings.habits.some((rule) => rule.id === editing.id) && (
-        <HabitEditor key={editing.id} initial={editing} lists={settings.foodLists} disabled={disabled} onSave={save} onCancel={() => setEditing(null)} />
+    <RuleListPanel
+      icon={CalendarClock}
+      title="Habitudes"
+      description="Tes règles par jour et par repas. « Obligatoire » et « Interdit » ne sont jamais contournés."
+      emptyText="Aucune habitude. Ex : « Poisson le vendredi, un des repas » ou « Pas de repas du lundi au jeudi midi »."
+      items={settings.habits}
+      createItem={() => emptyHabit(crypto.randomUUID())}
+      editorTitle={(_, isNew) => (isNew ? "Nouvelle habitude" : "Modifier l'habitude")}
+      disabled={disabled}
+      onSave={(rule) => onPatch({ habits: upsertById(settings.habits, rule) })}
+      renderRow={(rule, actions) => (
+        <HabitRow
+          key={rule.id}
+          rule={rule}
+          names={names}
+          disabled={actions.disabled}
+          onToggle={(enabled) => onPatch({ habits: setEnabledById(settings.habits, rule.id, enabled) })}
+          onEdit={actions.onEdit}
+          onDelete={() => onPatch({ habits: removeById(settings.habits, rule.id) })}
+        />
       )}
-
-      {settings.habits.map((rule) =>
-        editing?.id === rule.id ? (
-          <HabitEditor key={rule.id} initial={rule} lists={settings.foodLists} disabled={disabled} onSave={save} onCancel={() => setEditing(null)} />
-        ) : (
-          <HabitRow
-            key={rule.id}
-            rule={rule}
-            names={names}
-            disabled={disabled || editing !== null}
-            onToggle={(enabled) => onPatch({ habits: setEnabledById(settings.habits, rule.id, enabled) })}
-            onEdit={() => setEditing(rule)}
-            onDelete={() => onPatch({ habits: removeById(settings.habits, rule.id) })}
-          />
-        ),
+      renderEditor={(rule, actions) => (
+        <HabitEditor key={rule.id} initial={rule} lists={settings.foodLists} disabled={disabled} onSave={actions.onSave} onCancel={actions.onCancel} />
       )}
-
-      {settings.habits.length === 0 && !editing && (
-        <p className="text-xs text-slate-400 text-center py-4">Aucune habitude pour l'instant.</p>
-      )}
-    </div>
+    />
   );
 };

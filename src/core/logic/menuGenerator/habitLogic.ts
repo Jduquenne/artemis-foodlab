@@ -1,6 +1,7 @@
 import {
   GENERATED_SLOTS,
   GENERATED_SLOT_LABELS,
+  DessertRule,
   FoodList,
   GeneratedSlotType,
   HabitProtein,
@@ -306,7 +307,13 @@ function targetUsesList(target: HabitTarget, listId: string): boolean {
   return target.kind === "list" && target.listId === listId;
 }
 
-export function foodListUsage(listId: string, habits: readonly HabitRule[], quotas: readonly { target: HabitTarget }[]): number {
+export function foodListUsage(
+  listId: string,
+  habits: readonly HabitRule[],
+  quotas: readonly { target: HabitTarget }[],
+  dessertRules: readonly DessertRule[],
+): number {
   return habits.filter((rule) => targetUsesList(rule.target, listId)).length
-    + quotas.filter((quota) => targetUsesList(quota.target, listId)).length;
+    + quotas.filter((quota) => targetUsesList(quota.target, listId)).length
+    + dessertRules.filter((rule) => rule.items.some((item) => item.kind === "pick" && targetUsesList(item.target, listId))).length;
 }

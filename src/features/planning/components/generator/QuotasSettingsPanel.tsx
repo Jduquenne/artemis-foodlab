@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { Plus } from "lucide-react";
-import { MenuGeneratorSettings, WeeklyQuota } from "../../../../core/domain/menuGenerator";
+import { Scale } from "lucide-react";
+import { MenuGeneratorSettings } from "../../../../core/domain/menuGenerator";
 import { emptyQuota } from "../../../../core/logic/menuGenerator/quotaLogic";
 import { removeById, setEnabledById, upsertById } from "../../../../core/utils/collectionUtils";
 import { useHabitNames } from "../../../../shared/hooks/useHabitNames";
 import { QuotaEditor } from "./QuotaEditor";
 import { QuotaRow } from "./QuotaRow";
+import { RuleListPanel } from "./RuleListPanel";
 
 export interface QuotasSettingsPanelProps {
   settings: MenuGeneratorSettings;
@@ -15,54 +15,32 @@ export interface QuotasSettingsPanelProps {
 
 export const QuotasSettingsPanel = ({ settings, disabled, onPatch }: QuotasSettingsPanelProps) => {
   const names = useHabitNames(settings.foodLists);
-  const [editing, setEditing] = useState<WeeklyQuota | null>(null);
-
-  const save = (quota: WeeklyQuota) => {
-    onPatch({ quotas: upsertById(settings.quotas, quota) });
-    setEditing(null);
-  };
 
   return (
-    <div className="flex flex-col gap-2">
-      <div className="flex items-center justify-between gap-2">
-        <p className="text-[11px] text-slate-400">
-          « Par semaine » = par bloc de 7 jours à partir du début de la période, repas déjà prévus compris. Si le dernier bloc est incomplet (période de 8 à 13 jours), « au moins » y est réduit au prorata.
-        </p>
-        {!editing && (
-          <button
-            type="button"
-            onClick={() => setEditing(emptyQuota(crypto.randomUUID()))}
-            disabled={disabled}
-            className="shrink-0 flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-orange-500 text-xs font-bold text-white hover:bg-orange-600 disabled:opacity-50"
-          >
-            <Plus size={13} /> Ajouter
-          </button>
-        )}
-      </div>
-
-      {editing && !settings.quotas.some((quota) => quota.id === editing.id) && (
-        <QuotaEditor key={editing.id} initial={editing} lists={settings.foodLists} disabled={disabled} onSave={save} onCancel={() => setEditing(null)} />
+    <RuleListPanel
+      icon={Scale}
+      title="Quotas par semaine"
+      description="Par bloc de 7 jours depuis le début de la période, repas déjà prévus compris. Un dernier bloc incomplet réduit « au moins » au prorata."
+      emptyText="Aucun quota. Ex : « Poisson au moins 2 », « Viande rouge au plus 1 », « Poulet entre 1 et 2 »."
+      items={settings.quotas}
+      createItem={() => emptyQuota(crypto.randomUUID())}
+      editorTitle={(_, isNew) => (isNew ? "Nouveau quota" : "Modifier le quota")}
+      disabled={disabled}
+      onSave={(quota) => onPatch({ quotas: upsertById(settings.quotas, quota) })}
+      renderRow={(quota, actions) => (
+        <QuotaRow
+          key={quota.id}
+          quota={quota}
+          names={names}
+          disabled={actions.disabled}
+          onToggle={(enabled) => onPatch({ quotas: setEnabledById(settings.quotas, quota.id, enabled) })}
+          onEdit={actions.onEdit}
+          onDelete={() => onPatch({ quotas: removeById(settings.quotas, quota.id) })}
+        />
       )}
-
-      {settings.quotas.map((quota) =>
-        editing?.id === quota.id ? (
-          <QuotaEditor key={quota.id} initial={quota} lists={settings.foodLists} disabled={disabled} onSave={save} onCancel={() => setEditing(null)} />
-        ) : (
-          <QuotaRow
-            key={quota.id}
-            quota={quota}
-            names={names}
-            disabled={disabled || editing !== null}
-            onToggle={(enabled) => onPatch({ quotas: setEnabledById(settings.quotas, quota.id, enabled) })}
-            onEdit={() => setEditing(quota)}
-            onDelete={() => onPatch({ quotas: removeById(settings.quotas, quota.id) })}
-          />
-        ),
+      renderEditor={(quota, actions) => (
+        <QuotaEditor key={quota.id} initial={quota} lists={settings.foodLists} disabled={disabled} onSave={actions.onSave} onCancel={actions.onCancel} />
       )}
-
-      {settings.quotas.length === 0 && !editing && (
-        <p className="text-xs text-slate-400 text-center py-4">Aucun quota pour l'instant.</p>
-      )}
-    </div>
+    />
   );
 };

@@ -11,6 +11,7 @@ import {
 } from "../../../../core/logic/menuGenerator/habitLogic";
 import { ChoicePills } from "./ChoicePills";
 import { DaysField } from "./DaysField";
+import { SegmentedControl } from "./SegmentedControl";
 import { FoodChipsField } from "./FoodChipsField";
 import { HabitTargetField } from "./HabitTargetField";
 import { SettingsSection } from "./SettingsSection";
@@ -40,7 +41,7 @@ export const HabitEditor = ({ initial, lists, disabled, onSave, onCancel }: Habi
   };
 
   return (
-    <div className="flex flex-col gap-3 rounded-xl border border-orange-200 dark:border-orange-900 p-3">
+    <div className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-surface p-3.5">
       <SettingsSection title="Jours">
         <DaysField days={draft.days} disabled={disabled} onChange={(days) => patch({ days })} />
       </SettingsSection>
@@ -73,13 +74,13 @@ export const HabitEditor = ({ initial, lists, disabled, onSave, onCancel }: Habi
 
       {draft.target.kind !== "noMeal" && (
         <SettingsSection title="Force">
-          <ChoicePills options={STRENGTH_OPTIONS} isActive={(id) => id === draft.strength} onToggle={(strength) => patch({ strength })} disabled={disabled} />
+          <SegmentedControl options={STRENGTH_OPTIONS} value={draft.strength} onChange={(strength) => patch({ strength })} disabled={disabled} ariaLabel="Force" />
         </SettingsSection>
       )}
 
       {draft.target.kind !== "noMeal" && draft.slots.length > 1 && (draft.strength === "mandatory" || draft.strength === "preferred") && (
         <SettingsSection title="S'applique à" hint="« Un seul des repas du jour » : le déjeuner ou le dîner, tiré au hasard, suffit.">
-          <ChoicePills options={SCOPE_OPTIONS} isActive={(id) => id === draft.scope} onToggle={(scope) => patch({ scope })} disabled={disabled} />
+          <SegmentedControl options={SCOPE_OPTIONS} value={draft.scope} onChange={(scope) => patch({ scope })} disabled={disabled} ariaLabel="Portée" />
         </SettingsSection>
       )}
 

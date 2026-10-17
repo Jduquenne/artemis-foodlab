@@ -1,13 +1,11 @@
-import { Snowflake } from "lucide-react";
+import { CalendarRange, Leaf, Salad, Snowflake, UtensilsCrossed } from "lucide-react";
 import { GENERATED_SLOTS, GENERATED_SLOT_LABELS, MAX_GENERATION_DAYS, MIN_GENERATION_DAYS, MenuGeneratorSettings } from "../../../../core/domain/menuGenerator";
-import {
-  DIET_OPTIONS,
-  SEASON_OPTIONS,
-  toggleGeneratedSlot,
-} from "../../../../core/logic/menuGenerator/generatorSettingsLogic";
+import { DIET_OPTIONS, SEASON_OPTIONS, toggleGeneratedSlot } from "../../../../core/logic/menuGenerator/generatorSettingsLogic";
 import { periodLength } from "../../../../core/logic/menuGenerator/periodLogic";
 import { ChoicePills } from "./ChoicePills";
-import { SettingsSection } from "./SettingsSection";
+import { SegmentedControl } from "./SegmentedControl";
+import { SettingsCard } from "./SettingsCard";
+import { Switch } from "./Switch";
 
 export interface GeneralSettingsPanelProps {
   settings: MenuGeneratorSettings;
@@ -24,45 +22,47 @@ export const GeneralSettingsPanel = ({ settings, disabled, onPatch }: GeneralSet
   const length = periodLength(settings.startDate, settings.endDate);
 
   return (
-    <div className="flex flex-col gap-4">
-      <SettingsSection
+    <div className="flex flex-col gap-3">
+      <SettingsCard
+        icon={CalendarRange}
         title="Période"
-        hint={`${length !== null && length > 0 ? `${length} jour${length > 1 ? "s" : ""}` : "—"} · de ${MIN_GENERATION_DAYS} à ${MAX_GENERATION_DAYS} jours · les repas déjà prévus sont gardés`}
+        description={`${length !== null && length > 0 ? `${length} jour${length > 1 ? "s" : ""}` : "—"} · de ${MIN_GENERATION_DAYS} à ${MAX_GENERATION_DAYS} jours · les repas déjà prévus sont gardés`}
       >
         <div className="grid grid-cols-2 gap-2">
-          <input type="date" value={settings.startDate} disabled={disabled} onChange={(e) => onPatch({ startDate: e.target.value })} aria-label="Début" className={DATE_INPUT_CLASS} />
-          <input type="date" value={settings.endDate} disabled={disabled} onChange={(e) => onPatch({ endDate: e.target.value })} aria-label="Fin" className={DATE_INPUT_CLASS} />
+          <label className="flex flex-col gap-1 text-[11px] font-semibold text-slate-500">
+            Du
+            <input type="date" value={settings.startDate} disabled={disabled} onChange={(e) => onPatch({ startDate: e.target.value })} className={DATE_INPUT_CLASS} />
+          </label>
+          <label className="flex flex-col gap-1 text-[11px] font-semibold text-slate-500">
+            Au
+            <input type="date" value={settings.endDate} disabled={disabled} onChange={(e) => onPatch({ endDate: e.target.value })} className={DATE_INPUT_CLASS} />
+          </label>
         </div>
-      </SettingsSection>
+      </SettingsCard>
 
-      <SettingsSection title="Repas">
+      <SettingsCard icon={UtensilsCrossed} title="Repas à générer" description="Les créneaux déjà remplis restent tels quels.">
         <ChoicePills
           options={SLOT_OPTIONS}
           isActive={(slot) => settings.slots.includes(slot)}
           onToggle={(slot) => onPatch({ slots: toggleGeneratedSlot(settings.slots, slot) })}
           disabled={disabled}
         />
-      </SettingsSection>
+      </SettingsCard>
 
-      <SettingsSection title="Régime">
-        <ChoicePills options={DIET_OPTIONS} isActive={(id) => settings.diet === id} onToggle={(diet) => onPatch({ diet })} disabled={disabled} />
-      </SettingsSection>
+      <SettingsCard icon={Salad} title="Régime" description="S'applique à tous les repas générés.">
+        <SegmentedControl options={DIET_OPTIONS} value={settings.diet} onChange={(diet) => onPatch({ diet })} disabled={disabled} ariaLabel="Régime" />
+      </SettingsCard>
 
-      <SettingsSection title="Saison">
-        <ChoicePills options={SEASON_OPTIONS} isActive={(id) => settings.season === id} onToggle={(season) => onPatch({ season })} disabled={disabled} />
-      </SettingsSection>
+      <SettingsCard icon={Leaf} title="Saison" description="Les aliments congelés ou surgelés ne comptent jamais comme hors saison.">
+        <SegmentedControl options={SEASON_OPTIONS} value={settings.season} onChange={(season) => onPatch({ season })} disabled={disabled} ariaLabel="Saison" />
+      </SettingsCard>
 
-      <label className="flex items-center gap-2">
-        <input
-          type="checkbox"
-          checked={settings.useFreezer}
-          disabled={disabled}
-          onChange={(e) => onPatch({ useFreezer: e.target.checked })}
-          className="accent-orange-500"
-        />
-        <Snowflake size={14} className="text-cyan-500" />
-        <span className="text-sm text-slate-700">Utiliser les plats du congélateur</span>
-      </label>
+      <SettingsCard
+        icon={Snowflake}
+        title="Plats du congélateur"
+        description="Les plats en portions sont placés au hasard sur la période."
+        action={<Switch checked={settings.useFreezer} onChange={(useFreezer) => onPatch({ useFreezer })} disabled={disabled} label="Utiliser les plats du congélateur" />}
+      />
     </div>
   );
 };

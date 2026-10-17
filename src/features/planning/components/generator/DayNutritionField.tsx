@@ -2,7 +2,7 @@ import { DayNutritionLimits, NUTRIENT_KEYS, NutrientKey, NutrientRange } from ".
 import { NUTRIENT_LABELS } from "../../../../core/logic/menuGenerator/dayNutritionLogic";
 import { validateNutrientRange } from "../../../../core/logic/menuGenerator/generatorSettingsLogic";
 import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
-import { ChoicePills } from "./ChoicePills";
+import { SegmentedControl } from "./SegmentedControl";
 
 export interface DayNutritionFieldProps {
   limits: DayNutritionLimits;
@@ -23,7 +23,7 @@ export const DayNutritionField = ({ limits, disabled, onChange }: DayNutritionFi
 
   return (
     <div className="flex flex-col gap-2">
-      <ChoicePills options={MODE_OPTIONS} isActive={(id) => id === limits.mode} onToggle={(mode) => onChange({ ...limits, mode })} disabled={disabled} />
+      <SegmentedControl options={MODE_OPTIONS} value={limits.mode} onChange={(mode) => onChange({ ...limits, mode })} disabled={disabled} ariaLabel="Force" />
       <div className="grid grid-cols-[auto_auto_auto_auto] items-center justify-start gap-x-2 gap-y-1.5 text-xs text-slate-600">
         <span />
         <span className="text-[11px] font-bold text-slate-400">min</span>

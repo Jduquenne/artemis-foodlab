@@ -30,7 +30,7 @@ export const DessertRuleEditor = ({ initial, lists, disabled, onSave, onCancel }
   };
 
   return (
-    <div className="flex flex-col gap-3 rounded-xl border border-orange-200 dark:border-orange-900 p-3">
+    <div className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-surface p-3.5">
       <SettingsSection title="Jours">
         <DaysField days={draft.days} disabled={disabled} onChange={(days) => patch({ days })} />
       </SettingsSection>

@@ -6,6 +6,7 @@ import { useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapsho
 import { ChoicePills } from "./ChoicePills";
 import { HabitTargetField } from "./HabitTargetField";
 import { RecipeSearchInput } from "./RecipeSearchInput";
+import { SegmentedControl } from "./SegmentedControl";
 
 export interface DessertPickFieldProps {
   item: DessertPick;
@@ -29,18 +30,21 @@ export const DessertPickField = ({ item, index, lists, disabled, onChange, onRem
   const recipes = useRecipesSnapshot();
 
   return (
-    <div className="flex flex-col gap-1.5 rounded-lg bg-muted p-2">
+    <div className="flex flex-col gap-2 rounded-xl border border-slate-200 bg-subtle p-2.5">
       <div className="flex items-center justify-between gap-2">
         <span className="text-[11px] font-bold text-slate-500">Dessert {index + 1}</span>
         <button type="button" onClick={onRemove} disabled={disabled} aria-label={`Retirer le dessert ${index + 1}`} className="p-0.5 rounded text-slate-400 hover:text-red-500 disabled:opacity-50">
           <X size={12} />
         </button>
       </div>
-      <ChoicePills
+      <SegmentedControl
         options={MODE_OPTIONS}
-        isActive={(id) => id === item.kind}
-        onToggle={(kind) => onChange(kind === "recipe" ? { kind, recipeCode: "" } : { kind, target: { kind: "category", categoryId: "" } })}
+        value={item.kind}
+        onChange={(kind) => {
+          if (kind !== item.kind) onChange(kind === "recipe" ? { kind, recipeCode: "" } : { kind, target: { kind: "category", categoryId: "" } });
+        }}
         disabled={disabled}
+        ariaLabel="Type de dessert"
       />
       {item.kind === "recipe" ? (
         <div className="flex flex-col gap-1">

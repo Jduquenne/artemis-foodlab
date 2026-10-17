@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { GeneratedMeal, MenuGeneratorSettings, PeriodDay } from "../../core/domain/menuGenerator";
 import { BulkPlanningResult } from "../../core/domain/planning";
-import { FreezerBatchStock, freezerBatchStocks } from "../../core/logic/freezer/freezerStockLogic";
+import { FreezerBatchStock, freezerBatchStocks, getFoodIdsInFreezer } from "../../core/logic/freezer/freezerStockLogic";
 import { existingMealsByKey } from "../../core/logic/menuGenerator/generatorSettingsLogic";
 import { generateMenu, weeksSinceEatenMap } from "../../core/logic/menuGenerator/menuEngineLogic";
 import {
@@ -30,6 +30,7 @@ export interface MenuGeneratorContext {
   existing: Record<string, string[]>;
   weeksSinceEaten: Record<string, number>;
   freezer: FreezerBatchStock[];
+  frozenFoodIds: string[];
 }
 
 export interface MenuGeneratorRun {
@@ -54,6 +55,7 @@ async function loadGeneratorContext(settings: MenuGeneratorSettings): Promise<Me
     existing: existingMealsByKey(slots, days),
     weeksSinceEaten: weeksSinceEatenMap(usage, new Date()),
     freezer: freezerBatchStocks(freezerCategories),
+    frozenFoodIds: [...getFoodIdsInFreezer(freezerCategories)],
   };
 }
 
@@ -80,7 +82,7 @@ export function useMenuGenerator() {
     ...generateMenu({
       days: context.days,
       settings,
-      catalogue: { recipes, foods },
+      catalogue: { recipes, foods, seasonExemptFoodIds: new Set(context.frozenFoodIds) },
       categoryNames: Object.fromEntries(categories.map((category) => [category.id, category.name])),
       groupNames: Object.fromEntries(groups.map((group) => [group.id, group.name])),
       macros,

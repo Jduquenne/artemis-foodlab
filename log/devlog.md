@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-17 — Menu generator B9: frozen foods never out of season (v6.116.0)
+- Done: `SeasonCatalogue.seasonExemptFoodIds` (optional); `collectSeasonalFoods` sets aside seasonal foods that are in the freezer or used as a « Surgelés » ingredient (`seasonalFoodSplit`, a food also used fresh stays seasonal); `frozenOutOfSeasonFoods`; season score adds the reason « Hors saison, mais au congélateur ou surgelé : … ». Hook context gains `frozenFoodIds` (`getFoodIdsInFreezer`, bags > 0). Always on, no setting.
+- Numbers: `npx tsc -b` + `npm run lint` pass; `tsx` check (`_claude/tmp/menu-b9-check.ts`, October, strict season, 30 seeds): courgette gratin 0 / 30 without courgette in the freezer, 30 / 30 with; frozen green beans 30 / 30, fresh 0 / 30; reason shown; earlier checks pass. **Not checked in a browser**.
+- Still open: B7 (same starch in a row), B8 (day nutrition limits), C (sides, desserts). `bulk-items` prod go-live still to be confirmed.
+
 ## 2026-10-17 — API: bulk-items extension payloads received (v6.115.2, docs only)
 - Done: real dev payloads (a) dish + side + 2 desserts, (b) filled slot: dishes skipped (`slot_has_dish`), dessert still written, (c) `dessert_limit` + the fail variant (409, nothing written), (d) exact duplicate 400 — summarised in `docs/api.md`, TODO removed. Not captured: the « more than 4 dishes in one slot » 400 (the front never sends more than 4).
 - Still open: prod go-live of `bulk-items` (both versions) to be confirmed by the API session; C (sides, desserts) can now be built on dev. Next front step: B9.

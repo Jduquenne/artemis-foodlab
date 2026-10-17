@@ -1,7 +1,7 @@
 import { AdvancedSettings, GeneratedSlotType, MealReason, PreferredFood, SeasonMode } from "../../domain/menuGenerator";
 import { Macronutrients } from "../../domain/nutrition";
 import { RecipeDetails } from "../../domain/recipe";
-import { outOfSeasonFoods, recipeSeasonalFoods } from "../season/recipeSeasonLogic";
+import { frozenOutOfSeasonFoods, outOfSeasonFoods, recipeSeasonalFoods } from "../season/recipeSeasonLogic";
 import { MenuCatalogue } from "./candidateLogic";
 import { HabitMatcher, HabitNames, SlotHabits, habitScore } from "./habitLogic";
 import { PREFERRED_FOOD_BONUS, preferredFoodReason } from "./preferredFoodLogic";
@@ -79,9 +79,13 @@ function seasonScore(recipe: RecipeDetails, context: ScoreContext): CandidateSco
   if (offSeason.length > 0) {
     return { score: -2, reasons: [{ kind: "offSeason", label: `Hors saison : ${offSeason.map((food) => food.name).join(", ")}` }] };
   }
+  const frozen = frozenOutOfSeasonFoods(recipe, context.month, context.catalogue);
+  const frozenReasons: MealReason[] = frozen.length > 0
+    ? [{ kind: "freezer", label: `Hors saison, mais au congélateur ou surgelé : ${frozen.map((food) => food.name).join(", ")}` }]
+    : [];
   return recipeSeasonalFoods(recipe, context.catalogue).length > 0
-    ? { score: 1, reasons: [{ kind: "season", label: "De saison" }] }
-    : { score: 0, reasons: [] };
+    ? { score: 1, reasons: [{ kind: "season", label: "De saison" }, ...frozenReasons] }
+    : { score: 0, reasons: frozenReasons };
 }
 
 function varietyScore(recipe: RecipeDetails, context: ScoreContext): CandidateScore {

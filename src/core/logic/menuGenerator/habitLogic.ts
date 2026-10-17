@@ -1,4 +1,6 @@
 import {
+  GENERATED_SLOTS,
+  GENERATED_SLOT_LABELS,
   GeneratedSlotType,
   HabitProtein,
   HabitRule,
@@ -9,7 +11,8 @@ import {
 } from "../../domain/menuGenerator";
 import { DAYS } from "../../domain/planningConfig";
 import { RecipeDetails } from "../../domain/recipe";
-import { MenuCatalogue } from "./candidateLogic";
+import { normalizeQuery, rankByQuery } from "../../utils/textUtils";
+import { MenuCatalogue, isGeneratableDish } from "./candidateLogic";
 
 export const HABIT_SCORE = 3;
 
@@ -154,4 +157,82 @@ export function habitScore(
     reasons.push({ kind: "habit", label: `Malgré l'habitude : ${habitLabel(rule, names)}` });
   }
   return { score, reasons };
+}
+
+export type HabitTargetKind = HabitTarget["kind"];
+
+export const HABIT_TARGET_KIND_LABELS: Record<HabitTargetKind, string> = {
+  protein: "Protéine",
+  category: "Catégorie",
+  food: "Aliment",
+  recipe: "Recette",
+  noMeal: "Pas de repas",
+};
+
+const MAX_RECIPE_SUGGESTIONS = 8;
+
+export function emptyHabit(id: string): HabitRule {
+  return { id, enabled: true, days: [], slots: [...GENERATED_SLOTS], target: { kind: "protein", protein: "fish" }, strength: "mandatory" };
+}
+
+export function defaultHabitTarget(kind: HabitTargetKind): HabitTarget {
+  switch (kind) {
+    case "protein":
+      return { kind, protein: "fish" };
+    case "category":
+      return { kind, categoryId: "" };
+    case "food":
+      return { kind, foodId: "" };
+    case "recipe":
+      return { kind, recipeCode: "" };
+    case "noMeal":
+      return { kind };
+  }
+}
+
+export function toggleHabitDay(days: readonly string[], day: string): string[] {
+  const next = days.includes(day) ? days.filter((d) => d !== day) : [...days, day];
+  return DAYS.filter((d) => next.includes(d));
+}
+
+export function habitDayRange(from: string, to: string): string[] {
+  const start = (DAYS as readonly string[]).indexOf(from);
+  const end = (DAYS as readonly string[]).indexOf(to);
+  if (start < 0 || end < 0) return [];
+  const length = ((end - start + DAYS.length) % DAYS.length) + 1;
+  const range = Array.from({ length }, (_, offset) => DAYS[(start + offset) % DAYS.length]);
+  return DAYS.filter((day) => range.includes(day));
+}
+
+export function validateHabit(rule: HabitRule): string | null {
+  if (rule.days.length === 0) return "Choisis au moins un jour.";
+  if (rule.slots.length === 0) return "Choisis au moins un repas.";
+  const { target } = rule;
+  if (target.kind === "category" && !target.categoryId) return "Choisis une catégorie.";
+  if (target.kind === "food" && !target.foodId) return "Choisis un aliment.";
+  if (target.kind === "recipe" && !target.recipeCode) return "Choisis une recette.";
+  return null;
+}
+
+export function upsertHabit(habits: readonly HabitRule[], rule: HabitRule): HabitRule[] {
+  return habits.some((item) => item.id === rule.id)
+    ? habits.map((item) => (item.id === rule.id ? rule : item))
+    : [...habits, rule];
+}
+
+export function removeHabit(habits: readonly HabitRule[], id: string): HabitRule[] {
+  return habits.filter((item) => item.id !== id);
+}
+
+export function setHabitEnabled(habits: readonly HabitRule[], id: string, enabled: boolean): HabitRule[] {
+  return habits.map((item) => (item.id === id ? { ...item, enabled } : item));
+}
+
+export function habitSlotsLabel(slots: readonly GeneratedSlotType[]): string {
+  return GENERATED_SLOTS.filter((slot) => slots.includes(slot)).map((slot) => GENERATED_SLOT_LABELS[slot]).join(" + ");
+}
+
+export function searchHabitRecipes(query: string, recipes: Record<string, RecipeDetails>): RecipeDetails[] {
+  const dishes = Object.values(recipes).filter((recipe) => GENERATED_SLOTS.some((slot) => isGeneratableDish(recipe, slot)));
+  return rankByQuery(dishes, normalizeQuery(query), (recipe) => recipe.name).slice(0, MAX_RECIPE_SUGGESTIONS);
 }

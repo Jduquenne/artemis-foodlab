@@ -3,6 +3,7 @@ import { MenuGeneratorSettings } from "../../../../core/domain/menuGenerator";
 import { ChoicePills } from "./ChoicePills";
 import { FoodsSettingsPanel } from "./FoodsSettingsPanel";
 import { GeneralSettingsPanel } from "./GeneralSettingsPanel";
+import { HabitsSettingsPanel } from "./HabitsSettingsPanel";
 
 export interface GeneratorSettingsFormProps {
   settings: MenuGeneratorSettings;
@@ -10,10 +11,11 @@ export interface GeneratorSettingsFormProps {
   onChange: (settings: MenuGeneratorSettings) => void;
 }
 
-type SettingsTab = "general" | "foods";
+type SettingsTab = "general" | "habits" | "foods";
 
 const TABS: readonly { id: SettingsTab; label: string }[] = [
   { id: "general", label: "Période et repas" },
+  { id: "habits", label: "Habitudes" },
   { id: "foods", label: "Aliments" },
 ];
 
@@ -27,6 +29,7 @@ export const GeneratorSettingsForm = ({ settings, disabled, onChange }: Generato
       <ChoicePills options={TABS} isActive={(id) => id === tab} onToggle={setTab} />
       <div className="flex-1 min-h-0 overflow-y-auto pr-1">
         {tab === "general" && <GeneralSettingsPanel {...panelProps} />}
+        {tab === "habits" && <HabitsSettingsPanel {...panelProps} />}
         {tab === "foods" && <FoodsSettingsPanel {...panelProps} />}
       </div>
     </div>

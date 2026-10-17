@@ -16,7 +16,7 @@ export interface MenuGeneratorModalProps {
 export const MenuGeneratorModal = ({ startDate, onClose }: MenuGeneratorModalProps) => {
   const [settings, setSettings] = useState<MenuGeneratorSettings>(() => defaultGeneratorSettings(startDate));
   const [error, setError] = useState<string | null>(null);
-  const { run, generate, reset } = useMenuGenerator();
+  const { run, generate, reshuffle, regenerateMeal, toggleLock, reset } = useMenuGenerator();
   const pending = usePendingKey(MENU_GENERATOR_PENDING_KEY);
 
   const launch = async () => {
@@ -44,7 +44,7 @@ export const MenuGeneratorModal = ({ startDate, onClose }: MenuGeneratorModalPro
 
         <div className="flex-1 min-h-0 overflow-y-auto px-5 py-4">
           {run ? (
-            <GeneratorPreview meals={run.meals} />
+            <GeneratorPreview meals={run.meals} onToggleLock={toggleLock} onRegenerate={regenerateMeal} />
           ) : (
             <GeneratorSettingsForm settings={settings} disabled={pending} onChange={setSettings} />
           )}
@@ -62,11 +62,10 @@ export const MenuGeneratorModal = ({ startDate, onClose }: MenuGeneratorModalPro
                 <ArrowLeft size={15} /> Réglages
               </button>
               <button
-                onClick={() => generate(run.settings)}
-                disabled={pending}
+                onClick={reshuffle}
                 className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-orange-500 text-white text-sm font-bold hover:bg-orange-600 transition-colors disabled:opacity-50"
               >
-                {pending ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCw size={15} />}
+                <RefreshCw size={15} />
                 Autre proposition
               </button>
             </>

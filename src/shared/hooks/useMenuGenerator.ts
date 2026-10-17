@@ -1,8 +1,14 @@
 import { useCallback, useState } from "react";
-import { GeneratedMeal, MenuGeneratorSettings } from "../../core/domain/menuGenerator";
-import { freezerBatchStocks } from "../../core/logic/freezer/freezerStockLogic";
+import { GeneratedMeal, MenuGeneratorSettings, PeriodDay } from "../../core/domain/menuGenerator";
+import { FreezerBatchStock, freezerBatchStocks } from "../../core/logic/freezer/freezerStockLogic";
 import { existingMealsByKey } from "../../core/logic/menuGenerator/generatorSettingsLogic";
 import { generateMenu, weeksSinceEatenMap } from "../../core/logic/menuGenerator/menuEngineLogic";
+import {
+  lockedMealsByKey,
+  mealsAroundByKey,
+  rejectedForMeal,
+  toggleMealLock,
+} from "../../core/logic/menuGenerator/menuPreviewLogic";
 import { buildPeriodDays, periodWeeks } from "../../core/logic/menuGenerator/periodLogic";
 import { getCategories } from "../../core/services/freezerService";
 import { getWeekSlots, syncWeekFromApi } from "../../core/services/planningService";
@@ -15,10 +21,35 @@ import { useActiveProfile } from "./useActiveProfile";
 
 export const MENU_GENERATOR_PENDING_KEY = "menu-generator-run";
 
+export interface MenuGeneratorContext {
+  days: PeriodDay[];
+  existing: Record<string, string[]>;
+  weeksSinceEaten: Record<string, number>;
+  freezer: FreezerBatchStock[];
+}
+
 export interface MenuGeneratorRun {
   settings: MenuGeneratorSettings;
+  context: MenuGeneratorContext;
   seed: number;
   meals: GeneratedMeal[];
+}
+
+async function loadGeneratorContext(settings: MenuGeneratorSettings): Promise<MenuGeneratorContext> {
+  const days = buildPeriodDays(settings.startDate, settings.endDate);
+  const weeks = periodWeeks(days);
+  await Promise.all(weeks.map((w) => syncWeekFromApi(w.year, w.week)));
+  const slots = (await Promise.all(weeks.map((w) => getWeekSlots(w.year, w.week)))).flat();
+  const [usage, freezerCategories] = await Promise.all([
+    getRecipeUsage().catch(() => []),
+    getCategories(),
+  ]);
+  return {
+    days,
+    existing: existingMealsByKey(slots, days),
+    weeksSinceEaten: weeksSinceEatenMap(usage, new Date()),
+    freezer: freezerBatchStocks(freezerCategories),
+  };
 }
 
 export function useMenuGenerator() {
@@ -29,34 +60,54 @@ export function useMenuGenerator() {
   const activeProfile = useActiveProfile();
   const [run, setRun] = useState<MenuGeneratorRun | null>(null);
 
-  const generate = useCallback(async (settings: MenuGeneratorSettings, seed: number = newSeed()) => {
+  const compute = useCallback((
+    settings: MenuGeneratorSettings,
+    context: MenuGeneratorContext,
+    fixed: Record<string, GeneratedMeal>,
+    rejected: Record<string, string[]>,
+    seed: number,
+  ): MenuGeneratorRun => ({
+    settings,
+    context,
+    seed,
+    meals: generateMenu({
+      days: context.days,
+      settings,
+      catalogue: { recipes, foods },
+      macros,
+      kcalTarget: activeProfile?.kcalTarget ?? null,
+      weeksSinceEaten: context.weeksSinceEaten,
+      existing: context.existing,
+      fixed,
+      rejected,
+      freezer: context.freezer,
+      householdSize,
+      seed,
+    }),
+  }), [recipes, foods, macros, activeProfile, householdSize]);
+
+  const generate = useCallback(async (settings: MenuGeneratorSettings) => {
     await withPending(MENU_GENERATOR_PENDING_KEY, async () => {
-      const days = buildPeriodDays(settings.startDate, settings.endDate);
-      const weeks = periodWeeks(days);
-      await Promise.all(weeks.map((w) => syncWeekFromApi(w.year, w.week)));
-      const slots = (await Promise.all(weeks.map((w) => getWeekSlots(w.year, w.week)))).flat();
-      const [usage, freezerCategories] = await Promise.all([
-        getRecipeUsage().catch(() => []),
-        getCategories(),
-      ]);
-      const meals = generateMenu({
-        days,
-        settings,
-        catalogue: { recipes, foods },
-        macros,
-        kcalTarget: activeProfile?.kcalTarget ?? null,
-        weeksSinceEaten: weeksSinceEatenMap(usage, new Date()),
-        existing: existingMealsByKey(slots, days),
-        locked: {},
-        freezer: freezerBatchStocks(freezerCategories),
-        householdSize,
-        seed,
-      });
-      setRun({ settings, seed, meals });
+      const context = await loadGeneratorContext(settings);
+      setRun(compute(settings, context, {}, {}, newSeed()));
     });
-  }, [recipes, foods, macros, activeProfile, householdSize]);
+  }, [compute]);
+
+  const reshuffle = useCallback(() => {
+    if (!run) return;
+    setRun(compute(run.settings, run.context, lockedMealsByKey(run.meals), {}, newSeed()));
+  }, [run, compute]);
+
+  const regenerateMeal = useCallback((key: string) => {
+    if (!run) return;
+    setRun(compute(run.settings, run.context, mealsAroundByKey(run.meals, key), rejectedForMeal(run.meals, key), newSeed()));
+  }, [run, compute]);
+
+  const toggleLock = useCallback((key: string) => {
+    setRun((current) => (current ? { ...current, meals: toggleMealLock(current.meals, key) } : current));
+  }, []);
 
   const reset = useCallback(() => setRun(null), []);
 
-  return { run, generate, reset };
+  return { run, generate, reshuffle, regenerateMeal, toggleLock, reset };
 }

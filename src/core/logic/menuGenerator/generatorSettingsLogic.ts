@@ -3,6 +3,10 @@ import {
   DietFilter,
   GENERATED_SLOTS,
   GeneratedSlotType,
+  HabitProtein,
+  HabitRule,
+  HabitStrength,
+  HabitTarget,
   MAX_GENERATION_DAYS,
   MenuGeneratorSettings,
   PeriodDay,
@@ -12,6 +16,7 @@ import {
   SeasonMode,
 } from "../../domain/menuGenerator";
 import { MealSlot } from "../../domain/planning";
+import { DAYS } from "../../domain/planningConfig";
 import { toIsoDate, isoDateFromWeekDay } from "../../utils/dateUtils";
 import { mealKey } from "./menuEngineLogic";
 import { periodLength, validatePeriod } from "./periodLogic";
@@ -27,11 +32,6 @@ export const SEASON_OPTIONS: { id: SeasonMode; label: string }[] = [
   { id: "strict", label: "Uniquement" },
   { id: "off", label: "Ignorer" },
 ];
-
-export const GENERATED_SLOT_LABELS: Record<GeneratedSlotType, string> = {
-  lunch: "Déjeuner",
-  dinner: "Dîner",
-};
 
 const DEFAULT_PERIOD_DAYS = 7;
 
@@ -49,6 +49,7 @@ export function defaultGeneratorSettings(startDate: string): MenuGeneratorSettin
     preferredFoods: [],
     season: "preferred",
     useFreezer: true,
+    habits: [],
   };
 }
 
@@ -139,6 +140,51 @@ function oneOf<T extends string>(value: unknown, options: readonly { id: T }[], 
   return options.find((option) => option.id === value)?.id ?? fallback;
 }
 
+const HABIT_PROTEINS: readonly HabitProtein[] = ["fish", "meat", "redMeat", "whiteMeat", "deli", "vegetarian"];
+
+const HABIT_STRENGTHS: readonly HabitStrength[] = ["mandatory", "preferred", "avoid", "forbidden"];
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
+function restoreHabitTarget(value: unknown): HabitTarget | null {
+  if (!isRecord(value)) return null;
+  switch (value.kind) {
+    case "protein": {
+      const protein = HABIT_PROTEINS.find((item) => item === value.protein);
+      return protein ? { kind: "protein", protein } : null;
+    }
+    case "category":
+      return typeof value.categoryId === "string" ? { kind: "category", categoryId: value.categoryId } : null;
+    case "food":
+      return typeof value.foodId === "string" ? { kind: "food", foodId: value.foodId } : null;
+    case "recipe":
+      return typeof value.recipeCode === "string" ? { kind: "recipe", recipeCode: value.recipeCode } : null;
+    case "noMeal":
+      return { kind: "noMeal" };
+    default:
+      return null;
+  }
+}
+
+function restoreHabit(value: unknown): HabitRule | null {
+  if (!isRecord(value) || typeof value.id !== "string") return null;
+  const target = restoreHabitTarget(value.target);
+  const strength = HABIT_STRENGTHS.find((item) => item === value.strength);
+  const rawDays = Array.isArray(value.days) ? value.days : [];
+  const rawSlots = Array.isArray(value.slots) ? value.slots : [];
+  const days = DAYS.filter((day) => rawDays.includes(day));
+  const slots = GENERATED_SLOTS.filter((slot) => rawSlots.includes(slot));
+  if (!target || !strength || days.length === 0 || slots.length === 0) return null;
+  return { id: value.id, enabled: value.enabled !== false, days, slots, target, strength };
+}
+
+function restoreHabits(value: unknown): HabitRule[] {
+  if (!Array.isArray(value)) return [];
+  return value.map(restoreHabit).filter((rule): rule is HabitRule => rule !== null);
+}
+
 export function restoreGeneratorSettings(saved: Partial<SavedGeneratorSettings> | null, startDate: string): MenuGeneratorSettings {
   const defaults = defaultGeneratorSettings(startDate);
   if (!saved) return defaults;
@@ -155,5 +201,6 @@ export function restoreGeneratorSettings(saved: Partial<SavedGeneratorSettings> 
     excludedFoodIds: Array.isArray(saved.excludedFoodIds) ? saved.excludedFoodIds.filter((id) => typeof id === "string") : [],
     preferredFoods: restorePreferredFoods(saved.preferredFoods),
     useFreezer: typeof saved.useFreezer === "boolean" ? saved.useFreezer : defaults.useFreezer,
+    habits: restoreHabits(saved.habits),
   };
 }

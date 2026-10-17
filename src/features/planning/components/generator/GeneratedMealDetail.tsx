@@ -1,5 +1,4 @@
-import { GeneratedMeal } from "../../../../core/domain/menuGenerator";
-import { GENERATED_SLOT_LABELS } from "../../../../core/logic/menuGenerator/generatorSettingsLogic";
+import { GENERATED_SLOT_LABELS, GeneratedMeal } from "../../../../core/domain/menuGenerator";
 import { formatSourceDayFull } from "../../../../core/utils/dateUtils";
 import { MealReasonIcon } from "./MealReasonIcon";
 

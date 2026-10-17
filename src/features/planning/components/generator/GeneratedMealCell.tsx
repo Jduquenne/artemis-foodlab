@@ -13,11 +13,16 @@ export interface GeneratedMealCellProps {
 }
 
 export const GeneratedMealCell = ({ meal, recipeName, selected, onSelect, onToggleLock, onRegenerate }: GeneratedMealCellProps) => {
-  if (meal.kept) {
+  if (meal.kept || meal.noMeal) {
     return (
-      <div className="h-full min-h-20 flex items-center justify-center rounded-xl border border-dashed border-slate-200 px-2 text-[11px] font-semibold text-slate-400">
-        Déjà prévu
-      </div>
+      <button
+        type="button"
+        onClick={() => onSelect(meal.key)}
+        disabled={meal.kept}
+        className="h-full min-h-20 flex items-center justify-center rounded-xl border border-dashed border-slate-200 px-2 text-[11px] font-semibold text-slate-400"
+      >
+        {meal.kept ? "Déjà prévu" : "Pas de repas"}
+      </button>
     );
   }
 

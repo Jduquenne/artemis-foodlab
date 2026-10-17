@@ -284,7 +284,7 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
 - **Context**: owner feedback on the V1 (D-035): the target users are households with habits and strict rules (e.g. fish on Friday); the V1 settings are too coarse, must be retyped on each opening, the freezer meals always came first, and the settings window scrolls on a large screen.
 - **Decision** (owner, 2026-10-17):
   - Every new setting is either **strict** (never bent: a slot that cannot respect it stays empty with the reason) or a **preference** (score).
-  - **Habits**: rules « when » (days of the week, lunch / dinner / both) × « what » (protein type fish / red meat / white meat / deli / vegetarian, recipe category, a food, a recipe, « no meal ») × strength (mandatory / preferred / avoid / forbidden).
+  - **Habits**: rules « when » (days of the week picked one by one, or a range of days; no « week » / « weekend » notion; lunch / dinner / both) × « what » (protein type fish / red meat / white meat / deli / vegetarian, recipe category, a food, a recipe, « no meal ») × strength (mandatory / preferred / avoid / forbidden). No built-in or suggested rule (« fish on Friday » is not universal). Red / white meat come from recipe categories only (ingredients only say « Viande »), hence « meat (any) ».
   - **Weekly quotas** with the same targets (« red meat ≤ 2 », « fish ≥ 2 »), strict or preferred.
   - **Foods to use** (leftovers, freezer products), the mirror of « Aliments à éviter », each food « bonus » or « at least once », placed on a random slot (not first); a strict request that cannot be met is reported as a warning.
   - **Freezer**: one checkbox, meals spread at random (no modes).

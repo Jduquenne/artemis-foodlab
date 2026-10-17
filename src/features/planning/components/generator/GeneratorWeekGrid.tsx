@@ -1,5 +1,4 @@
-import { GeneratedMeal, GeneratedSlotType } from "../../../../core/domain/menuGenerator";
-import { GENERATED_SLOT_LABELS } from "../../../../core/logic/menuGenerator/generatorSettingsLogic";
+import { GENERATED_SLOT_LABELS, GeneratedMeal, GeneratedSlotType } from "../../../../core/domain/menuGenerator";
 import { mealKey } from "../../../../core/logic/menuGenerator/menuEngineLogic";
 import { DayKcalSummary, PreviewWeek } from "../../../../core/logic/menuGenerator/menuPreviewLogic";
 import { DayKcalBadge } from "./DayKcalBadge";

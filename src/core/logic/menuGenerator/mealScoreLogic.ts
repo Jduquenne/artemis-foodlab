@@ -3,6 +3,7 @@ import { Macronutrients } from "../../domain/nutrition";
 import { RecipeDetails } from "../../domain/recipe";
 import { outOfSeasonFoods, recipeSeasonalFoods } from "../season/recipeSeasonLogic";
 import { MenuCatalogue } from "./candidateLogic";
+import { HabitMatcher, HabitNames, SlotHabits, habitScore } from "./habitLogic";
 import { PREFERRED_FOOD_BONUS, preferredFoodReason } from "./preferredFoodLogic";
 
 export interface ScoreContext {
@@ -19,6 +20,9 @@ export interface ScoreContext {
   preferredFoods: readonly PreferredFood[];
   bonusFoodId: string | null;
   foodsOf: (code: string) => ReadonlySet<string>;
+  habits: SlotHabits;
+  matcher: HabitMatcher;
+  names: HabitNames;
 }
 
 export interface CandidateScore {
@@ -74,6 +78,7 @@ function preferredScore(recipe: RecipeDetails, context: ScoreContext): Candidate
 
 export function scoreCandidate(recipe: RecipeDetails, context: ScoreContext): CandidateScore {
   const parts = [
+    habitScore(recipe, context.habits, context.matcher, context.names),
     preferredScore(recipe, context),
     seasonScore(recipe, context),
     historyScore(context.weeksSinceEaten[recipe.code]),

@@ -10,7 +10,10 @@ export type MenuCatalogue = SeasonCatalogue;
 
 const MEAT_INGREDIENT_CATEGORIES: readonly IngredientCategory[] = [IngredientCategory.MEAT, IngredientCategory.DELI];
 const FISH_INGREDIENT_CATEGORIES: readonly IngredientCategory[] = [IngredientCategory.FISH];
-const MEAT_RECIPE_CATEGORY_IDS: readonly string[] = ["red-meat", "white-meat", "charcuterie"];
+const RED_MEAT_CATEGORY_ID = "red-meat";
+const WHITE_MEAT_CATEGORY_ID = "white-meat";
+const DELI_CATEGORY_ID = "charcuterie";
+const MEAT_RECIPE_CATEGORY_IDS: readonly string[] = [RED_MEAT_CATEGORY_ID, WHITE_MEAT_CATEGORY_ID, DELI_CATEGORY_ID];
 const FISH_RECIPE_CATEGORY_IDS: readonly string[] = ["fish"];
 
 export function isGeneratableDish(recipe: RecipeDetails, slot: GeneratedSlotType): boolean {
@@ -22,8 +25,12 @@ function collectDiet(recipe: RecipeDetails, recipes: Record<string, RecipeDetail
   visited.add(recipe.code);
   if (MEAT_RECIPE_CATEGORY_IDS.includes(recipe.categoryId)) diet.hasMeat = true;
   if (FISH_RECIPE_CATEGORY_IDS.includes(recipe.categoryId)) diet.hasFish = true;
+  if (recipe.categoryId === RED_MEAT_CATEGORY_ID) diet.hasRedMeat = true;
+  if (recipe.categoryId === WHITE_MEAT_CATEGORY_ID) diet.hasWhiteMeat = true;
+  if (recipe.categoryId === DELI_CATEGORY_ID) diet.hasDeli = true;
   for (const ingredient of recipe.ingredients) {
     if (MEAT_INGREDIENT_CATEGORIES.includes(ingredient.category)) diet.hasMeat = true;
+    if (ingredient.category === IngredientCategory.DELI) diet.hasDeli = true;
     if (FISH_INGREDIENT_CATEGORIES.includes(ingredient.category)) diet.hasFish = true;
     const base = ingredient.baseId ? recipes[ingredient.baseId] : undefined;
     if (base) collectDiet(base, recipes, visited, diet);
@@ -31,7 +38,7 @@ function collectDiet(recipe: RecipeDetails, recipes: Record<string, RecipeDetail
 }
 
 export function recipeDietProfile(recipe: RecipeDetails, recipes: Record<string, RecipeDetails>): RecipeDietProfile {
-  const diet: RecipeDietProfile = { hasMeat: false, hasFish: false };
+  const diet: RecipeDietProfile = { hasMeat: false, hasFish: false, hasRedMeat: false, hasWhiteMeat: false, hasDeli: false };
   collectDiet(recipe, recipes, new Set(), diet);
   return diet;
 }

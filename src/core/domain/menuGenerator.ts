@@ -4,6 +4,11 @@ export type GeneratedSlotType = MealType.LUNCH | MealType.DINNER;
 
 export const GENERATED_SLOTS: readonly GeneratedSlotType[] = [MealType.LUNCH, MealType.DINNER];
 
+export const GENERATED_SLOT_LABELS: Record<GeneratedSlotType, string> = {
+  [MealType.LUNCH]: "Déjeuner",
+  [MealType.DINNER]: "Dîner",
+};
+
 export const MAX_GENERATION_DAYS = 14;
 
 export type DietFilter = "all" | "pescatarian" | "vegetarian";
@@ -17,6 +22,26 @@ export interface PreferredFood {
   mode: PreferredFoodMode;
 }
 
+export type HabitProtein = "fish" | "meat" | "redMeat" | "whiteMeat" | "deli" | "vegetarian";
+
+export type HabitTarget =
+  | { kind: "protein"; protein: HabitProtein }
+  | { kind: "category"; categoryId: string }
+  | { kind: "food"; foodId: string }
+  | { kind: "recipe"; recipeCode: string }
+  | { kind: "noMeal" };
+
+export type HabitStrength = "mandatory" | "preferred" | "avoid" | "forbidden";
+
+export interface HabitRule {
+  id: string;
+  enabled: boolean;
+  days: string[];
+  slots: GeneratedSlotType[];
+  target: HabitTarget;
+  strength: HabitStrength;
+}
+
 export interface MenuGeneratorSettings {
   startDate: string;
   endDate: string;
@@ -26,6 +51,7 @@ export interface MenuGeneratorSettings {
   preferredFoods: PreferredFood[];
   season: SeasonMode;
   useFreezer: boolean;
+  habits: HabitRule[];
 }
 
 export type SavedGeneratorSettings = Omit<MenuGeneratorSettings, "startDate" | "endDate"> & {
@@ -43,6 +69,9 @@ export interface PeriodDay {
 export interface RecipeDietProfile {
   hasMeat: boolean;
   hasFish: boolean;
+  hasRedMeat: boolean;
+  hasWhiteMeat: boolean;
+  hasDeli: boolean;
 }
 
 export const KCAL_SLOT_SHARE: Record<GeneratedSlotType, number> = {
@@ -59,6 +88,7 @@ export type MealReasonKind =
   | "offSeason"
   | "freezer"
   | "preferred"
+  | "habit"
   | "history"
   | "recent"
   | "kcal"
@@ -78,6 +108,7 @@ export interface GeneratedMeal {
   recipeCode: string | null;
   kept: boolean;
   locked: boolean;
+  noMeal: boolean;
   reasons: MealReason[];
 }
 

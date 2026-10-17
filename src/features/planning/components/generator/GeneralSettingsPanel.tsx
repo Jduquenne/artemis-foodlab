@@ -1,8 +1,7 @@
 import { Snowflake } from "lucide-react";
-import { GENERATED_SLOTS, MAX_GENERATION_DAYS, MenuGeneratorSettings } from "../../../../core/domain/menuGenerator";
+import { GENERATED_SLOTS, GENERATED_SLOT_LABELS, MAX_GENERATION_DAYS, MenuGeneratorSettings } from "../../../../core/domain/menuGenerator";
 import {
   DIET_OPTIONS,
-  GENERATED_SLOT_LABELS,
   SEASON_OPTIONS,
   toggleGeneratedSlot,
 } from "../../../../core/logic/menuGenerator/generatorSettingsLogic";

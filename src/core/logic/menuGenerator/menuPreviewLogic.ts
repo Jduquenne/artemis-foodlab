@@ -24,7 +24,7 @@ export interface PreviewWeek {
   columns: PreviewColumn[];
 }
 
-const BADGE_KINDS: readonly MealReasonKind[] = ["freezer", "offSeason", "repeat", "recent", "season"];
+const BADGE_KINDS: readonly MealReasonKind[] = ["freezer", "preferred", "offSeason", "repeat", "recent", "season"];
 
 const MAX_BADGES = 2;
 

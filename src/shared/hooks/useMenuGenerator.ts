@@ -37,6 +37,7 @@ export interface MenuGeneratorRun {
   context: MenuGeneratorContext;
   seed: number;
   meals: GeneratedMeal[];
+  warnings: string[];
 }
 
 async function loadGeneratorContext(settings: MenuGeneratorSettings): Promise<MenuGeneratorContext> {
@@ -74,7 +75,7 @@ export function useMenuGenerator() {
     settings,
     context,
     seed,
-    meals: generateMenu({
+    ...generateMenu({
       days: context.days,
       settings,
       catalogue: { recipes, foods },

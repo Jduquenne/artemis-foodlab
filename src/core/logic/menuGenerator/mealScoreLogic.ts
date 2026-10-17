@@ -1,8 +1,9 @@
-import { KCAL_SLOT_SHARE, KCAL_TOLERANCE, RECENT_HISTORY_WEEKS, GeneratedSlotType, MealReason, SeasonMode } from "../../domain/menuGenerator";
+import { KCAL_SLOT_SHARE, KCAL_TOLERANCE, RECENT_HISTORY_WEEKS, GeneratedSlotType, MealReason, PreferredFood, SeasonMode } from "../../domain/menuGenerator";
 import { Macronutrients } from "../../domain/nutrition";
 import { RecipeDetails } from "../../domain/recipe";
 import { outOfSeasonFoods, recipeSeasonalFoods } from "../season/recipeSeasonLogic";
 import { MenuCatalogue } from "./candidateLogic";
+import { PREFERRED_FOOD_BONUS, preferredFoodReason } from "./preferredFoodLogic";
 
 export interface ScoreContext {
   catalogue: MenuCatalogue;
@@ -15,6 +16,9 @@ export interface ScoreContext {
   previousCategoryId: string | null;
   nextCategoryId: string | null;
   sameDayCategoryIds: readonly string[];
+  preferredFoods: readonly PreferredFood[];
+  bonusFoodId: string | null;
+  foodsOf: (code: string) => ReadonlySet<string>;
 }
 
 export interface CandidateScore {
@@ -60,8 +64,17 @@ function varietyScore(recipe: RecipeDetails, context: ScoreContext): CandidateSc
   return { score, reasons: [] };
 }
 
+function preferredScore(recipe: RecipeDetails, context: ScoreContext): CandidateScore {
+  if (context.preferredFoods.length === 0) return { score: 0, reasons: [] };
+  const foodIds = context.foodsOf(recipe.code);
+  const reason = preferredFoodReason(foodIds, context.preferredFoods, context.catalogue);
+  const score = context.bonusFoodId && foodIds.has(context.bonusFoodId) ? PREFERRED_FOOD_BONUS : 0;
+  return { score, reasons: reason ? [reason] : [] };
+}
+
 export function scoreCandidate(recipe: RecipeDetails, context: ScoreContext): CandidateScore {
   const parts = [
+    preferredScore(recipe, context),
     seasonScore(recipe, context),
     historyScore(context.weeksSinceEaten[recipe.code]),
     kcalScore(context.macros[recipe.code]?.kcal, slotKcalTarget(context.kcalTarget, context.slot)),

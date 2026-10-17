@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { AlertTriangle } from "lucide-react";
 import { GeneratedMeal, GeneratedSlotType, PeriodDay } from "../../../../core/domain/menuGenerator";
 import { dayKcalSummary, mealsByKey, previewWeeks } from "../../../../core/logic/menuGenerator/menuPreviewLogic";
 import { useActiveProfile } from "../../../../shared/hooks/useActiveProfile";
@@ -13,11 +14,12 @@ export interface GeneratorPreviewProps {
   slots: GeneratedSlotType[];
   meals: GeneratedMeal[];
   existing: Record<string, string[]>;
+  warnings: string[];
   onToggleLock: (key: string) => void;
   onRegenerate: (key: string) => void;
 }
 
-export const GeneratorPreview = ({ days, slots, meals, existing, onToggleLock, onRegenerate }: GeneratorPreviewProps) => {
+export const GeneratorPreview = ({ days, slots, meals, existing, warnings, onToggleLock, onRegenerate }: GeneratorPreviewProps) => {
   const recipes = useRecipesSnapshot();
   const { macros } = useRecipeMetricsSnapshot();
   const kcalTarget = useActiveProfile()?.kcalTarget ?? null;
@@ -46,6 +48,16 @@ export const GeneratorPreview = ({ days, slots, meals, existing, onToggleLock, o
 
   return (
     <div className="h-full min-h-0 flex flex-col gap-3">
+      {warnings.length > 0 && (
+        <ul className="shrink-0 flex flex-col gap-1 rounded-xl bg-amber-50 dark:bg-amber-900/20 px-3 py-2">
+          {warnings.map((warning) => (
+            <li key={warning} className="flex items-start gap-1.5 text-[11px] font-semibold text-amber-700 dark:text-amber-400">
+              <AlertTriangle size={12} className="mt-0.5 shrink-0" />
+              {warning}
+            </li>
+          ))}
+        </ul>
+      )}
       {weeks.length > 1 && (
         <div className="shrink-0">
           <ChoicePills

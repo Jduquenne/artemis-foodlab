@@ -10,12 +10,20 @@ export type DietFilter = "all" | "pescatarian" | "vegetarian";
 
 export type SeasonMode = "off" | "preferred" | "strict";
 
+export type PreferredFoodMode = "bonus" | "atLeastOnce";
+
+export interface PreferredFood {
+  foodId: string;
+  mode: PreferredFoodMode;
+}
+
 export interface MenuGeneratorSettings {
   startDate: string;
   endDate: string;
   slots: GeneratedSlotType[];
   diet: DietFilter;
   excludedFoodIds: string[];
+  preferredFoods: PreferredFood[];
   season: SeasonMode;
   useFreezer: boolean;
 }
@@ -50,6 +58,7 @@ export type MealReasonKind =
   | "season"
   | "offSeason"
   | "freezer"
+  | "preferred"
   | "history"
   | "recent"
   | "kcal"
@@ -70,4 +79,9 @@ export interface GeneratedMeal {
   kept: boolean;
   locked: boolean;
   reasons: MealReason[];
+}
+
+export interface MenuGenerationResult {
+  meals: GeneratedMeal[];
+  warnings: string[];
 }

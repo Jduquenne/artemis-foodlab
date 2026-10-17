@@ -286,7 +286,7 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
   - Every new setting is either **strict** (never bent: a slot that cannot respect it stays empty with the reason) or a **preference** (score).
   - **Habits**: rules « when » (days of the week, lunch / dinner / both) × « what » (protein type fish / red meat / white meat / deli / vegetarian, recipe category, a food, a recipe, « no meal ») × strength (mandatory / preferred / avoid / forbidden).
   - **Weekly quotas** with the same targets (« red meat ≤ 2 », « fish ≥ 2 »), strict or preferred.
-  - **Foods to use** (leftovers, freezer products), the mirror of « Aliments à éviter », each food « bonus » or « at least once ».
+  - **Foods to use** (leftovers, freezer products), the mirror of « Aliments à éviter », each food « bonus » or « at least once », placed on a random slot (not first); a strict request that cannot be met is reported as a warning.
   - **Freezer**: one checkbox, meals spread at random (no modes).
   - **Advanced**: repeat delay, same category in a row, kcal mode / tolerance / shares, favourite and banned recipes.
   - **Saved on the device** (local storage), not through the API: the owner wants the settings kept between openings; the period length is saved, not its dates (the start stays the selected day).

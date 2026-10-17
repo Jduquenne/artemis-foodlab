@@ -20,6 +20,11 @@ export function formatSourceDayFull(isoDate: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
+export function formatWeekdayShort(isoDate: string): string {
+  const s = format(parseISO(isoDate), "EEE d", { locale: fr });
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
 export function formatSourceDayShort(isoDate: string): string {
   return format(parseISO(isoDate), "d MMM", { locale: fr });
 }

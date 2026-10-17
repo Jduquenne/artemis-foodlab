@@ -42,6 +42,22 @@ export const KCAL_TOLERANCE = 0.15;
 
 export const RECENT_HISTORY_WEEKS = 3;
 
+export type MealReasonKind =
+  | "season"
+  | "offSeason"
+  | "freezer"
+  | "history"
+  | "recent"
+  | "kcal"
+  | "repeat"
+  | "empty"
+  | "kept";
+
+export interface MealReason {
+  kind: MealReasonKind;
+  label: string;
+}
+
 export interface GeneratedMeal {
   key: string;
   day: PeriodDay;
@@ -49,5 +65,5 @@ export interface GeneratedMeal {
   recipeCode: string | null;
   kept: boolean;
   locked: boolean;
-  reasons: string[];
+  reasons: MealReason[];
 }

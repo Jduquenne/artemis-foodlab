@@ -1,4 +1,4 @@
-import { GeneratedMeal, GeneratedSlotType, MenuGeneratorSettings, PeriodDay } from "../../domain/menuGenerator";
+import { GeneratedMeal, GeneratedSlotType, MealReason, MenuGeneratorSettings, PeriodDay } from "../../domain/menuGenerator";
 import { Macronutrients } from "../../domain/nutrition";
 import { RecipeUsageItem } from "../../domain/planningUsage";
 import { RecipeDetails } from "../../domain/recipe";
@@ -41,9 +41,9 @@ export function weeksSinceEatenMap(usage: readonly RecipeUsageItem[], now: Date)
 
 function chooseRecipe(
   pool: readonly RecipeDetails[],
-  score: (recipe: RecipeDetails) => { score: number; reasons: string[] },
+  score: (recipe: RecipeDetails) => { score: number; reasons: MealReason[] },
   random: () => number,
-): { recipe: RecipeDetails; reasons: string[] } | null {
+): { recipe: RecipeDetails; reasons: MealReason[] } | null {
   if (pool.length === 0) return null;
   const scored = pool.map((recipe) => ({ recipe, ...score(recipe) }));
   const best = Math.max(...scored.map((entry) => entry.score));
@@ -73,7 +73,7 @@ export function generateMenu(input: MenuEngineInput): GeneratedMeal[] {
       const categoryOf = (code: string | undefined) => (code ? catalogue.recipes[code]?.categoryId ?? null : null);
 
       if (existingCodes && existingCodes.length > 0) {
-        meals.push({ key, day, slot, recipeCode: null, kept: true, locked: true, reasons: ["Déjà rempli dans le planning"] });
+        meals.push({ key, day, slot, recipeCode: null, kept: true, locked: true, reasons: [{ kind: "kept", label: "Déjà rempli dans le planning" }] });
         previousCategoryId = categoryOf(existingCodes[0]);
         if (previousCategoryId) sameDayCategoryIds.push(previousCategoryId);
         continue;
@@ -122,13 +122,13 @@ export function generateMenu(input: MenuEngineInput): GeneratedMeal[] {
       const choice = chooseRecipe(pool, (recipe) => scoreCandidate(recipe, context), random);
 
       if (!choice) {
-        meals.push({ key, day, slot, recipeCode: null, kept: false, locked: false, reasons: [rejected.length > 0 ? "Aucune autre recette ne respecte les filtres" : "Aucune recette ne respecte les filtres"] });
+        meals.push({ key, day, slot, recipeCode: null, kept: false, locked: false, reasons: [{ kind: "empty", label: rejected.length > 0 ? "Aucune autre recette ne respecte les filtres" : "Aucune recette ne respecte les filtres" }] });
         previousCategoryId = null;
         continue;
       }
 
       used.add(choice.recipe.code);
-      const reasons = fresh.length > 0 ? choice.reasons : ["Répétée faute d'autre recette", ...choice.reasons];
+      const reasons = fresh.length > 0 ? choice.reasons : [{ kind: "repeat", label: "Répétée faute d'autre recette" } satisfies MealReason, ...choice.reasons];
       meals.push({ key, day, slot, recipeCode: choice.recipe.code, kept: false, locked: false, reasons });
       previousCategoryId = choice.recipe.categoryId;
       sameDayCategoryIds.push(choice.recipe.categoryId);

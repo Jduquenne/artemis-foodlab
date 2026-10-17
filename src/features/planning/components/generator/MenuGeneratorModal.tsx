@@ -27,7 +27,7 @@ export const MenuGeneratorModal = ({ startDate, onClose }: MenuGeneratorModalPro
 
   return (
     <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-surface rounded-2xl shadow-2xl w-full max-w-lg flex flex-col max-h-[90dvh]">
+      <div className={`bg-surface rounded-2xl shadow-2xl w-full ${run ? "max-w-5xl" : "max-w-lg"} flex flex-col max-h-[90dvh]`}>
         <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-slate-100">
           <div>
             <p className="text-xs font-black text-orange-600 uppercase tracking-widest flex items-center gap-1.5">
@@ -44,7 +44,13 @@ export const MenuGeneratorModal = ({ startDate, onClose }: MenuGeneratorModalPro
 
         <div className="flex-1 min-h-0 overflow-y-auto px-5 py-4">
           {run ? (
-            <GeneratorPreview meals={run.meals} onToggleLock={toggleLock} onRegenerate={regenerateMeal} />
+            <GeneratorPreview
+              days={run.context.days}
+              slots={run.settings.slots}
+              meals={run.meals}
+              onToggleLock={toggleLock}
+              onRegenerate={regenerateMeal}
+            />
           ) : (
             <GeneratorSettingsForm settings={settings} disabled={pending} onChange={setSettings} />
           )}

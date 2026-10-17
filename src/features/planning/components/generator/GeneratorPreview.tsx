@@ -1,70 +1,61 @@
-import { Lock, LockOpen, RefreshCw } from "lucide-react";
-import { GeneratedMeal } from "../../../../core/domain/menuGenerator";
-import { GENERATED_SLOT_LABELS } from "../../../../core/logic/menuGenerator/generatorSettingsLogic";
-import { groupMealsByDay } from "../../../../core/logic/menuGenerator/menuPreviewLogic";
-import { formatSourceDayFull } from "../../../../core/utils/dateUtils";
+import { useMemo, useState } from "react";
+import { GeneratedMeal, GeneratedSlotType, PeriodDay } from "../../../../core/domain/menuGenerator";
+import { mealsByKey, previewWeeks } from "../../../../core/logic/menuGenerator/menuPreviewLogic";
 import { useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
+import { ChoicePills } from "./ChoicePills";
+import { GeneratedMealDetail } from "./GeneratedMealDetail";
+import { GeneratorDayList } from "./GeneratorDayList";
+import { GeneratorWeekGrid } from "./GeneratorWeekGrid";
 
 export interface GeneratorPreviewProps {
+  days: PeriodDay[];
+  slots: GeneratedSlotType[];
   meals: GeneratedMeal[];
   onToggleLock: (key: string) => void;
   onRegenerate: (key: string) => void;
 }
 
-export const GeneratorPreview = ({ meals, onToggleLock, onRegenerate }: GeneratorPreviewProps) => {
+export const GeneratorPreview = ({ days, slots, meals, onToggleLock, onRegenerate }: GeneratorPreviewProps) => {
   const recipes = useRecipesSnapshot();
+  const weeks = useMemo(() => previewWeeks(days), [days]);
+  const byKey = useMemo(() => mealsByKey(meals), [meals]);
+  const [chosenWeek, setChosenWeek] = useState(weeks[0]?.key ?? "");
+  const [selectedKey, setSelectedKey] = useState<string | null>(null);
+  const week = weeks.find((w) => w.key === chosenWeek) ?? weeks[0];
+  const recipeNameOf = (code: string | null) => (code ? (recipes[code]?.name ?? code) : null);
+  const selected = selectedKey ? (byKey[selectedKey] ?? null) : null;
+
+  if (!week) return null;
+
+  const gridProps = {
+    week,
+    slots,
+    meals: byKey,
+    recipeNameOf,
+    selectedKey,
+    onSelect: setSelectedKey,
+    onToggleLock,
+    onRegenerate,
+  };
 
   return (
     <div className="flex flex-col gap-3">
-      {groupMealsByDay(meals).map(({ date, meals: dayMeals }) => (
-        <section key={date} className="flex flex-col gap-1.5">
-          <p className="text-xs font-black text-slate-500 uppercase tracking-wide">{formatSourceDayFull(date)}</p>
-          {dayMeals.map((meal) => (
-            <div
-              key={meal.key}
-              className={`flex flex-col gap-0.5 px-3 py-2 rounded-xl border ${
-                meal.kept ? "border-dashed border-slate-200 opacity-60" : meal.locked ? "border-orange-300 bg-orange-50 dark:border-orange-800 dark:bg-orange-900/20" : "border-slate-200"
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                <span className="w-16 shrink-0 text-[11px] font-bold text-orange-600">{GENERATED_SLOT_LABELS[meal.slot]}</span>
-                <span className="flex-1 min-w-0 text-sm font-semibold text-slate-800 truncate">
-                  {meal.kept ? "Déjà prévu" : meal.recipeCode ? (recipes[meal.recipeCode]?.name ?? meal.recipeCode) : "—"}
-                </span>
-                {!meal.kept && (
-                  <div className="flex shrink-0 items-center gap-0.5">
-                    {meal.recipeCode && (
-                      <button
-                        type="button"
-                        onClick={() => onToggleLock(meal.key)}
-                        aria-pressed={meal.locked}
-                        aria-label={meal.locked ? "Déverrouiller ce repas" : "Garder ce repas"}
-                        title={meal.locked ? "Déverrouiller" : "Garder ce repas"}
-                        className={`p-1.5 rounded-lg transition-colors ${meal.locked ? "text-orange-600 hover:bg-orange-100 dark:hover:bg-orange-900/30" : "text-slate-400 hover:text-orange-600 hover:bg-muted"}`}
-                      >
-                        {meal.locked ? <Lock size={14} /> : <LockOpen size={14} />}
-                      </button>
-                    )}
-                    <button
-                      type="button"
-                      onClick={() => onRegenerate(meal.key)}
-                      disabled={meal.locked}
-                      aria-label="Proposer une autre recette"
-                      title="Proposer une autre recette"
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-orange-600 hover:bg-muted transition-colors disabled:opacity-30 disabled:pointer-events-none"
-                    >
-                      <RefreshCw size={14} />
-                    </button>
-                  </div>
-                )}
-              </div>
-              {!meal.kept && meal.reasons.length > 0 && (
-                <p className="pl-18 text-[11px] text-slate-400 leading-snug">{meal.reasons.join(" · ")}</p>
-              )}
-            </div>
-          ))}
-        </section>
-      ))}
+      {weeks.length > 1 && (
+        <ChoicePills
+          options={weeks.map((w) => ({ id: w.key, label: w.label }))}
+          isActive={(id) => id === week.key}
+          onToggle={setChosenWeek}
+        />
+      )}
+      <div className="hidden sm:block">
+        <GeneratorWeekGrid {...gridProps} />
+      </div>
+      <div className="sm:hidden">
+        <GeneratorDayList key={week.key} {...gridProps} />
+      </div>
+      <div className="min-h-16 rounded-xl bg-muted px-3 py-2">
+        <GeneratedMealDetail meal={selected} recipeName={recipeNameOf(selected?.recipeCode ?? null)} />
+      </div>
     </div>
   );
 };

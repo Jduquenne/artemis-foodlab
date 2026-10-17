@@ -1,3 +1,4 @@
+import { MealReason } from "../../domain/menuGenerator";
 import { RecipeDetails } from "../../domain/recipe";
 import { FreezerBatchStock } from "../freezer/freezerStockLogic";
 
@@ -45,7 +46,7 @@ export function createFreezerPlan(
 export function takeFreezerMeal(
   plan: FreezerPlan,
   context: FreezerSlotContext,
-): { recipe: RecipeDetails; reason: string } | null {
+): { recipe: RecipeDetails; reason: MealReason } | null {
   const byCode = new Map(context.candidates.map((recipe) => [recipe.code, recipe]));
   for (const entry of plan.entries) {
     const recipe = byCode.get(entry.recipeCode);
@@ -58,7 +59,10 @@ export function takeFreezerMeal(
     entry.lastIndex = context.index;
     return {
       recipe,
-      reason: `Au congélateur : ${entry.portionsPerMeal} portion${entry.portionsPerMeal > 1 ? "s" : ""} utilisée${entry.portionsPerMeal > 1 ? "s" : ""}, ${entry.remainingPortions} restante${entry.remainingPortions > 1 ? "s" : ""}`,
+      reason: {
+        kind: "freezer",
+        label: `Au congélateur : ${entry.portionsPerMeal} portion${entry.portionsPerMeal > 1 ? "s" : ""} utilisée${entry.portionsPerMeal > 1 ? "s" : ""}, ${entry.remainingPortions} restante${entry.remainingPortions > 1 ? "s" : ""}`,
+      },
     };
   }
   return null;

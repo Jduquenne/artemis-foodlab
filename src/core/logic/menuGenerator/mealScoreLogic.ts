@@ -1,4 +1,4 @@
-import { KCAL_SLOT_SHARE, KCAL_TOLERANCE, RECENT_HISTORY_WEEKS, GeneratedSlotType, SeasonMode } from "../../domain/menuGenerator";
+import { KCAL_SLOT_SHARE, KCAL_TOLERANCE, RECENT_HISTORY_WEEKS, GeneratedSlotType, MealReason, SeasonMode } from "../../domain/menuGenerator";
 import { Macronutrients } from "../../domain/nutrition";
 import { RecipeDetails } from "../../domain/recipe";
 import { outOfSeasonFoods, recipeSeasonalFoods } from "../season/recipeSeasonLogic";
@@ -18,7 +18,7 @@ export interface ScoreContext {
 
 export interface CandidateScore {
   score: number;
-  reasons: string[];
+  reasons: MealReason[];
 }
 
 export function slotKcalTarget(dailyTarget: number | null, slot: GeneratedSlotType): number | null {
@@ -28,26 +28,26 @@ export function slotKcalTarget(dailyTarget: number | null, slot: GeneratedSlotTy
 function kcalScore(kcal: number | undefined, target: number | null): CandidateScore {
   if (!target || !kcal) return { score: 0, reasons: [] };
   const deviation = Math.abs(kcal - target) / target;
-  const reason = `${Math.round(kcal)} kcal / portion (cible ${target})`;
+  const reason: MealReason = { kind: "kcal", label: `${Math.round(kcal)} kcal / portion (cible ${target})` };
   if (deviation <= KCAL_TOLERANCE) return { score: 2, reasons: [reason] };
   return { score: -Math.min(4, (deviation - KCAL_TOLERANCE) * 10), reasons: [reason] };
 }
 
 function historyScore(weeks: number | undefined): CandidateScore {
-  if (weeks === undefined) return { score: 0.5, reasons: ["Jamais planifiée"] };
-  if (weeks <= 1) return { score: -4, reasons: [weeks <= 0 ? "Déjà planifiée cette semaine" : "Planifiée la semaine dernière"] };
-  if (weeks < RECENT_HISTORY_WEEKS) return { score: -2, reasons: [`Planifiée il y a ${weeks} sem.`] };
-  return { score: 1, reasons: [`Pas planifiée depuis ${weeks} sem.`] };
+  if (weeks === undefined) return { score: 0.5, reasons: [{ kind: "history", label: "Jamais planifiée" }] };
+  if (weeks <= 1) return { score: -4, reasons: [{ kind: "recent", label: weeks <= 0 ? "Déjà planifiée cette semaine" : "Planifiée la semaine dernière" }] };
+  if (weeks < RECENT_HISTORY_WEEKS) return { score: -2, reasons: [{ kind: "recent", label: `Planifiée il y a ${weeks} sem.` }] };
+  return { score: 1, reasons: [{ kind: "history", label: `Pas planifiée depuis ${weeks} sem.` }] };
 }
 
 function seasonScore(recipe: RecipeDetails, context: ScoreContext): CandidateScore {
   if (context.season === "off") return { score: 0, reasons: [] };
   const offSeason = outOfSeasonFoods(recipe, context.month, context.catalogue);
   if (offSeason.length > 0) {
-    return { score: -2, reasons: [`Hors saison : ${offSeason.map((food) => food.name).join(", ")}`] };
+    return { score: -2, reasons: [{ kind: "offSeason", label: `Hors saison : ${offSeason.map((food) => food.name).join(", ")}` }] };
   }
   return recipeSeasonalFoods(recipe, context.catalogue).length > 0
-    ? { score: 1, reasons: ["De saison"] }
+    ? { score: 1, reasons: [{ kind: "season", label: "De saison" }] }
     : { score: 0, reasons: [] };
 }
 

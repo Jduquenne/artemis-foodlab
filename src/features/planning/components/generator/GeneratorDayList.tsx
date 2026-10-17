@@ -2,8 +2,9 @@ import { useState } from "react";
 import { GeneratedMeal, GeneratedSlotType } from "../../../../core/domain/menuGenerator";
 import { GENERATED_SLOT_LABELS } from "../../../../core/logic/menuGenerator/generatorSettingsLogic";
 import { mealKey } from "../../../../core/logic/menuGenerator/menuEngineLogic";
-import { PreviewWeek } from "../../../../core/logic/menuGenerator/menuPreviewLogic";
+import { DayKcalSummary, PreviewWeek } from "../../../../core/logic/menuGenerator/menuPreviewLogic";
 import { ChoicePills } from "./ChoicePills";
+import { DayKcalBadge } from "./DayKcalBadge";
 import { GeneratedMealCell } from "./GeneratedMealCell";
 
 export interface GeneratorDayListProps {
@@ -11,13 +12,14 @@ export interface GeneratorDayListProps {
   slots: readonly GeneratedSlotType[];
   meals: Record<string, GeneratedMeal>;
   recipeNameOf: (code: string | null) => string | null;
+  kcalOf: (date: string) => DayKcalSummary;
   selectedKey: string | null;
   onSelect: (key: string) => void;
   onToggleLock: (key: string) => void;
   onRegenerate: (key: string) => void;
 }
 
-export const GeneratorDayList = ({ week, slots, meals, recipeNameOf, selectedKey, onSelect, onToggleLock, onRegenerate }: GeneratorDayListProps) => {
+export const GeneratorDayList = ({ week, slots, meals, recipeNameOf, kcalOf, selectedKey, onSelect, onToggleLock, onRegenerate }: GeneratorDayListProps) => {
   const days = week.columns.filter((column) => column.inPeriod);
   const [chosenDate, setChosenDate] = useState(days[0]?.date ?? "");
   const date = days.some((day) => day.date === chosenDate) ? chosenDate : (days[0]?.date ?? "");
@@ -45,6 +47,11 @@ export const GeneratorDayList = ({ week, slots, meals, recipeNameOf, selectedKey
           </div>
         ) : null;
       })}
+      {date && (
+        <p className="text-right">
+          <DayKcalBadge summary={kcalOf(date)} />
+        </p>
+      )}
     </div>
   );
 };

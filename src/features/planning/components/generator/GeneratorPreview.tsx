@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
 import { GeneratedMeal, GeneratedSlotType, PeriodDay } from "../../../../core/domain/menuGenerator";
-import { mealsByKey, previewWeeks } from "../../../../core/logic/menuGenerator/menuPreviewLogic";
-import { useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
+import { dayKcalSummary, mealsByKey, previewWeeks } from "../../../../core/logic/menuGenerator/menuPreviewLogic";
+import { useActiveProfile } from "../../../../shared/hooks/useActiveProfile";
+import { useRecipeMetricsSnapshot, useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { ChoicePills } from "./ChoicePills";
 import { GeneratedMealDetail } from "./GeneratedMealDetail";
 import { GeneratorDayList } from "./GeneratorDayList";
@@ -11,12 +12,15 @@ export interface GeneratorPreviewProps {
   days: PeriodDay[];
   slots: GeneratedSlotType[];
   meals: GeneratedMeal[];
+  existing: Record<string, string[]>;
   onToggleLock: (key: string) => void;
   onRegenerate: (key: string) => void;
 }
 
-export const GeneratorPreview = ({ days, slots, meals, onToggleLock, onRegenerate }: GeneratorPreviewProps) => {
+export const GeneratorPreview = ({ days, slots, meals, existing, onToggleLock, onRegenerate }: GeneratorPreviewProps) => {
   const recipes = useRecipesSnapshot();
+  const { macros } = useRecipeMetricsSnapshot();
+  const kcalTarget = useActiveProfile()?.kcalTarget ?? null;
   const weeks = useMemo(() => previewWeeks(days), [days]);
   const byKey = useMemo(() => mealsByKey(meals), [meals]);
   const [chosenWeek, setChosenWeek] = useState(weeks[0]?.key ?? "");
@@ -24,6 +28,7 @@ export const GeneratorPreview = ({ days, slots, meals, onToggleLock, onRegenerat
   const week = weeks.find((w) => w.key === chosenWeek) ?? weeks[0];
   const recipeNameOf = (code: string | null) => (code ? (recipes[code]?.name ?? code) : null);
   const selected = selectedKey ? (byKey[selectedKey] ?? null) : null;
+  const kcalOf = (date: string) => dayKcalSummary(date, slots, byKey, existing, macros, kcalTarget);
 
   if (!week) return null;
 
@@ -32,6 +37,7 @@ export const GeneratorPreview = ({ days, slots, meals, onToggleLock, onRegenerat
     slots,
     meals: byKey,
     recipeNameOf,
+    kcalOf,
     selectedKey,
     onSelect: setSelectedKey,
     onToggleLock,

@@ -1,7 +1,8 @@
 import { GeneratedMeal, GeneratedSlotType } from "../../../../core/domain/menuGenerator";
 import { GENERATED_SLOT_LABELS } from "../../../../core/logic/menuGenerator/generatorSettingsLogic";
 import { mealKey } from "../../../../core/logic/menuGenerator/menuEngineLogic";
-import { PreviewWeek } from "../../../../core/logic/menuGenerator/menuPreviewLogic";
+import { DayKcalSummary, PreviewWeek } from "../../../../core/logic/menuGenerator/menuPreviewLogic";
+import { DayKcalBadge } from "./DayKcalBadge";
 import { GeneratedMealCell } from "./GeneratedMealCell";
 
 export interface GeneratorWeekGridProps {
@@ -9,13 +10,14 @@ export interface GeneratorWeekGridProps {
   slots: readonly GeneratedSlotType[];
   meals: Record<string, GeneratedMeal>;
   recipeNameOf: (code: string | null) => string | null;
+  kcalOf: (date: string) => DayKcalSummary;
   selectedKey: string | null;
   onSelect: (key: string) => void;
   onToggleLock: (key: string) => void;
   onRegenerate: (key: string) => void;
 }
 
-export const GeneratorWeekGrid = ({ week, slots, meals, recipeNameOf, selectedKey, onSelect, onToggleLock, onRegenerate }: GeneratorWeekGridProps) => (
+export const GeneratorWeekGrid = ({ week, slots, meals, recipeNameOf, kcalOf, selectedKey, onSelect, onToggleLock, onRegenerate }: GeneratorWeekGridProps) => (
   <div className="grid grid-cols-[3.5rem_repeat(7,minmax(0,1fr))] gap-1.5">
     <span />
     {week.columns.map((column) => (
@@ -45,6 +47,12 @@ export const GeneratorWeekGrid = ({ week, slots, meals, recipeNameOf, selectedKe
             <div key={column.date} className="min-h-20 rounded-xl bg-muted opacity-40" />
           );
         })}
+      </div>
+    ))}
+    <span className="self-center text-[11px] font-bold text-slate-500">kcal</span>
+    {week.columns.map((column) => (
+      <div key={column.date} className="text-center">
+        {column.inPeriod && <DayKcalBadge summary={kcalOf(column.date)} />}
       </div>
     ))}
   </div>

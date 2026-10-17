@@ -48,6 +48,7 @@ export const MenuGeneratorModal = ({ startDate, onClose }: MenuGeneratorModalPro
               days={run.context.days}
               slots={run.settings.slots}
               meals={run.meals}
+              existing={run.context.existing}
               onToggleLock={toggleLock}
               onRegenerate={regenerateMeal}
             />

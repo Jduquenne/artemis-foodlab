@@ -1,6 +1,16 @@
-import { GeneratedMeal, MealReason, MealReasonKind, PeriodDay } from "../../domain/menuGenerator";
+import {
+  GeneratedMeal,
+  GeneratedSlotType,
+  KCAL_SLOT_SHARE,
+  KCAL_TOLERANCE,
+  MealReason,
+  MealReasonKind,
+  PeriodDay,
+} from "../../domain/menuGenerator";
+import { Macronutrients } from "../../domain/nutrition";
 import { DAYS } from "../../domain/planningConfig";
 import { formatSourceDayShort, formatWeekdayShort, isoDateFromWeekDay } from "../../utils/dateUtils";
+import { mealKey } from "./menuEngineLogic";
 
 export interface PreviewColumn {
   date: string;
@@ -17,6 +27,12 @@ export interface PreviewWeek {
 const BADGE_KINDS: readonly MealReasonKind[] = ["freezer", "offSeason", "repeat", "recent", "season"];
 
 const MAX_BADGES = 2;
+
+export interface DayKcalSummary {
+  kcal: number | null;
+  target: number | null;
+  onTarget: boolean | null;
+}
 
 export function countGeneratedMeals(meals: readonly GeneratedMeal[]): number {
   return meals.filter((meal) => !meal.kept && meal.recipeCode !== null).length;
@@ -69,4 +85,25 @@ export function mealsByKey(meals: readonly GeneratedMeal[]): Record<string, Gene
 export function reasonBadges(reasons: readonly MealReason[]): MealReasonKind[] {
   const kinds = new Set(reasons.map((reason) => reason.kind));
   return BADGE_KINDS.filter((kind) => kinds.has(kind)).slice(0, MAX_BADGES);
+}
+
+export function dayKcalSummary(
+  date: string,
+  slots: readonly GeneratedSlotType[],
+  meals: Record<string, GeneratedMeal>,
+  existing: Record<string, string[]>,
+  macros: Record<string, Macronutrients>,
+  dailyTarget: number | null,
+): DayKcalSummary {
+  const values = slots.flatMap((slot) => {
+    const key = mealKey(date, slot);
+    const meal = meals[key];
+    const codes = meal?.kept ? (existing[key] ?? []) : meal?.recipeCode ? [meal.recipeCode] : [];
+    return codes.map((code) => macros[code]?.kcal).filter((kcal): kcal is number => kcal !== undefined && kcal > 0);
+  });
+  const kcal = values.length > 0 ? Math.round(values.reduce((sum, value) => sum + value, 0)) : null;
+  const share = slots.reduce((sum, slot) => sum + KCAL_SLOT_SHARE[slot], 0);
+  const target = dailyTarget && dailyTarget > 0 && share > 0 ? Math.round(dailyTarget * share) : null;
+  const onTarget = kcal !== null && target !== null ? Math.abs(kcal - target) / target <= KCAL_TOLERANCE : null;
+  return { kcal, target, onTarget };
 }

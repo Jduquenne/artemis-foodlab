@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-17 — Menu generator, step 5c: kcal per day (v6.103.0)
+- Done: owner's format validated (2026-10-17). `menuPreviewLogic.dayKcalSummary` (kcal per portion of the chosen meals, kept slots count their planned recipes, target = profile kcal × sum of `KCAL_SLOT_SHARE` of the chosen meals, `onTarget` within `KCAL_TOLERANCE`). `DayKcalBadge` (green / orange / grey, « — » without data); « kcal » row in `GeneratorWeekGrid`, line under the day in `GeneratorDayList`. Spec `docs/spec-planning.md`.
+- Numbers: `npx tsc -b` + `npm run lint` pass; `tsx` check (`_claude/tmp/menu-kcal-check.ts`): 700 + 600 vs 2000 → 1300 / 1300 on target; kept lunch (300 + 250) + dinner 700 → 1250 / 1300; lunch only 600 → target 700, on target (14 %); nothing known and no target → « — ». **Not checked in a browser**.
+- To test: the kcal row matches the cells; regenerate / reshuffle updates it; a profile without a kcal target shows only the total in grey; only lunch chosen → target 35 %.
+- Still open: next step: write the proposal to the planning (API batch write path, to look at in `docs/spec-planning.md` § batch writes).
+
 ## 2026-10-17 — Menu generator, step 5b: preview as a week grid (v6.102.0)
 - Done: owner feedback: the scrolling list made weeks and days hard to identify. Owner choices: week grid like the Planning, reason icons with the detail on click. Reasons typed (`MealReason` `kind` + `label`) in `mealScoreLogic`, `freezerPlanLogic`, `menuEngineLogic` (labels unchanged). `menuPreviewLogic.ts`: `previewWeeks` (ISO weeks, 7 columns, `inPeriod`), `mealsByKey`, `reasonBadges` (max 2); `groupMealsByDay` removed (no consumer left). `dateUtils.formatWeekdayShort` (« Ven. 23 »). Components: `GeneratorWeekGrid` (sm and up), `GeneratorDayList` (mobile), `GeneratedMealCell`, `GeneratedMealDetail`, `MealReasonIcon`; `GeneratorPreview` holds the chosen week, the mobile day and the selected meal; modal `max-w-5xl` on the preview. Spec `docs/spec-planning.md`.
 - Numbers: `npx tsc -b` + `npm run lint` pass; `tsx` check (`_claude/tmp/menu-weeks-check.ts`): 23 → 29 oct. = S43 (Fri-Sun) + S44 (Mon-Thu), 25 déc. 2026 → 3 janv. 2027 = S52 + S53, single day = 1 week; step 5a check still passes. **Not checked in a browser**.

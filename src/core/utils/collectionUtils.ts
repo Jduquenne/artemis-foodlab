@@ -30,3 +30,17 @@ export function omitKey<T>(record: Record<string, T>, key: string): Record<strin
   if (!(key in record)) return record;
   return Object.fromEntries(Object.entries(record).filter(([k]) => k !== key));
 }
+
+export function upsertById<T extends { id: string }>(items: readonly T[], item: T): T[] {
+  return items.some((existing) => existing.id === item.id)
+    ? items.map((existing) => (existing.id === item.id ? item : existing))
+    : [...items, item];
+}
+
+export function removeById<T extends { id: string }>(items: readonly T[], id: string): T[] {
+  return items.filter((item) => item.id !== id);
+}
+
+export function setEnabledById<T extends { id: string; enabled: boolean }>(items: readonly T[], id: string, enabled: boolean): T[] {
+  return items.map((item) => (item.id === id ? { ...item, enabled } : item));
+}

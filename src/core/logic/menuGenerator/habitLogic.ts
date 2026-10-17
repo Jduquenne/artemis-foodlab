@@ -204,28 +204,17 @@ export function habitDayRange(from: string, to: string): string[] {
   return DAYS.filter((day) => range.includes(day));
 }
 
-export function validateHabit(rule: HabitRule): string | null {
-  if (rule.days.length === 0) return "Choisis au moins un jour.";
-  if (rule.slots.length === 0) return "Choisis au moins un repas.";
-  const { target } = rule;
+export function validateHabitTarget(target: HabitTarget): string | null {
   if (target.kind === "category" && !target.categoryId) return "Choisis une catégorie.";
   if (target.kind === "food" && !target.foodId) return "Choisis un aliment.";
   if (target.kind === "recipe" && !target.recipeCode) return "Choisis une recette.";
   return null;
 }
 
-export function upsertHabit(habits: readonly HabitRule[], rule: HabitRule): HabitRule[] {
-  return habits.some((item) => item.id === rule.id)
-    ? habits.map((item) => (item.id === rule.id ? rule : item))
-    : [...habits, rule];
-}
-
-export function removeHabit(habits: readonly HabitRule[], id: string): HabitRule[] {
-  return habits.filter((item) => item.id !== id);
-}
-
-export function setHabitEnabled(habits: readonly HabitRule[], id: string, enabled: boolean): HabitRule[] {
-  return habits.map((item) => (item.id === id ? { ...item, enabled } : item));
+export function validateHabit(rule: HabitRule): string | null {
+  if (rule.days.length === 0) return "Choisis au moins un jour.";
+  if (rule.slots.length === 0) return "Choisis au moins un repas.";
+  return validateHabitTarget(rule.target);
 }
 
 export function habitSlotsLabel(slots: readonly GeneratedSlotType[]): string {

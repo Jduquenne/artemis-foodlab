@@ -24,6 +24,7 @@ import { DAYS } from "../../domain/planningConfig";
 import { toIsoDate, isoDateFromWeekDay } from "../../utils/dateUtils";
 import { mealKey } from "./menuEngineLogic";
 import { periodLength, validatePeriod } from "./periodLogic";
+import { MAX_QUOTA_COUNT } from "./quotaLogic";
 
 export const DIET_OPTIONS: { id: DietFilter; label: string }[] = [
   { id: "all", label: "Tout" },
@@ -188,8 +189,6 @@ function restoreHabit(value: unknown): HabitRule | null {
 const QUOTA_COMPARATORS: readonly QuotaComparator[] = ["atLeast", "atMost"];
 
 const QUOTA_STRICTNESSES: readonly QuotaStrictness[] = ["strict", "preferred"];
-
-export const MAX_QUOTA_COUNT = 14;
 
 function restoreQuota(value: unknown): WeeklyQuota | null {
   if (!isRecord(value) || typeof value.id !== "string") return null;

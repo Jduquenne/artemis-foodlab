@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
 import { Plus } from "lucide-react";
 import { HabitRule, MenuGeneratorSettings } from "../../../../core/domain/menuGenerator";
-import { emptyHabit, removeHabit, setHabitEnabled, upsertHabit } from "../../../../core/logic/menuGenerator/habitLogic";
+import { emptyHabit } from "../../../../core/logic/menuGenerator/habitLogic";
+import { removeById, setEnabledById, upsertById } from "../../../../core/utils/collectionUtils";
 import { useCategoriesSnapshot, useFoodsSnapshot, useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { HabitEditor } from "./HabitEditor";
 import { HabitRow } from "./HabitRow";
@@ -23,7 +24,7 @@ export const HabitsSettingsPanel = ({ settings, disabled, onPatch }: HabitsSetti
   const [editing, setEditing] = useState<HabitRule | null>(null);
 
   const save = (rule: HabitRule) => {
-    onPatch({ habits: upsertHabit(settings.habits, rule) });
+    onPatch({ habits: upsertById(settings.habits, rule) });
     setEditing(null);
   };
 
@@ -56,9 +57,9 @@ export const HabitsSettingsPanel = ({ settings, disabled, onPatch }: HabitsSetti
             rule={rule}
             names={names}
             disabled={disabled || editing !== null}
-            onToggle={(enabled) => onPatch({ habits: setHabitEnabled(settings.habits, rule.id, enabled) })}
+            onToggle={(enabled) => onPatch({ habits: setEnabledById(settings.habits, rule.id, enabled) })}
             onEdit={() => setEditing(rule)}
-            onDelete={() => onPatch({ habits: removeHabit(settings.habits, rule.id) })}
+            onDelete={() => onPatch({ habits: removeById(settings.habits, rule.id) })}
           />
         ),
       )}

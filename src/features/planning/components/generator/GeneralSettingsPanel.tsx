@@ -1,5 +1,5 @@
 import { Snowflake } from "lucide-react";
-import { GENERATED_SLOTS, GENERATED_SLOT_LABELS, MAX_GENERATION_DAYS, MenuGeneratorSettings } from "../../../../core/domain/menuGenerator";
+import { GENERATED_SLOTS, GENERATED_SLOT_LABELS, MAX_GENERATION_DAYS, MIN_GENERATION_DAYS, MenuGeneratorSettings } from "../../../../core/domain/menuGenerator";
 import {
   DIET_OPTIONS,
   SEASON_OPTIONS,
@@ -27,7 +27,7 @@ export const GeneralSettingsPanel = ({ settings, disabled, onPatch }: GeneralSet
     <div className="flex flex-col gap-4">
       <SettingsSection
         title="Période"
-        hint={`${length !== null && length > 0 ? `${length} jour${length > 1 ? "s" : ""}` : "—"} · ${MAX_GENERATION_DAYS} jours maximum · les repas déjà prévus sont gardés`}
+        hint={`${length !== null && length > 0 ? `${length} jour${length > 1 ? "s" : ""}` : "—"} · de ${MIN_GENERATION_DAYS} à ${MAX_GENERATION_DAYS} jours · les repas déjà prévus sont gardés`}
       >
         <div className="grid grid-cols-2 gap-2">
           <input type="date" value={settings.startDate} disabled={disabled} onChange={(e) => onPatch({ startDate: e.target.value })} aria-label="Début" className={DATE_INPUT_CLASS} />

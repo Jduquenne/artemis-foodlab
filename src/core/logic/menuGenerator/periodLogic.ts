@@ -1,5 +1,5 @@
 import { addDays, differenceInCalendarDays, isValid, parseISO } from "date-fns";
-import { MAX_GENERATION_DAYS, PeriodDay } from "../../domain/menuGenerator";
+import { MAX_GENERATION_DAYS, MIN_GENERATION_DAYS, PeriodDay } from "../../domain/menuGenerator";
 import { toIsoDate } from "../../utils/dateUtils";
 import { dayNameOf, getWeekNumber, getWeekYear } from "../../utils/weekUtils";
 
@@ -14,6 +14,7 @@ export function validatePeriod(startDate: string, endDate: string): string | nul
   const length = periodLength(startDate, endDate);
   if (length === null) return "Choisis une date de début et une date de fin.";
   if (length < 1) return "La date de fin doit suivre la date de début.";
+  if (length < MIN_GENERATION_DAYS) return `La période doit faire au moins ${MIN_GENERATION_DAYS} jours.`;
   if (length > MAX_GENERATION_DAYS) return `La période ne peut pas dépasser ${MAX_GENERATION_DAYS} jours.`;
   return null;
 }

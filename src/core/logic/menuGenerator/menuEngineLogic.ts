@@ -22,14 +22,14 @@ import { FreezerReservation, OpenSlot, createFreezerPlan, reserveFreezerSlots } 
 import { scoreCandidate } from "./mealScoreLogic";
 import { assignPreferredFoods, createFoodIndex, preferredFoodReason } from "./preferredFoodLogic";
 import {
-  QuotaWeek,
+  QuotaBlock,
   assignQuotaSlots,
   matchesQuota,
   quotaCounterKey,
   quotaLabel,
   quotaScore,
   quotaTarget,
-  weekKeyOf,
+  periodBlocks,
 } from "./quotaLogic";
 
 export interface MenuEngineInput {
@@ -152,28 +152,30 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
     const code = fixedOf(key)?.recipeCode ?? reservations[key]?.recipeCode ?? null;
     return code ? [code] : [];
   };
-  const countInto = (counts: Map<string, number>, codes: readonly string[], weekKey: string) => {
+  const countInto = (counts: Map<string, number>, codes: readonly string[], blockKey: string) => {
     for (const quota of quotas) {
       if (!codes.some((code) => catalogue.recipes[code] && matchesQuota(catalogue.recipes[code], quota, matcher))) continue;
-      const counterKey = quotaCounterKey(quota.id, weekKey);
+      const counterKey = quotaCounterKey(quota.id, blockKey);
       counts.set(counterKey, (counts.get(counterKey) ?? 0) + 1);
     }
   };
   const knownCounts = new Map<string, number>();
-  for (const { day, key } of sequence) countInto(knownCounts, codesOfKey(key), weekKeyOf(day));
-  const quotaWeeks: QuotaWeek[] = [...new Set(sequence.map(({ day }) => weekKeyOf(day)))].map((weekKey) => {
-    const weekSlots = sequence.filter(({ day }) => weekKeyOf(day) === weekKey);
+  const blocks = periodBlocks(days);
+  const blockKeyOf = (day: PeriodDay) => blocks.get(day.date)?.blockKey ?? "";
+  for (const { day, key } of sequence) countInto(knownCounts, codesOfKey(key), blockKeyOf(day));
+  const quotaBlocks: QuotaBlock[] = [...new Set(sequence.map(({ day }) => blockKeyOf(day)))].map((blockKey) => {
+    const blockSlots = sequence.filter(({ day }) => blockKeyOf(day) === blockKey);
     return {
-      weekKey,
-      label: `Semaine ${weekSlots[0].day.week}`,
-      dayCount: new Set(weekSlots.map(({ day }) => day.date)).size,
-      slots: weekSlots
+      blockKey,
+      label: blocks.get(blockSlots[0].day.date)?.label ?? blockKey,
+      dayCount: new Set(blockSlots.map(({ day }) => day.date)).size,
+      slots: blockSlots
         .filter(({ key }) => !isKept(key) && !fixedOf(key) && !reservations[key] && !habitsOf(key).noMeal)
         .map(({ day, slot, key }) => ({ key, date: day.date, candidates: eligibleOf(day, slot, key) })),
     };
   });
-  const dayCountOf = (weekKey: string) => quotaWeeks.find((week) => week.weekKey === weekKey)?.dayCount ?? 0;
-  const quotaBySlot = assignQuotaSlots(quotas, quotaWeeks, knownCounts, new Set(Object.keys(preferredFoodBySlot)), matcher, random);
+  const dayCountOf = (blockKey: string) => quotaBlocks.find((block) => block.blockKey === blockKey)?.dayCount ?? 0;
+  const quotaBySlot = assignQuotaSlots(quotas, quotaBlocks, knownCounts, new Set(Object.keys(preferredFoodBySlot)), matcher, random);
   const forcedQuotaIds = new Map<string, Set<string>>(
     sequence
       .filter(({ key }) => !isKept(key) && !fixedOf(key) && !reservations[key] && !habitsOf(key).noMeal)
@@ -183,8 +185,8 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
         return [key, new Set(forced.map((quota) => quota.id))];
       }),
   );
-  const forcedAfter = (quotaId: string, weekKey: string, index: number) =>
-    sequence.filter((entry, position) => position > index && weekKeyOf(entry.day) === weekKey && forcedQuotaIds.get(entry.key)?.has(quotaId)).length;
+  const forcedAfter = (quotaId: string, blockKey: string, index: number) =>
+    sequence.filter((entry, position) => position > index && blockKeyOf(entry.day) === blockKey && forcedQuotaIds.get(entry.key)?.has(quotaId)).length;
   const counts = new Map<string, number>();
   const knownCategoryOf = (key: string | undefined) =>
     key ? (categoryOf(input.existing[key]?.[0]) ?? categoryOf(fixedOf(key)?.recipeCode) ?? categoryOf(reservations[key]?.recipeCode)) : null;
@@ -196,11 +198,11 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
 
   for (const [index, { day, slot, key }] of sequence.entries()) {
     if (index > 0 && sequence[index - 1].day.date !== day.date) sameDayCategoryIds = [];
-    const weekKey = weekKeyOf(day);
-    const countOf = (quotaId: string) => counts.get(quotaCounterKey(quotaId, weekKey)) ?? 0;
+    const blockKey = blockKeyOf(day);
+    const countOf = (quotaId: string) => counts.get(quotaCounterKey(quotaId, blockKey)) ?? 0;
     const place = (meal: GeneratedMeal, categoryId: string | null) => {
       meals.push(meal);
-      countInto(counts, meal.kept ? (input.existing[key] ?? []) : meal.recipeCode ? [meal.recipeCode] : [], weekKey);
+      countInto(counts, meal.kept ? (input.existing[key] ?? []) : meal.recipeCode ? [meal.recipeCode] : [], blockKey);
       cover(meal.kept ? input.existing[key]?.[0] : meal.recipeCode);
       previousCategoryId = categoryId;
       if (categoryId) sameDayCategoryIds.push(categoryId);
@@ -251,7 +253,7 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
       quota.comparator === "atMost"
       && quota.strictness === "strict"
       && !forcedQuotaIds.get(key)?.has(quota.id)
-      && countOf(quota.id) + forcedAfter(quota.id, weekKey, index) >= quota.count,
+      && countOf(quota.id) + forcedAfter(quota.id, blockKey, index) >= quota.count,
     );
     const allEligible = eligibleOf(day, slot, key).filter((recipe) => cappedQuotas.every((quota) => !matchesQuota(recipe, quota, matcher)));
     const requiredPool = pendingFood && required.has(pendingFood)
@@ -259,7 +261,7 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
       : [];
     const foodEligible = requiredPool.length > 0 ? requiredPool : allEligible;
     const slotQuota = quotas.find((quota) => quota.id === quotaBySlot[key]);
-    const pendingQuota = slotQuota && countOf(slotQuota.id) < quotaTarget(slotQuota, dayCountOf(weekKey)) ? slotQuota : null;
+    const pendingQuota = slotQuota && countOf(slotQuota.id) < quotaTarget(slotQuota, dayCountOf(blockKey)) ? slotQuota : null;
     const quotaPool = pendingQuota && pendingQuota.strictness === "strict"
       ? foodEligible.filter((recipe) => matchesQuota(recipe, pendingQuota, matcher))
       : [];
@@ -313,14 +315,14 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
     place({ key, day, slot, recipeCode: choice.recipe.code, kept: false, locked: false, noMeal: false, reasons }, choice.recipe.categoryId);
   }
   for (const quota of quotas.filter((item) => item.strictness === "strict")) {
-    for (const week of quotaWeeks) {
-      const count = counts.get(quotaCounterKey(quota.id, week.weekKey)) ?? 0;
-      const target = quotaTarget(quota, week.dayCount);
+    for (const block of quotaBlocks) {
+      const count = counts.get(quotaCounterKey(quota.id, block.blockKey)) ?? 0;
+      const target = quotaTarget(quota, block.dayCount);
       if (quota.comparator === "atLeast" && count < target) {
-        warnings.push(`${week.label} : ${quotaLabel(quota, names)} non atteint (${count} sur ${target}).`);
+        warnings.push(`${block.label} : ${quotaLabel(quota, names)} non atteint (${count} sur ${target}).`);
       }
       if (quota.comparator === "atMost" && count > target) {
-        warnings.push(`${week.label} : ${quotaLabel(quota, names)} dépassé (${count}) à cause des repas déjà prévus, gardés ou des habitudes.`);
+        warnings.push(`${block.label} : ${quotaLabel(quota, names)} dépassé (${count}) à cause des repas déjà prévus, gardés ou des habitudes.`);
       }
     }
   }

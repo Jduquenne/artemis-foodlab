@@ -8,6 +8,7 @@ import {
   HabitStrength,
   HabitTarget,
   MAX_GENERATION_DAYS,
+  MIN_GENERATION_DAYS,
   QuotaComparator,
   QuotaStrictness,
   QuotaTarget,
@@ -215,7 +216,7 @@ export function restoreGeneratorSettings(saved: Partial<SavedGeneratorSettings> 
   const defaults = defaultGeneratorSettings(startDate);
   if (!saved) return defaults;
   const periodDays = typeof saved.periodDays === "number" && Number.isInteger(saved.periodDays)
-    ? Math.min(MAX_GENERATION_DAYS, Math.max(1, saved.periodDays))
+    ? Math.min(MAX_GENERATION_DAYS, Math.max(MIN_GENERATION_DAYS, saved.periodDays))
     : DEFAULT_PERIOD_DAYS;
   const slots = Array.isArray(saved.slots) ? GENERATED_SLOTS.filter((slot) => saved.slots?.includes(slot)) : defaults.slots;
   return {

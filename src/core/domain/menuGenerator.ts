@@ -9,7 +9,11 @@ export const GENERATED_SLOT_LABELS: Record<GeneratedSlotType, string> = {
   [MealType.DINNER]: "Dîner",
 };
 
+export const MIN_GENERATION_DAYS = 7;
+
 export const MAX_GENERATION_DAYS = 14;
+
+export const QUOTA_BLOCK_DAYS = 7;
 
 export type DietFilter = "all" | "pescatarian" | "vegetarian";
 

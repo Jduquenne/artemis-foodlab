@@ -32,7 +32,7 @@ export const QuotasSettingsPanel = ({ settings, disabled, onPatch }: QuotasSetti
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between gap-2">
         <p className="text-[11px] text-slate-400">
-          Par semaine du lundi au dimanche, repas déjà prévus compris. Sur une semaine incomplète, « au moins » est réduit au prorata des jours.
+          « Par semaine » = par bloc de 7 jours à partir du début de la période, repas déjà prévus compris. Si le dernier bloc est incomplet (période de 8 à 13 jours), « au moins » y est réduit au prorata.
         </p>
         {!editing && (
           <button

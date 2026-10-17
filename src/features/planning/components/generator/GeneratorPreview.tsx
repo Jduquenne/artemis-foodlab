@@ -45,21 +45,23 @@ export const GeneratorPreview = ({ days, slots, meals, existing, onToggleLock, o
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="h-full min-h-0 flex flex-col gap-3">
       {weeks.length > 1 && (
-        <ChoicePills
-          options={weeks.map((w) => ({ id: w.key, label: w.label }))}
-          isActive={(id) => id === week.key}
-          onToggle={setChosenWeek}
-        />
+        <div className="shrink-0">
+          <ChoicePills
+            options={weeks.map((w) => ({ id: w.key, label: w.label }))}
+            isActive={(id) => id === week.key}
+            onToggle={setChosenWeek}
+          />
+        </div>
       )}
-      <div className="hidden sm:block">
+      <div className="hidden sm:block flex-1 min-h-0">
         <GeneratorWeekGrid {...gridProps} />
       </div>
       <div className="sm:hidden">
         <GeneratorDayList key={week.key} {...gridProps} />
       </div>
-      <div className="min-h-16 rounded-xl bg-muted px-3 py-2">
+      <div className="shrink-0 min-h-16 rounded-xl bg-muted px-3 py-2">
         <GeneratedMealDetail meal={selected} recipeName={recipeNameOf(selected?.recipeCode ?? null)} />
       </div>
     </div>

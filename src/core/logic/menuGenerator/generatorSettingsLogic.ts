@@ -58,3 +58,11 @@ export function existingMealsByKey(slots: readonly MealSlot[], days: readonly Pe
   }
   return result;
 }
+
+function settingsSignature(settings: MenuGeneratorSettings): string {
+  return JSON.stringify({ ...settings, excludedFoodIds: [...settings.excludedFoodIds].sort() });
+}
+
+export function sameGeneratorSettings(a: MenuGeneratorSettings, b: MenuGeneratorSettings): boolean {
+  return settingsSignature(a) === settingsSignature(b);
+}

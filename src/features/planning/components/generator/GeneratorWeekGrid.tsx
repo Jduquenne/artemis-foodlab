@@ -18,7 +18,11 @@ export interface GeneratorWeekGridProps {
 }
 
 export const GeneratorWeekGrid = ({ week, slots, meals, recipeNameOf, kcalOf, selectedKey, onSelect, onToggleLock, onRegenerate }: GeneratorWeekGridProps) => (
-  <div className="grid grid-cols-[3.5rem_repeat(7,minmax(0,1fr))] gap-1.5">
+  <div
+    className={`h-full grid grid-cols-[3.5rem_repeat(7,minmax(0,1fr))] gap-1.5 ${
+      slots.length > 1 ? "grid-rows-[auto_repeat(2,minmax(5rem,1fr))_auto]" : "grid-rows-[auto_minmax(5rem,1fr)_auto]"
+    }`}
+  >
     <span />
     {week.columns.map((column) => (
       <span

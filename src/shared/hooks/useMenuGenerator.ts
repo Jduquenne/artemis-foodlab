@@ -117,7 +117,5 @@ export function useMenuGenerator() {
     return withPending(MENU_GENERATOR_WRITE_PENDING_KEY, () => bulkAddPlanningItems(entries));
   }, [run]);
 
-  const reset = useCallback(() => setRun(null), []);
-
-  return { run, generate, reshuffle, regenerateMeal, toggleLock, write, reset };
+  return { run, generate, reshuffle, regenerateMeal, toggleLock, write };
 }

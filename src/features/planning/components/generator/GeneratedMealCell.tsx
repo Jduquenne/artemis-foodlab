@@ -33,7 +33,7 @@ export const GeneratedMealCell = ({ meal, recipeName, selected, onSelect, onTogg
         aria-pressed={selected}
         className="flex-1 min-h-0 px-2 pt-1.5 text-left"
       >
-        <span className={`block text-xs font-semibold leading-snug line-clamp-3 ${recipeName ? "text-slate-800" : "text-slate-400"}`}>
+        <span className={`block text-xs xl:text-sm font-semibold leading-snug line-clamp-3 xl:line-clamp-4 ${recipeName ? "text-slate-800" : "text-slate-400"}`}>
           {recipeName ?? "Aucune recette"}
         </span>
       </button>

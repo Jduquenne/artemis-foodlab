@@ -8,6 +8,10 @@ import {
   HabitStrength,
   HabitTarget,
   MAX_GENERATION_DAYS,
+  QuotaComparator,
+  QuotaStrictness,
+  QuotaTarget,
+  WeeklyQuota,
   MenuGeneratorSettings,
   PeriodDay,
   PreferredFood,
@@ -50,6 +54,7 @@ export function defaultGeneratorSettings(startDate: string): MenuGeneratorSettin
     season: "preferred",
     useFreezer: true,
     habits: [],
+    quotas: [],
   };
 }
 
@@ -180,6 +185,28 @@ function restoreHabit(value: unknown): HabitRule | null {
   return { id: value.id, enabled: value.enabled !== false, days, slots, target, strength };
 }
 
+const QUOTA_COMPARATORS: readonly QuotaComparator[] = ["atLeast", "atMost"];
+
+const QUOTA_STRICTNESSES: readonly QuotaStrictness[] = ["strict", "preferred"];
+
+export const MAX_QUOTA_COUNT = 14;
+
+function restoreQuota(value: unknown): WeeklyQuota | null {
+  if (!isRecord(value) || typeof value.id !== "string") return null;
+  const target = restoreHabitTarget(value.target);
+  const comparator = QUOTA_COMPARATORS.find((item) => item === value.comparator);
+  const strictness = QUOTA_STRICTNESSES.find((item) => item === value.strictness);
+  const count = typeof value.count === "number" && Number.isInteger(value.count) ? Math.min(MAX_QUOTA_COUNT, Math.max(0, value.count)) : null;
+  if (!target || target.kind === "noMeal" || !comparator || !strictness || count === null) return null;
+  const quotaTarget: QuotaTarget = target;
+  return { id: value.id, enabled: value.enabled !== false, target: quotaTarget, comparator, count, strictness };
+}
+
+function restoreQuotas(value: unknown): WeeklyQuota[] {
+  if (!Array.isArray(value)) return [];
+  return value.map(restoreQuota).filter((quota): quota is WeeklyQuota => quota !== null);
+}
+
 function restoreHabits(value: unknown): HabitRule[] {
   if (!Array.isArray(value)) return [];
   return value.map(restoreHabit).filter((rule): rule is HabitRule => rule !== null);
@@ -202,5 +229,6 @@ export function restoreGeneratorSettings(saved: Partial<SavedGeneratorSettings> 
     preferredFoods: restorePreferredFoods(saved.preferredFoods),
     useFreezer: typeof saved.useFreezer === "boolean" ? saved.useFreezer : defaults.useFreezer,
     habits: restoreHabits(saved.habits),
+    quotas: restoreQuotas(saved.quotas),
   };
 }

@@ -285,7 +285,7 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
 - **Decision** (owner, 2026-10-17):
   - Every new setting is either **strict** (never bent: a slot that cannot respect it stays empty with the reason) or a **preference** (score).
   - **Habits**: rules « when » (days of the week picked one by one, or a range of days; no « week » / « weekend » notion; lunch / dinner / both) × « what » (protein type fish / red meat / white meat / deli / vegetarian, recipe category, a food, a recipe, « no meal ») × strength (mandatory / preferred / avoid / forbidden). No built-in or suggested rule (« fish on Friday » is not universal). Red / white meat come from recipe categories only (ingredients only say « Viande »), hence « meat (any) ».
-  - **Weekly quotas** with the same targets (« red meat ≤ 2 », « fish ≥ 2 »), strict or preferred.
+  - **Weekly quotas** with the same targets (« red meat ≤ 2 », « fish ≥ 2 »), strict or preferred, per ISO week, planned meals included; a partial week prorates « at least » (round(N × days / 7)), « at most » unchanged (agent's proposal, 2026-10-17, to confirm by the owner); a mandatory habit wins over a strict « at most » (warning).
   - **Foods to use** (leftovers, freezer products), the mirror of « Aliments à éviter », each food « bonus » or « at least once », placed on a random slot (not first); a strict request that cannot be met is reported as a warning.
   - **Freezer**: one checkbox, meals spread at random (no modes).
   - **Advanced**: repeat delay, same category in a row, kcal mode / tolerance / shares, favourite and banned recipes.

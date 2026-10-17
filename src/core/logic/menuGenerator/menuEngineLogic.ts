@@ -21,6 +21,16 @@ import { FreezerBatchStock } from "../freezer/freezerStockLogic";
 import { FreezerReservation, OpenSlot, createFreezerPlan, reserveFreezerSlots } from "./freezerPlanLogic";
 import { scoreCandidate } from "./mealScoreLogic";
 import { assignPreferredFoods, createFoodIndex, preferredFoodReason } from "./preferredFoodLogic";
+import {
+  QuotaWeek,
+  assignQuotaSlots,
+  matchesQuota,
+  quotaCounterKey,
+  quotaLabel,
+  quotaScore,
+  quotaTarget,
+  weekKeyOf,
+} from "./quotaLogic";
 
 export interface MenuEngineInput {
   days: readonly PeriodDay[];
@@ -136,6 +146,46 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
     (code) => foodsOf(code),
     random,
   );
+  const quotas = settings.quotas.filter((quota) => quota.enabled);
+  const codesOfKey = (key: string): string[] => {
+    if (isKept(key)) return input.existing[key] ?? [];
+    const code = fixedOf(key)?.recipeCode ?? reservations[key]?.recipeCode ?? null;
+    return code ? [code] : [];
+  };
+  const countInto = (counts: Map<string, number>, codes: readonly string[], weekKey: string) => {
+    for (const quota of quotas) {
+      if (!codes.some((code) => catalogue.recipes[code] && matchesQuota(catalogue.recipes[code], quota, matcher))) continue;
+      const counterKey = quotaCounterKey(quota.id, weekKey);
+      counts.set(counterKey, (counts.get(counterKey) ?? 0) + 1);
+    }
+  };
+  const knownCounts = new Map<string, number>();
+  for (const { day, key } of sequence) countInto(knownCounts, codesOfKey(key), weekKeyOf(day));
+  const quotaWeeks: QuotaWeek[] = [...new Set(sequence.map(({ day }) => weekKeyOf(day)))].map((weekKey) => {
+    const weekSlots = sequence.filter(({ day }) => weekKeyOf(day) === weekKey);
+    return {
+      weekKey,
+      label: `Semaine ${weekSlots[0].day.week}`,
+      dayCount: new Set(weekSlots.map(({ day }) => day.date)).size,
+      slots: weekSlots
+        .filter(({ key }) => !isKept(key) && !fixedOf(key) && !reservations[key] && !habitsOf(key).noMeal)
+        .map(({ day, slot, key }) => ({ key, date: day.date, candidates: eligibleOf(day, slot, key) })),
+    };
+  });
+  const dayCountOf = (weekKey: string) => quotaWeeks.find((week) => week.weekKey === weekKey)?.dayCount ?? 0;
+  const quotaBySlot = assignQuotaSlots(quotas, quotaWeeks, knownCounts, new Set(Object.keys(preferredFoodBySlot)), matcher, random);
+  const forcedQuotaIds = new Map<string, Set<string>>(
+    sequence
+      .filter(({ key }) => !isKept(key) && !fixedOf(key) && !reservations[key] && !habitsOf(key).noMeal)
+      .map(({ day, slot, key }) => {
+        const pool = eligibleOf(day, slot, key);
+        const forced = quotas.filter((quota) => pool.length > 0 && pool.every((recipe) => matchesQuota(recipe, quota, matcher)));
+        return [key, new Set(forced.map((quota) => quota.id))];
+      }),
+  );
+  const forcedAfter = (quotaId: string, weekKey: string, index: number) =>
+    sequence.filter((entry, position) => position > index && weekKeyOf(entry.day) === weekKey && forcedQuotaIds.get(entry.key)?.has(quotaId)).length;
+  const counts = new Map<string, number>();
   const knownCategoryOf = (key: string | undefined) =>
     key ? (categoryOf(input.existing[key]?.[0]) ?? categoryOf(fixedOf(key)?.recipeCode) ?? categoryOf(reservations[key]?.recipeCode)) : null;
 
@@ -146,8 +196,11 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
 
   for (const [index, { day, slot, key }] of sequence.entries()) {
     if (index > 0 && sequence[index - 1].day.date !== day.date) sameDayCategoryIds = [];
+    const weekKey = weekKeyOf(day);
+    const countOf = (quotaId: string) => counts.get(quotaCounterKey(quotaId, weekKey)) ?? 0;
     const place = (meal: GeneratedMeal, categoryId: string | null) => {
       meals.push(meal);
+      countInto(counts, meal.kept ? (input.existing[key] ?? []) : meal.recipeCode ? [meal.recipeCode] : [], weekKey);
       cover(meal.kept ? input.existing[key]?.[0] : meal.recipeCode);
       previousCategoryId = categoryId;
       if (categoryId) sameDayCategoryIds.push(categoryId);
@@ -194,11 +247,23 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
 
     const targetFood = preferredFoodBySlot[key];
     const pendingFood = targetFood && !covered.has(targetFood) ? targetFood : null;
-    const allEligible = eligibleOf(day, slot, key);
+    const cappedQuotas = quotas.filter((quota) =>
+      quota.comparator === "atMost"
+      && quota.strictness === "strict"
+      && !forcedQuotaIds.get(key)?.has(quota.id)
+      && countOf(quota.id) + forcedAfter(quota.id, weekKey, index) >= quota.count,
+    );
+    const allEligible = eligibleOf(day, slot, key).filter((recipe) => cappedQuotas.every((quota) => !matchesQuota(recipe, quota, matcher)));
     const requiredPool = pendingFood && required.has(pendingFood)
       ? allEligible.filter((recipe) => foodsOf(recipe.code).has(pendingFood))
       : [];
-    const eligible = requiredPool.length > 0 ? requiredPool : allEligible;
+    const foodEligible = requiredPool.length > 0 ? requiredPool : allEligible;
+    const slotQuota = quotas.find((quota) => quota.id === quotaBySlot[key]);
+    const pendingQuota = slotQuota && countOf(slotQuota.id) < quotaTarget(slotQuota, dayCountOf(weekKey)) ? slotQuota : null;
+    const quotaPool = pendingQuota && pendingQuota.strictness === "strict"
+      ? foodEligible.filter((recipe) => matchesQuota(recipe, pendingQuota, matcher))
+      : [];
+    const eligible = quotaPool.length > 0 ? quotaPool : foodEligible;
     const fresh = eligible.filter((recipe) => !used.has(recipe.code));
     const pool = fresh.length > 0 ? fresh : eligible;
     const context = {
@@ -218,15 +283,22 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
       habits,
       matcher,
       names,
+      quotaAdjust: (recipe: RecipeDetails) => quotaScore(recipe, quotas, pendingQuota?.id ?? null, countOf, matcher, names),
     };
     const choice = chooseRecipe(pool, (recipe) => scoreCandidate(recipe, context), random);
 
     if (!choice) {
       const strict = [...habits.mandatory, ...habits.forbidden];
       const strictLabel = strict.map((rule) => habitLabel(rule, names)).join(" + ");
+      const cappedLabel = cappedQuotas.map((quota) => quotaLabel(quota, names)).join(" + ");
+      if (strict.length === 0 && cappedQuotas.length > 0) {
+        warnings.push(`${formatSourceDayFull(day.date)}, ${GENERATED_SLOT_LABELS[slot].toLowerCase()} : aucune recette possible sans dépasser ${cappedLabel}.`);
+      }
       const label = strict.length > 0
         ? `Aucune recette ne respecte les habitudes : ${strictLabel}`
-        : (input.rejected[key] ?? []).length > 0
+        : cappedQuotas.length > 0
+          ? `Aucune recette possible sans dépasser : ${cappedLabel}`
+          : (input.rejected[key] ?? []).length > 0
           ? "Aucune autre recette ne respecte les filtres"
           : "Aucune recette ne respecte les filtres";
       if (strict.length > 0) {
@@ -239,6 +311,18 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
     used.add(choice.recipe.code);
     const reasons = fresh.length > 0 ? choice.reasons : [{ kind: "repeat", label: "Répétée faute d'autre recette" } satisfies MealReason, ...choice.reasons];
     place({ key, day, slot, recipeCode: choice.recipe.code, kept: false, locked: false, noMeal: false, reasons }, choice.recipe.categoryId);
+  }
+  for (const quota of quotas.filter((item) => item.strictness === "strict")) {
+    for (const week of quotaWeeks) {
+      const count = counts.get(quotaCounterKey(quota.id, week.weekKey)) ?? 0;
+      const target = quotaTarget(quota, week.dayCount);
+      if (quota.comparator === "atLeast" && count < target) {
+        warnings.push(`${week.label} : ${quotaLabel(quota, names)} non atteint (${count} sur ${target}).`);
+      }
+      if (quota.comparator === "atMost" && count > target) {
+        warnings.push(`${week.label} : ${quotaLabel(quota, names)} dépassé (${count}) à cause des repas déjà prévus, gardés ou des habitudes.`);
+      }
+    }
   }
   for (const foodId of required) {
     if (covered.has(foodId)) continue;

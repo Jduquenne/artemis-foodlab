@@ -42,6 +42,21 @@ export interface HabitRule {
   strength: HabitStrength;
 }
 
+export type QuotaComparator = "atLeast" | "atMost";
+
+export type QuotaStrictness = "strict" | "preferred";
+
+export type QuotaTarget = Exclude<HabitTarget, { kind: "noMeal" }>;
+
+export interface WeeklyQuota {
+  id: string;
+  enabled: boolean;
+  target: QuotaTarget;
+  comparator: QuotaComparator;
+  count: number;
+  strictness: QuotaStrictness;
+}
+
 export interface MenuGeneratorSettings {
   startDate: string;
   endDate: string;
@@ -52,6 +67,7 @@ export interface MenuGeneratorSettings {
   season: SeasonMode;
   useFreezer: boolean;
   habits: HabitRule[];
+  quotas: WeeklyQuota[];
 }
 
 export type SavedGeneratorSettings = Omit<MenuGeneratorSettings, "startDate" | "endDate"> & {
@@ -89,6 +105,7 @@ export type MealReasonKind =
   | "freezer"
   | "preferred"
   | "habit"
+  | "quota"
   | "history"
   | "recent"
   | "kcal"

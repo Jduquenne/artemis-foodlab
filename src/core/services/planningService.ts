@@ -1,10 +1,12 @@
 import { db } from "./databaseService";
-import { MealSlot } from "../domain/planning";
+import { BulkPlanningResult, MealSlot, PlanningItemEntry } from "../domain/planning";
 import { canAddDessert } from "../domain/recipePredicates";
 import { apiFetch, apiFetchJson } from "./apiClient";
 import {
+  ApiBulkItemsResponse,
   ApiPlanningSlot,
   ApiPlanningSlotItem,
+  buildBulkItemsPayload,
   buildSlotItemsBatchPayload,
   mapApiItemsToSlotFields,
   mapApiSlotToMealSlot,
@@ -41,6 +43,17 @@ export async function saveSlot(slot: MealSlot): Promise<void> {
   });
 
   await db.planning.put({ ...slot, apiId, ...mapApiItemsToSlotFields(items) });
+}
+
+export async function bulkAddPlanningItems(entries: readonly PlanningItemEntry[]): Promise<BulkPlanningResult> {
+  const payload = buildBulkItemsPayload(entries);
+  if (!payload) return { written: 0, skipped: 0 };
+  const { slots, skipped } = await apiFetchJson<ApiBulkItemsResponse>("/planning-slots/bulk-items", {
+    method: "POST",
+    body: payload,
+  });
+  await db.planning.bulkPut(slots.map(mapApiSlotToMealSlot));
+  return { written: payload.entries.length - skipped.length, skipped: skipped.length };
 }
 
 export async function deleteSlot(id: string): Promise<void> {

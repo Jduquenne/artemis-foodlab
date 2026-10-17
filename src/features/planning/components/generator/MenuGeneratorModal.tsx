@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { ArrowLeft, Loader2, RefreshCw, Sparkles, X } from "lucide-react";
+import { ArrowLeft, CalendarPlus, Loader2, RefreshCw, Sparkles, X } from "lucide-react";
 import { MenuGeneratorSettings } from "../../../../core/domain/menuGenerator";
+import { BulkPlanningResult } from "../../../../core/domain/planning";
 import { defaultGeneratorSettings, validateGeneratorSettings } from "../../../../core/logic/menuGenerator/generatorSettingsLogic";
 import { countGeneratedMeals } from "../../../../core/logic/menuGenerator/menuPreviewLogic";
-import { MENU_GENERATOR_PENDING_KEY, useMenuGenerator } from "../../../../shared/hooks/useMenuGenerator";
+import { MENU_GENERATOR_PENDING_KEY, MENU_GENERATOR_WRITE_PENDING_KEY, useMenuGenerator } from "../../../../shared/hooks/useMenuGenerator";
 import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
 import { GeneratorSettingsForm } from "./GeneratorSettingsForm";
 import { GeneratorPreview } from "./GeneratorPreview";
@@ -11,18 +12,27 @@ import { GeneratorPreview } from "./GeneratorPreview";
 export interface MenuGeneratorModalProps {
   startDate: string;
   onClose: () => void;
+  onAdded: (result: BulkPlanningResult, startDate: string) => void;
 }
 
-export const MenuGeneratorModal = ({ startDate, onClose }: MenuGeneratorModalProps) => {
+export const MenuGeneratorModal = ({ startDate, onClose, onAdded }: MenuGeneratorModalProps) => {
   const [settings, setSettings] = useState<MenuGeneratorSettings>(() => defaultGeneratorSettings(startDate));
   const [error, setError] = useState<string | null>(null);
-  const { run, generate, reshuffle, regenerateMeal, toggleLock, reset } = useMenuGenerator();
+  const { run, generate, reshuffle, regenerateMeal, toggleLock, write, reset } = useMenuGenerator();
   const pending = usePendingKey(MENU_GENERATOR_PENDING_KEY);
+  const writing = usePendingKey(MENU_GENERATOR_WRITE_PENDING_KEY);
+  const mealCount = run ? countGeneratedMeals(run.meals) : 0;
 
   const launch = async () => {
     const problem = validateGeneratorSettings(settings);
     setError(problem);
     if (!problem) await generate(settings);
+  };
+
+  const addToPlanning = async () => {
+    if (!run) return;
+    const result = await write();
+    if (result) onAdded(result, run.settings.startDate);
   };
 
   return (
@@ -34,10 +44,10 @@ export const MenuGeneratorModal = ({ startDate, onClose }: MenuGeneratorModalPro
               <Sparkles size={12} /> Générer des menus
             </p>
             <p className="text-[11px] text-slate-500 mt-0.5">
-              {run ? `${countGeneratedMeals(run.meals)} repas proposés` : "Déjeuners et dîners de la période"}
+              {run ? `${mealCount} repas proposés` : "Déjeuners et dîners de la période"}
             </p>
           </div>
-          <button onClick={onClose} aria-label="Fermer" className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-muted transition-colors">
+          <button onClick={onClose} disabled={writing} aria-label="Fermer" className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-muted transition-colors">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -63,17 +73,26 @@ export const MenuGeneratorModal = ({ startDate, onClose }: MenuGeneratorModalPro
             <>
               <button
                 onClick={reset}
-                disabled={pending}
+                disabled={pending || writing}
                 className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-600 hover:bg-muted transition-colors disabled:opacity-50"
               >
                 <ArrowLeft size={15} /> Réglages
               </button>
               <button
                 onClick={reshuffle}
-                className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-orange-500 text-white text-sm font-bold hover:bg-orange-600 transition-colors disabled:opacity-50"
+                disabled={writing}
+                className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-600 hover:bg-muted transition-colors disabled:opacity-50"
               >
                 <RefreshCw size={15} />
-                Autre proposition
+                <span className="hidden sm:inline">Autre proposition</span>
+              </button>
+              <button
+                onClick={addToPlanning}
+                disabled={writing || mealCount === 0}
+                className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-orange-500 text-white text-sm font-bold hover:bg-orange-600 transition-colors disabled:opacity-50"
+              >
+                {writing ? <Loader2 className="w-4 h-4 animate-spin" /> : <CalendarPlus size={15} />}
+                Ajouter au planning ({mealCount})
               </button>
             </>
           ) : (

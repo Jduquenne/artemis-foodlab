@@ -19,6 +19,19 @@ export interface MealSlot {
   foodChoices?: Record<string, FoodChoice[]>;
 }
 
+export interface PlanningItemEntry {
+  year: number;
+  week: number;
+  day: string;
+  slot: SlotType;
+  code: string;
+}
+
+export interface BulkPlanningResult {
+  written: number;
+  skipped: number;
+}
+
 export interface CopyState {
   recipeId: string;
   slotType: SlotType;

@@ -24,6 +24,9 @@ import { toIsoDate } from '../../core/utils/dateUtils';
 import { computeDayMacros } from '../../core/logic/nutrition/macroLogic';
 import { useMacroCatalogue } from '../../shared/hooks/useMacroCatalogue';
 import { useRefreshStore } from '../../shared/store/useRefreshStore';
+import { useNotificationStore } from '../../shared/store/useNotificationStore';
+import { BulkPlanningResult } from '../../core/domain/planning';
+import { menuWriteMessage } from '../../core/logic/menuGenerator/menuWriteLogic';
 import { useSearchParams } from 'react-router-dom';
 import { SlotType, MealSlot } from '../../core/domain/planning';
 import { isDessert, canAddDessert } from '../../core/domain/recipePredicates';
@@ -166,6 +169,13 @@ export const PlanningModule = () => {
     };
 
     const swipeHandlers = useHorizontalSwipe(handleSwipe);
+
+    const pushNotification = useNotificationStore((s) => s.push);
+    const handleMenuAdded = (result: BulkPlanningResult, startDate: string) => {
+        setGeneratorOpen(false);
+        setSearchParams(p => { p.set('d', startDate); p.set('day', dayNameOf(new Date(startDate + 'T12:00:00'))); return p; }, { replace: true });
+        pushNotification({ message: menuWriteMessage(result), duration: 6000, variant: 'info' });
+    };
 
     const handleDeleteMeal = async (day: string, slot: SlotType) => {
         const slotId = buildSlotId(year, weekNumber, day, slot);
@@ -560,7 +570,7 @@ export const PlanningModule = () => {
                 )}
 
                 {generatorOpen && (
-                    <MenuGeneratorModal startDate={selectedDayDate} onClose={() => setGeneratorOpen(false)} />
+                    <MenuGeneratorModal startDate={selectedDayDate} onClose={() => setGeneratorOpen(false)} onAdded={handleMenuAdded} />
                 )}
 
                 {pendingDragMove && dessertChoiceIds && (

@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { GeneratedMeal, MenuGeneratorSettings, PeriodDay } from "../../core/domain/menuGenerator";
+import { BulkPlanningResult } from "../../core/domain/planning";
 import { FreezerBatchStock, freezerBatchStocks } from "../../core/logic/freezer/freezerStockLogic";
 import { existingMealsByKey } from "../../core/logic/menuGenerator/generatorSettingsLogic";
 import { generateMenu, weeksSinceEatenMap } from "../../core/logic/menuGenerator/menuEngineLogic";
@@ -9,9 +10,10 @@ import {
   rejectedForMeal,
   toggleMealLock,
 } from "../../core/logic/menuGenerator/menuPreviewLogic";
+import { plannedEntries } from "../../core/logic/menuGenerator/menuWriteLogic";
 import { buildPeriodDays, periodWeeks } from "../../core/logic/menuGenerator/periodLogic";
 import { getCategories } from "../../core/services/freezerService";
-import { getWeekSlots, syncWeekFromApi } from "../../core/services/planningService";
+import { bulkAddPlanningItems, getWeekSlots, syncWeekFromApi } from "../../core/services/planningService";
 import { getRecipeUsage } from "../../core/services/planningUsageService";
 import { newSeed } from "../../core/utils/randomUtils";
 import { useProfileStore } from "../store/useProfileStore";
@@ -20,6 +22,8 @@ import { useFoodsSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from "
 import { useActiveProfile } from "./useActiveProfile";
 
 export const MENU_GENERATOR_PENDING_KEY = "menu-generator-run";
+
+export const MENU_GENERATOR_WRITE_PENDING_KEY = "menu-generator-write";
 
 export interface MenuGeneratorContext {
   days: PeriodDay[];
@@ -107,7 +111,13 @@ export function useMenuGenerator() {
     setRun((current) => (current ? { ...current, meals: toggleMealLock(current.meals, key) } : current));
   }, []);
 
+  const write = useCallback(async (): Promise<BulkPlanningResult | undefined> => {
+    if (!run) return undefined;
+    const entries = plannedEntries(run.meals);
+    return withPending(MENU_GENERATOR_WRITE_PENDING_KEY, () => bulkAddPlanningItems(entries));
+  }, [run]);
+
   const reset = useCallback(() => setRun(null), []);
 
-  return { run, generate, reshuffle, regenerateMeal, toggleLock, reset };
+  return { run, generate, reshuffle, regenerateMeal, toggleLock, write, reset };
 }

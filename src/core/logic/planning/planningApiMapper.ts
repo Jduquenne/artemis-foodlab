@@ -1,5 +1,5 @@
 import { FoodChoice } from "../../domain/foodGroup";
-import { MealSlot, SlotType } from "../../domain/planning";
+import { MealSlot, PlanningItemEntry, SlotType } from "../../domain/planning";
 import { getCodeById, getIdByCode } from "../../catalogue/recipeIdMap";
 import { buildSlotId } from "./planningSlotIdLogic";
 import { SlotDiff } from "./slotDiffLogic";
@@ -22,6 +22,24 @@ export interface ApiPlanningSlot {
   slot: string;
   persons: number | null;
   items: ApiPlanningSlotItem[];
+}
+
+export interface ApiBulkItemEntry {
+  year: number;
+  week: number;
+  day: string;
+  slot: SlotType;
+  itemId: string;
+}
+
+export interface ApiBulkItemsPayload {
+  entries: ApiBulkItemEntry[];
+  onConflict: "skip" | "fail";
+}
+
+export interface ApiBulkItemsResponse {
+  slots: ApiPlanningSlot[];
+  skipped: { year: number; week: number; day: string; slot: string }[];
 }
 
 export interface SlotItemFields {
@@ -124,4 +142,12 @@ export function buildSlotItemsBatchPayload(diff: SlotDiff): SlotItemsBatchPayloa
     ...(remove.length > 0 ? { remove } : {}),
     ...(update.length > 0 ? { update } : {}),
   };
+}
+
+export function buildBulkItemsPayload(entries: readonly PlanningItemEntry[]): ApiBulkItemsPayload | null {
+  const apiEntries = entries.flatMap(({ year, week, day, slot, code }) => {
+    const itemId = getIdByCode(code);
+    return itemId ? [{ year, week, day, slot, itemId }] : [];
+  });
+  return apiEntries.length > 0 ? { entries: apiEntries, onConflict: "skip" } : null;
 }

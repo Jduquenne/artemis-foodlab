@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-17 — API: bulk-items extension payloads received (v6.115.2, docs only)
+- Done: real dev payloads (a) dish + side + 2 desserts, (b) filled slot: dishes skipped (`slot_has_dish`), dessert still written, (c) `dessert_limit` + the fail variant (409, nothing written), (d) exact duplicate 400 — summarised in `docs/api.md`, TODO removed. Not captured: the « more than 4 dishes in one slot » 400 (the front never sends more than 4).
+- Still open: prod go-live of `bulk-items` (both versions) to be confirmed by the API session; C (sides, desserts) can now be built on dev. Next front step: B9.
+
 ## 2026-10-17 — API: bulk-items extension described (v6.115.1, docs only)
 - Done: the API session extended `POST /planning-slots/bulk-items` on dev (several items per slot, `isDessert`, 200 entries, per-slot 4 dishes / 3 desserts in the body, `slot_has_dish` for all dish entries of a filled slot, `dessert_exists`, `dessert_limit`, `skipped` gains `itemId`, `isDessert`, `reason`; backward compatible). Recorded in `docs/api.md` from its description. The current front (dishes only, one per slot) is unaffected.
 - Problems: the real payloads asked for (cases a-d) were not sent; nothing will be coded against the extension before they are (TODO(owner) in `docs/api.md`). Prod go-live of `bulk-items` (both versions) still to be confirmed.

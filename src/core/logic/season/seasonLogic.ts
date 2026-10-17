@@ -15,8 +15,17 @@ export function normalizeMonths(months: readonly number[]): number[] {
   return unique.length === MONTH_COUNT ? [] : unique;
 }
 
+export const ALL_MONTHS: readonly number[] = Array.from({ length: MONTH_COUNT }, (_, index) => index + 1);
+
+export function checkedMonths(months: readonly number[] | undefined): readonly number[] {
+  const normalized = normalizeMonths(months ?? []);
+  return normalized.length === 0 ? ALL_MONTHS : normalized;
+}
+
 export function toggleMonth(months: readonly number[], month: number): number[] {
-  return normalizeMonths(months.includes(month) ? months.filter((m) => m !== month) : [...months, month]);
+  const checked = checkedMonths(months);
+  const next = checked.includes(month) ? checked.filter((m) => m !== month) : [...checked, month];
+  return next.length === 0 ? normalizeMonths(months) : normalizeMonths(next);
 }
 
 export function sameMonths(a: readonly number[], b: readonly number[]): boolean {

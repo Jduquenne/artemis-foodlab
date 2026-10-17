@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-17 — Food seasons: all year shown as 12 checked months (v6.100.3)
+- Done: owner's request: « Toute l'année » is now shown with the 12 months checked (was: none checked). Storage unchanged (`[]` = all year, API D-055 contract). `seasonLogic.ts`: `ALL_MONTHS`, `checkedMonths` (`[]` → 12 months), `toggleMonth` works on the checked months and ignores unchecking the last one. `SeasonMonthsField` hint = the season only (« Toute l'année » or the ranges). Spec `docs/spec-admin.md`.
+- Numbers: `npx tsc -b` + `npm run lint` pass; not checked in a browser (Dashboard › Aliments: an all-year food shows 12 green months; unchecking one gives 11 months; checking the 12th back gives « Toute l'année »; the last month cannot be unchecked; « Toute l'année » re-checks everything).
+- Still open: same as 2026-10-16 (Recipe Builder data fixes by the owner, apéritif decision, menu generator step 5).
+
 ## 2026-10-16 — Meal types review applied in prod (v6.100.2)
 - Done: owner's per-recipe review (`meal-types-review.html`, local) exported 168 changes; front check of the API dry-run (same counts, 57 desserts of which 55 lose lunch / dinner, intended); API `import:recipe-meal-types --apply` in prod, one transaction, 0 errors, 0 mismatch. Recount over 685 dishes: breakfast 172, lunch 509, dinner 507, snack 176, none empty. Rule written in `docs/spec-recipes.md` (meal types vs dessert). Docs only.
 - Numbers: no code change; `npx tsc -b` + `npm run lint` pass.

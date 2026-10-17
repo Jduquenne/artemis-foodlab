@@ -16,6 +16,19 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-17 — Pause test: menu generator V2 + A / B / C + settings UI U1 (v6.120.1, docs only)
+- Done: session paused by the owner to test in a browser. Owner question answered: the « Végétarien » diet = no meat and no fish (bases included), detected from the recipe category (`red-meat`, `white-meat`, `charcuterie`, `fish`) and from each ingredient's category in the recipe (« Viande », « Charcuterie », « Poisson »); eggs and dairy allowed. Known gap: meat / fish filed under « Conserves » or « Surgelés » (canned tuna, frozen shrimps) is not detected; proposed fix to decide: a data check by the API session first, then possibly also read the food's own category. Roadmap current focus brought up to date.
+- To test first (admin account, `npm run dev`, dev API since `bulk-items` is dev only):
+  1. Planning → « Générer »: full-screen window without scroll, light and dark mode, every settings tab, an editor open, a long list (U1 cards, switches, badges, empty states).
+  2. Settings survive a reload (device storage); « Toutes saisons » = all months checked.
+  3. Habits: fish on Friday (mandatory), « un seul des repas du jour », « sauf si la recette contient », family and list targets, « Pas de repas ».
+  4. Quotas: « entre 1 et 2 » poulet, legumes ≥ 2 with « aliments différents », soup by name ≥ 3 with « pas 2 fois de suite », a 10-day period (prorated last block).
+  5. Foods to use, favourite and banned recipes, freezer meals spread over the period, frozen foods allowed out of season.
+  6. Advanced: same starch in a row, day nutrition limits (strict: recipes without data excluded, warning), « Jour » row in the grid.
+  7. Desserts: a lunch rule (seasonal fruit + chocolate), a dinner rule; check « Chocolat 85 % », « Chocolat 74 % », « Skyr » are flagged dessert in the catalogue.
+  8. Preview: lock / regenerate one meal, detail on click, kcal per day; write → Planning opens on the start week, already filled slots keep their dishes, desserts written; then the shopping list.
+- Still open: U2 (vertical menu with counts: Essentiel, Habitudes, Quotas, Aliments, Desserts, Variété, Nutrition; mobile list then screen), U3 (editor steps 1 Quand · 2 Quoi · 3 Force, live summary sentence, sticky Enregistrer / Annuler); vegetarian detection gap (decision pending); `bulk-items` (v1 + extension) prod go-live to be confirmed by the API session **before any push of `master`**; shopping days offer (D-035 UX); ideas: leftovers, setting sets, side dishes.
+
 ## 2026-10-17 — Menu generator settings UI U1: shared components (v6.120.0)
 - Done: owner feedback « tout est posé en vrac, sans style ni ergonomie »; owner choices: vertical menu (U2) and a dedicated editor panel (U3). U1: `SettingsCard`, `SegmentedControl`, `Switch`, `StrengthBadge`, `TargetKindIcon`, `RuleCard`, `RuleListPanel` (editor replaces the list), restyled `ChoicePills` (check icon) and `SettingsSection` (uppercase label). Applied to every panel: Période et repas (cards Période, Repas à générer, Régime, Saison, Plats du congélateur with a switch), Aliments et recettes (5 cards), Avancé split into `VarietySettingsPanel` + `NutritionSettingsPanel` (cards; `ADVANCED_MODE_OPTIONS` moved to `generatorSettingsLogic`), Habitudes / Quotas / Desserts on `RuleListPanel` + `RuleCard` (switch, strength badge, target icon, empty state with examples), food lists on `RuleCard` (delete disabled with « Utilisée par N règles »). Editors: single choices on `SegmentedControl`, quota options on switches, editor cards restyled. Fix: `foodListUsage` now also counts dessert rules (a list used by a dessert pick could be deleted).
 - Numbers: `npx tsc -b` + `npm run lint` pass; engine untouched (A1 check rerun for `foodListUsage`). **Visual change, not checked in a browser** (to test with `npm run dev`: light / dark mode, every tab, an editor open, a long list).

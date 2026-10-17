@@ -40,6 +40,21 @@ export const AdvancedSettingsPanel = ({ settings, disabled, onPatch }: AdvancedS
         <ChoicePills options={MODE_OPTIONS} isActive={(id) => id === advanced.categoryInRow} onToggle={(categoryInRow) => patch({ categoryInRow })} disabled={disabled} />
       </SettingsSection>
 
+      <SettingsSection title="Même féculent à la suite" hint="Féculents = aliments de la catégorie « Féculents » (pâtes, riz, pommes de terre…), bases comprises.">
+        <ChoicePills options={MODE_OPTIONS} isActive={(id) => id === advanced.starchInRow} onToggle={(starchInRow) => patch({ starchInRow })} disabled={disabled} />
+        <div className="flex items-center gap-2 text-xs text-slate-600">
+          <span>Au plus</span>
+          <NumberStepper
+            value={advanced.starchMax}
+            {...ADVANCED_LIMITS.starchMax}
+            unit="repas"
+            disabled={disabled || advanced.starchInRow === "off"}
+            onChange={(starchMax) => patch({ starchMax })}
+          />
+          <span>de suite</span>
+        </div>
+      </SettingsSection>
+
       <SettingsSection title="Calories" hint="Cible d'un repas = objectif du profil actif × part du repas. Strict : hors tolérance, la recette n'est pas proposée.">
         <ChoicePills options={MODE_OPTIONS} isActive={(id) => id === advanced.kcalMode} onToggle={(kcalMode) => patch({ kcalMode })} disabled={disabled} />
         <div className="grid grid-cols-[auto_1fr] items-center gap-x-3 gap-y-1.5 text-xs text-slate-600">

@@ -210,6 +210,7 @@ function restoreHabit(value: unknown): HabitRule | null {
 
 export const ADVANCED_LIMITS = {
   repeatWeeks: { min: 1, max: 8, step: 1 },
+  starchMax: { min: 1, max: 4, step: 1 },
   kcalTolerance: { min: 5, max: 30, step: 5 },
   kcalShare: { min: 15, max: 60, step: 5 },
 } as const;
@@ -233,6 +234,8 @@ function restoreAdvanced(value: unknown): AdvancedSettings {
     repeatWeeks: clampInteger(value.repeatWeeks, ADVANCED_LIMITS.repeatWeeks.min, ADVANCED_LIMITS.repeatWeeks.max, defaults.repeatWeeks),
     repeatMode: restoreMode(value.repeatMode, defaults.repeatMode),
     categoryInRow: restoreMode(value.categoryInRow, defaults.categoryInRow),
+    starchInRow: restoreMode(value.starchInRow, defaults.starchInRow),
+    starchMax: clampInteger(value.starchMax, ADVANCED_LIMITS.starchMax.min, ADVANCED_LIMITS.starchMax.max, defaults.starchMax),
     kcalMode: restoreMode(value.kcalMode, defaults.kcalMode),
     kcalTolerance: clampInteger(value.kcalTolerance, ADVANCED_LIMITS.kcalTolerance.min, ADVANCED_LIMITS.kcalTolerance.max, defaults.kcalTolerance),
     kcalShares: {

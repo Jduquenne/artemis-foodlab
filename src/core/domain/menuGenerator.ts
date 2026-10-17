@@ -80,6 +80,8 @@ export interface AdvancedSettings {
   repeatWeeks: number;
   repeatMode: AdvancedMode;
   categoryInRow: AdvancedMode;
+  starchInRow: AdvancedMode;
+  starchMax: number;
   kcalMode: AdvancedMode;
   kcalTolerance: number;
   kcalShares: Record<GeneratedSlotType, number>;
@@ -89,6 +91,8 @@ export const DEFAULT_ADVANCED_SETTINGS: AdvancedSettings = {
   repeatWeeks: 3,
   repeatMode: "preferred",
   categoryInRow: "preferred",
+  starchInRow: "off",
+  starchMax: 2,
   kcalMode: "preferred",
   kcalTolerance: 15,
   kcalShares: { [MealType.LUNCH]: 35, [MealType.DINNER]: 30 },

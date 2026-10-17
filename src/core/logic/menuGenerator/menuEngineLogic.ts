@@ -20,6 +20,7 @@ import { HabitMatcher, SlotHabits, habitLabel, isOneMealHabit, matchesHabitRule,
 import { FreezerBatchStock } from "../freezer/freezerStockLogic";
 import { FreezerReservation, OpenSlot, createFreezerPlan, reserveFreezerSlots } from "./freezerPlanLogic";
 import { kcalDeviation, scoreCandidate, slotKcalTarget } from "./mealScoreLogic";
+import { STARCH_SCORE, starchFoodIds, starchRunViolations } from "./starchLogic";
 import { assignToRandomSlots, createFoodIndex, preferredFoodReason } from "./preferredFoodLogic";
 import {
   QuotaBlock,
@@ -230,6 +231,9 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
   const knownCodeOf = (key: string | undefined) =>
     key ? (input.existing[key]?.[0] ?? fixedOf(key)?.recipeCode ?? reservations[key]?.recipeCode ?? null) : null;
   let previousCode: string | null = null;
+  const starchesOf = (codes: readonly (string | null | undefined)[]) =>
+    new Set(codes.flatMap((code) => [...starchFoodIds(foodsOf(code), catalogue.foods)]));
+  const starchHistory: Set<string>[] = [];
   const knownCategoryOf = (key: string | undefined) =>
     key ? (categoryOf(input.existing[key]?.[0]) ?? categoryOf(fixedOf(key)?.recipeCode) ?? categoryOf(reservations[key]?.recipeCode)) : null;
 
@@ -246,6 +250,7 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
       meals.push(meal);
       countInto(counts, countedFoods, meal.kept ? (input.existing[key] ?? []) : meal.recipeCode ? [meal.recipeCode] : [], blockKey);
       previousCode = meal.kept ? (input.existing[key]?.[0] ?? null) : meal.recipeCode;
+      starchHistory.push(starchesOf(meal.kept ? (input.existing[key] ?? []) : [meal.recipeCode]));
       cover(meal.kept ? input.existing[key]?.[0] : meal.recipeCode);
       previousCategoryId = categoryId;
       if (categoryId) sameDayCategoryIds.push(categoryId);
@@ -294,6 +299,14 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
     const pendingFood = targetFood && !covered.has(targetFood) ? targetFood : null;
     const nextCategoryId = knownCategoryOf(sequence[index + 1]?.key);
     const kcalTarget = slotKcalTarget(input.kcalTarget, slot, advanced);
+    const upcomingStarches: Set<string>[] = [];
+    for (const entry of sequence.slice(index + 1)) {
+      const code = knownCodeOf(entry.key);
+      if (!code) break;
+      upcomingStarches.push(starchesOf(isKept(entry.key) ? (input.existing[entry.key] ?? []) : [code]));
+    }
+    const starchViolations = (recipe: RecipeDetails) =>
+      advanced.starchInRow === "off" ? [] : starchRunViolations(starchesOf([recipe.code]), starchHistory, upcomingStarches, advanced.starchMax);
     const strictFilters: { label: string; keep: (recipe: RecipeDetails) => boolean }[] = [
       ...(advanced.repeatMode === "strict"
         ? [{
@@ -305,6 +318,12 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
         ? [{
             label: "pas deux fois la même catégorie à la suite",
             keep: (recipe: RecipeDetails) => recipe.categoryId !== previousCategoryId && recipe.categoryId !== nextCategoryId,
+          }]
+        : []),
+      ...(advanced.starchInRow === "strict"
+        ? [{
+            label: `pas plus de ${advanced.starchMax} repas de suite avec le même féculent`,
+            keep: (recipe: RecipeDetails) => starchViolations(recipe).length === 0,
           }]
         : []),
       ...(advanced.kcalMode === "strict" && kcalTarget
@@ -381,6 +400,13 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
       advanced,
       favoriteCodes,
       bonusFavoriteCode: favoriteBySlot[key] ?? null,
+      starchAdjust: (recipe: RecipeDetails) => {
+        if (advanced.starchInRow !== "preferred") return { score: 0, reasons: [] };
+        const repeated = starchViolations(recipe);
+        if (repeated.length === 0) return { score: 0, reasons: [] };
+        const label = `Même féculent plus de ${advanced.starchMax} fois de suite : ${repeated.map((id) => catalogue.foods[id]?.name ?? id).join(", ")}`;
+        return { score: -STARCH_SCORE, reasons: [{ kind: "repeat", label } satisfies MealReason] };
+      },
       quotaAdjust: (recipe: RecipeDetails) => quotaScore(recipe, quotas, pendingQuota?.id ?? null, countOf, adjacentMatch, matcher, names),
     };
     const choice = chooseRecipe(pool, (recipe) => scoreCandidate(recipe, context), random);

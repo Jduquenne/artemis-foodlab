@@ -24,6 +24,7 @@ export interface ScoreContext {
   matcher: HabitMatcher;
   names: HabitNames;
   quotaAdjust: (recipe: RecipeDetails) => CandidateScore;
+  starchAdjust: (recipe: RecipeDetails) => CandidateScore;
   advanced: AdvancedSettings;
   favoriteCodes: ReadonlySet<string>;
   bonusFavoriteCode: string | null;
@@ -109,6 +110,7 @@ export function scoreCandidate(recipe: RecipeDetails, context: ScoreContext): Ca
   const parts = [
     habitScore(recipe, context.habits, context.matcher, context.names),
     context.quotaAdjust(recipe),
+    context.starchAdjust(recipe),
     preferredScore(recipe, context),
     seasonScore(recipe, context),
     favoriteScore(recipe, context),

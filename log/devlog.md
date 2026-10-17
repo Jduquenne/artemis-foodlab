@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-17 — Menu generator B7: same starch in a row (v6.117.0)
+- Done: `AdvancedSettings.starchInRow` (default off) + `starchMax` (1..4, default 2, restored with clamp); `starchLogic.ts` (`starchFoodIds`: foods of category « Féculents », `starchRunViolations`: previous run + 1 + next known run > N); engine keeps the starches of every placed meal and looks ahead over the next known meals; strict filter « pas plus de N repas de suite avec le même féculent », preferred −3 (`starchAdjust` in the score context, reason `repeat`). UI: « Même féculent à la suite » in « Avancé ».
+- Numbers: `npx tsc -b` + `npm run lint` pass; `tsx` check (`_claude/tmp/menu-b7-check.ts`, pasta in 18 / 30 recipes, 100 seeds): runs of more than 2 pasta meals in 100 / 100 menus (off, longest 13), 43 / 100 (preferred, longest 8), 0 / 100 (strict, longest 2); strict N = 1 → longest 1; 2 pasta meals already planned on Monday → Tuesday lunch never pasta; 2 pasta meals planned on Wednesday → Tuesday dinner never pasta (look-ahead); restore clamps 9 → 4. Earlier checks pass. **Not checked in a browser**.
+- Still open: « De préférence » is a moderate penalty (43 / 100 with a dominant starch); B8 (day nutrition limits), C (sides, desserts). `bulk-items` prod go-live still to be confirmed.
+
 ## 2026-10-17 — Menu generator B9: frozen foods never out of season (v6.116.0)
 - Done: `SeasonCatalogue.seasonExemptFoodIds` (optional); `collectSeasonalFoods` sets aside seasonal foods that are in the freezer or used as a « Surgelés » ingredient (`seasonalFoodSplit`, a food also used fresh stays seasonal); `frozenOutOfSeasonFoods`; season score adds the reason « Hors saison, mais au congélateur ou surgelé : … ». Hook context gains `frozenFoodIds` (`getFoodIdsInFreezer`, bags > 0). Always on, no setting.
 - Numbers: `npx tsc -b` + `npm run lint` pass; `tsx` check (`_claude/tmp/menu-b9-check.ts`, October, strict season, 30 seeds): courgette gratin 0 / 30 without courgette in the freezer, 30 / 30 with; frozen green beans 30 / 30, fresh 0 / 30; reason shown; earlier checks pass. **Not checked in a browser**.

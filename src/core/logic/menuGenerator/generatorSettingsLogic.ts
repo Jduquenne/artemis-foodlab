@@ -30,7 +30,7 @@ export function defaultGeneratorSettings(startDate: string): MenuGeneratorSettin
     diet: "all",
     excludedFoodIds: [],
     season: "preferred",
-    freezerFirst: true,
+    useFreezer: true,
   };
 }
 

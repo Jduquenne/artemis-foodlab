@@ -71,13 +71,13 @@ export const GeneratorSettingsForm = ({ settings, disabled, onChange }: Generato
       <label className="flex items-center gap-2">
         <input
           type="checkbox"
-          checked={settings.freezerFirst}
+          checked={settings.useFreezer}
           disabled={disabled}
-          onChange={(e) => patch({ freezerFirst: e.target.checked })}
+          onChange={(e) => patch({ useFreezer: e.target.checked })}
           className="accent-orange-500"
         />
         <Snowflake size={14} className="text-cyan-500" />
-        <span className="text-sm text-slate-700">Utiliser d'abord les plats du congélateur</span>
+        <span className="text-sm text-slate-700">Utiliser les plats du congélateur</span>
       </label>
     </div>
   );

@@ -271,8 +271,26 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
 - **Context**: households want a first menu proposal for a period that is good from the first generation. Everything needed already exists: recipes (meal types, categories, ingredients, bases, batch cooking), foods (categories, macros, seasons D-034), profiles (targets), freezer, per-account history (`GET /planning-slots/recipe-usage`) and the planning write path.
 - **Decision**:
   - **Engine**: pure front logic in `core/logic/menuGenerator/`, catalogue passed as a parameter, seeded randomness (regenerate = new seed). **Write** (owner, 2026-10-17, replaces the first plan « existing slot path, not atomic »): one atomic call `POST /planning-slots/bulk-items` (API, built on request) with `onConflict: "skip"`: a slot filled meanwhile on another device is left as it is and reported, everything else is written in one transaction; the local cache is rebuilt from the response. Rejected: up to ~56 non-atomic calls through `saveSlot` (simple, available, but not optimised; owner preferred to wait for the API).
-  - **Scope V1** (owner): free period (start → end, max 14 days, may cross ISO weeks); lunch and dinner only (no desserts, no breakfast: the household adds them by hand); filled slots are kept, only empty ones are filled; hard filters: diet all / pescatarian / vegetarian (derived from ingredient categories meat, deli, fish and recipe categories, bases included), excluded foods (a group ingredient is excluded only when every food of its family is), season strict / preferred / off; scoring: no duplicate, no same category on consecutive meals, history (recently eaten recipes penalised), kcal of the meal near the active profile's target share (lunch 35 %, dinner 30 %, ±15 %); freezer batch portions placed first.
+  - **Scope V1** (owner): free period (start → end, max 14 days, may cross ISO weeks); lunch and dinner only (no desserts, no breakfast: the household adds them by hand); filled slots are kept, only empty ones are filled; hard filters: diet all / pescatarian / vegetarian (derived from ingredient categories meat, deli, fish and recipe categories, bases included), excluded foods (a group ingredient is excluded only when every food of its family is), season strict / preferred / off; scoring: no duplicate, no same category on consecutive meals, history (recently eaten recipes penalised), kcal of the meal near the active profile's target share (lunch 35 %, dinner 30 %, ±15 %); freezer batch portions all placed, spread at random over the period (2026-10-17, was « placed first »).
   - **UX**: settings window → preview (reason per meal, lock, regenerate a slot or the rest, kcal per day vs target) → write → offer to set the shopping days when the period has ≤ 10 days.
   - **Access**: built on `master` behind an admin guard (`useIsAdmin`), opened to everyone once validated by the owner.
   - **Not in V1**: food tags (pork, gluten…; owner: not useful for now), per-profile kcal (needs « who eats which meal », #23), presets, preparation time, cost.
 - **Alternatives considered**: a `Dev` branch for the whole feature (merges and version conflicts); a server-side generator (catalogue already in memory on the client, no benefit); the displayed week only (owner wants a free period).
+
+## D-036 — Menu generator settings V2: habits, quotas, foods to use, saved on the device
+
+- **Date**: 2026-10-17
+- **Status**: accepted (owner); in progress
+- **Context**: owner feedback on the V1 (D-035): the target users are households with habits and strict rules (e.g. fish on Friday); the V1 settings are too coarse, must be retyped on each opening, the freezer meals always came first, and the settings window scrolls on a large screen.
+- **Decision** (owner, 2026-10-17):
+  - Every new setting is either **strict** (never bent: a slot that cannot respect it stays empty with the reason) or a **preference** (score).
+  - **Habits**: rules « when » (days of the week, lunch / dinner / both) × « what » (protein type fish / red meat / white meat / deli / vegetarian, recipe category, a food, a recipe, « no meal ») × strength (mandatory / preferred / avoid / forbidden).
+  - **Weekly quotas** with the same targets (« red meat ≤ 2 », « fish ≥ 2 »), strict or preferred.
+  - **Foods to use** (leftovers, freezer products), the mirror of « Aliments à éviter », each food « bonus » or « at least once ».
+  - **Freezer**: one checkbox, meals spread at random (no modes).
+  - **Advanced**: repeat delay, same category in a row, kcal mode / tolerance / shares, favourite and banned recipes.
+  - **Saved on the device** (local storage), not through the API: the owner wants the settings kept between openings; the period is not saved.
+  - **Window**: full screen, settings and preview side by side, no scroll on desktop (`docs/ui-design.md`).
+  - **Later** (roadmap ideas): leftovers « dinner served again at the next lunch », several setting sets (« Semaine normale », « Vacances »).
+- **Alternatives considered**: settings per account through the API (shared by the household on every device; owner chose the device); freezer modes ignore / prefer / use up (owner: a single checkbox).
+

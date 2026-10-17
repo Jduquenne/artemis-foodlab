@@ -6,7 +6,7 @@ import { createSeededRandom, pickRandom } from "../../utils/randomUtils";
 import { weeksSinceIsoWeek } from "../../utils/weekUtils";
 import { MenuCatalogue, dayCandidates, slotCandidates } from "./candidateLogic";
 import { FreezerBatchStock } from "../freezer/freezerStockLogic";
-import { FreezerPlan, createFreezerPlan, takeFreezerMeal } from "./freezerPlanLogic";
+import { FreezerReservation, OpenSlot, createFreezerPlan, reserveFreezerSlots } from "./freezerPlanLogic";
 import { scoreCandidate } from "./mealScoreLogic";
 
 export interface MenuEngineInput {
@@ -58,81 +58,93 @@ export function generateMenu(input: MenuEngineInput): GeneratedMeal[] {
   const fixedCodes = Object.values(input.fixed)
     .map((meal) => meal.recipeCode)
     .filter((code): code is string => code !== null);
-  const used = new Set([...Object.values(input.existing).flat(), ...fixedCodes]);
+  const existingCodes = Object.values(input.existing).flat();
+  const used = new Set([...existingCodes, ...fixedCodes]);
+  const categoryOf = (code: string | null | undefined) => (code ? (catalogue.recipes[code]?.categoryId ?? null) : null);
+  const slotPoolOf = (slot: GeneratedSlotType, key: string) => {
+    const rejected = input.rejected[key] ?? [];
+    return (candidatesBySlot.get(slot) ?? []).filter((recipe) => !rejected.includes(recipe.code));
+  };
+
+  const sequence = days.flatMap((day) => settings.slots.map((slot) => ({ day, slot, key: mealKey(day.date, slot) })));
+  const isKept = (key: string) => (input.existing[key]?.length ?? 0) > 0;
+  const fixedOf = (key: string) => {
+    const fixed = input.fixed[key];
+    return fixed && (fixed.recipeCode === null || catalogue.recipes[fixed.recipeCode]) ? fixed : null;
+  };
+  const openSlots: OpenSlot[] = sequence.flatMap(({ day, slot, key }, index) =>
+    !isKept(key) && !fixedOf(key)
+      ? [{ key, index, date: day.date, candidateCodes: new Set(slotPoolOf(slot, key).map((recipe) => recipe.code)) }]
+      : [],
+  );
+  const reservations: Record<string, FreezerReservation> = settings.useFreezer
+    ? reserveFreezerSlots(createFreezerPlan(input.freezer, input.householdSize, [...existingCodes, ...fixedCodes]), openSlots, categoryOf, random)
+    : {};
+  for (const reservation of Object.values(reservations)) used.add(reservation.recipeCode);
+  const knownCategoryOf = (key: string | undefined) =>
+    key ? (categoryOf(input.existing[key]?.[0]) ?? categoryOf(fixedOf(key)?.recipeCode) ?? categoryOf(reservations[key]?.recipeCode)) : null;
+
   const meals: GeneratedMeal[] = [];
   let previousCategoryId: string | null = null;
-  const freezerPlan: FreezerPlan | null = settings.freezerFirst
-    ? createFreezerPlan(input.freezer, input.householdSize, [...Object.values(input.existing).flat(), ...fixedCodes])
-    : null;
+  let sameDayCategoryIds: string[] = [];
 
-  for (const day of days) {
-    const sameDayCategoryIds: string[] = [];
-    for (const slot of settings.slots) {
-      const key = mealKey(day.date, slot);
-      const existingCodes = input.existing[key];
-      const categoryOf = (code: string | undefined) => (code ? catalogue.recipes[code]?.categoryId ?? null : null);
+  for (const [index, { day, slot, key }] of sequence.entries()) {
+    if (index > 0 && sequence[index - 1].day.date !== day.date) sameDayCategoryIds = [];
+    const place = (meal: GeneratedMeal, categoryId: string | null) => {
+      meals.push(meal);
+      previousCategoryId = categoryId;
+      if (categoryId) sameDayCategoryIds.push(categoryId);
+    };
 
-      if (existingCodes && existingCodes.length > 0) {
-        meals.push({ key, day, slot, recipeCode: null, kept: true, locked: true, reasons: [{ kind: "kept", label: "Déjà rempli dans le planning" }] });
-        previousCategoryId = categoryOf(existingCodes[0]);
-        if (previousCategoryId) sameDayCategoryIds.push(previousCategoryId);
-        continue;
-      }
-
-      const fixed = input.fixed[key];
-      if (fixed && (fixed.recipeCode === null || catalogue.recipes[fixed.recipeCode])) {
-        meals.push({ ...fixed, day, slot, kept: false });
-        previousCategoryId = categoryOf(fixed.recipeCode ?? undefined);
-        if (previousCategoryId) sameDayCategoryIds.push(previousCategoryId);
-        continue;
-      }
-
-      const rejected = input.rejected[key] ?? [];
-      const slotPool = (candidatesBySlot.get(slot) ?? []).filter((recipe) => !rejected.includes(recipe.code));
-      const frozen = freezerPlan
-        ? takeFreezerMeal(freezerPlan, {
-            candidates: slotPool,
-            index: meals.length,
-            previousCategoryId,
-            sameDayCategoryIds,
-          })
-        : null;
-      if (frozen) {
-        used.add(frozen.recipe.code);
-        meals.push({ key, day, slot, recipeCode: frozen.recipe.code, kept: false, locked: false, reasons: [frozen.reason] });
-        previousCategoryId = frozen.recipe.categoryId;
-        sameDayCategoryIds.push(frozen.recipe.categoryId);
-        continue;
-      }
-
-      const eligible = dayCandidates(slotPool, day.month, settings.season, catalogue);
-      const fresh = eligible.filter((recipe) => !used.has(recipe.code));
-      const pool = fresh.length > 0 ? fresh : eligible;
-      const context = {
-        catalogue,
-        macros: input.macros,
-        kcalTarget: input.kcalTarget,
-        weeksSinceEaten: input.weeksSinceEaten,
-        season: settings.season,
-        month: day.month,
-        slot,
-        previousCategoryId,
-        sameDayCategoryIds,
-      };
-      const choice = chooseRecipe(pool, (recipe) => scoreCandidate(recipe, context), random);
-
-      if (!choice) {
-        meals.push({ key, day, slot, recipeCode: null, kept: false, locked: false, reasons: [{ kind: "empty", label: rejected.length > 0 ? "Aucune autre recette ne respecte les filtres" : "Aucune recette ne respecte les filtres" }] });
-        previousCategoryId = null;
-        continue;
-      }
-
-      used.add(choice.recipe.code);
-      const reasons = fresh.length > 0 ? choice.reasons : [{ kind: "repeat", label: "Répétée faute d'autre recette" } satisfies MealReason, ...choice.reasons];
-      meals.push({ key, day, slot, recipeCode: choice.recipe.code, kept: false, locked: false, reasons });
-      previousCategoryId = choice.recipe.categoryId;
-      sameDayCategoryIds.push(choice.recipe.categoryId);
+    if (isKept(key)) {
+      place(
+        { key, day, slot, recipeCode: null, kept: true, locked: true, reasons: [{ kind: "kept", label: "Déjà rempli dans le planning" }] },
+        categoryOf(input.existing[key]?.[0]),
+      );
+      continue;
     }
+
+    const fixed = fixedOf(key);
+    if (fixed) {
+      place({ ...fixed, day, slot, kept: false }, categoryOf(fixed.recipeCode));
+      continue;
+    }
+
+    const reservation = reservations[key];
+    if (reservation) {
+      place(
+        { key, day, slot, recipeCode: reservation.recipeCode, kept: false, locked: false, reasons: [reservation.reason] },
+        categoryOf(reservation.recipeCode),
+      );
+      continue;
+    }
+
+    const eligible = dayCandidates(slotPoolOf(slot, key), day.month, settings.season, catalogue);
+    const fresh = eligible.filter((recipe) => !used.has(recipe.code));
+    const pool = fresh.length > 0 ? fresh : eligible;
+    const context = {
+      catalogue,
+      macros: input.macros,
+      kcalTarget: input.kcalTarget,
+      weeksSinceEaten: input.weeksSinceEaten,
+      season: settings.season,
+      month: day.month,
+      slot,
+      previousCategoryId,
+      nextCategoryId: knownCategoryOf(sequence[index + 1]?.key),
+      sameDayCategoryIds,
+    };
+    const choice = chooseRecipe(pool, (recipe) => scoreCandidate(recipe, context), random);
+
+    if (!choice) {
+      const label = (input.rejected[key] ?? []).length > 0 ? "Aucune autre recette ne respecte les filtres" : "Aucune recette ne respecte les filtres";
+      place({ key, day, slot, recipeCode: null, kept: false, locked: false, reasons: [{ kind: "empty", label }] }, null);
+      continue;
+    }
+
+    used.add(choice.recipe.code);
+    const reasons = fresh.length > 0 ? choice.reasons : [{ kind: "repeat", label: "Répétée faute d'autre recette" } satisfies MealReason, ...choice.reasons];
+    place({ key, day, slot, recipeCode: choice.recipe.code, kept: false, locked: false, reasons }, choice.recipe.categoryId);
   }
   return meals;
 }

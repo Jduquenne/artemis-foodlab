@@ -13,6 +13,7 @@ export interface ScoreContext {
   month: number;
   slot: GeneratedSlotType;
   previousCategoryId: string | null;
+  nextCategoryId: string | null;
   sameDayCategoryIds: readonly string[];
 }
 
@@ -54,6 +55,7 @@ function seasonScore(recipe: RecipeDetails, context: ScoreContext): CandidateSco
 function varietyScore(recipe: RecipeDetails, context: ScoreContext): CandidateScore {
   let score = 0;
   if (context.previousCategoryId === recipe.categoryId) score -= 3;
+  if (context.nextCategoryId === recipe.categoryId) score -= 3;
   if (context.sameDayCategoryIds.includes(recipe.categoryId)) score -= 1;
   return { score, reasons: [] };
 }

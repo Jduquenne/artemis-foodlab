@@ -250,7 +250,7 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
   - **Shopping**: the parts are split pro rata across the account's profiles, each profile's share uses its resolved food and its quantity per portion (e.g. 4 parts, 2 profiles, recipe 30 g / portion: Léa mozzarella 60 g, Tom comté without quantity → mozzarella 2 × 60 = 120 g, comté 2 × 30 = 60 g); works with any number of parts without knowing who eats (#23). A line resolved only by the recipe default shows « à préciser ».
   - **Journal**: a profile's macros use its resolved food and, when set, its quantity per portion as the base quantity of that ingredient (per-day journal overrides still apply on top).
   - **Planning**: choices follow the meal on move and copy; replacing the dish drops them.
-  - **V1 limits**: no group ingredient inside a base recipe; allowed in demo (user data, cascades with the profile and the planning item).
+  - **V1 limits**: no group ingredient inside a base recipe (lifted by D-037 step 1, pending); allowed in demo (user data, cascades with the profile and the planning item).
 - **Alternatives considered**: recipe variants per cheese (catalogue explosion, no per-profile choice); choice only in the shopping list (journal wrong, no per-profile choice); a candidate list per recipe ingredient instead of a reusable group (to re-enter in every recipe).
 
 ## D-034 — Food seasons by month
@@ -294,3 +294,13 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
   - **Later** (roadmap ideas): leftovers « dinner served again at the next lunch », several setting sets (« Semaine normale », « Vacances »).
 - **Alternatives considered**: settings per account through the API (shared by the household on every device; owner chose the device); freezer modes ignore / prefer / use up (owner: a single checkbox).
 
+## D-037 — Choices inside bases and accompaniment groups
+
+- **Date**: 2026-10-21
+- **Status**: step 1 accepted (owner), waiting for the API; step 2 proposed, open questions below
+- **Context**: a soup is eaten with an accompaniment (a slice of bread with butter, cheese or pâté…), reusable across many recipes like a base, and chosen per profile like a food family. A food family cannot cover it: the toppings come from different food categories and a food belongs to one family only (a family « Accompagnement tartine » would be a misuse). D-033 V1 also refuses an ingredient « au choix » inside a base, so a « Tartine fromage » base cannot let each profile pick its cheese.
+- **Decision**:
+  - **Step 1 — ingredient « au choix » inside a base** (lifts the D-033 V1 limit): a recipe of kind `base` may carry group ingredients. Every existing mechanism applies through the base: profile default per family, choice and quantity per planned meal × profile, shopping split, journal macros. A planned meal choice may target an ingredient of any base reached by the planned recipe (through `baseId`, recursively); when the same base is reached several times, the choice applies to every occurrence. Example: soup → base « Tartine fromage » (bread + cheese au choix, family Fromage): the profile default « Fromage → Comté » applies with nothing more to enter.
+  - **Step 2 — accompaniment groups** (choice between sub-recipes): a reusable catalogue group of bases (« Tartines » = Tartine beurre, Tartine fromage, Tartine pâté), created once in the Dashboard, a base may belong to several groups. A recipe references the group with a default base; each profile has a preferred base per group and may choose another one per planned meal; shopping and journal use each profile's base (quantities in base portions: one slice replaces one slice). Choices inside a base not chosen by a profile are ignored. Built on step 1.
+  - Open questions for step 2 (TODO(owner)): can a profile take no accompaniment (impact on parts in shopping and journal)? only bases in a group, or any recipe (proposal: bases only)? display name (« Groupe d'accompagnements », « Accompagnement au choix »…)?
+- **Alternatives considered**: a food family per accompaniment (mixes categories, a food has one family); a candidate list per recipe (to re-enter in every soup, rejected in D-033 for the same reason); the accompaniment added at planning time as a second dish of the slot (household-wide, not per profile, and the recipe does not know it goes with bread, which the menu generator needs).

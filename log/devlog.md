@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-21 — D-037: choices inside bases and accompaniment groups (v6.122.1, docs only)
+- Done: owner need: soups with an accompaniment (slice of bread with butter, cheese or pâté), reusable like a base, chosen per profile like a family. A food family cannot cover it (mixed categories, one family per food). Decision D-037: step 1 lift the D-033 V1 limit (group ingredient inside a base, choices reach base ingredients recursively, same base twice = same choice), step 2 accompaniment groups (catalogue group of bases, profile default, choice per planned meal), built on step 1. Roadmap current focus item added. API prompt for step 1 given to the owner.
+- Still open: API answer for step 1 (real payloads); then front step 1 (Recipe Builder validation, personalisation through bases, choice modal, shopping, journal); D-037 step 2 open questions (no accompaniment, bases only, name).
+
 ## 2026-10-21 — Family preferences: dedicated panel, one profile at a time (v6.122.0)
 - Done: owner feedback: « Préférences par famille » in « Profils du foyer » became a very long scroll (every family × every profile inline). Owner choices: a dedicated panel, only the selected profile's preferences. `FoodGroupDefaultsSection` is now a single entry row (« N préférences · M familles ») opening `FoodGroupDefaultsPanel` in place of the modal content (`ProfilesModal` state `showFoodGroups`, fixed `90dvh` height while open, back button, close): profile tabs (active profile first selected), search on family or food name, lists « Définies » then « Autres familles » (`FoodGroupDefaultsList`), split frozen at open / profile change so an edited row does not jump. `FoodGroupDefaultSelect` takes the family name as `label` (no profile dot / name any more), highlighted when set. Pure logic `foodGroupDefaultsLogic.ts` (`definedFoodGroupIds`, `countFoodGroupDefaults`, `foodGroupDefaultSections`). Saving unchanged (same `withPending` key, API calls unchanged).
 - Numbers: `npx tsc -b` + `npm run lint` pass, golden-rule greps clean. **Not checked in a browser** (to test with `npm run dev`).

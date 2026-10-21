@@ -111,7 +111,7 @@ Detail and rationale in `docs/conventions.md`, `docs/architecture.md` and `docs/
 2. "Still open" items of the latest `log/devlog.md` entries.
 3. `dev/issues.json` (open issues) and `dev/refactoring.md` (review findings), with the owner's go.
 
-Issue commands (on `dev/issues.json`, schema in its `_schema`): « nouvelle issue » → add an entry (`status: open`, `createdAt` = today, next numeric id); « analyse nos issues » → summary by status + prioritisation advice; « clore issue <id> » → `status: closed` + `closedAt`, and complete the `description` with what was done.
+Issue commands (on `dev/issues.json`, schema in its `_schema`): « nouvelle issue » → add an entry (`status: open`, `createdAt` = today, next numeric id); « analyse nos issues » → summary by status + prioritisation advice; « clore issue <id> » → `status: closed` + `closedAt`, and complete the `description` with what was done; « synchronise discord » → run `node dev/discord/sync.mjs --dry-run`, show the plan, then `node dev/discord/sync.mjs` (one-way mirror of the issues into the owner's private Discord forum; setup in `dev/discord/README.md`). Never sync without that command.
 
 ## Before you finish a task
 

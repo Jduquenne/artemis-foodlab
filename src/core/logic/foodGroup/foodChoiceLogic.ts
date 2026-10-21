@@ -6,8 +6,6 @@ import { compareByName } from "../../utils/sortUtils";
 
 export type FoodChoiceStatus = "none" | "partial" | "complete";
 
-export type FoodChoicesByCode = Record<string, FoodChoice[]>;
-
 export interface FoodGroupWithFoods {
   group: FoodGroup;
   foods: Food[];
@@ -203,29 +201,6 @@ export function reachableQuantityPerPortion(entry: ReachableGroupIngredient): nu
   return entry.ingredient.quantity === null ? null : entry.ingredient.quantity * entry.portionFactor;
 }
 
-export function pruneFoodChoices(
-  choices: FoodChoice[],
-  recipe: RecipeDetails,
-  recipes: Record<string, RecipeDetails>,
-): FoodChoice[] {
-  const reachable = new Set(reachableGroupIngredients(recipe, recipes).map((entry) => entry.ingredient.id));
-  const kept = choices.filter((choice) => reachable.has(choice.recipeIngredientId));
-  return kept.length === choices.length ? choices : kept;
-}
-
-export function pruneSlotFoodChoices(
-  foodChoices: Record<string, FoodChoice[]> | undefined,
-  recipes: Record<string, RecipeDetails>,
-): Record<string, FoodChoice[]> | undefined {
-  if (!foodChoices) return foodChoices;
-  return Object.fromEntries(
-    Object.entries(foodChoices).map(([code, choices]) => {
-      const recipe = recipes[code];
-      return [code, recipe ? pruneFoodChoices(choices, recipe, recipes) : choices];
-    }),
-  );
-}
-
 export function personalizeRecipeTree(
   recipe: RecipeDetails,
   personalization: FoodPersonalization,
@@ -275,25 +250,3 @@ export function sameFoodChoices(a: readonly FoodChoice[] | undefined, b: readonl
   return left.length === right.length && left.every((key, index) => key === right[index]);
 }
 
-export function withFoodChoices(
-  record: FoodChoicesByCode | undefined,
-  code: string,
-  choices: FoodChoice[],
-): FoodChoicesByCode | undefined {
-  const next = { ...record };
-  if (choices.length > 0) next[code] = choices;
-  else delete next[code];
-  return Object.keys(next).length > 0 ? next : undefined;
-}
-
-export function pickFoodChoices(
-  sources: readonly (FoodChoicesByCode | undefined)[],
-  codes: readonly string[],
-): FoodChoicesByCode | undefined {
-  const picked: FoodChoicesByCode = {};
-  for (const code of codes) {
-    const found = sources.find((source) => source?.[code]?.length)?.[code];
-    if (found) picked[code] = found;
-  }
-  return Object.keys(picked).length > 0 ? picked : undefined;
-}

@@ -1,3 +1,4 @@
+import { AccompanimentChoice } from "./accompaniment";
 import { FoodChoice } from "./foodGroup";
 import { MealType } from "./recipe";
 
@@ -17,6 +18,7 @@ export interface MealSlot {
   recipePersons?: Record<string, number>;
   recipeQuantities?: Record<string, number>;
   foodChoices?: Record<string, FoodChoice[]>;
+  accompanimentChoices?: Record<string, AccompanimentChoice[]>;
 }
 
 export interface PlanningItemEntry {
@@ -43,6 +45,7 @@ export interface CopyState {
   recipeName: string;
   sourcePersons?: number;
   sourceFoodChoices?: FoodChoice[];
+  sourceAccompanimentChoices?: AccompanimentChoice[];
 }
 
 export interface ShoppingDay {

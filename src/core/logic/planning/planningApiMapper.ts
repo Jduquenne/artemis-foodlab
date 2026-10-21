@@ -1,3 +1,4 @@
+import { AccompanimentChoice } from "../../domain/accompaniment";
 import { FoodChoice } from "../../domain/foodGroup";
 import { MealSlot, PlanningItemEntry, SlotType } from "../../domain/planning";
 import { getCodeById, getIdByCode } from "../../catalogue/recipeIdMap";
@@ -12,6 +13,7 @@ export interface ApiPlanningSlotItem {
   gramsOverride: number | null;
   position: number;
   foodChoices?: FoodChoice[];
+  accompanimentChoices?: AccompanimentChoice[];
 }
 
 export interface ApiPlanningSlot {
@@ -49,6 +51,7 @@ export interface SlotItemFields {
   recipePersons?: Record<string, number>;
   recipeQuantities?: Record<string, number>;
   foodChoices?: Record<string, FoodChoice[]>;
+  accompanimentChoices?: Record<string, AccompanimentChoice[]>;
   itemApiIds: Record<string, string>;
 }
 
@@ -58,6 +61,7 @@ export function mapApiItemsToSlotFields(items: ApiPlanningSlotItem[]): SlotItemF
   const recipePersons: Record<string, number> = {};
   const recipeQuantities: Record<string, number> = {};
   const foodChoices: Record<string, FoodChoice[]> = {};
+  const accompanimentChoices: Record<string, AccompanimentChoice[]> = {};
   const itemApiIds: Record<string, string> = {};
 
   const sorted = [...items].sort((a, b) => a.position - b.position);
@@ -69,6 +73,7 @@ export function mapApiItemsToSlotFields(items: ApiPlanningSlotItem[]): SlotItemF
     if (item.personsOverride != null) recipePersons[code] = item.personsOverride;
     if (item.gramsOverride != null) recipeQuantities[code] = item.gramsOverride;
     if (item.foodChoices && item.foodChoices.length > 0) foodChoices[code] = item.foodChoices;
+    if (item.accompanimentChoices && item.accompanimentChoices.length > 0) accompanimentChoices[code] = item.accompanimentChoices;
   }
 
   return {
@@ -77,6 +82,7 @@ export function mapApiItemsToSlotFields(items: ApiPlanningSlotItem[]): SlotItemF
     recipePersons: Object.keys(recipePersons).length > 0 ? recipePersons : undefined,
     recipeQuantities: Object.keys(recipeQuantities).length > 0 ? recipeQuantities : undefined,
     foodChoices: Object.keys(foodChoices).length > 0 ? foodChoices : undefined,
+    accompanimentChoices: Object.keys(accompanimentChoices).length > 0 ? accompanimentChoices : undefined,
     itemApiIds,
   };
 }
@@ -100,6 +106,7 @@ export interface SlotItemAddPayload {
   personsOverride: number | null;
   gramsOverride: number | null;
   foodChoices?: FoodChoice[];
+  accompanimentChoices?: AccompanimentChoice[];
 }
 
 export interface SlotItemUpdatePayload {
@@ -107,6 +114,7 @@ export interface SlotItemUpdatePayload {
   personsOverride: number | null;
   gramsOverride: number | null;
   foodChoices?: FoodChoice[];
+  accompanimentChoices?: AccompanimentChoice[];
 }
 
 export interface SlotItemsBatchPayload {
@@ -126,6 +134,7 @@ export function buildSlotItemsBatchPayload(diff: SlotDiff): SlotItemsBatchPayloa
       personsOverride: item.personsOverride,
       gramsOverride: item.gramsOverride,
       ...(item.foodChoices.length > 0 ? { foodChoices: item.foodChoices } : {}),
+      ...(item.accompanimentChoices.length > 0 ? { accompanimentChoices: item.accompanimentChoices } : {}),
     });
   }
   const update = diff.itemsToUpdate.map((u) => ({
@@ -133,6 +142,7 @@ export function buildSlotItemsBatchPayload(diff: SlotDiff): SlotItemsBatchPayloa
     personsOverride: u.personsOverride,
     gramsOverride: u.gramsOverride,
     ...(u.foodChoices ? { foodChoices: u.foodChoices } : {}),
+    ...(u.accompanimentChoices ? { accompanimentChoices: u.accompanimentChoices } : {}),
   }));
   const remove = diff.itemsToRemoveApiIds;
 

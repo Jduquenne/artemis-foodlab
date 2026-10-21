@@ -1,3 +1,4 @@
+import { AccompanimentDefault } from "./accompaniment";
 import { FoodGroupDefault } from "./foodGroup";
 import { MacroTargets } from "./nutrition";
 
@@ -9,4 +10,5 @@ export interface Profile {
   kcalTarget: number;
   macroTargets: MacroTargets;
   foodGroupDefaults: FoodGroupDefault[];
+  accompanimentDefaults: AccompanimentDefault[];
 }

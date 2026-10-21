@@ -14,7 +14,7 @@ import { FoodChoiceModal } from './components/FoodChoiceModal';
 import { MenuGeneratorModal } from './components/generator/MenuGeneratorModal';
 import { useIsAdmin } from '../../shared/hooks/useIsAdmin';
 import { FoodChoice } from '../../core/domain/foodGroup';
-import { withFoodChoices } from '../../core/logic/foodGroup/foodChoiceLogic';
+import { withRecordList } from '../../core/utils/collectionUtils';
 import { ShoppingSelectionBar } from './components/bars/ShoppingSelectionBar';
 import { PlanningHeader } from './components/PlanningHeader';
 import { PlanningSlot } from './components/slot/PlanningSlot';
@@ -36,6 +36,7 @@ import { useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
 import { computeSlotCopyProps } from '../../core/logic/planning/planningCopyLogic';
 import { useShoppingDaysSelection } from '../../shared/hooks/useShoppingDaysSelection';
 import { usePlanningCopy } from '../../shared/hooks/usePlanningCopy';
+import { useChoiceContext } from '../../shared/hooks/useChoiceContext';
 import { shiftDay } from '../../core/logic/planning/planningDayNavLogic';
 import { useHorizontalSwipe, SwipeDirection } from '../../shared/hooks/useHorizontalSwipe';
 import { useDragEdgeWeekNav } from '../../shared/hooks/useDragEdgeWeekNav';
@@ -123,6 +124,8 @@ export const PlanningModule = () => {
 
     const shopping = useShoppingDaysSelection(year, weekNumber);
     const isSelectionMode = shopping.isSelectionMode;
+    const choiceContext = useChoiceContext();
+    const save = (slot: MealSlot) => saveSlot(slot, choiceContext);
     const copy = usePlanningCopy(planningData, year, weekNumber);
     const isCopyMode = !!copy.copyState;
 
@@ -186,7 +189,7 @@ export const PlanningModule = () => {
         const savedSlot = planningData.find(p => p.day === day && p.slot === slot)
             ?? buildEmptySlot({ year, week: weekNumber, day, slot });
         const ok = await withPending(`planning-dessert-add:${savedSlot.id}`, async () => {
-            await addDessertToSlot(savedSlot, recipeId);
+            await addDessertToSlot(savedSlot, recipeId, choiceContext);
             return true;
         }).catch(() => false);
         return ok === true;
@@ -196,7 +199,7 @@ export const PlanningModule = () => {
         const savedSlot = planningData.find(p => p.day === day && p.slot === slot);
         if (!savedSlot) return;
         const slotId = buildSlotId(year, weekNumber, day, slot);
-        await withPending(`planning-dessert-remove:${slotId}:${recipeId}`, () => removeDessertFromSlot(savedSlot, recipeId)).catch(() => undefined);
+        await withPending(`planning-dessert-remove:${slotId}:${recipeId}`, () => removeDessertFromSlot(savedSlot, recipeId, choiceContext)).catch(() => undefined);
     };
 
     const handleRemoveRecipe = async (day: string, slot: SlotType, recipeIdToRemove: string) => {
@@ -206,7 +209,7 @@ export const PlanningModule = () => {
         await withPending(`planning-recipe-remove:${slotId}:${recipeIdToRemove}`, async () => {
             const ids = existing.recipeIds.filter(id => id !== recipeIdToRemove);
             if (ids.length === 0) await deleteSlot(existing.id);
-            else await saveSlot({ ...existing, recipeIds: ids });
+            else await save({ ...existing, recipeIds: ids });
         }).catch(() => undefined);
     };
 
@@ -258,7 +261,7 @@ export const PlanningModule = () => {
         const ok = await withPending([`planning-move:${fromId}`, `planning-move:${toId}`], async () => {
             await Promise.all([
                 ...(toDelete ? [deleteSlot(toDelete)] : []),
-                ...toSave.map(saveSlot),
+                ...toSave.map(save),
             ]);
             return true;
         }).catch(() => false);
@@ -291,7 +294,7 @@ export const PlanningModule = () => {
         if (!existing) return false;
         const slotId = buildSlotId(year, weekNumber, day, slot);
         const ok = await withPending(`planning-dessert-persons:${slotId}:${dessertId}`, async () => {
-            await setRecipePersonsOnSlot(existing, dessertId, persons);
+            await setRecipePersonsOnSlot(existing, dessertId, persons, choiceContext);
             return true;
         }).catch(() => false);
         return ok === true;
@@ -302,7 +305,7 @@ export const PlanningModule = () => {
         if (!existing) return false;
         const slotId = buildSlotId(year, weekNumber, day, slot);
         const ok = await withPending(`planning-food-choice:${slotId}:${recipeId}`, async () => {
-            await saveSlot({ ...existing, foodChoices: withFoodChoices(existing.foodChoices, recipeId, choices) });
+            await save({ ...existing, foodChoices: withRecordList(existing.foodChoices, recipeId, choices) });
             return true;
         }).catch(() => false);
         return ok === true;
@@ -315,7 +318,7 @@ export const PlanningModule = () => {
             return;
         }
         const ok = await withPending(`planning-persons:${slotId}`, async () => {
-            await saveSlot({ ...existing, persons });
+            await save({ ...existing, persons });
             return true;
         }).catch(() => false);
         if (ok) setEditingPersonsSlotId(null);
@@ -326,7 +329,7 @@ export const PlanningModule = () => {
         if (!existing) return false;
         const slotId = buildSlotId(year, weekNumber, day, slot);
         const ok = await withPending(`planning-recipe-meta:${slotId}:${recipeId}`, async () => {
-            await saveSlot({
+            await save({
                 ...existing,
                 recipePersons: { ...existing.recipePersons, [recipeId]: persons },
                 recipeQuantities: { ...existing.recipeQuantities, [recipeId]: grams },
@@ -348,8 +351,8 @@ export const PlanningModule = () => {
         const next = isDessertAdd ? null : placeRecipeInSlot(existing, at, mealDef, addRecipeId);
         if (!isDessertAdd && !next) return;
         const ok = await withPending(`planning-add-to-slot:${base.id}`, async () => {
-            if (next) await saveSlot(next);
-            else await addDessertToSlot(base, addRecipeId);
+            if (next) await save(next);
+            else await addDessertToSlot(base, addRecipeId, choiceContext);
             return true;
         }).catch(() => false);
         if (ok) clearAddMode();
@@ -363,7 +366,7 @@ export const PlanningModule = () => {
         if (!mealDef) return;
         const existing = planningData.find(p => p.day === pickerSlot.day && p.slot === pickerSlot.slot);
         const next = placeRecipeInSlot(existing, { year, week: weekNumber, ...pickerSlot }, mealDef, recipeId);
-        const ok = next ? await saveSlot(next).then(() => true).catch(() => false) : true;
+        const ok = next ? await save(next).then(() => true).catch(() => false) : true;
         if (ok) setPickerSlot(null);
     };
 

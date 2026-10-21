@@ -51,6 +51,20 @@ export async function deleteProfileFoodGroupDefaultApi(profileId: string, groupI
   await apiFetch(`/profiles/${profileId}/food-group-defaults/${groupId}`, { method: "DELETE" });
 }
 
+export async function setProfileAccompanimentDefaultApi(
+  profileId: string,
+  accompanimentId: string,
+  optionId: string | null,
+): Promise<Profile> {
+  return mapProfile(
+    await apiFetchJson<ApiProfile>(`/profiles/${profileId}/accompaniment-defaults/${accompanimentId}`, { method: "PUT", body: { optionId } }),
+  );
+}
+
+export async function deleteProfileAccompanimentDefaultApi(profileId: string, accompanimentId: string): Promise<void> {
+  await apiFetch(`/profiles/${profileId}/accompaniment-defaults/${accompanimentId}`, { method: "DELETE" });
+}
+
 export async function deleteProfileApi(id: string): Promise<void> {
   await apiFetch(`/profiles/${id}`, { method: "DELETE" });
 }

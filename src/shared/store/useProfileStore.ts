@@ -1,16 +1,20 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { Accompaniment } from "../../core/domain/accompaniment";
 import { Profile } from "../../core/domain/profile";
 import {
   CreateProfileInput,
   UpdateProfileInput,
   createProfileApi,
   deleteProfileApi,
+  deleteProfileAccompanimentDefaultApi,
   deleteProfileFoodGroupDefaultApi,
+  setProfileAccompanimentDefaultApi,
   setProfileFoodGroupDefaultApi,
   updateProfileApi,
 } from "../../core/services/profileService";
 import { withoutFoodGroupDefault } from "../../core/logic/foodGroup/foodChoiceLogic";
+import { pruneAccompanimentDefaults } from "../../core/logic/accompaniment/accompanimentLogic";
 import {
   replaceProfileInList,
   resolveActiveProfileId,
@@ -26,6 +30,9 @@ interface ProfileState {
   updateProfile: (id: string, input: UpdateProfileInput) => Promise<void>;
   deleteProfile: (id: string) => Promise<void>;
   setFoodGroupDefault: (profileId: string, groupId: string, foodId: string | null) => Promise<void>;
+  setAccompanimentDefault: (profileId: string, accompanimentId: string, optionId: string | null) => Promise<void>;
+  clearAccompanimentDefault: (profileId: string, accompanimentId: string) => Promise<void>;
+  pruneAccompanimentDefaults: (accompaniments: readonly Accompaniment[]) => void;
 }
 
 export const useProfileStore = create<ProfileState>()(
@@ -62,6 +69,26 @@ export const useProfileStore = create<ProfileState>()(
         }
         await deleteProfileFoodGroupDefaultApi(profileId, groupId);
         set({ profiles: get().profiles.map((p) => (p.id === profileId ? withoutFoodGroupDefault(p, groupId) : p)) });
+      },
+      setAccompanimentDefault: async (profileId, accompanimentId, optionId) => {
+        const updated = await setProfileAccompanimentDefaultApi(profileId, accompanimentId, optionId);
+        set({ profiles: replaceProfileInList(get().profiles, updated) });
+      },
+      clearAccompanimentDefault: async (profileId, accompanimentId) => {
+        await deleteProfileAccompanimentDefaultApi(profileId, accompanimentId);
+        set({
+          profiles: get().profiles.map((p) => (p.id === profileId
+            ? { ...p, accompanimentDefaults: p.accompanimentDefaults.filter((d) => d.accompanimentId !== accompanimentId) }
+            : p)),
+        });
+      },
+      pruneAccompanimentDefaults: (accompaniments) => {
+        set({
+          profiles: get().profiles.map((p) => {
+            const accompanimentDefaults = pruneAccompanimentDefaults(p.accompanimentDefaults, accompaniments);
+            return accompanimentDefaults === p.accompanimentDefaults ? p : { ...p, accompanimentDefaults };
+          }),
+        });
       },
     }),
     {

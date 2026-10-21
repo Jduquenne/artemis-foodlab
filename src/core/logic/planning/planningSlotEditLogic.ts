@@ -23,6 +23,7 @@ export function replaceMainRecipe(existing: MealSlot | undefined, at: ParsedSlot
     recipePersons: keepKeys(slot.recipePersons, dessertIds),
     recipeQuantities: keepKeys(slot.recipeQuantities, dessertIds),
     foodChoices: keepKeys(slot.foodChoices, dessertIds),
+    accompanimentChoices: keepKeys(slot.accompanimentChoices, dessertIds),
   };
 }
 

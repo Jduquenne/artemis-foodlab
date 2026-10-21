@@ -31,6 +31,29 @@ export function omitKey<T>(record: Record<string, T>, key: string): Record<strin
   return Object.fromEntries(Object.entries(record).filter(([k]) => k !== key));
 }
 
+export function withRecordList<T>(
+  record: Record<string, T[]> | undefined,
+  key: string,
+  list: T[],
+): Record<string, T[]> | undefined {
+  const next = { ...record };
+  if (list.length > 0) next[key] = list;
+  else delete next[key];
+  return Object.keys(next).length > 0 ? next : undefined;
+}
+
+export function pickRecordLists<T>(
+  sources: readonly (Record<string, T[]> | undefined)[],
+  keys: readonly string[],
+): Record<string, T[]> | undefined {
+  const picked: Record<string, T[]> = {};
+  for (const key of keys) {
+    const found = sources.find((source) => source?.[key]?.length)?.[key];
+    if (found) picked[key] = found;
+  }
+  return Object.keys(picked).length > 0 ? picked : undefined;
+}
+
 export function upsertById<T extends { id: string }>(items: readonly T[], item: T): T[] {
   return items.some((existing) => existing.id === item.id)
     ? items.map((existing) => (existing.id === item.id ? item : existing))

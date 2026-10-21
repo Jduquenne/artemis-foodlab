@@ -12,14 +12,14 @@ import {
   mapApiSlotToMealSlot,
 } from "../logic/planning/planningApiMapper";
 import { diffSlotItems } from "../logic/planning/slotDiffLogic";
-import { pruneSlotFoodChoices } from "../logic/foodGroup/foodChoiceLogic";
+import { ChoiceContext, pruneSlotChoices } from "../logic/accompaniment/accompanimentLogic";
 import { recipesCatalogue } from "../catalogue/recipes";
 
 export const getWeekSlots = (year: number, week: number) =>
   db.planning.where("[year+week]").equals([year, week]).toArray();
 
-export async function saveSlot(input: MealSlot): Promise<void> {
-  const slot = { ...input, foodChoices: pruneSlotFoodChoices(input.foodChoices, recipesCatalogue) };
+export async function saveSlot(input: MealSlot, choices: ChoiceContext): Promise<void> {
+  const slot = pruneSlotChoices(input, recipesCatalogue, choices);
   const previous = await db.planning.get(slot.id);
   const diff = diffSlotItems(previous, slot);
 
@@ -89,16 +89,16 @@ export async function syncWeekFromApi(year: number, week: number): Promise<void>
   }
 }
 
-export const addDessertToSlot = async (slot: MealSlot, recipeId: string) => {
+export const addDessertToSlot = async (slot: MealSlot, recipeId: string, choices: ChoiceContext) => {
   const ids = slot.dessertIds ?? [];
   if (!canAddDessert(slot) || ids.includes(recipeId)) return;
-  await saveSlot({ ...slot, dessertIds: [...ids, recipeId] });
+  await saveSlot({ ...slot, dessertIds: [...ids, recipeId] }, choices);
 };
 
-export const removeDessertFromSlot = async (slot: MealSlot, recipeId: string) => {
-  await saveSlot({ ...slot, dessertIds: (slot.dessertIds ?? []).filter(id => id !== recipeId) });
+export const removeDessertFromSlot = async (slot: MealSlot, recipeId: string, choices: ChoiceContext) => {
+  await saveSlot({ ...slot, dessertIds: (slot.dessertIds ?? []).filter(id => id !== recipeId) }, choices);
 };
 
-export const setRecipePersonsOnSlot = async (slot: MealSlot, recipeId: string, persons: number) => {
-  await saveSlot({ ...slot, recipePersons: { ...slot.recipePersons, [recipeId]: persons } });
+export const setRecipePersonsOnSlot = async (slot: MealSlot, recipeId: string, persons: number, choices: ChoiceContext) => {
+  await saveSlot({ ...slot, recipePersons: { ...slot.recipePersons, [recipeId]: persons } }, choices);
 };

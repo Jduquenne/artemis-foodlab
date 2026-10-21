@@ -1,6 +1,8 @@
 import { FoodChoice } from "../../domain/foodGroup";
 import { MealSlot } from "../../domain/planning";
+import { AccompanimentChoice } from "../../domain/accompaniment";
 import { sameFoodChoices } from "../foodGroup/foodChoiceLogic";
+import { sameAccompanimentChoices } from "../accompaniment/accompanimentLogic";
 
 export interface ItemToAdd {
   code: string;
@@ -8,6 +10,7 @@ export interface ItemToAdd {
   personsOverride: number | null;
   gramsOverride: number | null;
   foodChoices: FoodChoice[];
+  accompanimentChoices: AccompanimentChoice[];
 }
 
 export interface ItemToUpdate {
@@ -15,6 +18,7 @@ export interface ItemToUpdate {
   personsOverride: number | null;
   gramsOverride: number | null;
   foodChoices?: FoodChoice[];
+  accompanimentChoices?: AccompanimentChoice[];
 }
 
 export interface SlotDiff {
@@ -40,8 +44,9 @@ export function diffSlotItems(previous: MealSlot | undefined, next: MealSlot): S
     const personsOverride = next.recipePersons?.[code] ?? null;
     const gramsOverride = next.recipeQuantities?.[code] ?? null;
     const foodChoices = next.foodChoices?.[code] ?? [];
+    const accompanimentChoices = next.accompanimentChoices?.[code] ?? [];
     if (!previousSet.has(code)) {
-      itemsToAdd.push({ code, isDessert: nextDessertSet.has(code), personsOverride, gramsOverride, foodChoices });
+      itemsToAdd.push({ code, isDessert: nextDessertSet.has(code), personsOverride, gramsOverride, foodChoices, accompanimentChoices });
       continue;
     }
     const itemApiId = previous?.itemApiIds?.[code];
@@ -49,8 +54,15 @@ export function diffSlotItems(previous: MealSlot | undefined, next: MealSlot): S
     const prevPersons = previous?.recipePersons?.[code] ?? null;
     const prevGrams = previous?.recipeQuantities?.[code] ?? null;
     const choicesChanged = !sameFoodChoices(previous?.foodChoices?.[code], foodChoices);
-    if (itemApiId && (prevPersons !== personsOverride || prevGrams !== gramsOverride || choicesChanged)) {
-      itemsToUpdate.push({ itemApiId, personsOverride, gramsOverride, ...(choicesChanged ? { foodChoices } : {}) });
+    const accompanimentsChanged = !sameAccompanimentChoices(previous?.accompanimentChoices?.[code], accompanimentChoices);
+    if (itemApiId && (prevPersons !== personsOverride || prevGrams !== gramsOverride || choicesChanged || accompanimentsChanged)) {
+      itemsToUpdate.push({
+        itemApiId,
+        personsOverride,
+        gramsOverride,
+        ...(choicesChanged ? { foodChoices } : {}),
+        ...(accompanimentsChanged ? { accompanimentChoices } : {}),
+      });
     }
   }
 

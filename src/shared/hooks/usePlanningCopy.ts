@@ -3,9 +3,11 @@ import { CopyState, MealSlot, SlotType } from "../../core/domain/planning";
 import { buildCopiedSlot, copyTargetKey, parseCopyTargetKey } from "../../core/logic/planning/planningCopyLogic";
 import { saveSlot } from "../../core/services/planningService";
 import { usePlannableSnapshot } from "./useCatalogueSnapshot";
+import { useChoiceContext } from "./useChoiceContext";
 
 export function usePlanningCopy(planningData: MealSlot[], year: number, week: number) {
   const plannable = usePlannableSnapshot();
+  const choiceContext = useChoiceContext();
   const [copyState, setCopyState] = useState<CopyState | null>(null);
   const [copyTargets, setCopyTargets] = useState<Set<string>>(new Set());
   const [isCopying, setIsCopying] = useState(false);
@@ -20,6 +22,7 @@ export function usePlanningCopy(planningData: MealSlot[], year: number, week: nu
       recipeName: plannable[recipeId]?.name ?? "",
       sourcePersons: sourceSlot?.recipePersons?.[recipeId],
       sourceFoodChoices: sourceSlot?.foodChoices?.[recipeId],
+      sourceAccompanimentChoices: sourceSlot?.accompanimentChoices?.[recipeId],
     });
     setCopyTargets(new Set());
   };
@@ -40,7 +43,7 @@ export function usePlanningCopy(planningData: MealSlot[], year: number, week: nu
       if (!target) continue;
       const existing = planningData.find((p) => p.day === target.day && p.slot === target.slot);
       const next = buildCopiedSlot(existing, { year, week, ...target }, copy);
-      if (next) await saveSlot(next);
+      if (next) await saveSlot(next, choiceContext);
     }
   };
 

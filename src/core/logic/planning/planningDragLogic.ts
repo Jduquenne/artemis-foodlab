@@ -1,7 +1,7 @@
 import { MealSlot } from "../../domain/planning";
 import { MAX_DESSERTS_PER_SLOT } from "../../domain/planningConfig";
 import { ParsedSlot } from "./planningSlotIdLogic";
-import { pickFoodChoices } from "../foodGroup/foodChoiceLogic";
+import { pickRecordLists } from "../../utils/collectionUtils";
 
 export interface DragMoveResult {
   toSave: MealSlot[];
@@ -28,7 +28,8 @@ function placeMeal(
     persons: undefined,
     recipePersons: undefined,
     recipeQuantities: undefined,
-    foodChoices: pickFoodChoices(choiceSources.map((source) => source.foodChoices), [...recipeIds, ...(dessertIds ?? [])]),
+    foodChoices: pickRecordLists(choiceSources.map((source) => source.foodChoices), [...recipeIds, ...(dessertIds ?? [])]),
+    accompanimentChoices: pickRecordLists(choiceSources.map((source) => source.accompanimentChoices), [...recipeIds, ...(dessertIds ?? [])]),
   };
 }
 

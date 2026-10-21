@@ -1,7 +1,7 @@
 import { X } from "lucide-react";
 import { toggleInList } from "../../../../core/utils/collectionUtils";
 import { useFoodsSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
-import { FoodSearchInput } from "./FoodSearchInput";
+import { FoodSearchInput } from "../../../../shared/components/ui/FoodSearchInput";
 
 export interface FoodChipsFieldProps {
   foodIds: string[];

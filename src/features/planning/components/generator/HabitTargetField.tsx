@@ -5,7 +5,7 @@ import { useCategoriesSnapshot, useFoodGroupsSnapshot, useRecipesSnapshot } from
 import { ChoicePills } from "./ChoicePills";
 import { FoodChipsField } from "./FoodChipsField";
 import { KeywordsField } from "./KeywordsField";
-import { RecipeSearchInput } from "./RecipeSearchInput";
+import { RecipeSearchInput } from "../../../../shared/components/ui/RecipeSearchInput";
 
 export interface HabitTargetFieldProps {
   target: HabitTarget;

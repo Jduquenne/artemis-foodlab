@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
-import { RecipeDetails } from "../../../../core/domain/recipe";
-import { searchHabitRecipes } from "../../../../core/logic/menuGenerator/habitLogic";
-import { useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
+import { RecipeDetails } from "../../../core/domain/recipe";
+import { searchHabitRecipes } from "../../../core/logic/menuGenerator/habitLogic";
+import { useRecipesSnapshot } from "../../hooks/useCatalogueSnapshot";
 
 export interface RecipeSearchInputProps {
   disabled: boolean;

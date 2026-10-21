@@ -1,6 +1,6 @@
 import { X } from "lucide-react";
 import { useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
-import { RecipeSearchInput } from "./RecipeSearchInput";
+import { RecipeSearchInput } from "../../../../shared/components/ui/RecipeSearchInput";
 
 export interface RecipeListFieldProps {
   codes: string[];

@@ -5,7 +5,7 @@ import { HABIT_TARGET_KIND_LABELS, HabitTargetKind, defaultHabitTarget } from ".
 import { useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { ChoicePills } from "./ChoicePills";
 import { HabitTargetField } from "./HabitTargetField";
-import { RecipeSearchInput } from "./RecipeSearchInput";
+import { RecipeSearchInput } from "../../../../shared/components/ui/RecipeSearchInput";
 import { SegmentedControl } from "./SegmentedControl";
 
 export interface DessertPickFieldProps {

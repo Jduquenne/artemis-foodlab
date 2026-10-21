@@ -1,6 +1,6 @@
 import { X } from "lucide-react";
 import { useFoodsSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
-import { FoodSearchInput } from "./FoodSearchInput";
+import { FoodSearchInput } from "../../../../shared/components/ui/FoodSearchInput";
 
 export interface ExcludedFoodsFieldProps {
   foodIds: string[];

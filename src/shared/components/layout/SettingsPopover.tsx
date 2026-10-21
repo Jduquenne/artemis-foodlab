@@ -1,5 +1,5 @@
 import { lazy, Suspense, useRef, useState } from "react";
-import { Settings, Upload, Bell, UserCircle, ScrollText, Users } from "lucide-react";
+import { Settings, Upload, Bell, UserCircle, ScrollText, Users, Soup } from "lucide-react";
 import { isValidSyncPayload, SyncPayload } from "../../../core/logic/sync/importPayloadLogic";
 import { ThemeToggle } from "./ThemeToggle";
 import { SettingsMenuItem } from "./SettingsMenuItem";
@@ -9,6 +9,7 @@ const ImportModal = lazy(() => import("../../../features/sync/ImportModal").then
 const NotificationSettingsModal = lazy(() => import("../ui/NotificationSettingsModal").then(m => ({ default: m.NotificationSettingsModal })));
 const AccountModal = lazy(() => import("../ui/AccountModal").then(m => ({ default: m.AccountModal })));
 const ProfilesModal = lazy(() => import("../ui/profiles/ProfilesModal").then(m => ({ default: m.ProfilesModal })));
+const AccompanimentsModal = lazy(() => import("../../../features/accompaniments/AccompanimentsModal").then(m => ({ default: m.AccompanimentsModal })));
 const LegalModal = lazy(() => import("../ui/LegalModal").then(m => ({ default: m.LegalModal })));
 
 export const SettingsPopover = () => {
@@ -17,6 +18,7 @@ export const SettingsPopover = () => {
   const [notifSettingsOpen, setNotifSettingsOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
   const [profilesOpen, setProfilesOpen] = useState(false);
+  const [accompanimentsOpen, setAccompanimentsOpen] = useState(false);
   const [legalOpen, setLegalOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const isDemo = useIsDemo();
@@ -66,6 +68,7 @@ export const SettingsPopover = () => {
             <div className="absolute bottom-0 left-full ml-3 z-50 bg-surface border border-slate-200 rounded-2xl shadow-xl overflow-hidden w-52">
               <SettingsMenuItem icon={<UserCircle className="w-4 h-4 text-slate-400 shrink-0" />} label="Compte" divided={false} onClick={() => { setAccountOpen(true); setOpen(false); }} />
               <SettingsMenuItem icon={<Users className="w-4 h-4 text-slate-400 shrink-0" />} label="Profils" onClick={() => { setProfilesOpen(true); setOpen(false); }} />
+              <SettingsMenuItem icon={<Soup className="w-4 h-4 text-slate-400 shrink-0" />} label="Accompagnements" onClick={() => { setAccompanimentsOpen(true); setOpen(false); }} />
               {!isDemo && (
                 <SettingsMenuItem icon={<Upload className="w-4 h-4 text-slate-400 shrink-0" />} label="Importer des données" onClick={() => { fileInputRef.current?.click(); setOpen(false); }} />
               )}
@@ -97,6 +100,8 @@ export const SettingsPopover = () => {
         {accountOpen && <AccountModal onClose={() => setAccountOpen(false)} />}
 
         {profilesOpen && <ProfilesModal onClose={() => setProfilesOpen(false)} />}
+
+        {accompanimentsOpen && <AccompanimentsModal onClose={() => setAccompanimentsOpen(false)} />}
 
         {legalOpen && <LegalModal onClose={() => setLegalOpen(false)} />}
       </Suspense>

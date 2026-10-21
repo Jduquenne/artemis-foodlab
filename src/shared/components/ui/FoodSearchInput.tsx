@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
-import { searchFoods } from "../../../../core/logic/recipeBuilder/ingredientSearchLogic";
-import { useFoodsSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
+import { searchFoods } from "../../../core/logic/recipeBuilder/ingredientSearchLogic";
+import { useFoodsSnapshot } from "../../hooks/useCatalogueSnapshot";
 
 export interface FoodSearchInputProps {
   hiddenIds: readonly string[];

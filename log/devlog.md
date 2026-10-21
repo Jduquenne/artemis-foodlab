@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-21 — API D-058: accompaniments on dev (v6.124.2, docs only)
+- Done: the API session implemented D-058 (D-037 step 2) on dev with the owner's two changes (food option `unit` required, stable sort orders); contract and real payloads a-f recorded in `docs/api.md`. Key front rules: resolution item choice > profile default > `defaultOptionId` (`null` = none); foodChoices on an option's ingredients are accepted for any applying option, so the front prunes them to each profile's effective option and never resends orphans.
+- Still open: front plan for step 2 (proposed to the owner); D-057 and D-058 prod push before pushing `master`.
+
 ## 2026-10-21 — D-037 step 2 model: accompaniments per account (v6.124.1, docs only)
 - Done: owner answers: a profile may take no accompaniment; options = a base, a simple recipe or a simple food (« croûtons »); an accompaniment is named after the dish (« Soupe ») and must be **per account** (other households define their own), not app-wide. Opinion given and accepted: food families stay global (recipes reference them; tastes already per profile), catalogue recipes stay admin-only. Step 2 rewritten in D-037: accompaniment = account data (name, recipes picked one by one, options recipe with portions per person or food with quantity per person, accompaniment default), profile default or « sans », per-meal choice, shopping / journal per profile; recipes unchanged. « Recipe name contains » targets deferred (owner). API prompt given to the owner.
 - Still open: API contract for step 2 (real payloads); owner test of step 1; API D-057 prod push.

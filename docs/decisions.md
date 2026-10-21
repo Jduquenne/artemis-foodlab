@@ -297,7 +297,7 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
 ## D-037 — Choices inside bases and accompaniment groups
 
 - **Date**: 2026-10-21
-- **Status**: step 1 accepted (owner), waiting for the API; step 2 proposed, open questions below
+- **Status**: step 1 accepted (owner), API D-057 on dev (2026-10-21, not in prod yet), front to build; step 2 proposed, open questions below
 - **Context**: a soup is eaten with an accompaniment (a slice of bread with butter, cheese or pâté…), reusable across many recipes like a base, and chosen per profile like a food family. A food family cannot cover it: the toppings come from different food categories and a food belongs to one family only (a family « Accompagnement tartine » would be a misuse). D-033 V1 also refuses an ingredient « au choix » inside a base, so a « Tartine fromage » base cannot let each profile pick its cheese.
 - **Decision**:
   - **Step 1 — ingredient « au choix » inside a base** (lifts the D-033 V1 limit): a recipe of kind `base` may carry group ingredients. Every existing mechanism applies through the base: profile default per family, choice and quantity per planned meal × profile, shopping split, journal macros. A planned meal choice may target an ingredient of any base reached by the planned recipe (through `baseId`, recursively); when the same base is reached several times, the choice applies to every occurrence. Example: soup → base « Tartine fromage » (bread + cheese au choix, family Fromage): the profile default « Fromage → Comté » applies with nothing more to enter.

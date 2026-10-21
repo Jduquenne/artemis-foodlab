@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-21 — API D-057: group ingredients inside bases on dev (v6.122.2, docs only)
+- Done: the API session implemented D-037 step 1 on dev (D-057, no migration, not pushed): `foodGroupId` accepted in bases, batch `foodChoices` accept ingredients of any base reached recursively; real payloads a-e recorded in `docs/api.md`. Orphan choices (the dish stops using the base) stay in `GET` but are rejected on resend: the front must prune them on every write.
+- Still open: front step 1 (plan proposed to the owner); API D-057 prod push to be confirmed before any front push relying on it.
+
 ## 2026-10-21 — D-037: choices inside bases and accompaniment groups (v6.122.1, docs only)
 - Done: owner need: soups with an accompaniment (slice of bread with butter, cheese or pâté), reusable like a base, chosen per profile like a family. A food family cannot cover it (mixed categories, one family per food). Decision D-037: step 1 lift the D-033 V1 limit (group ingredient inside a base, choices reach base ingredients recursively, same base twice = same choice), step 2 accompaniment groups (catalogue group of bases, profile default, choice per planned meal), built on step 1. Roadmap current focus item added. API prompt for step 1 given to the owner.
 - Still open: API answer for step 1 (real payloads); then front step 1 (Recipe Builder validation, personalisation through bases, choice modal, shopping, journal); D-037 step 2 open questions (no accompaniment, bases only, name).

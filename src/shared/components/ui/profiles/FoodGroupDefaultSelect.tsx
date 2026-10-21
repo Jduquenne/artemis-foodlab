@@ -5,15 +5,15 @@ import { findFoodGroupDefault } from "../../../../core/logic/foodGroup/foodChoic
 import { usePendingKey } from "../../../hooks/usePendingKey";
 import { useProfileStore } from "../../../store/useProfileStore";
 import { withPending } from "../../../utils/withPending";
-import { ProfileDot } from "./ProfileDot";
 
 export interface FoodGroupDefaultSelectProps {
   profile: Profile;
   groupId: string;
+  label: string;
   options: Food[];
 }
 
-export const FoodGroupDefaultSelect = ({ profile, groupId, options }: FoodGroupDefaultSelectProps) => {
+export const FoodGroupDefaultSelect = ({ profile, groupId, label, options }: FoodGroupDefaultSelectProps) => {
   const setFoodGroupDefault = useProfileStore((s) => s.setFoodGroupDefault);
   const key = `profile-food-group-default:${profile.id}:${groupId}`;
   const pending = usePendingKey(key);
@@ -26,14 +26,15 @@ export const FoodGroupDefaultSelect = ({ profile, groupId, options }: FoodGroupD
   };
 
   return (
-    <label className="flex items-center gap-2">
-      <ProfileDot color={profile.color} />
-      <span className="w-20 shrink-0 text-sm text-slate-700 truncate">{profile.name}</span>
+    <label className="flex items-center gap-3">
+      <span className="flex-1 min-w-0 text-sm font-semibold text-slate-700 truncate">{label}</span>
       <select
         value={current ?? ""}
         disabled={pending}
         onChange={(e) => change(e.target.value)}
-        className="flex-1 min-w-0 px-2 py-1.5 bg-surface border border-slate-200 rounded-lg text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 disabled:opacity-50"
+        className={`w-40 sm:w-48 shrink-0 px-2 py-1.5 bg-surface border rounded-lg text-sm focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 disabled:opacity-50 ${
+          current ? "border-orange-300 text-orange-700 font-semibold" : "border-slate-200 text-slate-500"
+        }`}
       >
         <option value="">Défaut de la recette</option>
         {options.map((food) => (

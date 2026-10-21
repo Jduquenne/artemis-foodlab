@@ -1,7 +1,10 @@
 import { useMemo, useState } from 'react';
 import { Loader2, Shuffle } from 'lucide-react';
 import { FoodChoice } from '../../../core/domain/foodGroup';
-import { findMealChoice, foodsOfGroupSorted, reachableGroupIngredients, reachableQuantityPerPortion, resolveIngredientFood, setMealFoodChoice, setMealFoodQuantity } from '../../../core/logic/foodGroup/foodChoiceLogic';
+import { AccompanimentChoice } from '../../../core/domain/accompaniment';
+import { findMealChoice, foodsOfGroupSorted, reachableQuantityPerPortion, resolveIngredientFood, setMealFoodChoice, setMealFoodQuantity } from '../../../core/logic/foodGroup/foodChoiceLogic';
+import { accompanimentsFor, findAccompanimentChoice, mealChoiceIngredients, resolveAccompaniment, setAccompanimentChoice } from '../../../core/logic/accompaniment/accompanimentLogic';
+import { ACCOMPANIMENT_NONE_VALUE, accompanimentOptionLabel } from '../../../core/logic/accompaniment/accompanimentFormLogic';
 import { formatQty } from '../../../core/logic/unit/unitFormatLogic';
 import { DecimalInput } from '../../../shared/components/ui/DecimalInput';
 import { getProfileColorHex } from '../../../core/logic/profile/profileLogic';
@@ -9,46 +12,98 @@ import { foodGroupLabel } from '../../../core/logic/dashboard/foodGroupFormLogic
 import { useFoodGroupsSnapshot, useFoodsSnapshot, useRecipesSnapshot } from '../../../shared/hooks/useCatalogueSnapshot';
 import { usePendingKey } from '../../../shared/hooks/usePendingKey';
 import { useProfileStore } from '../../../shared/store/useProfileStore';
+import { useAccompanimentStore } from '../../../shared/store/useAccompanimentStore';
 
 export interface FoodChoiceModalProps {
     recipeId: string;
     pendingKey: string;
     initialChoices: FoodChoice[];
-    onSave: (choices: FoodChoice[]) => Promise<boolean>;
+    initialAccompanimentChoices: AccompanimentChoice[];
+    onSave: (choices: FoodChoice[], accompanimentChoices: AccompanimentChoice[]) => Promise<boolean>;
     onClose: () => void;
 }
 
 const SOURCE_LABELS = {
     profile: 'préférence du profil',
     recipe: 'défaut de la recette',
+    accompaniment: 'défaut',
 };
 
-export const FoodChoiceModal = ({ recipeId, pendingKey, initialChoices, onSave, onClose }: FoodChoiceModalProps) => {
+const SELECT_CLASS = 'flex-1 min-w-0 px-2 py-2 bg-surface border border-slate-200 rounded-xl text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 disabled:opacity-50';
+
+export const FoodChoiceModal = ({ recipeId, pendingKey, initialChoices, initialAccompanimentChoices, onSave, onClose }: FoodChoiceModalProps) => {
     const recipes = useRecipesSnapshot();
     const foods = useFoodsSnapshot();
     const groups = useFoodGroupsSnapshot();
     const profiles = useProfileStore((s) => s.profiles);
+    const allAccompaniments = useAccompanimentStore((s) => s.accompaniments);
     const pending = usePendingKey(pendingKey);
     const [choices, setChoices] = useState<FoodChoice[]>(initialChoices);
+    const [accompanimentChoices, setAccompanimentChoices] = useState<AccompanimentChoice[]>(initialAccompanimentChoices);
 
     const recipe = recipes[recipeId];
-    const entries = useMemo(() => (recipe ? reachableGroupIngredients(recipe, recipes) : []), [recipe, recipes]);
+    const accompaniments = useMemo(() => accompanimentsFor(recipeId, allAccompaniments), [recipeId, allAccompaniments]);
+    const ingredients = useMemo(
+        () => (recipe ? mealChoiceIngredients(recipe, recipes, allAccompaniments, profiles, accompanimentChoices) : []),
+        [recipe, recipes, allAccompaniments, profiles, accompanimentChoices],
+    );
 
     const save = async () => {
-        if (await onSave(choices)) onClose();
+        if (await onSave(choices, accompanimentChoices)) onClose();
     };
+
+    const profileDot = (color: string) => (
+        <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: getProfileColorHex(color) }} />
+    );
 
     return (
         <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
             <div className="bg-surface rounded-2xl shadow-2xl w-full max-w-md p-5 flex flex-col max-h-[90dvh]">
                 <p className="text-xs font-black text-orange-600 uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
-                    <Shuffle size={12} /> Ingrédients au choix
+                    <Shuffle size={12} /> Choix du repas
                 </p>
                 <p className="text-sm font-bold text-slate-800 mb-4 truncate">{recipe?.name ?? recipeId}</p>
 
                 <div className="flex flex-col gap-4 overflow-y-auto min-h-0 mb-4">
-                    {entries.map((entry) => {
-                        const { ingredient, ownerName } = entry;
+                    {accompaniments.map((accompaniment) => (
+                        <section key={accompaniment.id} className="flex flex-col gap-2">
+                            <p className="text-xs font-bold text-slate-500">
+                                {accompaniment.name}
+                                <span className="font-normal text-slate-400"> · accompagnement</span>
+                            </p>
+                            {profiles.map((profile) => {
+                                const mealChoice = findAccompanimentChoice(accompanimentChoices, accompaniment.id, profile.id);
+                                const fallback = resolveAccompaniment(accompaniment, profile, []);
+                                const fallbackName = fallback.option ? accompanimentOptionLabel(fallback.option, recipes, foods) : 'Sans';
+                                const value = mealChoice ? (mealChoice.optionId ?? ACCOMPANIMENT_NONE_VALUE) : '';
+                                return (
+                                    <label key={profile.id} className="flex items-center gap-2">
+                                        {profileDot(profile.color)}
+                                        <span className="w-20 shrink-0 text-sm text-slate-700 truncate">{profile.name}</span>
+                                        <select
+                                            value={value}
+                                            disabled={pending}
+                                            onChange={(e) => {
+                                                const next = e.target.value;
+                                                const optionId = next === '' ? undefined : next === ACCOMPANIMENT_NONE_VALUE ? null : next;
+                                                setAccompanimentChoices((prev) => setAccompanimentChoice(prev, accompaniment.id, profile.id, optionId));
+                                            }}
+                                            className={SELECT_CLASS}
+                                        >
+                                            <option value="">{`${fallbackName} (${SOURCE_LABELS[fallback.source === 'profile' ? 'profile' : 'accompaniment']})`}</option>
+                                            <option value={ACCOMPANIMENT_NONE_VALUE}>Sans accompagnement</option>
+                                            {accompaniment.options.map((option) => (
+                                                <option key={option.id} value={option.id}>{accompanimentOptionLabel(option, recipes, foods)}</option>
+                                            ))}
+                                        </select>
+                                    </label>
+                                );
+                            })}
+                        </section>
+                    ))}
+
+                    {ingredients.map(({ entry, ownerName, profileIds }) => {
+                        const { ingredient } = entry;
                         const options = ingredient.foodGroupId ? foodsOfGroupSorted(foods, ingredient.foodGroupId) : [];
                         const perPortion = reachableQuantityPerPortion(entry);
                         const unit = ingredient.unit || '';
@@ -59,20 +114,20 @@ export const FoodChoiceModal = ({ recipeId, pendingKey, initialChoices, onSave, 
                                     {ingredient.name}
                                     <span className="font-normal text-slate-400"> · {foodGroupLabel(groups, ingredient.foodGroupId)}</span>
                                 </p>
-                                {profiles.map((profile) => {
+                                {profiles.filter((profile) => profileIds.includes(profile.id)).map((profile) => {
                                     const mealChoice = findMealChoice(choices, ingredient.id, profile.id);
                                     const fallback = resolveIngredientFood(ingredient, profile.id, profile.foodGroupDefaults, []);
                                     const fallbackName = fallback ? (foods[fallback.foodId]?.name ?? fallback.foodId) : '—';
                                     const fallbackSource = fallback && fallback.source !== 'meal' ? SOURCE_LABELS[fallback.source] : '';
                                     return (
                                         <label key={profile.id} className="flex items-center gap-2">
-                                            <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: getProfileColorHex(profile.color) }} />
+                                            {profileDot(profile.color)}
                                             <span className="w-20 shrink-0 text-sm text-slate-700 truncate">{profile.name}</span>
                                             <select
                                                 value={mealChoice?.foodId ?? ''}
                                                 disabled={pending}
                                                 onChange={(e) => setChoices((prev) => setMealFoodChoice(prev, ingredient.id, profile.id, e.target.value || null))}
-                                                className="flex-1 min-w-0 px-2 py-2 bg-surface border border-slate-200 rounded-xl text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 disabled:opacity-50"
+                                                className={SELECT_CLASS}
                                             >
                                                 <option value="">{`${fallbackName} (${fallbackSource})`}</option>
                                                 {options.map((food) => (

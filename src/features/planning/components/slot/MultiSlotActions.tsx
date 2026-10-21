@@ -30,7 +30,7 @@ export const MultiSlotActions = ({
     const singleId = recipeIds.length === 1 ? recipeIds[0] : null;
     const actions: ItemAction[] = [];
     if (singleId) {
-        if (onChooseFood) actions.push({ id: 'food-choice', label: 'Ingrédients au choix', icon: Shuffle, onSelect: () => onChooseFood(singleId) });
+        if (onChooseFood) actions.push({ id: 'food-choice', label: 'Choix du repas', icon: Shuffle, onSelect: () => onChooseFood(singleId) });
         if (onEditQuantity) actions.push({ id: 'quantity', label: 'Quantité', icon: Scale, onSelect: onEditQuantity });
         if (onCopyRecipe) actions.push({ id: 'copy', label: 'Copier', icon: Copy, onSelect: () => onCopyRecipe(singleId) });
         if (canAddMore) actions.push({ id: 'add', label: 'Ajouter un repas', icon: Plus, onSelect: onAdd });

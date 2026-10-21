@@ -10,6 +10,7 @@ import { MealPhoto } from './MealPhoto';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { usePlannableSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 import { useGroupIngredients } from '../../../../shared/hooks/useGroupIngredients';
+import { useHasAccompaniment } from '../../../../shared/hooks/useHasMealChoices';
 import { useProfileStore } from '../../../../shared/store/useProfileStore';
 import { foodChoiceStatus } from '../../../../core/logic/foodGroup/foodChoiceLogic';
 import { FoodChoice } from '../../../../core/domain/foodGroup';
@@ -71,7 +72,8 @@ export const SingleMealSlot = ({
     const choiceStatus = groupIngredients.length > 0 && firstId
         ? foodChoiceStatus(groupIngredients, profiles, foodChoices?.[firstId] ?? [])
         : null;
-    const chooseMainFood = choiceStatus && firstId && onChooseFood ? () => onChooseFood(firstId) : undefined;
+    const hasAccompaniment = useHasAccompaniment(firstId);
+    const chooseMainFood = (choiceStatus || hasAccompaniment) && firstId && onChooseFood ? () => onChooseFood(firstId) : undefined;
 
     const { setNodeRef: setDropRef, isOver } = useDroppable({ id: slotId });
     const { setNodeRef: setDragRef, listeners, attributes, isDragging } = useDraggable({

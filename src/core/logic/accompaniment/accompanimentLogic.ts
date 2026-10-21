@@ -6,10 +6,12 @@ import {
   ResolvedAccompaniment,
 } from "../../domain/accompaniment";
 import { FoodChoice } from "../../domain/foodGroup";
+import { Food } from "../../domain/ingredient";
 import { MealSlot } from "../../domain/planning";
 import { Profile } from "../../domain/profile";
 import { RecipeDetails } from "../../domain/recipe";
-import { reachableGroupIngredients } from "../foodGroup/foodChoiceLogic";
+import { ReachableGroupIngredient, reachableGroupIngredients } from "../foodGroup/foodChoiceLogic";
+import { accompanimentOptionLabel } from "./accompanimentFormLogic";
 
 export type AccompanimentProfile = Pick<Profile, "id" | "accompanimentDefaults">;
 
@@ -149,4 +151,66 @@ export function pruneSlotChoices(slot: MealSlot, recipes: Record<string, RecipeD
     )
     : undefined;
   return { ...slot, foodChoices, accompanimentChoices };
+}
+
+export interface MealChoiceIngredient {
+  entry: ReachableGroupIngredient;
+  ownerName: string | null;
+  profileIds: string[];
+}
+
+export function mealChoiceIngredients(
+  recipe: RecipeDetails,
+  recipes: Record<string, RecipeDetails>,
+  accompaniments: readonly Accompaniment[],
+  profiles: readonly AccompanimentProfile[],
+  accompanimentChoices: readonly AccompanimentChoice[],
+): MealChoiceIngredient[] {
+  const allIds = profiles.map((p) => p.id);
+  const result = new Map<string, MealChoiceIngredient>();
+  for (const entry of reachableGroupIngredients(recipe, recipes)) {
+    result.set(entry.ingredient.id, { entry, ownerName: entry.ownerName, profileIds: allIds });
+  }
+  const applying = accompanimentsFor(recipe.code, accompaniments);
+  for (const profile of profiles) {
+    for (const accompaniment of applying) {
+      const { option } = resolveAccompaniment(accompaniment, profile, accompanimentChoices);
+      const optionRecipe = option?.kind === "recipe" && option.recipeCode ? recipes[option.recipeCode] : undefined;
+      if (!option || !optionRecipe) continue;
+      for (const entry of reachableGroupIngredients(optionRecipe, recipes, option.portionsPerPerson ?? 1)) {
+        const id = entry.ingredient.id;
+        const existing = result.get(id);
+        if (existing) {
+          if (!existing.profileIds.includes(profile.id)) result.set(id, { ...existing, profileIds: [...existing.profileIds, profile.id] });
+          continue;
+        }
+        result.set(id, { entry, ownerName: entry.ownerName ?? optionRecipe.name, profileIds: [profile.id] });
+      }
+    }
+  }
+  return [...result.values()];
+}
+
+export function setAccompanimentChoice(
+  choices: readonly AccompanimentChoice[],
+  accompanimentId: string,
+  profileId: string,
+  optionId: string | null | undefined,
+): AccompanimentChoice[] {
+  const others = choices.filter((c) => !(c.accompanimentId === accompanimentId && c.profileId === profileId));
+  return optionId === undefined ? others : [...others, { accompanimentId, profileId, optionId }];
+}
+
+export function accompanimentLabelsFor(
+  recipeCode: string,
+  profile: AccompanimentProfile,
+  mealChoices: readonly AccompanimentChoice[],
+  accompaniments: readonly Accompaniment[],
+  recipes: Record<string, RecipeDetails>,
+  foods: Record<string, Food>,
+): string[] {
+  return accompanimentsFor(recipeCode, accompaniments).flatMap((accompaniment) => {
+    const { option } = resolveAccompaniment(accompaniment, profile, mealChoices);
+    return option ? [accompanimentOptionLabel(option, recipes, foods)] : [];
+  });
 }

@@ -14,6 +14,7 @@ import { FoodChoice } from "../../../../core/domain/foodGroup";
 import { AccompanimentChoice } from "../../../../core/domain/accompaniment";
 import { personalizeRecipe } from "../../../../core/logic/foodGroup/foodChoiceLogic";
 import { useActiveProfile } from "../../../../shared/hooks/useActiveProfile";
+import { accompanimentLabelsFor } from "../../../../core/logic/accompaniment/accompanimentLogic";
 
 export interface RecipePortionRowProps {
   recipeId: string;
@@ -43,6 +44,12 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId, mealChoices, ac
     [catalogueRecipe, personalization, catalogue.foods],
   );
   const name = recipe?.name ?? recipeId;
+  const accompanimentLabels = useMemo(
+    () => (activeProfile
+      ? accompanimentLabelsFor(recipeId, activeProfile, accompanimentChoices ?? [], catalogue.accompaniments ?? [], catalogue.recipes, catalogue.foods)
+      : []),
+    [activeProfile, recipeId, accompanimentChoices, catalogue],
+  );
   const isIngredient = recipe?.kind === RecipeKind.INGREDIENT;
   const baseGrams = catalogue.baseGrams[recipeId] ?? 0;
   const useGrams = isIngredient && baseGrams > 0;
@@ -91,8 +98,11 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId, mealChoices, ac
   return (
     <div className="flex flex-col py-0.5 gap-0.5">
       <div className="flex items-center justify-between gap-1 w-full">
-        <span className="text-sm text-slate-700 font-semibold leading-tight truncate">
-          {name}
+        <span className="min-w-0 flex flex-col">
+          <span className="text-sm text-slate-700 font-semibold leading-tight truncate">{name}</span>
+          {accompanimentLabels.length > 0 && (
+            <span className="text-[11px] text-slate-400 leading-tight truncate">+ {accompanimentLabels.join(", ")}</span>
+          )}
         </span>
         {canExpand && (
           <button

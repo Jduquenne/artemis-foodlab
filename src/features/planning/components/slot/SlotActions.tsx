@@ -23,7 +23,7 @@ export const SlotActions = ({
 }: SlotActionsProps) => {
     const actions: ItemAction[] = [];
     if (onModify) actions.push({ id: 'modify', label: 'Changer le repas', icon: RefreshCw, onSelect: onModify });
-    if (onChooseFood) actions.push({ id: 'food-choice', label: 'Ingrédients au choix', icon: Shuffle, onSelect: onChooseFood });
+    if (onChooseFood) actions.push({ id: 'food-choice', label: 'Choix du repas', icon: Shuffle, onSelect: onChooseFood });
     if (onEditPersons) actions.push({ id: 'persons', label: 'Personnes', icon: Users, onSelect: onEditPersons });
     if (onDelete) actions.push({ id: 'delete', label: 'Supprimer', icon: Trash2, onSelect: onDelete, danger: true });
 

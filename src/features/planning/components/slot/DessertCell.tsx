@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { X, Copy, Users, Minus, Plus, Check, Loader2, Shuffle } from 'lucide-react';
-import { useGroupIngredients } from '../../../../shared/hooks/useGroupIngredients';
+import { useHasMealChoices } from '../../../../shared/hooks/useHasMealChoices';
 import { ItemAction, ItemActionsMenu } from './ItemActionsMenu';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 import { MealPhoto } from './MealPhoto';
@@ -31,7 +31,7 @@ export const DessertCell = ({ slotId, recipeId, onRemove, isAddMode, onCopy, isC
     const [draft, setDraft] = useState(persons ?? 1);
     const removePending = usePendingKey(`planning-dessert-remove:${slotId}:${recipeId}`);
     const savingPersons = usePendingKey(`planning-dessert-persons:${slotId}:${recipeId}`);
-    const hasFoodChoice = useGroupIngredients(recipeId).length > 0;
+    const hasFoodChoice = useHasMealChoices(recipeId);
 
     if (!recipe?.assets?.mealPhoto) return null;
 
@@ -49,7 +49,7 @@ export const DessertCell = ({ slotId, recipeId, onRemove, isAddMode, onCopy, isC
 
     const actions: ItemAction[] = [];
     if (!isAddMode && !hideActions && !isEditingPersons) {
-        if (hasFoodChoice && onChooseFood) actions.push({ id: 'food-choice', label: 'Ingrédients au choix', icon: Shuffle, onSelect: onChooseFood });
+        if (hasFoodChoice && onChooseFood) actions.push({ id: 'food-choice', label: 'Choix du repas', icon: Shuffle, onSelect: onChooseFood });
         if (onSetPersons) actions.push({ id: 'persons', label: 'Personnes', icon: Users, onSelect: openEditor });
         if (onCopy) actions.push({ id: 'copy', label: 'Copier', icon: Copy, onSelect: onCopy });
         actions.push({ id: 'remove', label: 'Retirer', icon: X, onSelect: onRemove, danger: true });

@@ -11,7 +11,7 @@ import { RecipeMetaEditor } from './RecipeMetaEditor';
 import { MealPhoto } from './MealPhoto';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { usePlannableSnapshot, useRecipeMetricsSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
-import { useGroupIngredients } from '../../../../shared/hooks/useGroupIngredients';
+import { useHasMealChoices } from '../../../../shared/hooks/useHasMealChoices';
 
 export interface MultiMealSlotProps {
     label: string;
@@ -77,7 +77,7 @@ export const MultiMealSlot = ({
     const singleHasPhoto = Boolean(firstRecipe?.assets?.mealPhoto);
     const singleHasRecipesPage = Boolean(firstRecipe?.assets?.mealPhoto || firstRecipe?.assets?.instructionsPhoto);
     const singleIsDish = isDish(firstRecipe) || isBase(firstRecipe);
-    const singleHasFoodChoice = useGroupIngredients(recipeIds.length === 1 ? recipeIds[0] : undefined).length > 0;
+    const singleHasFoodChoice = useHasMealChoices(recipeIds.length === 1 ? recipeIds[0] : undefined);
 
     const hasRecipes = slotHasRecipes({ recipeIds });
     const isFull = isSlotFull({ recipeIds });

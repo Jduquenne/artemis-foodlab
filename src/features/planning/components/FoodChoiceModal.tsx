@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Loader2, Shuffle } from 'lucide-react';
 import { FoodChoice } from '../../../core/domain/foodGroup';
-import { findMealChoice, foodsOfGroupSorted, groupIngredientsOf, recipeQuantityPerPortion, resolveIngredientFood, setMealFoodChoice, setMealFoodQuantity } from '../../../core/logic/foodGroup/foodChoiceLogic';
+import { findMealChoice, foodsOfGroupSorted, reachableGroupIngredients, reachableQuantityPerPortion, resolveIngredientFood, setMealFoodChoice, setMealFoodQuantity } from '../../../core/logic/foodGroup/foodChoiceLogic';
 import { formatQty } from '../../../core/logic/unit/unitFormatLogic';
 import { DecimalInput } from '../../../shared/components/ui/DecimalInput';
 import { getProfileColorHex } from '../../../core/logic/profile/profileLogic';
@@ -32,7 +32,7 @@ export const FoodChoiceModal = ({ recipeId, pendingKey, initialChoices, onSave, 
     const [choices, setChoices] = useState<FoodChoice[]>(initialChoices);
 
     const recipe = recipes[recipeId];
-    const ingredients = useMemo(() => groupIngredientsOf(recipe), [recipe]);
+    const entries = useMemo(() => (recipe ? reachableGroupIngredients(recipe, recipes) : []), [recipe, recipes]);
 
     const save = async () => {
         if (await onSave(choices)) onClose();
@@ -47,13 +47,15 @@ export const FoodChoiceModal = ({ recipeId, pendingKey, initialChoices, onSave, 
                 <p className="text-sm font-bold text-slate-800 mb-4 truncate">{recipe?.name ?? recipeId}</p>
 
                 <div className="flex flex-col gap-4 overflow-y-auto min-h-0 mb-4">
-                    {ingredients.map((ingredient) => {
+                    {entries.map((entry) => {
+                        const { ingredient, ownerName } = entry;
                         const options = ingredient.foodGroupId ? foodsOfGroupSorted(foods, ingredient.foodGroupId) : [];
-                        const perPortion = recipe ? recipeQuantityPerPortion(ingredient, recipe.defaultPortions) : null;
+                        const perPortion = reachableQuantityPerPortion(entry);
                         const unit = ingredient.unit || '';
                         return (
                             <section key={ingredient.id} className="flex flex-col gap-2">
                                 <p className="text-xs font-bold text-slate-500">
+                                    {ownerName && <span className="font-semibold text-slate-400">{ownerName} › </span>}
                                     {ingredient.name}
                                     <span className="font-normal text-slate-400"> · {foodGroupLabel(groups, ingredient.foodGroupId)}</span>
                                 </p>

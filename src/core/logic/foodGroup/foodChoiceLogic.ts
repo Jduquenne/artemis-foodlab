@@ -63,10 +63,6 @@ export function resolveIngredientFood(
   return { foodId: ingredient.foodId, source: "recipe", quantityPerPortion: null };
 }
 
-export function groupIngredientsOf(recipe: { ingredients: Ingredient[] } | undefined): Ingredient[] {
-  return (recipe?.ingredients ?? []).filter((ing) => Boolean(ing.foodGroupId && ing.foodId && !ing.baseId));
-}
-
 export function foodsOfGroupSorted(foods: Record<string, Food>, groupId: string): Food[] {
   return Object.values(foods).filter((food) => food.groupId === groupId).sort(compareByName);
 }

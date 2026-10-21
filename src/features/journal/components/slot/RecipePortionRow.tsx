@@ -11,6 +11,7 @@ import { withPending } from "../../../../shared/utils/withPending";
 import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
 import { IngredientOverrideRow } from "./IngredientOverrideRow";
 import { FoodChoice } from "../../../../core/domain/foodGroup";
+import { AccompanimentChoice } from "../../../../core/domain/accompaniment";
 import { personalizeRecipe } from "../../../../core/logic/foodGroup/foodChoiceLogic";
 import { useActiveProfile } from "../../../../shared/hooks/useActiveProfile";
 
@@ -18,9 +19,10 @@ export interface RecipePortionRowProps {
   recipeId: string;
   planningSlotItemId?: string;
   mealChoices?: FoodChoice[];
+  accompanimentChoices?: AccompanimentChoice[];
 }
 
-export const RecipePortionRow = ({ recipeId, planningSlotItemId, mealChoices }: RecipePortionRowProps) => {
+export const RecipePortionRow = ({ recipeId, planningSlotItemId, mealChoices, accompanimentChoices }: RecipePortionRowProps) => {
   const { portionOverrides, gramOverrides, ingredientOverrides } = useActiveJournalOverrides();
   const { setPortionOverride, setGramOverride, setIngredientOverride, resetIngredientOverride } = useJournalStore();
   const [expanded, setExpanded] = useState(false);
@@ -30,8 +32,10 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId, mealChoices }: 
   const catalogue = useMacroCatalogue();
   const activeProfile = useActiveProfile();
   const personalization = useMemo(
-    () => (activeProfile ? { profile: activeProfile, mealChoices: mealChoices ?? [] } : undefined),
-    [activeProfile, mealChoices],
+    () => (activeProfile
+      ? { profile: activeProfile, mealChoices: mealChoices ?? [], accompanimentChoices: accompanimentChoices ?? [] }
+      : undefined),
+    [activeProfile, mealChoices, accompanimentChoices],
   );
   const catalogueRecipe = catalogue.recipes[recipeId];
   const recipe = useMemo(

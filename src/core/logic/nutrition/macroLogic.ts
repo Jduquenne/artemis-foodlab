@@ -1,3 +1,4 @@
+import { Accompaniment, AccompanimentChoice, AccompanimentOption } from "../../domain/accompaniment";
 import { Food, UNIT_WEIGHT_UNITS, Unit } from "../../domain/ingredient";
 import { Macronutrients } from "../../domain/nutrition";
 import { MealSlot } from "../../domain/planning";
@@ -5,6 +6,8 @@ import { PlannableItem, RecipeDetails } from "../../domain/recipe";
 import { getAllRecipeIds, isDish, isBase } from "../../domain/recipePredicates";
 import { Profile } from "../../domain/profile";
 import { FoodPersonalization, personalizeRecipeTree } from "../foodGroup/foodChoiceLogic";
+import { accompanimentsFor, resolveAccompaniment } from "../accompaniment/accompanimentLogic";
+import { parseUnit } from "../unit/unitLogic";
 
 export const ZERO: Macronutrients = {
   kcal: 0,
@@ -117,6 +120,43 @@ export interface MacroCatalogue {
   foods: Record<string, Food>;
   recipeMacros: Record<string, Macronutrients>;
   baseGrams: Record<string, number>;
+  accompaniments?: readonly Accompaniment[];
+}
+
+export type MacroProfile = Pick<Profile, "id" | "foodGroupDefaults" | "accompanimentDefaults">;
+
+export interface MealPersonalization extends FoodPersonalization {
+  profile: MacroProfile;
+  accompanimentChoices: readonly AccompanimentChoice[];
+}
+
+function accompanimentOptionMacros(
+  catalogue: MacroCatalogue,
+  option: AccompanimentOption,
+  personalization: MealPersonalization,
+): Macronutrients {
+  if (option.kind === "food") {
+    const food = option.foodId ? catalogue.foods[option.foodId] : undefined;
+    if (!food || option.quantityPerPerson === null) return { ...ZERO };
+    const grams = toGrams(option.quantityPerPerson, parseUnit(option.unit), food.unitWeight);
+    return grams === null ? { ...ZERO } : scaleMacros(food.macros, grams / 100);
+  }
+  const recipe = option.recipeCode ? catalogue.recipes[option.recipeCode] : undefined;
+  if (!recipe) return { ...ZERO };
+  const portions = option.portionsPerPerson ?? 1;
+  const tree = personalizeRecipeTree(recipe, personalization, catalogue.recipes, catalogue.foods, portions);
+  return scaleMacros(calculateRecipeMacros(tree.recipe, tree.recipes, catalogue.foods), portions);
+}
+
+export function computeAccompanimentMacros(
+  catalogue: MacroCatalogue,
+  recipeId: string,
+  personalization: MealPersonalization,
+): Macronutrients {
+  return accompanimentsFor(recipeId, catalogue.accompaniments ?? []).reduce((sum, accompaniment) => {
+    const { option } = resolveAccompaniment(accompaniment, personalization.profile, personalization.accompanimentChoices);
+    return option ? addMacros(sum, accompanimentOptionMacros(catalogue, option, personalization)) : sum;
+  }, { ...ZERO });
 }
 
 export function computeItemMacros(
@@ -126,6 +166,21 @@ export function computeItemMacros(
   portionOverrides: Record<string, number>,
   gramOverrides: Record<string, number>,
   ingredientOverrides: Record<string, Record<string, number>> = {},
+  personalization?: MealPersonalization,
+): Macronutrients {
+  const dish = computeDishMacros(catalogue, recipeId, itemKey, portionOverrides, gramOverrides, ingredientOverrides, personalization);
+  if (!personalization) return dish;
+  const accompaniment = computeAccompanimentMacros(catalogue, recipeId, personalization);
+  return addMacros(dish, scaleMacros(accompaniment, portionOverrides[itemKey] ?? 1));
+}
+
+function computeDishMacros(
+  catalogue: MacroCatalogue,
+  recipeId: string,
+  itemKey: string,
+  portionOverrides: Record<string, number>,
+  gramOverrides: Record<string, number>,
+  ingredientOverrides: Record<string, Record<string, number>>,
   personalization?: FoodPersonalization,
 ): Macronutrients {
   const recipe = catalogue.plannable[recipeId];
@@ -154,7 +209,7 @@ export function computeSlotMacros(
   portionOverrides: Record<string, number>,
   gramOverrides: Record<string, number>,
   ingredientOverrides: Record<string, Record<string, number>> = {},
-  profile?: Pick<Profile, "id" | "foodGroupDefaults">,
+  profile?: MacroProfile,
 ): Macronutrients {
   return getAllRecipeIds(slot).reduce(
     (sum, id) =>
@@ -167,7 +222,9 @@ export function computeSlotMacros(
           portionOverrides,
           gramOverrides,
           ingredientOverrides,
-          profile ? { profile, mealChoices: slot.foodChoices?.[id] ?? [] } : undefined,
+          profile
+            ? { profile, mealChoices: slot.foodChoices?.[id] ?? [], accompanimentChoices: slot.accompanimentChoices?.[id] ?? [] }
+            : undefined,
         ),
       ),
     { ...ZERO },
@@ -180,7 +237,7 @@ export function computeDayMacros(
   portionOverrides: Record<string, number>,
   gramOverrides: Record<string, number>,
   ingredientOverrides: Record<string, Record<string, number>> = {},
-  profile?: Pick<Profile, "id" | "foodGroupDefaults">,
+  profile?: MacroProfile,
 ): Macronutrients {
   return slots.reduce(
     (total, slot) => addMacros(total, computeSlotMacros(catalogue, slot, portionOverrides, gramOverrides, ingredientOverrides, profile)),

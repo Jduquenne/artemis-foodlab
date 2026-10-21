@@ -23,7 +23,7 @@ export function computeWeekAverage(
   portionOverrides: Record<string, number>,
   gramOverrides: Record<string, number>,
   ingredientOverrides: Record<string, Record<string, number>>,
-  profile?: Pick<Profile, "id" | "foodGroupDefaults">,
+  profile?: Pick<Profile, "id" | "foodGroupDefaults" | "accompanimentDefaults">,
 ): WeekAverageResult {
   const filledDays = days
     .map((day) => weekSlots.filter((s) => s.day === day))

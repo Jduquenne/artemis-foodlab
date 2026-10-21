@@ -1,3 +1,4 @@
+import { Accompaniment } from "./accompaniment";
 import { Food, IngredientCategory } from "./ingredient";
 import { Profile } from "./profile";
 import { RecipeDetails } from "./recipe";
@@ -53,7 +54,8 @@ export interface ShoppingCatalogue {
   recipes: Record<string, RecipeDetails>;
   baseGrams: Record<string, number>;
   foods: Record<string, Food>;
-  profiles: Pick<Profile, "id" | "name" | "foodGroupDefaults">[];
+  profiles: Pick<Profile, "id" | "name" | "foodGroupDefaults" | "accompanimentDefaults">[];
+  accompaniments?: readonly Accompaniment[];
 }
 
 export interface RecipeCardIngredient {

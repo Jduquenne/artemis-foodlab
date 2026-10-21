@@ -42,6 +42,7 @@ import { AddExtraModal } from './components/AddExtraModal';
 import { useRefreshStore } from '../../shared/store/useRefreshStore';
 import { useFoodsSnapshot, useHouseholdSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
 import { useProfileStore } from '../../shared/store/useProfileStore';
+import { useAccompanimentStore } from '../../shared/store/useAccompanimentStore';
 import { sumBy } from '../../core/utils/collectionUtils';
 
 const NO_INGREDIENTS: ConsolidatedIngredient[] = [];
@@ -61,6 +62,7 @@ export const ShoppingModule = () => {
     const { baseGrams } = useRecipeMetricsSnapshot();
     const foods = useFoodsSnapshot();
     const profiles = useProfileStore(s => s.profiles);
+    const accompaniments = useAccompanimentStore(s => s.accompaniments);
     const householdDb = useHouseholdSnapshot();
     const allHouseholdItems = useMemo(() => Object.values(householdDb), [householdDb]);
     const refreshTick = useRefreshStore((s) => s.tick);
@@ -85,13 +87,13 @@ export const ShoppingModule = () => {
     }, [authStatus, shoppingDays, refreshTick]);
 
     const ingredients = useLiveQuery(
-        () => getShoppingListForDays(shoppingDays, { recipes, baseGrams, foods, profiles }),
-        [shoppingDays, recipes, baseGrams, foods, profiles]
+        () => getShoppingListForDays(shoppingDays, { recipes, baseGrams, foods, profiles, accompaniments }),
+        [shoppingDays, recipes, baseGrams, foods, profiles, accompaniments]
     );
 
     const basesRaw = useLiveQuery(
-        () => getBasesForDays(shoppingDays, { recipes, baseGrams, foods, profiles }),
-        [shoppingDays, recipes, baseGrams, foods, profiles]
+        () => getBasesForDays(shoppingDays, { recipes, baseGrams, foods, profiles, accompaniments }),
+        [shoppingDays, recipes, baseGrams, foods, profiles, accompaniments]
     );
     const bases = useMemo(() => basesRaw ?? [], [basesRaw]);
 

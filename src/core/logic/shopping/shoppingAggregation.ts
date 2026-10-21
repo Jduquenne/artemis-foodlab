@@ -1,10 +1,14 @@
-import { Ingredient, IngredientCategory } from "../../domain/ingredient";
+import { Ingredient, IngredientCategory, Unit } from "../../domain/ingredient";
+import { RecipeDetails, RecipeKind } from "../../domain/recipe";
 import { MealSlot, ShoppingDay } from "../../domain/planning";
 import { getAllRecipeIds } from "../../domain/recipePredicates";
 import { BaseEntry, ConsolidatedIngredient, IngredientSource, ShoppingCatalogue } from "../../domain/shopping";
 import { isoDateFromWeekDay } from "../../utils/dateUtils";
 import { compareByName } from "../../utils/sortUtils";
-import { reachableGroupIngredients, splitGroupIngredient } from "../foodGroup/foodChoiceLogic";
+import { AccompanimentOption } from "../../domain/accompaniment";
+import { reachableGroupIngredients, resolveIngredientFood, personalizeRecipeTree, splitGroupIngredient } from "../foodGroup/foodChoiceLogic";
+import { accompanimentsFor, resolveAccompaniment } from "../accompaniment/accompanimentLogic";
+import { parseUnit } from "../unit/unitLogic";
 
 function cleanRecipeName(name: string): string {
   return name
@@ -94,13 +98,17 @@ export function aggregateSlots(
       existing.totalQuantity += qty;
       if (!existing.foodId && ing.foodId) existing.foodId = ing.foodId;
       if (toSpecify) existing.toSpecify = true;
-      const alreadyListed = existing.sources.some(
+      const listed = existing.sources.find(
         (s) =>
           s.recipeId === source.recipeId &&
           s.day === source.day &&
           s.slot === source.slot,
       );
-      if (!alreadyListed) existing.sources.push(source);
+      if (!listed) existing.sources.push(source);
+      else if (listed.profileNames && source.profileNames) {
+        listed.quantity += source.quantity;
+        listed.profileNames = [...new Set([...listed.profileNames, ...source.profileNames])];
+      }
     } else {
       map.set(key, {
         key,
@@ -145,6 +153,62 @@ export function aggregateSlots(
           );
         }
       };
+
+      const addAccompanimentOption = (option: AccompanimentOption, profile: ShoppingCatalogue["profiles"][number], persons: number) => {
+        const names = [profile.name].filter(Boolean);
+        if (option.kind === "food") {
+          const food = option.foodId ? catalogue.foods[option.foodId] : undefined;
+          if (!food || option.quantityPerPerson === null) return;
+          const qty = option.quantityPerPerson * persons;
+          const ing: Ingredient = {
+            id: `accompaniment-${option.id}`,
+            name: food.name,
+            quantity: option.quantityPerPerson,
+            unit: parseUnit(option.unit),
+            category: food.category,
+            foodId: food.id,
+          };
+          addIngredientToMap(ing, qty, buildIngredientSource(slot, recipeId, recipeName, ing, qty, undefined, names));
+          return;
+        }
+        const optionRecipe = option.recipeCode ? data[option.recipeCode] : undefined;
+        if (!optionRecipe || !option.recipeCode) return;
+        const perPerson = option.portionsPerPerson ?? 1;
+        const mealChoices = slot.foodChoices?.[recipeId] ?? [];
+        const personalization = { profile, mealChoices };
+        const toSpecify = new Set(
+          reachableGroupIngredients(optionRecipe, data, perPerson)
+            .filter(({ ingredient }) => resolveIngredientFood(ingredient, profile.id, profile.foodGroupDefaults, mealChoices)?.source === "recipe")
+            .map(({ ingredient }) => ingredient.id),
+        );
+        const tree = personalizeRecipeTree(optionRecipe, personalization, data, catalogue.foods, perPerson);
+        const scale = (perPerson * persons) / Math.max(optionRecipe.defaultPortions, 1);
+        for (const optionIng of tree.recipe.ingredients) {
+          const base = optionIng.baseId ? tree.recipes[optionIng.baseId] : undefined;
+          if (optionIng.baseId && base) {
+            const baseScale = (scale * (optionIng.quantity ?? 1)) / Math.max(base.defaultPortions, 1);
+            for (const baseIng of base.ingredients) {
+              const qty = (baseIng.quantity ?? 0) * baseScale;
+              addIngredientToMap(baseIng, qty, buildIngredientSource(slot, recipeId, recipeName, baseIng, qty, optionIng.baseId, names), toSpecify.has(baseIng.id));
+            }
+            continue;
+          }
+          const qty = (optionIng.quantity ?? 0) * scale;
+          addIngredientToMap(optionIng, qty, buildIngredientSource(slot, recipeId, recipeName, optionIng, qty, option.recipeCode, names), toSpecify.has(optionIng.id));
+        }
+      };
+
+      const accompaniments = accompanimentsFor(recipeId, catalogue.accompaniments ?? []);
+      if (accompaniments.length > 0 && catalogue.profiles.length > 0) {
+        const persons = (scaleFactor * Math.max(details.defaultPortions, 1)) / catalogue.profiles.length;
+        const accompanimentChoices = slot.accompanimentChoices?.[recipeId] ?? [];
+        for (const accompaniment of accompaniments) {
+          for (const profile of catalogue.profiles) {
+            const { option } = resolveAccompaniment(accompaniment, profile, accompanimentChoices);
+            if (option) addAccompanimentOption(option, profile, persons);
+          }
+        }
+      }
 
       for (const ing of details.ingredients) {
         if (ing.baseId) {
@@ -199,23 +263,32 @@ export function aggregateBases(slots: MealSlot[], catalogue: ShoppingCatalogue):
       if (!details) continue;
 
       const scaleFactor = slotScaleFactor(slot, recipeId, details.defaultPortions, catalogue.baseGrams);
+      const addBase = (baseId: string, baseRecipe: RecipeDetails, qty: number, unit: Unit) => {
+        const existing = map.get(baseId);
+        if (existing) {
+          existing.totalPortions += qty;
+        } else {
+          map.set(baseId, { baseId, name: cleanRecipeName(baseRecipe.name), totalPortions: qty, unit });
+        }
+      };
 
       for (const ing of details.ingredients) {
         if (!ing.baseId) continue;
         const baseRecipe = data[ing.baseId];
         if (!baseRecipe) continue;
+        addBase(ing.baseId, baseRecipe, (ing.quantity ?? 1) * scaleFactor, ing.unit);
+      }
 
-        const qty = (ing.quantity ?? 1) * scaleFactor;
-        const existing = map.get(ing.baseId);
-        if (existing) {
-          existing.totalPortions += qty;
-        } else {
-          map.set(ing.baseId, {
-            baseId: ing.baseId,
-            name: cleanRecipeName(baseRecipe.name),
-            totalPortions: qty,
-            unit: ing.unit,
-          });
+      const accompaniments = accompanimentsFor(recipeId, catalogue.accompaniments ?? []);
+      if (accompaniments.length === 0 || catalogue.profiles.length === 0) continue;
+      const persons = (scaleFactor * Math.max(details.defaultPortions, 1)) / catalogue.profiles.length;
+      const accompanimentChoices = slot.accompanimentChoices?.[recipeId] ?? [];
+      for (const accompaniment of accompaniments) {
+        for (const profile of catalogue.profiles) {
+          const { option } = resolveAccompaniment(accompaniment, profile, accompanimentChoices);
+          const optionRecipe = option?.kind === "recipe" && option.recipeCode ? data[option.recipeCode] : undefined;
+          if (!option?.recipeCode || !optionRecipe || optionRecipe.kind !== RecipeKind.BASE) continue;
+          addBase(option.recipeCode, optionRecipe, (option.portionsPerPerson ?? 1) * persons, Unit.PORTION);
         }
       }
     }

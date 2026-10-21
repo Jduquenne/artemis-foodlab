@@ -191,9 +191,10 @@ function collectGroupIngredients(
 export function reachableGroupIngredients(
   recipe: RecipeDetails,
   recipes: Record<string, RecipeDetails>,
+  rootPortions = 1,
 ): ReachableGroupIngredient[] {
   const found = new Map<string, ReachableGroupIngredient>();
-  collectGroupIngredients(recipe, recipe.code, 1 / Math.max(recipe.defaultPortions, 1), recipes, new Set(), found);
+  collectGroupIngredients(recipe, recipe.code, rootPortions / Math.max(recipe.defaultPortions, 1), recipes, new Set(), found);
   return [...found.values()];
 }
 
@@ -206,10 +207,11 @@ export function personalizeRecipeTree(
   personalization: FoodPersonalization,
   recipes: Record<string, RecipeDetails>,
   foods: Record<string, Food>,
+  rootPortions = 1,
 ): PersonalizedRecipeTree {
   const { profile, mealChoices } = personalization;
   const changes = new Map<string, Map<string, Ingredient>>();
-  for (const { ingredient, ownerCode, portionFactor } of reachableGroupIngredients(recipe, recipes)) {
+  for (const { ingredient, ownerCode, portionFactor } of reachableGroupIngredients(recipe, recipes, rootPortions)) {
     const resolved = resolveIngredientFood(ingredient, profile.id, profile.foodGroupDefaults, mealChoices);
     if (!resolved) continue;
     const quantity =

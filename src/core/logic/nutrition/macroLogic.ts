@@ -4,7 +4,7 @@ import { MealSlot } from "../../domain/planning";
 import { PlannableItem, RecipeDetails } from "../../domain/recipe";
 import { getAllRecipeIds, isDish, isBase } from "../../domain/recipePredicates";
 import { Profile } from "../../domain/profile";
-import { FoodPersonalization, personalizeRecipe } from "../foodGroup/foodChoiceLogic";
+import { FoodPersonalization, personalizeRecipeTree } from "../foodGroup/foodChoiceLogic";
 
 export const ZERO: Macronutrients = {
   kcal: 0,
@@ -131,13 +131,15 @@ export function computeItemMacros(
   const recipe = catalogue.plannable[recipeId];
   const itemIngredientOverrides = ingredientOverrides[itemKey];
   const catalogueRecipe = catalogue.recipes[recipeId];
-  const fullRecipe =
-    catalogueRecipe && personalization ? personalizeRecipe(catalogueRecipe, personalization, catalogue.foods) : catalogueRecipe;
+  const tree =
+    catalogueRecipe && personalization ? personalizeRecipeTree(catalogueRecipe, personalization, catalogue.recipes, catalogue.foods) : null;
+  const fullRecipe = tree?.recipe ?? catalogueRecipe;
+  const recipes = tree?.recipes ?? catalogue.recipes;
   if (fullRecipe && itemIngredientOverrides && Object.keys(itemIngredientOverrides).length > 0) {
-    return calculateOverriddenRecipeMacros(fullRecipe, itemIngredientOverrides, catalogue.recipes, catalogue.foods);
+    return calculateOverriddenRecipeMacros(fullRecipe, itemIngredientOverrides, recipes, catalogue.foods);
   }
-  const isPersonalized = !!fullRecipe && fullRecipe !== catalogueRecipe;
-  const m = isPersonalized ? calculateRecipeMacros(fullRecipe, catalogue.recipes, catalogue.foods) : catalogue.recipeMacros[recipeId];
+  const isPersonalized = !!tree && (tree.recipe !== catalogueRecipe || tree.recipes !== catalogue.recipes);
+  const m = isPersonalized ? calculateRecipeMacros(fullRecipe, recipes, catalogue.foods) : catalogue.recipeMacros[recipeId];
   if (!m) return { ...ZERO };
   const baseGrams = isPersonalized ? calculateRecipeBaseGrams(fullRecipe, catalogue.foods) : catalogue.baseGrams[recipeId];
   if (!isDish(recipe) && !isBase(recipe) && baseGrams) {

@@ -12,11 +12,14 @@ import {
   mapApiSlotToMealSlot,
 } from "../logic/planning/planningApiMapper";
 import { diffSlotItems } from "../logic/planning/slotDiffLogic";
+import { pruneSlotFoodChoices } from "../logic/foodGroup/foodChoiceLogic";
+import { recipesCatalogue } from "../catalogue/recipes";
 
 export const getWeekSlots = (year: number, week: number) =>
   db.planning.where("[year+week]").equals([year, week]).toArray();
 
-export async function saveSlot(slot: MealSlot): Promise<void> {
+export async function saveSlot(input: MealSlot): Promise<void> {
+  const slot = { ...input, foodChoices: pruneSlotFoodChoices(input.foodChoices, recipesCatalogue) };
   const previous = await db.planning.get(slot.id);
   const diff = diffSlotItems(previous, slot);
 

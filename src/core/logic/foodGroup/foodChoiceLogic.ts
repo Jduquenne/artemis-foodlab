@@ -18,6 +18,18 @@ export interface FoodPersonalization {
   mealChoices: readonly FoodChoice[];
 }
 
+export interface ReachableGroupIngredient {
+  ingredient: Ingredient;
+  ownerCode: string;
+  ownerName: string | null;
+  portionFactor: number;
+}
+
+export interface PersonalizedRecipeTree {
+  recipe: RecipeDetails;
+  recipes: Record<string, RecipeDetails>;
+}
+
 export interface FoodChoiceShare {
   foodId: string;
   quantity: number;
@@ -126,6 +138,7 @@ export function splitGroupIngredient(
   scaleFactor: number,
   profiles: readonly Pick<Profile, "id" | "foodGroupDefaults">[],
   mealChoices: readonly FoodChoice[],
+  choiceShare = 1,
 ): FoodChoiceShare[] {
   const recipePerPortion = recipeQuantityPerPortion(ingredient, defaultPortions) ?? 0;
   const portions = scaleFactor * Math.max(defaultPortions, 1);
@@ -138,7 +151,8 @@ export function splitGroupIngredient(
   for (const profile of profiles) {
     const resolved = resolveIngredientFood(ingredient, profile.id, profile.foodGroupDefaults, mealChoices);
     if (!resolved) continue;
-    const quantity = (resolved.quantityPerPortion ?? recipePerPortion) * portionsPerProfile;
+    const perPortion = resolved.quantityPerPortion !== null ? resolved.quantityPerPortion * choiceShare : recipePerPortion;
+    const quantity = perPortion * portionsPerProfile;
     const byRecipeDefault = resolved.source === "recipe";
     const existing = shares.get(resolved.foodId);
     if (existing) {
@@ -152,24 +166,107 @@ export function splitGroupIngredient(
   return [...shares.values()];
 }
 
+function collectGroupIngredients(
+  recipe: RecipeDetails,
+  rootCode: string,
+  factor: number,
+  recipes: Record<string, RecipeDetails>,
+  path: ReadonlySet<string>,
+  found: Map<string, ReachableGroupIngredient>,
+): void {
+  if (path.has(recipe.code)) return;
+  const nextPath = new Set(path).add(recipe.code);
+  for (const ingredient of recipe.ingredients) {
+    if (ingredient.baseId) {
+      const base = recipes[ingredient.baseId];
+      const baseFactor = (factor * (ingredient.quantity ?? 0)) / Math.max(base?.defaultPortions ?? 1, 1);
+      if (base) collectGroupIngredients(base, rootCode, baseFactor, recipes, nextPath, found);
+      continue;
+    }
+    if (!ingredient.foodGroupId || !ingredient.foodId) continue;
+    const existing = found.get(ingredient.id);
+    if (existing) {
+      found.set(ingredient.id, { ...existing, portionFactor: existing.portionFactor + factor });
+    } else {
+      const ownerName = recipe.code === rootCode ? null : recipe.name;
+      found.set(ingredient.id, { ingredient, ownerCode: recipe.code, ownerName, portionFactor: factor });
+    }
+  }
+}
+
+export function reachableGroupIngredients(
+  recipe: RecipeDetails,
+  recipes: Record<string, RecipeDetails>,
+): ReachableGroupIngredient[] {
+  const found = new Map<string, ReachableGroupIngredient>();
+  collectGroupIngredients(recipe, recipe.code, 1 / Math.max(recipe.defaultPortions, 1), recipes, new Set(), found);
+  return [...found.values()];
+}
+
+export function reachableQuantityPerPortion(entry: ReachableGroupIngredient): number | null {
+  return entry.ingredient.quantity === null ? null : entry.ingredient.quantity * entry.portionFactor;
+}
+
+export function pruneFoodChoices(
+  choices: FoodChoice[],
+  recipe: RecipeDetails,
+  recipes: Record<string, RecipeDetails>,
+): FoodChoice[] {
+  const reachable = new Set(reachableGroupIngredients(recipe, recipes).map((entry) => entry.ingredient.id));
+  const kept = choices.filter((choice) => reachable.has(choice.recipeIngredientId));
+  return kept.length === choices.length ? choices : kept;
+}
+
+export function pruneSlotFoodChoices(
+  foodChoices: Record<string, FoodChoice[]> | undefined,
+  recipes: Record<string, RecipeDetails>,
+): Record<string, FoodChoice[]> | undefined {
+  if (!foodChoices) return foodChoices;
+  return Object.fromEntries(
+    Object.entries(foodChoices).map(([code, choices]) => {
+      const recipe = recipes[code];
+      return [code, recipe ? pruneFoodChoices(choices, recipe, recipes) : choices];
+    }),
+  );
+}
+
+export function personalizeRecipeTree(
+  recipe: RecipeDetails,
+  personalization: FoodPersonalization,
+  recipes: Record<string, RecipeDetails>,
+  foods: Record<string, Food>,
+): PersonalizedRecipeTree {
+  const { profile, mealChoices } = personalization;
+  const changes = new Map<string, Map<string, Ingredient>>();
+  for (const { ingredient, ownerCode, portionFactor } of reachableGroupIngredients(recipe, recipes)) {
+    const resolved = resolveIngredientFood(ingredient, profile.id, profile.foodGroupDefaults, mealChoices);
+    if (!resolved) continue;
+    const quantity =
+      resolved.quantityPerPortion !== null && portionFactor > 0 ? resolved.quantityPerPortion / portionFactor : ingredient.quantity;
+    if (resolved.foodId === ingredient.foodId && quantity === ingredient.quantity) continue;
+    const owner = changes.get(ownerCode) ?? new Map<string, Ingredient>();
+    owner.set(ingredient.id, { ...ingredient, foodId: resolved.foodId, name: foods[resolved.foodId]?.name ?? ingredient.name, quantity });
+    changes.set(ownerCode, owner);
+  }
+  if (changes.size === 0) return { recipe, recipes };
+
+  const apply = (target: RecipeDetails): RecipeDetails => {
+    const owned = changes.get(target.code);
+    return owned ? { ...target, ingredients: target.ingredients.map((ing) => owned.get(ing.id) ?? ing) } : target;
+  };
+  const baseCodes = [...changes.keys()].filter((code) => code !== recipe.code && recipes[code]);
+  const personalizedRecipes = baseCodes.length === 0
+    ? recipes
+    : { ...recipes, ...Object.fromEntries(baseCodes.map((code) => [code, apply(recipes[code])])) };
+  return { recipe: apply(recipe), recipes: personalizedRecipes };
+}
+
 export function personalizeRecipe(
   recipe: RecipeDetails,
   personalization: FoodPersonalization,
   foods: Record<string, Food>,
 ): RecipeDetails {
-  const { profile, mealChoices } = personalization;
-  let changed = false;
-  const ingredients = recipe.ingredients.map((ingredient) => {
-    if (!ingredient.foodGroupId) return ingredient;
-    const resolved = resolveIngredientFood(ingredient, profile.id, profile.foodGroupDefaults, mealChoices);
-    if (!resolved) return ingredient;
-    const quantity =
-      resolved.quantityPerPortion !== null ? resolved.quantityPerPortion * recipe.defaultPortions : ingredient.quantity;
-    if (resolved.foodId === ingredient.foodId && quantity === ingredient.quantity) return ingredient;
-    changed = true;
-    return { ...ingredient, foodId: resolved.foodId, name: foods[resolved.foodId]?.name ?? ingredient.name, quantity };
-  });
-  return changed ? { ...recipe, ingredients } : recipe;
+  return personalizeRecipeTree(recipe, personalization, {}, foods).recipe;
 }
 
 function choiceKey(choice: FoodChoice): string {

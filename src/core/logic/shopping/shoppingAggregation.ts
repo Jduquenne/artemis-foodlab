@@ -4,7 +4,7 @@ import { getAllRecipeIds } from "../../domain/recipePredicates";
 import { BaseEntry, ConsolidatedIngredient, IngredientSource, ShoppingCatalogue } from "../../domain/shopping";
 import { isoDateFromWeekDay } from "../../utils/dateUtils";
 import { compareByName } from "../../utils/sortUtils";
-import { splitGroupIngredient } from "../foodGroup/foodChoiceLogic";
+import { reachableGroupIngredients, splitGroupIngredient } from "../foodGroup/foodChoiceLogic";
 
 function cleanRecipeName(name: string): string {
   return name
@@ -57,6 +57,7 @@ function buildIngredientSource(
       slot: slot.slot,
       quantity,
       unit: ingredient.unit,
+      ...(fromBaseId && { fromBaseId }),
       profileNames,
     };
   }
@@ -126,6 +127,24 @@ export function aggregateSlots(
 
       const recipeName = cleanRecipeName(details.name);
       const scaleFactor = slotScaleFactor(slot, recipeId, details.defaultPortions, catalogue.baseGrams);
+      const choices = slot.foodChoices?.[recipeId] ?? [];
+      const portionFactors = new Map(
+        reachableGroupIngredients(details, data).map((entry) => [entry.ingredient.id, entry.portionFactor]),
+      );
+
+      const addGroupIngredient = (ing: Ingredient, choiceShare: number, fromBaseId?: string) => {
+        for (const share of splitGroupIngredient(ing, details.defaultPortions, scaleFactor, catalogue.profiles, choices, choiceShare)) {
+          const isDefault = share.foodId === ing.foodId;
+          const shareIng = isDefault ? ing : { ...ing, foodId: share.foodId, name: catalogue.foods[share.foodId]?.name ?? ing.name };
+          const names = share.profileIds.map((id) => catalogue.profiles.find((p) => p.id === id)?.name ?? "");
+          addIngredientToMap(
+            shareIng,
+            share.quantity,
+            buildIngredientSource(slot, recipeId, recipeName, shareIng, share.quantity, fromBaseId, names.filter(Boolean)),
+            share.byRecipeDefault,
+          );
+        }
+      };
 
       for (const ing of details.ingredients) {
         if (ing.baseId) {
@@ -134,6 +153,13 @@ export function aggregateSlots(
             const basePortionScale = (ing.quantity ?? 1) / baseRecipe.defaultPortions;
             const combinedScale = scaleFactor * basePortionScale;
             for (const baseIng of baseRecipe.ingredients) {
+              if (baseIng.foodGroupId && baseIng.foodId) {
+                const dishIng = { ...baseIng, quantity: (baseIng.quantity ?? 0) * basePortionScale };
+                const occurrence = basePortionScale / Math.max(details.defaultPortions, 1);
+                const total = portionFactors.get(baseIng.id) ?? 0;
+                addGroupIngredient(dishIng, total > 0 ? occurrence / total : 1, ing.baseId);
+                continue;
+              }
               const qty = (baseIng.quantity ?? 0) * combinedScale;
               addIngredientToMap(baseIng, qty, buildIngredientSource(slot, recipeId, recipeName, baseIng, qty, ing.baseId));
             }
@@ -142,18 +168,7 @@ export function aggregateSlots(
         }
 
         if (ing.foodGroupId) {
-          const choices = slot.foodChoices?.[recipeId] ?? [];
-          for (const share of splitGroupIngredient(ing, details.defaultPortions, scaleFactor, catalogue.profiles, choices)) {
-            const isDefault = share.foodId === ing.foodId;
-            const shareIng = isDefault ? ing : { ...ing, foodId: share.foodId, name: catalogue.foods[share.foodId]?.name ?? ing.name };
-            const names = share.profileIds.map((id) => catalogue.profiles.find((p) => p.id === id)?.name ?? "");
-            addIngredientToMap(
-              shareIng,
-              share.quantity,
-              buildIngredientSource(slot, recipeId, recipeName, shareIng, share.quantity, undefined, names.filter(Boolean)),
-              share.byRecipeDefault,
-            );
-          }
+          addGroupIngredient(ing, 1);
           continue;
         }
 

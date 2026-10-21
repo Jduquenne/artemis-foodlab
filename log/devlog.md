@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-10-21 — D-037 step 2 model: accompaniments per account (v6.124.1, docs only)
+- Done: owner answers: a profile may take no accompaniment; options = a base, a simple recipe or a simple food (« croûtons »); an accompaniment is named after the dish (« Soupe ») and must be **per account** (other households define their own), not app-wide. Opinion given and accepted: food families stay global (recipes reference them; tastes already per profile), catalogue recipes stay admin-only. Step 2 rewritten in D-037: accompaniment = account data (name, recipes picked one by one, options recipe with portions per person or food with quantity per person, accompaniment default), profile default or « sans », per-meal choice, shopping / journal per profile; recipes unchanged. « Recipe name contains » targets deferred (owner). API prompt given to the owner.
+- Still open: API contract for step 2 (real payloads); owner test of step 1; API D-057 prod push.
+
 ## 2026-10-21 — D-037 step 1 F2: choices inside bases, UI (v6.124.0)
 - Done: `FoodChoiceModal` builds its list from `reachableGroupIngredients` (base ingredients titled « Tartine au fromage › Fromage · Fromage », placeholder = quantity per dish portion via `reachableQuantityPerPortion`); `useGroupIngredients` uses it too, so the slot badge « à préciser » and the « Ingrédients au choix » menu entry (dish, cell, dessert, multi-dish slot) count base ingredients. `groupIngredientsOf` removed (no consumer left). Recipe cards unchanged (« (au choix) » was already shown in bases).
 - Numbers: `npx tsc -b` + `npm run lint` pass, golden-rule greps clean. **Not checked in a browser** (to test with `npm run dev` against the local API with D-057).

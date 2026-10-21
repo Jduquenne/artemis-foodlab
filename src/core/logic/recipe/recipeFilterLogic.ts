@@ -12,28 +12,34 @@ import { TypeMedians } from "./macroReferenceLogic";
 import { candidateRecipeId, matchesFilterType } from "./recipeFilterTypeLogic";
 
 export function normalizeRecipeFilter(raw: Partial<RecipeFilter> | null): RecipeFilter {
+  const inSeason = raw?.inSeason === true;
   const type = Object.values(RecipeFilterType).find((value) => value === raw?.type) ?? null;
-  if (type === null) return EMPTY_RECIPE_FILTER;
+  if (type === null) return { ...EMPTY_RECIPE_FILTER, inSeason };
   const macros: RecipeFilter["macros"] = {};
   for (const { key } of MACRO_DISPLAYS) {
     const comparison = raw?.macros?.[key];
     if (comparison === "below" || comparison === "above") macros[key] = comparison;
   }
-  return { type, macros };
+  return { type, macros, inSeason };
 }
 
 export function isRecipeFilterActive(filter: RecipeFilter): boolean {
-  return filter.type !== null;
+  return filter.type !== null || filter.inSeason;
 }
 
 export function countFilterCriteria(filter: RecipeFilter): number {
-  if (filter.type === null) return 0;
-  return 1 + Object.keys(filter.macros).length;
+  const seasonCount = filter.inSeason ? 1 : 0;
+  if (filter.type === null) return seasonCount;
+  return seasonCount + 1 + Object.keys(filter.macros).length;
 }
 
 export function setFilterType(filter: RecipeFilter, type: RecipeFilterType | null): RecipeFilter {
-  if (type === null) return EMPTY_RECIPE_FILTER;
-  return { type, macros: filter.macros };
+  if (type === null) return { ...EMPTY_RECIPE_FILTER, inSeason: filter.inSeason };
+  return { ...filter, type };
+}
+
+export function setFilterInSeason(filter: RecipeFilter, inSeason: boolean): RecipeFilter {
+  return { ...filter, inSeason };
 }
 
 export function setFilterMacro(
@@ -52,7 +58,9 @@ export function matchesRecipeFilter(
   macros: Macronutrients | undefined,
   filter: RecipeFilter,
   medians: TypeMedians,
+  inSeason: boolean,
 ): boolean {
+  if (filter.inSeason && !inSeason) return false;
   const { type } = filter;
   if (type === null) return true;
   if (!matchesFilterType(recipe, type)) return false;
@@ -72,12 +80,13 @@ export function filterRecipesByFilter<T extends FilterCandidate>(
   recipeMacros: Record<string, Macronutrients>,
   filter: RecipeFilter,
   medians: TypeMedians,
+  inSeasonIds: ReadonlySet<string>,
 ): T[] {
   if (!isRecipeFilterActive(filter)) return items;
   return items.filter((item) => {
     const id = candidateRecipeId(item);
     const recipe = recipes[id];
-    return recipe !== undefined && matchesRecipeFilter(recipe, recipeMacros[id], filter, medians);
+    return recipe !== undefined && matchesRecipeFilter(recipe, recipeMacros[id], filter, medians, inSeasonIds.has(id));
   });
 }
 

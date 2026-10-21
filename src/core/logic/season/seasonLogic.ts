@@ -6,6 +6,10 @@ export const MONTH_SHORT_LABELS: readonly string[] = [
   "janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc.",
 ];
 
+export const MONTH_LABELS: readonly string[] = [
+  "janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre",
+];
+
 export const ALL_YEAR_LABEL = "Toute l'année";
 
 export function normalizeMonths(months: readonly number[]): number[] {

@@ -12,6 +12,7 @@ export enum RecipeFilterType {
 export interface RecipeFilter {
   type: RecipeFilterType | null;
   macros: Partial<Record<FilterMacroKey, MacroComparison>>;
+  inSeason: boolean;
 }
 
 export interface FilterCandidate {
@@ -19,7 +20,7 @@ export interface FilterCandidate {
   recipeId?: string;
 }
 
-export const EMPTY_RECIPE_FILTER: RecipeFilter = { type: null, macros: {} };
+export const EMPTY_RECIPE_FILTER: RecipeFilter = { type: null, macros: {}, inSeason: false };
 
 export interface FilterTypeDefinition {
   type: RecipeFilterType;

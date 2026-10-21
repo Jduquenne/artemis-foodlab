@@ -7,6 +7,7 @@ import { markScrolling } from '../../../../shared/utils/scrollGuard';
 import { RecipeFilterButton } from '../filter/RecipeFilterButton';
 import { ActiveFilterChips } from '../filter/ActiveFilterChips';
 import { useTypeMedians } from '../../../../shared/hooks/useTypeMedians';
+import { useInSeasonRecipes } from '../../../../shared/hooks/useInSeasonRecipes';
 import { isPlannable } from '../../../../core/domain/recipePredicates';
 import { useMenuStore } from '../../../../shared/store/useMenuStore';
 import { getCategoryRecipes } from '../../../../core/logic/recipe/recipeListLogic';
@@ -27,13 +28,14 @@ export const CategoryDetail = () => {
     const recipesDb = useRecipesSnapshot();
     const { macros: recipeMacros } = useRecipeMetricsSnapshot();
     const medians = useTypeMedians();
+    const { ids: inSeasonIds } = useInSeasonRecipes();
     const categories = useCategoriesSnapshot();
 
     const recipes = useMemo(() => getCategoryRecipes(recipesDb, categoryId ?? ''), [recipesDb, categoryId]);
 
     const filteredRecipes = useMemo(
-        () => filterRecipesByFilter(recipes, recipesDb, recipeMacros, recipeFilter, medians),
-        [recipes, recipesDb, recipeMacros, recipeFilter, medians],
+        () => filterRecipesByFilter(recipes, recipesDb, recipeMacros, recipeFilter, medians, inSeasonIds),
+        [recipes, recipesDb, recipeMacros, recipeFilter, medians, inSeasonIds],
     );
 
     const BATCH_SIZE = 24;

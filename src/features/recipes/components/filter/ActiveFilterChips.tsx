@@ -1,9 +1,11 @@
 import { X } from 'lucide-react';
 import { RecipeFilter } from '../../../../core/domain/recipeFilter';
 import { MACRO_DISPLAYS } from '../../../../core/domain/nutrition';
-import { formatMacroCriterion, setFilterType, setFilterMacro } from '../../../../core/logic/recipe/recipeFilterLogic';
+import { formatMacroCriterion, setFilterInSeason, setFilterType, setFilterMacro } from '../../../../core/logic/recipe/recipeFilterLogic';
+import { MONTH_LABELS } from '../../../../core/logic/season/seasonLogic';
 import { getFilterTypeLabel } from '../../../../core/logic/recipe/recipeFilterTypeLogic';
 import { useTypeMedians } from '../../../../shared/hooks/useTypeMedians';
+import { useInSeasonRecipes } from '../../../../shared/hooks/useInSeasonRecipes';
 
 export interface ActiveFilterChipsProps {
   filter: RecipeFilter;
@@ -13,13 +15,20 @@ export interface ActiveFilterChipsProps {
 
 export const ActiveFilterChips = ({ filter, onChange, chipClassName = 'flex' }: ActiveFilterChipsProps) => {
   const medians = useTypeMedians();
-  if (filter.type === null) return null;
+  const { month } = useInSeasonRecipes();
+  const { type } = filter;
 
-  const typeMedians = medians[filter.type];
-  const chips = [
+  const seasonChips = filter.inSeason
+    ? [{
+      key: 'season',
+      label: `De saison · ${MONTH_LABELS[month - 1]}`,
+      remove: () => onChange(setFilterInSeason(filter, false)),
+    }]
+    : [];
+  const typeChips = type === null ? [] : [
     {
       key: 'type',
-      label: getFilterTypeLabel(filter.type),
+      label: getFilterTypeLabel(type),
       remove: () => onChange(setFilterType(filter, null)),
     },
     ...MACRO_DISPLAYS.flatMap((display) => {
@@ -27,11 +36,13 @@ export const ActiveFilterChips = ({ filter, onChange, chipClassName = 'flex' }: 
       if (comparison === undefined) return [];
       return [{
         key: display.key,
-        label: formatMacroCriterion(display, comparison, typeMedians[display.key]),
+        label: formatMacroCriterion(display, comparison, medians[type][display.key]),
         remove: () => onChange(setFilterMacro(filter, display.key, null)),
       }];
     }),
   ];
+  const chips = [...seasonChips, ...typeChips];
+  if (chips.length === 0) return null;
 
   return (
     <>

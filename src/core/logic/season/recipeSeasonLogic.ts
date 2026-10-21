@@ -1,5 +1,6 @@
 import { Food, IngredientCategory } from "../../domain/ingredient";
-import { RecipeDetails } from "../../domain/recipe";
+import { MealType, RecipeDetails, RecipeKind } from "../../domain/recipe";
+import { isDessert } from "../../domain/recipePredicates";
 import { compareByName } from "../../utils/sortUtils";
 import { MONTH_COUNT, hasSeason } from "./seasonLogic";
 
@@ -57,6 +58,24 @@ export function outOfSeasonFoods(recipe: RecipeDetails, month: number, catalogue
 
 export function isRecipeInSeason(recipe: RecipeDetails, month: number, catalogue: SeasonCatalogue): boolean {
   return outOfSeasonFoods(recipe, month, catalogue).length === 0;
+}
+
+export function isSeasonalRecipe(recipe: RecipeDetails, month: number, catalogue: SeasonCatalogue): boolean {
+  const seasonal = recipeSeasonalFoods(recipe, catalogue);
+  return seasonal.length > 0 && seasonal.every((food) => isFoodInSeason(food, month));
+}
+
+function isMainMeal(recipe: RecipeDetails): boolean {
+  return recipe.kind === RecipeKind.DISH
+    && !isDessert(recipe)
+    && (recipe.mealTypes.includes(MealType.LUNCH) || recipe.mealTypes.includes(MealType.DINNER));
+}
+
+export function seasonalMealIds(month: number, catalogue: SeasonCatalogue): Set<string> {
+  return new Set(Object.keys(catalogue.recipes).filter((id) => {
+    const recipe = catalogue.recipes[id];
+    return isMainMeal(recipe) && isSeasonalRecipe(recipe, month, catalogue);
+  }));
 }
 
 export function recipeSeasonMonths(recipe: RecipeDetails, catalogue: SeasonCatalogue): number[] {

@@ -7,12 +7,15 @@ import {
   isRecipeFilterActive,
   setFilterType,
   setFilterMacro,
+  setFilterInSeason,
 } from '../../../../core/logic/recipe/recipeFilterLogic';
 import { countFilterTypes, getFilterTypeLabel } from '../../../../core/logic/recipe/recipeFilterTypeLogic';
 import { useTypeMedians } from '../../../../shared/hooks/useTypeMedians';
+import { useInSeasonRecipes } from '../../../../shared/hooks/useInSeasonRecipes';
 import { useRecipesSnapshot, useRecipeMetricsSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 import { FilterTypeSelector } from './FilterTypeSelector';
 import { MacroMedianRow } from './MacroMedianRow';
+import { SeasonFilterToggle } from './SeasonFilterToggle';
 
 export interface RecipeFilterModalProps {
   filter: RecipeFilter;
@@ -27,14 +30,20 @@ export const RecipeFilterModal = ({ filter, candidates, onSubmit, onClose }: Rec
   const recipes = useRecipesSnapshot();
   const { macros } = useRecipeMetricsSnapshot();
   const medians = useTypeMedians();
+  const { month, ids: inSeasonIds } = useInSeasonRecipes();
 
   const handleClose = () => { setIsClosing(true); setTimeout(onClose, 220); };
 
   const typeCounts = useMemo(() => countFilterTypes(candidates, recipes), [candidates, recipes]);
 
+  const seasonCount = useMemo(
+    () => filterRecipesByFilter(candidates, recipes, macros, setFilterInSeason(EMPTY_RECIPE_FILTER, true), medians, inSeasonIds).length,
+    [candidates, recipes, macros, medians, inSeasonIds],
+  );
+
   const matchCount = useMemo(
-    () => filterRecipesByFilter(candidates, recipes, macros, draft, medians).length,
-    [candidates, recipes, macros, draft, medians],
+    () => filterRecipesByFilter(candidates, recipes, macros, draft, medians, inSeasonIds).length,
+    [candidates, recipes, macros, draft, medians, inSeasonIds],
   );
 
   const active = isRecipeFilterActive(draft);
@@ -69,6 +78,16 @@ export const RecipeFilterModal = ({ filter, candidates, onSubmit, onClose }: Rec
         </div>
 
         <div className="flex-1 min-h-0 overflow-y-auto px-5 py-4 space-y-5">
+          <section className="space-y-2">
+            <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest">Saison</h3>
+            <SeasonFilterToggle
+              checked={draft.inSeason}
+              month={month}
+              count={seasonCount}
+              onChange={(inSeason) => setDraft(setFilterInSeason(draft, inSeason))}
+            />
+          </section>
+
           <section className="space-y-2">
             <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest">Type de recette</h3>
             <FilterTypeSelector

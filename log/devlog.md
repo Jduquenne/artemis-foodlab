@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-09 — Issue #34: linked bases follow the parent's portions (v6.130.1)
+- Done: bug fix. `LinkedBaseLink` always opened the base at its default portions. `getLinkedBases` now takes the scaled recipe and returns `portions` per base (`basePortionsNeeded`: scaled quantity of the `baseId` ingredients, summed, integer, min 1); the link is `/recipes/detail/<base>?portions=<N>` so the base's ingredient quantities are the ones needed for the parent's current portions.
+- Numbers: `npx tsc -b` + `npm run lint` pass, golden-rule greps clean; `tsx` check `_claude/tmp/linked-base-check.ts` 6 / 6 OK (default portions, ×3 scaling, half a portion → 1, base used twice summed, base without photo ignored, URL). **Not checked in a browser** (to test with `npm run dev`: open a recipe using a base, change the stepper, click the base thumbnail: the new tab must show the matching portions).
+- Known limit: a fractional base quantity (e.g. 0.5 portion) opens as 1 portion because portions are integers in the detail page.
+- Still open: issues #35 to #39 in order (one commit each).
+
 ## 2026-11-09 — Issue #33: recipes with a freezer food (v6.130.0)
 - Done: `BookOpen` button on freezer food items linked to the catalogue, opening `/recipes?food=<foodId>`. `recipesUsingFood` (`recipeFoodFilterLogic.ts`, reuses `recipeFoodIds`: bases and « au choix » groups included, dishes only); `RecipeModule` reads the `food` param (not persisted), composes it with the text search and the existing filters; `RecipeFoodFilterBanner` with a clear button; specific empty message in `RecipeSearchResults`. Owner's choices: visible button, exact catalogue food rather than text, no button on unlinked items.
 - Numbers: `npx tsc -b` + `npm run lint` pass, golden-rule greps clean; `tsx` check `_claude/tmp/recipe-food-check.ts` 4 / 4 OK (direct, via a base with a cycle, via a group, ingredient-kind recipe excluded, unknown food). **Not checked in a browser** (to test with `npm run dev`: freezer → food item → book button → banner, results, combine with a filter, open a recipe and come back, clear the banner).

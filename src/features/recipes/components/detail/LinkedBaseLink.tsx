@@ -5,13 +5,14 @@ import { RecipePhotoCard } from '../../../../shared/components/ui/RecipePhotoCar
 export interface LinkedBaseLinkProps {
   id: string;
   name: string;
+  portions: number;
   recipe: RecipeDetails;
   compact?: boolean;
 }
 
-export const LinkedBaseLink = ({ id, name, recipe, compact = false }: LinkedBaseLinkProps) => (
+export const LinkedBaseLink = ({ id, name, portions, recipe, compact = false }: LinkedBaseLinkProps) => (
   <a
-    href={`#${buildRecipeDetailUrl(id, undefined)}`}
+    href={`#${buildRecipeDetailUrl(id, portions)}`}
     target="_blank"
     rel="noopener noreferrer"
     className={`flex flex-col items-center group ${compact ? 'gap-1' : 'gap-2'}`}

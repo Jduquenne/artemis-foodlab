@@ -68,7 +68,7 @@ export const RecipeDetail = () => {
     }
   }, [recipe, recipes, foods]);
 
-  const linkedBases = useMemo(() => (recipe ? getLinkedBases(recipes, recipe) : []), [recipes, recipe]);
+  const linkedBases = useMemo(() => (scaledRecipe ? getLinkedBases(recipes, scaledRecipe) : []), [recipes, scaledRecipe]);
 
   if (!recipe) return <RecipeNotFound />;
   if (!scaledRecipe || (!mealPhotoUrl && !instructionsPhotoUrl)) return null;
@@ -133,8 +133,8 @@ export const RecipeDetail = () => {
         {linkedBases.length > 0 && (
           <div className="hidden sm:flex flex-1 min-h-0 items-center justify-end pr-3">
             <div className="flex flex-col items-center gap-3">
-              {linkedBases.map(({ id, name }) => (
-                <LinkedBaseLink key={id} id={id} name={name} recipe={recipes[id]} />
+              {linkedBases.map(({ id, name, portions: basePortions }) => (
+                <LinkedBaseLink key={id} id={id} name={name} portions={basePortions} recipe={recipes[id]} />
               ))}
             </div>
           </div>
@@ -178,8 +178,8 @@ export const RecipeDetail = () => {
           {macros && <MacroCircles macros={macros} compact />}
           {linkedBases.length > 0 && (
             <div className="flex gap-3 items-center">
-              {linkedBases.map(({ id, name }) => (
-                <LinkedBaseLink key={id} id={id} name={name} recipe={recipes[id]} compact />
+              {linkedBases.map(({ id, name, portions: basePortions }) => (
+                <LinkedBaseLink key={id} id={id} name={name} portions={basePortions} recipe={recipes[id]} compact />
               ))}
             </div>
           )}

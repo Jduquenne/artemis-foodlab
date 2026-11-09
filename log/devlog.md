@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-09 — Base version: « Choix du repas » missing on lunch / dinner dishes (v6.139.3)
+- Context: owner test of #37 after adding a store-bought version of the « gnocchis maison » base: on a recipe using that base, the version choice was not available. Cause (mine): in step 4 I extended `useHasMealChoices` but `SingleMealSlot` (the lunch / dinner main dish) computed its own condition (`choiceStatus || hasAccompaniment`), so a dish whose only choice is a base version never got the « ⋯ » entry. Breakfast / snack cells, multi slots and desserts already used the hook.
+- Done: `SingleMealSlot` now uses `useHasMealChoices(firstId)` for the entry (the « à préciser » badge still comes from `choiceStatus`, group ingredients only). One source of truth for the entry in all slot types.
+- Numbers: `npx tsc -b` + `npm run lint` pass. **Not checked in the browser.** To test: plan a lunch or dinner dish using a base that has a store-bought version → « ⋯ » → « Choix du repas » → the base shows « Maison / Du commerce »; pick « Du commerce », save, check the shopping list.
+- Reminder: a store-bought product created with all macros at 0 keeps the home version's kcal (D-038 amendment): the planning kcal and the journal will not change, only the shopping list does. Give the product real nutritional values in the dashboard (foods table) to change the kcal.
+
 ## 2026-11-09 — Issues #32 to #39 shipped; issue #40 framed (D-040, v6.139.2, docs only)
 - Done: the owner reported the eight issues tested ok and the API (D-057 to D-061) and the client pushed on `master`; roadmap, `docs/api.md` and the D-038 / D-039 statuses updated (prod behaviour not verified from the agent session). New issue #40 « portion de référence par personne » (petit-déjeuner et goûter) added to `dev/issues.json` (22 issues; Discord forum post to sync by the owner), framed with the owner: reference on the recipe, bare number, every dish, effects on the planning day kcal, journal, shopping and detail links → **D-040**. Prompt for the API session given to the owner.
 - Still open: real payloads from the API session, then front in two commits (catalogue + Recipe Builder field; effects on macros, journal, shopping, planning links). Issues #32 to #39 not closed yet in `dev/issues.json` (waiting for the owner's « clore issues »).

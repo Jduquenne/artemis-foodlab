@@ -31,6 +31,7 @@ export interface ApiFreezerBatchDetail {
 
 export interface ApiFreezerItem {
   id: string;
+  categoryId?: string;
   type: "food" | "batch";
   position: number;
   food?: ApiFreezerFoodDetail;

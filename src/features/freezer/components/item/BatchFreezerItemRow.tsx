@@ -1,9 +1,10 @@
 import { useRef, useState } from "react";
-import { CalendarPlus, ChefHat, MoreVertical, Trash2, AlertTriangle, Loader2 } from "lucide-react";
+import { ArrowRightLeft, CalendarPlus, ChefHat, MoreVertical, Trash2, AlertTriangle, Loader2 } from "lucide-react";
 import { BatchFreezerItem } from "../../../../core/domain/freezer";
 import { updateBatchPortions } from "../../../../core/services/freezerService";
 import { freezerItemAge } from "../../../../core/logic/freezer/freezerAgeLogic";
 import { AddBatchToMenuModal } from "../modal/AddBatchToMenuModal";
+import { MoveFreezerItemModal } from "../modal/MoveFreezerItemModal";
 import { FloatingMenu } from "../../../../shared/components/ui/FloatingMenu";
 import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
 import { withPending } from "../../../../shared/utils/withPending";
@@ -18,6 +19,7 @@ export const BatchFreezerItemRow = ({ item, categoryId, onDelete }: BatchFreezer
     const isEmpty = item.portions === 0;
     const [menuOpen, setMenuOpen] = useState(false);
     const [menuAddOpen, setMenuAddOpen] = useState(false);
+    const [moveOpen, setMoveOpen] = useState(false);
     const menuButtonRef = useRef<HTMLButtonElement>(null);
     const age = freezerItemAge(item.addedDate);
     const deletePending = usePendingKey(`freezer-item-delete:${item.id}`);
@@ -63,6 +65,13 @@ export const BatchFreezerItemRow = ({ item, categoryId, onDelete }: BatchFreezer
                         </button>
                     )}
                     <button
+                        onClick={() => { setMenuOpen(false); setMoveOpen(true); }}
+                        className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-muted transition-colors"
+                    >
+                        <ArrowRightLeft className="w-4 h-4 shrink-0" />
+                        Déplacer vers…
+                    </button>
+                    <button
                         onClick={onDelete}
                         className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-500 hover:bg-red-50 transition-colors"
                     >
@@ -103,6 +112,7 @@ export const BatchFreezerItemRow = ({ item, categoryId, onDelete }: BatchFreezer
             </div>
         </div>
         {menuAddOpen && <AddBatchToMenuModal item={item} onClose={() => setMenuAddOpen(false)} />}
+        {moveOpen && <MoveFreezerItemModal item={item} categoryId={categoryId} onClose={() => setMoveOpen(false)} />}
         </>
     );
 };

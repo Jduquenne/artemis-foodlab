@@ -115,6 +115,22 @@ export const removeItemFromCategory = async (categoryId: string, itemId: string)
   }));
 };
 
+export const moveItemToCategory = async (
+  sourceCategoryId: string,
+  itemId: string,
+  targetCategoryId: string,
+): Promise<void> => {
+  const moved = await apiFetchJson<ApiFreezerItem>(`/freezer-items/${itemId}`, {
+    method: "PUT",
+    body: { categoryId: targetCategoryId },
+  });
+  const item = mapApiItem(moved);
+  await db.transaction("rw", db.freezerCategories, async () => {
+    await withCategory(sourceCategoryId, cat => ({ items: cat.items.filter(i => i.id !== itemId) }));
+    await withCategory(targetCategoryId, cat => ({ items: [...cat.items.filter(i => i.id !== itemId), item] }));
+  });
+};
+
 export const addBagToFoodItem = async (
   categoryId: string,
   itemId: string,

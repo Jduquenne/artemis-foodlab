@@ -110,6 +110,7 @@ A separate Claude Code session owns `meals-planning-api` (sibling repo). Collabo
   → 201 { "id": "<uuid>", "type": "food", "position": 0, "food": { "foodId": "fv-010", "name": "Betterave rouge",
     "bags": [ { "id": "<uuid>", "quantity": 500, "unit": "g", "preparation": "écossés", "addedDate": "2026-10-01T00:00:00.000Z" } ] } }
   ```
+- **Move an item to another category** (API D-059, issue #35): `PUT /freezer-items/:id { categoryId }` (uuid, combinable with `position` / `name` / `portions`; empty body → 400). Target category unknown or owned by another account → 404 « Cette catégorie de congélateur est introuvable. » (invalid uuid → 400); same category → 200, nothing moves; the item lands at the end of the target (`max(position) + 1`), an explicit `position` wins; one transaction; bags, `addedDate`, `foodId`, recipe untouched; no server-side name uniqueness (front rule). Every item response now carries `categoryId`, and `PUT` returns the **full item with its bags sorted by `addedDate`** (same shape as the `POST` 201; it used to return `bags: []`). Read from the API repo (code, tests 493/493, docs) on 2026-11-09; **front end-to-end check against the local API and prod deployment to confirm by the owner before pushing `master`**.
 - Blocked deletes return French 409 messages.
 
 ## Import

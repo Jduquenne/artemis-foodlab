@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Snowflake, Plus, MoreVertical, Trash2, Loader2, BookOpen } from "lucide-react";
+import { Snowflake, Plus, MoreVertical, Trash2, Loader2, BookOpen, ArrowRightLeft } from "lucide-react";
 import { FreezerItem } from "../../../../core/domain/freezer";
 import { addBagToFoodItem } from "../../../../core/services/freezerService";
 import { recipeFoodPath } from "../../../../core/logic/recipe/recipeFoodFilterLogic";
@@ -8,6 +8,7 @@ import { getFoodBagsSummary } from "../../../../core/logic/freezer/freezerStockL
 import { FloatingMenu } from "../../../../shared/components/ui/FloatingMenu";
 import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
 import { withPending } from "../../../../shared/utils/withPending";
+import { MoveFreezerItemModal } from "../modal/MoveFreezerItemModal";
 import { BatchFreezerItemRow } from "./BatchFreezerItemRow";
 import { BagRow } from "./BagRow";
 import { AddBagForm } from "./AddBagForm";
@@ -21,6 +22,7 @@ export interface FreezerItemRowProps {
 export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowProps) => {
   const navigate = useNavigate();
   const [addingBag, setAddingBag] = useState(false);
+  const [moveOpen, setMoveOpen] = useState(false);
   const [itemMenuOpen, setItemMenuOpen] = useState(false);
   const itemMenuButtonRef = useRef<HTMLButtonElement>(null);
   const deletePending = usePendingKey(`freezer-item-delete:${item.id}`);
@@ -34,6 +36,7 @@ export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowPro
   const foodId = item.foodId;
 
   return (
+    <>
     <div className={`bg-surface rounded-2xl border border-slate-200 px-3 py-2.5 transition ${isEmpty ? "opacity-60" : ""} ${deletePending ? "opacity-50 pointer-events-none" : ""}`}>
       <div className="flex items-center gap-2.5">
         <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 bg-muted">
@@ -73,6 +76,13 @@ export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowPro
           </button>
           <FloatingMenu open={itemMenuOpen} anchorRef={itemMenuButtonRef} onClose={() => setItemMenuOpen(false)}>
             <button
+              onClick={() => { setItemMenuOpen(false); setMoveOpen(true); }}
+              className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-muted transition-colors"
+            >
+              <ArrowRightLeft className="w-4 h-4 shrink-0" />
+              Déplacer vers…
+            </button>
+            <button
               onClick={() => { setItemMenuOpen(false); onDelete(); }}
               className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-500 hover:bg-red-50 transition-colors"
             >
@@ -111,5 +121,7 @@ export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowPro
         </div>
       )}
     </div>
+    {moveOpen && <MoveFreezerItemModal item={item} categoryId={categoryId} onClose={() => setMoveOpen(false)} />}
+    </>
   );
 };

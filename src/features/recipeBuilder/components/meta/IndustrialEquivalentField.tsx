@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { X } from "lucide-react";
 import { SELECTABLE_UNITS, Unit } from "../../../../core/domain/ingredient";
 import { IndustrialEquivalentDraft } from "../../../../core/domain/recipeBuilderTypes";
-import { emptyIndustrialDraft, pickIndustrialFood } from "../../../../core/logic/recipeBuilder/industrialEquivalentLogic";
+import { emptyIndustrialDraft, industrialFoodCreationDraft, pickIndustrialFood } from "../../../../core/logic/recipeBuilder/industrialEquivalentLogic";
+import { isUnit } from "../../../../core/logic/unit/unitLogic";
 import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
 import { FoodSearchInput } from "../../../../shared/components/ui/FoodSearchInput";
+import { FoodFormModal } from "../../../../shared/components/ui/form/FoodFormModal";
+import { useCatalogueFoods } from "../../../../shared/hooks/useCatalogueFoods";
 import { useFoodsSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 
 export interface IndustrialEquivalentFieldProps {
@@ -17,6 +21,8 @@ const inputClass =
 
 export const IndustrialEquivalentField = ({ value, onChange }: IndustrialEquivalentFieldProps) => {
   const foods = useFoodsSnapshot();
+  const { foods: allFoods, create } = useCatalogueFoods();
+  const [creatingName, setCreatingName] = useState<string | null>(null);
   const food = value?.foodId ? foods[value.foodId] : undefined;
 
   return (
@@ -55,6 +61,25 @@ export const IndustrialEquivalentField = ({ value, onChange }: IndustrialEquival
               onPick={(foodId) => {
                 const picked = foods[foodId];
                 if (picked) onChange(pickIndustrialFood(value, picked));
+              }}
+              onCreate={setCreatingName}
+            />
+          )}
+          {food && (
+            <p className="text-[11px] text-slate-400">
+              Sans valeurs nutritionnelles pour ce produit, les kcal de la version maison sont conservés.
+            </p>
+          )}
+          {creatingName !== null && (
+            <FoodFormModal
+              food={null}
+              foods={allFoods}
+              initialDraft={industrialFoodCreationDraft(creatingName)}
+              onClose={() => setCreatingName(null)}
+              onSubmit={async (body) => {
+                const created = await create(body);
+                if (created) onChange({ ...value, foodId: body.id, unit: isUnit(body.unit) ? body.unit : value.unit });
+                return created;
               }}
             />
           )}

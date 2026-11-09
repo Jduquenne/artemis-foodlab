@@ -8,7 +8,7 @@ import {
   hasSeason,
   toggleMonth,
 } from "../../../../core/logic/season/seasonLogic";
-import { FormField } from "../common/FormField";
+import { FormField } from "./FormField";
 
 export interface SeasonMonthsFieldProps {
   months: number[];

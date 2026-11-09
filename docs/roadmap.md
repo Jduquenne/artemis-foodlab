@@ -14,6 +14,8 @@ The detailed backlog and future features live in `dev/issues.json` and `dev/refa
 7. ✅ Recipe filter « De saison » for the current month (v6.121.0, `docs/spec-recipes.md` § Filters): owner test on the dev data, 189 recipes in October (2026-10-21); in prod.
 8. ⏸ Tablet portrait pass (P5) paused by the owner on 2026-10-15 (no longer a priority).
 
+9. 🟡 Industrial version of a base (D-038, issue #37, owner 2026-11-09): delivery A **done in the front** (v6.133.0 → v6.136.0: catalogue + Recipe Builder field, planning data, effects on macros / shopping / journal, « Choix du repas » UI), API D-060 on dev (commit `8f5d89d`, **prod deployment to confirm**); owner end-to-end test pending. Delivery B (per-account default per base) not started.
+
 ## Honest status (2026-10-21)
 
 - Production on GitHub Pages, backed by the API since 2026-09-09; deployed with each push on `master`.

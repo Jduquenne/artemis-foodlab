@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { Food } from "../../../../core/domain/ingredient";
 import { useCatalogueFoods } from "../../../../shared/hooks/useCatalogueFoods";
 import { FoodRow } from "./FoodRow";
-import { FoodFormModal } from "./FoodFormModal";
+import { FoodFormModal } from "../../../../shared/components/ui/form/FoodFormModal";
 import { DataPanelShell } from "../common/DataPanelShell";
 import { DataList } from "../common/DataList";
 import { useFoodGroupsSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";

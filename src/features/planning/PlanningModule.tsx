@@ -15,6 +15,7 @@ import { MenuGeneratorModal } from './components/generator/MenuGeneratorModal';
 import { useIsAdmin } from '../../shared/hooks/useIsAdmin';
 import { FoodChoice } from '../../core/domain/foodGroup';
 import { AccompanimentChoice } from '../../core/domain/accompaniment';
+import { BaseVersionChoice } from '../../core/domain/baseVersion';
 import { withRecordList } from '../../core/utils/collectionUtils';
 import { ShoppingSelectionBar } from './components/bars/ShoppingSelectionBar';
 import { PlanningHeader } from './components/PlanningHeader';
@@ -306,6 +307,7 @@ export const PlanningModule = () => {
         recipeId: string,
         choices: FoodChoice[],
         accompanimentChoices: AccompanimentChoice[],
+        baseVersionChoices: BaseVersionChoice[],
     ): Promise<boolean> => {
         const existing = planningData.find(p => p.day === day && p.slot === slot);
         if (!existing) return false;
@@ -315,6 +317,7 @@ export const PlanningModule = () => {
                 ...existing,
                 foodChoices: withRecordList(existing.foodChoices, recipeId, choices),
                 accompanimentChoices: withRecordList(existing.accompanimentChoices, recipeId, accompanimentChoices),
+                baseVersionChoices: withRecordList(existing.baseVersionChoices, recipeId, baseVersionChoices),
             });
             return true;
         }).catch(() => false);
@@ -578,7 +581,8 @@ export const PlanningModule = () => {
                         pendingKey={`planning-food-choice:${buildSlotId(year, weekNumber, foodChoiceTarget.day, foodChoiceTarget.slot)}:${foodChoiceTarget.recipeId}`}
                         initialChoices={planningData.find(p => p.day === foodChoiceTarget.day && p.slot === foodChoiceTarget.slot)?.foodChoices?.[foodChoiceTarget.recipeId] ?? []}
                         initialAccompanimentChoices={planningData.find(p => p.day === foodChoiceTarget.day && p.slot === foodChoiceTarget.slot)?.accompanimentChoices?.[foodChoiceTarget.recipeId] ?? []}
-                        onSave={(choices, accompanimentChoices) => handleSaveFoodChoices(foodChoiceTarget.day, foodChoiceTarget.slot, foodChoiceTarget.recipeId, choices, accompanimentChoices)}
+                        initialBaseVersionChoices={planningData.find(p => p.day === foodChoiceTarget.day && p.slot === foodChoiceTarget.slot)?.baseVersionChoices?.[foodChoiceTarget.recipeId] ?? []}
+                        onSave={(choices, accompanimentChoices, baseVersionChoices) => handleSaveFoodChoices(foodChoiceTarget.day, foodChoiceTarget.slot, foodChoiceTarget.recipeId, choices, accompanimentChoices, baseVersionChoices)}
                         onClose={() => setFoodChoiceTarget(null)}
                     />
                 )}

@@ -2,6 +2,7 @@ import { Food, Unit } from "../../domain/ingredient";
 import { IndustrialEquivalent } from "../../domain/recipe";
 import { IndustrialEquivalentDraft } from "../../domain/recipeBuilderTypes";
 import { isUnit } from "../unit/unitLogic";
+import { FoodFormDraft } from "../dashboard/foodFormLogic";
 
 export interface ApiIndustrialEquivalent {
   foodId: string;
@@ -39,4 +40,8 @@ export function validateIndustrialDraft(draft: IndustrialEquivalentDraft | null 
 export function mapApiIndustrialEquivalent(api: ApiIndustrialEquivalent | null | undefined): IndustrialEquivalent | undefined {
   if (!api) return undefined;
   return { foodId: api.foodId, quantity: api.quantity, unit: isUnit(api.unit) ? api.unit : Unit.NONE };
+}
+
+export function industrialFoodCreationDraft(name: string): Partial<FoodFormDraft> {
+  return { name, macros: { kcal: "0", proteins: "0", lipids: "0", carbohydrates: "0", fibers: "0" } };
 }

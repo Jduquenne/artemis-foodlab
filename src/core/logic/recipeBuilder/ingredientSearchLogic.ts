@@ -1,5 +1,5 @@
 import { Food } from "../../domain/ingredient";
-import { normalizeQuery, rankByQuery } from "../../utils/textUtils";
+import { foldText, normalizeQuery, rankByQuery } from "../../utils/textUtils";
 
 const MAX_SUGGESTIONS = 8;
 
@@ -13,4 +13,9 @@ export function searchBases(
 ): { id: string; name: string }[] {
   if (!query) return bases.slice(0, MAX_SUGGESTIONS);
   return rankByQuery(bases, normalizeQuery(query), (base) => base.name).slice(0, MAX_SUGGESTIONS);
+}
+
+export function canCreateFoodFromQuery(query: string, foods: readonly Food[]): boolean {
+  const name = foldText(query.trim());
+  return name.length >= 2 && !foods.some((food) => foldText(food.name) === name);
 }

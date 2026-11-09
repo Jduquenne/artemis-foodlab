@@ -16,23 +16,24 @@ import {
 import { atwaterKcal } from "../../../../core/logic/nutrition/atwaterLogic";
 import { useFoodGroupsSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
-import { FormModalShell } from "../common/FormModalShell";
-import { FormField } from "../common/FormField";
+import { FormModalShell } from "./FormModalShell";
+import { FormField } from "./FormField";
 import { SeasonMonthsField } from "./SeasonMonthsField";
 import { FORM_INPUT_CLASS as INPUT_CLASS } from "../../../../shared/components/ui/formStyles";
 
 export interface FoodFormModalProps {
   food: Food | null;
   foods: Food[];
+  initialDraft?: Partial<FoodFormDraft>;
   onClose: () => void;
   onSubmit: (body: FoodInput) => Promise<boolean>;
 }
 
 
-export const FoodFormModal = ({ food, foods, onClose, onSubmit }: FoodFormModalProps) => {
+export const FoodFormModal = ({ food, foods, initialDraft, onClose, onSubmit }: FoodFormModalProps) => {
   const isCreate = food === null;
   const groups = useFoodGroupsSnapshot();
-  const [draft, setDraft] = useState<FoodFormDraft>(() => (food ? foodToDraft(food) : emptyFoodDraft()));
+  const [draft, setDraft] = useState<FoodFormDraft>(() => (food ? foodToDraft(food) : { ...emptyFoodDraft(), ...initialDraft }));
   const [id, setId] = useState("");
   const [idTouched, setIdTouched] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);

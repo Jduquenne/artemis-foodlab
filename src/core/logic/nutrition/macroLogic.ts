@@ -190,7 +190,7 @@ function computeDishMacros(
   const recipe = catalogue.plannable[recipeId];
   const itemIngredientOverrides = ingredientOverrides[itemKey];
   const catalogueRecipe = catalogue.recipes[recipeId];
-  const versioned = catalogueRecipe ? applyBaseVersions(catalogueRecipe, catalogue.recipes, baseVersions, catalogue.foods) : catalogue.recipes;
+  const versioned = catalogueRecipe ? applyBaseVersions(catalogueRecipe, catalogue.recipes, baseVersions, catalogue.foods, { requireNutrition: true }) : catalogue.recipes;
   const tree =
     catalogueRecipe && personalization ? personalizeRecipeTree(catalogueRecipe, personalization, versioned, catalogue.foods) : null;
   const fullRecipe = tree?.recipe ?? catalogueRecipe;

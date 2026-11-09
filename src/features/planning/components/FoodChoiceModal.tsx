@@ -2,9 +2,11 @@ import { useMemo, useState } from 'react';
 import { Loader2, Shuffle } from 'lucide-react';
 import { FoodChoice } from '../../../core/domain/foodGroup';
 import { AccompanimentChoice } from '../../../core/domain/accompaniment';
+import { BaseVersion, BaseVersionChoice } from '../../../core/domain/baseVersion';
 import { findMealChoice, foodsOfGroupSorted, reachableQuantityPerPortion, resolveIngredientFood, setMealFoodChoice, setMealFoodQuantity } from '../../../core/logic/foodGroup/foodChoiceLogic';
 import { accompanimentsFor, findAccompanimentChoice, mealChoiceIngredients, resolveAccompaniment, setAccompanimentChoice } from '../../../core/logic/accompaniment/accompanimentLogic';
 import { ACCOMPANIMENT_NONE_VALUE, accompanimentOptionLabel } from '../../../core/logic/accompaniment/accompanimentFormLogic';
+import { setBaseVersion } from '../../../core/logic/baseVersion/baseVersionLogic';
 import { formatQty } from '../../../core/logic/unit/unitFormatLogic';
 import { DecimalInput } from '../../../shared/components/ui/DecimalInput';
 import { getProfileColorHex } from '../../../core/logic/profile/profileLogic';
@@ -13,13 +15,16 @@ import { useFoodGroupsSnapshot, useFoodsSnapshot, useRecipesSnapshot } from '../
 import { usePendingKey } from '../../../shared/hooks/usePendingKey';
 import { useProfileStore } from '../../../shared/store/useProfileStore';
 import { useAccompanimentStore } from '../../../shared/store/useAccompanimentStore';
+import { useIndustrialBases } from '../../../shared/hooks/useIndustrialBases';
+import { BaseVersionSection } from './BaseVersionSection';
 
 export interface FoodChoiceModalProps {
     recipeId: string;
     pendingKey: string;
     initialChoices: FoodChoice[];
     initialAccompanimentChoices: AccompanimentChoice[];
-    onSave: (choices: FoodChoice[], accompanimentChoices: AccompanimentChoice[]) => Promise<boolean>;
+    initialBaseVersionChoices: BaseVersionChoice[];
+    onSave: (choices: FoodChoice[], accompanimentChoices: AccompanimentChoice[], baseVersionChoices: BaseVersionChoice[]) => Promise<boolean>;
     onClose: () => void;
 }
 
@@ -31,7 +36,7 @@ const SOURCE_LABELS = {
 
 const SELECT_CLASS = 'flex-1 min-w-0 px-2 py-2 bg-surface border border-slate-200 rounded-xl text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 disabled:opacity-50';
 
-export const FoodChoiceModal = ({ recipeId, pendingKey, initialChoices, initialAccompanimentChoices, onSave, onClose }: FoodChoiceModalProps) => {
+export const FoodChoiceModal = ({ recipeId, pendingKey, initialChoices, initialAccompanimentChoices, initialBaseVersionChoices, onSave, onClose }: FoodChoiceModalProps) => {
     const recipes = useRecipesSnapshot();
     const foods = useFoodsSnapshot();
     const groups = useFoodGroupsSnapshot();
@@ -40,6 +45,8 @@ export const FoodChoiceModal = ({ recipeId, pendingKey, initialChoices, initialA
     const pending = usePendingKey(pendingKey);
     const [choices, setChoices] = useState<FoodChoice[]>(initialChoices);
     const [accompanimentChoices, setAccompanimentChoices] = useState<AccompanimentChoice[]>(initialAccompanimentChoices);
+    const [baseVersionChoices, setBaseVersionChoices] = useState<BaseVersionChoice[]>(initialBaseVersionChoices);
+    const industrialBases = useIndustrialBases(recipeId);
 
     const recipe = recipes[recipeId];
     const accompaniments = useMemo(() => accompanimentsFor(recipeId, allAccompaniments), [recipeId, allAccompaniments]);
@@ -49,8 +56,11 @@ export const FoodChoiceModal = ({ recipeId, pendingKey, initialChoices, initialA
     );
 
     const save = async () => {
-        if (await onSave(choices, accompanimentChoices)) onClose();
+        if (await onSave(choices, accompanimentChoices, baseVersionChoices)) onClose();
     };
+
+    const changeBaseVersion = (baseCode: string, version: BaseVersion) =>
+        setBaseVersionChoices((prev) => setBaseVersion(prev, baseCode, version === 'industrial' ? 'industrial' : null));
 
     const profileDot = (color: string) => (
         <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: getProfileColorHex(color) }} />
@@ -101,6 +111,14 @@ export const FoodChoiceModal = ({ recipeId, pendingKey, initialChoices, initialA
                             })}
                         </section>
                     ))}
+
+                    <BaseVersionSection
+                        bases={industrialBases}
+                        choices={baseVersionChoices}
+                        foods={foods}
+                        disabled={pending}
+                        onChange={changeBaseVersion}
+                    />
 
                     {ingredients.map(({ entry, ownerName, profileIds }) => {
                         const { ingredient } = entry;

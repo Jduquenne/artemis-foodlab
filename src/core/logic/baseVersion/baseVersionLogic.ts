@@ -1,6 +1,7 @@
 import { BaseVersion, BaseVersionChoice } from "../../domain/baseVersion";
 import { Food } from "../../domain/ingredient";
-import { RecipeDetails } from "../../domain/recipe";
+import { IndustrialEquivalent, RecipeDetails } from "../../domain/recipe";
+import { formatQty } from "../unit/unitFormatLogic";
 
 export function reachableBaseCodes(recipe: RecipeDetails, recipes: Record<string, RecipeDetails>): Set<string> {
   const found = new Set<string>();
@@ -84,11 +85,20 @@ export function isIndustrialChoice(
   return findBaseVersion(choices, base.code) === "industrial" && industrialBaseRecipe(base, foods) !== null;
 }
 
+export function hasNutritionData(food: Food): boolean {
+  return Object.values(food.macros).some((value) => value > 0);
+}
+
+export interface ApplyBaseVersionsOptions {
+  requireNutrition?: boolean;
+}
+
 export function applyBaseVersions(
   recipe: RecipeDetails,
   recipes: Record<string, RecipeDetails>,
   choices: readonly BaseVersionChoice[] | undefined,
   foods: Record<string, Food>,
+  options: ApplyBaseVersionsOptions = {},
 ): Record<string, RecipeDetails> {
   if (!choices || choices.length === 0) return recipes;
   const reachable = reachableBaseCodes(recipe, recipes);
@@ -96,8 +106,15 @@ export function applyBaseVersions(
   for (const choice of choices) {
     const base = recipes[choice.baseCode];
     if (choice.version !== "industrial" || !reachable.has(choice.baseCode) || !base) continue;
+    const equivalentFood = base.industrialEquivalent ? foods[base.industrialEquivalent.foodId] : undefined;
+    if (options.requireNutrition && (!equivalentFood || !hasNutritionData(equivalentFood))) continue;
     const substitute = industrialBaseRecipe(base, foods);
     if (substitute) substitutes[choice.baseCode] = substitute;
   }
   return Object.keys(substitutes).length === 0 ? recipes : { ...recipes, ...substitutes };
+}
+
+export function industrialEquivalentLabel(equivalent: IndustrialEquivalent, foods: Record<string, Food>): string {
+  const name = foods[equivalent.foodId]?.name ?? equivalent.foodId;
+  return `${name} · ${formatQty(equivalent.quantity)} ${equivalent.unit} / portion`.replace("  ", " ");
 }

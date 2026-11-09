@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { accompanimentsFor } from "../../core/logic/accompaniment/accompanimentLogic";
 import { useAccompanimentStore } from "../store/useAccompanimentStore";
 import { useGroupIngredients } from "./useGroupIngredients";
+import { useIndustrialBases } from "./useIndustrialBases";
 
 export function useHasAccompaniment(recipeId: string | undefined): boolean {
   const accompaniments = useAccompanimentStore((s) => s.accompaniments);
@@ -10,5 +11,6 @@ export function useHasAccompaniment(recipeId: string | undefined): boolean {
 
 export function useHasMealChoices(recipeId: string | undefined): boolean {
   const hasAccompaniment = useHasAccompaniment(recipeId);
-  return useGroupIngredients(recipeId).length > 0 || hasAccompaniment;
+  const hasIndustrialBase = useIndustrialBases(recipeId).length > 0;
+  return useGroupIngredients(recipeId).length > 0 || hasAccompaniment || hasIndustrialBase;
 }

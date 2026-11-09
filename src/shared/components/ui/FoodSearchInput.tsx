@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
-import { searchFoods } from "../../../core/logic/recipeBuilder/ingredientSearchLogic";
+import { canCreateFoodFromQuery, searchFoods } from "../../../core/logic/recipeBuilder/ingredientSearchLogic";
 import { useFoodsSnapshot } from "../../hooks/useCatalogueSnapshot";
 
 export interface FoodSearchInputProps {
@@ -8,9 +8,10 @@ export interface FoodSearchInputProps {
   disabled: boolean;
   placeholder: string;
   onPick: (foodId: string) => void;
+  onCreate?: (name: string) => void;
 }
 
-export const FoodSearchInput = ({ hiddenIds, disabled, placeholder, onPick }: FoodSearchInputProps) => {
+export const FoodSearchInput = ({ hiddenIds, disabled, placeholder, onPick, onCreate }: FoodSearchInputProps) => {
   const foods = useFoodsSnapshot();
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
@@ -19,6 +20,8 @@ export const FoodSearchInput = ({ hiddenIds, disabled, placeholder, onPick }: Fo
     () => (query.trim() ? searchFoods(query, allFoods).filter((food) => !hiddenIds.includes(food.id)) : []),
     [query, allFoods, hiddenIds],
   );
+
+  const showCreate = onCreate !== undefined && canCreateFoodFromQuery(query, allFoods);
 
   return (
     <div className="relative">
@@ -32,7 +35,7 @@ export const FoodSearchInput = ({ hiddenIds, disabled, placeholder, onPick }: Fo
         placeholder={placeholder}
         className="w-full pl-9 pr-3 py-2 bg-surface border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 disabled:opacity-50"
       />
-      {open && suggestions.length > 0 && (
+      {open && (suggestions.length > 0 || showCreate) && (
         <div className="absolute z-10 left-0 right-0 mt-1 flex flex-col rounded-xl border border-slate-200 overflow-hidden bg-surface shadow-lg">
           {suggestions.map((food) => (
             <button
@@ -46,6 +49,16 @@ export const FoodSearchInput = ({ hiddenIds, disabled, placeholder, onPick }: Fo
               <span className="text-xs text-slate-400 ml-3 shrink-0">{food.category}</span>
             </button>
           ))}
+          {showCreate && (
+            <button
+              type="button"
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => { onCreate?.(query.trim()); setQuery(""); setOpen(false); }}
+              className="flex items-center gap-2 px-3 py-2 text-left text-sm font-bold text-orange-600 hover:bg-subtle"
+            >
+              {`Créer « ${query.trim()} »`}
+            </button>
+          )}
         </div>
       )}
     </div>

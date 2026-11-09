@@ -108,23 +108,34 @@ export const AccountModal = ({ onClose }: AccountModalProps) => {
         </div>
 
         <div className="p-5 flex flex-col gap-5 overflow-y-auto">
-          <section className="flex flex-col gap-3">
+          <form
+            autoComplete="off"
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (profileDirty && !profileSaving) saveProfile();
+            }}
+            className="flex flex-col gap-3"
+          >
             <span className="text-xs font-black text-slate-500 uppercase tracking-wide">Profil</span>
             <label className="flex flex-col gap-1">
               <span className="text-xs font-bold text-slate-500">Adresse e-mail</span>
               {isDemo ? (
                 <span className="text-sm text-slate-500">Compte de démonstration</span>
               ) : (
-                <input type="email" autoComplete="off" value={email} onChange={(e) => setEmail(e.target.value)} className={INPUT_CLASS} />
+                <input type="email" name="profile-email" autoComplete="off" data-lpignore="true" data-1p-ignore value={email} onChange={(e) => setEmail(e.target.value)} className={INPUT_CLASS} />
               )}
             </label>
             <label className="flex flex-col gap-1">
               <span className="text-xs font-bold text-slate-500">Nom affiché</span>
-              <input value={displayName} onChange={(e) => setDisplayName(e.target.value)} placeholder="Optionnel" className={INPUT_CLASS} />
+              <input name="display-name" autoComplete="off" data-lpignore="true" data-1p-ignore value={displayName} onChange={(e) => setDisplayName(e.target.value)} placeholder="Optionnel" className={INPUT_CLASS} />
             </label>
             <label className="flex flex-col gap-1">
               <span className="text-xs font-bold text-slate-500">Lieu d&apos;achat particulier</span>
               <input
+                name="shopping-place"
+                autoComplete="off"
+                data-lpignore="true"
+                data-1p-ignore
                 value={placeName}
                 maxLength={50}
                 onChange={(e) => setPlaceName(e.target.value)}
@@ -136,18 +147,33 @@ export const AccountModal = ({ onClose }: AccountModalProps) => {
             {profileError && <p className="text-xs text-red-500">{profileError}</p>}
             {profileSaved && <p className="text-xs text-emerald-600">Profil enregistré.</p>}
             <button
-              type="button"
-              onClick={saveProfile}
+              type="submit"
               disabled={!profileDirty || profileSaving}
               className="self-start py-1.5 px-3 rounded-lg bg-orange-500 text-white text-xs font-bold hover:bg-orange-600 transition-colors disabled:opacity-40"
             >
               {profileSaving ? "Enregistrement…" : "Enregistrer"}
             </button>
-          </section>
+          </form>
 
           {!isDemo && (
-            <section className="flex flex-col gap-3 border-t border-slate-100 pt-5">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (currentPassword && newPassword && confirmPassword && !passwordSaving) savePassword();
+              }}
+              className="flex flex-col gap-3 border-t border-slate-100 pt-5"
+            >
               <span className="text-xs font-black text-slate-500 uppercase tracking-wide">Mot de passe</span>
+              <input
+                type="text"
+                name="username"
+                autoComplete="username"
+                value={user.email}
+                readOnly
+                tabIndex={-1}
+                aria-hidden="true"
+                className="sr-only"
+              />
               <input
                 type="password"
                 autoComplete="current-password"
@@ -179,14 +205,13 @@ export const AccountModal = ({ onClose }: AccountModalProps) => {
                 </p>
             )}
             <button
-              type="button"
-              onClick={savePassword}
+              type="submit"
               disabled={!currentPassword || !newPassword || !confirmPassword || passwordSaving}
               className="self-start py-1.5 px-3 rounded-lg bg-orange-500 text-white text-xs font-bold hover:bg-orange-600 transition-colors disabled:opacity-40"
             >
               {passwordSaving ? "Modification…" : "Changer le mot de passe"}
             </button>
-          </section>
+          </form>
           )}
 
           <section className="flex flex-col gap-2 border-t border-slate-100 pt-5">

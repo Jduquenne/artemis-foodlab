@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-09 — Account modal: Chrome offered to change the saved login (v6.139.1)
+- Context: owner report: saving the profile (with the new « Lieu d'achat particulier ») made Chrome propose to update the saved account. Cause: `AccountModal` had no `<form>`; e-mail, text fields and password fields sat in one pseudo-form, and Chrome takes the text input before a password input for the username.
+- Done: « Profil » and « Mot de passe » are now two `<form>`s; profile inputs `name` + `autoComplete="off"` + `data-lpignore` / `data-1p-ignore`; the password form holds an invisible read-only `username` input = the e-mail so the credential is explicit. Buttons became `type="submit"`, Enter works. No logic change.
+- Numbers: `npx tsc -b` + `npm run lint` pass. **Not checked in Chrome** (browser heuristics cannot be guaranteed from here): to test, change the place name or the display name and save: no Chrome offer expected; change the password: Chrome may propose to update the saved password of the e-mail, which is the legitimate case.
+- Still open: if Chrome still prompts, tell me which field it shows as the username.
+
 ## 2026-11-09 — Issue #39, step 2/2: filter, clipboard, recipe shortcut, extra form (v6.139.0)
 - Done: `shoppingPlaceLogic.ts` (`filterIngredientsByPlace`, `placeFoodIds`, `allKeysAtPlace`, `chunkList`, `placeFilterTitle`), `PlaceFilterControl` in the Ingrédients toolbar, `ShoppingModule` wiring (filter applied before grouping and before « Complète / Manquants », household items hidden for the place filter, counter and empty states), clipboard title, `setAtPlaceForKeys` in `useShoppingPeriodChecks` (batches of 200 through the D-061 route), pin button on `RecipeShoppingCard`, checkbox in `AddExtraModal`. The placeholder of the account field no longer cites an example (owner: too specific), just « Optionnel ». Issue #39 front complete.
 - Numbers: `npx tsc -b` + `npm run lint` pass, golden-rule greps clean; `tsx` check `_claude/tmp/shopping-place-check.ts` 22 / 22 OK (flag state per key, filter all / place / elsewhere, food ids of a card with duplicates, extras and unlinked lines ignored, all-flagged test, chunking, titles, clipboard text with and without title). **Not checked in a browser nor against the local API.**

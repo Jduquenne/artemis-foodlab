@@ -16,6 +16,8 @@ One account = one household. Login required. Roles: `admin` / `guest` (`docs/arc
 Lazy, opened from `SettingsPopover` → « Compte»:
 
 - Profile: e-mail + display name (`displayName`, display only: greeting and name column in the admin users list; no business logic). Saved via `updateMe` with `suppressGlobalError` → inline error. E-mail change allowed directly, 409 if taken, no re-verification.
+- Profile also has « Lieu d'achat particulier » (`shoppingPlaceName`, optional, ≤ 50 characters, D-039 / `docs/spec-shopping.md`).
+- **Two real `<form>`s** (v6.139.1): « Profil » and « Mot de passe » are separate forms (Enter submits, `preventDefault`), the profile inputs carry `name` + `autoComplete="off"` + `data-lpignore` / `data-1p-ignore`, and the password form contains an invisible read-only `username` input (`autoComplete="username"`, value = the e-mail, `sr-only`). Reason: with no `<form>`, Chrome took the text field before the password fields (the place name, or the display name) for the login and offered to change the saved account when the profile was saved. Now the only credential Chrome can associate is the e-mail, and only a password change can trigger its « update password » offer.
 - Password: current / new / confirmation, ≥ 12 chars, `changePassword` → inline error; the new access token is reused.
 - If admin: « Gérer les comptes » link → `/dashboard`.
 - « Se déconnecter »: `logout()` then `setUser(null)` + `setStatus("unauthenticated")`.

@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-09 — Issue #38: accompaniments counted in the planning day kcal (v6.132.2)
+- Done: bug fix. The planning computed the day kcal with `computeDayMacros(…, {}, {})` and no profile, so accompaniments (and per-profile food choices) were ignored while the journal counted them. New pure `weekDayKcal` (`core/logic/planning/dayKcalLogic.ts`) used by `PlanningModule` with the active profile (`useActiveProfile`); the inline computation left the component.
+- Numbers: `npx tsc -b` + `npm run lint` pass, golden-rule greps clean; `tsx` check `_claude/tmp/day-kcal-check.ts` 7 / 7 OK (no profile 300 kcal, default accompaniment 380, recipe option 500, « sans » 300, meal choice over profile default 500, empty day 0, 7 days). **Not checked in a browser** (to test with `npm run dev`: plan a soup with an accompaniment, compare the day kcal in the planning with the journal of the same profile, change the profile and the meal choice).
+- Known limit: the planning shows one number per day for the active profile; other profiles' accompaniments are not shown there. Persons / grams overrides are still not applied in this figure (unchanged).
+- Still open: #35 end-to-end test (local API) and prod confirmation; #37 waits for the API session (D-038); #39 to frame.
+
 ## 2026-11-09 — Issue #37: industrial version of a base, decision (v6.132.1, docs only)
 - Done: owner choices recorded as **D-038** (`docs/decisions.md`): equivalent defined on the base (`industrialEquivalent`), choice per planned meal for the household, delivery A (catalogue + meal choice + shopping + macros) then B (per-account default), store-bought food listed in its own aisle, generator untouched. Prompt for the API session given to the owner.
 - Still open: real payloads from the API session (catalogue field on bases, planning item choice, orphans, errors) and prod deployment, then front delivery A (Recipe Builder field, `FoodChoiceModal` section, shopping, macros, journal), then B. #38 and #39 do not depend on it.

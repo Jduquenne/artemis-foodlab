@@ -22,7 +22,7 @@ import { PlanningSlot } from './components/slot/PlanningSlot';
 import { DayTabsBar } from './components/bars/DayTabsBar';
 import { getWeekNumber, getWeekYear, getMonday, getWeekRange, dayNameOf } from '../../core/utils/weekUtils';
 import { toIsoDate } from '../../core/utils/dateUtils';
-import { computeDayMacros } from '../../core/logic/nutrition/macroLogic';
+import { weekDayKcal } from '../../core/logic/planning/dayKcalLogic';
 import { useMacroCatalogue } from '../../shared/hooks/useMacroCatalogue';
 import { useRefreshStore } from '../../shared/store/useRefreshStore';
 import { useNotificationStore } from '../../shared/store/useNotificationStore';
@@ -38,6 +38,7 @@ import { computeSlotCopyProps } from '../../core/logic/planning/planningCopyLogi
 import { useShoppingDaysSelection } from '../../shared/hooks/useShoppingDaysSelection';
 import { usePlanningCopy } from '../../shared/hooks/usePlanningCopy';
 import { useChoiceContext } from '../../shared/hooks/useChoiceContext';
+import { useActiveProfile } from '../../shared/hooks/useActiveProfile';
 import { shiftDay } from '../../core/logic/planning/planningDayNavLogic';
 import { useHorizontalSwipe, SwipeDirection } from '../../shared/hooks/useHorizontalSwipe';
 import { useDragEdgeWeekNav } from '../../shared/hooks/useDragEdgeWeekNav';
@@ -137,12 +138,10 @@ export const PlanningModule = () => {
     }, [authStatus, year, weekNumber, refreshTick]);
 
     const macroCatalogue = useMacroCatalogue();
-    const dayKcal = useMemo(() =>
-        Object.fromEntries(DAYS.map(day => {
-            const slots = planningData.filter(p => p.day === day);
-            return [day, slots.length ? Math.round(computeDayMacros(macroCatalogue, slots, {}, {}).kcal) : 0];
-        })),
-        [macroCatalogue, planningData]
+    const activeProfile = useActiveProfile();
+    const dayKcal = useMemo(
+        () => weekDayKcal(macroCatalogue, planningData, activeProfile ?? undefined),
+        [macroCatalogue, planningData, activeProfile]
     );
 
     const activeMeal = useMemo(

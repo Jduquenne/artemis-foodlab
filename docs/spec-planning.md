@@ -34,6 +34,10 @@ A dessert-only destination must never give its own dessert to the origin slot (p
 
 Each slot save diffs items (`diffSlotItems`) and sends **one** batch call `PUT /planning-slots/:id/items/batch`; the local cache is rebuilt from the full response. A move A→B is two batch calls (not atomic). Decision: D-009.
 
+## Day kcal in the planning
+
+The kcal shown per day in the planning (day tabs on mobile, column headers on desktop) come from `weekDayKcal(catalogue, slots, profile)` (`core/logic/planning/dayKcalLogic.ts`), which sums `computeDayMacros` per day with the **active profile** (`useActiveProfile`), exactly like the journal: the profile's accompaniment (meal choice, then profile default, then accompaniment default, « Sans accompagnement » counts nothing) and its food choices are included. Since issue #38 (v6.132.2) the planning used to call `computeDayMacros` without profile, so accompaniments and personalised foods were left out. Without an active profile the plain recipe values are used. Per-meal persons / grams overrides are still not applied here (unchanged).
+
 ## Placing a dish from elsewhere
 
 `placeMainDish(target, recipeId, choices)` (`planningService`) writes a main dish into any lunch / dinner slot without the planning screen: `syncWeekFromApi`, `replaceMainRecipe` on the cached slot, `saveSlot` (same diff and batch call as every slot save). `slotTargetOf(isoDate, slot)` (`batchToMenuLogic.ts`) gives the ISO year / week / day name. First consumer: freezer batch « Ajouter au menu » (`docs/spec-freezer.md`).

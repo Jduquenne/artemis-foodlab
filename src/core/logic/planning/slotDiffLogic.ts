@@ -1,8 +1,10 @@
 import { FoodChoice } from "../../domain/foodGroup";
 import { MealSlot } from "../../domain/planning";
 import { AccompanimentChoice } from "../../domain/accompaniment";
+import { BaseVersionChoice } from "../../domain/baseVersion";
 import { sameFoodChoices } from "../foodGroup/foodChoiceLogic";
 import { sameAccompanimentChoices } from "../accompaniment/accompanimentLogic";
+import { sameBaseVersionChoices } from "../baseVersion/baseVersionLogic";
 
 export interface ItemToAdd {
   code: string;
@@ -11,6 +13,7 @@ export interface ItemToAdd {
   gramsOverride: number | null;
   foodChoices: FoodChoice[];
   accompanimentChoices: AccompanimentChoice[];
+  baseVersionChoices: BaseVersionChoice[];
 }
 
 export interface ItemToUpdate {
@@ -19,6 +22,7 @@ export interface ItemToUpdate {
   gramsOverride: number | null;
   foodChoices?: FoodChoice[];
   accompanimentChoices?: AccompanimentChoice[];
+  baseVersionChoices?: BaseVersionChoice[];
 }
 
 export interface SlotDiff {
@@ -45,8 +49,9 @@ export function diffSlotItems(previous: MealSlot | undefined, next: MealSlot): S
     const gramsOverride = next.recipeQuantities?.[code] ?? null;
     const foodChoices = next.foodChoices?.[code] ?? [];
     const accompanimentChoices = next.accompanimentChoices?.[code] ?? [];
+    const baseVersionChoices = next.baseVersionChoices?.[code] ?? [];
     if (!previousSet.has(code)) {
-      itemsToAdd.push({ code, isDessert: nextDessertSet.has(code), personsOverride, gramsOverride, foodChoices, accompanimentChoices });
+      itemsToAdd.push({ code, isDessert: nextDessertSet.has(code), personsOverride, gramsOverride, foodChoices, accompanimentChoices, baseVersionChoices });
       continue;
     }
     const itemApiId = previous?.itemApiIds?.[code];
@@ -55,13 +60,15 @@ export function diffSlotItems(previous: MealSlot | undefined, next: MealSlot): S
     const prevGrams = previous?.recipeQuantities?.[code] ?? null;
     const choicesChanged = !sameFoodChoices(previous?.foodChoices?.[code], foodChoices);
     const accompanimentsChanged = !sameAccompanimentChoices(previous?.accompanimentChoices?.[code], accompanimentChoices);
-    if (itemApiId && (prevPersons !== personsOverride || prevGrams !== gramsOverride || choicesChanged || accompanimentsChanged)) {
+    const baseVersionsChanged = !sameBaseVersionChoices(previous?.baseVersionChoices?.[code], baseVersionChoices);
+    if (itemApiId && (prevPersons !== personsOverride || prevGrams !== gramsOverride || choicesChanged || accompanimentsChanged || baseVersionsChanged)) {
       itemsToUpdate.push({
         itemApiId,
         personsOverride,
         gramsOverride,
         ...(choicesChanged ? { foodChoices } : {}),
         ...(accompanimentsChanged ? { accompanimentChoices } : {}),
+        ...(baseVersionsChanged ? { baseVersionChoices } : {}),
       });
     }
   }

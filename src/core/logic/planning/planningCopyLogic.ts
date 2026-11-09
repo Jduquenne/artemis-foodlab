@@ -25,20 +25,21 @@ export function parseCopyTargetKey(key: string): { day: string; slot: SlotType }
 export function buildCopiedSlot(
   existing: MealSlot | undefined,
   at: ParsedSlot,
-  copy: Pick<CopyState, "recipeId" | "sourcePersons" | "sourceFoodChoices" | "sourceAccompanimentChoices" | "isDessert">,
+  copy: Pick<CopyState, "recipeId" | "sourcePersons" | "sourceFoodChoices" | "sourceAccompanimentChoices" | "sourceBaseVersionChoices" | "isDessert">,
 ): MealSlot | null {
   const slot = existing ?? buildEmptySlot(at);
   const { recipeId, sourcePersons } = copy;
   const recipePersons = sourcePersons !== undefined ? { ...slot.recipePersons, [recipeId]: sourcePersons } : slot.recipePersons;
   const foodChoices = withRecordList(slot.foodChoices, recipeId, copy.sourceFoodChoices ?? []);
   const accompanimentChoices = withRecordList(slot.accompanimentChoices, recipeId, copy.sourceAccompanimentChoices ?? []);
+  const baseVersionChoices = withRecordList(slot.baseVersionChoices, recipeId, copy.sourceBaseVersionChoices ?? []);
   if (copy.isDessert) {
     const dessertIds = slot.dessertIds ?? [];
     if (!canAddDessert(slot) || dessertIds.includes(recipeId)) return null;
-    return { ...slot, dessertIds: [...dessertIds, recipeId], recipePersons, foodChoices, accompanimentChoices };
+    return { ...slot, dessertIds: [...dessertIds, recipeId], recipePersons, foodChoices, accompanimentChoices, baseVersionChoices };
   }
   if (isSlotFull(slot) || slot.recipeIds.includes(recipeId)) return null;
-  return { ...slot, recipeIds: [...slot.recipeIds, recipeId], recipePersons, foodChoices, accompanimentChoices };
+  return { ...slot, recipeIds: [...slot.recipeIds, recipeId], recipePersons, foodChoices, accompanimentChoices, baseVersionChoices };
 }
 
 export function computeSlotCopyProps(

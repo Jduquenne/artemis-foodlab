@@ -6,6 +6,7 @@ import {
   ResolvedAccompaniment,
 } from "../../domain/accompaniment";
 import { FoodChoice } from "../../domain/foodGroup";
+import { pruneBaseVersionChoices } from "../baseVersion/baseVersionLogic";
 import { Food } from "../../domain/ingredient";
 import { MealSlot } from "../../domain/planning";
 import { Profile } from "../../domain/profile";
@@ -150,7 +151,15 @@ export function pruneSlotChoices(slot: MealSlot, recipes: Record<string, RecipeD
       }),
     )
     : undefined;
-  return { ...slot, foodChoices, accompanimentChoices };
+  const baseVersionChoices = slot.baseVersionChoices
+    ? Object.fromEntries(
+      Object.entries(slot.baseVersionChoices).map(([code, choices]) => {
+        const recipe = recipes[code];
+        return [code, recipe ? pruneBaseVersionChoices(choices, recipe, recipes) : choices];
+      }),
+    )
+    : undefined;
+  return { ...slot, foodChoices, accompanimentChoices, baseVersionChoices };
 }
 
 export interface MealChoiceIngredient {

@@ -1,4 +1,5 @@
 import { AccompanimentChoice } from "./accompaniment";
+import { BaseVersionChoice } from "./baseVersion";
 import { FoodChoice } from "./foodGroup";
 import { MealType } from "./recipe";
 
@@ -19,6 +20,7 @@ export interface MealSlot {
   recipeQuantities?: Record<string, number>;
   foodChoices?: Record<string, FoodChoice[]>;
   accompanimentChoices?: Record<string, AccompanimentChoice[]>;
+  baseVersionChoices?: Record<string, BaseVersionChoice[]>;
 }
 
 export interface PlanningItemEntry {
@@ -46,6 +48,7 @@ export interface CopyState {
   sourcePersons?: number;
   sourceFoodChoices?: FoodChoice[];
   sourceAccompanimentChoices?: AccompanimentChoice[];
+  sourceBaseVersionChoices?: BaseVersionChoice[];
 }
 
 export interface ShoppingDay {

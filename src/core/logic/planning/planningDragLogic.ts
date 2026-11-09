@@ -30,6 +30,7 @@ function placeMeal(
     recipeQuantities: undefined,
     foodChoices: pickRecordLists(choiceSources.map((source) => source.foodChoices), [...recipeIds, ...(dessertIds ?? [])]),
     accompanimentChoices: pickRecordLists(choiceSources.map((source) => source.accompanimentChoices), [...recipeIds, ...(dessertIds ?? [])]),
+    baseVersionChoices: pickRecordLists(choiceSources.map((source) => source.baseVersionChoices), [...recipeIds, ...(dessertIds ?? [])]),
   };
 }
 

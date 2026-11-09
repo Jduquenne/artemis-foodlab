@@ -1,9 +1,15 @@
 import { AccompanimentChoice } from "../../domain/accompaniment";
+import { BaseVersion, BaseVersionChoice } from "../../domain/baseVersion";
 import { FoodChoice } from "../../domain/foodGroup";
 import { MealSlot, PlanningItemEntry, SlotType } from "../../domain/planning";
 import { getCodeById, getIdByCode } from "../../catalogue/recipeIdMap";
 import { buildSlotId } from "./planningSlotIdLogic";
 import { SlotDiff } from "./slotDiffLogic";
+
+export interface ApiBaseVersionChoice {
+  baseId: string;
+  version: BaseVersion;
+}
 
 export interface ApiPlanningSlotItem {
   id: string;
@@ -14,6 +20,7 @@ export interface ApiPlanningSlotItem {
   position: number;
   foodChoices?: FoodChoice[];
   accompanimentChoices?: AccompanimentChoice[];
+  baseVersionChoices?: ApiBaseVersionChoice[];
 }
 
 export interface ApiPlanningSlot {
@@ -52,7 +59,19 @@ export interface SlotItemFields {
   recipeQuantities?: Record<string, number>;
   foodChoices?: Record<string, FoodChoice[]>;
   accompanimentChoices?: Record<string, AccompanimentChoice[]>;
+  baseVersionChoices?: Record<string, BaseVersionChoice[]>;
   itemApiIds: Record<string, string>;
+}
+
+export function mapApiBaseVersionChoices(choices: readonly ApiBaseVersionChoice[]): BaseVersionChoice[] {
+  return choices.map((choice) => ({ baseCode: getCodeById(choice.baseId) ?? choice.baseId, version: choice.version }));
+}
+
+export function toApiBaseVersionChoices(choices: readonly BaseVersionChoice[]): ApiBaseVersionChoice[] {
+  return choices.flatMap((choice) => {
+    const baseId = getIdByCode(choice.baseCode);
+    return baseId ? [{ baseId, version: choice.version }] : [];
+  });
 }
 
 export function mapApiItemsToSlotFields(items: ApiPlanningSlotItem[]): SlotItemFields {
@@ -62,6 +81,7 @@ export function mapApiItemsToSlotFields(items: ApiPlanningSlotItem[]): SlotItemF
   const recipeQuantities: Record<string, number> = {};
   const foodChoices: Record<string, FoodChoice[]> = {};
   const accompanimentChoices: Record<string, AccompanimentChoice[]> = {};
+  const baseVersionChoices: Record<string, BaseVersionChoice[]> = {};
   const itemApiIds: Record<string, string> = {};
 
   const sorted = [...items].sort((a, b) => a.position - b.position);
@@ -74,6 +94,7 @@ export function mapApiItemsToSlotFields(items: ApiPlanningSlotItem[]): SlotItemF
     if (item.gramsOverride != null) recipeQuantities[code] = item.gramsOverride;
     if (item.foodChoices && item.foodChoices.length > 0) foodChoices[code] = item.foodChoices;
     if (item.accompanimentChoices && item.accompanimentChoices.length > 0) accompanimentChoices[code] = item.accompanimentChoices;
+    if (item.baseVersionChoices && item.baseVersionChoices.length > 0) baseVersionChoices[code] = mapApiBaseVersionChoices(item.baseVersionChoices);
   }
 
   return {
@@ -83,6 +104,7 @@ export function mapApiItemsToSlotFields(items: ApiPlanningSlotItem[]): SlotItemF
     recipeQuantities: Object.keys(recipeQuantities).length > 0 ? recipeQuantities : undefined,
     foodChoices: Object.keys(foodChoices).length > 0 ? foodChoices : undefined,
     accompanimentChoices: Object.keys(accompanimentChoices).length > 0 ? accompanimentChoices : undefined,
+    baseVersionChoices: Object.keys(baseVersionChoices).length > 0 ? baseVersionChoices : undefined,
     itemApiIds,
   };
 }
@@ -107,6 +129,7 @@ export interface SlotItemAddPayload {
   gramsOverride: number | null;
   foodChoices?: FoodChoice[];
   accompanimentChoices?: AccompanimentChoice[];
+  baseVersionChoices?: ApiBaseVersionChoice[];
 }
 
 export interface SlotItemUpdatePayload {
@@ -115,6 +138,7 @@ export interface SlotItemUpdatePayload {
   gramsOverride: number | null;
   foodChoices?: FoodChoice[];
   accompanimentChoices?: AccompanimentChoice[];
+  baseVersionChoices?: ApiBaseVersionChoice[];
 }
 
 export interface SlotItemsBatchPayload {
@@ -128,6 +152,7 @@ export function buildSlotItemsBatchPayload(diff: SlotDiff): SlotItemsBatchPayloa
   for (const item of diff.itemsToAdd) {
     const itemId = getIdByCode(item.code);
     if (!itemId) continue;
+    const baseVersionChoices = toApiBaseVersionChoices(item.baseVersionChoices);
     add.push({
       itemId,
       isDessert: item.isDessert,
@@ -135,6 +160,7 @@ export function buildSlotItemsBatchPayload(diff: SlotDiff): SlotItemsBatchPayloa
       gramsOverride: item.gramsOverride,
       ...(item.foodChoices.length > 0 ? { foodChoices: item.foodChoices } : {}),
       ...(item.accompanimentChoices.length > 0 ? { accompanimentChoices: item.accompanimentChoices } : {}),
+      ...(baseVersionChoices.length > 0 ? { baseVersionChoices } : {}),
     });
   }
   const update = diff.itemsToUpdate.map((u) => ({
@@ -143,6 +169,7 @@ export function buildSlotItemsBatchPayload(diff: SlotDiff): SlotItemsBatchPayloa
     gramsOverride: u.gramsOverride,
     ...(u.foodChoices ? { foodChoices: u.foodChoices } : {}),
     ...(u.accompanimentChoices ? { accompanimentChoices: u.accompanimentChoices } : {}),
+    ...(u.baseVersionChoices ? { baseVersionChoices: toApiBaseVersionChoices(u.baseVersionChoices) } : {}),
   }));
   const remove = diff.itemsToRemoveApiIds;
 

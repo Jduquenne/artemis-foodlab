@@ -24,6 +24,7 @@ export function replaceMainRecipe(existing: MealSlot | undefined, at: ParsedSlot
     recipeQuantities: keepKeys(slot.recipeQuantities, dessertIds),
     foodChoices: keepKeys(slot.foodChoices, dessertIds),
     accompanimentChoices: keepKeys(slot.accompanimentChoices, dessertIds),
+    baseVersionChoices: keepKeys(slot.baseVersionChoices, dessertIds),
   };
 }
 

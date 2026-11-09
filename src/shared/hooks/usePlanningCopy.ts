@@ -23,6 +23,7 @@ export function usePlanningCopy(planningData: MealSlot[], year: number, week: nu
       sourcePersons: sourceSlot?.recipePersons?.[recipeId],
       sourceFoodChoices: sourceSlot?.foodChoices?.[recipeId],
       sourceAccompanimentChoices: sourceSlot?.accompanimentChoices?.[recipeId],
+      sourceBaseVersionChoices: sourceSlot?.baseVersionChoices?.[recipeId],
     });
     setCopyTargets(new Set());
   };

@@ -16,6 +16,15 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-09 — End of session
+- Done in the session (v6.129.0 → v6.141.2): issues #32 to #40, all tested by the owner and pushed on `master` (API D-059 to D-062 included): freezer batch to the menu and move between categories, recipes filtered on a freezer food, linked bases with the parent's portions, food family filter, accompaniments in the planning day kcal, industrial version of a base (D-038, delivery A), particular shopping place (D-039), reference portion per person (D-040), then a fix of the account modal for Chrome and of the meal choice entry on lunch / dinner dishes. Backlog cleared by the owner: only #10 (Google sign-in, paused) stays open.
+- Nothing left to test. Last commit still to make: the backlog closure (docs, v6.141.2).
+- Resume with: Discord forum sync for the 8 last closures (« synchronise discord »); then the owner picks: #10 Google sign-in, delivery B of D-038 (per-account default per base, no issue yet), or recreating « who eats which meal » (old #23, closed without implementation) if it hurts in daily use. Agent working files: the one-shot scripts of this session were deleted; rule saved in the owner's memory (single `tmp/oneshot.*`).
+
+## 2026-11-09 — Backlog cleared by the owner (v6.141.2, docs only)
+- Done: on the owner's instruction (« tout est à clore, sauf Google »), `dev/issues.json` closed #40 (delivered: D-040 / API D-062, v6.140.0 and v6.141.0) and #23, #26, #27, #28, #29, #30, #31 **without implementation** (no delivery recorded; their description says so). Only #10 (Google sign-in, paused) stays open. Roadmap items 4 and 6 note the closure. Discord: the 8 updates are planned by the dry run, the real sync is for the owner (« synchronise discord »).
+- Still open: #10; delivery B of #37 (per-account default per base) has no issue; the closed unimplemented ones can be reopened or recreated (« who eats which meal » #23 remains the main functional gap: choices and accompaniments split the shopping list between all the account's profiles).
+
 ## 2026-11-09 — Issue #40 shipped (v6.141.1, docs only)
 - Done: the owner reported #40 tested and the API (D-062) and client pushed on `master`; roadmap item 11 (✅), `docs/api.md` and D-040 statuses updated. Prod behaviour not verified from the agent session. #40 stays open in `dev/issues.json` until the owner says « clore issue 40 ».
 - Still open: delivery B of #37 (per-account default per base) not started; open backlog in `dev/issues.json`: #10 (Google sign-in, paused), #23 (who eats which meal, high), #26 to #29 (menu generator), #30 (badge), #31 (generator and accompaniments), #40 (to close).

@@ -14,6 +14,8 @@ import {
 import { diffSlotItems } from "../logic/planning/slotDiffLogic";
 import { ChoiceContext, pruneSlotChoices } from "../logic/accompaniment/accompanimentLogic";
 import { recipesCatalogue } from "../catalogue/recipes";
+import { ParsedSlot, buildSlotId } from "../logic/planning/planningSlotIdLogic";
+import { replaceMainRecipe } from "../logic/planning/planningSlotEditLogic";
 
 export const getWeekSlots = (year: number, week: number) =>
   db.planning.where("[year+week]").equals([year, week]).toArray();
@@ -65,6 +67,12 @@ export async function bulkAddPlanningItems(entries: readonly PlanningItemEntry[]
     writtenDesserts: sentDesserts - skippedDesserts,
     skippedDesserts,
   };
+}
+
+export async function placeMainDish(target: ParsedSlot, recipeId: string, choices: ChoiceContext): Promise<void> {
+  await syncWeekFromApi(target.year, target.week);
+  const existing = await db.planning.get(buildSlotId(target.year, target.week, target.day, target.slot));
+  await saveSlot(replaceMainRecipe(existing, target, recipeId), choices);
 }
 
 export async function deleteSlot(id: string): Promise<void> {

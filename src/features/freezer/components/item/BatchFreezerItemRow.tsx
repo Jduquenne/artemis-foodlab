@@ -1,8 +1,9 @@
 import { useRef, useState } from "react";
-import { ChefHat, MoreVertical, Trash2, AlertTriangle, Loader2 } from "lucide-react";
+import { CalendarPlus, ChefHat, MoreVertical, Trash2, AlertTriangle, Loader2 } from "lucide-react";
 import { BatchFreezerItem } from "../../../../core/domain/freezer";
 import { updateBatchPortions } from "../../../../core/services/freezerService";
 import { freezerItemAge } from "../../../../core/logic/freezer/freezerAgeLogic";
+import { AddBatchToMenuModal } from "../modal/AddBatchToMenuModal";
 import { FloatingMenu } from "../../../../shared/components/ui/FloatingMenu";
 import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
 import { withPending } from "../../../../shared/utils/withPending";
@@ -16,6 +17,7 @@ export interface BatchFreezerItemRowProps {
 export const BatchFreezerItemRow = ({ item, categoryId, onDelete }: BatchFreezerItemRowProps) => {
     const isEmpty = item.portions === 0;
     const [menuOpen, setMenuOpen] = useState(false);
+    const [menuAddOpen, setMenuAddOpen] = useState(false);
     const menuButtonRef = useRef<HTMLButtonElement>(null);
     const age = freezerItemAge(item.addedDate);
     const deletePending = usePendingKey(`freezer-item-delete:${item.id}`);
@@ -32,6 +34,7 @@ export const BatchFreezerItemRow = ({ item, categoryId, onDelete }: BatchFreezer
     };
 
     return (
+        <>
         <div className={`px-3 py-2.5 bg-surface border border-slate-200 rounded-2xl transition ${isEmpty ? 'opacity-60' : ''} ${deletePending ? 'opacity-50 pointer-events-none' : ''}`}>
             <div className="flex items-center gap-2.5">
                 <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${isEmpty ? 'bg-muted' : 'bg-orange-100 dark:bg-orange-900/30'}`}>
@@ -50,6 +53,15 @@ export const BatchFreezerItemRow = ({ item, categoryId, onDelete }: BatchFreezer
                     {deletePending ? <Loader2 className="w-4 h-4 animate-spin text-orange-400" /> : <MoreVertical className="w-4 h-4" />}
                 </button>
                 <FloatingMenu open={menuOpen} anchorRef={menuButtonRef} onClose={() => setMenuOpen(false)}>
+                    {!isEmpty && (
+                        <button
+                            onClick={() => { setMenuOpen(false); setMenuAddOpen(true); }}
+                            className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-muted transition-colors"
+                        >
+                            <CalendarPlus className="w-4 h-4 shrink-0" />
+                            Ajouter au menu
+                        </button>
+                    )}
                     <button
                         onClick={onDelete}
                         className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-500 hover:bg-red-50 transition-colors"
@@ -90,5 +102,7 @@ export const BatchFreezerItemRow = ({ item, categoryId, onDelete }: BatchFreezer
                 </div>
             </div>
         </div>
+        {menuAddOpen && <AddBatchToMenuModal item={item} onClose={() => setMenuAddOpen(false)} />}
+        </>
     );
 };

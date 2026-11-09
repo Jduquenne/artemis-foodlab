@@ -34,6 +34,10 @@ A dessert-only destination must never give its own dessert to the origin slot (p
 
 Each slot save diffs items (`diffSlotItems`) and sends **one** batch call `PUT /planning-slots/:id/items/batch`; the local cache is rebuilt from the full response. A move A→B is two batch calls (not atomic). Decision: D-009.
 
+## Placing a dish from elsewhere
+
+`placeMainDish(target, recipeId, choices)` (`planningService`) writes a main dish into any lunch / dinner slot without the planning screen: `syncWeekFromApi`, `replaceMainRecipe` on the cached slot, `saveSlot` (same diff and batch call as every slot save). `slotTargetOf(isoDate, slot)` (`batchToMenuLogic.ts`) gives the ISO year / week / day name. First consumer: freezer batch « Ajouter au menu » (`docs/spec-freezer.md`).
+
 ## Meal actions menu
 
 Every planned item keeps its **information badges** visible (persons / grams, freezer) and groups its **actions** in one « ⋯ » button (`ItemActionsMenu`, built on `FloatingMenu`; revealed on hover on desktop, always shown on touch; spinner while a removal is pending). The menu wrapper stops click and pointer propagation, so opening it never starts a drag nor opens the recipe. Owner's decision 2026-10-15 (room for the food choice of D-033).

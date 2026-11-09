@@ -18,7 +18,7 @@ The detailed backlog and future features live in `dev/issues.json` and `dev/refa
 
 10. 🟡 Particular shopping place (D-039, issue #39, owner 2026-11-09): API D-061 (commit `ee3e84e`) and the front **pushed on `master` and tested by the owner (2026-11-09)**; front (v6.138.0 account setting + flag on lines and extras, v6.139.0 filter « Tout / lieu / Ailleurs », clipboard, whole-recipe shortcut, extra form).
 
-11. 🟡 Reference portion per person (D-040, issue #40, owner 2026-11-09): API D-062 on dev (real payloads received, **migration to be pushed and checked in prod**); front done (v6.140.0 catalogue + Recipe Builder field, v6.141.0 effects: planning day kcal, journal default, shopping scale, planning links); owner test pending.
+11. ✅ Reference portion per person (D-040, issue #40, owner 2026-11-09): API D-062 and the front done (v6.140.0 catalogue + Recipe Builder field, v6.141.0 effects: planning day kcal, journal default, shopping scale, planning links), **pushed on `master` and tested by the owner (2026-11-09)**.
 
 ## Honest status (2026-10-21)
 

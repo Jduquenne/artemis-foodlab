@@ -11,6 +11,7 @@ import { isBrowsableCategory } from '../../core/domain/recipePredicates';
 import { RecipeFilterButton } from './components/filter/RecipeFilterButton';
 import { ActiveFilterChips } from './components/filter/ActiveFilterChips';
 import { useTypeMedians } from '../../shared/hooks/useTypeMedians';
+import { useFamilyRecipeIndex } from '../../shared/hooks/useFamilyRecipeIndex';
 import { useInSeasonRecipes } from '../../shared/hooks/useInSeasonRecipes';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { filterRecipesByFilter, isRecipeFilterActive } from '../../core/logic/recipe/recipeFilterLogic';
@@ -45,11 +46,12 @@ export const RecipeModule = () => {
     const { macros: recipeMacros } = useRecipeMetricsSnapshot();
     const medians = useTypeMedians();
     const { ids: inSeasonIds } = useInSeasonRecipes();
+    const familyIndex = useFamilyRecipeIndex();
     const categories = useCategoriesSnapshot();
 
     const filteredResults = useMemo(
-        () => filterRecipesByFilter(baseResults, recipes, recipeMacros, recipeFilter, medians, inSeasonIds),
-        [baseResults, recipes, recipeMacros, recipeFilter, medians, inSeasonIds],
+        () => filterRecipesByFilter(baseResults, recipes, recipeMacros, recipeFilter, medians, inSeasonIds, familyIndex),
+        [baseResults, recipes, recipeMacros, recipeFilter, medians, inSeasonIds, familyIndex],
     );
 
     const handleSearchChange = (val: string) => {

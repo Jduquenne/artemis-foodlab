@@ -11,6 +11,7 @@ import { useInSeasonRecipes } from '../../../../shared/hooks/useInSeasonRecipes'
 import { isPlannable } from '../../../../core/domain/recipePredicates';
 import { useMenuStore } from '../../../../shared/store/useMenuStore';
 import { getCategoryRecipes } from '../../../../core/logic/recipe/recipeListLogic';
+import { useFamilyRecipeIndex } from '../../../../shared/hooks/useFamilyRecipeIndex';
 import { filterRecipesByFilter, isRecipeFilterActive } from '../../../../core/logic/recipe/recipeFilterLogic';
 import { resolveRestoredCount } from '../../../../core/logic/recipe/recipeListLogic';
 import { useScrollRestore } from '../../../../shared/hooks/useScrollRestore';
@@ -29,13 +30,14 @@ export const CategoryDetail = () => {
     const { macros: recipeMacros } = useRecipeMetricsSnapshot();
     const medians = useTypeMedians();
     const { ids: inSeasonIds } = useInSeasonRecipes();
+    const familyIndex = useFamilyRecipeIndex();
     const categories = useCategoriesSnapshot();
 
     const recipes = useMemo(() => getCategoryRecipes(recipesDb, categoryId ?? ''), [recipesDb, categoryId]);
 
     const filteredRecipes = useMemo(
-        () => filterRecipesByFilter(recipes, recipesDb, recipeMacros, recipeFilter, medians, inSeasonIds),
-        [recipes, recipesDb, recipeMacros, recipeFilter, medians, inSeasonIds],
+        () => filterRecipesByFilter(recipes, recipesDb, recipeMacros, recipeFilter, medians, inSeasonIds, familyIndex),
+        [recipes, recipesDb, recipeMacros, recipeFilter, medians, inSeasonIds, familyIndex],
     );
 
     const BATCH_SIZE = 24;

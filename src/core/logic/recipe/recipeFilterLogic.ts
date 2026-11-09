@@ -9,37 +9,43 @@ import {
 import { MACRO_DISPLAYS, MacroDisplay, Macronutrients } from "../../domain/nutrition";
 import { RecipeDetails } from "../../domain/recipe";
 import { TypeMedians } from "./macroReferenceLogic";
+import { FamilyRecipeIndex } from "./recipeFoodFilterLogic";
 import { candidateRecipeId, matchesFilterType } from "./recipeFilterTypeLogic";
 
 export function normalizeRecipeFilter(raw: Partial<RecipeFilter> | null): RecipeFilter {
   const inSeason = raw?.inSeason === true;
+  const foodGroupId = typeof raw?.foodGroupId === "string" && raw.foodGroupId.length > 0 ? raw.foodGroupId : null;
   const type = Object.values(RecipeFilterType).find((value) => value === raw?.type) ?? null;
-  if (type === null) return { ...EMPTY_RECIPE_FILTER, inSeason };
+  if (type === null) return { ...EMPTY_RECIPE_FILTER, inSeason, foodGroupId };
   const macros: RecipeFilter["macros"] = {};
   for (const { key } of MACRO_DISPLAYS) {
     const comparison = raw?.macros?.[key];
     if (comparison === "below" || comparison === "above") macros[key] = comparison;
   }
-  return { type, macros, inSeason };
+  return { type, macros, inSeason, foodGroupId };
 }
 
 export function isRecipeFilterActive(filter: RecipeFilter): boolean {
-  return filter.type !== null || filter.inSeason;
+  return filter.type !== null || filter.inSeason || filter.foodGroupId !== null;
 }
 
 export function countFilterCriteria(filter: RecipeFilter): number {
-  const seasonCount = filter.inSeason ? 1 : 0;
-  if (filter.type === null) return seasonCount;
-  return seasonCount + 1 + Object.keys(filter.macros).length;
+  const baseCount = (filter.inSeason ? 1 : 0) + (filter.foodGroupId !== null ? 1 : 0);
+  if (filter.type === null) return baseCount;
+  return baseCount + 1 + Object.keys(filter.macros).length;
 }
 
 export function setFilterType(filter: RecipeFilter, type: RecipeFilterType | null): RecipeFilter {
-  if (type === null) return { ...EMPTY_RECIPE_FILTER, inSeason: filter.inSeason };
+  if (type === null) return { ...EMPTY_RECIPE_FILTER, inSeason: filter.inSeason, foodGroupId: filter.foodGroupId };
   return { ...filter, type };
 }
 
 export function setFilterInSeason(filter: RecipeFilter, inSeason: boolean): RecipeFilter {
   return { ...filter, inSeason };
+}
+
+export function setFilterFoodGroup(filter: RecipeFilter, foodGroupId: string | null): RecipeFilter {
+  return { ...filter, foodGroupId };
 }
 
 export function setFilterMacro(
@@ -59,8 +65,10 @@ export function matchesRecipeFilter(
   filter: RecipeFilter,
   medians: TypeMedians,
   inSeason: boolean,
+  inFamily: boolean,
 ): boolean {
   if (filter.inSeason && !inSeason) return false;
+  if (filter.foodGroupId !== null && !inFamily) return false;
   const { type } = filter;
   if (type === null) return true;
   if (!matchesFilterType(recipe, type)) return false;
@@ -81,12 +89,14 @@ export function filterRecipesByFilter<T extends FilterCandidate>(
   filter: RecipeFilter,
   medians: TypeMedians,
   inSeasonIds: ReadonlySet<string>,
+  familyIndex: FamilyRecipeIndex,
 ): T[] {
   if (!isRecipeFilterActive(filter)) return items;
+  const familyIds = filter.foodGroupId === null ? null : familyIndex.get(filter.foodGroupId);
   return items.filter((item) => {
     const id = candidateRecipeId(item);
     const recipe = recipes[id];
-    return recipe !== undefined && matchesRecipeFilter(recipe, recipeMacros[id], filter, medians, inSeasonIds.has(id));
+    return recipe !== undefined && matchesRecipeFilter(recipe, recipeMacros[id], filter, medians, inSeasonIds.has(id), familyIds?.has(id) === true);
   });
 }
 

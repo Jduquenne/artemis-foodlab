@@ -13,6 +13,7 @@ export interface RecipeFilter {
   type: RecipeFilterType | null;
   macros: Partial<Record<FilterMacroKey, MacroComparison>>;
   inSeason: boolean;
+  foodGroupId: string | null;
 }
 
 export interface FilterCandidate {
@@ -20,7 +21,7 @@ export interface FilterCandidate {
   recipeId?: string;
 }
 
-export const EMPTY_RECIPE_FILTER: RecipeFilter = { type: null, macros: {}, inSeason: false };
+export const EMPTY_RECIPE_FILTER: RecipeFilter = { type: null, macros: {}, inSeason: false, foodGroupId: null };
 
 export interface FilterTypeDefinition {
   type: RecipeFilterType;

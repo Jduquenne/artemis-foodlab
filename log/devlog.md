@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-09 — Issue #36: filter recipes by food family (v6.131.0)
+- Done: « Famille d'aliments » section in the recipe filter modal (one family at a time, persisted with the other criteria, chip in the active filters). `RecipeFilter.foodGroupId`; `familyRecipeIndex` / `countByFamily` (`recipeFoodFilterLogic.ts`), `useFamilyRecipeIndex` hook, `FoodFamilyFilterSelector`; `filterRecipesByFilter` gains the family index (callers: `RecipeModule`, `CategoryDetail`, `RecipeFilterModal`). Owner's choices: catalogue only, single family, persisted. Dishes only (as the #33 food filter).
+- Numbers: `npx tsc -b` + `npm run lint` pass, golden-rule greps clean; `tsx` check `_claude/tmp/family-filter-check.ts` 11 / 11 OK (direct, via base, « au choix » ingredient, unknown family, combined criteria count, old saved filters, invalid value, `setFilterType(null)` keeps the family, counts). **Not checked in a browser** (to test with `npm run dev`: filter button → « Famille d'aliments » → pick one, result count, chip, inside a category and in the global results, reload to check persistence).
+- Still open: #35 waits for the API session (`categoryId` on `PUT /freezer-items/:id`, prompt given to the owner), then #37 to #39.
+
 ## 2026-11-09 — Issue #34: linked bases follow the parent's portions (v6.130.1)
 - Done: bug fix. `LinkedBaseLink` always opened the base at its default portions. `getLinkedBases` now takes the scaled recipe and returns `portions` per base (`basePortionsNeeded`: scaled quantity of the `baseId` ingredients, summed, integer, min 1); the link is `/recipes/detail/<base>?portions=<N>` so the base's ingredient quantities are the ones needed for the parent's current portions.
 - Numbers: `npx tsc -b` + `npm run lint` pass, golden-rule greps clean; `tsx` check `_claude/tmp/linked-base-check.ts` 6 / 6 OK (default portions, ×3 scaling, half a portion → 1, base used twice summed, base without photo ignored, URL). **Not checked in a browser** (to test with `npm run dev`: open a recipe using a base, change the stepper, click the base thumbnail: the new tab must show the matching portions).

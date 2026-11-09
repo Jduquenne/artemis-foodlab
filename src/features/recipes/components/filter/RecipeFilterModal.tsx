@@ -8,12 +8,17 @@ import {
   setFilterType,
   setFilterMacro,
   setFilterInSeason,
+  setFilterFoodGroup,
 } from '../../../../core/logic/recipe/recipeFilterLogic';
 import { countFilterTypes, getFilterTypeLabel } from '../../../../core/logic/recipe/recipeFilterTypeLogic';
+import { countByFamily } from '../../../../core/logic/recipe/recipeFoodFilterLogic';
+import { compareByName } from '../../../../core/utils/sortUtils';
+import { useFamilyRecipeIndex } from '../../../../shared/hooks/useFamilyRecipeIndex';
 import { useTypeMedians } from '../../../../shared/hooks/useTypeMedians';
 import { useInSeasonRecipes } from '../../../../shared/hooks/useInSeasonRecipes';
-import { useRecipesSnapshot, useRecipeMetricsSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
+import { useFoodGroupsSnapshot, useRecipesSnapshot, useRecipeMetricsSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 import { FilterTypeSelector } from './FilterTypeSelector';
+import { FoodFamilyFilterSelector } from './FoodFamilyFilterSelector';
 import { MacroMedianRow } from './MacroMedianRow';
 import { SeasonFilterToggle } from './SeasonFilterToggle';
 
@@ -31,19 +36,27 @@ export const RecipeFilterModal = ({ filter, candidates, onSubmit, onClose }: Rec
   const { macros } = useRecipeMetricsSnapshot();
   const medians = useTypeMedians();
   const { month, ids: inSeasonIds } = useInSeasonRecipes();
+  const familyIndex = useFamilyRecipeIndex();
+  const foodGroups = useFoodGroupsSnapshot();
 
   const handleClose = () => { setIsClosing(true); setTimeout(onClose, 220); };
 
   const typeCounts = useMemo(() => countFilterTypes(candidates, recipes), [candidates, recipes]);
 
   const seasonCount = useMemo(
-    () => filterRecipesByFilter(candidates, recipes, macros, setFilterInSeason(EMPTY_RECIPE_FILTER, true), medians, inSeasonIds).length,
-    [candidates, recipes, macros, medians, inSeasonIds],
+    () => filterRecipesByFilter(candidates, recipes, macros, setFilterInSeason(EMPTY_RECIPE_FILTER, true), medians, inSeasonIds, familyIndex).length,
+    [candidates, recipes, macros, medians, inSeasonIds, familyIndex],
   );
 
   const matchCount = useMemo(
-    () => filterRecipesByFilter(candidates, recipes, macros, draft, medians, inSeasonIds).length,
-    [candidates, recipes, macros, draft, medians, inSeasonIds],
+    () => filterRecipesByFilter(candidates, recipes, macros, draft, medians, inSeasonIds, familyIndex).length,
+    [candidates, recipes, macros, draft, medians, inSeasonIds, familyIndex],
+  );
+
+  const familyCounts = useMemo(() => countByFamily(candidates, familyIndex), [candidates, familyIndex]);
+  const families = useMemo(
+    () => foodGroups.filter((group) => familyIndex.has(group.id)).sort(compareByName),
+    [foodGroups, familyIndex],
   );
 
   const active = isRecipeFilterActive(draft);
@@ -87,6 +100,18 @@ export const RecipeFilterModal = ({ filter, candidates, onSubmit, onClose }: Rec
               onChange={(inSeason) => setDraft(setFilterInSeason(draft, inSeason))}
             />
           </section>
+
+          {families.length > 0 && (
+            <section className="space-y-2">
+              <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest">Famille d'aliments</h3>
+              <FoodFamilyFilterSelector
+                families={families}
+                counts={familyCounts}
+                value={draft.foodGroupId}
+                onChange={(foodGroupId) => setDraft(setFilterFoodGroup(draft, foodGroupId))}
+              />
+            </section>
+          )}
 
           <section className="space-y-2">
             <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest">Type de recette</h3>

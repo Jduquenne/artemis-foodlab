@@ -1,9 +1,10 @@
 import { X } from 'lucide-react';
 import { RecipeFilter } from '../../../../core/domain/recipeFilter';
 import { MACRO_DISPLAYS } from '../../../../core/domain/nutrition';
-import { formatMacroCriterion, setFilterInSeason, setFilterType, setFilterMacro } from '../../../../core/logic/recipe/recipeFilterLogic';
+import { formatMacroCriterion, setFilterInSeason, setFilterType, setFilterMacro, setFilterFoodGroup } from '../../../../core/logic/recipe/recipeFilterLogic';
 import { MONTH_LABELS } from '../../../../core/logic/season/seasonLogic';
 import { getFilterTypeLabel } from '../../../../core/logic/recipe/recipeFilterTypeLogic';
+import { useFoodGroupsSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 import { useTypeMedians } from '../../../../shared/hooks/useTypeMedians';
 import { useInSeasonRecipes } from '../../../../shared/hooks/useInSeasonRecipes';
 
@@ -16,7 +17,14 @@ export interface ActiveFilterChipsProps {
 export const ActiveFilterChips = ({ filter, onChange, chipClassName = 'flex' }: ActiveFilterChipsProps) => {
   const medians = useTypeMedians();
   const { month } = useInSeasonRecipes();
+  const foodGroups = useFoodGroupsSnapshot();
   const { type } = filter;
+
+  const familyChips = filter.foodGroupId === null ? [] : [{
+    key: 'family',
+    label: `Famille : ${foodGroups.find((group) => group.id === filter.foodGroupId)?.name ?? 'introuvable'}`,
+    remove: () => onChange(setFilterFoodGroup(filter, null)),
+  }];
 
   const seasonChips = filter.inSeason
     ? [{
@@ -41,7 +49,7 @@ export const ActiveFilterChips = ({ filter, onChange, chipClassName = 'flex' }: 
       }];
     }),
   ];
-  const chips = [...seasonChips, ...typeChips];
+  const chips = [...seasonChips, ...familyChips, ...typeChips];
   if (chips.length === 0) return null;
 
   return (

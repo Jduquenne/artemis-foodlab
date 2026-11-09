@@ -312,7 +312,7 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
 ## D-038 — Industrial version of a base
 
 - **Date**: 2026-11-09
-- **Status**: accepted (owner, 2026-11-09, issue #37); API contract requested from the API session, front not started
+- **Status**: accepted (owner, 2026-11-09, issue #37); delivery A done: API D-060 and front v6.133.0 → v6.137.0, pushed on `master` and tested by the owner (2026-11-09); delivery B not started
 - **Context**: a recipe uses a base as an ingredient (`Ingredient.baseId`, quantity = portions of the base): « Gnocchis maison », « Sauce tomate maison ». On some days the household buys the ready-made product instead. The « au choix » ingredient (D-033, D-037 step 1) swaps a food for another food of one family; it cannot replace a whole base by a store-bought food.
 - **Decision** (owner's answers, 2026-11-09):
   - **Defined on the base, once** (catalogue, admin only, Recipe Builder base form): `industrialEquivalent: { foodId, quantity, unit } | null` on recipes of kind `base`, the quantity being for **one portion of the base**. It then applies in every recipe using the base (rejected: per recipe ingredient, to re-enter everywhere).
@@ -326,7 +326,7 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
 ## D-039 — A particular shopping place on the list
 
 - **Date**: 2026-11-09
-- **Status**: accepted (owner, 2026-11-09, issue #39); API D-061 delivered (commit `ee3e84e`, migration `20261109180000_add_shopping_place`, 544 tests; **prod deployment to confirm**); front done (v6.138.0 account setting + flag on lines and extras, v6.139.0 filter, clipboard, recipe shortcut, extra form); owner end-to-end test pending
+- **Status**: accepted (owner, 2026-11-09, issue #39); API D-061 delivered (commit `ee3e84e`, migration `20261109180000_add_shopping_place`, 544 tests); front done (v6.138.0 account setting + flag on lines and extras, v6.139.0 filter, clipboard, recipe shortcut, extra form); pushed on `master` and tested by the owner (2026-11-09)
 - **Context**: some items (or whole recipes) of the weekly list are bought at a particular place (the owner's household: « Merris »), the rest elsewhere. The household wants to see and copy the list of what to take there.
 - **Decision** (owner's answers, 2026-11-09):
   - **One particular place, named by the account**, not hard-coded: an optional account setting « lieu d'achat particulier » (`AuthUser.shoppingPlaceName`, same mechanism as `freezerName`, via `PUT /me`). Without a name the feature is invisible. Several stores per account are out of scope for now (rejected: heavier, to revisit if a household needs it); hard-coding « Merris » rejected (other households).
@@ -336,3 +336,16 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
   - **Household items** (« Articles du quotidien ») are not concerned for now.
 - **Alternatives considered**: a flag per recipe × day × slot like source checks (an ingredient aggregated from several recipes would be half at the place: ambiguous); a permanent per-food default only (loses the « this week » case); several named stores with a custom resource like the aisles (D-054).
 - **Consequences**: API: `shoppingPlaceName` on the user and in every `AuthUser` response, `atPlace` on item checks and extras, a batch upsert for the item-check flag (as D-047 for source checks); front: account setting, flag on lines and extras form, recipe card shortcut, filter, clipboard. Never merged before the API is confirmed in prod.
+
+## D-040 — Reference portion per person on a recipe
+
+- **Date**: 2026-11-09
+- **Status**: accepted (owner, 2026-11-09, issue #40); API contract requested from the API session, front not started
+- **Context**: for breakfast and snack recipes the household reasons in units per person (« 4 pancakes », « 2 sablés »). The day kcal in the planning and the journal count **1 recipe portion** per planned item, and the shopping list scales by `persons ÷ defaultPortions`. When a recipe is written with one portion per unit (20 pancakes = 20 portions), « 4 pancakes per person » is simply **4 portions per person**.
+- **Decision** (owner's answers, 2026-11-09):
+  - **Defined on the recipe, in the catalogue**: `portionsPerPerson`, a number > 0, default 1, edited by the admin in the Recipe Builder for every dish (intended for breakfast and snack, not restricted by meal type). The same reference for everyone (not per account nor per profile; the journal portion stepper still lets each person adjust their own).
+  - **A bare number**, shown as « N portions » (no unit label such as « pancakes »).
+  - **Applies everywhere the recipe is a planned item**: day kcal of the planning (kcal of one portion × `portionsPerPerson`), journal (the default portion count, 1 today, becomes the reference; an explicit journal override replaces it, it does not multiply it), shopping quantities (`persons × portionsPerPerson ÷ defaultPortions`), and the portions passed to the recipe detail page from the planning (`persons × portionsPerPerson`).
+  - Unchanged: the number of persons of a meal, the menu generator, lunch and dinner (reference 1 unless the admin sets one), gram overrides of ingredient-kind recipes.
+- **Alternatives considered**: a reference per account or per profile (« adult 4, child 2 »: heavier, the journal override covers the individual adjustment); a unit label next to the number (second API field, not needed to compute); restricting the field to breakfast / snack recipes (arbitrary, a lunch recipe may also be counted per person).
+- **Consequences**: API: one numeric column on recipes (default 1, additive migration) exposed wherever `defaultPortions` is; front: Recipe Builder field, `macroLogic` default multiplier, journal default, `slotScaleFactor`, planning links. Details to settle when implementing: decimals (0.5 portion) versus the integer steps of the journal stepper; desserts (the dessert scale in the shopping list is `1 ÷ defaultPortions` today). Never pushed before the API is in prod.

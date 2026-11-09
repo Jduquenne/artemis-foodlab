@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-09 — Issues #32 to #39 shipped; issue #40 framed (D-040, v6.139.2, docs only)
+- Done: the owner reported the eight issues tested ok and the API (D-057 to D-061) and the client pushed on `master`; roadmap, `docs/api.md` and the D-038 / D-039 statuses updated (prod behaviour not verified from the agent session). New issue #40 « portion de référence par personne » (petit-déjeuner et goûter) added to `dev/issues.json` (22 issues; Discord forum post to sync by the owner), framed with the owner: reference on the recipe, bare number, every dish, effects on the planning day kcal, journal, shopping and detail links → **D-040**. Prompt for the API session given to the owner.
+- Still open: real payloads from the API session, then front in two commits (catalogue + Recipe Builder field; effects on macros, journal, shopping, planning links). Issues #32 to #39 not closed yet in `dev/issues.json` (waiting for the owner's « clore issues »).
+
 ## 2026-11-09 — Account modal: Chrome offered to change the saved login (v6.139.1)
 - Context: owner report: saving the profile (with the new « Lieu d'achat particulier ») made Chrome propose to update the saved account. Cause: `AccountModal` had no `<form>`; e-mail, text fields and password fields sat in one pseudo-form, and Chrome takes the text input before a password input for the username.
 - Done: « Profil » and « Mot de passe » are now two `<form>`s; profile inputs `name` + `autoComplete="off"` + `data-lpignore` / `data-1p-ignore`; the password form holds an invisible read-only `username` input = the e-mail so the credential is explicit. Buttons became `type="submit"`, Enter works. No logic change.

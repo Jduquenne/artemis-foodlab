@@ -321,3 +321,17 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
   - **Effects**: shopping: for an industrial base the base's ingredients are replaced by the food, quantity = equivalent quantity × base portions of the meal (same scaling as the base), listed in the food's own aisle; journal and planning macros: the food's macros for that quantity; group ingredients inside the replaced base (D-037 step 1) disappear for that meal. The recipe detail page is unchanged. The menu generator ignores it (home version).
 - **Alternatives considered**: equivalence on each recipe ingredient (more flexible, re-entered in every recipe); choice per profile (nobody cooks twice); extending the food family mechanism (it swaps foods, not a recipe for a food); a separate store-bought recipe per base (duplicates the catalogue and loses the link with the base).
 - **Consequences**: new API decision (catalogue field, planning item choices returned in every response, then account defaults); front: Recipe Builder field, `FoodChoiceModal` section, `shoppingAggregation`, `macroLogic` and the journal. Never merged before the API is confirmed in prod.
+
+## D-039 — A particular shopping place on the list
+
+- **Date**: 2026-11-09
+- **Status**: accepted (owner, 2026-11-09, issue #39); API contract requested from the API session, front not started
+- **Context**: some items (or whole recipes) of the weekly list are bought at a particular place (the owner's household: « Merris »), the rest elsewhere. The household wants to see and copy the list of what to take there.
+- **Decision** (owner's answers, 2026-11-09):
+  - **One particular place, named by the account**, not hard-coded: an optional account setting « lieu d'achat particulier » (`AuthUser.shoppingPlaceName`, same mechanism as `freezerName`, via `PUT /me`). Without a name the feature is invisible. Several stores per account are out of scope for now (rejected: heavier, to revisit if a household needs it); hard-coding « Merris » rejected (other households).
+  - **Per period, per list item**: a flag « at the place » on the period's item checks (keyed by food, like check / stock / freezer bags) and on the manual extras. It follows the period's lifecycle: changing the shopping days deletes it with the rest. No permanent per-food default for now (possible later delivery B, as for D-038).
+  - **Whole recipe = a shortcut**, not stored: « Tout à prendre à <lieu> » on a recipe card flags every ingredient of that recipe (one batch write); the flag itself stays per item.
+  - **Display**: a badge with the place name on the line; a filter « Tout / <lieu> / Ailleurs » above the list; the clipboard text follows the filter.
+  - **Household items** (« Articles du quotidien ») are not concerned for now.
+- **Alternatives considered**: a flag per recipe × day × slot like source checks (an ingredient aggregated from several recipes would be half at the place: ambiguous); a permanent per-food default only (loses the « this week » case); several named stores with a custom resource like the aisles (D-054).
+- **Consequences**: API: `shoppingPlaceName` on the user and in every `AuthUser` response, `atPlace` on item checks and extras, a batch upsert for the item-check flag (as D-047 for source checks); front: account setting, flag on lines and extras form, recipe card shortcut, filter, clipboard. Never merged before the API is confirmed in prod.

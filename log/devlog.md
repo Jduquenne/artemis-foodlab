@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-09 — Issue #39: a particular shopping place, decision (v6.132.3, docs only)
+- Done: owner choices recorded as **D-039**: one particular place named by the account (`shoppingPlaceName`), per-period flag on list items and extras, whole-recipe shortcut that flags its ingredients, badge + filter « Tout / lieu / Ailleurs » + clipboard following the filter, household items not concerned. Prompt for the API session given to the owner.
+- Still open: real payloads from the API session and prod deployment, then the front (account setting, flag on lines and extras form, recipe shortcut, filter, clipboard). Interpretation to confirm with the owner: the answer « oui » to « household items not concerned for now » was read as agreement with the recommendation (not concerned).
+
 ## 2026-11-09 — Issue #38: accompaniments counted in the planning day kcal (v6.132.2)
 - Done: bug fix. The planning computed the day kcal with `computeDayMacros(…, {}, {})` and no profile, so accompaniments (and per-profile food choices) were ignored while the journal counted them. New pure `weekDayKcal` (`core/logic/planning/dayKcalLogic.ts`) used by `PlanningModule` with the active profile (`useActiveProfile`); the inline computation left the component.
 - Numbers: `npx tsc -b` + `npm run lint` pass, golden-rule greps clean; `tsx` check `_claude/tmp/day-kcal-check.ts` 7 / 7 OK (no profile 300 kcal, default accompaniment 380, recipe option 500, « sans » 300, meal choice over profile default 500, empty day 0, 7 days). **Not checked in a browser** (to test with `npm run dev`: plan a soup with an accompaniment, compare the day kcal in the planning with the journal of the same profile, change the profile and the meal choice).

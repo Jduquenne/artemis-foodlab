@@ -36,6 +36,8 @@ export const AddExtraModal = ({ extra, plannedRecipes, onClose, onSubmit }: AddE
   const [recipeCode, setRecipeCode] = useState<string>(
     extra?.recipeId ? getCodeById(extra.recipeId) ?? "" : "",
   );
+  const placeName = useAuthStore((s) => s.user?.shoppingPlaceName ?? null);
+  const [atPlace, setAtPlace] = useState<boolean>(extra?.atPlace ?? false);
   const [foodQuery, setFoodQuery] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -74,6 +76,7 @@ export const AddExtraModal = ({ extra, plannedRecipes, onClose, onSubmit }: AddE
       ...extraAisleFields(aisles.find((aisle) => aisle.id === aisleId), Boolean(extra?.customShoppingCategoryId)),
       foodId,
       recipeId: recipeCode ? getIdByCode(recipeCode) ?? null : null,
+      ...(placeName ? { atPlace } : {}),
     };
     const ok = await onSubmit(body);
     setSubmitting(false);
@@ -186,6 +189,18 @@ export const AddExtraModal = ({ extra, plannedRecipes, onClose, onSubmit }: AddE
                   <option key={r.code} value={r.code}>{r.name}</option>
                 ))}
               </select>
+            </label>
+          )}
+
+          {placeName && (
+            <label className="flex items-center gap-2 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={atPlace}
+                onChange={(e) => setAtPlace(e.target.checked)}
+                className="w-4 h-4 accent-orange-500"
+              />
+              <span className="text-sm text-slate-700">{`À acheter à ${placeName}`}</span>
             </label>
           )}
 

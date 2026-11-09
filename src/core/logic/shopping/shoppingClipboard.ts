@@ -9,6 +9,7 @@ export function buildShoppingClipboardText(
   stocks: Record<string, number>,
   sourceChecked: Set<string>,
   uncheckedHouseholdItems: HouseholdItem[],
+  title: string | null = null,
 ): string {
   const fmtUnit = (unit: string, qty: number): string => {
     if (unit === 'pièce') return '';
@@ -16,7 +17,7 @@ export function buildShoppingClipboardText(
     return pluralizeUnit(unit, qty);
   };
 
-  const lines: string[] = [];
+  const lines: string[] = title ? [title, ""] : [];
 
   for (const group of allGroupedItems) {
     const items = group.list.filter((i) => isIngredientNeeded(i, checked, stocks, sourceChecked));

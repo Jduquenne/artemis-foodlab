@@ -7,6 +7,7 @@ import { ConsolidatedIngredient, IngredientSource, RecipeCard } from '../../core
 import { ApiShoppingExtra, extrasToIngredients } from '../../core/logic/shopping/shoppingApiMapper';
 import { computeUncheckedCount } from '../../core/logic/shopping/shoppingChecks';
 import { buildShoppingClipboardText } from '../../core/logic/shopping/shoppingClipboard';
+import { PlaceFilter, filterIngredientsByPlace, placeFilterTitle } from '../../core/logic/shopping/shoppingPlaceLogic';
 import {
     groupIngredients,
     filterGroupedIngredients,
@@ -39,6 +40,7 @@ import { PricePerKgModal } from './components/PricePerKgModal';
 import { HouseholdShoppingCard } from './components/HouseholdShoppingCard';
 import { HouseholdPanel } from './components/household/HouseholdPanel';
 import { AddExtraModal } from './components/AddExtraModal';
+import { PlaceFilterControl } from './components/PlaceFilterControl';
 import { useRefreshStore } from '../../shared/store/useRefreshStore';
 import { useFoodsSnapshot, useHouseholdSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
 import { useProfileStore } from '../../shared/store/useProfileStore';
@@ -72,6 +74,7 @@ export const ShoppingModule = () => {
     const { foodBags } = useFreezerStock();
     const [viewMode, setViewMode] = useState<'meals' | 'ingredients' | 'household'>('ingredients');
     const [ingredientFilter, setIngredientFilter] = useState<'all' | 'missing'>('all');
+    const [placeFilter, setPlaceFilter] = useState<PlaceFilter>('all');
     const [copied, setCopied] = useState(false);
     const [showPriceCalc, setShowPriceCalc] = useState(false);
     const [showCategoryOrder, setShowCategoryOrder] = useState(false);
@@ -119,6 +122,7 @@ export const ShoppingModule = () => {
         atPlace,
         toggleItem,
         toggleAtPlace,
+        setAtPlaceForKeys,
         setStock,
         toggleSourceCheck,
         toggleSourceBatch,
@@ -148,24 +152,36 @@ export const ShoppingModule = () => {
         setExtraModal({ open: true, extra: extras.find(e => e.id === extraId) ?? null });
     };
 
+    const effectivePlaceFilter: PlaceFilter = placeName ? placeFilter : 'all';
+
+    const placeIngredients = useMemo(
+        () => displayIngredients ? filterIngredientsByPlace(displayIngredients, atPlace, effectivePlaceFilter) : undefined,
+        [displayIngredients, atPlace, effectivePlaceFilter]
+    );
+
     const allGroupedItems = useMemo(
-        () => displayIngredients ? groupIngredients(displayIngredients, categoryOrder) : [],
-        [displayIngredients, categoryOrder]
+        () => placeIngredients ? groupIngredients(placeIngredients, categoryOrder) : [],
+        [placeIngredients, categoryOrder]
     );
 
     const groupedItems = useMemo(
-        () => displayIngredients ? filterGroupedIngredients(displayIngredients, categoryOrder, ingredientFilter, checked, stocks, sourceChecked) : [],
-        [displayIngredients, categoryOrder, ingredientFilter, checked, stocks, sourceChecked]
+        () => placeIngredients ? filterGroupedIngredients(placeIngredients, categoryOrder, ingredientFilter, checked, stocks, sourceChecked) : [],
+        [placeIngredients, categoryOrder, ingredientFilter, checked, stocks, sourceChecked]
+    );
+
+    const shownHouseholdItems = useMemo(
+        () => (effectivePlaceFilter === 'place' ? [] : householdItems),
+        [householdItems, effectivePlaceFilter]
     );
 
     const visibleHouseholdItems = useMemo(() => {
-        if (ingredientFilter === 'all') return householdItems;
-        return householdItems.filter(i => !checked.has(`household::${i.id}`));
-    }, [householdItems, ingredientFilter, checked]);
+        if (ingredientFilter === 'all') return shownHouseholdItems;
+        return shownHouseholdItems.filter(i => !checked.has(`household::${i.id}`));
+    }, [shownHouseholdItems, ingredientFilter, checked]);
 
     const uncheckedCount = useMemo(
-        () => computeUncheckedCount(displayIngredients ?? [], checked, stocks, sourceChecked, householdItems),
-        [displayIngredients, checked, stocks, sourceChecked, householdItems]
+        () => computeUncheckedCount(placeIngredients ?? [], checked, stocks, sourceChecked, shownHouseholdItems),
+        [placeIngredients, checked, stocks, sourceChecked, shownHouseholdItems]
     );
 
     const ingredientColumns = useMemo(
@@ -185,8 +201,8 @@ export const ShoppingModule = () => {
     }, [shoppingDays]);
 
     const handleCopy = async () => {
-        const uncheckedHousehold = householdItems.filter(i => !checked.has(`household::${i.id}`));
-        const text = buildShoppingClipboardText(allGroupedItems, checked, stocks, sourceChecked, uncheckedHousehold);
+        const uncheckedHousehold = shownHouseholdItems.filter(i => !checked.has(`household::${i.id}`));
+        const text = buildShoppingClipboardText(allGroupedItems, checked, stocks, sourceChecked, uncheckedHousehold, placeFilterTitle(effectivePlaceFilter, placeName));
         const written = await navigator.clipboard.writeText(text).then(() => true, () => false);
         if (!written) return;
         setCopied(true);
@@ -282,6 +298,8 @@ export const ShoppingModule = () => {
                             </button>
                         </div>
                         {viewMode === 'ingredients' && (
+                            <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2">
+                                {placeName && <PlaceFilterControl value={placeFilter} placeName={placeName} onChange={setPlaceFilter} />}
                             <div className="grid grid-cols-2 gap-0.5 sm:flex">
                                 <button
                                     onClick={() => setIngredientFilter('all')}
@@ -301,6 +319,7 @@ export const ShoppingModule = () => {
                                 >
                                     Manquants
                                 </button>
+                            </div>
                             </div>
                         )}
                     </div>
@@ -349,6 +368,9 @@ export const ShoppingModule = () => {
                                                     directIngredients={card.directIngredients}
                                                     baseGroups={card.baseGroups}
                                                     sourceChecked={sourceChecked}
+                                                    placeName={placeName}
+                                                    atPlace={atPlace}
+                                                    onToggleAllAtPlace={setAtPlaceForKeys}
                                                     onToggleSource={toggleSourceCheck}
                                                     onToggleBatch={toggleSourceBatch}
                                                 />
@@ -362,6 +384,16 @@ export const ShoppingModule = () => {
                             <ShoppingCart className="w-12 h-12 opacity-30" />
                             <p className="font-medium">Aucun repas planifié sur cette période</p>
                             <p className="text-sm">Planifie des repas ou ajoute un article</p>
+                        </div>
+                    ) : effectivePlaceFilter !== 'all' && (placeIngredients?.length ?? 0) === 0 && shownHouseholdItems.length === 0 ? (
+                        <div className="h-full flex flex-col items-center justify-center gap-3 text-slate-400">
+                            <ShoppingCart className="w-12 h-12 opacity-30" />
+                            <p className="font-medium text-slate-500">
+                                {effectivePlaceFilter === 'place' ? `Rien n'est marqué à acheter à ${placeName}` : 'Rien à acheter ailleurs'}
+                            </p>
+                            <p className="text-sm">
+                                {effectivePlaceFilter === 'place' ? 'Marque des lignes avec le repère de la liste' : 'Tout est marqué comme à acheter sur place'}
+                            </p>
                         </div>
                     ) : groupedItems.length === 0 && visibleHouseholdItems.length === 0 ? (
                         <div className="h-full flex flex-col items-center justify-center gap-3 text-slate-400">

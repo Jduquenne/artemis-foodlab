@@ -19,8 +19,10 @@ import {
   fetchSourceChecks,
   updateExtra,
   upsertItemCheck,
+  upsertItemChecksAtPlace,
   upsertSourceChecks,
 } from "../../core/services/shoppingPeriodService";
+import { PLACE_BATCH_MAX, chunkList, placeFoodIds } from "../../core/logic/shopping/shoppingPlaceLogic";
 import { useRefreshStore } from "../store/useRefreshStore";
 import { withPending } from "../utils/withPending";
 
@@ -131,6 +133,20 @@ export function useShoppingPeriodChecks(
     if (updated) patchItemCheck(periodId, updated);
   };
 
+  const setAtPlaceForKeys = async (keys: string[], value: boolean) => {
+    if (!periodId) return;
+    const foodIds = placeFoodIds(keys, state.keyToFoodId);
+    if (foodIds.length === 0) return;
+    const updated = await withPending(keys.map((key) => `shopping-place:${key}`), async () => {
+      const results: ApiItemCheck[] = [];
+      for (const part of chunkList(foodIds, PLACE_BATCH_MAX)) {
+        results.push(...(await upsertItemChecksAtPlace(periodId, part.map((foodId) => ({ foodId, atPlace: value })))));
+      }
+      return results;
+    }).catch(() => undefined);
+    if (updated) patch(periodId, (p) => ({ ...p, itemChecks: upsertAllById(p.itemChecks, updated) }));
+  };
+
   const setStock = async (key: string, value: number) => {
     if (!periodId) return;
     const foodId = state.keyToFoodId.get(key);
@@ -195,6 +211,7 @@ export function useShoppingPeriodChecks(
     atPlace: state.atPlace,
     toggleItem,
     toggleAtPlace,
+    setAtPlaceForKeys,
     setStock,
     toggleSourceCheck,
     toggleSourceBatch,

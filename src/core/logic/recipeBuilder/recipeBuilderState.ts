@@ -15,4 +15,5 @@ export const initialRecipeBuilderState = (): RecipeBuilderState => ({
   bookPage: null,
   ingredients: [],
   instructions: [],
+  industrialEquivalent: null,
 });

@@ -1,6 +1,12 @@
 import { Unit, IngredientCategory } from "./ingredient";
 import { RecipeKind, MealType } from "./recipe";
 
+export interface IndustrialEquivalentDraft {
+  foodId: string | null;
+  quantity: number | null;
+  unit: Unit;
+}
+
 export interface DraftIngredient {
   id: string;
   apiId?: string;
@@ -29,4 +35,5 @@ export interface RecipeBuilderState {
   bookPage: number | null;
   ingredients: DraftIngredient[];
   instructions: string[];
+  industrialEquivalent?: IndustrialEquivalentDraft | null;
 }

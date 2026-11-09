@@ -10,6 +10,7 @@ import { isCategoryUnlocked, registerUnlockClick } from "../../../../core/logic/
 import { categoryLabel } from "../../../../core/logic/recipe/categoryLogic";
 import { isRecipeCategory } from "../../../../core/domain/recipePredicates";
 import { InstructionsModal } from "./InstructionsModal";
+import { IndustrialEquivalentField } from "./IndustrialEquivalentField";
 import { CategoryChangeModal } from "./CategoryChangeModal";
 import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
 
@@ -181,6 +182,13 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
           </button>
         </div>
       </div>
+
+      {isBase && (
+        <IndustrialEquivalentField
+          value={state.industrialEquivalent}
+          onChange={(industrialEquivalent) => onChange({ industrialEquivalent })}
+        />
+      )}
 
       {!isBase && (
         <div>

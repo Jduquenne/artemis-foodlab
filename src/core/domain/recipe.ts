@@ -1,4 +1,4 @@
-import { Ingredient } from "./ingredient";
+import { Ingredient, Unit } from "./ingredient";
 
 export interface Category {
   id: string;
@@ -26,6 +26,12 @@ export interface RecipeAsset {
   key?: string;
 }
 
+export interface IndustrialEquivalent {
+  foodId: string;
+  quantity: number;
+  unit: Unit;
+}
+
 export interface RecipeDetails {
   code: string;
   apiId: string;
@@ -42,6 +48,7 @@ export interface RecipeDetails {
   isFromBook?: boolean;
   bookPage?: number;
   announcedAt?: string | null;
+  industrialEquivalent?: IndustrialEquivalent;
 }
 
 export interface PlannableItem {

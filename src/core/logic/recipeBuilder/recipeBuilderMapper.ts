@@ -6,6 +6,7 @@ import { getIdByCode } from "../../catalogue/recipeIdMap";
 import { ApiIngredientInput, ApiRecipeInput } from "../recipe/recipeApiMapper";
 import { getBuilderRecipeCode } from "./recipeCodeLogic";
 import { isUnit } from "../unit/unitLogic";
+import { industrialDraftFromRecipe, industrialDraftToApi } from "./industrialEquivalentLogic";
 
 export function switchIngredientType(
   ing: DraftIngredient,
@@ -76,6 +77,7 @@ export function recipeToBuilderState(
     bookPage: recipe.bookPage ?? null,
     ingredients,
     instructions: recipe.instructions?.split("\n") ?? [],
+    industrialEquivalent: industrialDraftFromRecipe(recipe.industrialEquivalent),
   };
 }
 
@@ -111,6 +113,7 @@ export function builderStateToApiBody(state: RecipeBuilderState): ApiRecipeInput
     bookPage: state.isFromBook ? state.bookPage : null,
     instructions:
       state.instructions.map((line) => line.trim()).filter(Boolean).join("\n") || null,
+    industrialEquivalent: industrialDraftToApi(state.industrialEquivalent, isBaseKind),
     ingredients,
   };
 }

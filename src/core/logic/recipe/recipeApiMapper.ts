@@ -8,6 +8,7 @@ import {
   RecipeKind,
 } from "../../domain/recipe";
 import { parseUnit } from "../unit/unitLogic";
+import { ApiIndustrialEquivalent, mapApiIndustrialEquivalent } from "../recipeBuilder/industrialEquivalentLogic";
 
 export interface ApiIngredient {
   id: string;
@@ -36,6 +37,7 @@ export interface ApiRecipe {
   bookPage: number | null;
   instructions: string | null;
   announcedAt: string | null;
+  industrialEquivalent?: ApiIndustrialEquivalent | null;
   ingredients: ApiIngredient[];
   assets: Partial<Record<RecipeAssetKey, RecipeAsset>>;
 }
@@ -64,6 +66,7 @@ export interface ApiRecipeInput {
   isFromBook: boolean;
   bookPage: number | null;
   instructions: string | null;
+  industrialEquivalent: ApiIndustrialEquivalent | null;
   ingredients: ApiIngredientInput[];
 }
 
@@ -115,6 +118,7 @@ export function mapApiRecipe(api: ApiRecipe, codeByApiId: Map<string, string>): 
     isDessert: api.isDessert || undefined,
     isFromBook: api.isFromBook || undefined,
     bookPage: api.bookPage ?? undefined,
+    industrialEquivalent: mapApiIndustrialEquivalent(api.industrialEquivalent),
   };
 }
 

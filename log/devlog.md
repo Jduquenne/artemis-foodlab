@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-09 — Issue #37: industrial version of a base, decision (v6.132.1, docs only)
+- Done: owner choices recorded as **D-038** (`docs/decisions.md`): equivalent defined on the base (`industrialEquivalent`), choice per planned meal for the household, delivery A (catalogue + meal choice + shopping + macros) then B (per-account default), store-bought food listed in its own aisle, generator untouched. Prompt for the API session given to the owner.
+- Still open: real payloads from the API session (catalogue field on bases, planning item choice, orphans, errors) and prod deployment, then front delivery A (Recipe Builder field, `FoodChoiceModal` section, shopping, macros, journal), then B. #38 and #39 do not depend on it.
+
 ## 2026-11-09 — Issue #35: move a freezer item to another category (v6.132.0)
 - Done: with the API side delivered by the API session (D-059, `PUT /freezer-items/:id { categoryId }`), front « Déplacer vers… » in the « ⋯ » menu of food items and batches: `MoveFreezerItemModal`, `freezerMoveLogic.ts` (targets, duplicate-name block), `moveItemToCategory` service (API first, cache rebuilt from the response), `useFreezerCategories` hook; `ApiFreezerItem.categoryId` added to the mapper type. Contract recorded in `docs/api.md` § Freezer.
 - Numbers: `npx tsc -b` + `npm run lint` pass, golden-rule greps clean; `tsx` check `_claude/tmp/freezer-move-check.ts` 5 / 5 OK (targets, duplicate name ignoring case and spaces, batch never blocked, label, mapping of a PUT response with bags). The contract was verified by reading the API repo (code, docs, tests); creating a throwaway admin account in the local API database was refused by the permission system, so **no curl round trip and no browser check yet**. Nothing was sent to the production API.

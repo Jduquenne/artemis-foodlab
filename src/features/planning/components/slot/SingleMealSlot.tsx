@@ -11,6 +11,7 @@ import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { usePlannableSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 import { useGroupIngredients } from '../../../../shared/hooks/useGroupIngredients';
 import { useHasMealChoices } from '../../../../shared/hooks/useHasMealChoices';
+import { defaultPersonsOf } from '../../../../core/logic/recipe/portionsPerPersonLogic';
 import { useProfileStore } from '../../../../shared/store/useProfileStore';
 import { foodChoiceStatus } from '../../../../core/logic/foodGroup/foodChoiceLogic';
 import { FoodChoice } from '../../../../core/domain/foodGroup';
@@ -64,7 +65,7 @@ export const SingleMealSlot = ({
     const recipe = firstId ? plannable[firstId] : undefined;
     const hasPhoto = Boolean(recipe?.assets?.mealPhoto);
     const hasRecipesPage = Boolean(recipe?.assets?.mealPhoto || recipe?.assets?.instructionsPhoto);
-    const defaultPortion = recipe?.defaultPortions;
+    const defaultPortion = defaultPersonsOf(recipe);
     const isDeletePending = usePendingKey(`planning-slot-delete:${slotId}`);
     const isPersonsPending = usePendingKey(`planning-persons:${slotId}`);
     const groupIngredients = useGroupIngredients(firstId);

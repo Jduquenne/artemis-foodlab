@@ -9,6 +9,7 @@ import {
   scaleIngredientsByRatio,
 } from "../../core/logic/journal/journalOverrideLogic";
 import { RECIPE_BASE_GRAMS } from "../../core/catalogue/recipeMetrics";
+import { portionsPerPersonOf } from "../../core/logic/recipe/portionsPerPersonLogic";
 import { useProfileStore } from "./useProfileStore";
 
 interface JournalState {
@@ -77,7 +78,7 @@ export const useJournalStore = create<JournalState>((set, get) => {
     recipe: RecipeDetails | undefined,
     planningSlotItemId: string,
   ): Record<string, number> => {
-    const portions = current.portionOverrides[planningSlotItemId] ?? 1;
+    const portions = current.portionOverrides[planningSlotItemId] ?? portionsPerPersonOf(recipe);
     return defaultIngredientOverridesForPortions(recipe, portions);
   };
 

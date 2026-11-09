@@ -1,11 +1,7 @@
 import { RecipeKind } from "../../domain/recipe";
+import { DEFAULT_PORTIONS_PER_PERSON } from "../recipe/portionsPerPersonLogic";
 
-export const DEFAULT_PORTIONS_PER_PERSON = 1;
 export const MAX_PORTIONS_PER_PERSON = 100;
-
-export function portionsPerPersonOf(recipe: { portionsPerPerson?: number } | undefined): number {
-  return recipe?.portionsPerPerson ?? DEFAULT_PORTIONS_PER_PERSON;
-}
 
 function hasAtMostTwoDecimals(value: number): boolean {
   return Math.abs(value * 100 - Math.round(value * 100)) < 1e-9;

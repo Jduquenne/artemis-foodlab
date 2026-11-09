@@ -64,6 +64,7 @@ export interface PlannableItem {
   kind?: RecipeKind;
   mealTypes?: MealType[];
   defaultPortions?: number;
+  portionsPerPerson?: number;
   ingredients?: Ingredient[];
   batchCooking?: boolean;
   isDessert?: boolean;

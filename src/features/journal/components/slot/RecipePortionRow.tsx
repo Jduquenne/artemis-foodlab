@@ -16,6 +16,9 @@ import { BaseVersionChoice } from "../../../../core/domain/baseVersion";
 import { personalizeRecipe } from "../../../../core/logic/foodGroup/foodChoiceLogic";
 import { useActiveProfile } from "../../../../shared/hooks/useActiveProfile";
 import { accompanimentLabelsFor } from "../../../../core/logic/accompaniment/accompanimentLogic";
+import { portionsPerPersonOf } from "../../../../core/logic/recipe/portionsPerPersonLogic";
+import { stepJournalPortions } from "../../../../core/logic/journal/portionStepLogic";
+import { formatQty } from "../../../../core/logic/unit/unitFormatLogic";
 
 export interface RecipePortionRowProps {
   recipeId: string;
@@ -92,7 +95,8 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId, mealChoices, ac
     );
   }
 
-  const portions = portionOverrides[key] ?? 1;
+  const reference = portionsPerPersonOf(catalogueRecipe);
+  const portions = portionOverrides[key] ?? reference;
   const overridableIngredients = recipe?.ingredients.filter(isOverridableIngredient) ?? [];
   const canExpand = !!planningSlotItemId && overridableIngredients.length > 0;
   const scaledDefaults = recipe ? defaultIngredientOverridesForPortions(recipe, portions) : {};
@@ -121,19 +125,19 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId, mealChoices, ac
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-0.5">
           <button
-            onClick={() => planningSlotItemId && withPending(`journal-override:${key}`, () => setPortionOverride(planningSlotItemId, recipe, Math.max(1, portions - 1))).catch(() => undefined)}
-            disabled={!planningSlotItemId || pending}
+            onClick={() => planningSlotItemId && withPending(`journal-override:${key}`, () => setPortionOverride(planningSlotItemId, recipe, stepJournalPortions(portions, -1, reference) ?? portions)).catch(() => undefined)}
+            disabled={!planningSlotItemId || pending || stepJournalPortions(portions, -1, reference) === null}
             aria-label={`Réduire les portions — ${name}`}
             className="w-5 h-5 flex items-center justify-center rounded text-slate-400 hover:text-orange-500 transition-colors disabled:opacity-40"
           >
             <Minus className="w-3 h-3" />
           </button>
-          <span className={`text-[11px] font-bold w-5 text-center leading-none ${portions > 1 ? "text-orange-500" : "text-slate-400"} ${pending ? "animate-pulse" : ""}`}>
-            {portions}×
+          <span className={`text-[11px] font-bold min-w-5 text-center leading-none ${portions !== reference ? "text-orange-500" : "text-slate-400"} ${pending ? "animate-pulse" : ""}`}>
+            {formatQty(portions)}×
           </span>
           <button
-            onClick={() => planningSlotItemId && withPending(`journal-override:${key}`, () => setPortionOverride(planningSlotItemId, recipe, Math.min(10, portions + 1))).catch(() => undefined)}
-            disabled={!planningSlotItemId || pending}
+            onClick={() => planningSlotItemId && withPending(`journal-override:${key}`, () => setPortionOverride(planningSlotItemId, recipe, stepJournalPortions(portions, 1, reference) ?? portions)).catch(() => undefined)}
+            disabled={!planningSlotItemId || pending || stepJournalPortions(portions, 1, reference) === null}
             aria-label={`Augmenter les portions — ${name}`}
             className="w-5 h-5 flex items-center justify-center rounded text-slate-400 hover:text-orange-500 transition-colors disabled:opacity-40"
           >

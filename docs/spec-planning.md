@@ -34,6 +34,10 @@ A dessert-only destination must never give its own dessert to the origin slot (p
 
 Each slot save diffs items (`diffSlotItems`) and sends **one** batch call `PUT /planning-slots/:id/items/batch`; the local cache is rebuilt from the full response. A move A→B is two batch calls (not atomic). Decision: D-009.
 
+## Reference portion per person (D-040, v6.141.0)
+
+A recipe may carry `portionsPerPerson` (1 by default, `docs/spec-recipes.md`): the number of recipe portions one person eats (breakfast / snack, e.g. 4 pancakes of a 20-portion recipe). It multiplies the **per-person** figures only: the default portion count of a planned item in the macros (planning day kcal, journal), the shopping scale (`persons × reference ÷ defaultPortions` for slot persons, per-recipe persons and desserts; no persons set = the whole recipe, unchanged; gram overrides of ingredient-kind recipes unchanged), and the portions passed to the recipe detail page (`persons × reference`). The persons count itself is unchanged; the default shown when none is set is `defaultPortions ÷ reference`. Accompaniments (per person) are not multiplied: the shopping persons used for their shares are `parts ÷ reference ÷ profiles`.
+
 ## Day kcal in the planning
 
 The kcal shown per day in the planning (day tabs on mobile, column headers on desktop) come from `weekDayKcal(catalogue, slots, profile)` (`core/logic/planning/dayKcalLogic.ts`), which sums `computeDayMacros` per day with the **active profile** (`useActiveProfile`), exactly like the journal: the profile's accompaniment (meal choice, then profile default, then accompaniment default, « Sans accompagnement » counts nothing) and its food choices are included. Since issue #38 (v6.132.2) the planning used to call `computeDayMacros` without profile, so accompaniments and personalised foods were left out. Without an active profile the plain recipe values are used. Per-meal persons / grams overrides are still not applied here (unchanged).

@@ -7,6 +7,7 @@ import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
 import { MealPhoto } from './MealPhoto';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { buildRecipeDetailUrl } from '../../../../core/logic/recipe/recipeScalingLogic';
+import { plannedPortions } from '../../../../core/logic/recipe/portionsPerPersonLogic';
 import { usePlannableSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 
 export interface DessertCellProps {
@@ -39,7 +40,7 @@ export const DessertCell = ({ slotId, recipeId, onRemove, isAddMode, onCopy, isC
     const canNavigate = hasRecipePage && !isAddMode && !hideActions && !isEditingPersons;
 
     const handleClick = () => {
-        if (canNavigate) navigate(buildRecipeDetailUrl(recipeId, persons));
+        if (canNavigate) navigate(buildRecipeDetailUrl(recipeId, plannedPortions(persons, recipe)));
     };
 
     const openEditor = () => {

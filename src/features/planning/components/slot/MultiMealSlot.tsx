@@ -12,6 +12,7 @@ import { MealPhoto } from './MealPhoto';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { usePlannableSnapshot, useRecipeMetricsSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 import { useHasMealChoices } from '../../../../shared/hooks/useHasMealChoices';
+import { defaultPersonsOf } from '../../../../core/logic/recipe/portionsPerPersonLogic';
 
 export interface MultiMealSlotProps {
     label: string;
@@ -126,7 +127,7 @@ export const MultiMealSlot = ({
     const showSingleBadge = !!singleRecipeId && !isAddMode && !copyTargetState && !!onSaveRecipeMeta && !isEditingPersons && (singleIsDish || singleBaseGrams > 0 || singleCurrentPersons !== undefined);
 
     const inFreezer = recipeIds.length === 1 && (batchRecipeIds?.has(recipeIds[0]) ?? false);
-    const displayPersons = persons ?? (recipeIds.length === 1 ? firstRecipe?.defaultPortions : undefined);
+    const displayPersons = persons ?? (recipeIds.length === 1 ? defaultPersonsOf(firstRecipe) : undefined);
     const isPersonsCustom = persons !== undefined;
     const showPersonsBadge = hasRecipes && !isAddMode && !copyTargetState && !editingMetaId && !isEditingPersons && displayPersons !== undefined && !!onOpenPersonsEditor;
 
@@ -251,8 +252,8 @@ export const MultiMealSlot = ({
 
             {isEditingPersons && onConfirmPersons && onCancelPersons && (
                 <PersonsEditor
-                    initialValue={persons ?? firstRecipe?.defaultPortions ?? 2}
-                    defaultPortion={recipeIds.length === 1 ? firstRecipe?.defaultPortions : undefined}
+                    initialValue={persons ?? defaultPersonsOf(firstRecipe) ?? 2}
+                    defaultPortion={recipeIds.length === 1 ? defaultPersonsOf(firstRecipe) : undefined}
                     onConfirm={onConfirmPersons}
                     onCancel={onCancelPersons}
                     pending={isPersonsPending}

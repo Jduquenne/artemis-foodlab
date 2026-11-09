@@ -7,7 +7,8 @@ import { ApiIngredientInput, ApiRecipeInput } from "../recipe/recipeApiMapper";
 import { getBuilderRecipeCode } from "./recipeCodeLogic";
 import { isUnit } from "../unit/unitLogic";
 import { industrialDraftFromRecipe, industrialDraftToApi } from "./industrialEquivalentLogic";
-import { portionsPerPersonOf, portionsPerPersonToApi } from "./portionsPerPersonLogic";
+import { portionsPerPersonToApi } from "./portionsPerPersonLogic";
+import { portionsPerPersonOf } from "../recipe/portionsPerPersonLogic";
 
 export function switchIngredientType(
   ing: DraftIngredient,

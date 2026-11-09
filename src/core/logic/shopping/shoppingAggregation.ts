@@ -9,6 +9,7 @@ import { AccompanimentOption } from "../../domain/accompaniment";
 import { reachableGroupIngredients, resolveIngredientFood, personalizeRecipeTree, splitGroupIngredient } from "../foodGroup/foodChoiceLogic";
 import { accompanimentsFor, resolveAccompaniment } from "../accompaniment/accompanimentLogic";
 import { applyBaseVersions, isIndustrialChoice } from "../baseVersion/baseVersionLogic";
+import { portionsPerPersonOf } from "../recipe/portionsPerPersonLogic";
 import { parseUnit } from "../unit/unitLogic";
 
 function cleanRecipeName(name: string): string {
@@ -22,6 +23,7 @@ function slotScaleFactor(
   recipeId: string,
   defaultPortions: number,
   baseGramsById: Record<string, number>,
+  portionsPerPerson = 1,
 ): number {
   const recipePersonsOverride = slot.recipePersons?.[recipeId];
   const recipeGramsOverride = slot.recipeQuantities?.[recipeId];
@@ -32,13 +34,13 @@ function slotScaleFactor(
     return (persons * recipeGramsOverride) / (defaultPortions * baseGrams);
   }
   if (recipePersonsOverride !== undefined && defaultPortions > 0) {
-    return recipePersonsOverride / defaultPortions;
+    return (recipePersonsOverride * portionsPerPerson) / defaultPortions;
   }
   if (slot.persons !== undefined && defaultPortions > 0) {
-    return slot.persons / defaultPortions;
+    return (slot.persons * portionsPerPerson) / defaultPortions;
   }
   if (slot.dessertIds?.includes(recipeId) && defaultPortions > 0) {
-    return 1 / defaultPortions;
+    return portionsPerPerson / defaultPortions;
   }
   return 1;
 }
@@ -135,7 +137,8 @@ export function aggregateSlots(
       if (!details) continue;
 
       const recipeName = cleanRecipeName(details.name);
-      const scaleFactor = slotScaleFactor(slot, recipeId, details.defaultPortions, catalogue.baseGrams);
+      const reference = portionsPerPersonOf(details);
+      const scaleFactor = slotScaleFactor(slot, recipeId, details.defaultPortions, catalogue.baseGrams, reference);
       const choices = slot.foodChoices?.[recipeId] ?? [];
       const recipes = applyBaseVersions(details, data, slot.baseVersionChoices?.[recipeId], catalogue.foods);
       const portionFactors = new Map(
@@ -202,7 +205,7 @@ export function aggregateSlots(
 
       const accompaniments = accompanimentsFor(recipeId, catalogue.accompaniments ?? []);
       if (accompaniments.length > 0 && catalogue.profiles.length > 0) {
-        const persons = (scaleFactor * Math.max(details.defaultPortions, 1)) / catalogue.profiles.length;
+        const persons = (scaleFactor * Math.max(details.defaultPortions, 1)) / reference / catalogue.profiles.length;
         const accompanimentChoices = slot.accompanimentChoices?.[recipeId] ?? [];
         for (const accompaniment of accompaniments) {
           for (const profile of catalogue.profiles) {
@@ -264,7 +267,8 @@ export function aggregateBases(slots: MealSlot[], catalogue: ShoppingCatalogue):
       const details = data[recipeId];
       if (!details) continue;
 
-      const scaleFactor = slotScaleFactor(slot, recipeId, details.defaultPortions, catalogue.baseGrams);
+      const reference = portionsPerPersonOf(details);
+      const scaleFactor = slotScaleFactor(slot, recipeId, details.defaultPortions, catalogue.baseGrams, reference);
       const addBase = (baseId: string, baseRecipe: RecipeDetails, qty: number, unit: Unit) => {
         const existing = map.get(baseId);
         if (existing) {
@@ -284,7 +288,7 @@ export function aggregateBases(slots: MealSlot[], catalogue: ShoppingCatalogue):
 
       const accompaniments = accompanimentsFor(recipeId, catalogue.accompaniments ?? []);
       if (accompaniments.length === 0 || catalogue.profiles.length === 0) continue;
-      const persons = (scaleFactor * Math.max(details.defaultPortions, 1)) / catalogue.profiles.length;
+      const persons = (scaleFactor * Math.max(details.defaultPortions, 1)) / reference / catalogue.profiles.length;
       const accompanimentChoices = slot.accompanimentChoices?.[recipeId] ?? [];
       for (const accompaniment of accompaniments) {
         for (const profile of catalogue.profiles) {

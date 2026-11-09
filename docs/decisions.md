@@ -340,7 +340,7 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
 ## D-040 — Reference portion per person on a recipe
 
 - **Date**: 2026-11-09
-- **Status**: accepted (owner, 2026-11-09, issue #40); API contract requested from the API session, front not started
+- **Status**: accepted (owner, 2026-11-09, issue #40); API D-062 delivered on dev (migration `20261109200000_add_recipe_portions_per_person`, real payloads received); front in progress (step 1 done: catalogue + Recipe Builder field), step 2 (effects) to do
 - **Context**: for breakfast and snack recipes the household reasons in units per person (« 4 pancakes », « 2 sablés »). The day kcal in the planning and the journal count **1 recipe portion** per planned item, and the shopping list scales by `persons ÷ defaultPortions`. When a recipe is written with one portion per unit (20 pancakes = 20 portions), « 4 pancakes per person » is simply **4 portions per person**.
 - **Decision** (owner's answers, 2026-11-09):
   - **Defined on the recipe, in the catalogue**: `portionsPerPerson`, a number > 0, default 1, edited by the admin in the Recipe Builder for every dish (intended for breakfast and snack, not restricted by meal type). The same reference for everyone (not per account nor per profile; the journal portion stepper still lets each person adjust their own).

@@ -40,6 +40,7 @@ export interface RecipeDetails {
   mealTypes: MealType[];
   kind: RecipeKind;
   defaultPortions: number;
+  portionsPerPerson?: number;
   ingredients: Ingredient[];
   instructions: string | null;
   assets: Partial<Record<RecipeAssetKey, RecipeAsset>>;

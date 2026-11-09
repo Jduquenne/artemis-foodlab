@@ -183,6 +183,22 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
         </div>
       </div>
 
+      {state.kind === RecipeKind.DISH && (
+        <div>
+          <label className={labelClass}>Portions par personne</label>
+          <DecimalInput
+            min={0}
+            value={state.portionsPerPerson ?? 1}
+            onValueChange={(portionsPerPerson) => onChange({ portionsPerPerson })}
+            placeholder="1"
+            className={inputClass}
+          />
+          <p className="mt-1 text-[11px] text-slate-400">
+            Portion de référence d&apos;une personne (ex. 4 si la recette compte une portion par pancake et qu&apos;on en mange 4). Sert au total calorique du jour, au journal et aux courses.
+          </p>
+        </div>
+      )}
+
       {isBase && (
         <IndustrialEquivalentField
           value={state.industrialEquivalent}

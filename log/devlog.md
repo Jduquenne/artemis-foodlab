@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-09 — Issue #40, step 1/2: portions per person in the catalogue and the builder (v6.140.0)
+- Done: API D-062 contract recorded from the API session's real payloads (`docs/api.md`). Front: `RecipeDetails.portionsPerPerson?`, `ApiRecipe` / `ApiRecipeInput`, `mapApiRecipe`, builder state / mapper / validation, `portionsPerPersonLogic.ts` (`portionsPerPersonOf`, `validatePortionsPerPerson`, `portionsPerPersonToApi`), « Portions par personne » field in `RecipeMetaForm` for dishes. Plan: step 1 (this one, testable in the builder) then step 2 (effects).
+- Numbers: `npx tsc -b` + `npm run lint` pass, golden-rule greps clean; `tsx` check `_claude/tmp/portions-per-person-check.ts` 35 / 35 OK (validation: 0.01 / 1 / 1.5 / 2.25 / 100 accepted; 0, negative, empty, 100.01, 1.234 refused; floating noise tolerated; non-dishes skipped; mapping of the real payload with the field, without it (legacy), round trip, body sent as 1 for a base or an empty value). One check first failed because my expectation was wrong (0.1 + 0.2 is accepted by design). **Not checked in the browser nor against the local API.**
+- To test (owner, `npm run dev` with the local API on the D-062 commit): Recipe Builder → load a dish (breakfast) → « Portions par personne » shows 1 → set 4 → save → reload the recipe in the builder → 4; try 0 and 1.234 (error before sending); a base or an ingredient has no such field.
+- Still open: step 2 (effects); D-062 migration push and prod check before pushing the front; #40 stays open in `dev/issues.json`.
+
 ## 2026-11-09 — Base version: « Choix du repas » missing on lunch / dinner dishes (v6.139.3)
 - Context: owner test of #37 after adding a store-bought version of the « gnocchis maison » base: on a recipe using that base, the version choice was not available. Cause (mine): in step 4 I extended `useHasMealChoices` but `SingleMealSlot` (the lunch / dinner main dish) computed its own condition (`choiceStatus || hasAccompaniment`), so a dish whose only choice is a base version never got the « ⋯ » entry. Breakfast / snack cells, multi slots and desserts already used the hook.
 - Done: `SingleMealSlot` now uses `useHasMealChoices(firstId)` for the entry (the « à préciser » badge still comes from `choiceStatus`, group ingredients only). One source of truth for the entry in all slot types.

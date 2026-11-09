@@ -5,6 +5,7 @@ import { getIngredientCategoryId } from "../../domain/ingredientCategorySlugs";
 import { getIdByCode } from "../../catalogue/recipeIdMap";
 import { buildRecipeDbId } from "./recipeCodeLogic";
 import { validateIndustrialDraft } from "./industrialEquivalentLogic";
+import { validatePortionsPerPerson } from "./portionsPerPersonLogic";
 import { categoryLabel } from "../recipe/categoryLogic";
 import { isRecipeCategory } from "../../domain/recipePredicates";
 
@@ -48,6 +49,7 @@ export function validateBuilderState(state: RecipeBuilderState): string[] {
   if (state.isFromBook && (state.bookPage == null || state.bookPage <= 0)) {
     errors.push("Indique la page du livre.");
   }
+  errors.push(...validatePortionsPerPerson(state.portionsPerPerson, state.kind));
   errors.push(...validateIndustrialDraft(state.industrialEquivalent, state.kind === RecipeKind.BASE));
   const named = state.ingredients.filter((ing) => ing.name.trim());
   if (named.length === 0) errors.push("Ajoute au moins un ingrédient.");

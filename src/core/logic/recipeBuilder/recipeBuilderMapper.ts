@@ -7,6 +7,7 @@ import { ApiIngredientInput, ApiRecipeInput } from "../recipe/recipeApiMapper";
 import { getBuilderRecipeCode } from "./recipeCodeLogic";
 import { isUnit } from "../unit/unitLogic";
 import { industrialDraftFromRecipe, industrialDraftToApi } from "./industrialEquivalentLogic";
+import { portionsPerPersonOf, portionsPerPersonToApi } from "./portionsPerPersonLogic";
 
 export function switchIngredientType(
   ing: DraftIngredient,
@@ -71,6 +72,7 @@ export function recipeToBuilderState(
     kind: recipe.kind,
     mealTypes: recipe.mealTypes ?? [],
     defaultPortions: recipe.defaultPortions,
+    portionsPerPerson: portionsPerPersonOf(recipe),
     isDessert: recipe.isDessert ?? false,
     batchCooking: recipe.batchCooking ?? false,
     isFromBook: recipe.isFromBook ?? false,
@@ -107,6 +109,7 @@ export function builderStateToApiBody(state: RecipeBuilderState): ApiRecipeInput
     kind: state.kind,
     mealTypes: isBaseKind ? [] : state.mealTypes,
     defaultPortions: state.defaultPortions,
+    portionsPerPerson: portionsPerPersonToApi(state.portionsPerPerson, state.kind),
     batchCooking: state.batchCooking,
     isDessert: isBaseKind ? false : state.isDessert,
     isFromBook: state.isFromBook,

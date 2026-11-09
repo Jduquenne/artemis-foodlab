@@ -12,10 +12,11 @@ import { LazyRender } from '../../../shared/components/ui/LazyRender';
 interface RecipeSearchResultsProps {
     results: SearchRecipeResult[];
     searchQuery: string;
+    foodName?: string;
     scrollKey: string;
 }
 
-export const RecipeSearchResults = ({ results, searchQuery, scrollKey }: RecipeSearchResultsProps) => {
+export const RecipeSearchResults = ({ results, searchQuery, foodName, scrollKey }: RecipeSearchResultsProps) => {
     const recipesDb = useRecipesSnapshot();
     const navigate = useNavigate();
     const { ref, onScroll } = useScrollRestore(scrollKey);
@@ -29,6 +30,8 @@ export const RecipeSearchResults = ({ results, searchQuery, scrollKey }: RecipeS
                 <div className="text-center py-10 text-slate-400">
                     {searchQuery.length >= 3
                         ? `Aucune recette trouvée pour "${searchQuery}"`
+                        : foodName
+                            ? `Aucune recette avec « ${foodName} » ne correspond à ces critères`
                         : searchQuery.length > 0
                             ? `Encore ${3 - searchQuery.length} caractère${3 - searchQuery.length > 1 ? 's' : ''}…`
                             : 'Aucune recette ne correspond à ces filtres'}

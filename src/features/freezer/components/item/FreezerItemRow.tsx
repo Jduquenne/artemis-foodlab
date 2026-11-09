@@ -1,7 +1,9 @@
 import { useState, useRef } from "react";
-import { Snowflake, Plus, MoreVertical, Trash2, Loader2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Snowflake, Plus, MoreVertical, Trash2, Loader2, BookOpen } from "lucide-react";
 import { FreezerItem } from "../../../../core/domain/freezer";
 import { addBagToFoodItem } from "../../../../core/services/freezerService";
+import { recipeFoodPath } from "../../../../core/logic/recipe/recipeFoodFilterLogic";
 import { getFoodBagsSummary } from "../../../../core/logic/freezer/freezerStockLogic";
 import { FloatingMenu } from "../../../../shared/components/ui/FloatingMenu";
 import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
@@ -17,6 +19,7 @@ export interface FreezerItemRowProps {
 }
 
 export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowProps) => {
+  const navigate = useNavigate();
   const [addingBag, setAddingBag] = useState(false);
   const [itemMenuOpen, setItemMenuOpen] = useState(false);
   const itemMenuButtonRef = useRef<HTMLButtonElement>(null);
@@ -28,6 +31,7 @@ export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowPro
   }
 
   const isEmpty = item.bags.length === 0;
+  const foodId = item.foodId;
 
   return (
     <div className={`bg-surface rounded-2xl border border-slate-200 px-3 py-2.5 transition ${isEmpty ? "opacity-60" : ""} ${deletePending ? "opacity-50 pointer-events-none" : ""}`}>
@@ -42,6 +46,16 @@ export const FreezerItemRow = ({ item, categoryId, onDelete }: FreezerItemRowPro
         </div>
 
         <div className="flex items-center gap-0.5 shrink-0">
+          {foodId && (
+            <button
+              aria-label="Voir les recettes avec cet aliment"
+              title="Voir les recettes avec cet aliment"
+              onClick={() => navigate(recipeFoodPath(foodId))}
+              className="p-2 rounded-xl text-slate-400 hover:text-orange-500 hover:bg-orange-50 transition-colors"
+            >
+              <BookOpen className="w-4 h-4" />
+            </button>
+          )}
           <button
             aria-label="Ajouter un sac"
             onClick={() => setAddingBag(a => !a)}

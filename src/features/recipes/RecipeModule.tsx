@@ -1,12 +1,12 @@
 import { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { X, Search, Plus } from 'lucide-react';
 import { useIsAdmin } from '../../shared/hooks/useIsAdmin';
 import { useRecipeBuilderStore } from '../../shared/store/useRecipeBuilderStore';
 import { SearchBar } from '../../shared/components/ui/SearchBar';
 import { CategoryCard } from '../../shared/components/ui/CategoryCard';
 import { useSearchRecipes } from '../../shared/hooks/useSearch';
-import { useCategoriesSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
+import { useCategoriesSnapshot, useFoodsSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
 import { isBrowsableCategory } from '../../core/domain/recipePredicates';
 import { RecipeFilterButton } from './components/filter/RecipeFilterButton';
 import { ActiveFilterChips } from './components/filter/ActiveFilterChips';
@@ -14,10 +14,13 @@ import { useTypeMedians } from '../../shared/hooks/useTypeMedians';
 import { useInSeasonRecipes } from '../../shared/hooks/useInSeasonRecipes';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { filterRecipesByFilter, isRecipeFilterActive } from '../../core/logic/recipe/recipeFilterLogic';
+import { RECIPE_FOOD_PARAM, recipesUsingFood } from '../../core/logic/recipe/recipeFoodFilterLogic';
+import { RecipeFoodFilterBanner } from './components/filter/RecipeFoodFilterBanner';
 import { RecipeSearchResults } from './components/RecipeSearchResults';
 
 export const RecipeModule = () => {
     const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
     const isAdmin = useIsAdmin();
     const resetBuilder = useRecipeBuilderStore((s) => s.reset);
     const { recipeFilter, setRecipeFilter } = useMenuStore();
@@ -25,12 +28,23 @@ export const RecipeModule = () => {
     const [isSearchOpen, setIsSearchOpen] = useState(() => (sessionStorage.getItem('last_recipe_search') || '').length > 0);
 
     const isSearchActive = isSearchOpen || searchQuery.length > 0;
-    const showResults = searchQuery.length >= 3 || isRecipeFilterActive(recipeFilter);
-    const baseResults = useSearchRecipes(showResults ? searchQuery : '');
+    const foods = useFoodsSnapshot();
+    const recipes = useRecipesSnapshot();
+    const foodId = searchParams.get(RECIPE_FOOD_PARAM);
+    const filterFood = foodId ? foods[foodId] : undefined;
+    const showResults = searchQuery.length >= 3 || isRecipeFilterActive(recipeFilter) || filterFood !== undefined;
+    const searchResults = useSearchRecipes(showResults ? searchQuery : '');
+    const foodRecipeIds = useMemo(
+        () => (filterFood ? recipesUsingFood(recipes, foods, filterFood.id) : null),
+        [filterFood, recipes, foods],
+    );
+    const baseResults = useMemo(
+        () => (foodRecipeIds ? searchResults.filter((result) => foodRecipeIds.has(result.recipeId)) : searchResults),
+        [searchResults, foodRecipeIds],
+    );
     const { macros: recipeMacros } = useRecipeMetricsSnapshot();
     const medians = useTypeMedians();
     const { ids: inSeasonIds } = useInSeasonRecipes();
-    const recipes = useRecipesSnapshot();
     const categories = useCategoriesSnapshot();
 
     const filteredResults = useMemo(
@@ -44,6 +58,11 @@ export const RecipeModule = () => {
     };
 
     const openSearch = () => setIsSearchOpen(true);
+
+    const clearFoodFilter = () => setSearchParams((params) => {
+        params.delete(RECIPE_FOOD_PARAM);
+        return params;
+    }, { replace: true });
 
     const closeSearch = () => {
         setIsSearchOpen(false);
@@ -111,12 +130,15 @@ export const RecipeModule = () => {
                 </div>
             </div>
 
+            {filterFood && <RecipeFoodFilterBanner foodName={filterFood.name} onClear={clearFoodFilter} />}
+
             <div className="flex-1 min-h-0 overflow-hidden">
                 {showResults ? (
                     <RecipeSearchResults
                         results={filteredResults}
                         searchQuery={searchQuery}
-                        scrollKey={`search:${searchQuery}:${JSON.stringify(recipeFilter)}`}
+                        foodName={filterFood?.name}
+                        scrollKey={`search:${searchQuery}:${foodId ?? ''}:${JSON.stringify(recipeFilter)}`}
                     />
                 ) : (
                     <div className="h-full grid grid-cols-2 tablet:grid-cols-3 lg:grid-cols-6 auto-rows-fr gap-3">

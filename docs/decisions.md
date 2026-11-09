@@ -326,7 +326,7 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
 ## D-039 — A particular shopping place on the list
 
 - **Date**: 2026-11-09
-- **Status**: accepted (owner, 2026-11-09, issue #39); API contract requested from the API session, front not started
+- **Status**: accepted (owner, 2026-11-09, issue #39); API D-061 delivered (commit `ee3e84e`, migration `20261109180000_add_shopping_place`, 544 tests; **prod deployment to confirm**); front in progress (step 1 done: account setting + flag on lines and extras)
 - **Context**: some items (or whole recipes) of the weekly list are bought at a particular place (the owner's household: « Merris »), the rest elsewhere. The household wants to see and copy the list of what to take there.
 - **Decision** (owner's answers, 2026-11-09):
   - **One particular place, named by the account**, not hard-coded: an optional account setting « lieu d'achat particulier » (`AuthUser.shoppingPlaceName`, same mechanism as `freezerName`, via `PUT /me`). Without a name the feature is invisible. Several stores per account are out of scope for now (rejected: heavier, to revisit if a household needs it); hard-coding « Merris » rejected (other households).

@@ -16,6 +16,8 @@ The detailed backlog and future features live in `dev/issues.json` and `dev/refa
 
 9. 🟡 Industrial version of a base (D-038, issue #37, owner 2026-11-09): delivery A **done in the front** (v6.133.0 → v6.136.0: catalogue + Recipe Builder field, planning data, effects on macros / shopping / journal, « Choix du repas » UI), API D-060 on dev (commit `8f5d89d`, **prod deployment to confirm**); owner end-to-end test pending. Delivery B (per-account default per base) not started.
 
+10. 🟡 Particular shopping place (D-039, issue #39, owner 2026-11-09): API D-061 delivered (commit `ee3e84e`, **prod deployment to confirm**); front step 1 done (v6.138.0: account setting, flag on list lines and extras); step 2 to do (filter, clipboard, recipe shortcut, extra form).
+
 ## Honest status (2026-10-21)
 
 - Production on GitHub Pages, backed by the API since 2026-09-09; deployed with each push on `master`.

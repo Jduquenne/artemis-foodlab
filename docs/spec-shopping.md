@@ -34,6 +34,14 @@ Need: add a manual line (e.g. a specific cheese wanted on top of a recipe) that 
 - Not shown in the "meals" view (v1). Only ingredient categories (no household category).
 - A link (`foodId` / `categoryId` / `recipeId`) can come back `null` (`SetNull` on delete); an extra without category goes to « Autre ».
 
+## Particular shopping place (D-039, API D-061, issue #39)
+
+The account may name **one particular place** where some items are bought (`AuthUser.shoppingPlaceName`, « Merris » in the owner's household); without a name the feature is invisible. Step 1 (v6.138.0):
+- Setting: `AccountModal` › Profil › « Lieu d'achat particulier » (optional, ≤ 50 characters, saved with the profile through `PUT /me`; blank clears it; allowed in demo).
+- Flag per **list item of the period** (not permanent): item checks (keyed by food, so every key of that food: two units, base and recipe) and extras carry `atPlace`. `buildShoppingCheckState` exposes `atPlace: Set<ingredientKey>` (foods through `itemCheckByFoodId`, extras as `extra::<id>`); `useShoppingPeriodChecks.toggleAtPlace(key)` writes through `upsertItemCheck` (`POST` creates an unchecked row when none exists, `PUT /:id` otherwise; extras through `updateExtra`), pending key `shopping-place:<key>`; household rows are ignored. `upsertItemChecksAtPlace` (batch, `PUT …/item-checks`) is wired in the service for the recipe shortcut (step 2).
+- UI: `PlaceFlagButton` on `IngredientCheckRow` and `ExtraCheckRow` when a place name exists, the line has a catalogue food (or is an extra) and is not checked: a faint pin icon, or an orange pill with the place name when flagged (click toggles, does not check the line).
+- Step 2 to come: filter « Tout / <lieu> / Ailleurs », clipboard following the filter, « Tout à prendre à <lieu> » on a recipe card (batch write of its ingredients), checkbox in the extra form.
+
 ## Household items
 
 - Checked = **"to buy"** (`household-shopping-flags`), `householdService` (`getRecords` / `toggleItem` / `clearAll`). Shown in the household tab of Shopping (`features/shopping/components/household/HouseholdPanel.tsx`, category order `HOUSEHOLD_CATEGORY_ORDER` in `core/domain/household.ts`) and as « Articles du quotidien » in the ingredients list.

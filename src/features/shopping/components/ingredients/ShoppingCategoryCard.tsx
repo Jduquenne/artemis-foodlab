@@ -10,7 +10,10 @@ export interface ShoppingCategoryCardProps {
     checked: Set<string>;
     stocks: Record<string, number>;
     sourceChecked: Set<string>;
+    placeName: string | null;
+    atPlace: Set<string>;
     onToggle: (key: string) => void;
+    onToggleAtPlace: (key: string) => void;
     onSetStock: (key: string, value: number) => void;
     onShowSources: (key: string, sources: IngredientSource[], freezerBags: FreezerBag[]) => void;
     onEditExtra: (extraId: string) => void;
@@ -18,7 +21,7 @@ export interface ShoppingCategoryCardProps {
     foodBags?: Map<string, FreezerBag[]>;
 }
 
-export const ShoppingCategoryCard = ({ label, items, checked, stocks, sourceChecked, onToggle, onSetStock, onShowSources, onEditExtra, onDeleteExtra, foodBags }: ShoppingCategoryCardProps) => {
+export const ShoppingCategoryCard = ({ label, items, checked, stocks, sourceChecked, placeName, atPlace, onToggle, onToggleAtPlace, onSetStock, onShowSources, onEditExtra, onDeleteExtra, foodBags }: ShoppingCategoryCardProps) => {
     const checkedCount = items.filter(i => checked.has(i.key)).length;
     const [editingKey, setEditingKey] = useState<string | null>(null);
     const [editValue, setEditValue] = useState<number | null>(null);
@@ -55,7 +58,10 @@ export const ShoppingCategoryCard = ({ label, items, checked, stocks, sourceChec
                                 key={item.key}
                                 item={item}
                                 isChecked={isChecked}
+                                placeName={placeName}
+                                atPlace={atPlace.has(item.key)}
                                 onToggle={onToggle}
+                                onToggleAtPlace={onToggleAtPlace}
                                 onEditExtra={onEditExtra}
                                 onDeleteExtra={onDeleteExtra}
                             />
@@ -73,6 +79,9 @@ export const ShoppingCategoryCard = ({ label, items, checked, stocks, sourceChec
                             item={item}
                             isChecked={isChecked}
                             stock={stock}
+                            placeName={placeName}
+                            atPlace={atPlace.has(item.key)}
+                            onToggleAtPlace={onToggleAtPlace}
                             sourceChecked={sourceChecked}
                             matchingBags={matchingBags}
                             inFreezer={inFreezer}

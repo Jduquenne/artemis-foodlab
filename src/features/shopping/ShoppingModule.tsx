@@ -53,6 +53,7 @@ export const ShoppingModule = () => {
     const currentPeriodId = useMenuStore((s) => s.currentPeriodId);
     const authStatus = useAuthStore((s) => s.status);
     const savedCategoryOrder = useAuthStore((s) => s.user?.shoppingCategoryOrder);
+    const placeName = useAuthStore((s) => s.user?.shoppingPlaceName ?? null);
     const customCategories = useCustomShoppingCategoryStore((s) => s.categories);
     const categoryOrder = useMemo(
         () => resolveShoppingAisles(savedCategoryOrder, customCategories),
@@ -115,7 +116,9 @@ export const ShoppingModule = () => {
         stocks,
         sourceChecked,
         freezerSelection,
+        atPlace,
         toggleItem,
+        toggleAtPlace,
         setStock,
         toggleSourceCheck,
         toggleSourceBatch,
@@ -380,7 +383,10 @@ export const ShoppingModule = () => {
                                                         checked={checked}
                                                         stocks={stocks}
                                                         sourceChecked={sourceChecked}
+                                                        placeName={placeName}
+                                                        atPlace={atPlace}
                                                         onToggle={toggleItem}
+                                                        onToggleAtPlace={toggleAtPlace}
                                                         onSetStock={setStock}
                                                         onShowSources={(key, sources, bags) => setActiveSources({ key, sources, freezerBags: bags })}
                                                         onEditExtra={handleEditExtra}

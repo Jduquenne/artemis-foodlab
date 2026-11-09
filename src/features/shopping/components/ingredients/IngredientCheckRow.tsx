@@ -3,6 +3,7 @@ import { ConsolidatedIngredient, IngredientSource } from '../../../../core/domai
 import { checkedSourcesQuantity, remainingToBuy } from '../../../../core/logic/shopping/shoppingChecks';
 import { FreezerBag } from '../../../../core/domain/freezer';
 import { IngredientTooltip } from './IngredientTooltip';
+import { PlaceFlagButton } from './PlaceFlagButton';
 import { pluralizeUnit, formatQty } from '../../../../core/logic/unit/unitFormatLogic';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { CheckToggleIcon } from '../../../../shared/components/ui/CheckToggleIcon';
@@ -12,12 +13,15 @@ export interface IngredientCheckRowProps {
     item: ConsolidatedIngredient;
     isChecked: boolean;
     stock: number;
+    placeName: string | null;
+    atPlace: boolean;
     sourceChecked: Set<string>;
     matchingBags: FreezerBag[];
     inFreezer: boolean;
     isEditing: boolean;
     editValue: number | null;
     onToggle: (key: string) => void;
+    onToggleAtPlace: (key: string) => void;
     onStartEditing: (key: string, currentStock: number) => void;
     onEditValueChange: (value: number | null) => void;
     onCommitEdit: (key: string) => void;
@@ -29,12 +33,15 @@ export const IngredientCheckRow = ({
     item,
     isChecked,
     stock,
+    placeName,
+    atPlace,
     sourceChecked,
     matchingBags,
     inFreezer,
     isEditing,
     editValue,
     onToggle,
+    onToggleAtPlace,
     onStartEditing,
     onEditValueChange,
     onCommitEdit,
@@ -70,6 +77,9 @@ export const IngredientCheckRow = ({
                         <span className="ml-1.5 text-[10px] font-bold text-amber-600 bg-amber-50 dark:bg-amber-900/20 px-1 py-0.5 rounded">à préciser</span>
                     )}
                 </span>
+                {placeName && item.foodId && !isChecked && (
+                    <PlaceFlagButton itemKey={item.key} placeName={placeName} flagged={atPlace} onToggle={onToggleAtPlace} />
+                )}
             </div>
 
             <div className="flex items-center gap-1 shrink-0" onClick={e => e.stopPropagation()}>

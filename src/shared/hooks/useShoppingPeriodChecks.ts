@@ -112,6 +112,25 @@ export function useShoppingPeriodChecks(
     if (updated) patchItemCheck(periodId, updated);
   };
 
+  const toggleAtPlace = async (key: string) => {
+    if (!periodId || key.startsWith("household::")) return;
+    const pendingKey = `shopping-place:${key}`;
+    if (key.startsWith("extra::")) {
+      const id = key.slice("extra::".length);
+      const extra = extras.find((e) => e.id === id);
+      const updated = await withPending(pendingKey, () => updateExtra(periodId, id, { atPlace: !extra?.atPlace })).catch(() => undefined);
+      if (updated) patch(periodId, (p) => ({ ...p, extras: upsertById(p.extras, updated) }));
+      return;
+    }
+    const foodId = state.keyToFoodId.get(key);
+    if (!foodId) return;
+    const existing = state.itemCheckByFoodId.get(foodId);
+    const updated = await withPending(pendingKey, () =>
+      upsertItemCheck(periodId, existing?.id, { foodId }, { atPlace: !existing?.atPlace }),
+    ).catch(() => undefined);
+    if (updated) patchItemCheck(periodId, updated);
+  };
+
   const setStock = async (key: string, value: number) => {
     if (!periodId) return;
     const foodId = state.keyToFoodId.get(key);
@@ -173,7 +192,9 @@ export function useShoppingPeriodChecks(
     stocks: state.stocks,
     sourceChecked: state.sourceChecked,
     freezerSelection: state.freezerSelection,
+    atPlace: state.atPlace,
     toggleItem,
+    toggleAtPlace,
     setStock,
     toggleSourceCheck,
     toggleSourceBatch,

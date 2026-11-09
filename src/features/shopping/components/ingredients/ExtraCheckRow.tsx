@@ -3,16 +3,20 @@ import { ConsolidatedIngredient } from '../../../../core/domain/shopping';
 import { pluralizeUnit, formatQty } from '../../../../core/logic/unit/unitFormatLogic';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { CheckToggleIcon } from '../../../../shared/components/ui/CheckToggleIcon';
+import { PlaceFlagButton } from './PlaceFlagButton';
 
 export interface ExtraCheckRowProps {
     item: ConsolidatedIngredient;
     isChecked: boolean;
+    placeName: string | null;
+    atPlace: boolean;
     onToggle: (key: string) => void;
+    onToggleAtPlace: (key: string) => void;
     onEditExtra: (extraId: string) => void;
     onDeleteExtra: (extraId: string) => void;
 }
 
-export const ExtraCheckRow = ({ item, isChecked, onToggle, onEditExtra, onDeleteExtra }: ExtraCheckRowProps) => {
+export const ExtraCheckRow = ({ item, isChecked, placeName, atPlace, onToggle, onToggleAtPlace, onEditExtra, onDeleteExtra }: ExtraCheckRowProps) => {
     const togglePending = usePendingKey(`shopping-check:${item.key}`);
     const deletePending = usePendingKey(`shopping-extra-delete:${item.extraId ?? ''}`);
 
@@ -33,6 +37,9 @@ export const ExtraCheckRow = ({ item, isChecked, onToggle, onEditExtra, onDelete
                     )}
                 </span>
                 <span className="shrink-0 text-[10px] font-bold text-orange-400 uppercase">ajouté</span>
+                {placeName && !isChecked && (
+                    <PlaceFlagButton itemKey={item.key} placeName={placeName} flagged={atPlace} onToggle={onToggleAtPlace} />
+                )}
             </div>
             <div className="flex items-center gap-0.5 shrink-0" onClick={e => e.stopPropagation()}>
                 <button

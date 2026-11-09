@@ -40,6 +40,7 @@ export interface ExtraInput {
   foodId?: string | null;
   recipeId?: string | null;
   isChecked?: boolean;
+  atPlace?: boolean;
 }
 
 export const fetchExtras = (periodId: string) =>
@@ -62,7 +63,7 @@ export const fetchSourceChecks = (periodId: string) =>
   apiFetchJson<ApiSourceCheck[]>(`/shopping-periods/${periodId}/source-checks`);
 
 type ItemCheckTarget = { foodId: string } | { householdItemId: string };
-type ItemCheckUpdates = Partial<{ isChecked: boolean; stockOverride: number | null; freezerBagIds: string[] }>;
+type ItemCheckUpdates = Partial<{ isChecked: boolean; stockOverride: number | null; freezerBagIds: string[]; atPlace: boolean }>;
 
 export async function upsertItemCheck(
   periodId: string,
@@ -81,6 +82,17 @@ export async function upsertItemCheck(
     body: { ...target, ...updates },
   });
 }
+
+export interface ItemCheckPlaceUpsert {
+  foodId: string;
+  atPlace: boolean;
+}
+
+export const upsertItemChecksAtPlace = (periodId: string, checks: ItemCheckPlaceUpsert[]) =>
+  apiFetchJson<ApiItemCheck[]>(`/shopping-periods/${periodId}/item-checks`, {
+    method: "PUT",
+    body: { checks },
+  });
 
 export interface SourceCheckUpsert {
   foodId: string;

@@ -3,7 +3,7 @@ import { X, LogOut, ShieldCheck } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { changePassword, logout, updateMe } from "../../../core/services/authService";
 import { useAuthStore } from "../../store/useAuthStore";
-import { PASSWORD_MIN_LENGTH } from "../../../core/domain/user";
+import { PASSWORD_MIN_LENGTH, UpdateMeInput } from "../../../core/domain/user";
 import { FORM_INPUT_CLASS as INPUT_CLASS } from "./formStyles";
 
 export interface AccountModalProps {
@@ -21,6 +21,7 @@ export const AccountModal = ({ onClose }: AccountModalProps) => {
 
   const [email, setEmail] = useState(user?.email ?? "");
   const [displayName, setDisplayName] = useState(user?.displayName ?? "");
+  const [placeName, setPlaceName] = useState(user?.shoppingPlaceName ?? "");
   const [profileError, setProfileError] = useState<string | null>(null);
   const [profileSaving, setProfileSaving] = useState(false);
   const [profileSaved, setProfileSaved] = useState(false);
@@ -38,14 +39,17 @@ export const AccountModal = ({ onClose }: AccountModalProps) => {
   const roleLabel = isDemo ? "Démo" : user.role === "admin" ? "Administrateur" : "Invité";
 
   const profileDirty =
-    email.trim() !== user.email || displayName.trim() !== (user.displayName ?? "");
+    email.trim() !== user.email ||
+    displayName.trim() !== (user.displayName ?? "") ||
+    placeName.trim() !== (user.shoppingPlaceName ?? "");
 
   const saveProfile = async () => {
     setProfileError(null);
     setProfileSaved(false);
-    const body: { email?: string; displayName?: string | null } = {};
+    const body: UpdateMeInput = {};
     if (email.trim() !== user.email) body.email = email.trim();
     if (displayName.trim() !== (user.displayName ?? "")) body.displayName = displayName.trim() || null;
+    if (placeName.trim() !== (user.shoppingPlaceName ?? "")) body.shoppingPlaceName = placeName.trim() || null;
     setProfileSaving(true);
     try {
       setUser(await updateMe(body, { suppressGlobalError: true }));
@@ -117,6 +121,17 @@ export const AccountModal = ({ onClose }: AccountModalProps) => {
             <label className="flex flex-col gap-1">
               <span className="text-xs font-bold text-slate-500">Nom affiché</span>
               <input value={displayName} onChange={(e) => setDisplayName(e.target.value)} placeholder="Optionnel" className={INPUT_CLASS} />
+            </label>
+            <label className="flex flex-col gap-1">
+              <span className="text-xs font-bold text-slate-500">Lieu d&apos;achat particulier</span>
+              <input
+                value={placeName}
+                maxLength={50}
+                onChange={(e) => setPlaceName(e.target.value)}
+                placeholder="Optionnel"
+                className={INPUT_CLASS}
+              />
+              <span className="text-[11px] text-slate-400">Permet de repérer dans la liste de courses ce qui est à acheter là-bas.</span>
             </label>
             {profileError && <p className="text-xs text-red-500">{profileError}</p>}
             {profileSaved && <p className="text-xs text-emerald-600">Profil enregistré.</p>}

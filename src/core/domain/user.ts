@@ -5,6 +5,7 @@ export interface AuthUser {
   email: string;
   role: UserRole;
   freezerName: string;
+  shoppingPlaceName?: string | null;
   displayName: string | null;
   isDemo: boolean;
   demoExpiresAt: string | null;
@@ -13,6 +14,7 @@ export interface AuthUser {
 
 export interface UpdateMeInput {
   freezerName?: string;
+  shoppingPlaceName?: string | null;
   displayName?: string | null;
   email?: string;
   shoppingCategoryOrder?: string[] | null;

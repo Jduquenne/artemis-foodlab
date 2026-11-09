@@ -21,6 +21,7 @@ export interface ApiItemCheck {
   stockOverride: number | null;
   freezerBagIds: string[];
   stock: number;
+  atPlace?: boolean;
 }
 
 export interface ApiSourceCheck {
@@ -42,6 +43,7 @@ export interface ApiShoppingExtra {
   foodId: string | null;
   recipeId: string | null;
   isChecked: boolean;
+  atPlace?: boolean;
   createdAt: string;
 }
 

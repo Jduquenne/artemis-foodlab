@@ -11,6 +11,7 @@ export interface ShoppingCheckState {
   stocks: Record<string, number>;
   freezerSelection: Record<string, string[]>;
   sourceChecked: Set<string>;
+  atPlace: Set<string>;
 }
 
 export interface SourceToggle {
@@ -59,8 +60,13 @@ export function buildShoppingCheckState(
   for (const item of householdItems) {
     if (itemCheckByHouseholdId.get(item.id)?.isChecked) checked.add(`household::${item.id}`);
   }
+  const atPlace = new Set<string>();
+  for (const [key, foodId] of keyToFoodId) {
+    if (itemCheckByFoodId.get(foodId)?.atPlace) atPlace.add(key);
+  }
   for (const extra of extras) {
     if (extra.isChecked) checked.add(`extra::${extra.id}`);
+    if (extra.atPlace) atPlace.add(`extra::${extra.id}`);
   }
 
   const sourceChecked = new Set<string>();
@@ -80,6 +86,7 @@ export function buildShoppingCheckState(
     stocks,
     freezerSelection,
     sourceChecked,
+    atPlace,
   };
 }
 

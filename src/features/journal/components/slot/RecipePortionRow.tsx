@@ -12,6 +12,7 @@ import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
 import { IngredientOverrideRow } from "./IngredientOverrideRow";
 import { FoodChoice } from "../../../../core/domain/foodGroup";
 import { AccompanimentChoice } from "../../../../core/domain/accompaniment";
+import { BaseVersionChoice } from "../../../../core/domain/baseVersion";
 import { personalizeRecipe } from "../../../../core/logic/foodGroup/foodChoiceLogic";
 import { useActiveProfile } from "../../../../shared/hooks/useActiveProfile";
 import { accompanimentLabelsFor } from "../../../../core/logic/accompaniment/accompanimentLogic";
@@ -21,9 +22,10 @@ export interface RecipePortionRowProps {
   planningSlotItemId?: string;
   mealChoices?: FoodChoice[];
   accompanimentChoices?: AccompanimentChoice[];
+  baseVersionChoices?: BaseVersionChoice[];
 }
 
-export const RecipePortionRow = ({ recipeId, planningSlotItemId, mealChoices, accompanimentChoices }: RecipePortionRowProps) => {
+export const RecipePortionRow = ({ recipeId, planningSlotItemId, mealChoices, accompanimentChoices, baseVersionChoices }: RecipePortionRowProps) => {
   const { portionOverrides, gramOverrides, ingredientOverrides } = useActiveJournalOverrides();
   const { setPortionOverride, setGramOverride, setIngredientOverride, resetIngredientOverride } = useJournalStore();
   const [expanded, setExpanded] = useState(false);
@@ -54,7 +56,7 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId, mealChoices, ac
   const baseGrams = catalogue.baseGrams[recipeId] ?? 0;
   const useGrams = isIngredient && baseGrams > 0;
   const itemIngredientOverrides = ingredientOverrides[key];
-  const kcal = computeItemMacros(catalogue, recipeId, key, portionOverrides, gramOverrides, ingredientOverrides, personalization).kcal;
+  const kcal = computeItemMacros(catalogue, recipeId, key, portionOverrides, gramOverrides, ingredientOverrides, personalization, baseVersionChoices).kcal;
 
   if (useGrams) {
     const defaultGrams = Math.round(baseGrams);

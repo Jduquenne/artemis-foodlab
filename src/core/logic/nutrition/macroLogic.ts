@@ -1,4 +1,5 @@
 import { Accompaniment, AccompanimentChoice, AccompanimentOption } from "../../domain/accompaniment";
+import { BaseVersionChoice } from "../../domain/baseVersion";
 import { Food, UNIT_WEIGHT_UNITS, Unit } from "../../domain/ingredient";
 import { Macronutrients } from "../../domain/nutrition";
 import { MealSlot } from "../../domain/planning";
@@ -7,6 +8,7 @@ import { getAllRecipeIds, isDish, isBase } from "../../domain/recipePredicates";
 import { Profile } from "../../domain/profile";
 import { FoodPersonalization, personalizeRecipeTree } from "../foodGroup/foodChoiceLogic";
 import { accompanimentsFor, resolveAccompaniment } from "../accompaniment/accompanimentLogic";
+import { applyBaseVersions } from "../baseVersion/baseVersionLogic";
 import { parseUnit } from "../unit/unitLogic";
 
 export const ZERO: Macronutrients = {
@@ -167,8 +169,9 @@ export function computeItemMacros(
   gramOverrides: Record<string, number>,
   ingredientOverrides: Record<string, Record<string, number>> = {},
   personalization?: MealPersonalization,
+  baseVersions?: readonly BaseVersionChoice[],
 ): Macronutrients {
-  const dish = computeDishMacros(catalogue, recipeId, itemKey, portionOverrides, gramOverrides, ingredientOverrides, personalization);
+  const dish = computeDishMacros(catalogue, recipeId, itemKey, portionOverrides, gramOverrides, ingredientOverrides, personalization, baseVersions);
   if (!personalization) return dish;
   const accompaniment = computeAccompanimentMacros(catalogue, recipeId, personalization);
   return addMacros(dish, scaleMacros(accompaniment, portionOverrides[itemKey] ?? 1));
@@ -182,18 +185,20 @@ function computeDishMacros(
   gramOverrides: Record<string, number>,
   ingredientOverrides: Record<string, Record<string, number>>,
   personalization?: FoodPersonalization,
+  baseVersions?: readonly BaseVersionChoice[],
 ): Macronutrients {
   const recipe = catalogue.plannable[recipeId];
   const itemIngredientOverrides = ingredientOverrides[itemKey];
   const catalogueRecipe = catalogue.recipes[recipeId];
+  const versioned = catalogueRecipe ? applyBaseVersions(catalogueRecipe, catalogue.recipes, baseVersions, catalogue.foods) : catalogue.recipes;
   const tree =
-    catalogueRecipe && personalization ? personalizeRecipeTree(catalogueRecipe, personalization, catalogue.recipes, catalogue.foods) : null;
+    catalogueRecipe && personalization ? personalizeRecipeTree(catalogueRecipe, personalization, versioned, catalogue.foods) : null;
   const fullRecipe = tree?.recipe ?? catalogueRecipe;
-  const recipes = tree?.recipes ?? catalogue.recipes;
+  const recipes = tree?.recipes ?? versioned;
   if (fullRecipe && itemIngredientOverrides && Object.keys(itemIngredientOverrides).length > 0) {
     return calculateOverriddenRecipeMacros(fullRecipe, itemIngredientOverrides, recipes, catalogue.foods);
   }
-  const isPersonalized = !!tree && (tree.recipe !== catalogueRecipe || tree.recipes !== catalogue.recipes);
+  const isPersonalized = versioned !== catalogue.recipes || (!!tree && (tree.recipe !== catalogueRecipe || tree.recipes !== versioned));
   const m = isPersonalized ? calculateRecipeMacros(fullRecipe, recipes, catalogue.foods) : catalogue.recipeMacros[recipeId];
   if (!m) return { ...ZERO };
   const baseGrams = isPersonalized ? calculateRecipeBaseGrams(fullRecipe, catalogue.foods) : catalogue.baseGrams[recipeId];
@@ -225,6 +230,7 @@ export function computeSlotMacros(
           profile
             ? { profile, mealChoices: slot.foodChoices?.[id] ?? [], accompanimentChoices: slot.accompanimentChoices?.[id] ?? [] }
             : undefined,
+          slot.baseVersionChoices?.[id],
         ),
       ),
     { ...ZERO },

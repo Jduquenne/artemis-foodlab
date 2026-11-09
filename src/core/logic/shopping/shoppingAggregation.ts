@@ -8,6 +8,7 @@ import { compareByName } from "../../utils/sortUtils";
 import { AccompanimentOption } from "../../domain/accompaniment";
 import { reachableGroupIngredients, resolveIngredientFood, personalizeRecipeTree, splitGroupIngredient } from "../foodGroup/foodChoiceLogic";
 import { accompanimentsFor, resolveAccompaniment } from "../accompaniment/accompanimentLogic";
+import { applyBaseVersions, isIndustrialChoice } from "../baseVersion/baseVersionLogic";
 import { parseUnit } from "../unit/unitLogic";
 
 function cleanRecipeName(name: string): string {
@@ -136,8 +137,9 @@ export function aggregateSlots(
       const recipeName = cleanRecipeName(details.name);
       const scaleFactor = slotScaleFactor(slot, recipeId, details.defaultPortions, catalogue.baseGrams);
       const choices = slot.foodChoices?.[recipeId] ?? [];
+      const recipes = applyBaseVersions(details, data, slot.baseVersionChoices?.[recipeId], catalogue.foods);
       const portionFactors = new Map(
-        reachableGroupIngredients(details, data).map((entry) => [entry.ingredient.id, entry.portionFactor]),
+        reachableGroupIngredients(details, recipes).map((entry) => [entry.ingredient.id, entry.portionFactor]),
       );
 
       const addGroupIngredient = (ing: Ingredient, choiceShare: number, fromBaseId?: string) => {
@@ -212,7 +214,7 @@ export function aggregateSlots(
 
       for (const ing of details.ingredients) {
         if (ing.baseId) {
-          const baseRecipe = data[ing.baseId];
+          const baseRecipe = recipes[ing.baseId];
           if (baseRecipe) {
             const basePortionScale = (ing.quantity ?? 1) / baseRecipe.defaultPortions;
             const combinedScale = scaleFactor * basePortionScale;
@@ -276,6 +278,7 @@ export function aggregateBases(slots: MealSlot[], catalogue: ShoppingCatalogue):
         if (!ing.baseId) continue;
         const baseRecipe = data[ing.baseId];
         if (!baseRecipe) continue;
+        if (isIndustrialChoice(slot.baseVersionChoices?.[recipeId], baseRecipe, catalogue.foods)) continue;
         addBase(ing.baseId, baseRecipe, (ing.quantity ?? 1) * scaleFactor, ing.unit);
       }
 

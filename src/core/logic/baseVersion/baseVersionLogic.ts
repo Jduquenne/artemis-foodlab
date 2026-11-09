@@ -1,4 +1,5 @@
 import { BaseVersion, BaseVersionChoice } from "../../domain/baseVersion";
+import { Food } from "../../domain/ingredient";
 import { RecipeDetails } from "../../domain/recipe";
 
 export function reachableBaseCodes(recipe: RecipeDetails, recipes: Record<string, RecipeDetails>): Set<string> {
@@ -54,4 +55,49 @@ export function pruneBaseVersionChoices(
   const reachable = reachableBaseCodes(recipe, recipes);
   const kept = choices.filter((choice) => reachable.has(choice.baseCode));
   return kept.length === choices.length ? choices : kept;
+}
+
+export function industrialBaseRecipe(base: RecipeDetails, foods: Record<string, Food>): RecipeDetails | null {
+  const equivalent = base.industrialEquivalent;
+  const food = equivalent ? foods[equivalent.foodId] : undefined;
+  if (!equivalent || !food) return null;
+  return {
+    ...base,
+    ingredients: [
+      {
+        id: `industrial-${base.code}`,
+        name: food.name,
+        quantity: equivalent.quantity * Math.max(base.defaultPortions, 1),
+        unit: equivalent.unit,
+        category: food.category,
+        foodId: food.id,
+      },
+    ],
+  };
+}
+
+export function isIndustrialChoice(
+  choices: readonly BaseVersionChoice[] | undefined,
+  base: RecipeDetails,
+  foods: Record<string, Food>,
+): boolean {
+  return findBaseVersion(choices, base.code) === "industrial" && industrialBaseRecipe(base, foods) !== null;
+}
+
+export function applyBaseVersions(
+  recipe: RecipeDetails,
+  recipes: Record<string, RecipeDetails>,
+  choices: readonly BaseVersionChoice[] | undefined,
+  foods: Record<string, Food>,
+): Record<string, RecipeDetails> {
+  if (!choices || choices.length === 0) return recipes;
+  const reachable = reachableBaseCodes(recipe, recipes);
+  const substitutes: Record<string, RecipeDetails> = {};
+  for (const choice of choices) {
+    const base = recipes[choice.baseCode];
+    if (choice.version !== "industrial" || !reachable.has(choice.baseCode) || !base) continue;
+    const substitute = industrialBaseRecipe(base, foods);
+    if (substitute) substitutes[choice.baseCode] = substitute;
+  }
+  return Object.keys(substitutes).length === 0 ? recipes : { ...recipes, ...substitutes };
 }

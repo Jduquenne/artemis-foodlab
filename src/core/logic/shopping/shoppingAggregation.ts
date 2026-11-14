@@ -10,6 +10,7 @@ import { reachableGroupIngredients, resolveIngredientFood, personalizeRecipeTree
 import { accompanimentsFor, resolveAccompaniment } from "../accompaniment/accompanimentLogic";
 import { applyBaseVersions, isIndustrialChoice } from "../baseVersion/baseVersionLogic";
 import { portionsPerPersonOf } from "../recipe/portionsPerPersonLogic";
+import { basePortionsOf } from "../recipe/cookedWeightLogic";
 import { parseUnit } from "../unit/unitLogic";
 
 function cleanRecipeName(name: string): string {
@@ -191,7 +192,7 @@ export function aggregateSlots(
         for (const optionIng of tree.recipe.ingredients) {
           const base = optionIng.baseId ? tree.recipes[optionIng.baseId] : undefined;
           if (optionIng.baseId && base) {
-            const baseScale = (scale * (optionIng.quantity ?? 1)) / Math.max(base.defaultPortions, 1);
+            const baseScale = (scale * (basePortionsOf(optionIng.quantity ?? 1, optionIng.unit, base) ?? 0)) / Math.max(base.defaultPortions, 1);
             for (const baseIng of base.ingredients) {
               const qty = (baseIng.quantity ?? 0) * baseScale;
               addIngredientToMap(baseIng, qty, buildIngredientSource(slot, recipeId, recipeName, baseIng, qty, optionIng.baseId, names), toSpecify.has(baseIng.id));
@@ -219,7 +220,7 @@ export function aggregateSlots(
         if (ing.baseId) {
           const baseRecipe = recipes[ing.baseId];
           if (baseRecipe) {
-            const basePortionScale = (ing.quantity ?? 1) / baseRecipe.defaultPortions;
+            const basePortionScale = (basePortionsOf(ing.quantity ?? 1, ing.unit, baseRecipe) ?? 0) / baseRecipe.defaultPortions;
             const combinedScale = scaleFactor * basePortionScale;
             for (const baseIng of baseRecipe.ingredients) {
               if (baseIng.foodGroupId && baseIng.foodId) {
@@ -283,7 +284,7 @@ export function aggregateBases(slots: MealSlot[], catalogue: ShoppingCatalogue):
         const baseRecipe = data[ing.baseId];
         if (!baseRecipe) continue;
         if (isIndustrialChoice(slot.baseVersionChoices?.[recipeId], baseRecipe, catalogue.foods)) continue;
-        addBase(ing.baseId, baseRecipe, (ing.quantity ?? 1) * scaleFactor, ing.unit);
+        addBase(ing.baseId, baseRecipe, (basePortionsOf(ing.quantity ?? 1, ing.unit, baseRecipe) ?? 0) * scaleFactor, ing.unit === Unit.G ? Unit.PORTION : ing.unit);
       }
 
       const accompaniments = accompanimentsFor(recipeId, catalogue.accompaniments ?? []);

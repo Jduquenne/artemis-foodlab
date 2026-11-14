@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-14 — Base in grams, step 4: shopping and linked bases (v6.144.4)
+- Done: every reader of a base ingredient quantity goes through `basePortionsOf`: `shoppingAggregation` (dish bases, bases to cook, accompaniment recipes), `basePortionsNeeded` (new `base` parameter, used by `getLinkedBases`), `collectGroupIngredients` (food choice portion factor). The other consumers (`candidateLogic`, `preferredFoodLogic`, `recipeSeasonLogic`, `baseVersionLogic`) only walk the tree and do not read the quantity. tsc + lint pass; not checked in a browser (nothing enters `g` until step 5).
+- Still open: step 5 (builder unit selector, validation blocking the save of a base whose weight is removed while used in `g`, recipe cards text « 150 g »).
+
 ## 2026-11-14 — Base in grams, step 3: conversion and macros (v6.144.3)
 - Done: API reply received (unit `g` already accepted, two new 400 rules, weight accepted on every kind; dev only). `basePortionsOf` (`cookedWeightLogic.ts`) converts a base ingredient quantity to portions (`g`: via the cooked weight, else unchanged); used by `calculateRecipeMacros` and `builderMacrosLogic`. tsc + lint pass; no browser check (nothing visible yet, the unit selector comes later).
 - Still open: steps 4 (shopping + linked bases), 5 (builder unit selector + validation + recipe cards text). Other consumers of the base ingredient quantity to review at step 4: `recipeScalingLogic`, `baseVersionLogic`, `foodChoiceLogic` (portionFactor), `candidateLogic`, `ingredientLines`.

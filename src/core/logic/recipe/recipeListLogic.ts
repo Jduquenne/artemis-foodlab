@@ -1,6 +1,7 @@
 import { OutdoorEntry, RecipeDetails } from "../../domain/recipe";
 import { isIngredient } from "../../domain/recipePredicates";
 import { includesText, normalizeQuery } from "../../utils/textUtils";
+import { basePortionsOf } from "./cookedWeightLogic";
 
 export interface CategoryRecipeEntry {
   id: string;
@@ -21,10 +22,10 @@ export interface LinkedBase {
   portions: number;
 }
 
-export function basePortionsNeeded(recipe: Pick<RecipeDetails, "ingredients">, baseId: string): number {
+export function basePortionsNeeded(recipe: Pick<RecipeDetails, "ingredients">, baseId: string, base: RecipeDetails): number {
   const total = recipe.ingredients
     .filter((ing) => ing.baseId === baseId)
-    .reduce((sum, ing) => sum + (ing.quantity ?? 0), 0);
+    .reduce((sum, ing) => sum + (basePortionsOf(ing.quantity ?? 0, ing.unit, base) ?? 0), 0);
   return Math.max(1, Math.round(total));
 }
 
@@ -39,7 +40,7 @@ export function getLinkedBases(
       seen.add(ing.baseId);
       const base = recipes[ing.baseId];
       if (base?.assets?.mealPhoto) {
-        result.push({ id: ing.baseId, name: base.name, portions: basePortionsNeeded(recipe, ing.baseId) });
+        result.push({ id: ing.baseId, name: base.name, portions: basePortionsNeeded(recipe, ing.baseId, base) });
       }
     }
   }

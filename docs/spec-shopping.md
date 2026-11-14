@@ -17,6 +17,10 @@ The Shopping view (`/shopping`) has three modes (`viewMode: 'meals' | 'ingredien
 
 `slotScaleFactor` takes the recipe's `portionsPerPerson`: slot persons and per-recipe persons give `persons × reference ÷ defaultPortions`, a dessert gives `reference ÷ defaultPortions`, nothing set = 1 (the whole recipe), gram overrides unchanged. Accompaniment shares divide the parts by the reference (persons stay persons). Example: 20 pancakes, 4 per person, 4 persons planned = 0.8 of the recipe (16 pancakes).
 
+## Base ingredient in grams (D-042, v6.144.4)
+
+A base ingredient with the unit `g` (grams of the base's cooked weight) is converted to base portions (`basePortionsOf`, `docs/spec-recipes.md`) before scaling: the base's own ingredients are multiplied by `portions ÷ base defaultPortions` as for a portion quantity, and the « bases to cook » list shows portions. A `g` ingredient whose base has no cooked weight contributes nothing.
+
 ## Ingredients « au choix » (D-033)
 
 `aggregateSlots` splits an ingredient carrying a `foodGroupId` with `splitGroupIngredient` (`core/logic/foodGroup/foodChoiceLogic.ts`): the planned parts are shared equally between the account's profiles (`ShoppingCatalogue.profiles`, no notion of who eats yet, #23); each profile's share uses its resolved food (meal choice → profile default → recipe default) and its quantity per portion (meal choice `quantity`, else the recipe's). Shares of the same food are merged. Example: recipe 30 g / portion, 4 parts, Léa mozzarella 60 g, Tom comté → mozzarella 120 g, comté 60 g.

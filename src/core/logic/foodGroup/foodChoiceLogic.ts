@@ -3,6 +3,7 @@ import { Food, Ingredient } from "../../domain/ingredient";
 import { Profile } from "../../domain/profile";
 import { RecipeDetails } from "../../domain/recipe";
 import { compareByName } from "../../utils/sortUtils";
+import { basePortionsOf } from "../recipe/cookedWeightLogic";
 
 export type FoodChoiceStatus = "none" | "partial" | "complete";
 
@@ -173,7 +174,8 @@ function collectGroupIngredients(
   for (const ingredient of recipe.ingredients) {
     if (ingredient.baseId) {
       const base = recipes[ingredient.baseId];
-      const baseFactor = (factor * (ingredient.quantity ?? 0)) / Math.max(base?.defaultPortions ?? 1, 1);
+      const basePortions = base ? (basePortionsOf(ingredient.quantity ?? 0, ingredient.unit, base) ?? 0) : 0;
+      const baseFactor = (factor * basePortions) / Math.max(base?.defaultPortions ?? 1, 1);
       if (base) collectGroupIngredients(base, rootCode, baseFactor, recipes, nextPath, found);
       continue;
     }

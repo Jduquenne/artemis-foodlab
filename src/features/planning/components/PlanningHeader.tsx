@@ -1,9 +1,12 @@
 import { useRef } from "react";
 import { ChevronLeft, ChevronRight, ShoppingCart, Sparkles } from "lucide-react";
+import { CostEstimate } from "../../../core/logic/price/priceLogic";
+import { PlanningCostLabel } from "./PlanningCostLabel";
 
 export interface PlanningHeaderProps {
   weekNumber: number;
   weekRange: string;
+  weekCost?: CostEstimate | null;
   selectedDayDate: string;
   isAnyEditing: boolean;
   isSelectionMode: boolean;
@@ -17,7 +20,7 @@ export interface PlanningHeaderProps {
 }
 
 export const PlanningHeader = ({
-  weekNumber, weekRange, selectedDayDate,
+  weekNumber, weekRange, weekCost, selectedDayDate,
   isAnyEditing, isSelectionMode, isAddMode, hasShoppingDays,
   onPrevWeek, onNextWeek, onDateChange, onEnterSelectionMode, onOpenGenerator,
 }: PlanningHeaderProps) => {
@@ -38,6 +41,7 @@ export const PlanningHeader = ({
           className="sm:pointer-events-none text-left text-xs sm:text-sm font-bold text-slate-400 hover:text-orange-500 sm:hover:text-slate-400 transition-colors"
         >
           Sem. {weekNumber} · {weekRange}
+          {weekCost && weekCost.total > 0 && <> · <PlanningCostLabel estimate={weekCost} /></>}
         </button>
       </div>
 

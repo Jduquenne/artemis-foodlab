@@ -64,6 +64,7 @@ export function estimateCost(lines: readonly PricedLine[], foods: Record<string,
   let total = 0;
   const missing: PricedLine[] = [];
   for (const line of lines) {
+    if (line.quantity <= 0) continue;
     const cost = lineCost(line, foods, prices);
     if (cost === null) missing.push(line);
     else total += cost;
@@ -85,6 +86,10 @@ export function gramsFrom(paidTotal: number, pricePerKg: number): number | null 
 
 export function formatEuro(amount: number): string {
   return `${amount.toFixed(2).replace(".", ",")} €`;
+}
+
+export function formatEuroRounded(amount: number): string {
+  return amount > 0 && amount < 1 ? "< 1 €" : `${Math.round(amount)} €`;
 }
 
 export type PriceEntryField = "quantity" | "paid" | "perKg";
@@ -147,5 +152,5 @@ export function priceEntryPayload(values: PriceEntryValues, gramsPerUnit: number
 }
 
 export function lineCosts(lines: readonly PricedLine[], foods: Record<string, Food>, prices: Map<string, FoodPrice>): Map<string, number | null> {
-  return new Map(lines.map((line) => [line.key, lineCost(line, foods, prices)]));
+  return new Map(lines.filter((line) => line.quantity > 0).map((line) => [line.key, lineCost(line, foods, prices)]));
 }

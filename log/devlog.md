@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-14 — Prices, step 5: planning estimate (v6.153.0)
+- Done (#47): `planningCost` (`core/logic/price/planningCostLogic.ts`, `aggregateSlots` per day and for the week at full planned quantities) and `usePlanningCost`; `PlanningCostLabel` in `DayColumnHeader`, `DayTabsBar` and the week line of `PlanningHeader`; `formatEuroRounded`. Household cost, not per profile (the kcal stay per profile).
+- Fix in the same commit: `estimateCost` and `lineCosts` now ignore lines without quantity (salt « au goût », extras without quantity); before, they counted as missing, so the shopping estimate was almost always amber and showed « prix ? » on them.
+- tsc + lint pass; **not checked in a browser** (to test: desktop headers, phone day tabs incl. the active one, tablet portrait headers, week total; a day with a food without price → amber; an empty day → nothing; changing persons changes the amount).
+
 ## 2026-11-14 — Prices, step 4: price entry when ticking (v6.152.0)
 - Done (#48): `askPriceOnCheck` in `useShoppingModeStore` (off by default), `OptionsSwitchRow` « Saisir le prix en cochant » (admins, not demo, effective store), `handleToggleItem` opens `PriceEntrySheet` with `inCart` after a successful check in store mode, footer link « Ne plus demander le prix pendant ces courses ». Shopping list part of the price feature complete. tsc + lint pass; **not checked in a browser** (to test: switch on, tick in store mode → sheet, « Passer » keeps the check, save, « Ne plus demander » turns the switch off; switch off → ticking only ticks; untick never opens; guest/demo never see the switch).
 - Still open: planning estimate (#47), graph (#50, later).

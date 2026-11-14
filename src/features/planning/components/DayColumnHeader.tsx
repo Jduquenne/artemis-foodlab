@@ -1,11 +1,14 @@
 import { Check, ShoppingCart } from 'lucide-react';
 import { formatDayDate } from '../../../core/utils/dateUtils';
+import { CostEstimate } from '../../../core/logic/price/priceLogic';
+import { PlanningCostLabel } from './PlanningCostLabel';
 
 export interface DayColumnHeaderProps {
     day: string;
     dayIndex: number;
     monday: Date;
     kcal: number;
+    cost?: CostEstimate | null;
     isSelectionMode: boolean;
     selected: boolean;
     confirmed: boolean;
@@ -13,7 +16,7 @@ export interface DayColumnHeaderProps {
     onToggle: () => void;
 }
 
-export const DayColumnHeader = ({ day, dayIndex, monday, kcal, isSelectionMode, selected, confirmed, blocked, onToggle }: DayColumnHeaderProps) => (
+export const DayColumnHeader = ({ day, dayIndex, monday, kcal, cost, isSelectionMode, selected, confirmed, blocked, onToggle }: DayColumnHeaderProps) => (
     <div
         onClick={isSelectionMode && !blocked ? onToggle : undefined}
         className={[
@@ -32,9 +35,10 @@ export const DayColumnHeader = ({ day, dayIndex, monday, kcal, isSelectionMode, 
                 {formatDayDate(monday, dayIndex)}
             </span>
         </div>
-        {kcal > 0 && (
-            <span className="font-semibold normal-case tracking-normal opacity-60 text-[11px]">
-                {kcal} kcal
+        {(kcal > 0 || (cost && cost.total > 0)) && (
+            <span className="flex items-center gap-1 font-semibold normal-case tracking-normal text-[11px] tablet:flex-col tablet:gap-0">
+                {kcal > 0 && <span className="opacity-60">{kcal} kcal</span>}
+                {cost && cost.total > 0 && <PlanningCostLabel estimate={cost} className="opacity-80" />}
             </span>
         )}
     </div>

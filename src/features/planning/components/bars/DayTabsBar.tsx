@@ -1,10 +1,13 @@
 import { addDays } from 'date-fns';
+import { CostEstimate } from '../../../../core/logic/price/priceLogic';
+import { PlanningCostLabel } from '../PlanningCostLabel';
 
 export interface DayTabsBarProps {
     days: readonly string[];
     selectedDay: string;
     monday: Date;
     dayKcal: Record<string, number>;
+    dayCost?: Record<string, CostEstimate> | null;
     isSelectionMode: boolean;
     isDraft: (day: string) => boolean;
     isConfirmed: (day: string) => boolean;
@@ -15,7 +18,7 @@ export interface DayTabsBarProps {
 }
 
 export const DayTabsBar = ({
-    days, selectedDay, monday, dayKcal, isSelectionMode,
+    days, selectedDay, monday, dayKcal, dayCost, isSelectionMode,
     isDraft, isConfirmed, hasMeals,
     atMax, onSelectDay, onToggleDraft,
 }: DayTabsBarProps) => (
@@ -28,6 +31,7 @@ export const DayTabsBar = ({
             const blocked = isSelectionMode && !draft && atMax;
             const dayNum = addDays(monday, i).getDate();
             const kcal = dayKcal[day] ?? 0;
+            const cost = dayCost?.[day];
 
             return (
                 <button
@@ -49,6 +53,9 @@ export const DayTabsBar = ({
                     </span>
                     {kcal > 0 && (
                         <span className="text-[8px] font-semibold leading-none mt-0.5 opacity-60">{kcal}</span>
+                    )}
+                    {cost && cost.total > 0 && (
+                        <PlanningCostLabel estimate={cost} compact className={`text-[8px] font-semibold leading-none mt-0.5 ${isActive || draft ? 'text-white! opacity-80' : 'opacity-70'}`} />
                     )}
                     <span className={[
                         'w-1 h-1 rounded-full mt-0.5',

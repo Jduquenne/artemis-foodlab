@@ -25,6 +25,7 @@ import { getWeekNumber, getWeekYear, getMonday, getWeekRange, dayNameOf } from '
 import { toIsoDate } from '../../core/utils/dateUtils';
 import { weekDayKcal } from '../../core/logic/planning/dayKcalLogic';
 import { useMacroCatalogue } from '../../shared/hooks/useMacroCatalogue';
+import { usePlanningCost } from '../../shared/hooks/usePlanningCost';
 import { useRefreshStore } from '../../shared/store/useRefreshStore';
 import { useNotificationStore } from '../../shared/store/useNotificationStore';
 import { BulkPlanningResult } from '../../core/domain/planning';
@@ -144,6 +145,8 @@ export const PlanningModule = () => {
         () => weekDayKcal(macroCatalogue, planningData, activeProfile ?? undefined),
         [macroCatalogue, planningData, activeProfile]
     );
+
+    const planningCost = usePlanningCost(planningData);
 
     const activeMeal = useMemo(
         () => {
@@ -443,6 +446,7 @@ export const PlanningModule = () => {
                 <PlanningHeader
                     weekNumber={weekNumber}
                     weekRange={weekRange}
+                    weekCost={planningCost?.week ?? null}
                     selectedDayDate={selectedDayDate}
                     isAnyEditing={isAnyEditing}
                     isSelectionMode={isSelectionMode}
@@ -469,6 +473,7 @@ export const PlanningModule = () => {
                     selectedDay={selectedDay}
                     monday={monday}
                     dayKcal={dayKcal}
+                    dayCost={planningCost?.days ?? null}
                     isSelectionMode={isSelectionMode}
                     isDraft={shopping.isDraft}
                     isConfirmed={shopping.isConfirmed}
@@ -524,6 +529,7 @@ export const PlanningModule = () => {
                                     dayIndex={i}
                                     monday={monday}
                                     kcal={dayKcal[day]}
+                                    cost={planningCost?.days[day] ?? null}
                                     isSelectionMode={isSelectionMode}
                                     selected={selected}
                                     confirmed={!isSelectionMode && shopping.isConfirmed(day)}

@@ -42,6 +42,13 @@ A recipe may carry `portionsPerPerson` (1 by default, `docs/spec-recipes.md`): t
 
 The kcal shown per day in the planning (day tabs on mobile, column headers on desktop) come from `weekDayKcal(catalogue, slots, profile)` (`core/logic/planning/dayKcalLogic.ts`), which sums `computeDayMacros` per day with the **active profile** (`useActiveProfile`), exactly like the journal: the profile's accompaniment (meal choice, then profile default, then accompaniment default, « Sans accompagnement » counts nothing) and its food choices are included. Since issue #38 (v6.132.2) the planning used to call `computeDayMacros` without profile, so accompaniments and personalised foods were left out. Without an active profile the plain recipe values are used. Per-meal persons / grams overrides are still not applied here (unchanged).
 
+## Day and week price estimate (D-043, issue #47, v6.153.0)
+
+Indicative cost of what is planned, shown to every account when an effective price store exists and at least one price is known (`usePlanningCost`, `core/logic/price/planningCostLogic.ts`):
+- **Same quantities as the shopping list**: `aggregateSlots` over the day's slots (persons, portions per person, food choices, accompaniments, base versions, bases one level), each line at its **full planned quantity** (no stock, no checks), priced by `estimateCost` with the latest price of the effective store. Not tied to the active profile (unlike the kcal, which are per profile): it is the household's cost.
+- Lines without quantity (« au goût ») are ignored; a line without food link, price or usable conversion is missing and turns the amount amber (`PlanningCostLabel`, title « Estimation indicative, incomplète : N articles sans prix »).
+- **Where**: next to the kcal in the desktop column headers (`DayColumnHeader`, « 1850 kcal · ≈ 12 € », stacked on portrait tablet), under the kcal in the mobile day tabs (`DayTabsBar`, compact « 12€ », white on the active tab), and the week total after « Sem. N · <range> » in `PlanningHeader`. Whole euros (`formatEuroRounded`, « < 1 € » under one euro). Nothing when the total is 0.
+
 ## Placing a dish from elsewhere
 
 `placeMainDish(target, recipeId, choices)` (`planningService`) writes a main dish into any lunch / dinner slot without the planning screen: `syncWeekFromApi`, `replaceMainRecipe` on the cached slot, `saveSlot` (same diff and batch call as every slot save). `slotTargetOf(isoDate, slot)` (`batchToMenuLogic.ts`) gives the ISO year / week / day name. First consumer: freezer batch « Ajouter au menu » (`docs/spec-freezer.md`).

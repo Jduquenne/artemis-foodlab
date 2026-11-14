@@ -10,7 +10,7 @@ export interface StockEntrySheetProps {
     item: ConsolidatedIngredient;
     needed: number;
     stock: number;
-    onSave: (value: number) => Promise<void>;
+    onSave: (value: number) => Promise<boolean>;
     onClose: () => void;
 }
 
@@ -21,7 +21,7 @@ export const StockEntrySheet = ({ item, needed, stock, onSave, onClose }: StockE
 
     const save = (value: number) => {
         if (pending) return;
-        onSave(value).then(onClose, () => undefined);
+        onSave(value).then((saved) => { if (saved) onClose(); }, () => undefined);
     };
 
     return (

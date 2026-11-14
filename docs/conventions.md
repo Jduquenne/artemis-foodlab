@@ -64,7 +64,7 @@ Any mutation triggered by a click (except a form with its own local `submitting`
 - `shared/components/ui/CheckToggleIcon.tsx` — replaces a `CheckCircle2`/`Circle` pair with an animated `Loader2` when `pending`.
 - Key at the level of the **business action**, not the HTTP request: an action that fires several calls (e.g. check all ingredients of a recipe) uses one key per affected element, never one per request — otherwise the spinner flickers. (Why not in `apiClient`: `docs/decisions.md` D-008.)
 - **Pitfall**: never wrap a free-text `onChange` with `withPending` — the guard can drop the last keystroke if it lands while a previous request is in flight, and nothing resends it. Reserved for discrete interactions (click, blur, explicit confirmation). Better: do not save on each keystroke at all — commit on blur / Enter with a local draft (`RecipePortionRow` grams, `IngredientOverrideRow`, shopping stock).
-- List rows needing these hooks are their own components (`IngredientCheckRow`, `HouseholdCheckRow`, `FreezerBagRow`, `SourceGroupRow`, `RecipeBaseGroupSection`).
+- List rows needing these hooks are their own components (`ShoppingItemRow`, `HouseholdCheckRow`, `FreezerBagRow`, `SourceGroupRow`, `RecipeBaseGroupSection`, `PlaceToggleRow`).
 - Wired on: shopping, household, journal (portion stepper), freezer, planning (delete, persons/grams, copy, pickers, « ajouter au planning » and drag & drop with a spinner on the slots involved, dessert choice on drag & drop, shopping days selection). Dashboard / Account / Import / Recipe Builder keep their own local `submitting` state in their modals — do not migrate them without reason.
 
 ## Refactoring safety and verification habits

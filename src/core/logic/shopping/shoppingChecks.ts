@@ -9,7 +9,7 @@ export function buildSourceCheckKey(
   return `${ingredientKey}::${source.recipeId}::${source.day}::${source.slot}`;
 }
 
-export function checkedSourcesQuantity(ing: ConsolidatedIngredient, sourceChecked: Set<string>): number {
+function checkedSourcesQuantity(ing: ConsolidatedIngredient, sourceChecked: Set<string>): number {
   return sumBy(
     ing.sources.filter((s) => sourceChecked.has(buildSourceCheckKey(ing.key, s))),
     (s) => s.quantity,

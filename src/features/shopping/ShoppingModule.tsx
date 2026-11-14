@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { ShoppingCart, CalendarDays, ArrowLeft } from 'lucide-react';
+import { CalendarDays, ArrowLeft } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useNavigate } from 'react-router-dom';
 import { ConsolidatedIngredient, RecipeCard, ShoppingLayout } from '../../core/domain/shopping';
@@ -11,7 +11,6 @@ import {
     groupIngredients,
     filterGroupedIngredients,
     countCoveredByGroup,
-    assignIngredientColumns,
 } from '../../core/logic/shopping/shoppingGrouping';
 import { buildRecipeCards } from '../../core/logic/shopping/shoppingRecipeCards';
 import { getShoppingListForDays, getBasesForDays } from '../../core/services/shoppingListService';
@@ -19,26 +18,20 @@ import { getRecords as getHouseholdRecords } from '../../core/services/household
 import { syncWeekFromApi } from '../../core/services/planningService';
 import { ExtraInput } from '../../core/services/shoppingPeriodService';
 import { markScrolling } from '../../shared/utils/scrollGuard';
-import { distributeToColumns } from '../../core/utils/columnUtils';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { useAuthStore } from '../../shared/store/useAuthStore';
 import { resolveShoppingAisles } from '../../core/logic/shopping/shoppingCategoryOrderLogic';
 import { useCustomShoppingCategoryStore } from '../../shared/store/useCustomShoppingCategoryStore';
 import { CategoryOrderModal } from './components/order/CategoryOrderModal';
 import { ColBreakpoint, useColCount } from '../../shared/hooks/useColCount';
-
-const SHOPPING_COLUMNS: readonly ColBreakpoint[] = [
-    { minWidth: 1024, cols: 3 },
-    { minWidth: 768, cols: 2 },
-];
 import { useFreezerStock } from '../../shared/hooks/useFreezerStock';
 import { useShoppingPeriodChecks } from '../../shared/hooks/useShoppingPeriodChecks';
-import { ShoppingCategoryCard } from './components/ingredients/ShoppingCategoryCard';
-import { RecipeShoppingCard } from './components/meals/RecipeShoppingCard';
+import { ShoppingAislesView } from './components/ingredients/ShoppingAislesView';
+import { ShoppingMealsView } from './components/meals/ShoppingMealsView';
 import { ShoppingItemSheet } from './components/sheets/ShoppingItemSheet';
 import { StockEntrySheet } from './components/sheets/StockEntrySheet';
 import { PricePerKgModal } from './components/PricePerKgModal';
-import { HouseholdShoppingCard } from './components/HouseholdShoppingCard';
+import { ShoppingEmptyState } from './components/ShoppingEmptyState';
 import { HouseholdPanel } from './components/household/HouseholdPanel';
 import { AddExtraModal } from './components/AddExtraModal';
 import { ShoppingHeader } from './components/header/ShoppingHeader';
@@ -49,7 +42,12 @@ import { useRefreshStore } from '../../shared/store/useRefreshStore';
 import { useFoodsSnapshot, useHouseholdSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
 import { useProfileStore } from '../../shared/store/useProfileStore';
 import { useAccompanimentStore } from '../../shared/store/useAccompanimentStore';
-import { sumBy } from '../../core/utils/collectionUtils';
+import { shoppingFilterPills } from '../../core/logic/shopping/shoppingFilterPills';
+
+const SHOPPING_COLUMNS: readonly ColBreakpoint[] = [
+    { minWidth: 1024, cols: 3 },
+    { minWidth: 768, cols: 2 },
+];
 
 const NO_INGREDIENTS: ConsolidatedIngredient[] = [];
 
@@ -189,8 +187,6 @@ export const ShoppingModule = () => {
         [householdItems, effectivePlaceFilter]
     );
 
-    const visibleHouseholdItems = shownHouseholdItems;
-
     const coveredByGroup = useMemo(
         () => countCoveredByGroup(allGroupedItems, stocks, sourceChecked),
         [allGroupedItems, stocks, sourceChecked]
@@ -199,16 +195,6 @@ export const ShoppingModule = () => {
     const uncheckedCount = useMemo(
         () => computeUncheckedCount(placeIngredients ?? [], checked, stocks, sourceChecked, shownHouseholdItems),
         [placeIngredients, checked, stocks, sourceChecked, shownHouseholdItems]
-    );
-
-    const ingredientColumns = useMemo(
-        () => assignIngredientColumns(allGroupedItems, groupedItems, colCount),
-        [allGroupedItems, groupedItems, colCount]
-    );
-
-    const mealColumns = useMemo(
-        () => distributeToColumns(recipeCards, c => c.directIngredients.length + sumBy(c.baseGroups, b => b.ingredients.length), colCount),
-        [recipeCards, colCount]
     );
 
     const daysLabel = useMemo(() => {
@@ -229,19 +215,12 @@ export const ShoppingModule = () => {
     };
 
     const hasList = !!ingredients && shoppingDays.length > 0;
-    const filterPills: ActiveFilterPill[] = [
-        ...(effectivePlaceFilter !== 'all' && placeName
-            ? [{
-                key: 'place',
-                label: effectivePlaceFilter === 'place' ? `Seulement ${placeName}` : `Hors ${placeName}`,
-                clearLabel: 'Retirer le filtre de lieu',
-                onClear: () => setPlaceFilter('all'),
-            }]
-            : []),
-        ...(layout === 'meals'
-            ? [{ key: 'layout', label: 'Par repas', clearLabel: "Revenir à l'affichage par rayon", onClear: () => setLayout('aisles') }]
-            : []),
-    ];
+    const filterPills: ActiveFilterPill[] = shoppingFilterPills(effectivePlaceFilter, placeName, layout).map((pill) => ({
+        key: pill.kind,
+        label: pill.label,
+        clearLabel: pill.clearLabel,
+        onClear: pill.kind === 'place' ? () => setPlaceFilter('all') : () => setLayout('aisles'),
+    }));
 
     return (
         <>
@@ -289,125 +268,65 @@ export const ShoppingModule = () => {
                     {showHousehold ? (
                         <HouseholdPanel colCount={colCount} />
                     ) : shoppingDays.length === 0 ? (
-                        <div className="h-full flex flex-col items-center justify-center gap-4 text-slate-400">
-                            <CalendarDays className="w-12 h-12 opacity-30" />
-                            <div className="text-center">
-                                <p className="font-medium text-slate-500">Aucune période de courses sélectionnée</p>
-                                <p className="text-sm mt-1">Va dans le planning pour choisir tes jours</p>
-                            </div>
-                            <button
-                                onClick={() => navigate('/planning')}
-                                className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-5 py-2.5 rounded-xl font-bold transition-colors"
-                            >
-                                <CalendarDays className="w-4 h-4" />
-                                Aller au planning
-                            </button>
-                        </div>
+                        <ShoppingEmptyState
+                            title="Aucune période de courses sélectionnée"
+                            hint="Va dans le planning pour choisir tes jours"
+                            icon={<CalendarDays className="w-12 h-12 opacity-30" />}
+                            action={
+                                <button
+                                    onClick={() => navigate('/planning')}
+                                    className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-5 py-2.5 rounded-xl font-bold transition-colors"
+                                >
+                                    <CalendarDays className="w-4 h-4" />
+                                    Aller au planning
+                                </button>
+                            }
+                        />
                     ) : !ingredients ? (
                         <div className="h-full flex items-center justify-center text-slate-400">
                             Chargement...
                         </div>
                     ) : layout === 'meals' ? (
-                        ingredients.length === 0 ? (
-                            <div className="h-full flex flex-col items-center justify-center gap-3 text-slate-400">
-                                <ShoppingCart className="w-12 h-12 opacity-30" />
-                                <p className="font-medium">Aucun repas planifié sur cette période</p>
-                                <p className="text-sm">Planifie des repas pour générer la liste</p>
-                            </div>
-                        ) :
-                            <div className="grid gap-4 pb-4 items-start" style={{ gridTemplateColumns: `repeat(${colCount}, 1fr)` }}>
-                                {mealColumns.map((col, ci) => (
-                                    <div key={ci} className="flex flex-col gap-4">
-                                        {col.map((card, i) => (
-                                            <div key={card.recipeId} className="animate-fade-in-up" style={{ animationDelay: `${(ci + i) * 60}ms` }}>
-                                                <RecipeShoppingCard
-                                                    recipeName={card.recipeName}
-                                                    directIngredients={card.directIngredients}
-                                                    baseGroups={card.baseGroups}
-                                                    sourceChecked={sourceChecked}
-                                                    checkableKeys={checkableKeys}
-                                                    placeName={placeName}
-                                                    atPlace={atPlace}
-                                                    onToggleAllAtPlace={setAtPlaceForKeys}
-                                                    onToggleSource={toggleSourceCheck}
-                                                    onToggleBatch={toggleSourceBatch}
-                                                    onOpenDetail={setDetailKey}
-                                                />
-                                            </div>
-                                        ))}
-                                    </div>
-                                ))}
-                            </div>
-                    ) : (displayIngredients?.length ?? 0) === 0 && visibleHouseholdItems.length === 0 ? (
-                        <div className="h-full flex flex-col items-center justify-center gap-3 text-slate-400">
-                            <ShoppingCart className="w-12 h-12 opacity-30" />
-                            <p className="font-medium">Aucun repas planifié sur cette période</p>
-                            <p className="text-sm">Planifie des repas ou ajoute un article</p>
-                        </div>
+                        <ShoppingMealsView
+                            cards={recipeCards}
+                            colCount={colCount}
+                            sourceChecked={sourceChecked}
+                            checkableKeys={checkableKeys}
+                            placeName={placeName}
+                            atPlace={atPlace}
+                            onToggleAllAtPlace={setAtPlaceForKeys}
+                            onToggleSource={toggleSourceCheck}
+                            onToggleBatch={toggleSourceBatch}
+                            onOpenDetail={setDetailKey}
+                        />
+                    ) : (displayIngredients?.length ?? 0) === 0 && shownHouseholdItems.length === 0 ? (
+                        <ShoppingEmptyState title="Aucun repas planifié sur cette période" hint="Planifie des repas ou ajoute un article" />
                     ) : effectivePlaceFilter !== 'all' && (placeIngredients?.length ?? 0) === 0 && shownHouseholdItems.length === 0 ? (
-                        <div className="h-full flex flex-col items-center justify-center gap-3 text-slate-400">
-                            <ShoppingCart className="w-12 h-12 opacity-30" />
-                            <p className="font-medium text-slate-500">
-                                {effectivePlaceFilter === 'place' ? `Rien n'est marqué à acheter à ${placeName}` : 'Rien à acheter ailleurs'}
-                            </p>
-                            <p className="text-sm">
-                                {effectivePlaceFilter === 'place' ? 'Marque des lignes avec le repère de la liste' : 'Tout est marqué comme à acheter sur place'}
-                            </p>
-                        </div>
-                    ) : groupedItems.length === 0 && visibleHouseholdItems.length === 0 ? (
-                        <div className="h-full flex flex-col items-center justify-center gap-3 text-slate-400">
-                            <ShoppingCart className="w-12 h-12 opacity-30" />
-                            <p className="font-medium text-slate-500">Tout est couvert !</p>
-                            <p className="text-sm">Rien à acheter — tout est en stock ou coché</p>
-                        </div>
+                        <ShoppingEmptyState
+                            title={effectivePlaceFilter === 'place' ? `Rien n'est marqué à acheter à ${placeName}` : 'Rien à acheter ailleurs'}
+                            hint={effectivePlaceFilter === 'place' ? "Ouvre le détail d'un article pour le marquer" : 'Tout est marqué comme à acheter sur place'}
+                        />
+                    ) : groupedItems.length === 0 && shownHouseholdItems.length === 0 ? (
+                        <ShoppingEmptyState title="Tout est couvert !" hint="Rien à acheter : tout est déjà à la maison" />
                     ) : (
-                        <>
-                            {groupedItems.length > 0 && (
-                                <div className="grid gap-4 pb-4 items-start" style={{ gridTemplateColumns: `repeat(${colCount}, 1fr)` }}>
-                                    {ingredientColumns.map((col, ci) => (
-                                        <div key={ci} className="flex flex-col gap-4">
-                                            {col.map((group, i) => (
-                                                <div key={group.key} className="animate-fade-in-up" style={{ animationDelay: `${(ci + i) * 60}ms` }}>
-                                                    <ShoppingCategoryCard
-                                                        label={group.label}
-                                                        items={group.list}
-                                                        mode={mode}
-                                                        coveredCount={coveredByGroup[group.key] ?? 0}
-                                                        checked={checked}
-                                                        stocks={stocks}
-                                                        sourceChecked={sourceChecked}
-                                                        placeName={placeName}
-                                                        atPlace={atPlace}
-                                                        foodBags={foodBags}
-                                                        onToggle={toggleItem}
-                                                        onOpenStock={setStockKey}
-                                                        onOpenDetail={setDetailKey}
-                                                    />
-                                                </div>
-                                            ))}
-                                            {ci === ingredientColumns.length - 1 && visibleHouseholdItems.length > 0 && (
-                                                <HouseholdShoppingCard
-                                                    items={visibleHouseholdItems}
-                                                    checked={checked}
-                                                    onToggle={toggleItem}
-                                                    onManage={() => setShowHousehold(true)}
-                                                />
-                                            )}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                            {groupedItems.length === 0 && visibleHouseholdItems.length > 0 && (
-                                <div className="pb-4">
-                                    <HouseholdShoppingCard
-                                        items={visibleHouseholdItems}
-                                        checked={checked}
-                                        onToggle={toggleItem}
-                                        onManage={() => setShowHousehold(true)}
-                                    />
-                                </div>
-                            )}
-                        </>
+                        <ShoppingAislesView
+                            allGroups={allGroupedItems}
+                            groups={groupedItems}
+                            colCount={colCount}
+                            mode={mode}
+                            coveredByGroup={coveredByGroup}
+                            checked={checked}
+                            stocks={stocks}
+                            sourceChecked={sourceChecked}
+                            placeName={placeName}
+                            atPlace={atPlace}
+                            foodBags={foodBags}
+                            householdItems={shownHouseholdItems}
+                            onToggle={toggleItem}
+                            onOpenStock={setStockKey}
+                            onOpenDetail={setDetailKey}
+                            onManageHousehold={() => setShowHousehold(true)}
+                        />
                     )}
                 </div>
             </div>

@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-14 — Shopping redesign, step 4: cleanup and docs (v6.149.2)
+- Done (after the owner's review question, three gaps fixed in the same commit): the stock sheet and the extra deletion closed even when the API failed (`setStock` and `removeExtra` now return a boolean, the sheets close on success only); the two list views left `ShoppingModule` (`ShoppingAislesView`, `ShoppingMealsView`, which compute their own columns; module 444 → 381 lines); the filter pills are built by the pure `shoppingFilterPills`. Not done: no portrait-tablet check (rule 16), to look at in 820×1180.
+- Also: `ShoppingEmptyState` replaces the five inline empty states of `ShoppingModule` (the place hint now says « Ouvre le détail d'un article pour le marquer », the pin left the row); `visibleHouseholdItems` alias removed; `checkedSourcesQuantity` no longer exported (no consumer outside `shoppingChecks.ts`). Docs: `spec-shopping.md` (stale references to the deleted rows, the toolbar and « Complète / Manquants » rewritten), `conventions.md` (row components list), roadmap. Unused-export sweep of `core/logic/shopping/`: only the pre-existing `DEFAULT_SHOPPING_CATEGORY_ORDER` remains exported without outside consumer (used inside its file, left as is). tsc + lint pass; **not checked in a browser**.
+- Still open: owner test of the whole redesign, then « clore issue 55 » (and #43), then the price feature (#44 API prompt already given).
+
 ## 2026-11-14 — Fix: unchecking a whole meal in « Par repas » (v6.149.1)
 - Problem (owner test): checking a whole meal worked, unchecking did nothing. Likely cause (from the code, not reproduced in a browser): a line without a catalogue food cannot get a source check (`collectSourceCheckRequests` skips keys without `foodId`), so the meal never counted as fully checked and the header kept sending « check ».
 - Done: `checkableKeys` exposed by `useShoppingPeriodChecks`, `checkableCardIngredients` in `shoppingChecks.ts`; meal and base headers count and toggle only checkable lines; a non-checkable line has no check circle and is disabled. tsc + lint pass; **not checked in a browser**.

@@ -149,15 +149,17 @@ export function useShoppingPeriodChecks(
     if (updated) patch(periodId, (p) => ({ ...p, itemChecks: upsertAllById(p.itemChecks, updated) }));
   };
 
-  const setStock = async (key: string, value: number) => {
-    if (!periodId) return;
+  const setStock = async (key: string, value: number): Promise<boolean> => {
+    if (!periodId) return false;
     const foodId = state.keyToFoodId.get(key);
-    if (!foodId) return;
+    if (!foodId) return false;
     const existing = state.itemCheckByFoodId.get(foodId);
     const updated = await withPending(`shopping-stock:${key}`, () =>
       upsertItemCheck(periodId, existing?.id, { foodId }, { stockOverride: value > 0 ? value : null }),
     ).catch(() => null);
-    if (updated) patchItemCheck(periodId, updated);
+    if (!updated) return false;
+    patchItemCheck(periodId, updated);
+    return true;
   };
 
   const toggleSourceBatch = async (toggles: SourceToggle[], isChecked: boolean) => {
@@ -197,12 +199,14 @@ export function useShoppingPeriodChecks(
     }
   };
 
-  const removeExtra = async (extraId: string) => {
-    if (!periodId) return;
-    await withPending(`shopping-extra-delete:${extraId}`, async () => {
+  const removeExtra = async (extraId: string): Promise<boolean> => {
+    if (!periodId) return false;
+    const deleted = await withPending(`shopping-extra-delete:${extraId}`, async () => {
       await deleteExtra(periodId, extraId);
       patch(periodId, (p) => ({ ...p, extras: p.extras.filter((e) => e.id !== extraId) }));
-    }).catch(() => undefined);
+      return true;
+    }).catch(() => false);
+    return deleted ?? false;
   };
 
   return {

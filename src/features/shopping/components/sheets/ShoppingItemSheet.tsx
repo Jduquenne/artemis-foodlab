@@ -21,7 +21,7 @@ export interface ShoppingItemSheetProps {
     onToggleSource: (ingredientKey: string, sources: IngredientSource[], checked: boolean) => void;
     onToggleBag: (bagId: string) => void;
     onEditExtra: (extraId: string) => void;
-    onDeleteExtra: (extraId: string) => Promise<void>;
+    onDeleteExtra: (extraId: string) => Promise<boolean>;
     onClose: () => void;
 }
 
@@ -84,7 +84,7 @@ export const ShoppingItemSheet = ({
                     <button
                         type="button"
                         disabled={deletePending}
-                        onClick={() => item.extraId && onDeleteExtra(item.extraId).then(onClose, () => undefined)}
+                        onClick={() => item.extraId && onDeleteExtra(item.extraId).then((deleted) => { if (deleted) onClose(); }, () => undefined)}
                         className="flex items-center justify-center gap-2 py-3 rounded-2xl border border-slate-200 bg-surface text-red-600 font-bold disabled:opacity-60"
                     >
                         {deletePending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}

@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-14 — Shopping redesign, step 1: header, mode, Options menu (v6.147.0)
+- Done: issue #55 created (mock-up validated by the owner, includes #43). New `features/shopping/components/header/` (`ShoppingHeader`, `ShoppingModeToggle`, `ShoppingOptionsMenu` on `FloatingMenu`, `OptionsMenuSection`, `OptionsRadioRow`, `OptionsToolRow`, `ActiveFilterPills`), `useShoppingModeStore` (persisted `cipe_shopping_mode`), types `ShoppingMode` / `ShoppingLayout`. Tabs Repas / Ingrédients / Articles, « Complète / Manquants » and the toolbar icons removed; `PlaceFilterControl` deleted (no consumer left). The store mode reuses the « missing » filter. tsc + lint pass; **not checked in a browser** (to test with `npm run dev`: phone and desktop, both modes, every Options entry, the pills, household back arrow, copy).
+- Still open: step 2 (rows, stock entry, detail sheet), step 3 (Par repas), step 4 (cleanup, docs).
+
 ## 2026-11-14 — Issues #51, #52, #53, #54 closed
 - Done: all four closed by the owner after tests (prod for #51 and #52). Roadmap items 12 and 13 added.
 - Still open: not done on purpose: planning in grams, grams per person, link with D-040, per-100 g macros, override of accompaniment quantities in the journal.

@@ -32,6 +32,10 @@ export interface ConsolidatedIngredient {
   customCategoryId?: string;
 }
 
+export type ShoppingMode = "home" | "store";
+
+export type ShoppingLayout = "aisles" | "meals";
+
 export const MAX_CUSTOM_SHOPPING_CATEGORIES = 30;
 
 export interface CustomShoppingCategory {

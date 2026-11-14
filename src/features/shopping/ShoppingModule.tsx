@@ -1,9 +1,9 @@
 import { useState, useMemo, useEffect } from 'react';
-import { ShoppingCart, CalendarDays, Clipboard, Check, Scale, Plus, ListOrdered } from 'lucide-react';
+import { ShoppingCart, CalendarDays, ArrowLeft } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useNavigate } from 'react-router-dom';
 import { FreezerBag } from '../../core/domain/freezer';
-import { ConsolidatedIngredient, IngredientSource, RecipeCard } from '../../core/domain/shopping';
+import { ConsolidatedIngredient, IngredientSource, RecipeCard, ShoppingLayout } from '../../core/domain/shopping';
 import { ApiShoppingExtra, extrasToIngredients } from '../../core/logic/shopping/shoppingApiMapper';
 import { computeUncheckedCount } from '../../core/logic/shopping/shoppingChecks';
 import { buildShoppingClipboardText } from '../../core/logic/shopping/shoppingClipboard';
@@ -40,7 +40,10 @@ import { PricePerKgModal } from './components/PricePerKgModal';
 import { HouseholdShoppingCard } from './components/HouseholdShoppingCard';
 import { HouseholdPanel } from './components/household/HouseholdPanel';
 import { AddExtraModal } from './components/AddExtraModal';
-import { PlaceFilterControl } from './components/PlaceFilterControl';
+import { ShoppingHeader } from './components/header/ShoppingHeader';
+import { ActiveFilterPill } from './components/header/ActiveFilterPills';
+import { useShoppingModeStore } from '../../shared/store/useShoppingModeStore';
+import { useNotificationStore } from '../../shared/store/useNotificationStore';
 import { useRefreshStore } from '../../shared/store/useRefreshStore';
 import { useFoodsSnapshot, useHouseholdSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
 import { useProfileStore } from '../../shared/store/useProfileStore';
@@ -72,10 +75,12 @@ export const ShoppingModule = () => {
 
     const colCount = useColCount(SHOPPING_COLUMNS);
     const { foodBags } = useFreezerStock();
-    const [viewMode, setViewMode] = useState<'meals' | 'ingredients' | 'household'>('ingredients');
-    const [ingredientFilter, setIngredientFilter] = useState<'all' | 'missing'>('all');
+    const [layout, setLayout] = useState<ShoppingLayout>('aisles');
+    const [showHousehold, setShowHousehold] = useState(false);
+    const mode = useShoppingModeStore((s) => s.mode);
+    const setMode = useShoppingModeStore((s) => s.setMode);
+    const ingredientFilter = mode === 'store' ? 'missing' : 'all';
     const [placeFilter, setPlaceFilter] = useState<PlaceFilter>('all');
-    const [copied, setCopied] = useState(false);
     const [showPriceCalc, setShowPriceCalc] = useState(false);
     const [showCategoryOrder, setShowCategoryOrder] = useState(false);
     const [activeSources, setActiveSources] = useState<{ key: string; sources: IngredientSource[]; freezerBags: FreezerBag[] } | null>(null);
@@ -204,132 +209,72 @@ export const ShoppingModule = () => {
         const uncheckedHousehold = shownHouseholdItems.filter(i => !checked.has(`household::${i.id}`));
         const text = buildShoppingClipboardText(allGroupedItems, checked, stocks, sourceChecked, uncheckedHousehold, placeFilterTitle(effectivePlaceFilter, placeName));
         const written = await navigator.clipboard.writeText(text).then(() => true, () => false);
-        if (!written) return;
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
+        useNotificationStore.getState().push({
+            message: written ? 'Liste copiée' : 'Copie refusée par le navigateur',
+            variant: written ? 'info' : 'error',
+            duration: 2500,
+        });
     };
+
+    const hasList = !!ingredients && shoppingDays.length > 0;
+    const filterPills: ActiveFilterPill[] = [
+        ...(effectivePlaceFilter !== 'all' && placeName
+            ? [{
+                key: 'place',
+                label: effectivePlaceFilter === 'place' ? `Seulement ${placeName}` : `Hors ${placeName}`,
+                clearLabel: 'Retirer le filtre de lieu',
+                onClear: () => setPlaceFilter('all'),
+            }]
+            : []),
+        ...(layout === 'meals'
+            ? [{ key: 'layout', label: 'Par repas', clearLabel: "Revenir à l'affichage par rayon", onClear: () => setLayout('aisles') }]
+            : []),
+    ];
 
     return (
         <>
             <div className="h-full flex flex-col gap-3 overflow-hidden">
-                <div className="shrink-0">
-                    <div className="flex items-start justify-between">
-                        <div>
-                            <h1 className="text-xl sm:text-2xl tablet:text-3xl font-black text-slate-900">Liste de courses</h1>
-                            <p className="text-slate-500 text-sm mt-0.5">
-                                {daysLabel ?? <span className="italic text-slate-400">Aucune période sélectionnée</span>}
-                                {ingredients && shoppingDays.length > 0 && (
-                                    <span className="text-orange-600 font-medium before:content-['·'] before:mx-1.5">
-                                        {uncheckedCount} restant{uncheckedCount !== 1 ? 's' : ''}
-                                    </span>
-                                )}
-                            </p>
-                        </div>
-                        <div className="flex gap-2 shrink-0">
-                            {currentPeriodId && (
-                                <button
-                                    onClick={() => setExtraModal({ open: true, extra: null })}
-                                    title="Ajouter un article"
-                                    className="shrink-0 flex items-center gap-1.5 px-2.5 py-2 rounded-xl bg-orange-500 text-white text-sm font-bold hover:bg-orange-600 transition-colors"
-                                >
-                                    <Plus className="w-4 h-4" />
-                                    <span className="hidden sm:inline">Article</span>
-                                </button>
-                            )}
-                            {viewMode === 'ingredients' && (
-                                <button
-                                    onClick={() => setShowCategoryOrder(true)}
-                                    title="Ordre des rayons"
-                                    className="shrink-0 p-2 rounded-xl border bg-surface border-slate-200 text-slate-400 hover:text-orange-600 hover:border-orange-300 transition-colors"
-                                >
-                                    <ListOrdered className="w-4 h-4" />
-                                </button>
-                            )}
-                            <button
-                                onClick={() => setShowPriceCalc(true)}
-                                title="Prix au kilo"
-                                className="shrink-0 p-2 rounded-xl border bg-surface border-slate-200 text-slate-400 hover:text-orange-600 hover:border-orange-300 transition-colors"
-                            >
-                                <Scale className="w-4 h-4" />
-                            </button>
-                            {ingredients && shoppingDays.length > 0 && (
-                                <button
-                                    onClick={handleCopy}
-                                    title={copied ? 'Copié !' : 'Copier la liste'}
-                                    className={`shrink-0 p-2 rounded-xl border transition-colors ${copied
-                                            ? 'bg-green-50 dark:bg-green-900/20 border-green-300 text-green-600'
-                                            : 'bg-surface border-slate-200 text-slate-400 hover:text-orange-600 hover:border-orange-300'
-                                        }`}
-                                >
-                                    {copied ? <Check className="w-4 h-4" /> : <Clipboard className="w-4 h-4" />}
-                                </button>
-                            )}
-                        </div>
+                {showHousehold ? (
+                    <div className="shrink-0 flex items-center gap-2">
+                        <button
+                            type="button"
+                            onClick={() => setShowHousehold(false)}
+                            aria-label="Revenir à la liste de courses"
+                            className="p-2 -ml-2 rounded-xl text-slate-500 hover:text-orange-600 hover:bg-muted transition-colors"
+                        >
+                            <ArrowLeft className="w-5 h-5" />
+                        </button>
+                        <h1 className="text-xl sm:text-2xl tablet:text-3xl font-black text-slate-900">Articles du quotidien</h1>
                     </div>
-
-                    <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between mt-3 bg-muted rounded-2xl p-1">
-                        <div className="grid grid-cols-3 gap-0.5 sm:flex">
-                            <button
-                                onClick={() => setViewMode('meals')}
-                                className={`px-3.5 py-1.5 rounded-xl text-sm font-bold text-center transition-all ${viewMode === 'meals'
-                                        ? 'bg-surface text-slate-900 shadow-sm'
-                                        : 'text-slate-500 hover:text-slate-700'
-                                    }`}
-                            >
-                                Repas
-                            </button>
-                            <button
-                                onClick={() => setViewMode('ingredients')}
-                                className={`px-3.5 py-1.5 rounded-xl text-sm font-bold text-center transition-all ${viewMode === 'ingredients'
-                                        ? 'bg-surface text-slate-900 shadow-sm'
-                                        : 'text-slate-500 hover:text-slate-700'
-                                    }`}
-                            >
-                                Ingrédients
-                            </button>
-                            <button
-                                onClick={() => setViewMode('household')}
-                                className={`px-3.5 py-1.5 rounded-xl text-sm font-bold text-center transition-all ${viewMode === 'household'
-                                        ? 'bg-surface text-slate-900 shadow-sm'
-                                        : 'text-slate-500 hover:text-slate-700'
-                                    }`}
-                            >
-                                Articles
-                            </button>
-                        </div>
-                        {viewMode === 'ingredients' && (
-                            <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2">
-                                {placeName && <PlaceFilterControl value={placeFilter} placeName={placeName} onChange={setPlaceFilter} />}
-                            <div className="grid grid-cols-2 gap-0.5 sm:flex">
-                                <button
-                                    onClick={() => setIngredientFilter('all')}
-                                    className={`px-3.5 py-1.5 rounded-xl text-sm font-bold text-center transition-all ${ingredientFilter === 'all'
-                                            ? 'bg-surface text-slate-900 shadow-sm'
-                                            : 'text-slate-500 hover:text-slate-700'
-                                        }`}
-                                >
-                                    Complète
-                                </button>
-                                <button
-                                    onClick={() => setIngredientFilter('missing')}
-                                    className={`px-3.5 py-1.5 rounded-xl text-sm font-bold text-center transition-all ${ingredientFilter === 'missing'
-                                            ? 'bg-surface text-slate-900 shadow-sm'
-                                            : 'text-slate-500 hover:text-slate-700'
-                                        }`}
-                                >
-                                    Manquants
-                                </button>
-                            </div>
-                            </div>
-                        )}
-                    </div>
-                </div>
+                ) : (
+                    <ShoppingHeader
+                        daysLabel={daysLabel}
+                        remainingCount={hasList ? uncheckedCount : null}
+                        mode={mode}
+                        onModeChange={setMode}
+                        onAddExtra={currentPeriodId ? () => setExtraModal({ open: true, extra: null }) : null}
+                        pills={filterPills}
+                        options={{
+                            placeName,
+                            placeFilter: effectivePlaceFilter,
+                            onPlaceFilterChange: setPlaceFilter,
+                            layout,
+                            onLayoutChange: setLayout,
+                            hasActiveFilter: filterPills.length > 0,
+                            onOpenHousehold: () => setShowHousehold(true),
+                            onOpenAisleOrder: () => setShowCategoryOrder(true),
+                            onOpenPriceCalc: () => setShowPriceCalc(true),
+                            onCopy: hasList ? () => { handleCopy().catch(() => undefined); } : null,
+                            onChangeDays: () => navigate('/planning'),
+                        }}
+                    />
+                )}
 
                 <div
                     className="flex-1 min-h-0 overflow-y-auto pr-1"
                     onScroll={markScrolling}
                 >
-                    {viewMode === 'household' ? (
+                    {showHousehold ? (
                         <HouseholdPanel colCount={colCount} />
                     ) : shoppingDays.length === 0 ? (
                         <div className="h-full flex flex-col items-center justify-center gap-4 text-slate-400">
@@ -350,7 +295,7 @@ export const ShoppingModule = () => {
                         <div className="h-full flex items-center justify-center text-slate-400">
                             Chargement...
                         </div>
-                    ) : viewMode === 'meals' ? (
+                    ) : layout === 'meals' ? (
                         ingredients.length === 0 ? (
                             <div className="h-full flex flex-col items-center justify-center gap-3 text-slate-400">
                                 <ShoppingCart className="w-12 h-12 opacity-30" />

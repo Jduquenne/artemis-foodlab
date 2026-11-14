@@ -4,6 +4,7 @@ import { PREPARATION_OPTIONS } from "../../../../core/domain/preparationOptions"
 import { Unit, IngredientCategory, SELECTABLE_UNITS } from "../../../../core/domain/ingredient";
 import { IngredientFoodSearch } from "./IngredientFoodSearch";
 import { BaseRecipeSearch } from "./BaseRecipeSearch";
+import { BaseUnitSelect } from "./BaseUnitSelect";
 import { DraftIngredient } from "../../../../core/domain/recipeBuilderTypes";
 import { applyFoodPick } from "../../../../core/logic/recipeBuilder/recipeBuilderMapper";
 import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
@@ -82,14 +83,21 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
           </div>
 
           <div>
-            <label className={LABEL_CLASS}>{isBase ? "Portions" : "Quantité"}</label>
+            <label className={LABEL_CLASS}>{isBase ? (ingredient.unit === Unit.G ? "Grammes cuits" : "Portions") : "Quantité"}</label>
             <DecimalInput
               value={ingredient.quantity}
               onValueChange={(quantity) => update({ quantity })}
-              placeholder={isBase ? "Nombre de portions…" : "Quantité…"}
+              placeholder={isBase ? (ingredient.unit === Unit.G ? "Nombre de grammes…" : "Nombre de portions…") : "Quantité…"}
               className={FIELD_CLASS}
             />
           </div>
+
+          {isBase && (
+            <div>
+              <label className={LABEL_CLASS}>Unité</label>
+              <BaseUnitSelect ingredient={ingredient} onChange={onChange} className="w-full" />
+            </div>
+          )}
 
           {!isBase && (
             <>

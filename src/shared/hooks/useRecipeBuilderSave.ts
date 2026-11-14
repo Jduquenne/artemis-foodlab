@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import { RecipeBuilderState } from "../../core/domain/recipeBuilderTypes";
 import { builderStateToApiBody } from "../../core/logic/recipeBuilder/recipeBuilderMapper";
 import { validateBuilderIdentity, validateBuilderPhoto, validateBuilderState } from "../../core/logic/recipeBuilder/recipeBuilderValidation";
+import { validateBaseGrams } from "../../core/logic/recipeBuilder/baseGramsLogic";
 import { recipesCatalogue } from "../../core/catalogue/recipes";
 import {
   createRecipe,
@@ -33,6 +34,7 @@ export function useRecipeBuilderSave() {
     const errors = [
       ...validateBuilderState(state),
       ...validateBuilderIdentity(state, recipesCatalogue),
+      ...validateBaseGrams(state, recipesCatalogue),
       ...validateBuilderPhoto(Boolean(photos.mealPhoto || (source?.apiId && source.assets?.mealPhoto))),
     ];
     if (errors.length > 0) {

@@ -3,6 +3,7 @@ import { PREPARATION_OPTIONS } from "../../../../core/domain/preparationOptions"
 import { Unit, IngredientCategory, SELECTABLE_UNITS } from "../../../../core/domain/ingredient";
 import { IngredientFoodSearch } from "./IngredientFoodSearch";
 import { BaseRecipeSearch } from "./BaseRecipeSearch";
+import { BaseUnitSelect } from "./BaseUnitSelect";
 import { DraftIngredient } from "../../../../core/domain/recipeBuilderTypes";
 import { applyFoodPick } from "../../../../core/logic/recipeBuilder/recipeBuilderMapper";
 import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
@@ -33,10 +34,10 @@ export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: Ingredi
           <DecimalInput
             value={ingredient.quantity}
             onValueChange={(quantity) => update({ quantity })}
-            placeholder="Portions"
+            placeholder={ingredient.unit === Unit.G ? "Grammes" : "Portions"}
             className="w-20 px-2 py-2 bg-surface border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 text-center"
           />
-          <span className="text-xs text-slate-400 shrink-0">portion</span>
+          <BaseUnitSelect ingredient={ingredient} onChange={onChange} className="w-24 shrink-0" />
         </>
       ) : (
         <>

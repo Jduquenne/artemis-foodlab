@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-14 — Base in grams, step 5: Recipe Builder (v6.145.0)
+- Done: `BaseUnitSelect` on base ingredients (row and drawer), `validateBaseGrams` wired into `SaveRecipePanel` and `useRecipeBuilderSave`. Cards unchanged (they already print quantity + unit). tsc + lint pass; **not checked in a browser** (to test with `npm run dev` on the migrated dev API: base bread with a cooked weight, a dish using it in « g cuits », save, reload, macros and shopping list, change the weight, try to remove it, switch back to portions).
+- Still open: the whole #52 is done on the front, local only. The owner pushes the API (D-063 + base rules), confirms prod, then pushes the front and says « clore issue 51 » and « clore issue 52 ».
+
 ## 2026-11-14 — Base in grams, step 4: shopping and linked bases (v6.144.4)
 - Done: every reader of a base ingredient quantity goes through `basePortionsOf`: `shoppingAggregation` (dish bases, bases to cook, accompaniment recipes), `basePortionsNeeded` (new `base` parameter, used by `getLinkedBases`), `collectGroupIngredients` (food choice portion factor). The other consumers (`candidateLogic`, `preferredFoodLogic`, `recipeSeasonLogic`, `baseVersionLogic`) only walk the tree and do not read the quantity. tsc + lint pass; not checked in a browser (nothing enters `g` until step 5).
 - Still open: step 5 (builder unit selector, validation blocking the save of a base whose weight is removed while used in `g`, recipe cards text « 150 g »).

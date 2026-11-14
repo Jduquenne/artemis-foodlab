@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Save, X, Check, Loader2, Trash2, AlertTriangle } from "lucide-react";
 import { RecipeBuilderState } from "../../../../core/domain/recipeBuilderTypes";
 import { summarizeBuilderState, validateBuilderIdentity, validateBuilderPhoto, validateBuilderState } from "../../../../core/logic/recipeBuilder/recipeBuilderValidation";
+import { validateBaseGrams } from "../../../../core/logic/recipeBuilder/baseGramsLogic";
 import { getBuilderRecipeCode } from "../../../../core/logic/recipeBuilder/recipeCodeLogic";
 import { useCategoriesSnapshot, useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { useRecipeBuilderSave } from "../../../../shared/hooks/useRecipeBuilderSave";
@@ -29,7 +30,7 @@ export const SaveRecipePanel = ({ state, mealPhoto, bookPhoto, onSaved }: SaveRe
   const isExisting = Boolean(source);
   const hasMealPhoto = Boolean(mealPhoto || source?.assets?.mealPhoto);
   const liveErrors = useMemo(
-    () => [...validateBuilderState(state), ...validateBuilderIdentity(state, recipes), ...validateBuilderPhoto(hasMealPhoto)],
+    () => [...validateBuilderState(state), ...validateBuilderIdentity(state, recipes), ...validateBaseGrams(state, recipes), ...validateBuilderPhoto(hasMealPhoto)],
     [state, recipes, hasMealPhoto],
   );
   const recap = useMemo(() => summarizeBuilderState(state, categories), [state, categories]);

@@ -362,3 +362,16 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
   - Not linked to `portionsPerPerson` (D-040).
 - **Alternatives considered**: a weight per portion instead of a total (the total is what the owner weighs out of the oven, the per-portion figure is derived); grams in the planning and shopping (bigger change, no need yet); also for bases (dough, sauce: later if needed).
 - **Consequences**: API: one nullable numeric column on recipes (additive migration) exposed wherever `defaultPortions` is, and confirmation that a journal `gramsOverride` is accepted on a recipe that is not of kind ingredient (to verify, not assumed). Front: catalogue mapping, Recipe Builder field, `computeDishMacros` grams branch for dishes with a cooked weight, journal entry, recipe detail. Never merged before the API is confirmed in prod.
+
+## D-042 — Quantity of a base in a recipe: portions or grams of cooked weight
+
+- **Date**: 2026-11-14
+- **Status**: accepted (owner, 2026-11-14, issue #52, depends on D-041); API not started; front not started
+- **Context**: a base such as bread now carries a cooked weight (D-041). In a recipe that uses it, the ingredient quantity is a number of base portions (`Ingredient.baseId`, unit `portion`). The owner wants to choose, per ingredient, between portions and grams of cooked weight (« 150 g of bread »). Nothing else changes: bases and dishes keep their portions and per-portion macros.
+- **Decision**:
+  - **Per ingredient choice**: an ingredient with a `baseId` has the unit `portion` (current meaning, default) or `g` (grams of cooked base). The stored unit says how to read the quantity, so no data migration: existing recipes stay in portions.
+  - **Choice offered only when the base has a cooked weight**; the Recipe Builder shows the unit selector on a base ingredient only then.
+  - **One conversion**: base portions = grams ÷ (`cookedWeightGrams` ÷ base `defaultPortions`) (`portionsFromCookedGrams`), applied wherever the code reads the quantity of a base ingredient as portions: macros (`macroLogic`, `builderMacrosLogic`), shopping (`shoppingAggregation`, accompaniment recipes), linked bases (`basePortionsNeeded`), recipe cards text (« 150 g » instead of « 1.92 portion »).
+  - **Removing the cooked weight of a base used in grams is refused**: the Recipe Builder blocks the save with a clear message, the API refuses too while an ingredient uses the base in grams. **Changing** the weight keeps the grams of the ingredients (only their portion conversion, hence the macros, changes).
+- **Alternatives considered**: removing portions and showing macros per 100 g for weighed recipes (large rewrite, rejected by the owner); storing grams converted to portions (rounding errors, wrong after a weight change).
+- **Consequences**: API: accept the unit `g` on an ingredient with a `baseId` (to verify, not assumed), relax D-063 « kind dish only » for the cooked weight (the front gates it by category, D-041 amended), refuse removing a cooked weight used in grams. Front: see issue #52. Never merged before the API is in prod.

@@ -3,6 +3,7 @@ import { Macronutrients } from "../../domain/nutrition";
 import { RecipeDetails } from "../../domain/recipe";
 import { DraftIngredient } from "../../domain/recipeBuilderTypes";
 import { ZERO, addMacros, calculateRecipeMacros, scaleMacros, toGrams } from "../nutrition/macroLogic";
+import { basePortionsOf } from "../recipe/cookedWeightLogic";
 
 export function computeDraftTotal(
   foods: Record<string, Food>,
@@ -36,8 +37,13 @@ export function computeDraftTotal(
         missing++;
         continue;
       }
+      const basePortions = basePortionsOf(ing.quantity, ing.unit, base);
+      if (basePortions === null) {
+        missing++;
+        continue;
+      }
       const basePerPortion = calculateRecipeMacros(base, recipes, foods);
-      total = addMacros(total, scaleMacros(basePerPortion, ing.quantity));
+      total = addMacros(total, scaleMacros(basePerPortion, basePortions));
     } else {
       missing++;
     }

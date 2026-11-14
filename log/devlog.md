@@ -16,6 +16,15 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-14 — Base in grams, step 3: conversion and macros (v6.144.3)
+- Done: API reply received (unit `g` already accepted, two new 400 rules, weight accepted on every kind; dev only). `basePortionsOf` (`cookedWeightLogic.ts`) converts a base ingredient quantity to portions (`g`: via the cooked weight, else unchanged); used by `calculateRecipeMacros` and `builderMacrosLogic`. tsc + lint pass; no browser check (nothing visible yet, the unit selector comes later).
+- Still open: steps 4 (shopping + linked bases), 5 (builder unit selector + validation + recipe cards text). Other consumers of the base ingredient quantity to review at step 4: `recipeScalingLogic`, `baseVersionLogic`, `foodChoiceLogic` (portionFactor), `candidateLogic`, `ingredientLines`.
+
+## 2026-11-14 — Base quantity in portions or grams, framing (v6.144.2, docs only)
+- Done: the owner clarified the need: a base with a cooked weight keeps its portions; in a recipe using it, each base ingredient is entered in portions or in grams of cooked weight. Recorded as D-042 (accepted) with a section in `docs/spec-recipes.md` and issue #52 (local). The larger idea (no portions, macros per 100 g, grams per person in the planning) was dropped by the owner.
+- Problems: API acceptance of the unit `g` on an ingredient with a `baseId` is unverified. Prompt given to the owner for the API session.
+- Still open: the API reply, then the front steps listed in #52.
+
 ## 2026-11-14 — Cooked weight scope amended: bases, cereal products, pastries (v6.144.1)
 - Done: on the owner's request the field is not for dishes in general but for the categories « bases », « cereal-products » and « pastries ». `supportsCookedWeight` (`recipePredicates.ts`) gates the Recipe Builder field (label « Poids cuit (g) »), validation and the value sent (`null` outside these categories). The journal field and the recipe detail info already follow the data. D-041, `spec-recipes.md`, `spec-journal.md`, `api.md` amended. tsc + lint pass; not checked in a browser.
 - Problems: API D-063 refuses a value on a recipe that is not of kind dish: bases would get a 400. Prompt for the API session given to the owner (relax the kind rule, not yet deployed so no prod impact).

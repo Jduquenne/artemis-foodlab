@@ -10,7 +10,7 @@ import { FoodPersonalization, personalizeRecipeTree } from "../foodGroup/foodCho
 import { accompanimentsFor, resolveAccompaniment } from "../accompaniment/accompanimentLogic";
 import { applyBaseVersions } from "../baseVersion/baseVersionLogic";
 import { portionsPerPersonOf } from "../recipe/portionsPerPersonLogic";
-import { portionsFromCookedGrams } from "../recipe/cookedWeightLogic";
+import { basePortionsOf, portionsFromCookedGrams } from "../recipe/cookedWeightLogic";
 import { parseUnit } from "../unit/unitLogic";
 
 export const ZERO: Macronutrients = {
@@ -87,8 +87,10 @@ export function calculateRecipeMacros(
     } else if (ingredient.baseId) {
       const base = allRecipes[ingredient.baseId];
       if (!base) continue;
+      const basePortions = basePortionsOf(ingredient.quantity, ingredient.unit, base);
+      if (basePortions === null) continue;
       const baseMacrosPerPortion = calculateRecipeMacros(base, allRecipes, foodDb);
-      total = addMacros(total, scaleMacros(baseMacrosPerPortion, ingredient.quantity));
+      total = addMacros(total, scaleMacros(baseMacrosPerPortion, basePortions));
     }
   }
 

@@ -1,3 +1,5 @@
+import { Unit } from "../../domain/ingredient";
+
 type CookedWeightRecipe = { cookedWeightGrams?: number; defaultPortions?: number } | undefined;
 
 export function cookedWeightPerPortion(recipe: CookedWeightRecipe): number | null {
@@ -13,6 +15,11 @@ export function portionsFromCookedGrams(recipe: CookedWeightRecipe, grams: numbe
 export function cookedGramsFromPortions(recipe: CookedWeightRecipe, portions: number): number | null {
   const perPortion = cookedWeightPerPortion(recipe);
   return perPortion === null ? null : portions * perPortion;
+}
+
+export function basePortionsOf(quantity: number, unit: Unit, base: CookedWeightRecipe): number | null {
+  if (unit !== Unit.G) return quantity;
+  return portionsFromCookedGrams(base, quantity);
 }
 
 export function kcalPer100CookedGrams(recipe: CookedWeightRecipe, kcalPerPortion: number): number | null {

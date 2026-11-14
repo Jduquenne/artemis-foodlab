@@ -6,6 +6,7 @@ Daily macro tracking per profile, based on the meals planned in the Menu. Profil
 
 - Macros of the day for the **active profile**, against its targets (`MacroSummary`, with `ProfileSwitcher` in its header).
 - Per planned meal, portion (stepper) or grams override for the whole meal (`RecipePortionRow`). The stepper uses `withPending`. The grams field and the per-ingredient fields (`IngredientOverrideRow`) are `DecimalInput`s that **save once, on blur or Enter** (never on each keystroke: concurrent saves could land out of order); while typing, a local draft is shown.
+- **Grams for a dish with a cooked weight** (D-041, planned, issue #51): a dish carrying `cookedWeightGrams` also accepts the grams eaten (`DecimalInput`, saved on blur or Enter like the other grams fields); the macros of the whole recipe are scaled by `grams ÷ cookedWeightGrams`. Waiting for the API column and for confirmation that `gramsOverride` is accepted on a dish.
 - Mobile (`< sm:`): meals in a horizontal scroll-snap carousel with a dot indicator (`JournalModule.tsx`); the expanded ingredient list scrolls internally (`MealSlotCard.tsx`, `overflow-y-auto`). Two distinct axes, no gesture conflict. Tablet: see `docs/ui-design.md`.
 
 ## Week average and targets

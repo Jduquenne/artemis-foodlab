@@ -10,6 +10,7 @@ Domain terms whose meaning is not obvious from the code. UI labels are French; c
 | **`freezerName`** | Display name of the account's freezer. |
 | **Persons / portions / parts** | Planning `persons` ≡ recipe portions (`persons / defaultPortions` is the scale factor). « Parts » in the UI. |
 | **Gram override** (`recipeQuantities`, `gramsOverride`) | Quantity in grams for a weighed meal or base; not a number of portions. |
+| **Cooked weight** (`cookedWeightGrams`, planned, D-041) | Weight of the whole finished dish after cooking (bread: less than the raw dough). Used only to convert grams eaten into a portion factor; macros still come from the ingredients. |
 | **Override (journal)** | Per-day adjustment of a planned meal for one profile: portions, grams, or per-ingredient quantities. Never modifies the recipe. |
 | **Base** | A recipe of kind `base` used as an ingredient of other recipes (`Ingredient.baseId`, quantity = portions of the base). |
 | **Plannable item** | Anything that can be placed in the planning: a recipe or an outdoor activity (one identity in the API, `plannable_items`). |

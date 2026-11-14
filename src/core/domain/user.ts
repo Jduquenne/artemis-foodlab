@@ -10,6 +10,7 @@ export interface AuthUser {
   isDemo: boolean;
   demoExpiresAt: string | null;
   shoppingCategoryOrder?: string[] | null;
+  priceStoreId?: string | null;
 }
 
 export interface UpdateMeInput {
@@ -18,6 +19,7 @@ export interface UpdateMeInput {
   displayName?: string | null;
   email?: string;
   shoppingCategoryOrder?: string[] | null;
+  priceStoreId?: string | null;
 }
 
 export interface AdminUser {

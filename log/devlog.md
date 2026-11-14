@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-14 — Prices, step 1: data layer (v6.149.3)
+- API D-064 pushed by the owner; prod check from here: `/health` 200, `/price-stores` and `/food-prices` 401 without token (mounted). Contract read in the API repo (`docs/spec-catalogue.md` § Food prices and stores; numbers serialized as numbers, checked in `foodPriceService.ts`).
+- Done: D-043 (owner: indicative estimate only, nothing about the amount paid), `docs/api.md` § Prices, glossary. Code: `core/domain/price.ts`, `core/services/priceService.ts`, `usePriceStore` (bootstrap `priceStores` + `foodPrices` through `applyBootstrapResult`; `recordPrice` keeps the latest per couple; `deletePrice` drops it then refetches the previous one), `AuthUser.priceStoreId`, `core/logic/price/priceLogic.ts` (`effectivePriceStoreId`, `latestPricesByFood`, `costOfQuantity` via `toGrams`, `estimateCost` with `missingCount`, `pricePerKgFrom` / `paidTotalFrom` / `gramsFrom` rounded to the API decimals, `formatEuro`). Nothing visible yet. tsc + lint pass; **not checked in a browser** (nothing to see; a reload must still boot).
+- Still open: #46, #49, #48 in the shopping list; #47 planning.
+
 ## 2026-11-14 — Issues #55 and #43 closed
 - Done: shopping list redesign tested by the owner; #55 and #43 closed, roadmap item 14 marked done.
 - Still open: portrait tablet check (820×1180) of the shopping screen; price feature: waiting for the API session answer to the #44 prompt.

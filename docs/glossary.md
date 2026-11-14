@@ -28,4 +28,7 @@ Domain terms whose meaning is not obvious from the code. UI labels are French; c
 | **News** (« Nouveautés ») | Recipes announced in the last 30 days (`announcedAt`). |
 | **Demo account** | Ephemeral `guest` account with `isDemo`, created by « Essayer la démo », purged after ~2 h. |
 | **Pending key** | Identifier of a business action in flight (`usePendingStore`), drives spinners and the double-click guard. |
+| **Price store** | A shop (name, city) the food prices are tied to; global, created by admins, picked per account (D-043). |
+| **Reference price** | The price per kg (per litre for liquids) of a food in a price store; the latest entry wins. |
+| **Missing price** | A line that cannot be priced (no price, no food link, or no unit weight for a piece); left out of the estimate, which turns orange. |
 | **Snapshot** | Copy of an in-memory catalogue domain whose identity changes only when that domain changes (`useCatalogueSnapshot`). |

@@ -117,7 +117,7 @@ Persisted keys: `theme`, `last_recipe_search`, `cipe_shopping_price_calc`, `cipe
 
 ## Stores (`shared/store/`)
 
-`useAuthStore`, `useMenuStore` (active week, recipe filter, shopping days, current period), `useJournalStore` (`overridesByProfile`, `persistOverride` always sends the 3 fields), `useProfileStore`, `useMediaStore`, `useNewsStore` (`lastSeenDate`), `useRecipeBuilderStore` (persisted draft), `usePendingStore`, `useRefreshStore`, `useNotificationStore`, `useNotificationSettingsStore` (`versionCheckEnabled`), `useMenuGeneratorSettingsStore` (persisted menu generator settings, D-036), `useShoppingModeStore` (persisted shopping list mode, issue #55).
+`useAuthStore`, `useMenuStore` (active week, recipe filter, shopping days, current period), `useJournalStore` (`overridesByProfile`, `persistOverride` always sends the 3 fields), `useProfileStore`, `useMediaStore`, `useNewsStore` (`lastSeenDate`), `useRecipeBuilderStore` (persisted draft), `usePendingStore`, `useRefreshStore`, `useNotificationStore`, `useNotificationSettingsStore` (`versionCheckEnabled`), `useMenuGeneratorSettingsStore` (persisted menu generator settings, D-036), `useShoppingModeStore` (persisted shopping list mode, issue #55), `usePriceStore` (price stores and latest food prices from `/bootstrap`, D-043).
 
 ## Media (recipe photos)
 

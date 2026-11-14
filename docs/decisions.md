@@ -375,3 +375,19 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
   - **Removing the cooked weight of a base used in grams is refused**: the Recipe Builder blocks the save with a clear message, the API refuses too while an ingredient uses the base in grams. **Changing** the weight keeps the grams of the ingredients (only their portion conversion, hence the macros, changes).
 - **Alternatives considered**: removing portions and showing macros per 100 g for weighed recipes (large rewrite, rejected by the owner); storing grams converted to portions (rounding errors, wrong after a weight change).
 - **Consequences**: API: accept the unit `g` on an ingredient with a `baseId` (to verify, not assumed), relax D-063 « kind dish only » for the cooked weight (the front gates it by category, D-041 amended), refuse removing a cooked weight used in grams. Front: see issue #52. Never merged before the API is in prod.
+
+## D-043 — Food prices: a store, a price per kg, an indicative estimate
+
+- **Date**: 2026-11-14
+- **Status**: accepted (owner, 2026-11-13 and 2026-11-14, issues #41, #44 to #49); API D-064 **live in prod** (routes mounted, checked 2026-11-14); front step 1 (data layer) done, shopping list UI next (mock-up validated, artifact « Courses — maquette » v10 to v12).
+- **Context**: the owner wants to know roughly what a planned menu costs. No public store API (Leclerc checked 2026-11-13), so prices are entered by hand by admins.
+- **Decision**:
+  - Prices are **global to the application**, tied to a **price store** (name, city) created by admins; each account picks its store (`AuthUser.priceStoreId`, `PUT /me`). **Effective store** = the account's store, else the only store when exactly one exists, else none (no estimate) — so existing accounts need no migration (`effectivePriceStoreId`, `core/logic/price/priceLogic.ts`).
+  - **One reference price per food: the price per kg** (per litre for liquids, 1 ml = 1 g as for macros). Other units go through the food's unit weight (`toGrams`); a food without a usable conversion or without a price is **missing** and is left out of the total.
+  - **The estimate is indicative only**: quantities planned × latest known price of the effective store. It is not an exact amount, and what was actually paid is **not shown** (owner, 2026-11-14: no « déjà payé », no « payé X € »). A missing price only changes the colour of the amount (orange), nothing else.
+  - **History kept**: every entry is a new row (`POST /food-prices`), never overwritten; a wrong entry is deleted (`DELETE /food-prices/:id`) and the previous one becomes the latest. The bootstrap only carries the latest price per (food, store) with its `id`.
+  - An in-store entry may carry `paidTotal` and `purchasedGrams` (both or neither, API `CHECK`) for a future stock feature (#42); they are stored, not displayed.
+  - Entry points (admin, hidden in demo): the shopping list detail sheet (« Mettre à jour le prix ») and, when the device setting « Saisir le prix en cochant » is on (off by default), ticking a line in store mode. Fields in this order: weight, price paid, price per kg; two give the third.
+- **Alternatives considered**: per-account prices (no: the owner wants one shared base); scraping store sites or leaflets (refused); Open Prices (Open Food Facts) as an automatic source later, after a coverage test; showing the amount paid (refused: the period is not linked to the price rows, the figure would be wrong after a reload).
+- **Consequences**: front: `core/domain/price.ts`, `priceService`, `usePriceStore` (filled from `/bootstrap` `priceStores` and `foodPrices`), pure logic `core/logic/price/`. Contract: `docs/api.md` § Prices.
+

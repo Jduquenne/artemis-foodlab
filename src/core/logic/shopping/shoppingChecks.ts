@@ -1,6 +1,9 @@
 import { HouseholdItem } from "../../domain/household";
 import { ConsolidatedIngredient, IngredientSource, RecipeCardIngredient } from "../../domain/shopping";
 import { sumBy } from "../../utils/collectionUtils";
+import { roundTo } from "../../utils/numberUtils";
+
+export const SHOPPING_QUANTITY_DECIMALS = 2;
 
 export function buildSourceCheckKey(
   ingredientKey: string,
@@ -17,7 +20,7 @@ function checkedSourcesQuantity(ing: ConsolidatedIngredient, sourceChecked: Set<
 }
 
 export function effectiveQuantity(ing: ConsolidatedIngredient, sourceChecked: Set<string>): number {
-  return Math.max(0, ing.totalQuantity - checkedSourcesQuantity(ing, sourceChecked));
+  return roundTo(Math.max(0, ing.totalQuantity - checkedSourcesQuantity(ing, sourceChecked)), SHOPPING_QUANTITY_DECIMALS);
 }
 
 export function remainingToBuy(
@@ -26,8 +29,7 @@ export function remainingToBuy(
   sourceChecked: Set<string>,
 ): number {
   if (ing.totalQuantity === 0) return 0;
-  const effective = Math.max(0, ing.totalQuantity - checkedSourcesQuantity(ing, sourceChecked));
-  return Math.max(0, effective - (stocks[ing.key] ?? 0));
+  return roundTo(Math.max(0, effectiveQuantity(ing, sourceChecked) - (stocks[ing.key] ?? 0)), SHOPPING_QUANTITY_DECIMALS);
 }
 
 export function isIngredientNeeded(

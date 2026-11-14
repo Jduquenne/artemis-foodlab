@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-14 — Fix: 266.666… quantities in the shopping inputs (v6.153.1)
+- Problem (owner): quantities like 266.666666 in the shopping list. Cause: scaled quantities (persons × portion ÷ recipe portions) are repeating decimals; the new stock and price sheets show the raw number in a `DecimalInput` (`String(value)`), and « J'ai tout » saved it as the stock.
+- Done: `effectiveQuantity` and `remainingToBuy` round to 2 decimals (`SHOPPING_QUANTITY_DECIMALS`), so the stock sheet, « J'ai tout », the price entry prefill, the row labels and the estimate all get the rounded value; `StockEntrySheet` rounds a stock already saved raw. tsc + lint pass; **not checked in a browser** (to test: a recipe for 3 portions planned for 8 persons, open the stock sheet and the price entry, « J'ai tout », reload).
+- If the owner still sees such a number elsewhere (journal, recipe detail), ask where: only the shopping list was fixed here.
+
 ## 2026-11-14 — Prices, step 5: planning estimate (v6.153.0)
 - Done (#47): `planningCost` (`core/logic/price/planningCostLogic.ts`, `aggregateSlots` per day and for the week at full planned quantities) and `usePlanningCost`; `PlanningCostLabel` in `DayColumnHeader`, `DayTabsBar` and the week line of `PlanningHeader`; `formatEuroRounded`. Household cost, not per profile (the kcal stay per profile).
 - Fix in the same commit: `estimateCost` and `lineCosts` now ignore lines without quantity (salt « au goût », extras without quantity); before, they counted as missing, so the shopping estimate was almost always amber and showed « prix ? » on them.

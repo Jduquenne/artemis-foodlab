@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { ConsolidatedIngredient } from '../../../../core/domain/shopping';
 import { formatShoppingQuantity } from '../../../../core/logic/shopping/shoppingRowLabel';
 import { pluralizeUnit } from '../../../../core/logic/unit/unitFormatLogic';
+import { roundTo } from '../../../../core/utils/numberUtils';
+import { SHOPPING_QUANTITY_DECIMALS } from '../../../../core/logic/shopping/shoppingChecks';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { DecimalInput } from '../../../../shared/components/ui/DecimalInput';
 import { ShoppingSheet } from './ShoppingSheet';
@@ -15,7 +17,7 @@ export interface StockEntrySheetProps {
 }
 
 export const StockEntrySheet = ({ item, needed, stock, onSave, onClose }: StockEntrySheetProps) => {
-    const [draft, setDraft] = useState<number | null>(stock > 0 ? stock : null);
+    const [draft, setDraft] = useState<number | null>(stock > 0 ? roundTo(stock, SHOPPING_QUANTITY_DECIMALS) : null);
     const pending = usePendingKey(`shopping-stock:${item.key}`);
     const left = Math.max(0, needed - (draft ?? 0));
 

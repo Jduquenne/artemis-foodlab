@@ -15,6 +15,7 @@ export interface ShoppingCategoryCardProps {
     placeName: string | null;
     atPlace: Set<string>;
     foodBags?: Map<string, FreezerBag[]>;
+    costs: Map<string, number | null>;
     onToggle: (key: string) => void;
     onOpenStock: (key: string) => void;
     onOpenDetail: (key: string) => void;
@@ -31,6 +32,7 @@ export const ShoppingCategoryCard = ({
     placeName,
     atPlace,
     foodBags,
+    costs,
     onToggle,
     onOpenStock,
     onOpenDetail,
@@ -59,6 +61,7 @@ export const ShoppingCategoryCard = ({
                     placeName={placeName}
                     atPlace={atPlace.has(item.key)}
                     inFreezer={!!item.foodId && (foodBags?.get(item.foodId)?.length ?? 0) > 0}
+                    cost={costs.get(item.key)}
                     onToggle={onToggle}
                     onOpenStock={onOpenStock}
                     onOpenDetail={onOpenDetail}

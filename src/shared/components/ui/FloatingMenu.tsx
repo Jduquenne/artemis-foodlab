@@ -15,13 +15,17 @@ export const FloatingMenu = ({ open, anchorRef, onClose, children, className }: 
 
     useEffect(() => {
         if (!open) return;
-        window.addEventListener("scroll", onClose, true);
+        const closeOnOutsideScroll = (event: Event) => {
+            if (event.target instanceof Node && menuRef.current?.contains(event.target)) return;
+            onClose();
+        };
+        window.addEventListener("scroll", closeOnOutsideScroll, true);
         window.addEventListener("resize", onClose);
         return () => {
-            window.removeEventListener("scroll", onClose, true);
+            window.removeEventListener("scroll", closeOnOutsideScroll, true);
             window.removeEventListener("resize", onClose);
         };
-    }, [open, onClose]);
+    }, [open, onClose, menuRef]);
 
     if (!open) return null;
 

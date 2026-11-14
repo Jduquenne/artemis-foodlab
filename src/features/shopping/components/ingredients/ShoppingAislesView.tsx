@@ -18,6 +18,7 @@ export interface ShoppingAislesViewProps {
     placeName: string | null;
     atPlace: Set<string>;
     foodBags: Map<string, FreezerBag[]>;
+    costs: Map<string, number | null>;
     householdItems: HouseholdItem[];
     onToggle: (key: string) => void;
     onOpenStock: (key: string) => void;
@@ -37,6 +38,7 @@ export const ShoppingAislesView = ({
     placeName,
     atPlace,
     foodBags,
+    costs,
     householdItems,
     onToggle,
     onOpenStock,
@@ -71,6 +73,7 @@ export const ShoppingAislesView = ({
                                 placeName={placeName}
                                 atPlace={atPlace}
                                 foodBags={foodBags}
+                                costs={costs}
                                 onToggle={onToggle}
                                 onOpenStock={onOpenStock}
                                 onOpenDetail={onOpenDetail}

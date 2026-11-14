@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-14 — Prices, step 3: estimate (v6.151.0) + Options menu scroll fix
+- Done (#49): `shoppingLinesToPrice` (lines still to buy, remaining quantity), `estimateCost` now returns the missing lines (names), `lineCosts` per line; `ShoppingItemRow` shows « ≈ X € » or « prix ? »; `EstimateBadge` in the header (amber + « ! » when incomplete) opens `EstimateSheet` (amount, store, « indicatif », lines left out). Nothing shown without an effective store.
+- Fix (owner report: « impossible de scroll, ça coupe la page »): `FloatingMenu` closed on **any** scroll, including the scroll of its own content, so the « Options » menu (taller than a phone screen since the price store section) closed as soon as one tried to scroll it. It now ignores scroll events coming from inside the menu (`menuRef.contains(event.target)`); page scroll still closes it. Shared component: also applies to the freezer bag menus.
+- tsc + lint pass; **not checked in a browser** (to test: the Options menu scrolls on a phone; amounts on rows, the badge, incomplete case with a food without price, the sheet; the total follows stock, checks, « déjà pris » and the place filter).
+
 ## 2026-11-14 — Prices, step 2: price in the detail sheet, entry, stores (v6.150.0)
 - Done (#46): `components/price/` (`PriceSection`, `PriceEntrySheet`, `PriceEntryRow`, `PriceStoreForm`, `PriceStoresSheet`), `useFoodPrices` hook, logic `completePriceEntry` / `touchPriceEntryField` / `priceEntryPayload` / `costPerPiece`; `ShoppingItemSheet` gets a `priceSection` slot; Options gets « Magasin des prix » (store radio through `PUT /me`, « Gérer les magasins » for admins); price deletion confirmed by `ConfirmActionModal`. Admin actions hidden for guests and in demo. tsc + lint pass; **not checked in a browser**.
 - To test with `npm run dev` against the prod-shaped local API: as admin, create a store (Options › Gérer les magasins), check it is selected; open an item detail, « Ajouter un prix » with weight + paid (price per kg computed), then with paid + price per kg (weight computed), then price per kg only; a piece food (eggs) and a food without unit weight; « Supprimer ce prix » (the previous price comes back); reload (prices come from the bootstrap); as a guest or in demo, no edit buttons.

@@ -2,6 +2,7 @@ import { ChevronRight, Loader2, Snowflake } from 'lucide-react';
 import { ConsolidatedIngredient, ShoppingMode } from '../../../../core/domain/shopping';
 import { countRecipes } from '../../../../core/logic/shopping/shoppingChecks';
 import { homeStockState, shoppingRowQuantity } from '../../../../core/logic/shopping/shoppingRowLabel';
+import { formatEuro } from '../../../../core/logic/price/priceLogic';
 import { useAnyPendingKey } from '../../../../shared/hooks/useAnyPendingKey';
 import { CheckToggleIcon } from '../../../../shared/components/ui/CheckToggleIcon';
 import { HomeStockMarker } from './HomeStockMarker';
@@ -15,6 +16,7 @@ export interface ShoppingItemRowProps {
     placeName: string | null;
     atPlace: boolean;
     inFreezer: boolean;
+    cost?: number | null;
     onToggle: (key: string) => void;
     onOpenStock: (key: string) => void;
     onOpenDetail: (key: string) => void;
@@ -29,6 +31,7 @@ export const ShoppingItemRow = ({
     placeName,
     atPlace,
     inFreezer,
+    cost,
     onToggle,
     onOpenStock,
     onOpenDetail,
@@ -75,6 +78,8 @@ export const ShoppingItemRow = ({
                             </span>
                         )}
                         {placeName && atPlace && <span className="text-[11px] font-bold px-1.5 rounded-md bg-orange-100 dark:bg-orange-900/40 text-orange-600">{placeName}</span>}
+                        {cost === null && <span className="text-[11px] font-bold text-amber-600">prix ?</span>}
+                        {cost !== undefined && cost !== null && <span className="text-[11px] font-bold text-slate-500 tabular-nums">≈ {formatEuro(cost)}</span>}
                     </span>
                 </span>
                 {quantity.main && (

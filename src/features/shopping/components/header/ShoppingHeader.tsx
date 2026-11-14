@@ -1,6 +1,7 @@
 import { Plus } from 'lucide-react';
 import { ShoppingMode } from '../../../../core/domain/shopping';
 import { ActiveFilterPill, ActiveFilterPills } from './ActiveFilterPills';
+import { EstimateBadge, EstimateBadgeProps } from './EstimateBadge';
 import { ShoppingModeToggle } from './ShoppingModeToggle';
 import { ShoppingOptionsMenu, ShoppingOptionsMenuProps } from './ShoppingOptionsMenu';
 
@@ -12,9 +13,10 @@ export interface ShoppingHeaderProps {
     onAddExtra: (() => void) | null;
     options: ShoppingOptionsMenuProps;
     pills: ActiveFilterPill[];
+    estimate: EstimateBadgeProps | null;
 }
 
-export const ShoppingHeader = ({ daysLabel, remainingCount, mode, onModeChange, onAddExtra, options, pills }: ShoppingHeaderProps) => (
+export const ShoppingHeader = ({ daysLabel, remainingCount, mode, onModeChange, onAddExtra, options, pills, estimate }: ShoppingHeaderProps) => (
     <div className="shrink-0 flex flex-col gap-3 lg:flex-row lg:flex-wrap lg:items-center lg:gap-x-6 lg:gap-y-2">
         <div className="flex items-start justify-between gap-2 lg:contents">
             <div className="min-w-0">
@@ -26,6 +28,7 @@ export const ShoppingHeader = ({ daysLabel, remainingCount, mode, onModeChange, 
                             {remainingCount} {mode === 'store' ? `restant${remainingCount !== 1 ? 's' : ''}` : 'à acheter'}
                         </span>
                     )}
+                    {estimate && <EstimateBadge {...estimate} />}
                 </p>
             </div>
             <div className="flex gap-2 shrink-0 lg:order-2 lg:ml-auto">

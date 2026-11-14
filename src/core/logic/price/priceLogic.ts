@@ -9,6 +9,8 @@ export const PAID_TOTAL_DECIMALS = 2;
 export const PURCHASED_GRAMS_DECIMALS = 3;
 
 export interface PricedLine {
+  key: string;
+  name: string;
   foodId?: string;
   quantity: number;
   unit: string;
@@ -16,7 +18,7 @@ export interface PricedLine {
 
 export interface CostEstimate {
   total: number;
-  missingCount: number;
+  missing: PricedLine[];
 }
 
 export function effectivePriceStoreId(priceStoreId: string | null | undefined, stores: readonly PriceStore[]): string | null {
@@ -60,13 +62,13 @@ export function lineCost(line: PricedLine, foods: Record<string, Food>, prices: 
 
 export function estimateCost(lines: readonly PricedLine[], foods: Record<string, Food>, prices: Map<string, FoodPrice>): CostEstimate {
   let total = 0;
-  let missingCount = 0;
+  const missing: PricedLine[] = [];
   for (const line of lines) {
     const cost = lineCost(line, foods, prices);
-    if (cost === null) missingCount += 1;
+    if (cost === null) missing.push(line);
     else total += cost;
   }
-  return { total, missingCount };
+  return { total, missing };
 }
 
 export function pricePerKgFrom(paidTotal: number, grams: number): number | null {
@@ -142,4 +144,8 @@ export function priceEntryPayload(values: PriceEntryValues, gramsPerUnit: number
     paidTotal: roundTo(values.paid, PAID_TOTAL_DECIMALS),
     purchasedGrams: roundTo(values.quantity * gramsPerUnit, PURCHASED_GRAMS_DECIMALS),
   };
+}
+
+export function lineCosts(lines: readonly PricedLine[], foods: Record<string, Food>, prices: Map<string, FoodPrice>): Map<string, number | null> {
+  return new Map(lines.map((line) => [line.key, lineCost(line, foods, prices)]));
 }

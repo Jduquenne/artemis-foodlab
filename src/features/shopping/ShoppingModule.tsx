@@ -46,6 +46,9 @@ import { useProfileStore } from '../../shared/store/useProfileStore';
 import { useAccompanimentStore } from '../../shared/store/useAccompanimentStore';
 import { shoppingFilterPills } from '../../core/logic/shopping/shoppingFilterPills';
 import { formatBagDate } from '../../core/utils/dateUtils';
+import { estimateCost, lineCosts } from '../../core/logic/price/priceLogic';
+import { shoppingLinesToPrice } from '../../core/logic/shopping/shoppingPriceLines';
+import { EstimateSheet } from './components/price/EstimateSheet';
 import { useFoodPrices } from '../../shared/hooks/useFoodPrices';
 import { useIsAdmin } from '../../shared/hooks/useIsAdmin';
 import { useIsDemo } from '../../shared/hooks/useIsDemo';
@@ -97,6 +100,7 @@ export const ShoppingModule = () => {
     const [priceEntryKey, setPriceEntryKey] = useState<string | null>(null);
     const [priceToDelete, setPriceToDelete] = useState<FoodPrice | null>(null);
     const [showPriceStores, setShowPriceStores] = useState(false);
+    const [showEstimate, setShowEstimate] = useState(false);
     const foodPrices = useFoodPrices();
     const setUser = useAuthStore((s) => s.setUser);
     const isAdmin = useIsAdmin();
@@ -208,6 +212,19 @@ export const ShoppingModule = () => {
         [householdItems, effectivePlaceFilter]
     );
 
+    const priceLines = useMemo(
+        () => shoppingLinesToPrice(placeIngredients ?? [], checked, stocks, sourceChecked),
+        [placeIngredients, checked, stocks, sourceChecked]
+    );
+    const estimate = useMemo(
+        () => (foodPrices.store ? estimateCost(priceLines, foods, foodPrices.priceByFood) : null),
+        [priceLines, foods, foodPrices]
+    );
+    const costs = useMemo(
+        () => (foodPrices.store ? lineCosts(priceLines, foods, foodPrices.priceByFood) : new Map<string, number | null>()),
+        [priceLines, foods, foodPrices]
+    );
+
     const coveredByGroup = useMemo(
         () => countCoveredByGroup(allGroupedItems, stocks, sourceChecked),
         [allGroupedItems, stocks, sourceChecked]
@@ -282,6 +299,7 @@ export const ShoppingModule = () => {
                         onModeChange={setMode}
                         onAddExtra={currentPeriodId ? () => setExtraModal({ open: true, extra: null }) : null}
                         pills={filterPills}
+                        estimate={hasList && estimate ? { total: estimate.total, missingCount: estimate.missing.length, onOpen: () => setShowEstimate(true) } : null}
                         options={{
                             placeName,
                             placeFilter: effectivePlaceFilter,
@@ -362,6 +380,7 @@ export const ShoppingModule = () => {
                             placeName={placeName}
                             atPlace={atPlace}
                             foodBags={foodBags}
+                            costs={costs}
                             householdItems={shownHouseholdItems}
                             onToggle={toggleItem}
                             onOpenStock={setStockKey}
@@ -429,6 +448,10 @@ export const ShoppingModule = () => {
             )}
 
             {showPriceStores && <PriceStoresSheet onClose={() => setShowPriceStores(false)} />}
+
+            {showEstimate && estimate && foodPrices.store && (
+                <EstimateSheet estimate={estimate} store={foodPrices.store} onClose={() => setShowEstimate(false)} />
+            )}
 
             {stockItem && (
                 <StockEntrySheet

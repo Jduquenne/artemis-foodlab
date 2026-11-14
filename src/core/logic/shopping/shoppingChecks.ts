@@ -52,6 +52,13 @@ export function countRecipes(ing: ConsolidatedIngredient): number {
   return new Set(ing.sources.map((s) => s.recipeId)).size;
 }
 
+export function checkableCardIngredients(
+  ingredients: RecipeCardIngredient[],
+  checkableKeys: ReadonlySet<string>,
+): RecipeCardIngredient[] {
+  return ingredients.filter((ing) => checkableKeys.has(ing.ingredientKey));
+}
+
 export function isIngChecked(ing: RecipeCardIngredient, sourceChecked: Set<string>): boolean {
   return ing.sources.length > 0 && ing.sources.every(
     (s) => sourceChecked.has(buildSourceCheckKey(ing.ingredientKey, s))

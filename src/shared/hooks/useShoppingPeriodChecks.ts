@@ -80,6 +80,8 @@ export function useShoppingPeriodChecks(
     [ingredients, householdItems, itemChecks, sourceChecks, extras],
   );
 
+  const checkableKeys = useMemo<ReadonlySet<string>>(() => new Set(state.keyToFoodId.keys()), [state]);
+
   const patch = (forPeriod: string, update: (prev: PeriodChecks) => PeriodChecks) =>
     setData((prev) => (prev && prev.periodId === forPeriod ? update(prev) : prev));
 
@@ -205,6 +207,7 @@ export function useShoppingPeriodChecks(
 
   return {
     extras,
+    checkableKeys,
     checked: state.checked,
     stocks: state.stocks,
     sourceChecked: state.sourceChecked,

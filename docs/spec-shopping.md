@@ -21,6 +21,7 @@ Step 3 (v6.149.0), « Par repas » layout (`features/shopping/components/meals/`
 - **Meal card** (`RecipeShoppingCard`): the whole header is a button (check circle, recipe name, « touche pour tout cocher » / « N/M pris » / « tout est pris ») that checks every ingredient of the meal, bases included (`toggleSourceBatch`, one call); once all is taken the card folds to its header. The place shortcut stays as a pin button on the right of the header.
 - **Base group** (`RecipeBaseGroupSection`): an inset box whose header (« Base · touche pour cocher toute la base ») checks the whole base; it folds when taken.
 - **Line** (`IngredientRow`): same size as the aisle rows; a tap checks that meal's share, the chevron opens the item detail sheet.
+- **Only lines linked to a catalogue food can be checked** (source checks are keyed by `foodId`; `useShoppingPeriodChecks.checkableKeys`). A free-text line shows no check circle and is ignored by the meal and base totals (`checkableCardIngredients`); before v6.149.1 it kept the meal « not all checked », so a second tap on the header checked again instead of unchecking.
 
 ## Shopping list model
 

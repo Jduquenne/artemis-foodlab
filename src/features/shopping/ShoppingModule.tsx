@@ -121,6 +121,7 @@ export const ShoppingModule = () => {
 
     const {
         extras,
+        checkableKeys,
         checked,
         stocks,
         sourceChecked,
@@ -324,6 +325,7 @@ export const ShoppingModule = () => {
                                                     directIngredients={card.directIngredients}
                                                     baseGroups={card.baseGroups}
                                                     sourceChecked={sourceChecked}
+                                                    checkableKeys={checkableKeys}
                                                     placeName={placeName}
                                                     atPlace={atPlace}
                                                     onToggleAllAtPlace={setAtPlaceForKeys}

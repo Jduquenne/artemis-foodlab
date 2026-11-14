@@ -7,13 +7,14 @@ import { CheckToggleIcon } from '../../../../shared/components/ui/CheckToggleIco
 
 export interface IngredientRowProps {
     ing: RecipeCardIngredient;
+    checkable: boolean;
     sourceChecked: Set<string>;
     onToggleSource: (ingredientKey: string, sources: IngredientSource[], checked: boolean) => void;
     onOpenDetail: (key: string) => void;
 }
 
-export const IngredientRow = ({ ing, sourceChecked, onToggleSource, onOpenDetail }: IngredientRowProps) => {
-    const allChecked = isIngChecked(ing, sourceChecked);
+export const IngredientRow = ({ ing, checkable, sourceChecked, onToggleSource, onOpenDetail }: IngredientRowProps) => {
+    const allChecked = checkable && isIngChecked(ing, sourceChecked);
     const pending = useAnyPendingKey(
         ing.sources.map(s => `shopping-source:${buildSourceCheckKey(ing.ingredientKey, s)}`)
     );
@@ -22,11 +23,14 @@ export const IngredientRow = ({ ing, sourceChecked, onToggleSource, onOpenDetail
         <div className={`flex items-stretch border-t border-slate-200 ${allChecked ? 'opacity-50' : ''}`}>
             <button
                 type="button"
-                aria-pressed={allChecked}
+                aria-pressed={checkable ? allChecked : undefined}
+                disabled={!checkable}
                 onClick={() => !pending && onToggleSource(ing.ingredientKey, ing.sources, !allChecked)}
                 className="flex-1 min-w-0 flex items-center gap-3 pl-3 pr-1.5 py-2 min-h-13 text-left hover:bg-subtle-tint transition-colors lg:min-h-10 lg:py-1.5"
             >
-                <CheckToggleIcon checked={allChecked} pending={pending} className="w-5 h-5" checkedClassName="text-orange-500" />
+                {checkable
+                    ? <CheckToggleIcon checked={allChecked} pending={pending} className="w-5 h-5" checkedClassName="text-orange-500" />
+                    : <span className="w-5 h-5 shrink-0" />}
                 <span className={`flex-1 min-w-0 text-[15px] font-semibold text-slate-900 truncate lg:text-sm ${allChecked ? 'line-through' : ''}`}>
                     {ing.name}
                 </span>

@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-14 — Fix: unchecking a whole meal in « Par repas » (v6.149.1)
+- Problem (owner test): checking a whole meal worked, unchecking did nothing. Likely cause (from the code, not reproduced in a browser): a line without a catalogue food cannot get a source check (`collectSourceCheckRequests` skips keys without `foodId`), so the meal never counted as fully checked and the header kept sending « check ».
+- Done: `checkableKeys` exposed by `useShoppingPeriodChecks`, `checkableCardIngredients` in `shoppingChecks.ts`; meal and base headers count and toggle only checkable lines; a non-checkable line has no check circle and is disabled. tsc + lint pass; **not checked in a browser**.
+- Still open: step 4 of #55 (cleanup, docs), interrupted for this fix.
+
 ## 2026-11-14 — Shopping redesign, step 3: « Par repas » (v6.149.0)
 - Done: `RecipeShoppingCard` header = whole-meal check (folds when all taken, place pin kept), `RecipeBaseGroupSection` inset box with a whole-base header (folds when taken), `IngredientRow` in the new row style with a chevron to the detail sheet (`onOpenDetail`). tsc + lint pass; **not checked in a browser** (to test: Options › Par repas, check a meal, a base, a line, uncheck by the header, the pin shortcut, the chevron; then back to « Par rayon » to see the quantities taken off).
 - Still open: step 4 (cleanup, docs).

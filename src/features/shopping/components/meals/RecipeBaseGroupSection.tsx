@@ -1,5 +1,5 @@
 import { IngredientSource, RecipeBaseGroup } from '../../../../core/domain/shopping';
-import { buildSourceCheckKey, isIngChecked } from '../../../../core/logic/shopping/shoppingChecks';
+import { buildSourceCheckKey, checkableCardIngredients, isIngChecked } from '../../../../core/logic/shopping/shoppingChecks';
 import { IngredientRow } from './IngredientRow';
 import { useAnyPendingKey } from '../../../../shared/hooks/useAnyPendingKey';
 import { CheckToggleIcon } from '../../../../shared/components/ui/CheckToggleIcon';
@@ -7,20 +7,22 @@ import { CheckToggleIcon } from '../../../../shared/components/ui/CheckToggleIco
 export interface RecipeBaseGroupSectionProps {
     base: RecipeBaseGroup;
     sourceChecked: Set<string>;
+    checkableKeys: ReadonlySet<string>;
     onToggleSource: (ingredientKey: string, sources: IngredientSource[], checked: boolean) => void;
     onToggleBatch: (batch: Array<{ ingredientKey: string; sources: IngredientSource[] }>, checked: boolean) => void;
     onOpenDetail: (key: string) => void;
 }
 
-export const RecipeBaseGroupSection = ({ base, sourceChecked, onToggleSource, onToggleBatch, onOpenDetail }: RecipeBaseGroupSectionProps) => {
-    const allBaseChecked = base.ingredients.length > 0 && base.ingredients.every(ing => isIngChecked(ing, sourceChecked));
+export const RecipeBaseGroupSection = ({ base, sourceChecked, checkableKeys, onToggleSource, onToggleBatch, onOpenDetail }: RecipeBaseGroupSectionProps) => {
+    const checkable = checkableCardIngredients(base.ingredients, checkableKeys);
+    const allBaseChecked = checkable.length > 0 && checkable.every(ing => isIngChecked(ing, sourceChecked));
     const pending = useAnyPendingKey(
-        base.ingredients.flatMap(ing => ing.sources.map(s => `shopping-source:${buildSourceCheckKey(ing.ingredientKey, s)}`))
+        checkable.flatMap(ing => ing.sources.map(s => `shopping-source:${buildSourceCheckKey(ing.ingredientKey, s)}`))
     );
 
     const handleToggleBase = () => {
         if (pending) return;
-        onToggleBatch(base.ingredients.map(ing => ({ ingredientKey: ing.ingredientKey, sources: ing.sources })), !allBaseChecked);
+        onToggleBatch(checkable.map(ing => ({ ingredientKey: ing.ingredientKey, sources: ing.sources })), !allBaseChecked);
     };
 
     return (
@@ -29,6 +31,7 @@ export const RecipeBaseGroupSection = ({ base, sourceChecked, onToggleSource, on
                 type="button"
                 aria-pressed={allBaseChecked}
                 onClick={handleToggleBase}
+                disabled={checkable.length === 0}
                 className="flex items-center gap-3 w-full px-3 py-2 bg-subtle text-left hover:bg-muted transition-colors"
             >
                 <CheckToggleIcon checked={allBaseChecked} pending={pending} className="w-5 h-5" checkedClassName="text-orange-500" />
@@ -43,6 +46,7 @@ export const RecipeBaseGroupSection = ({ base, sourceChecked, onToggleSource, on
                 <IngredientRow
                     key={ing.ingredientKey}
                     ing={ing}
+                    checkable={checkableKeys.has(ing.ingredientKey)}
                     sourceChecked={sourceChecked}
                     onToggleSource={onToggleSource}
                     onOpenDetail={onOpenDetail}

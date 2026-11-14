@@ -1,7 +1,7 @@
 import { MapPin } from 'lucide-react';
 import { IngredientSource, RecipeCardIngredient, RecipeBaseGroup } from '../../../../core/domain/shopping';
 import { allKeysAtPlace } from '../../../../core/logic/shopping/shoppingPlaceLogic';
-import { buildSourceCheckKey, isIngChecked } from '../../../../core/logic/shopping/shoppingChecks';
+import { buildSourceCheckKey, checkableCardIngredients, isIngChecked } from '../../../../core/logic/shopping/shoppingChecks';
 import { IngredientRow } from './IngredientRow';
 import { RecipeBaseGroupSection } from './RecipeBaseGroupSection';
 import { useAnyPendingKey } from '../../../../shared/hooks/useAnyPendingKey';
@@ -12,6 +12,7 @@ export interface RecipeShoppingCardProps {
     directIngredients: RecipeCardIngredient[];
     baseGroups: RecipeBaseGroup[];
     sourceChecked: Set<string>;
+    checkableKeys: ReadonlySet<string>;
     placeName: string | null;
     atPlace: Set<string>;
     onToggleAllAtPlace: (keys: string[], value: boolean) => void;
@@ -25,6 +26,7 @@ export const RecipeShoppingCard = ({
     directIngredients,
     baseGroups,
     sourceChecked,
+    checkableKeys,
     placeName,
     atPlace,
     onToggleAllAtPlace,
@@ -33,11 +35,12 @@ export const RecipeShoppingCard = ({
     onOpenDetail,
 }: RecipeShoppingCardProps) => {
     const allIngs = [...directIngredients, ...baseGroups.flatMap(b => b.ingredients)];
-    const totalCount = allIngs.length;
-    const checkedCount = allIngs.filter(ing => isIngChecked(ing, sourceChecked)).length;
+    const checkable = checkableCardIngredients(allIngs, checkableKeys);
+    const totalCount = checkable.length;
+    const checkedCount = checkable.filter(ing => isIngChecked(ing, sourceChecked)).length;
     const allCardChecked = totalCount > 0 && checkedCount === totalCount;
     const pending = useAnyPendingKey(
-        allIngs.flatMap(ing => ing.sources.map(s => `shopping-source:${buildSourceCheckKey(ing.ingredientKey, s)}`))
+        checkable.flatMap(ing => ing.sources.map(s => `shopping-source:${buildSourceCheckKey(ing.ingredientKey, s)}`))
     );
 
     const placeKeys = allIngs.map(ing => ing.ingredientKey);
@@ -47,7 +50,7 @@ export const RecipeShoppingCard = ({
 
     const handleToggleAll = () => {
         if (pending) return;
-        onToggleBatch(allIngs.map(ing => ({ ingredientKey: ing.ingredientKey, sources: ing.sources })), !allCardChecked);
+        onToggleBatch(checkable.map(ing => ({ ingredientKey: ing.ingredientKey, sources: ing.sources })), !allCardChecked);
     };
 
     const status = allCardChecked
@@ -61,6 +64,7 @@ export const RecipeShoppingCard = ({
                     type="button"
                     aria-pressed={allCardChecked}
                     onClick={handleToggleAll}
+                    disabled={totalCount === 0}
                     className="flex-1 min-w-0 flex items-center gap-3 px-3 py-2.5 text-left hover:bg-subtle-tint transition-colors"
                 >
                     <CheckToggleIcon checked={allCardChecked} pending={pending} className="w-5 h-5" checkedClassName="text-orange-500" />
@@ -69,7 +73,7 @@ export const RecipeShoppingCard = ({
                         <span className="text-xs text-slate-400 truncate">{status}</span>
                     </span>
                 </button>
-                {placeName && totalCount > 0 && (
+                {placeName && allIngs.length > 0 && (
                     <button
                         type="button"
                         onClick={() => !placePending && onToggleAllAtPlace(placeKeys, !allAtPlace)}
@@ -86,13 +90,14 @@ export const RecipeShoppingCard = ({
             {!allCardChecked && (
                 <>
                     {directIngredients.map(ing => (
-                        <IngredientRow key={ing.ingredientKey} ing={ing} sourceChecked={sourceChecked} onToggleSource={onToggleSource} onOpenDetail={onOpenDetail} />
+                        <IngredientRow key={ing.ingredientKey} ing={ing} checkable={checkableKeys.has(ing.ingredientKey)} sourceChecked={sourceChecked} onToggleSource={onToggleSource} onOpenDetail={onOpenDetail} />
                     ))}
                     {baseGroups.map(base => (
                         <RecipeBaseGroupSection
                             key={base.baseId}
                             base={base}
                             sourceChecked={sourceChecked}
+                            checkableKeys={checkableKeys}
                             onToggleSource={onToggleSource}
                             onToggleBatch={onToggleBatch}
                             onOpenDetail={onOpenDetail}

@@ -176,11 +176,15 @@ export const RecipeDetail = () => {
       </div>
 
       {(macros || linkedBases.length > 0) && (
-        <div className="flex sm:hidden shrink-0 pt-3 items-center gap-4">
-          {macros && <MacroCircles macros={macros} compact />}
-          <CookedWeightInfo recipe={recipe} macros={macros} compact />
+        <div className="flex sm:hidden shrink-0 pt-3 flex-col gap-3">
+          {macros && (
+            <div className="flex items-center gap-4">
+              <MacroCircles macros={macros} compact />
+              <CookedWeightInfo recipe={recipe} macros={macros} compact />
+            </div>
+          )}
           {linkedBases.length > 0 && (
-            <div className="flex gap-3 items-center">
+            <div className="flex flex-wrap gap-3 items-start justify-center">
               {linkedBases.map(({ id, name, portions: basePortions }) => (
                 <LinkedBaseLink key={id} id={id} name={name} portions={basePortions} recipe={recipes[id]} compact />
               ))}

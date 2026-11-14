@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-14 — Linked bases visible on portrait phone (v6.145.1)
+- Done: on the recipe detail, mobile layout (`sm:hidden` block) now stacks the macro circles + cooked weight info on one row and the linked bases on their own wrapping, centred row below, so none is cut by the screen width (issue #53). tsc + lint pass; **not checked in a browser** (to test on a phone in portrait with a recipe that has 1, 2 and 3+ linked bases).
+- Still open: none.
+
 ## 2026-11-14 — Base in grams, step 5: Recipe Builder (v6.145.0)
 - Done: `BaseUnitSelect` on base ingredients (row and drawer), `validateBaseGrams` wired into `SaveRecipePanel` and `useRecipeBuilderSave`. Cards unchanged (they already print quantity + unit). tsc + lint pass; **not checked in a browser** (to test with `npm run dev` on the migrated dev API: base bread with a cooked weight, a dish using it in « g cuits », save, reload, macros and shopping list, change the weight, try to remove it, switch back to portions).
 - Still open: the whole #52 is done on the front, local only. The owner pushes the API (D-063 + base rules), confirms prod, then pushes the front and says « clore issue 51 » and « clore issue 52 ».

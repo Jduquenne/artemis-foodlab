@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-14 — Issues #55 and #43 closed
+- Done: shopping list redesign tested by the owner; #55 and #43 closed, roadmap item 14 marked done.
+- Still open: portrait tablet check (820×1180) of the shopping screen; price feature: waiting for the API session answer to the #44 prompt.
+
 ## 2026-11-14 — Shopping redesign, step 4: cleanup and docs (v6.149.2)
 - Done (after the owner's review question, three gaps fixed in the same commit): the stock sheet and the extra deletion closed even when the API failed (`setStock` and `removeExtra` now return a boolean, the sheets close on success only); the two list views left `ShoppingModule` (`ShoppingAislesView`, `ShoppingMealsView`, which compute their own columns; module 444 → 381 lines); the filter pills are built by the pure `shoppingFilterPills`. Not done: no portrait-tablet check (rule 16), to look at in 820×1180.
 - Also: `ShoppingEmptyState` replaces the five inline empty states of `ShoppingModule` (the place hint now says « Ouvre le détail d'un article pour le marquer », the pin left the row); `visibleHouseholdItems` alias removed; `checkedSourcesQuantity` no longer exported (no consumer outside `shoppingChecks.ts`). Docs: `spec-shopping.md` (stale references to the deleted rows, the toolbar and « Complète / Manquants » rewritten), `conventions.md` (row components list), roadmap. Unused-export sweep of `core/logic/shopping/`: only the pre-existing `DEFAULT_SHOPPING_CATEGORY_ORDER` remains exported without outside consumer (used inside its file, left as is). tsc + lint pass; **not checked in a browser**.

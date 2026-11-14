@@ -4,7 +4,9 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { useNavigate } from 'react-router-dom';
 import { ConsolidatedIngredient, RecipeCard, ShoppingLayout } from '../../core/domain/shopping';
 import { ApiShoppingExtra, extrasToIngredients } from '../../core/logic/shopping/shoppingApiMapper';
-import { computeUncheckedCount, effectiveQuantity } from '../../core/logic/shopping/shoppingChecks';
+import { computeUncheckedCount, effectiveQuantity, remainingToBuy } from '../../core/logic/shopping/shoppingChecks';
+import { FoodPrice } from '../../core/domain/price';
+import { updateMe } from '../../core/services/authService';
 import { buildShoppingClipboardText } from '../../core/logic/shopping/shoppingClipboard';
 import { PlaceFilter, filterIngredientsByPlace, placeFilterTitle } from '../../core/logic/shopping/shoppingPlaceLogic';
 import {
@@ -43,6 +45,16 @@ import { useFoodsSnapshot, useHouseholdSnapshot, useRecipeMetricsSnapshot, useRe
 import { useProfileStore } from '../../shared/store/useProfileStore';
 import { useAccompanimentStore } from '../../shared/store/useAccompanimentStore';
 import { shoppingFilterPills } from '../../core/logic/shopping/shoppingFilterPills';
+import { formatBagDate } from '../../core/utils/dateUtils';
+import { useFoodPrices } from '../../shared/hooks/useFoodPrices';
+import { useIsAdmin } from '../../shared/hooks/useIsAdmin';
+import { useIsDemo } from '../../shared/hooks/useIsDemo';
+import { usePriceStore } from '../../shared/store/usePriceStore';
+import { withPending } from '../../shared/utils/withPending';
+import { ConfirmActionModal } from '../../shared/components/ui/ConfirmActionModal';
+import { PriceSection } from './components/price/PriceSection';
+import { PriceEntrySheet } from './components/price/PriceEntrySheet';
+import { PriceStoresSheet } from './components/price/PriceStoresSheet';
 
 const SHOPPING_COLUMNS: readonly ColBreakpoint[] = [
     { minWidth: 1024, cols: 3 },
@@ -82,6 +94,14 @@ export const ShoppingModule = () => {
     const [showPriceCalc, setShowPriceCalc] = useState(false);
     const [showCategoryOrder, setShowCategoryOrder] = useState(false);
     const [detailKey, setDetailKey] = useState<string | null>(null);
+    const [priceEntryKey, setPriceEntryKey] = useState<string | null>(null);
+    const [priceToDelete, setPriceToDelete] = useState<FoodPrice | null>(null);
+    const [showPriceStores, setShowPriceStores] = useState(false);
+    const foodPrices = useFoodPrices();
+    const setUser = useAuthStore((s) => s.setUser);
+    const isAdmin = useIsAdmin();
+    const isDemo = useIsDemo();
+    const canEditPrices = isAdmin && !isDemo;
     const [stockKey, setStockKey] = useState<string | null>(null);
     const [extraModal, setExtraModal] = useState<{ open: boolean; extra: ApiShoppingExtra | null }>({ open: false, extra: null });
 
@@ -143,6 +163,7 @@ export const ShoppingModule = () => {
     );
 
     const detailItem = detailKey ? displayIngredients?.find((i) => i.key === detailKey) ?? null : null;
+    const priceItem = priceEntryKey ? displayIngredients?.find((i) => i.key === priceEntryKey) ?? null : null;
     const stockItem = stockKey ? displayIngredients?.find((i) => i.key === stockKey) ?? null : null;
     const detailBags = useMemo(
         () => (detailItem?.foodId ? foodBags.get(detailItem.foodId)?.filter((b) => b.unit === detailItem.unit) ?? [] : []),
@@ -214,6 +235,22 @@ export const ShoppingModule = () => {
         });
     };
 
+    const quantityToPrice = (item: ConsolidatedIngredient) =>
+        remainingToBuy(item, stocks, sourceChecked) || effectiveQuantity(item, sourceChecked);
+
+    const selectPriceStore = (id: string) => {
+        withPending('price-store-select', async () => setUser(await updateMe({ priceStoreId: id }))).catch(() => undefined);
+    };
+
+    const confirmDeletePrice = (price: FoodPrice) =>
+        withPending(`price-delete:${price.id}`, () => usePriceStore.getState().deletePrice(price)).then(
+            () => {
+                setPriceToDelete(null);
+                return true;
+            },
+            () => false,
+        );
+
     const hasList = !!ingredients && shoppingDays.length > 0;
     const filterPills: ActiveFilterPill[] = shoppingFilterPills(effectivePlaceFilter, placeName, layout).map((pill) => ({
         key: pill.kind,
@@ -252,6 +289,10 @@ export const ShoppingModule = () => {
                             layout,
                             onLayoutChange: setLayout,
                             hasActiveFilter: filterPills.length > 0,
+                            priceStores: foodPrices.stores,
+                            activePriceStoreId: foodPrices.store?.id ?? null,
+                            onPriceStoreChange: selectPriceStore,
+                            onManagePriceStores: canEditPrices ? () => setShowPriceStores(true) : null,
                             onOpenHousehold: () => setShowHousehold(true),
                             onOpenAisleOrder: () => setShowCategoryOrder(true),
                             onOpenPriceCalc: () => setShowPriceCalc(true),
@@ -340,6 +381,18 @@ export const ShoppingModule = () => {
                     atPlace={atPlace.has(detailItem.key)}
                     freezerBags={detailBags}
                     selectedBagIds={freezerSelection[detailItem.key] ?? []}
+                    priceSection={detailItem.foodId ? (
+                        <PriceSection
+                            quantity={quantityToPrice(detailItem)}
+                            unit={detailItem.unit}
+                            food={foods[detailItem.foodId]}
+                            price={foodPrices.priceByFood.get(detailItem.foodId)}
+                            store={foodPrices.store}
+                            canEdit={canEditPrices}
+                            onEdit={() => setPriceEntryKey(detailItem.key)}
+                            onDelete={() => setPriceToDelete(foodPrices.priceByFood.get(detailItem.foodId ?? '') ?? null)}
+                        />
+                    ) : null}
                     onToggleAtPlace={toggleAtPlace}
                     onToggleSource={toggleSourceCheck}
                     onToggleBag={handleToggleFreezerBag}
@@ -348,6 +401,34 @@ export const ShoppingModule = () => {
                     onClose={() => setDetailKey(null)}
                 />
             )}
+
+            {priceItem?.foodId && foodPrices.store && (
+                <PriceEntrySheet
+                    key={priceItem.key}
+                    name={priceItem.name}
+                    unit={priceItem.unit}
+                    foodId={priceItem.foodId}
+                    food={foods[priceItem.foodId]}
+                    storeId={foodPrices.store.id}
+                    storeName={`${foodPrices.store.name}, ${foodPrices.store.city}`}
+                    currentPrice={foodPrices.priceByFood.get(priceItem.foodId)}
+                    initialQuantity={quantityToPrice(priceItem)}
+                    onClose={() => setPriceEntryKey(null)}
+                />
+            )}
+
+            {priceToDelete && (
+                <ConfirmActionModal
+                    title="Supprimer ce prix ?"
+                    intro={`Le prix du ${formatBagDate(priceToDelete.recordedAt)} sera retiré de l'historique. Le prix précédent, s'il existe, redeviendra le prix actuel.`}
+                    confirmLabel="Supprimer"
+                    danger
+                    onConfirm={() => confirmDeletePrice(priceToDelete)}
+                    onCancel={() => setPriceToDelete(null)}
+                />
+            )}
+
+            {showPriceStores && <PriceStoresSheet onClose={() => setShowPriceStores(false)} />}
 
             {stockItem && (
                 <StockEntrySheet

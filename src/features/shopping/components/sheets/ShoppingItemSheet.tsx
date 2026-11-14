@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { Loader2, Pencil, Trash2 } from 'lucide-react';
 import { FreezerBag } from '../../../../core/domain/freezer';
 import { ConsolidatedIngredient, IngredientSource } from '../../../../core/domain/shopping';
@@ -17,6 +18,7 @@ export interface ShoppingItemSheetProps {
     atPlace: boolean;
     freezerBags: FreezerBag[];
     selectedBagIds: string[];
+    priceSection?: ReactNode;
     onToggleAtPlace: (key: string) => void;
     onToggleSource: (ingredientKey: string, sources: IngredientSource[], checked: boolean) => void;
     onToggleBag: (bagId: string) => void;
@@ -33,6 +35,7 @@ export const ShoppingItemSheet = ({
     atPlace,
     freezerBags,
     selectedBagIds,
+    priceSection,
     onToggleAtPlace,
     onToggleSource,
     onToggleBag,
@@ -68,6 +71,7 @@ export const ShoppingItemSheet = ({
                     ))}
                 </section>
             )}
+            {priceSection}
             {canFlagPlace && placeName && (
                 <PlaceToggleRow itemKey={item.key} placeName={placeName} flagged={atPlace} onToggle={onToggleAtPlace} />
             )}

@@ -1,5 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
-import { CalendarDays, Clipboard, Globe, House, LayoutList, ListOrdered, MapPin, MapPinOff, Scale, SlidersHorizontal, UtensilsCrossed } from 'lucide-react';
+import { CalendarDays, Clipboard, Globe, House, LayoutList, ListOrdered, MapPin, MapPinOff, Scale, Settings, SlidersHorizontal, Store, UtensilsCrossed } from 'lucide-react';
+import { PriceStore } from '../../../../core/domain/price';
 import { ShoppingLayout } from '../../../../core/domain/shopping';
 import { PlaceFilter } from '../../../../core/logic/shopping/shoppingPlaceLogic';
 import { FloatingMenu } from '../../../../shared/components/ui/FloatingMenu';
@@ -14,6 +15,10 @@ export interface ShoppingOptionsMenuProps {
     layout: ShoppingLayout;
     onLayoutChange: (value: ShoppingLayout) => void;
     hasActiveFilter: boolean;
+    priceStores: PriceStore[];
+    activePriceStoreId: string | null;
+    onPriceStoreChange: (id: string) => void;
+    onManagePriceStores: (() => void) | null;
     onOpenHousehold: () => void;
     onOpenAisleOrder: () => void;
     onOpenPriceCalc: () => void;
@@ -30,6 +35,10 @@ export const ShoppingOptionsMenu = ({
     layout,
     onLayoutChange,
     hasActiveFilter,
+    priceStores,
+    activePriceStoreId,
+    onPriceStoreChange,
+    onManagePriceStores,
     onOpenHousehold,
     onOpenAisleOrder,
     onOpenPriceCalc,
@@ -76,6 +85,23 @@ export const ShoppingOptionsMenu = ({
                         <OptionsRadioRow icon={<LayoutList className={ICON} />} label="Par rayon" hint="Dans l'ordre de ton parcours" checked={layout === 'aisles'} onSelect={run(() => onLayoutChange('aisles'))} />
                         <OptionsRadioRow icon={<UtensilsCrossed className={ICON} />} label="Par repas" hint="Recette par recette" checked={layout === 'meals'} onSelect={run(() => onLayoutChange('meals'))} />
                     </OptionsMenuSection>
+                    {(priceStores.length > 0 || onManagePriceStores) && (
+                        <OptionsMenuSection title="Magasin des prix">
+                            {priceStores.map((store) => (
+                                <OptionsRadioRow
+                                    key={store.id}
+                                    icon={<Store className={ICON} />}
+                                    label={store.name}
+                                    hint={store.city}
+                                    checked={store.id === activePriceStoreId}
+                                    onSelect={run(() => onPriceStoreChange(store.id))}
+                                />
+                            ))}
+                            {onManagePriceStores && (
+                                <OptionsToolRow icon={<Settings className={ICON} />} label="Gérer les magasins" hint="Admin · nom et ville" onSelect={run(onManagePriceStores)} />
+                            )}
+                        </OptionsMenuSection>
+                    )}
                     <OptionsMenuSection title="Outils">
                         <OptionsToolRow icon={<House className={ICON} />} label="Articles du quotidien" hint="Papier toilette, lessive…" onSelect={run(onOpenHousehold)} />
                         <OptionsToolRow icon={<ListOrdered className={ICON} />} label="Ordre des rayons" hint="Ton parcours en magasin" onSelect={run(onOpenAisleOrder)} />

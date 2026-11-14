@@ -15,11 +15,11 @@ export const LinkedBaseLink = ({ id, name, portions, recipe, compact = false }: 
     href={`#${buildRecipeDetailUrl(id, portions)}`}
     target="_blank"
     rel="noopener noreferrer"
-    className={`flex flex-col items-center group ${compact ? 'gap-1' : 'gap-2'}`}
+    className={`flex flex-col items-center group ${compact ? 'gap-1 grow basis-20 max-w-32 min-w-0' : 'gap-2'}`}
   >
-    <div className={`${compact ? 'h-14 rounded-xl' : 'h-28 md:h-32 rounded-2xl'} aspect-[189/208] overflow-hidden shadow-md ring-1 ring-strong group-hover:opacity-75 group-hover:ring-orange-300 transition-all`}>
+    <div className={`${compact ? 'w-full rounded-xl' : 'h-28 md:h-32 rounded-2xl'} aspect-[189/208] overflow-hidden shadow-md ring-1 ring-strong group-hover:opacity-75 group-hover:ring-orange-300 transition-all`}>
       <RecipePhotoCard recipeId={id} recipe={recipe} fill />
     </div>
-    <span className={`${compact ? 'text-[10px] w-14' : 'text-xs w-20'} font-semibold text-slate-500 text-center leading-tight line-clamp-2`}>{name}</span>
+    <span className={`${compact ? 'text-[11px] w-full' : 'text-xs w-20'} font-semibold text-slate-500 text-center leading-tight line-clamp-2`}>{name}</span>
   </a>
 );

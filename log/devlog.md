@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-14 — Mobile linked bases fill the width (v6.146.2)
+- Done: issue #53 follow-up. In the mobile block, each `LinkedBaseLink` (compact) grows to share the row (`grow basis-20 max-w-32`, photo `w-full` with its aspect ratio, label `w-full`), so the thumbnails get bigger with fewer bases (up to 8 rem) and smaller with more, wrapping after ~4 on a 360 px screen. tsc + lint pass; **not checked in a browser**.
+
+## 2026-11-14 — Mobile recipe detail: macros centred (v6.146.1)
+- Done: issue #53 follow-up, the macros row of the mobile block is now centred like the bases row (`justify-center`). tsc + lint pass; **not checked in a browser**.
+
 ## 2026-11-14 — Accompaniment ingredients in the journal (v6.146.0)
 - Done: issue #54. `accompanimentLabelsFor` replaced by `accompanimentDetailsFor` (label + ingredient lines, quantities scaled like the macros); `RecipePortionRow` shows the ingredients under each accompaniment, always visible, display only. tsc + lint pass; **not checked in a browser** (to test with `npm run dev`: a dish with a recipe accompaniment and a food one, change the dish portions, change the accompaniment choice in « Choix du repas »).
 - Still open: no override of accompaniment quantities (not requested); the grams-only branch (plain ingredient) never showed accompaniments.

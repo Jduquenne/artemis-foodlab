@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-14 — Prices, step 4: price entry when ticking (v6.152.0)
+- Done (#48): `askPriceOnCheck` in `useShoppingModeStore` (off by default), `OptionsSwitchRow` « Saisir le prix en cochant » (admins, not demo, effective store), `handleToggleItem` opens `PriceEntrySheet` with `inCart` after a successful check in store mode, footer link « Ne plus demander le prix pendant ces courses ». Shopping list part of the price feature complete. tsc + lint pass; **not checked in a browser** (to test: switch on, tick in store mode → sheet, « Passer » keeps the check, save, « Ne plus demander » turns the switch off; switch off → ticking only ticks; untick never opens; guest/demo never see the switch).
+- Still open: planning estimate (#47), graph (#50, later).
+
 ## 2026-11-14 — Prices, step 3: estimate (v6.151.0) + Options menu scroll fix
 - Done (#49): `shoppingLinesToPrice` (lines still to buy, remaining quantity), `estimateCost` now returns the missing lines (names), `lineCosts` per line; `ShoppingItemRow` shows « ≈ X € » or « prix ? »; `EstimateBadge` in the header (amber + « ! » when incomplete) opens `EstimateSheet` (amount, store, « indicatif », lines left out). Nothing shown without an effective store.
 - Fix (owner report: « impossible de scroll, ça coupe la page »): `FloatingMenu` closed on **any** scroll, including the scroll of its own content, so the « Options » menu (taller than a phone screen since the price store section) closed as soon as one tried to scroll it. It now ignores scroll events coming from inside the menu (`menuRef.contains(event.target)`); page scroll still closes it. Shared component: also applies to the freezer bag menus.

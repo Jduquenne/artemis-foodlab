@@ -93,11 +93,13 @@ export const ShoppingModule = () => {
     const [showHousehold, setShowHousehold] = useState(false);
     const mode = useShoppingModeStore((s) => s.mode);
     const setMode = useShoppingModeStore((s) => s.setMode);
+    const askPriceOnCheck = useShoppingModeStore((s) => s.askPriceOnCheck);
+    const setAskPriceOnCheck = useShoppingModeStore((s) => s.setAskPriceOnCheck);
     const [placeFilter, setPlaceFilter] = useState<PlaceFilter>('all');
     const [showPriceCalc, setShowPriceCalc] = useState(false);
     const [showCategoryOrder, setShowCategoryOrder] = useState(false);
     const [detailKey, setDetailKey] = useState<string | null>(null);
-    const [priceEntryKey, setPriceEntryKey] = useState<string | null>(null);
+    const [priceEntry, setPriceEntry] = useState<{ key: string; inCart: boolean } | null>(null);
     const [priceToDelete, setPriceToDelete] = useState<FoodPrice | null>(null);
     const [showPriceStores, setShowPriceStores] = useState(false);
     const [showEstimate, setShowEstimate] = useState(false);
@@ -167,7 +169,7 @@ export const ShoppingModule = () => {
     );
 
     const detailItem = detailKey ? displayIngredients?.find((i) => i.key === detailKey) ?? null : null;
-    const priceItem = priceEntryKey ? displayIngredients?.find((i) => i.key === priceEntryKey) ?? null : null;
+    const priceItem = priceEntry ? displayIngredients?.find((i) => i.key === priceEntry.key) ?? null : null;
     const stockItem = stockKey ? displayIngredients?.find((i) => i.key === stockKey) ?? null : null;
     const detailBags = useMemo(
         () => (detailItem?.foodId ? foodBags.get(detailItem.foodId)?.filter((b) => b.unit === detailItem.unit) ?? [] : []),
@@ -259,6 +261,20 @@ export const ShoppingModule = () => {
         withPending('price-store-select', async () => setUser(await updateMe({ priceStoreId: id }))).catch(() => undefined);
     };
 
+    const handleToggleItem = (key: string) => {
+        const item = displayIngredients?.find((i) => i.key === key);
+        const asksPrice = mode === 'store' && askPriceOnCheck && canEditPrices && !!foodPrices.store
+            && !!item?.foodId && item.totalQuantity > 0 && !checked.has(key);
+        toggleItem(key).then(() => {
+            if (asksPrice) setPriceEntry({ key, inCart: true });
+        }, () => undefined);
+    };
+
+    const stopAskingPrice = () => {
+        setAskPriceOnCheck(false);
+        setPriceEntry(null);
+    };
+
     const confirmDeletePrice = (price: FoodPrice) =>
         withPending(`price-delete:${price.id}`, () => usePriceStore.getState().deletePrice(price)).then(
             () => {
@@ -311,6 +327,8 @@ export const ShoppingModule = () => {
                             activePriceStoreId: foodPrices.store?.id ?? null,
                             onPriceStoreChange: selectPriceStore,
                             onManagePriceStores: canEditPrices ? () => setShowPriceStores(true) : null,
+                            askPriceOnCheck: canEditPrices && foodPrices.store ? askPriceOnCheck : null,
+                            onAskPriceOnCheckChange: setAskPriceOnCheck,
                             onOpenHousehold: () => setShowHousehold(true),
                             onOpenAisleOrder: () => setShowCategoryOrder(true),
                             onOpenPriceCalc: () => setShowPriceCalc(true),
@@ -382,7 +400,7 @@ export const ShoppingModule = () => {
                             foodBags={foodBags}
                             costs={costs}
                             householdItems={shownHouseholdItems}
-                            onToggle={toggleItem}
+                            onToggle={handleToggleItem}
                             onOpenStock={setStockKey}
                             onOpenDetail={setDetailKey}
                             onManageHousehold={() => setShowHousehold(true)}
@@ -408,7 +426,7 @@ export const ShoppingModule = () => {
                             price={foodPrices.priceByFood.get(detailItem.foodId)}
                             store={foodPrices.store}
                             canEdit={canEditPrices}
-                            onEdit={() => setPriceEntryKey(detailItem.key)}
+                            onEdit={() => setPriceEntry({ key: detailItem.key, inCart: false })}
                             onDelete={() => setPriceToDelete(foodPrices.priceByFood.get(detailItem.foodId ?? '') ?? null)}
                         />
                     ) : null}
@@ -432,7 +450,13 @@ export const ShoppingModule = () => {
                     storeName={`${foodPrices.store.name}, ${foodPrices.store.city}`}
                     currentPrice={foodPrices.priceByFood.get(priceItem.foodId)}
                     initialQuantity={quantityToPrice(priceItem)}
-                    onClose={() => setPriceEntryKey(null)}
+                    inCart={priceEntry?.inCart ?? false}
+                    footer={priceEntry?.inCart ? (
+                        <button type="button" onClick={stopAskingPrice} className="-mt-2 self-center text-xs font-semibold text-slate-400 underline hover:text-slate-600">
+                            Ne plus demander le prix pendant ces courses
+                        </button>
+                    ) : undefined}
+                    onClose={() => setPriceEntry(null)}
                 />
             )}
 

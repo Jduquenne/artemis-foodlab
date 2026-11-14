@@ -1,11 +1,12 @@
 import { useCallback, useRef, useState } from 'react';
-import { CalendarDays, Clipboard, Globe, House, LayoutList, ListOrdered, MapPin, MapPinOff, Scale, Settings, SlidersHorizontal, Store, UtensilsCrossed } from 'lucide-react';
+import { CalendarDays, Clipboard, Euro, Globe, House, LayoutList, ListOrdered, MapPin, MapPinOff, Scale, Settings, SlidersHorizontal, Store, UtensilsCrossed } from 'lucide-react';
 import { PriceStore } from '../../../../core/domain/price';
 import { ShoppingLayout } from '../../../../core/domain/shopping';
 import { PlaceFilter } from '../../../../core/logic/shopping/shoppingPlaceLogic';
 import { FloatingMenu } from '../../../../shared/components/ui/FloatingMenu';
 import { OptionsMenuSection } from './OptionsMenuSection';
 import { OptionsRadioRow } from './OptionsRadioRow';
+import { OptionsSwitchRow } from './OptionsSwitchRow';
 import { OptionsToolRow } from './OptionsToolRow';
 
 export interface ShoppingOptionsMenuProps {
@@ -19,6 +20,8 @@ export interface ShoppingOptionsMenuProps {
     activePriceStoreId: string | null;
     onPriceStoreChange: (id: string) => void;
     onManagePriceStores: (() => void) | null;
+    askPriceOnCheck: boolean | null;
+    onAskPriceOnCheckChange: (value: boolean) => void;
     onOpenHousehold: () => void;
     onOpenAisleOrder: () => void;
     onOpenPriceCalc: () => void;
@@ -39,6 +42,8 @@ export const ShoppingOptionsMenu = ({
     activePriceStoreId,
     onPriceStoreChange,
     onManagePriceStores,
+    askPriceOnCheck,
+    onAskPriceOnCheckChange,
     onOpenHousehold,
     onOpenAisleOrder,
     onOpenPriceCalc,
@@ -97,6 +102,15 @@ export const ShoppingOptionsMenu = ({
                                     onSelect={run(() => onPriceStoreChange(store.id))}
                                 />
                             ))}
+                            {askPriceOnCheck !== null && (
+                                <OptionsSwitchRow
+                                    icon={<Euro className={ICON} />}
+                                    label="Saisir le prix en cochant"
+                                    hint={askPriceOnCheck ? 'En magasin, cocher ouvre la saisie du prix' : "Cocher, c'est tout"}
+                                    checked={askPriceOnCheck}
+                                    onToggle={() => onAskPriceOnCheckChange(!askPriceOnCheck)}
+                                />
+                            )}
                             {onManagePriceStores && (
                                 <OptionsToolRow icon={<Settings className={ICON} />} label="Gérer les magasins" hint="Admin · nom et ville" onSelect={run(onManagePriceStores)} />
                             )}

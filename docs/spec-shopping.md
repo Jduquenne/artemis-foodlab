@@ -91,6 +91,10 @@ Step #49 (v6.151.0), estimate (only when an effective store exists, « Par rayon
 - **Row**: « ≈ X € » (`lineCosts`) or « prix ? » in amber at the end of the meta line; nothing on checked or covered lines.
 - **Header**: `EstimateBadge` after « N à acheter »: « ≈ total » (`estimateCost`), amber with a « ! » when at least one line is missing (the amount is only coloured, D-043). A tap opens `EstimateSheet`: the amount (amber if incomplete), the store, « Montant indicatif », and the names of the lines left out.
 
+Step #48 (v6.152.0), price entry when ticking:
+- Device setting `askPriceOnCheck` in `useShoppingModeStore` (same persisted key `cipe_shopping_mode`), **off by default**. Switch « Saisir le prix en cochant » (`OptionsSwitchRow`) in Options › « Magasin des prix », shown to admins (not demo) when an effective store exists.
+- When it is on, in **store** mode, ticking a line linked to a food, with a quantity, that was not checked yet opens `PriceEntrySheet` once the check is saved (`handleToggleItem` in `ShoppingModule`), with « Dans le caddie » and « Passer, sans prix » (closing keeps the check). The footer link « Ne plus demander le prix pendant ces courses » turns the setting off and closes the sheet. Unticking never opens it; home mode and the « Par repas » layout never open it.
+
 ## Household items
 
 - Checked = **"to buy"** (`household-shopping-flags`), `householdService` (`getRecords` / `toggleItem` / `clearAll`). Shown in the household tab of Shopping (`features/shopping/components/household/HouseholdPanel.tsx`, category order `HOUSEHOLD_CATEGORY_ORDER` in `core/domain/household.ts`) and as « Articles du quotidien » in the ingredients list.

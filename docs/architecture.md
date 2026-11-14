@@ -113,7 +113,7 @@ Three layers, no exceptions:
 
 ## Client storage (localStorage)
 
-Persisted keys: `theme`, `last_recipe_search`, `cipe_shopping_price_calc`, `cipe_notification_settings`, `cipe_news_last_seen`, `cipe_recipe_filter`, `cipe_recipe_builder` (builder draft), `cipe_active_profile`, `cipe_media_overrides`, `cipe_refresh_token`, `cipe_menu_generator_settings` (menu generator settings, D-036), `cipe_shopping_mode` (shopping list mode, issue #55). Journal targets/overrides and shopping days are **not** stored locally any more (D-027).
+Persisted keys: `theme`, `last_recipe_search`, `cipe_shopping_price_calc`, `cipe_notification_settings`, `cipe_news_last_seen`, `cipe_recipe_filter`, `cipe_recipe_builder` (builder draft), `cipe_active_profile`, `cipe_media_overrides`, `cipe_refresh_token`, `cipe_menu_generator_settings` (menu generator settings, D-036), `cipe_shopping_mode` (shopping list mode and « ask the price when ticking », issues #55 and #48). Journal targets/overrides and shopping days are **not** stored locally any more (D-027).
 
 ## Stores (`shared/store/`)
 

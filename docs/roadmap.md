@@ -20,6 +20,9 @@ The detailed backlog and future features live in `dev/issues.json` and `dev/refa
 
 11. ✅ Reference portion per person (D-040, issue #40, owner 2026-11-09): API D-062 and the front done (v6.140.0 catalogue + Recipe Builder field, v6.141.0 effects: planning day kcal, journal default, shopping scale, planning links), **pushed on `master` and tested by the owner (2026-11-09)**.
 
+12. ✅ Cooked weight and base quantity in grams (D-041 and D-042, issues #51 and #52, owner 2026-11-14): API D-063 (`cookedWeightGrams`, unit `g` on a base ingredient, two 400 rules) and the front (v6.141.3 to v6.145.0: field on bases, cereal products and pastries; kcal per 100 g cooked on the recipe detail; « g cuits » field in the journal; portion or « g cuits » unit on base ingredients in the Recipe Builder, with macros, shopping and linked bases converting through `basePortionsOf`). **Pushed to prod and tested by the owner (2026-11-14).**
+13. ✅ Small items of 2026-11-14 (owner, tested): linked bases of the recipe detail stacked, centred and sized by their count on a portrait phone (issue #53, v6.145.1 to v6.146.2); accompaniment ingredients listed under the dish in the journal, display only (issue #54, v6.146.0).
+
 ## Honest status (2026-10-21)
 
 - Production on GitHub Pages, backed by the API since 2026-09-09; deployed with each push on `master`.

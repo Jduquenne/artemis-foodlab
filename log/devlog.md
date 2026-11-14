@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-14 — Issues #51, #52, #53, #54 closed
+- Done: all four closed by the owner after tests (prod for #51 and #52). Roadmap items 12 and 13 added.
+- Still open: not done on purpose: planning in grams, grams per person, link with D-040, per-100 g macros, override of accompaniment quantities in the journal.
+
 ## 2026-11-14 — Mobile linked bases fill the width (v6.146.2)
 - Done: issue #53 follow-up. In the mobile block, each `LinkedBaseLink` (compact) grows to share the row (`grow basis-20 max-w-32`, photo `w-full` with its aspect ratio, label `w-full`), so the thumbnails get bigger with fewer bases (up to 8 rem) and smaller with more, wrapping after ~4 on a 360 px screen. tsc + lint pass; **not checked in a browser**.
 

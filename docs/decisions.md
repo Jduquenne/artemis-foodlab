@@ -353,7 +353,7 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
 ## D-041 — Cooked weight of a finished dish, to express a portion in grams
 
 - **Date**: 2026-11-14
-- **Status**: accepted (owner, 2026-11-14, issue #51); API D-063 delivered on dev only (not in prod); front steps 1 (v6.142.0: catalogue + Recipe Builder field) and 2 (v6.143.0: journal grams) done locally; recipe detail to do. Never pushed before the API is confirmed in prod.
+- **Status**: accepted (owner, 2026-11-14, issue #51); API D-063 delivered on dev only (not in prod); front done locally in three steps (v6.142.0 catalogue + Recipe Builder field, v6.143.0 journal grams, v6.144.0 recipe detail). Never pushed before the API is confirmed in prod.
 - **Context**: for a dish like bread the weight of the cooked result is not the sum of the raw ingredients (water evaporates). A recipe only knows portions; the gram quantity (`gramsOverride`, `baseGrams`) exists only for ingredient-kind recipes. One cannot say « 1 portion = 50 g of bread » nor log « I ate 80 g of bread ».
 - **Decision**:
   - **Defined on the recipe, in the catalogue**: `cookedWeightGrams`, a number > 0 or null (default null = current behaviour), edited by the admin in the Recipe Builder, for dishes only (bases excluded for now).

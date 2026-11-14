@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-14 — Cooked weight, step 3: recipe detail (v6.144.0)
+- Done: `CookedWeightInfo` (features/recipes/components/detail) shows « 1 part ≈ N g cuits » and « N kcal / 100 g cuits » under the macro circles (desktop) or next to them (mobile) for a dish with a cooked weight; `kcalPer100CookedGrams` in `cookedWeightLogic.ts`. tsc + lint pass; not checked in a browser (`npm run dev`, desktop and phone width, with and without a cooked weight).
+- Still open: the whole #51 feature is done on the front and local only. The owner pushes the API (D-063), confirms prod, then pushes the front and says « clore issue 51 ».
+
 ## 2026-11-14 — Cooked weight, step 2: grams in the journal (v6.143.0)
 - Done: `cookedWeightLogic.ts` (`portionsFromCookedGrams`, `cookedGramsFromPortions`); `computeDishMacros` scales by the equivalent portions when a journal grams override exists on a dish with a cooked weight; `setGramOverride` uses `cookedWeightGrams` as the reference weight for the ingredient overrides; `RecipePortionRow` shows a « g cuits » field under the stepper (stepper and grams exclude each other). tsc + lint pass; not checked in a browser (to test with `npm run dev` against the migrated dev API: type grams on a bread, reload, use the stepper, retype grams, check kcal of the day and the week average).
 - Problems: no test runner in the project, the conversion is covered by reading only.

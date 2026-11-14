@@ -14,3 +14,8 @@ export function cookedGramsFromPortions(recipe: CookedWeightRecipe, portions: nu
   const perPortion = cookedWeightPerPortion(recipe);
   return perPortion === null ? null : portions * perPortion;
 }
+
+export function kcalPer100CookedGrams(recipe: CookedWeightRecipe, kcalPerPortion: number): number | null {
+  if (!recipe?.cookedWeightGrams || !recipe.defaultPortions) return null;
+  return (kcalPerPortion * recipe.defaultPortions * 100) / recipe.cookedWeightGrams;
+}

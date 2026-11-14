@@ -12,6 +12,7 @@ import { useIsAdmin } from '../../../../shared/hooks/useIsAdmin';
 import { useRecipeBuilderStore } from '../../../../shared/store/useRecipeBuilderStore';
 import { MacroCircles } from '../macro/MacroCircles';
 import { LinkedBaseLink } from './LinkedBaseLink';
+import { CookedWeightInfo } from './CookedWeightInfo';
 import { RecipeRecetteCard } from '../../../../shared/components/ui/RecipeRecetteCard';
 import { RecipeBookCard } from '../../../../shared/components/ui/RecipeBookCard';
 import { useModalBack } from '../../../../shared/hooks/useModalBack';
@@ -156,8 +157,9 @@ export const RecipeDetail = () => {
           />
         )}
 
-        <div className="hidden sm:flex flex-1 min-h-0 items-center justify-start pl-3">
+        <div className="hidden sm:flex flex-1 min-h-0 flex-col items-center justify-center gap-2 pl-3">
           {macros && <MacroCircles macros={macros} />}
+          <CookedWeightInfo recipe={recipe} macros={macros} />
         </div>
 
         {categoryId && (
@@ -176,6 +178,7 @@ export const RecipeDetail = () => {
       {(macros || linkedBases.length > 0) && (
         <div className="flex sm:hidden shrink-0 pt-3 items-center gap-4">
           {macros && <MacroCircles macros={macros} compact />}
+          <CookedWeightInfo recipe={recipe} macros={macros} compact />
           {linkedBases.length > 0 && (
             <div className="flex gap-3 items-center">
               {linkedBases.map(({ id, name, portions: basePortions }) => (

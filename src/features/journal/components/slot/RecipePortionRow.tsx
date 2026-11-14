@@ -15,11 +15,11 @@ import { AccompanimentChoice } from "../../../../core/domain/accompaniment";
 import { BaseVersionChoice } from "../../../../core/domain/baseVersion";
 import { personalizeRecipe } from "../../../../core/logic/foodGroup/foodChoiceLogic";
 import { useActiveProfile } from "../../../../shared/hooks/useActiveProfile";
-import { accompanimentLabelsFor } from "../../../../core/logic/accompaniment/accompanimentLogic";
+import { accompanimentDetailsFor } from "../../../../core/logic/accompaniment/accompanimentLogic";
 import { portionsPerPersonOf } from "../../../../core/logic/recipe/portionsPerPersonLogic";
 import { cookedGramsFromPortions, cookedWeightPerPortion, portionsFromCookedGrams } from "../../../../core/logic/recipe/cookedWeightLogic";
 import { stepJournalPortions } from "../../../../core/logic/journal/portionStepLogic";
-import { formatQty } from "../../../../core/logic/unit/unitFormatLogic";
+import { formatQty, pluralizeUnit } from "../../../../core/logic/unit/unitFormatLogic";
 
 export interface RecipePortionRowProps {
   recipeId: string;
@@ -50,11 +50,12 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId, mealChoices, ac
     [catalogueRecipe, personalization, catalogue.foods],
   );
   const name = recipe?.name ?? recipeId;
-  const accompanimentLabels = useMemo(
-    () => (activeProfile
-      ? accompanimentLabelsFor(recipeId, activeProfile, accompanimentChoices ?? [], catalogue.accompaniments ?? [], catalogue.recipes, catalogue.foods)
+  const accompanimentDishPortions = portionOverrides[key] ?? 1;
+  const accompanimentDetails = useMemo(
+    () => (personalization
+      ? accompanimentDetailsFor(recipeId, personalization, accompanimentChoices ?? [], catalogue.accompaniments ?? [], catalogue.recipes, catalogue.foods, accompanimentDishPortions)
       : []),
-    [activeProfile, recipeId, accompanimentChoices, catalogue],
+    [personalization, recipeId, accompanimentChoices, catalogue, accompanimentDishPortions],
   );
   const isIngredient = recipe?.kind === RecipeKind.INGREDIENT;
   const baseGrams = catalogue.baseGrams[recipeId] ?? 0;
@@ -118,9 +119,6 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId, mealChoices, ac
       <div className="flex items-center justify-between gap-1 w-full">
         <span className="min-w-0 flex flex-col">
           <span className="text-sm text-slate-700 font-semibold leading-tight truncate">{name}</span>
-          {accompanimentLabels.length > 0 && (
-            <span className="text-[11px] text-slate-400 leading-tight truncate">+ {accompanimentLabels.join(", ")}</span>
-          )}
         </span>
         {canExpand && (
           <button
@@ -134,6 +132,19 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId, mealChoices, ac
           </button>
         )}
       </div>
+      {accompanimentDetails.map((detail) => (
+        <div key={detail.id} className="flex flex-col pl-3">
+          <span className="text-[11px] text-slate-400 leading-tight font-semibold">+ {detail.label}</span>
+          {detail.lines.map((line) => (
+            <span key={line.id} className="flex justify-between gap-1.5 pl-2 text-[10px] text-slate-400 leading-tight">
+              <span className="truncate">{line.name}</span>
+              {line.quantity !== null && (
+                <span className="shrink-0 tabular-nums">{formatQty(line.quantity)} {pluralizeUnit(line.unit, line.quantity)}</span>
+              )}
+            </span>
+          ))}
+        </div>
+      ))}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-0.5">
           <button

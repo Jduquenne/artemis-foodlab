@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-14 — Accompaniment ingredients in the journal (v6.146.0)
+- Done: issue #54. `accompanimentLabelsFor` replaced by `accompanimentDetailsFor` (label + ingredient lines, quantities scaled like the macros); `RecipePortionRow` shows the ingredients under each accompaniment, always visible, display only. tsc + lint pass; **not checked in a browser** (to test with `npm run dev`: a dish with a recipe accompaniment and a food one, change the dish portions, change the accompaniment choice in « Choix du repas »).
+- Still open: no override of accompaniment quantities (not requested); the grams-only branch (plain ingredient) never showed accompaniments.
+
 ## 2026-11-14 — Linked bases visible on portrait phone (v6.145.1)
 - Done: on the recipe detail, mobile layout (`sm:hidden` block) now stacks the macro circles + cooked weight info on one row and the linked bases on their own wrapping, centred row below, so none is cut by the screen width (issue #53). tsc + lint pass; **not checked in a browser** (to test on a phone in portrait with a recipe that has 1, 2 and 3+ linked bases).
 - Still open: none.

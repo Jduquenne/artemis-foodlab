@@ -11,7 +11,9 @@ import { Food } from "../../domain/ingredient";
 import { MealSlot } from "../../domain/planning";
 import { Profile } from "../../domain/profile";
 import { RecipeDetails } from "../../domain/recipe";
-import { ReachableGroupIngredient, reachableGroupIngredients } from "../foodGroup/foodChoiceLogic";
+import { FoodPersonalization, ReachableGroupIngredient, personalizeRecipeTree, reachableGroupIngredients } from "../foodGroup/foodChoiceLogic";
+import { roundTo } from "../../utils/numberUtils";
+import { parseUnit } from "../unit/unitLogic";
 import { accompanimentOptionLabel } from "./accompanimentFormLogic";
 
 export type AccompanimentProfile = Pick<Profile, "id" | "accompanimentDefaults">;
@@ -210,16 +212,61 @@ export function setAccompanimentChoice(
   return optionId === undefined ? others : [...others, { accompanimentId, profileId, optionId }];
 }
 
-export function accompanimentLabelsFor(
+export interface AccompanimentLine {
+  id: string;
+  name: string;
+  quantity: number | null;
+  unit: string;
+}
+
+export interface AccompanimentDetail {
+  id: string;
+  label: string;
+  lines: AccompanimentLine[];
+}
+
+function optionLines(
+  option: AccompanimentOption,
+  personalization: FoodPersonalization,
+  recipes: Record<string, RecipeDetails>,
+  foods: Record<string, Food>,
+  dishPortions: number,
+): AccompanimentLine[] {
+  if (option.kind === "food") {
+    const food = option.foodId ? foods[option.foodId] : undefined;
+    if (!food) return [];
+    const quantity = option.quantityPerPerson === null ? null : roundTo(option.quantityPerPerson * dishPortions, 2);
+    return [{ id: option.id, name: food.name, quantity, unit: quantity === null ? "" : parseUnit(option.unit) }];
+  }
+  const recipe = option.recipeCode ? recipes[option.recipeCode] : undefined;
+  if (!recipe) return [];
+  const portions = option.portionsPerPerson ?? 1;
+  const personalized = personalizeRecipeTree(recipe, personalization, recipes, foods, portions).recipe;
+  const factor = (portions * dishPortions) / personalized.defaultPortions;
+  return personalized.ingredients.map((ingredient) => ({
+    id: ingredient.id,
+    name: ingredient.name,
+    quantity: ingredient.quantity === null ? null : roundTo(ingredient.quantity * factor, 2),
+    unit: ingredient.quantity === null ? "" : ingredient.unit,
+  }));
+}
+
+export function accompanimentDetailsFor(
   recipeCode: string,
-  profile: AccompanimentProfile,
-  mealChoices: readonly AccompanimentChoice[],
+  personalization: FoodPersonalization & { profile: AccompanimentProfile },
+  accompanimentChoices: readonly AccompanimentChoice[],
   accompaniments: readonly Accompaniment[],
   recipes: Record<string, RecipeDetails>,
   foods: Record<string, Food>,
-): string[] {
+  dishPortions: number,
+): AccompanimentDetail[] {
   return accompanimentsFor(recipeCode, accompaniments).flatMap((accompaniment) => {
-    const { option } = resolveAccompaniment(accompaniment, profile, mealChoices);
-    return option ? [accompanimentOptionLabel(option, recipes, foods)] : [];
+    const { option } = resolveAccompaniment(accompaniment, personalization.profile, accompanimentChoices);
+    if (!option) return [];
+    return [{
+      id: accompaniment.id,
+      label: accompanimentOptionLabel(option, recipes, foods),
+      lines: optionLines(option, personalization, recipes, foods, dishPortions),
+    }];
   });
 }

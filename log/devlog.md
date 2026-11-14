@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-14 — Cooked weight scope amended: bases, cereal products, pastries (v6.144.1)
+- Done: on the owner's request the field is not for dishes in general but for the categories « bases », « cereal-products » and « pastries ». `supportsCookedWeight` (`recipePredicates.ts`) gates the Recipe Builder field (label « Poids cuit (g) »), validation and the value sent (`null` outside these categories). The journal field and the recipe detail info already follow the data. D-041, `spec-recipes.md`, `spec-journal.md`, `api.md` amended. tsc + lint pass; not checked in a browser.
+- Problems: API D-063 refuses a value on a recipe that is not of kind dish: bases would get a 400. Prompt for the API session given to the owner (relax the kind rule, not yet deployed so no prod impact).
+- Still open: the API session relaxes the rule; then test, API push, prod confirmation, front push, « clore issue 51 ».
+
 ## 2026-11-14 — Cooked weight, step 3: recipe detail (v6.144.0)
 - Done: `CookedWeightInfo` (features/recipes/components/detail) shows « 1 part ≈ N g cuits » and « N kcal / 100 g cuits » under the macro circles (desktop) or next to them (mobile) for a dish with a cooked weight; `kcalPer100CookedGrams` in `cookedWeightLogic.ts`. tsc + lint pass; not checked in a browser (`npm run dev`, desktop and phone width, with and without a cooked weight).
 - Still open: the whole #51 feature is done on the front and local only. The owner pushes the API (D-063), confirms prod, then pushes the front and says « clore issue 51 ».

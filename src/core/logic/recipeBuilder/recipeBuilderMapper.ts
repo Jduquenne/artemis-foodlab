@@ -113,7 +113,7 @@ export function builderStateToApiBody(state: RecipeBuilderState): ApiRecipeInput
     mealTypes: isBaseKind ? [] : state.mealTypes,
     defaultPortions: state.defaultPortions,
     portionsPerPerson: portionsPerPersonToApi(state.portionsPerPerson, state.kind),
-    cookedWeightGrams: cookedWeightToApi(state.cookedWeightGrams, state.kind),
+    cookedWeightGrams: cookedWeightToApi(state.cookedWeightGrams, state.categoryId),
     batchCooking: state.batchCooking,
     isDessert: isBaseKind ? false : state.isDessert,
     isFromBook: state.isFromBook,

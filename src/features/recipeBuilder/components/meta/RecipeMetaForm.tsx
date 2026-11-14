@@ -8,7 +8,7 @@ import { CATEGORY_PREFIX, buildRecipeId, suggestNextRecipeNumber } from "../../.
 import { useBuilderSourceRecipe } from "../../../../shared/hooks/useBuilderSourceRecipe";
 import { isCategoryUnlocked, registerUnlockClick } from "../../../../core/logic/recipeBuilder/recipeCategoryChangeLogic";
 import { categoryLabel } from "../../../../core/logic/recipe/categoryLogic";
-import { isRecipeCategory } from "../../../../core/domain/recipePredicates";
+import { isRecipeCategory, supportsCookedWeight } from "../../../../core/domain/recipePredicates";
 import { InstructionsModal } from "./InstructionsModal";
 import { IndustrialEquivalentField } from "./IndustrialEquivalentField";
 import { CategoryChangeModal } from "./CategoryChangeModal";
@@ -202,9 +202,9 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
         </div>
       )}
 
-      {state.kind === RecipeKind.DISH && (
+      {supportsCookedWeight({ categoryId: state.categoryId }) && (
         <div>
-          <label className={labelClass}>Poids du plat cuit (g)</label>
+          <label className={labelClass}>Poids cuit (g)</label>
           <DecimalInput
             min={0}
             value={state.cookedWeightGrams ?? null}
@@ -213,7 +213,7 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
             className={inputClass}
           />
           <p className="mt-1 text-[11px] text-slate-400">
-            Poids de tout le plat fini, après cuisson (le pain pèse moins que sa pâte). Permet de saisir des grammes mangés au journal.
+            Poids de la recette finie, après cuisson (le pain pèse moins que sa pâte). Permet de saisir des grammes mangés au journal.
             {cookedPerPortion !== null && ` Soit environ ${roundTo(cookedPerPortion, 1)} g par portion.`}
           </p>
         </div>

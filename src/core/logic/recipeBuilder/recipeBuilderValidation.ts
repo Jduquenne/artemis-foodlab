@@ -51,7 +51,7 @@ export function validateBuilderState(state: RecipeBuilderState): string[] {
     errors.push("Indique la page du livre.");
   }
   errors.push(...validatePortionsPerPerson(state.portionsPerPerson, state.kind));
-  errors.push(...validateCookedWeight(state.cookedWeightGrams, state.kind));
+  errors.push(...validateCookedWeight(state.cookedWeightGrams, state.categoryId));
   errors.push(...validateIndustrialDraft(state.industrialEquivalent, state.kind === RecipeKind.BASE));
   const named = state.ingredients.filter((ing) => ing.name.trim());
   if (named.length === 0) errors.push("Ajoute au moins un ingrédient.");

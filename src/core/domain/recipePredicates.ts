@@ -4,6 +4,11 @@ import { MealSlot } from "./planning";
 import { PlannableItem, RecipeKind } from "./recipe";
 
 const NON_BROWSABLE_CATEGORY_IDS: readonly string[] = ["outdoor", "sweet-grocery"];
+const COOKED_WEIGHT_CATEGORY_IDS: readonly string[] = ["bases", "cereal-products", "pastries"];
+
+export function supportsCookedWeight(recipe: { categoryId?: string } | undefined | null): boolean {
+  return !!recipe?.categoryId && COOKED_WEIGHT_CATEGORY_IDS.includes(recipe.categoryId);
+}
 
 export function isDessert(recipe: Pick<PlannableItem, "isDessert"> | undefined | null): boolean {
   return recipe?.isDessert === true;

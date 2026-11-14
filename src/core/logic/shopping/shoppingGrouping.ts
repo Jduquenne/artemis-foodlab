@@ -1,6 +1,6 @@
-import { ConsolidatedIngredient, IngredientGroup, ShoppingAisle } from "../../domain/shopping";
+import { ConsolidatedIngredient, IngredientGroup, ShoppingAisle, ShoppingMode } from "../../domain/shopping";
 import { distributeToColumns } from "../../utils/columnUtils";
-import { isIngredientNeeded } from "./shoppingChecks";
+import { isCoveredAtHome } from "./shoppingChecks";
 
 const OTHERS_GROUP_KEY = "others";
 
@@ -32,12 +32,23 @@ export function groupIngredients(
 export function filterGroupedIngredients(
   ingredients: ConsolidatedIngredient[],
   aisles: readonly ShoppingAisle[],
-  filter: "all" | "missing",
-  checked: Set<string>,
+  mode: ShoppingMode,
   stocks: Record<string, number>,
   sourceChecked: Set<string>,
 ): IngredientGroup[] {
-  return groupByCategory(ingredients, aisles, (i) => filter === "all" || isIngredientNeeded(i, checked, stocks, sourceChecked));
+  return groupByCategory(ingredients, aisles, (i) => mode === "home" || !isCoveredAtHome(i, stocks, sourceChecked));
+}
+
+export function countCoveredByGroup(
+  groups: IngredientGroup[],
+  stocks: Record<string, number>,
+  sourceChecked: Set<string>,
+): Record<string, number> {
+  return Object.fromEntries(groups.map((g) => [g.key, g.list.filter((i) => isCoveredAtHome(i, stocks, sourceChecked)).length]));
+}
+
+export function sortCheckedLast(list: ConsolidatedIngredient[], checked: Set<string>): ConsolidatedIngredient[] {
+  return [...list.filter((i) => !checked.has(i.key)), ...list.filter((i) => checked.has(i.key))];
 }
 
 export function assignIngredientColumns(

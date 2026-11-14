@@ -2,15 +2,15 @@ import { useState, useMemo, useEffect } from 'react';
 import { ShoppingCart, CalendarDays, ArrowLeft } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useNavigate } from 'react-router-dom';
-import { FreezerBag } from '../../core/domain/freezer';
-import { ConsolidatedIngredient, IngredientSource, RecipeCard, ShoppingLayout } from '../../core/domain/shopping';
+import { ConsolidatedIngredient, RecipeCard, ShoppingLayout } from '../../core/domain/shopping';
 import { ApiShoppingExtra, extrasToIngredients } from '../../core/logic/shopping/shoppingApiMapper';
-import { computeUncheckedCount } from '../../core/logic/shopping/shoppingChecks';
+import { computeUncheckedCount, effectiveQuantity } from '../../core/logic/shopping/shoppingChecks';
 import { buildShoppingClipboardText } from '../../core/logic/shopping/shoppingClipboard';
 import { PlaceFilter, filterIngredientsByPlace, placeFilterTitle } from '../../core/logic/shopping/shoppingPlaceLogic';
 import {
     groupIngredients,
     filterGroupedIngredients,
+    countCoveredByGroup,
     assignIngredientColumns,
 } from '../../core/logic/shopping/shoppingGrouping';
 import { buildRecipeCards } from '../../core/logic/shopping/shoppingRecipeCards';
@@ -35,7 +35,8 @@ import { useFreezerStock } from '../../shared/hooks/useFreezerStock';
 import { useShoppingPeriodChecks } from '../../shared/hooks/useShoppingPeriodChecks';
 import { ShoppingCategoryCard } from './components/ingredients/ShoppingCategoryCard';
 import { RecipeShoppingCard } from './components/meals/RecipeShoppingCard';
-import { SourcesModal } from './components/SourcesModal';
+import { ShoppingItemSheet } from './components/sheets/ShoppingItemSheet';
+import { StockEntrySheet } from './components/sheets/StockEntrySheet';
 import { PricePerKgModal } from './components/PricePerKgModal';
 import { HouseholdShoppingCard } from './components/HouseholdShoppingCard';
 import { HouseholdPanel } from './components/household/HouseholdPanel';
@@ -79,11 +80,11 @@ export const ShoppingModule = () => {
     const [showHousehold, setShowHousehold] = useState(false);
     const mode = useShoppingModeStore((s) => s.mode);
     const setMode = useShoppingModeStore((s) => s.setMode);
-    const ingredientFilter = mode === 'store' ? 'missing' : 'all';
     const [placeFilter, setPlaceFilter] = useState<PlaceFilter>('all');
     const [showPriceCalc, setShowPriceCalc] = useState(false);
     const [showCategoryOrder, setShowCategoryOrder] = useState(false);
-    const [activeSources, setActiveSources] = useState<{ key: string; sources: IngredientSource[]; freezerBags: FreezerBag[] } | null>(null);
+    const [detailKey, setDetailKey] = useState<string | null>(null);
+    const [stockKey, setStockKey] = useState<string | null>(null);
     const [extraModal, setExtraModal] = useState<{ open: boolean; extra: ApiShoppingExtra | null }>({ open: false, extra: null });
 
     useEffect(() => {
@@ -142,8 +143,15 @@ export const ShoppingModule = () => {
         [ingredients, extraIngredients],
     );
 
+    const detailItem = detailKey ? displayIngredients?.find((i) => i.key === detailKey) ?? null : null;
+    const stockItem = stockKey ? displayIngredients?.find((i) => i.key === stockKey) ?? null : null;
+    const detailBags = useMemo(
+        () => (detailItem?.foodId ? foodBags.get(detailItem.foodId)?.filter((b) => b.unit === detailItem.unit) ?? [] : []),
+        [detailItem, foodBags],
+    );
+
     const handleToggleFreezerBag = (bagId: string) => {
-        if (activeSources) toggleFreezerBag(activeSources.key, bagId, activeSources.freezerBags);
+        if (detailItem) toggleFreezerBag(detailItem.key, bagId, detailBags);
     };
 
     const plannedRecipes = useMemo(
@@ -154,6 +162,7 @@ export const ShoppingModule = () => {
     const submitExtra = (body: ExtraInput) => saveExtra(extraModal.extra?.id ?? null, body);
 
     const handleEditExtra = (extraId: string) => {
+        setDetailKey(null);
         setExtraModal({ open: true, extra: extras.find(e => e.id === extraId) ?? null });
     };
 
@@ -170,8 +179,8 @@ export const ShoppingModule = () => {
     );
 
     const groupedItems = useMemo(
-        () => placeIngredients ? filterGroupedIngredients(placeIngredients, categoryOrder, ingredientFilter, checked, stocks, sourceChecked) : [],
-        [placeIngredients, categoryOrder, ingredientFilter, checked, stocks, sourceChecked]
+        () => placeIngredients ? filterGroupedIngredients(placeIngredients, categoryOrder, mode, stocks, sourceChecked) : [],
+        [placeIngredients, categoryOrder, mode, stocks, sourceChecked]
     );
 
     const shownHouseholdItems = useMemo(
@@ -179,10 +188,12 @@ export const ShoppingModule = () => {
         [householdItems, effectivePlaceFilter]
     );
 
-    const visibleHouseholdItems = useMemo(() => {
-        if (ingredientFilter === 'all') return shownHouseholdItems;
-        return shownHouseholdItems.filter(i => !checked.has(`household::${i.id}`));
-    }, [shownHouseholdItems, ingredientFilter, checked]);
+    const visibleHouseholdItems = shownHouseholdItems;
+
+    const coveredByGroup = useMemo(
+        () => countCoveredByGroup(allGroupedItems, stocks, sourceChecked),
+        [allGroupedItems, stocks, sourceChecked]
+    );
 
     const uncheckedCount = useMemo(
         () => computeUncheckedCount(placeIngredients ?? [], checked, stocks, sourceChecked, shownHouseholdItems),
@@ -357,18 +368,17 @@ export const ShoppingModule = () => {
                                                     <ShoppingCategoryCard
                                                         label={group.label}
                                                         items={group.list}
+                                                        mode={mode}
+                                                        coveredCount={coveredByGroup[group.key] ?? 0}
                                                         checked={checked}
                                                         stocks={stocks}
                                                         sourceChecked={sourceChecked}
                                                         placeName={placeName}
                                                         atPlace={atPlace}
-                                                        onToggle={toggleItem}
-                                                        onToggleAtPlace={toggleAtPlace}
-                                                        onSetStock={setStock}
-                                                        onShowSources={(key, sources, bags) => setActiveSources({ key, sources, freezerBags: bags })}
-                                                        onEditExtra={handleEditExtra}
-                                                        onDeleteExtra={removeExtra}
                                                         foodBags={foodBags}
+                                                        onToggle={toggleItem}
+                                                        onOpenStock={setStockKey}
+                                                        onOpenDetail={setDetailKey}
                                                     />
                                                 </div>
                                             ))}
@@ -377,6 +387,7 @@ export const ShoppingModule = () => {
                                                     items={visibleHouseholdItems}
                                                     checked={checked}
                                                     onToggle={toggleItem}
+                                                    onManage={() => setShowHousehold(true)}
                                                 />
                                             )}
                                         </div>
@@ -389,6 +400,7 @@ export const ShoppingModule = () => {
                                         items={visibleHouseholdItems}
                                         checked={checked}
                                         onToggle={toggleItem}
+                                        onManage={() => setShowHousehold(true)}
                                     />
                                 </div>
                             )}
@@ -397,16 +409,32 @@ export const ShoppingModule = () => {
                 </div>
             </div>
 
-            {activeSources && (
-                <SourcesModal
-                    ingredientKey={activeSources.key}
-                    sources={activeSources.sources}
+            {detailItem && (
+                <ShoppingItemSheet
+                    item={detailItem}
+                    stock={stocks[detailItem.key] ?? 0}
                     sourceChecked={sourceChecked}
+                    placeName={placeName}
+                    atPlace={atPlace.has(detailItem.key)}
+                    freezerBags={detailBags}
+                    selectedBagIds={freezerSelection[detailItem.key] ?? []}
+                    onToggleAtPlace={toggleAtPlace}
                     onToggleSource={toggleSourceCheck}
-                    onClose={() => setActiveSources(null)}
-                    freezerBags={activeSources.freezerBags}
-                    selectedBagIds={freezerSelection[activeSources.key] ?? []}
                     onToggleBag={handleToggleFreezerBag}
+                    onEditExtra={handleEditExtra}
+                    onDeleteExtra={removeExtra}
+                    onClose={() => setDetailKey(null)}
+                />
+            )}
+
+            {stockItem && (
+                <StockEntrySheet
+                    key={stockItem.key}
+                    item={stockItem}
+                    needed={effectiveQuantity(stockItem, sourceChecked)}
+                    stock={stocks[stockItem.key] ?? 0}
+                    onSave={(value) => setStock(stockItem.key, value)}
+                    onClose={() => setStockKey(null)}
                 />
             )}
 

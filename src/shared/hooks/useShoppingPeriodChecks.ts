@@ -152,8 +152,9 @@ export function useShoppingPeriodChecks(
     const foodId = state.keyToFoodId.get(key);
     if (!foodId) return;
     const existing = state.itemCheckByFoodId.get(foodId);
-    const updated = await upsertItemCheck(periodId, existing?.id, { foodId }, { stockOverride: value > 0 ? value : null })
-      .catch(() => null);
+    const updated = await withPending(`shopping-stock:${key}`, () =>
+      upsertItemCheck(periodId, existing?.id, { foodId }, { stockOverride: value > 0 ? value : null }),
+    ).catch(() => null);
     if (updated) patchItemCheck(periodId, updated);
   };
 

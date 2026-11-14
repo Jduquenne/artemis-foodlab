@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-14 — Shopping redesign, step 2: rows, stock sheet, detail sheet (v6.148.0)
+- Done: chained with step 1 at the owner's request (one commit for both). `ShoppingItemRow` + `HomeStockMarker`, `ShoppingCategoryCard` rewritten (mode, counters, checked last, « N déjà à la maison »), `components/sheets/` (`ShoppingSheet`, `StockEntrySheet`, `ShoppingItemSheet`, `FreezerBagsSection`, `PlaceToggleRow`), logic `shoppingRowLabel.ts` and `effectiveQuantity` / `isCoveredAtHome` / `countRecipes` / `countCoveredByGroup` / `sortCheckedLast`; `filterGroupedIngredients` takes the mode; `setStock` gets a pending key. Deleted: `IngredientCheckRow`, `ExtraCheckRow`, `IngredientTooltip`, `PlaceFlagButton`, `SourcesModal`. Household rows restyled with a « Gérer » link. tsc + lint pass; **not checked in a browser**.
+- To test with `npm run dev` (phone and desktop): at home, stock sheet (J'ai tout, Je n'en ai pas, a value, Enter), markers and labels; in store, check / uncheck, checked lines at the bottom, « déjà à la maison »; detail sheet: meals « déjà pris », freezer bags, place switch, extra edit and delete; household card and « Gérer »; round trip: set a stock, reload, switch modes.
+- Still open: step 3 (« Par repas »: whole meal, whole base, line), step 4 (cleanup, docs).
+
 ## 2026-11-14 — Shopping redesign, step 1: header, mode, Options menu (v6.147.0)
 - Done: issue #55 created (mock-up validated by the owner, includes #43). New `features/shopping/components/header/` (`ShoppingHeader`, `ShoppingModeToggle`, `ShoppingOptionsMenu` on `FloatingMenu`, `OptionsMenuSection`, `OptionsRadioRow`, `OptionsToolRow`, `ActiveFilterPills`), `useShoppingModeStore` (persisted `cipe_shopping_mode`), types `ShoppingMode` / `ShoppingLayout`. Tabs Repas / Ingrédients / Articles, « Complète / Manquants » and the toolbar icons removed; `PlaceFilterControl` deleted (no consumer left). The store mode reuses the « missing » filter. tsc + lint pass; **not checked in a browser** (to test with `npm run dev`: phone and desktop, both modes, every Options entry, the pills, household back arrow, copy).
 - Still open: step 2 (rows, stock entry, detail sheet), step 3 (Par repas), step 4 (cleanup, docs).

@@ -13,15 +13,16 @@ export const HouseholdCheckRow = ({ item, isChecked, onToggle }: HouseholdCheckR
   const pending = usePendingKey(`shopping-check:${key}`);
 
   return (
-    <div
+    <button
+      type="button"
       onClick={() => !pending && onToggle(key)}
-      className={`flex items-center gap-1.5 px-1.5 py-1 rounded-lg transition-all cursor-pointer select-none
-        ${isChecked ? 'opacity-40 bg-subtle-tint' : 'hover:bg-subtle-tint'}`}
+      aria-pressed={isChecked}
+      className={`flex items-center gap-3 w-full px-3 py-2 min-h-13 border-t border-slate-200 first:border-t-0 text-left hover:bg-subtle-tint transition-colors lg:min-h-10 lg:py-1.5 ${isChecked ? 'opacity-50' : ''}`}
     >
-      <CheckToggleIcon checked={isChecked} pending={pending} />
-      <span className={`text-xs font-medium text-slate-800 truncate ${isChecked ? 'line-through' : ''}`}>
+      <CheckToggleIcon checked={isChecked} pending={pending} className="w-5 h-5" checkedClassName="text-orange-500" />
+      <span className={`text-[15px] font-semibold text-slate-900 truncate lg:text-sm ${isChecked ? 'line-through' : ''}`}>
         {item.name}
       </span>
-    </div>
+    </button>
   );
 };

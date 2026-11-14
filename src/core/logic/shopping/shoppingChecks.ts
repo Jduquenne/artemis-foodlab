@@ -16,6 +16,10 @@ export function checkedSourcesQuantity(ing: ConsolidatedIngredient, sourceChecke
   );
 }
 
+export function effectiveQuantity(ing: ConsolidatedIngredient, sourceChecked: Set<string>): number {
+  return Math.max(0, ing.totalQuantity - checkedSourcesQuantity(ing, sourceChecked));
+}
+
 export function remainingToBuy(
   ing: ConsolidatedIngredient,
   stocks: Record<string, number>,
@@ -34,6 +38,18 @@ export function isIngredientNeeded(
 ): boolean {
   if (checked.has(ing.key)) return false;
   return ing.totalQuantity === 0 || remainingToBuy(ing, stocks, sourceChecked) > 0;
+}
+
+export function isCoveredAtHome(
+  ing: ConsolidatedIngredient,
+  stocks: Record<string, number>,
+  sourceChecked: Set<string>,
+): boolean {
+  return ing.totalQuantity > 0 && remainingToBuy(ing, stocks, sourceChecked) === 0;
+}
+
+export function countRecipes(ing: ConsolidatedIngredient): number {
+  return new Set(ing.sources.map((s) => s.recipeId)).size;
 }
 
 export function isIngChecked(ing: RecipeCardIngredient, sourceChecked: Set<string>): boolean {

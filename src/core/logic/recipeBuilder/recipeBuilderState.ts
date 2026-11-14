@@ -10,6 +10,7 @@ export const initialRecipeBuilderState = (): RecipeBuilderState => ({
   mealTypes: [],
   defaultPortions: 2,
   portionsPerPerson: 1,
+  cookedWeightGrams: null,
   isDessert: false,
   batchCooking: false,
   isFromBook: false,

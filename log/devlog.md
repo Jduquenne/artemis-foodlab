@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-14 — Cooked weight, step 1: catalogue and Recipe Builder (v6.142.0)
+- Done: API D-063 reported implemented on dev (not deployed): `cookedWeightGrams` on recipes, `gramsOverride` accepted on a dish. Front: field read from the API (`ApiRecipe`, `RecipeDetails`, `PlannableItem`), builder state, mapper (always sent, null for a non-dish), validation, « Poids du plat cuit (g) » field with the weight per portion in `RecipeMetaForm`. D-041 set to accepted. Verified by tsc + lint only, not in a browser (to test with `npm run dev` against a local API on the migrated dev database: set a weight on a dish, save, reload, clear it).
+- Still open: steps 4 (journal grams) and 5 (recipe detail); the owner pushes the API and confirms prod before any push of the front.
+
 ## 2026-11-14 — Cooked weight of a dish, framing (v6.141.3, docs only)
 - Done: user need « bread portion in grams » framed as issue #51 (`dev/issues.json`, local): optional `cookedWeightGrams` on a dish, macros unchanged, grams ↔ portions conversion only. Recorded as D-041 (proposed), with notes in `docs/spec-recipes.md`, `docs/spec-journal.md` and `docs/glossary.md`. Defaults proposed to the owner: Recipe Builder + journal + recipe detail first, planning and shopping stay in portions, not linked to D-040, dishes only.
 - Problems: the journal `gramsOverride` on a non-ingredient recipe is unverified on the API side. The API prompt was handed to the owner to relay.

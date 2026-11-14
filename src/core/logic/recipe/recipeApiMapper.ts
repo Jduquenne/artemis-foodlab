@@ -32,6 +32,7 @@ export interface ApiRecipe {
   mealTypes: string[];
   defaultPortions: number;
   portionsPerPerson?: number;
+  cookedWeightGrams?: number | null;
   batchCooking: boolean;
   isDessert: boolean;
   isFromBook: boolean;
@@ -63,6 +64,7 @@ export interface ApiRecipeInput {
   mealTypes: string[];
   defaultPortions: number;
   portionsPerPerson: number;
+  cookedWeightGrams: number | null;
   batchCooking: boolean;
   isDessert: boolean;
   isFromBook: boolean;
@@ -113,6 +115,7 @@ export function mapApiRecipe(api: ApiRecipe, codeByApiId: Map<string, string>): 
     kind: api.kind as RecipeKind,
     defaultPortions: api.defaultPortions,
     portionsPerPerson: api.portionsPerPerson,
+    cookedWeightGrams: api.cookedWeightGrams ?? undefined,
     ingredients: api.ingredients.map((ing) => mapApiIngredient(ing, codeByApiId)),
     instructions: api.instructions,
     announcedAt: api.announcedAt,

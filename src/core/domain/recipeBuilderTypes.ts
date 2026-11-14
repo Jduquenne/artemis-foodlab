@@ -30,6 +30,7 @@ export interface RecipeBuilderState {
   mealTypes: MealType[];
   defaultPortions: number;
   portionsPerPerson?: number | null;
+  cookedWeightGrams?: number | null;
   isDessert: boolean;
   batchCooking: boolean;
   isFromBook: boolean;

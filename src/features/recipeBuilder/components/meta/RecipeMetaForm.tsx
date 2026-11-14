@@ -13,6 +13,8 @@ import { InstructionsModal } from "./InstructionsModal";
 import { IndustrialEquivalentField } from "./IndustrialEquivalentField";
 import { CategoryChangeModal } from "./CategoryChangeModal";
 import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
+import { cookedWeightPerPortion } from "../../../../core/logic/recipe/cookedWeightLogic";
+import { roundTo } from "../../../../core/utils/numberUtils";
 
 export interface RecipeMetaFormProps {
   state: RecipeBuilderState;
@@ -37,6 +39,7 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
   const prefix = CATEGORY_PREFIX[state.categoryId] ?? state.categoryId.toUpperCase();
   const computedId = buildRecipeId(state.categoryId, state.recipeNumber);
   const isBase = state.kind === RecipeKind.BASE;
+  const cookedPerPortion = cookedWeightPerPortion({ cookedWeightGrams: state.cookedWeightGrams ?? undefined, defaultPortions: state.defaultPortions });
   const recipes = useRecipesSnapshot();
   const categories = useCategoriesSnapshot();
   const source = useBuilderSourceRecipe(state);
@@ -195,6 +198,23 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
           />
           <p className="mt-1 text-[11px] text-slate-400">
             Portion de référence d&apos;une personne (ex. 4 si la recette compte une portion par pancake et qu&apos;on en mange 4). Sert au total calorique du jour, au journal et aux courses.
+          </p>
+        </div>
+      )}
+
+      {state.kind === RecipeKind.DISH && (
+        <div>
+          <label className={labelClass}>Poids du plat cuit (g)</label>
+          <DecimalInput
+            min={0}
+            value={state.cookedWeightGrams ?? null}
+            onValueChange={(cookedWeightGrams) => onChange({ cookedWeightGrams })}
+            placeholder="Optionnel"
+            className={inputClass}
+          />
+          <p className="mt-1 text-[11px] text-slate-400">
+            Poids de tout le plat fini, après cuisson (le pain pèse moins que sa pâte). Permet de saisir des grammes mangés au journal.
+            {cookedPerPortion !== null && ` Soit environ ${roundTo(cookedPerPortion, 1)} g par portion.`}
           </p>
         </div>
       )}

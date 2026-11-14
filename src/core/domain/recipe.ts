@@ -41,6 +41,7 @@ export interface RecipeDetails {
   kind: RecipeKind;
   defaultPortions: number;
   portionsPerPerson?: number;
+  cookedWeightGrams?: number;
   ingredients: Ingredient[];
   instructions: string | null;
   assets: Partial<Record<RecipeAssetKey, RecipeAsset>>;
@@ -65,6 +66,7 @@ export interface PlannableItem {
   mealTypes?: MealType[];
   defaultPortions?: number;
   portionsPerPerson?: number;
+  cookedWeightGrams?: number;
   ingredients?: Ingredient[];
   batchCooking?: boolean;
   isDessert?: boolean;

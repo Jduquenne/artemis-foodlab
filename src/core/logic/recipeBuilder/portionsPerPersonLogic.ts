@@ -3,7 +3,7 @@ import { DEFAULT_PORTIONS_PER_PERSON } from "../recipe/portionsPerPersonLogic";
 
 export const MAX_PORTIONS_PER_PERSON = 100;
 
-function hasAtMostTwoDecimals(value: number): boolean {
+export function hasAtMostTwoDecimals(value: number): boolean {
   return Math.abs(value * 100 - Math.round(value * 100)) < 1e-9;
 }
 

@@ -10,6 +10,7 @@ import { FoodPersonalization, personalizeRecipeTree } from "../foodGroup/foodCho
 import { accompanimentsFor, resolveAccompaniment } from "../accompaniment/accompanimentLogic";
 import { applyBaseVersions } from "../baseVersion/baseVersionLogic";
 import { portionsPerPersonOf } from "../recipe/portionsPerPersonLogic";
+import { portionsFromCookedGrams } from "../recipe/cookedWeightLogic";
 import { parseUnit } from "../unit/unitLogic";
 
 export const ZERO: Macronutrients = {
@@ -206,7 +207,9 @@ function computeDishMacros(
   if (!isDish(recipe) && !isBase(recipe) && baseGrams) {
     return scaleMacros(m, (gramOverrides[itemKey] ?? baseGrams) / baseGrams);
   }
-  return scaleMacros(m, portionOverrides[itemKey] ?? portionsPerPersonOf(catalogueRecipe));
+  const gramsEaten = gramOverrides[itemKey];
+  const cookedPortions = gramsEaten === undefined ? null : portionsFromCookedGrams(catalogueRecipe, gramsEaten);
+  return scaleMacros(m, cookedPortions ?? portionOverrides[itemKey] ?? portionsPerPersonOf(catalogueRecipe));
 }
 
 export function computeSlotMacros(

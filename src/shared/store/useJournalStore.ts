@@ -10,6 +10,7 @@ import {
 } from "../../core/logic/journal/journalOverrideLogic";
 import { RECIPE_BASE_GRAMS } from "../../core/catalogue/recipeMetrics";
 import { portionsPerPersonOf } from "../../core/logic/recipe/portionsPerPersonLogic";
+import { portionsFromCookedGrams } from "../../core/logic/recipe/cookedWeightLogic";
 import { useProfileStore } from "./useProfileStore";
 
 interface JournalState {
@@ -78,7 +79,9 @@ export const useJournalStore = create<JournalState>((set, get) => {
     recipe: RecipeDetails | undefined,
     planningSlotItemId: string,
   ): Record<string, number> => {
-    const portions = current.portionOverrides[planningSlotItemId] ?? portionsPerPersonOf(recipe);
+    const gramsEaten = current.gramOverrides[planningSlotItemId];
+    const cookedPortions = gramsEaten === undefined ? null : portionsFromCookedGrams(recipe, gramsEaten);
+    const portions = current.portionOverrides[planningSlotItemId] ?? cookedPortions ?? portionsPerPersonOf(recipe);
     return defaultIngredientOverridesForPortions(recipe, portions);
   };
 
@@ -90,8 +93,8 @@ export const useJournalStore = create<JournalState>((set, get) => {
       await persistOverride(planningSlotItemId, () => ({ portionsOverride: value, gramsOverride: null, ingredientOverrides }));
     },
     setGramOverride: async (planningSlotItemId, recipeId, recipe, value) => {
-      const baseGrams = RECIPE_BASE_GRAMS[recipeId] ?? 0;
-      const ratio = baseGrams > 0 ? value / baseGrams : 1;
+      const referenceGrams = recipe?.cookedWeightGrams ?? RECIPE_BASE_GRAMS[recipeId] ?? 0;
+      const ratio = referenceGrams > 0 ? value / referenceGrams : 1;
       const ingredientOverrides = recipe ? scaleIngredientsByRatio(recipe, ratio) : {};
       await persistOverride(planningSlotItemId, () => ({ portionsOverride: null, gramsOverride: value, ingredientOverrides }));
     },

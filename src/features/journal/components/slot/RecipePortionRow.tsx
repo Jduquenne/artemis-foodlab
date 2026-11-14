@@ -17,6 +17,7 @@ import { personalizeRecipe } from "../../../../core/logic/foodGroup/foodChoiceLo
 import { useActiveProfile } from "../../../../shared/hooks/useActiveProfile";
 import { accompanimentLabelsFor } from "../../../../core/logic/accompaniment/accompanimentLogic";
 import { portionsPerPersonOf } from "../../../../core/logic/recipe/portionsPerPersonLogic";
+import { cookedGramsFromPortions, cookedWeightPerPortion, portionsFromCookedGrams } from "../../../../core/logic/recipe/cookedWeightLogic";
 import { stepJournalPortions } from "../../../../core/logic/journal/portionStepLogic";
 import { formatQty } from "../../../../core/logic/unit/unitFormatLogic";
 
@@ -96,7 +97,18 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId, mealChoices, ac
   }
 
   const reference = portionsPerPersonOf(catalogueRecipe);
-  const portions = portionOverrides[key] ?? reference;
+  const cookedPerPortion = cookedWeightPerPortion(catalogueRecipe);
+  const gramsEaten = gramOverrides[key];
+  const cookedPortions = gramsEaten === undefined ? null : portionsFromCookedGrams(catalogueRecipe, gramsEaten);
+  const portions = portionOverrides[key] ?? cookedPortions ?? reference;
+  const shownGrams = gramsEaten ?? Math.round(cookedGramsFromPortions(catalogueRecipe, portions) ?? 0);
+  const commitCookedGrams = () => {
+    if (planningSlotItemId && gramsDraft !== null && gramsDraft > 0 && gramsDraft !== shownGrams) {
+      const value = gramsDraft;
+      withPending(`journal-override:${key}`, () => setGramOverride(planningSlotItemId, recipeId, recipe, value)).catch(() => undefined);
+    }
+    setGramsDraft(null);
+  };
   const overridableIngredients = recipe?.ingredients.filter(isOverridableIngredient) ?? [];
   const canExpand = !!planningSlotItemId && overridableIngredients.length > 0;
   const scaledDefaults = recipe ? defaultIngredientOverridesForPortions(recipe, portions) : {};
@@ -148,6 +160,21 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId, mealChoices, ac
           {Math.round(kcal)} kcal
         </span>
       </div>
+
+      {cookedPerPortion !== null && (
+        <div className="flex items-center gap-1">
+          <DecimalInput
+            value={gramsDraft ?? shownGrams}
+            aria-label={`Poids mangé en grammes — ${name}`}
+            disabled={!planningSlotItemId || pending}
+            onValueChange={setGramsDraft}
+            onBlur={commitCookedGrams}
+            onKeyDown={(e) => { if (e.key === "Enter") e.currentTarget.blur(); }}
+            className={`w-12 text-[11px] font-bold text-center bg-subtle rounded px-1 py-0.5 outline-none focus:ring-1 focus:ring-orange-400 ${gramsEaten !== undefined ? "text-orange-500" : "text-slate-400"}`}
+          />
+          <span className="text-[11px] text-slate-400">g cuits</span>
+        </div>
+      )}
 
       {expanded && recipe && planningSlotItemId && (
         <div className="flex flex-col gap-0.5 mt-0.5">

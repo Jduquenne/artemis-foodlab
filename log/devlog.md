@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-14 — Cooked weight, step 2: grams in the journal (v6.143.0)
+- Done: `cookedWeightLogic.ts` (`portionsFromCookedGrams`, `cookedGramsFromPortions`); `computeDishMacros` scales by the equivalent portions when a journal grams override exists on a dish with a cooked weight; `setGramOverride` uses `cookedWeightGrams` as the reference weight for the ingredient overrides; `RecipePortionRow` shows a « g cuits » field under the stepper (stepper and grams exclude each other). tsc + lint pass; not checked in a browser (to test with `npm run dev` against the migrated dev API: type grams on a bread, reload, use the stepper, retype grams, check kcal of the day and the week average).
+- Problems: no test runner in the project, the conversion is covered by reading only.
+- Still open: step 3 (recipe detail « 1 portion ≈ N g » and kcal per 100 g); the owner pushes the API and confirms prod before any push of the front.
+
 ## 2026-11-14 — Cooked weight, step 1: catalogue and Recipe Builder (v6.142.0)
 - Done: API D-063 reported implemented on dev (not deployed): `cookedWeightGrams` on recipes, `gramsOverride` accepted on a dish. Front: field read from the API (`ApiRecipe`, `RecipeDetails`, `PlannableItem`), builder state, mapper (always sent, null for a non-dish), validation, « Poids du plat cuit (g) » field with the weight per portion in `RecipeMetaForm`. D-041 set to accepted. Verified by tsc + lint only, not in a browser (to test with `npm run dev` against a local API on the migrated dev database: set a weight on a dish, save, reload, clear it).
 - Still open: steps 4 (journal grams) and 5 (recipe detail); the owner pushes the API and confirms prod before any push of the front.

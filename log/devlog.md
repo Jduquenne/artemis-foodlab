@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-14 — Shopping redesign, step 3: « Par repas » (v6.149.0)
+- Done: `RecipeShoppingCard` header = whole-meal check (folds when all taken, place pin kept), `RecipeBaseGroupSection` inset box with a whole-base header (folds when taken), `IngredientRow` in the new row style with a chevron to the detail sheet (`onOpenDetail`). tsc + lint pass; **not checked in a browser** (to test: Options › Par repas, check a meal, a base, a line, uncheck by the header, the pin shortcut, the chevron; then back to « Par rayon » to see the quantities taken off).
+- Still open: step 4 (cleanup, docs).
+
 ## 2026-11-14 — Shopping redesign, step 2: rows, stock sheet, detail sheet (v6.148.0)
 - Done: chained with step 1 at the owner's request (one commit for both). `ShoppingItemRow` + `HomeStockMarker`, `ShoppingCategoryCard` rewritten (mode, counters, checked last, « N déjà à la maison »), `components/sheets/` (`ShoppingSheet`, `StockEntrySheet`, `ShoppingItemSheet`, `FreezerBagsSection`, `PlaceToggleRow`), logic `shoppingRowLabel.ts` and `effectiveQuantity` / `isCoveredAtHome` / `countRecipes` / `countCoveredByGroup` / `sortCheckedLast`; `filterGroupedIngredients` takes the mode; `setStock` gets a pending key. Deleted: `IngredientCheckRow`, `ExtraCheckRow`, `IngredientTooltip`, `PlaceFlagButton`, `SourcesModal`. Household rows restyled with a « Gérer » link. tsc + lint pass; **not checked in a browser**.
 - To test with `npm run dev` (phone and desktop): at home, stock sheet (J'ai tout, Je n'en ai pas, a value, Enter), markers and labels; in store, check / uncheck, checked lines at the bottom, « déjà à la maison »; detail sheet: meals « déjà pris », freezer bags, place switch, extra edit and delete; household card and « Gérer »; round trip: set a stock, reload, switch modes.

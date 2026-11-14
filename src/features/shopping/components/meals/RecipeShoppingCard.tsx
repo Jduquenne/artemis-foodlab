@@ -17,6 +17,7 @@ export interface RecipeShoppingCardProps {
     onToggleAllAtPlace: (keys: string[], value: boolean) => void;
     onToggleSource: (ingredientKey: string, sources: IngredientSource[], checked: boolean) => void;
     onToggleBatch: (batch: Array<{ ingredientKey: string; sources: IngredientSource[] }>, checked: boolean) => void;
+    onOpenDetail: (key: string) => void;
 }
 
 export const RecipeShoppingCard = ({
@@ -29,6 +30,7 @@ export const RecipeShoppingCard = ({
     onToggleAllAtPlace,
     onToggleSource,
     onToggleBatch,
+    onOpenDetail,
 }: RecipeShoppingCardProps) => {
     const allIngs = [...directIngredients, ...baseGroups.flatMap(b => b.ingredients)];
     const totalCount = allIngs.length;
@@ -41,69 +43,63 @@ export const RecipeShoppingCard = ({
     const placeKeys = allIngs.map(ing => ing.ingredientKey);
     const allAtPlace = allKeysAtPlace(placeKeys, atPlace);
     const placePending = useAnyPendingKey(placeKeys.map(key => `shopping-place:${key}`));
+    const placeLabel = allAtPlace ? `Ne plus tout prendre à ${placeName}` : `Tout à prendre à ${placeName}`;
 
-    const handleTogglePlace = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        if (placePending) return;
-        onToggleAllAtPlace(placeKeys, !allAtPlace);
-    };
-
-    const handleToggleAll = (e: React.MouseEvent) => {
-        e.stopPropagation();
+    const handleToggleAll = () => {
         if (pending) return;
         onToggleBatch(allIngs.map(ing => ({ ingredientKey: ing.ingredientKey, sources: ing.sources })), !allCardChecked);
     };
 
+    const status = allCardChecked
+        ? 'tout est pris'
+        : checkedCount > 0 ? `${checkedCount}/${totalCount} pris · touche pour tout cocher` : 'touche pour tout cocher';
+
     return (
-        <div className="bg-surface border border-slate-200 rounded-xl p-2 shadow-sm">
-            <div className="flex items-center justify-between mb-1">
-                <h2 className="text-orange-600 font-black uppercase tracking-widest text-xs truncate">{recipeName}</h2>
-                <div className="flex items-center gap-1.5 shrink-0 ml-1">
-                    {checkedCount > 0 && (
-                        <span className="text-xs text-slate-400 font-medium">{checkedCount}/{totalCount}</span>
-                    )}
-                    {placeName && totalCount > 0 && (
-                        <button
-                            type="button"
-                            onClick={handleTogglePlace}
-                            disabled={placePending}
-                            title={allAtPlace ? `Ne plus tout prendre à ${placeName}` : `Tout à prendre à ${placeName}`}
-                            aria-label={allAtPlace ? `Ne plus tout prendre à ${placeName}` : `Tout à prendre à ${placeName}`}
-                            aria-pressed={allAtPlace}
-                            className={`flex items-center justify-center w-5 h-5 rounded-full transition-colors disabled:opacity-60 ${
-                                allAtPlace ? 'bg-orange-100 text-orange-600 dark:bg-orange-900/30' : 'text-slate-300 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900/30'
-                            }`}
-                        >
-                            <MapPin className={`w-3.5 h-3.5 ${placePending ? 'animate-pulse' : ''}`} />
-                        </button>
-                    )}
+        <div className="bg-surface border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+            <div className="flex items-stretch">
+                <button
+                    type="button"
+                    aria-pressed={allCardChecked}
+                    onClick={handleToggleAll}
+                    className="flex-1 min-w-0 flex items-center gap-3 px-3 py-2.5 text-left hover:bg-subtle-tint transition-colors"
+                >
+                    <CheckToggleIcon checked={allCardChecked} pending={pending} className="w-5 h-5" checkedClassName="text-orange-500" />
+                    <span className="flex flex-col min-w-0">
+                        <span className={`text-[15px] font-extrabold truncate lg:text-sm ${allCardChecked ? 'line-through text-slate-400' : 'text-slate-900'}`}>{recipeName}</span>
+                        <span className="text-xs text-slate-400 truncate">{status}</span>
+                    </span>
+                </button>
+                {placeName && totalCount > 0 && (
                     <button
-                        onClick={handleToggleAll}
-                        className="flex items-center justify-center w-5 h-5 rounded-full hover:bg-orange-50 dark:hover:bg-orange-900/30 transition-colors"
+                        type="button"
+                        onClick={() => !placePending && onToggleAllAtPlace(placeKeys, !allAtPlace)}
+                        disabled={placePending}
+                        title={placeLabel}
+                        aria-label={placeLabel}
+                        aria-pressed={allAtPlace}
+                        className={`w-11 shrink-0 grid place-items-center transition-colors disabled:opacity-60 ${allAtPlace ? 'text-orange-600 bg-orange-50 dark:bg-orange-900/20' : 'text-slate-300 hover:text-orange-500'}`}
                     >
-                        <CheckToggleIcon
-                            checked={allCardChecked}
-                            pending={pending}
-                            className="w-4 h-4"
-                            uncheckedClassName="text-slate-300 hover:text-orange-400"
-                        />
+                        <MapPin className={`w-4.5 h-4.5 ${placePending ? 'animate-pulse' : ''}`} />
                     </button>
-                </div>
+                )}
             </div>
-            <div className="space-y-0.5">
-                {directIngredients.map(ing => (
-                    <IngredientRow key={ing.ingredientKey} ing={ing} sourceChecked={sourceChecked} onToggleSource={onToggleSource} />
-                ))}
-                {baseGroups.map(base => (
-                    <RecipeBaseGroupSection
-                        key={base.baseId}
-                        base={base}
-                        sourceChecked={sourceChecked}
-                        onToggleSource={onToggleSource}
-                        onToggleBatch={onToggleBatch}
-                    />
-                ))}
-            </div>
+            {!allCardChecked && (
+                <>
+                    {directIngredients.map(ing => (
+                        <IngredientRow key={ing.ingredientKey} ing={ing} sourceChecked={sourceChecked} onToggleSource={onToggleSource} onOpenDetail={onOpenDetail} />
+                    ))}
+                    {baseGroups.map(base => (
+                        <RecipeBaseGroupSection
+                            key={base.baseId}
+                            base={base}
+                            sourceChecked={sourceChecked}
+                            onToggleSource={onToggleSource}
+                            onToggleBatch={onToggleBatch}
+                            onOpenDetail={onOpenDetail}
+                        />
+                    ))}
+                </>
+            )}
         </div>
     );
 };

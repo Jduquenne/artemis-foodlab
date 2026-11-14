@@ -17,6 +17,11 @@ Step 2 (v6.148.0), rows and sheets:
 - **Detail sheet** (`ShoppingItemSheet` on `ShoppingSheet`: bottom sheet on phones, centred card from `sm:`, closed by its × only): summary « Total · j'ai · à acheter » (`shoppingItemSummary`), « à préciser » note, freezer bags (`FreezerBagsSection`, same rules as the former sources modal), the meals (`SourceGroupRow`, check = « déjà pris »), the place switch (`PlaceToggleRow`, replaces the pin on the row), and « Modifier » / « Supprimer » for an extra. It replaces `SourcesModal`, `IngredientTooltip`, `PlaceFlagButton`, `IngredientCheckRow`, `ExtraCheckRow` (deleted).
 - **Household card** in the list: same row style, a « Gérer » link opens the household screen.
 
+Step 3 (v6.149.0), « Par repas » layout (`features/shopping/components/meals/`), same in both modes (a check there always means « déjà pris » for that meal, through the source checks):
+- **Meal card** (`RecipeShoppingCard`): the whole header is a button (check circle, recipe name, « touche pour tout cocher » / « N/M pris » / « tout est pris ») that checks every ingredient of the meal, bases included (`toggleSourceBatch`, one call); once all is taken the card folds to its header. The place shortcut stays as a pin button on the right of the header.
+- **Base group** (`RecipeBaseGroupSection`): an inset box whose header (« Base · touche pour cocher toute la base ») checks the whole base; it folds when taken.
+- **Line** (`IngredientRow`): same size as the aisle rows; a tap checks that meal's share, the chevron opens the item detail sheet.
+
 ## Shopping list model
 
 - The list is **never stored**: it is recomputed on the client from the shopping days + the cached planning (`getShoppingListForDays`, `core/logic/shopping/` — aggregation, checks, recipe cards, grouping, clipboard, price).

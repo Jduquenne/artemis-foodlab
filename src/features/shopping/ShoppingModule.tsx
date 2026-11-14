@@ -329,6 +329,7 @@ export const ShoppingModule = () => {
                                                     onToggleAllAtPlace={setAtPlaceForKeys}
                                                     onToggleSource={toggleSourceCheck}
                                                     onToggleBatch={toggleSourceBatch}
+                                                    onOpenDetail={setDetailKey}
                                                 />
                                             </div>
                                         ))}

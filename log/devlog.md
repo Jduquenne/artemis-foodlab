@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-14 — Prices: « Renseigner les prix » in the admin foods table (v6.154.0)
+- Owner request: a dedicated quick-entry screen, one food at a time with its photo, a price per kg, « OK » goes to the next one like a slider.
+- Done: `PriceSliderModal` + `PriceSliderCard` (`features/dashboard/components/prices/`), `priceQueueLogic.ts` (`buildPriceQueue` « Sans prix » / « Tous », `ingredientRecipesByFood` for the photo, `isLiquidFood`); button in `FoodsTable`, price column in `FoodRow`. Deliberate exception to the dashboard « confirm every write » rule (documented in spec-admin). tsc + lint pass; **not checked in a browser** (to test: open from Dashboard › Données › Aliments, enter a price + Enter, Passer, ‹, switch « Tous », a food with a photo and one without, a piece food, a liquid; the price column updates; the shopping estimate uses the new prices).
+
 ## 2026-11-14 — Fix: 266.666… quantities in the shopping inputs (v6.153.1)
 - Problem (owner): quantities like 266.666666 in the shopping list. Cause: scaled quantities (persons × portion ÷ recipe portions) are repeating decimals; the new stock and price sheets show the raw number in a `DecimalInput` (`String(value)`), and « J'ai tout » saved it as the stock.
 - Done: `effectiveQuantity` and `remainingToBuy` round to 2 decimals (`SHOPPING_QUANTITY_DECIMALS`), so the stock sheet, « J'ai tout », the price entry prefill, the row labels and the estimate all get the rounded value; `StockEntrySheet` rounds a stock already saved raw. tsc + lint pass; **not checked in a browser** (to test: a recipe for 3 portions planned for 8 persons, open the stock sheet and the price entry, « J'ai tout », reload).

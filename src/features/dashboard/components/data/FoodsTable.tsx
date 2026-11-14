@@ -10,6 +10,9 @@ import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActi
 import { includesAnyText, normalizeQuery } from "../../../../core/utils/textUtils";
 import { FOOD_SEASON_FILTERS, FoodSeasonFilter, filterFoodsBySeason } from "../../../../core/logic/dashboard/foodTableLogic";
 import { PillTabs } from "../common/PillTabs";
+import { Euro } from "lucide-react";
+import { useFoodPrices } from "../../../../shared/hooks/useFoodPrices";
+import { PriceSliderModal } from "../prices/PriceSliderModal";
 
 export const FoodsTable = () => {
   const { foods, create, save, remove } = useCatalogueFoods();
@@ -19,6 +22,8 @@ export const FoodsTable = () => {
   const [creating, setCreating] = useState(false);
   const [editing, setEditing] = useState<Food | null>(null);
   const [pendingDelete, setPendingDelete] = useState<Food | null>(null);
+  const [pricing, setPricing] = useState(false);
+  const { priceByFood } = useFoodPrices();
 
   const filtered = useMemo(() => {
     const needle = normalizeQuery(query);
@@ -31,7 +36,19 @@ export const FoodsTable = () => {
     <DataPanelShell
       title="Aliments"
       count={filtered.length}
-      filters={<PillTabs tabs={FOOD_SEASON_FILTERS} value={season} onChange={setSeason} compact />}
+      filters={
+        <>
+          <PillTabs tabs={FOOD_SEASON_FILTERS} value={season} onChange={setSeason} compact />
+          <button
+            type="button"
+            onClick={() => setPricing(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-bold text-slate-600 hover:border-orange-300 hover:text-orange-600 transition-colors shrink-0"
+          >
+            <Euro size={14} />
+            Renseigner les prix
+          </button>
+        </>
+      }
       search={{ value: query, onChange: setQuery }}
       onAdd={() => setCreating(true)}
     >
@@ -41,12 +58,14 @@ export const FoodsTable = () => {
             key={food.id}
             food={food}
             groupName={groups.find((group) => group.id === food.groupId)?.name ?? null}
+            price={priceByFood.get(food.id)}
             onEdit={setEditing}
             onAskDelete={setPendingDelete}
           />
         ))}
       </DataList>
 
+      {pricing && <PriceSliderModal onClose={() => setPricing(false)} />}
       {creating && (
         <FoodFormModal
           food={null}

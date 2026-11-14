@@ -2,15 +2,19 @@ import { Snowflake } from "lucide-react";
 import { Food } from "../../../../core/domain/ingredient";
 import { RowActions } from "../common/RowActions";
 import { formatMonths, hasSeason } from "../../../../core/logic/season/seasonLogic";
+import { FoodPrice } from "../../../../core/domain/price";
+import { formatEuro } from "../../../../core/logic/price/priceLogic";
+import { isLiquidFood } from "../../../../core/logic/price/priceQueueLogic";
 
 export interface FoodRowProps {
   food: Food;
   groupName: string | null;
+  price: FoodPrice | undefined;
   onEdit: (food: Food) => void;
   onAskDelete: (food: Food) => void;
 }
 
-export const FoodRow = ({ food, groupName, onEdit, onAskDelete }: FoodRowProps) => (
+export const FoodRow = ({ food, groupName, price, onEdit, onAskDelete }: FoodRowProps) => (
   <div className="flex items-center gap-3 px-4 py-2.5">
     <div className="flex-1 min-w-0">
       <p className="text-sm text-slate-800 truncate flex items-center gap-1.5">
@@ -23,6 +27,9 @@ export const FoodRow = ({ food, groupName, onEdit, onAskDelete }: FoodRowProps) 
         {hasSeason(food.months) && ` · ${formatMonths(food.months)}`}
       </p>
     </div>
+    <span className="shrink-0 text-xs tabular-nums text-slate-500 w-20 text-right">
+      {price ? `${formatEuro(price.pricePerKg)}/${isLiquidFood(food) ? "l" : "kg"}` : "—"}
+    </span>
     <span className="shrink-0 text-xs tabular-nums text-slate-500 w-16 text-right">
       {food.macros.kcal} kcal
     </span>

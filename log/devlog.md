@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-17 — Cooking sheets, step 4: Recipe Builder hint (v6.158.0)
+- Done: `cookedEquivalents` (`recipeCookingLogic.ts`: raw grams × ratio per sheet with a ratio), `draftCookedEquivalents` (`core/logic/recipeBuilder/cookedEquivalentLogic.ts`, food ingredients only), `CookedEquivalentHint` under each matching ingredient in `IngredientBuilderList` (desktop row and phone card). Front of D-044 complete.
+- tsc + lint pass; **not checked in a browser** (to test against the dev API: Recipe Builder, rice 300 g with a sheet « À l'eau » ratio 2,5 → « ≈ 750 g cuits (à l'eau) »; change the quantity → updates; « pièce » unit on a food without unit weight → no hint; a base → no hint; phone card too).
+- Still open: API D-065 to be deployed in prod by the API session; **do not push the front before** (the bootstrap fallback keeps reads safe, but the admin save would 404). Then owner browser test and close #57 and #58.
+
 ## 2026-11-17 — Cooking sheets, step 3: recipe detail « Cuisson » sheet (v6.157.0)
 - Done: `flattenRecipeLines` extracted to `core/logic/recipe/recipeFlattenLogic.ts` (recipe + linked bases scaled to the portions; `recipeCost` now uses it, behaviour unchanged); `recipeCookingRows` / `cookedGramsOf` (`core/logic/cooking/recipeCookingLogic.ts`), `useRecipeCooking`; `RecipeCookingSheet`; toolbar action « Cuisson » (flame, only when an ingredient has a sheet); `RecipeDetail` has one `openSheet` state (« cost » / « cooking »). Toolbar on phones: two rows in the same container (portions + price, then the actions with labels), since an admin's five segments overflowed one phone row (≈ 380 px for ≈ 330).
 - tsc + lint pass; **not checked in a browser** (to test against the dev API: a recipe using rice with a sheet « À l'eau » ratio 2,5 → « Cuisson » shows the raw quantity and « ≈ N g cuits », the stepper changes them; a food used in the dish and in a linked base is merged with the base name; a recipe without any sheet → no « Cuisson » button; the price sheet still opens; phone: two rows, labels visible, nothing clipped; desktop: one row).

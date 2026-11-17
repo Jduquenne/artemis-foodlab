@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Plus } from "lucide-react";
 import { Unit, IngredientCategory } from "../../../../core/domain/ingredient";
 import { IngredientBuilderRow } from "./IngredientBuilderRow";
@@ -6,6 +6,10 @@ import { IngredientMobileCard } from "./IngredientMobileCard";
 import { IngredientEditDrawer } from "./IngredientEditDrawer";
 import { DraftIngredient } from "../../../../core/domain/recipeBuilderTypes";
 import { markScrolling } from "../../../../shared/utils/scrollGuard";
+import { draftCookedEquivalents } from "../../../../core/logic/recipeBuilder/cookedEquivalentLogic";
+import { useFoodsSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
+import { useFoodCookings } from "../../../../shared/hooks/useFoodCookings";
+import { CookedEquivalentHint } from "./CookedEquivalentHint";
 
 export interface IngredientBuilderListProps {
   ingredients: DraftIngredient[];
@@ -24,6 +28,12 @@ const emptyIngredient = (): DraftIngredient => ({
 
 export const IngredientBuilderList = ({ ingredients, onChange }: IngredientBuilderListProps) => {
   const [editingId, setEditingId] = useState<string | null>(null);
+  const foods = useFoodsSnapshot();
+  const cookingsByFood = useFoodCookings();
+  const equivalentsById = useMemo(
+    () => draftCookedEquivalents(ingredients, foods, cookingsByFood),
+    [ingredients, foods, cookingsByFood],
+  );
 
   const update = (id: string, updated: DraftIngredient) =>
     onChange(ingredients.map(i => (i.id === id ? updated : i)));
@@ -87,6 +97,7 @@ export const IngredientBuilderList = ({ ingredients, onChange }: IngredientBuild
                   onRemove={() => remove(ing.id)}
                 />
               </div>
+              {equivalentsById.has(ing.id) && <CookedEquivalentHint equivalents={equivalentsById.get(ing.id) ?? []} />}
             </div>
           ))}
         </div>

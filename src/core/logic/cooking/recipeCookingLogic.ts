@@ -52,6 +52,25 @@ export function recipeCookingRows(
   }));
 }
 
+export interface CookedEquivalent {
+  method: FoodCooking["method"];
+  grams: number;
+}
+
+export function cookedEquivalents(
+  quantity: number | null,
+  unit: string,
+  food: Food | undefined,
+  cookings: readonly FoodCooking[],
+): CookedEquivalent[] {
+  if (quantity === null || quantity <= 0 || !food) return [];
+  const rawGrams = toGrams(quantity, parseUnit(unit), food.unitWeight);
+  if (rawGrams === null) return [];
+  return cookings
+    .filter((cooking) => cooking.cookedRatio !== null)
+    .map((cooking) => ({ method: cooking.method, grams: cookedGrams(rawGrams, cooking.cookedRatio ?? 0) }));
+}
+
 export function cookedGramsOf(row: Pick<RecipeCookingRow, "rawGrams">, cooking: Pick<FoodCooking, "cookedRatio">): number | null {
   if (row.rawGrams === null || cooking.cookedRatio === null) return null;
   return cookedGrams(row.rawGrams, cooking.cookedRatio);

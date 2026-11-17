@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-17 — Cooking sheets, step 2: admin entry (v6.156.0)
+- Done: flame button and methods in the subtitle of each foods table row (`FoodRow`), `FoodCookingModal` + `CookingDraftCard` (`features/dashboard/components/cooking/`), `useFoodCookings` (sheets by food). `cookingFormLogic.ts` now works on numeric drafts (`CookingDraft` = `FoodCookingInput`, inputs are `DecimalInput`s) and gets `buildCookingRecap`; `cookingLogic.ts` gets `formatCookingSummary` / `formatCookedRatio`. `docs/spec-admin.md` § Cooking sheets.
+- tsc + lint pass; **not checked in a browser** (to test against the dev API: Dashboard › Données › Aliments, flame on a food, add « À l'eau » 10-12 min ratio 2,5, « Four » 200 °C 40 min, « Cru » with a note, Continuer → recap → Enregistrer; reopen: values kept, subtitle « · Four, À l'eau, Cru »; errors: max without min, ratio 2,5555, no duration nor ratio; remove every mode → red confirmation; reload: sheets still there).
+- Next: step 3 recipe detail « Cuisson » sheet.
+
 ## 2026-11-17 — Cooking sheets, step 1: data layer (v6.155.1)
 - Context: issues #57 (cooking times per method) and #58 (raw → cooked ratio), one model decided with the owner (D-044): a cooking sheet per (food, method). API D-065 done by the API session, **on dev only**: do not push the front before the API session confirms prod.
 - Done: D-044, `docs/api.md` § Cooking sheets (contract and messages from the real dev payloads), glossary, architecture. Code: `core/domain/cooking.ts` (methods in API order, French labels, limits), `cookingService.saveFoodCookings` (`PUT /foods/:id/cookings`), `useFoodCookingStore` (bootstrap `foodCookings`, `?? []` so a prod API without it keeps working; save replaces the food's sheets), `core/logic/cooking/cookingLogic.ts` (`cookingsByFood`, `formatCookingDuration` « 20-25 min » / « 1 h 30 », `cookedGrams`, `acceptsTemperature`, `isRawMethod`), `cookingFormLogic.ts` (string drafts, `validateCookingDraft(s)` with the API rules and texts, `availableCookingMethods`). Nothing visible.

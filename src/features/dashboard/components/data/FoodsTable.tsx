@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Food } from "../../../../core/domain/ingredient";
+import { FoodCooking } from "../../../../core/domain/cooking";
 import { useCatalogueFoods } from "../../../../shared/hooks/useCatalogueFoods";
 import { FoodRow } from "./FoodRow";
 import { FoodFormModal } from "../../../../shared/components/ui/form/FoodFormModal";
@@ -13,6 +14,10 @@ import { PillTabs } from "../common/PillTabs";
 import { Euro } from "lucide-react";
 import { useFoodPrices } from "../../../../shared/hooks/useFoodPrices";
 import { PriceSliderModal } from "../prices/PriceSliderModal";
+import { FoodCookingModal } from "../cooking/FoodCookingModal";
+import { useFoodCookings } from "../../../../shared/hooks/useFoodCookings";
+
+const NO_COOKINGS: FoodCooking[] = [];
 
 export const FoodsTable = () => {
   const { foods, create, save, remove } = useCatalogueFoods();
@@ -24,6 +29,8 @@ export const FoodsTable = () => {
   const [pendingDelete, setPendingDelete] = useState<Food | null>(null);
   const [pricing, setPricing] = useState(false);
   const { priceByFood } = useFoodPrices();
+  const cookingsByFood = useFoodCookings();
+  const [cooking, setCooking] = useState<Food | null>(null);
 
   const filtered = useMemo(() => {
     const needle = normalizeQuery(query);
@@ -59,13 +66,22 @@ export const FoodsTable = () => {
             food={food}
             groupName={groups.find((group) => group.id === food.groupId)?.name ?? null}
             price={priceByFood.get(food.id)}
+            cookings={cookingsByFood.get(food.id) ?? NO_COOKINGS}
             onEdit={setEditing}
+            onEditCooking={setCooking}
             onAskDelete={setPendingDelete}
           />
         ))}
       </DataList>
 
       {pricing && <PriceSliderModal onClose={() => setPricing(false)} />}
+      {cooking && (
+        <FoodCookingModal
+          food={cooking}
+          cookings={cookingsByFood.get(cooking.id) ?? NO_COOKINGS}
+          onClose={() => setCooking(null)}
+        />
+      )}
       {creating && (
         <FoodFormModal
           food={null}

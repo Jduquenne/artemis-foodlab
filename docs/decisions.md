@@ -394,7 +394,7 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
 ## D-044 — Cooking sheets per (food, method): cooking times and raw → cooked ratio
 
 - **Date**: 2026-11-17
-- **Status**: accepted (owner, 2026-11-17, issues #57 and #58); API D-065 **on dev only, not in prod** (nothing to push before the API session confirms prod); front step 1 (data layer) done.
+- **Status**: accepted (owner, 2026-11-17, issues #57 and #58); API D-065 **on dev only, not in prod** (nothing to push before the API session confirms prod); front step 1 (data layer) and step 2 (admin entry) done.
 - **Context**: the owner wants cooking times per method on foods (#57) and a raw / cooked weight correspondence on some foods (#58: starches, legumes, vegetables). A food is often cooked several ways, and its weight change depends on the way (potato: steamed ≈ same weight, oven ≈ lighter).
 - **Decision**:
   - **One structure for both issues**: a cooking sheet per (food, method), identified by that couple (no id). Closed list of methods, in this order: oven, steam, air_fryer, boiled, pan, microwave, pressure_cooker, raw (UI labels: Four, Vapeur, Airfryer, À l'eau, Poêle, Micro-ondes, Cocotte-minute, Cru).

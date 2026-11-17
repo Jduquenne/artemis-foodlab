@@ -1,4 +1,4 @@
-import { COOKING_METHODS, CookingMethod, FoodCooking, TEMPERATURE_COOKING_METHODS } from "../../domain/cooking";
+import { COOKING_METHODS, CookingMethod, FoodCooking, FoodCookingInput, TEMPERATURE_COOKING_METHODS } from "../../domain/cooking";
 
 export function compareCookingMethods(a: CookingMethod, b: CookingMethod): number {
   return COOKING_METHODS.indexOf(a) - COOKING_METHODS.indexOf(b);
@@ -40,4 +40,19 @@ export function formatCookingDuration(cooking: Pick<FoodCooking, "minMinutes" | 
 
 export function cookedGrams(rawGrams: number, cookedRatio: number): number {
   return rawGrams * cookedRatio;
+}
+
+export function formatCookedRatio(ratio: number): string {
+  return `cuit ×${String(ratio).replace(".", ",")}`;
+}
+
+export function formatCookingSummary(cooking: FoodCookingInput): string {
+  if (isRawMethod(cooking.method)) return cooking.note ? `Se mange cru · ${cooking.note}` : "Se mange cru";
+  const duration = formatCookingDuration(cooking);
+  return [
+    duration,
+    cooking.temperatureC !== null ? `${cooking.temperatureC} °C` : null,
+    cooking.cookedRatio !== null ? formatCookedRatio(cooking.cookedRatio) : null,
+    cooking.note,
+  ].filter((part): part is string => !!part).join(" · ");
 }

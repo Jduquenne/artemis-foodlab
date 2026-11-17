@@ -30,5 +30,7 @@ Domain terms whose meaning is not obvious from the code. UI labels are French; c
 | **Pending key** | Identifier of a business action in flight (`usePendingStore`), drives spinners and the double-click guard. |
 | **Price store** | A shop (name, city) the food prices are tied to; global, created by admins, picked per account (D-043). |
 | **Reference price** | The price per kg (per litre for liquids) of a food in a price store; the latest entry wins. |
+| **Cooking sheet** (« fiche de cuisson ») | How one food is cooked one way (D-044): method, duration range, temperature (oven / air fryer), raw → cooked ratio, note. One per (food, method). |
+| **Raw → cooked ratio** (`cookedRatio`) | Cooked grams ÷ raw grams for a food and a method (rice boiled ≈ 2.5). Display only: macros and prices stay on raw weights. Not the same as a dish's **cooked weight** (D-041). |
 | **Missing price** | A line that cannot be priced (no price, no food link, or no unit weight for a piece); left out of the estimate, which turns orange. |
 | **Snapshot** | Copy of an in-memory catalogue domain whose identity changes only when that domain changes (`useCatalogueSnapshot`). |

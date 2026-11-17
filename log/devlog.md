@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-17 — Cooking sheets, step 1: data layer (v6.155.1)
+- Context: issues #57 (cooking times per method) and #58 (raw → cooked ratio), one model decided with the owner (D-044): a cooking sheet per (food, method). API D-065 done by the API session, **on dev only**: do not push the front before the API session confirms prod.
+- Done: D-044, `docs/api.md` § Cooking sheets (contract and messages from the real dev payloads), glossary, architecture. Code: `core/domain/cooking.ts` (methods in API order, French labels, limits), `cookingService.saveFoodCookings` (`PUT /foods/:id/cookings`), `useFoodCookingStore` (bootstrap `foodCookings`, `?? []` so a prod API without it keeps working; save replaces the food's sheets), `core/logic/cooking/cookingLogic.ts` (`cookingsByFood`, `formatCookingDuration` « 20-25 min » / « 1 h 30 », `cookedGrams`, `acceptsTemperature`, `isRawMethod`), `cookingFormLogic.ts` (string drafts, `validateCookingDraft(s)` with the API rules and texts, `availableCookingMethods`). Nothing visible.
+- tsc + lint pass; **not checked in a browser** (nothing to see; a reload against the dev API must still boot).
+- Next: step 2 admin entry (`FoodCookingModal` from the foods table), step 3 recipe detail « Cuisson » sheet, step 4 Recipe Builder hint.
+
 ## 2026-11-17 — Prices: recipe price on the recipe detail (v6.155.0)
 - Owner request: show the price of a recipe in the catalogue, for the chosen portions. New issues the same day: #56 (this), #57 cooking times per mode and #58 raw / cooked ratio (both need the API, next).
 - Done (#56): `recipeCost` (`core/logic/price/recipeCostLogic.ts`: ingredients scaled to the portions, linked bases expanded via `basePortionsOf`, guard against a base cycle, then `estimateCost`), `useRecipeCost`, `RecipeCostInfo` in `RecipeDetail`: total for the stepper's portions + per part, amber with « ! » when a price is missing. `docs/spec-recipes.md` § Recipe detail.

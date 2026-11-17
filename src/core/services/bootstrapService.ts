@@ -4,6 +4,7 @@ import { ApiAccompaniment, mapAccompaniments } from "../logic/accompaniment/acco
 import { HouseholdItem } from "../domain/household";
 import { CustomShoppingCategory } from "../domain/shopping";
 import { FoodPrice, PriceStore } from "../domain/price";
+import { FoodCooking } from "../domain/cooking";
 import { Food } from "../domain/ingredient";
 import { Profile } from "../domain/profile";
 import { Category } from "../domain/recipe";
@@ -33,6 +34,7 @@ interface ApiBootstrap {
   accompaniments?: ApiAccompaniment[];
   priceStores?: PriceStore[];
   foodPrices?: FoodPrice[];
+  foodCookings?: FoodCooking[];
   householdShoppingFlags: ApiBootstrapHouseholdFlag[];
   profiles: ApiProfile[];
   journalOverrides: ApiJournalOverride[];
@@ -47,6 +49,7 @@ export interface BootstrapResult {
   accompaniments: Accompaniment[];
   priceStores: PriceStore[];
   foodPrices: FoodPrice[];
+  foodCookings: FoodCooking[];
 }
 
 export interface SyncBootstrapOptions {
@@ -78,6 +81,7 @@ export async function syncBootstrapFromApi(options: SyncBootstrapOptions = {}): 
       accompaniments: mapAccompaniments(data.accompaniments ?? []),
       priceStores: data.priceStores ?? [],
       foodPrices: data.foodPrices ?? [],
+      foodCookings: data.foodCookings ?? [],
     };
   } catch {
     return null;

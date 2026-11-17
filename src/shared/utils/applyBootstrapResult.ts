@@ -5,6 +5,7 @@ import { useProfileStore } from "../store/useProfileStore";
 import { useCustomShoppingCategoryStore } from "../store/useCustomShoppingCategoryStore";
 import { useAccompanimentStore } from "../store/useAccompanimentStore";
 import { usePriceStore } from "../store/usePriceStore";
+import { useFoodCookingStore } from "../store/useFoodCookingStore";
 
 interface AppliedSignatures {
   profiles: string;
@@ -13,6 +14,7 @@ interface AppliedSignatures {
   customCategories: string;
   accompaniments: string;
   prices: string;
+  cookings: string;
 }
 
 let applied: AppliedSignatures | null = null;
@@ -26,6 +28,7 @@ export function applyBootstrapResult(result: BootstrapResult): void {
     customCategories: JSON.stringify(result.customShoppingCategories),
     accompaniments: JSON.stringify(result.accompaniments),
     prices: JSON.stringify([result.priceStores, result.foodPrices]),
+    cookings: JSON.stringify(result.foodCookings),
   };
   if (applied === null || applied.profiles !== next.profiles) {
     useProfileStore.getState().replaceProfiles(result.profiles);
@@ -44,6 +47,9 @@ export function applyBootstrapResult(result: BootstrapResult): void {
   }
   if (applied === null || applied.prices !== next.prices) {
     usePriceStore.getState().replacePrices(result.priceStores, result.foodPrices);
+  }
+  if (applied === null || applied.cookings !== next.cookings) {
+    useFoodCookingStore.getState().replaceCookings(result.foodCookings);
   }
   applied = next;
 }

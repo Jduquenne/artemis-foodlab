@@ -391,3 +391,16 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
 - **Alternatives considered**: per-account prices (no: the owner wants one shared base); scraping store sites or leaflets (refused); Open Prices (Open Food Facts) as an automatic source later, after a coverage test; showing the amount paid (refused: the period is not linked to the price rows, the figure would be wrong after a reload).
 - **Consequences**: front: `core/domain/price.ts`, `priceService`, `usePriceStore` (filled from `/bootstrap` `priceStores` and `foodPrices`), pure logic `core/logic/price/`. Contract: `docs/api.md` § Prices.
 
+## D-044 — Cooking sheets per (food, method): cooking times and raw → cooked ratio
+
+- **Date**: 2026-11-17
+- **Status**: accepted (owner, 2026-11-17, issues #57 and #58); API D-065 **on dev only, not in prod** (nothing to push before the API session confirms prod); front step 1 (data layer) done.
+- **Context**: the owner wants cooking times per method on foods (#57) and a raw / cooked weight correspondence on some foods (#58: starches, legumes, vegetables). A food is often cooked several ways, and its weight change depends on the way (potato: steamed ≈ same weight, oven ≈ lighter).
+- **Decision**:
+  - **One structure for both issues**: a cooking sheet per (food, method), identified by that couple (no id). Closed list of methods, in this order: oven, steam, air_fryer, boiled, pan, microwave, pressure_cooker, raw (UI labels: Four, Vapeur, Airfryer, À l'eau, Poêle, Micro-ondes, Cocotte-minute, Cru).
+  - A sheet holds an optional **duration range** in whole minutes (min required when a duration is given, max ≥ min), an optional **temperature** (°C, oven and air fryer only), an optional **raw → cooked ratio** (cooked grams = raw grams × ratio, > 0, ≤ 10, 3 decimals) and an optional **note** (≤ 120 characters). Every method but raw needs a duration or a ratio. **raw** is a pure « se mange cru » marker: note only.
+  - Admins edit all the sheets of a food at once (full replacement, `PUT /foods/:id/cookings`); everyone reads them from `/bootstrap` `foodCookings`.
+  - Display (owner): admin entry in Dashboard › Données › Aliments, a « Cuisson » sheet on the recipe detail (ingredients with sheets, cooked weight for the chosen portions), and a cooked-weight hint in the Recipe Builder. Not in the journal for now (no cooked-grams entry).
+  - The ratio never changes macros nor prices: both stay computed on raw weights.
+- **Alternatives considered**: one ratio per food (refused: wrong for foods cooked several ways); a single duration value (refused: package ranges are more faithful); free-text methods (refused: duplicates); temperature on every method (refused with the API session, can be relaxed later without a destructive migration).
+- **Consequences**: front: `core/domain/cooking.ts`, `cookingService`, `useFoodCookingStore` (filled from `/bootstrap` `foodCookings`, empty when the API does not send it), pure logic `core/logic/cooking/` (`cookingLogic.ts`: display and cooked grams; `cookingFormLogic.ts`: drafts and validation mirroring the API messages). Contract: `docs/api.md` § Cooking sheets.

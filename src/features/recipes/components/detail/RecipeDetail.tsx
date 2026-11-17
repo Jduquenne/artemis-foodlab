@@ -7,6 +7,8 @@ import { getLinkedBases, getCategoryRecipeIds } from '../../../../core/logic/rec
 import { resolveInitialPortions, scaleRecipeToPortions } from '../../../../core/logic/recipe/recipeScalingLogic';
 import { RecipeToolbar } from './RecipeToolbar';
 import { RecipeCostSheet } from './RecipeCostSheet';
+import { RecipeCookingSheet } from './RecipeCookingSheet';
+import { useRecipeCooking } from '../../../../shared/hooks/useRecipeCooking';
 import { RecipeNotFound } from './RecipeNotFound';
 import { recipeToBuilderState } from '../../../../core/logic/recipeBuilder/recipeBuilderMapper';
 import { useIsAdmin } from '../../../../shared/hooks/useIsAdmin';
@@ -52,12 +54,12 @@ export const RecipeDetail = () => {
     resolveInitialPortions(recipe?.defaultPortions ?? 1, portionsParam),
   );
 
-  const [costOpen, setCostOpen] = useState(false);
+  const [openSheet, setOpenSheet] = useState<'cost' | 'cooking' | null>(null);
 
   if (recipeId !== lastRecipeId) {
     setLastRecipeId(recipeId);
     setPortions(resolveInitialPortions(recipe?.defaultPortions ?? 1, portionsParam));
-    setCostOpen(false);
+    setOpenSheet(null);
   }
 
   const scaledRecipe = useMemo(
@@ -75,6 +77,7 @@ export const RecipeDetail = () => {
   }, [recipe, recipes, foods]);
 
   const cost = useRecipeCost(recipe, portions);
+  const cookingRows = useRecipeCooking(recipe, portions);
 
   const linkedBases = useMemo(() => (scaledRecipe ? getLinkedBases(recipes, scaledRecipe) : []), [recipes, scaledRecipe]);
 
@@ -111,7 +114,8 @@ export const RecipeDetail = () => {
             portions={portions}
             onPortionsChange={setPortions}
             cost={cost}
-            onOpenCost={() => setCostOpen(true)}
+            onOpenCost={() => setOpenSheet('cost')}
+            onOpenCooking={cookingRows.length > 0 ? () => setOpenSheet('cooking') : undefined}
             onEdit={isAdmin ? handleEditInBuilder : undefined}
             onOpenMacros={() => navigate(`/recipes/detail/${recipeId}/macros`)}
           />
@@ -193,8 +197,11 @@ export const RecipeDetail = () => {
         </div>
       )}
 
-      {costOpen && cost && (
-        <RecipeCostSheet cost={cost} portions={portions} onClose={() => setCostOpen(false)} />
+      {openSheet === 'cost' && cost && (
+        <RecipeCostSheet cost={cost} portions={portions} onClose={() => setOpenSheet(null)} />
+      )}
+      {openSheet === 'cooking' && cookingRows.length > 0 && (
+        <RecipeCookingSheet rows={cookingRows} portions={portions} onClose={() => setOpenSheet(null)} />
       )}
 
     </div>

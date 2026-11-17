@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-17 — Cooking sheets, step 3: recipe detail « Cuisson » sheet (v6.157.0)
+- Done: `flattenRecipeLines` extracted to `core/logic/recipe/recipeFlattenLogic.ts` (recipe + linked bases scaled to the portions; `recipeCost` now uses it, behaviour unchanged); `recipeCookingRows` / `cookedGramsOf` (`core/logic/cooking/recipeCookingLogic.ts`), `useRecipeCooking`; `RecipeCookingSheet`; toolbar action « Cuisson » (flame, only when an ingredient has a sheet); `RecipeDetail` has one `openSheet` state (« cost » / « cooking »). Toolbar on phones: two rows in the same container (portions + price, then the actions with labels), since an admin's five segments overflowed one phone row (≈ 380 px for ≈ 330).
+- tsc + lint pass; **not checked in a browser** (to test against the dev API: a recipe using rice with a sheet « À l'eau » ratio 2,5 → « Cuisson » shows the raw quantity and « ≈ N g cuits », the stepper changes them; a food used in the dish and in a linked base is merged with the base name; a recipe without any sheet → no « Cuisson » button; the price sheet still opens; phone: two rows, labels visible, nothing clipped; desktop: one row).
+- Next: step 4 Recipe Builder hint.
+
 ## 2026-11-17 — Cooking sheets, step 2: admin entry (v6.156.0)
 - Done: flame button and methods in the subtitle of each foods table row (`FoodRow`), `FoodCookingModal` + `CookingDraftCard` (`features/dashboard/components/cooking/`), `useFoodCookings` (sheets by food). `cookingFormLogic.ts` now works on numeric drafts (`CookingDraft` = `FoodCookingInput`, inputs are `DecimalInput`s) and gets `buildCookingRecap`; `cookingLogic.ts` gets `formatCookingSummary` / `formatCookedRatio`. `docs/spec-admin.md` § Cooking sheets.
 - tsc + lint pass; **not checked in a browser** (to test against the dev API: Dashboard › Données › Aliments, flame on a food, add « À l'eau » 10-12 min ratio 2,5, « Four » 200 °C 40 min, « Cru » with a note, Continuer → recap → Enregistrer; reopen: values kept, subtitle « · Four, À l'eau, Cru »; errors: max without min, ratio 2,5555, no duration nor ratio; remove every mode → red confirmation; reload: sheets still there).

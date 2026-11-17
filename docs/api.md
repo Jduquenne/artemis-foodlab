@@ -11,6 +11,7 @@ A separate Claude Code session owns `meals-planning-api` (sibling repo). Collabo
 - A decision that affects the other side's data model (unique constraint, opening a route to a role) is raised to the owner as a **product decision**.
 - Even a confirmed text contract deserves empirical verification, especially when the endpoint is only local: run the API locally (`npm run dev` in the API repo), create a throwaway account (`NEW_USER_EMAIL=… NEW_USER_PASSWORD=… npx tsx scripts/createUser.ts`), log in with `curl POST /auth/login`, test nominal and documented error cases one by one with `curl`, then clean up (delete the account and data, stop the server). Never repoint the front's `.env` for this.
 - A change that **replaces** an existing write path must not be merged until the endpoint it depends on is confirmed deployed in prod.
+- **A 401 without token does not prove a route is deployed** (API session, 2026-11-17): authentication runs before route matching on protected prefixes such as `/foods`, so an undeployed route also answers 401. Proof of a prod deployment = the migration applied in the prod database, an **authenticated** request to the route answering 200, and the new key present in an authenticated `/bootstrap` when relevant. Ask the API session for that confirmation.
 
 ## General
 

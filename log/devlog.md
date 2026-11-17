@@ -19,6 +19,7 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 ## 2026-11-17 — Cooking sheets, step 4: Recipe Builder hint (v6.158.0)
 - Done: `cookedEquivalents` (`recipeCookingLogic.ts`: raw grams × ratio per sheet with a ratio), `draftCookedEquivalents` (`core/logic/recipeBuilder/cookedEquivalentLogic.ts`, food ingredients only), `CookedEquivalentHint` under each matching ingredient in `IngredientBuilderList` (desktop row and phone card). Front of D-044 complete.
 - tsc + lint pass; **not checked in a browser** (to test against the dev API: Recipe Builder, rice 300 g with a sheet « À l'eau » ratio 2,5 → « ≈ 750 g cuits (à l'eau) »; change the quantity → updates; « pièce » unit on a food without unit weight → no hint; a base → no hint; phone card too).
+- API session (2026-11-17, after step 4): D-065 **not in prod** (prod database still at D-064); it will confirm explicitly with an authenticated 200 on `GET /foods/:id/cookings` and `foodCookings` in an authenticated `/bootstrap` (a 401 without token proves nothing, see `docs/api.md` § Working with the API session).
 - Still open: API D-065 to be deployed in prod by the API session; **do not push the front before** (the bootstrap fallback keeps reads safe, but the admin save would 404). Then owner browser test and close #57 and #58.
 
 ## 2026-11-17 — Cooking sheets, step 3: recipe detail « Cuisson » sheet (v6.157.0)

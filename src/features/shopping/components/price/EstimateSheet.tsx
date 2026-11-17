@@ -1,6 +1,6 @@
 import { PriceStore } from '../../../../core/domain/price';
 import { CostEstimate, formatEuro } from '../../../../core/logic/price/priceLogic';
-import { ShoppingSheet } from '../sheets/ShoppingSheet';
+import { Sheet } from '../../../../shared/components/ui/Sheet';
 
 export interface EstimateSheetProps {
     estimate: CostEstimate;
@@ -12,7 +12,7 @@ export const EstimateSheet = ({ estimate, store, onClose }: EstimateSheetProps) 
     const partial = estimate.missing.length > 0;
 
     return (
-        <ShoppingSheet
+        <Sheet
             title="Estimation"
             subtitle={`Prix de ${store.name}, ${store.city}, pour ce qui reste à acheter. Montant indicatif.`}
             onClose={onClose}
@@ -31,6 +31,6 @@ export const EstimateSheet = ({ estimate, store, onClose }: EstimateSheetProps) 
             ) : (
                 <p className="text-sm text-slate-500">Tous les articles ont un prix.</p>
             )}
-        </ShoppingSheet>
+        </Sheet>
     );
 };

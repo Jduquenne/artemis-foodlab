@@ -6,7 +6,7 @@ import { roundTo } from '../../../../core/utils/numberUtils';
 import { SHOPPING_QUANTITY_DECIMALS } from '../../../../core/logic/shopping/shoppingChecks';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { DecimalInput } from '../../../../shared/components/ui/DecimalInput';
-import { ShoppingSheet } from './ShoppingSheet';
+import { Sheet } from '../../../../shared/components/ui/Sheet';
 
 export interface StockEntrySheetProps {
     item: ConsolidatedIngredient;
@@ -27,7 +27,7 @@ export const StockEntrySheet = ({ item, needed, stock, onSave, onClose }: StockE
     };
 
     return (
-        <ShoppingSheet
+        <Sheet
             title={item.name}
             subtitle={<>Il en faut <b className="text-slate-900">{formatShoppingQuantity(needed, item.unit)}</b> pour la période. Combien en as-tu ?</>}
             onClose={onClose}
@@ -73,6 +73,6 @@ export const StockEntrySheet = ({ item, needed, stock, onSave, onClose }: StockE
             >
                 Valider
             </button>
-        </ShoppingSheet>
+        </Sheet>
     );
 };

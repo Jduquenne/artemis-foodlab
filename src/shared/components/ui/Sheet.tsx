@@ -1,14 +1,14 @@
 import { ReactNode } from 'react';
 import { X } from 'lucide-react';
 
-export interface ShoppingSheetProps {
+export interface SheetProps {
     title: string;
     subtitle?: ReactNode;
     onClose: () => void;
     children: ReactNode;
 }
 
-export const ShoppingSheet = ({ title, subtitle, onClose, children }: ShoppingSheetProps) => (
+export const Sheet = ({ title, subtitle, onClose, children }: SheetProps) => (
     <div className="fixed inset-0 z-50 bg-black/40 flex items-end sm:items-center justify-center sm:p-4">
         <div
             role="dialog"

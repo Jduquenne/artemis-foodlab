@@ -1,11 +1,12 @@
 import { useMemo, useState } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, Calculator, ChevronLeft, ChevronRight, Pencil } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useFoodsSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 import { calculateRecipeMacros } from '../../../../core/logic/nutrition/macroLogic';
 import { getLinkedBases, getCategoryRecipeIds } from '../../../../core/logic/recipe/recipeListLogic';
 import { resolveInitialPortions, scaleRecipeToPortions } from '../../../../core/logic/recipe/recipeScalingLogic';
-import { PortionsStepper } from './PortionsStepper';
+import { RecipeToolbar } from './RecipeToolbar';
+import { RecipeCostSheet } from './RecipeCostSheet';
 import { RecipeNotFound } from './RecipeNotFound';
 import { recipeToBuilderState } from '../../../../core/logic/recipeBuilder/recipeBuilderMapper';
 import { useIsAdmin } from '../../../../shared/hooks/useIsAdmin';
@@ -13,6 +14,7 @@ import { useRecipeBuilderStore } from '../../../../shared/store/useRecipeBuilder
 import { MacroCircles } from '../macro/MacroCircles';
 import { LinkedBaseLink } from './LinkedBaseLink';
 import { CookedWeightInfo } from './CookedWeightInfo';
+import { useRecipeCost } from '../../../../shared/hooks/useRecipeCost';
 import { RecipeRecetteCard } from '../../../../shared/components/ui/RecipeRecetteCard';
 import { RecipeBookCard } from '../../../../shared/components/ui/RecipeBookCard';
 import { useModalBack } from '../../../../shared/hooks/useModalBack';
@@ -50,9 +52,12 @@ export const RecipeDetail = () => {
     resolveInitialPortions(recipe?.defaultPortions ?? 1, portionsParam),
   );
 
+  const [costOpen, setCostOpen] = useState(false);
+
   if (recipeId !== lastRecipeId) {
     setLastRecipeId(recipeId);
     setPortions(resolveInitialPortions(recipe?.defaultPortions ?? 1, portionsParam));
+    setCostOpen(false);
   }
 
   const scaledRecipe = useMemo(
@@ -68,6 +73,8 @@ export const RecipeDetail = () => {
       return null;
     }
   }, [recipe, recipes, foods]);
+
+  const cost = useRecipeCost(recipe, portions);
 
   const linkedBases = useMemo(() => (scaledRecipe ? getLinkedBases(recipes, scaledRecipe) : []), [recipes, scaledRecipe]);
 
@@ -86,35 +93,28 @@ export const RecipeDetail = () => {
   return (
     <div className={`fixed inset-0 z-50 bg-slate-50 flex flex-col p-4 md:p-6 ${isLeaving ? 'modal-center-exit' : 'modal-center-enter'}`}>
 
-      <div className="flex items-center gap-3 shrink-0 mb-4">
-        <button
-          aria-label="Retour"
-          onClick={goBack}
-          className="p-2 rounded-xl text-slate-400 hover:text-orange-600 hover:bg-orange-50 transition-colors shrink-0"
-        >
-          <ArrowLeft className="w-5 h-5" />
-        </button>
-        <h1 className="text-base sm:text-xl tablet:text-2xl font-black text-slate-900 leading-snug">
-          {recipe.name}
-        </h1>
-        <div className="ml-auto flex items-center gap-1.5 shrink-0">
-          <PortionsStepper value={portions} onChange={setPortions} />
-          {isAdmin && (
-            <button
-              aria-label="Modifier dans le créateur"
-              onClick={handleEditInBuilder}
-              className="p-2 rounded-xl text-slate-400 hover:text-orange-600 hover:bg-orange-50 transition-colors shrink-0"
-            >
-              <Pencil className="w-5 h-5" />
-            </button>
-          )}
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 shrink-0 mb-4">
+        <div className="flex items-center gap-3 min-w-0">
           <button
-            aria-label="Calculateur nutritionnel"
-            onClick={() => navigate(`/recipes/detail/${recipeId}/macros`)}
+            aria-label="Retour"
+            onClick={goBack}
             className="p-2 rounded-xl text-slate-400 hover:text-orange-600 hover:bg-orange-50 transition-colors shrink-0"
           >
-            <Calculator className="w-5 h-5" />
+            <ArrowLeft className="w-5 h-5" />
           </button>
+          <h1 className="text-base sm:text-xl tablet:text-2xl font-black text-slate-900 leading-snug">
+            {recipe.name}
+          </h1>
+        </div>
+        <div className="sm:ml-auto shrink-0">
+          <RecipeToolbar
+            portions={portions}
+            onPortionsChange={setPortions}
+            cost={cost}
+            onOpenCost={() => setCostOpen(true)}
+            onEdit={isAdmin ? handleEditInBuilder : undefined}
+            onOpenMacros={() => navigate(`/recipes/detail/${recipeId}/macros`)}
+          />
         </div>
       </div>
 
@@ -191,6 +191,10 @@ export const RecipeDetail = () => {
             </div>
           )}
         </div>
+      )}
+
+      {costOpen && cost && (
+        <RecipeCostSheet cost={cost} portions={portions} onClose={() => setCostOpen(false)} />
       )}
 
     </div>

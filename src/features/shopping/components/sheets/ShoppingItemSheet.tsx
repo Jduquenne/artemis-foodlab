@@ -8,7 +8,7 @@ import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { SourceGroupRow } from '../SourceGroupRow';
 import { FreezerBagsSection } from './FreezerBagsSection';
 import { PlaceToggleRow } from './PlaceToggleRow';
-import { ShoppingSheet } from './ShoppingSheet';
+import { Sheet } from '../../../../shared/components/ui/Sheet';
 
 export interface ShoppingItemSheetProps {
     item: ConsolidatedIngredient;
@@ -48,7 +48,7 @@ export const ShoppingItemSheet = ({
     const canFlagPlace = !!placeName && (!!item.foodId || !!item.isExtra);
 
     return (
-        <ShoppingSheet title={item.name} subtitle={shoppingItemSummary(item, stock, sourceChecked)} onClose={onClose}>
+        <Sheet title={item.name} subtitle={shoppingItemSummary(item, stock, sourceChecked)} onClose={onClose}>
             {item.toSpecify && (
                 <p className="text-sm text-amber-600 bg-amber-50 dark:bg-amber-900/20 rounded-2xl px-3.5 py-2.5">
                     À préciser : l'aliment n'a pas été choisi pour ce repas.
@@ -96,6 +96,6 @@ export const ShoppingItemSheet = ({
                     </button>
                 </div>
             )}
-        </ShoppingSheet>
+        </Sheet>
     );
 };

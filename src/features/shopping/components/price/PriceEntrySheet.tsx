@@ -17,7 +17,7 @@ import { formatBagDate } from '../../../../core/utils/dateUtils';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { usePriceStore } from '../../../../shared/store/usePriceStore';
 import { withPending } from '../../../../shared/utils/withPending';
-import { ShoppingSheet } from '../sheets/ShoppingSheet';
+import { Sheet } from '../../../../shared/components/ui/Sheet';
 import { PriceEntryRow } from './PriceEntryRow';
 
 export interface PriceEntrySheetProps {
@@ -83,7 +83,7 @@ export const PriceEntrySheet = ({
         : <>Aucun prix enregistré · {storeName}</>;
 
     return (
-        <ShoppingSheet title={name} subtitle={subtitle} onClose={onClose}>
+        <Sheet title={name} subtitle={subtitle} onClose={onClose}>
             {inCart && (
                 <p className="-mt-2 inline-flex items-center gap-1.5 text-xs font-bold text-orange-600">
                     <ShoppingCart className="w-3.5 h-3.5" />
@@ -136,6 +136,6 @@ export const PriceEntrySheet = ({
                 {inCart ? 'Passer, sans prix' : 'Annuler'}
             </button>
             {footer}
-        </ShoppingSheet>
+        </Sheet>
     );
 };

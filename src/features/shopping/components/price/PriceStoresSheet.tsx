@@ -3,7 +3,7 @@ import { Pencil } from 'lucide-react';
 import { PriceStoreInput } from '../../../../core/domain/price';
 import { usePriceStore } from '../../../../shared/store/usePriceStore';
 import { withPending } from '../../../../shared/utils/withPending';
-import { ShoppingSheet } from '../sheets/ShoppingSheet';
+import { Sheet } from '../../../../shared/components/ui/Sheet';
 import { PriceStoreForm } from './PriceStoreForm';
 
 export interface PriceStoresSheetProps {
@@ -25,7 +25,7 @@ export const PriceStoresSheet = ({ onClose }: PriceStoresSheetProps) => {
         });
 
     return (
-        <ShoppingSheet title="Magasins des prix" subtitle="Les prix sont partagés par toute l'application, rattachés à un magasin." onClose={onClose}>
+        <Sheet title="Magasins des prix" subtitle="Les prix sont partagés par toute l'application, rattachés à un magasin." onClose={onClose}>
             {stores.length > 0 && (
                 <ul className="flex flex-col divide-y divide-slate-200 border border-slate-200 rounded-2xl overflow-hidden">
                     {stores.map((store) => (
@@ -62,6 +62,6 @@ export const PriceStoresSheet = ({ onClose }: PriceStoresSheetProps) => {
                 <h3 className="text-[11px] font-extrabold text-slate-400 uppercase tracking-widest">Ajouter un magasin</h3>
                 <PriceStoreForm pendingKey="price-store-create" submitLabel="Ajouter" onSubmit={create} />
             </section>
-        </ShoppingSheet>
+        </Sheet>
     );
 };

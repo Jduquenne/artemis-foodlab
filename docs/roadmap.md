@@ -73,8 +73,6 @@ Milestones reconstructed from history; definitions of done marked "proposed" wer
 - `git rm --cached .claude/settings.local.json` (tracked although ignored).
 - Font licences in `ATTRIBUTION.md`.
 - Technical debt and review findings: `dev/refactoring.md`.
-- Create the public repo `jduquenne.github.io` (user site) with the `index.html` and `404.html` given on 2026-11-19 (redirect of mistyped addresses, `docs/development.md` § Branches and deployment), enable Pages on it, then check `https://jduquenne.github.io/Artemis-Foodlab/` and the root.
-
 ## Blocked
 
 - ⏸ Google sign-in (#10): set aside by the owner on 2026-10-15; also waiting for the API endpoint and the owner's Google Cloud setup (`docs/api.md` § Planned).

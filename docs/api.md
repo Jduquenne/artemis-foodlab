@@ -165,9 +165,9 @@ Source of truth for shapes and messages: the API repo `docs/spec-catalogue.md` �
 - `/bootstrap`: `priceStores` (as `GET /price-stores`) and `foodPrices` = the latest price of each (food, store), `{ id, foodId, storeId, pricePerKg, recordedAt }`. Measured +14 KB gzip with every food priced in one store.
 - `AuthUser.priceStoreId` (`string | null`), written by `PUT /me` (`null` = none; unknown id 400 « Ce magasin est introuvable. »), allowed in demo. A new demo account starts with the oldest store; existing accounts stay `null` (the front then uses the only store).
 
-## Cooking sheets (API D-065, front D-044; **dev only, not in prod**)
+## Cooking sheets (API D-065, front D-044; live in prod 2026-11-17)
 
-Source of truth: the API repo `docs/spec-catalogue.md` and D-065. Received from the API session on 2026-11-17 with real payloads (dev).
+Source of truth: the API repo `docs/spec-catalogue.md` and D-065. Received from the API session on 2026-11-17 with real payloads (dev); deployment in prod confirmed by the API session the same day.
 - Entry shape (every key always present, nulls sent as `null`, numbers as numbers): `{ foodId, method, minMinutes, maxMinutes, temperatureC, cookedRatio, note, updatedAt }`. `method` ∈ `oven, steam, air_fryer, boiled, pan, microwave, pressure_cooker, raw` (lists are sorted in this order). `updatedAt` = last PUT for that food, shared by all its sheets. Key = (food, method), no id.
 - `GET /foods/:id/cookings` (any signed-in account, demo included): the food's sheets, `[]` when none. Not used by the front (the bootstrap carries everything).
 - `PUT /foods/:id/cookings` (admin; guest 403 « Cette action est réservée aux administrateurs. », demo 403 `DEMO_FORBIDDEN`): body `{ cookings: [{ method, minMinutes, maxMinutes, temperatureC, cookedRatio, note }] }`, any order, a missing key counts as `null`, at most 8, `[]` clears. Full replacement in one transaction; 200 with the saved list (same shape and order as GET); a refused body leaves the stored sheets untouched. 404 « L'aliment "<id>" est introuvable. ».

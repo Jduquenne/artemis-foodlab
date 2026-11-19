@@ -16,6 +16,17 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-17 — Session end: where to resume
+- State: front pushed up to v6.158.1 (last commit `7aeecc21`); v6.158.2 (docs: D-065 live in prod, issues closed, this entry) waiting for the owner's commit. API D-064 (prices) and D-065 (cooking sheets) live in prod.
+- Issues closed today (`dev/issues.json`): #44 to #49 (prices), #56 (recipe price), #57 and #58 (cooking sheets). Still open: #41 (price idea, kept for #50) and #50 (price graph, later).
+- Test first in prod (phone and desktop): 1) recipe detail toolbar: portions − / +, price and « Détail du prix » (most expensive first, amber block of missing prices), « Cuisson » only when an ingredient has a sheet, « Modifier » (admin), « Macros »; phone: two rows, nothing clipped; 2) Dashboard › Données › Aliments: flame, add / edit / remove modes, errors, red confirmation when removing all, reload; 3) recipe detail « Cuisson »: raw quantity and « ≈ N g cuits » follow the portions, food in dish + base merged with the base name; 4) Recipe Builder: « ≈ N g cuits (mode) » under matching ingredients; 5) shopping sheets (item detail, stock, price entry, stores, estimate) still open after the `Sheet` move.
+- Open points: a recipe whose ingredients all lack a price shows « ≈ 0,00 € ! » (kept on purpose: the breakdown lists the missing prices; owner never answered, revisit if it bothers); portrait tablet (820×1180) never checked for the shopping screen nor the recipe toolbar; local test data script `E:/Developpement/_claude/scripts/seed-local-prices.mjs` (localhost only, not versioned).
+- New conventions this session: shared `Sheet` (`shared/components/ui/Sheet.tsx`, listed in `docs/conventions.md`); a 401 without token does not prove an API route is deployed (`docs/api.md` § Working with the API session).
+
+## 2026-11-17 — D-065 live in prod, front pushed (v6.158.2)
+- The owner pushed the front (#56 and the four cooking-sheet steps) and the API D-065 commit; the API session confirmed D-065 in prod (migration applied, authenticated `GET /foods/:id/cookings` 200, `foodCookings` in `/bootstrap`). Docs updated: D-044, `docs/api.md` § Cooking sheets, roadmap item 16, spec-recipes, spec-admin. New rule in `docs/api.md` § Working with the API session: a 401 without token does not prove a route is deployed.
+- Still open: owner browser test in prod of the cooking sheets (admin entry, recipe detail « Cuisson », Recipe Builder hint) and of the recipe price; then close #56, #57, #58 (and #45 to #49 if the price tests are good) at « pause test ».
+
 ## 2026-11-17 — Cooking sheets, step 4: Recipe Builder hint (v6.158.0)
 - Done: `cookedEquivalents` (`recipeCookingLogic.ts`: raw grams × ratio per sheet with a ratio), `draftCookedEquivalents` (`core/logic/recipeBuilder/cookedEquivalentLogic.ts`, food ingredients only), `CookedEquivalentHint` under each matching ingredient in `IngredientBuilderList` (desktop row and phone card). Front of D-044 complete.
 - tsc + lint pass; **not checked in a browser** (to test against the dev API: Recipe Builder, rice 300 g with a sheet « À l'eau » ratio 2,5 → « ≈ 750 g cuits (à l'eau) »; change the quantity → updates; « pièce » unit on a food without unit weight → no hint; a base → no hint; phone card too).

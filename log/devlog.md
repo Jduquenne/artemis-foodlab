@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-19 — Price entry UX, step 2: store picker (v6.161.0)
+- Done: `PriceStorePicker` in the foods table toolbar, shown only with 2+ stores (owner decision); it drives the price column, `FoodPriceSheet` and `PriceSliderModal` (new `storeId` prop) through `useFoodPrices(storeOverrideId)` (optional override, falls back to the account's effective store; the 6 other callers unchanged). The account's store is not modified. Docs: `docs/spec-admin.md`.
+- tsc + lint pass; **not checked in a browser** (to test with `npm run dev`: with one store → no picker; with two → pick the other store: the price column changes, a price recorded from the sheet or the slider lands in that store, Courses still uses the account's store).
+- Next: step 3 improved slider.
+
 ## 2026-11-19 — Price entry UX, step 1: food price sheet (v6.160.0)
 - Context: owner feedback, entering prices was too frustrating: the only way was the « Renseigner les prix » slider, with no way to reach a given food. Plan validated (owner): 1) food price sheet from the foods table, 2) store picker in the tools only when several stores exist, 3) improved slider (jump to a food, category filter, « Sans prix / Prix anciens / Tous »). Price per kg only. No API work (routes exist).
 - Done (step 1): the price cell of the foods table opens `FoodPriceSheet` (current price, entry, history of the store with deletion behind `ConfirmActionModal`); new hook `useFoodPriceHistory` (first front use of `GET /food-prices` history besides `deletePrice`). Docs: `docs/spec-admin.md`.

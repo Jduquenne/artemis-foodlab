@@ -10,16 +10,16 @@ export interface FoodPrices {
   priceByFood: Map<string, FoodPrice>;
 }
 
-export function useFoodPrices(): FoodPrices {
+export function useFoodPrices(storeOverrideId: string | null = null): FoodPrices {
   const priceStoreId = useAuthStore((s) => s.user?.priceStoreId);
   const stores = usePriceStore((s) => s.stores);
   const prices = usePriceStore((s) => s.prices);
   return useMemo(() => {
-    const storeId = effectivePriceStoreId(priceStoreId, stores);
+    const storeId = effectivePriceStoreId(storeOverrideId, stores) ?? effectivePriceStoreId(priceStoreId, stores);
     return {
       stores,
       store: stores.find((s) => s.id === storeId) ?? null,
       priceByFood: latestPricesByFood(prices, storeId),
     };
-  }, [priceStoreId, stores, prices]);
+  }, [storeOverrideId, priceStoreId, stores, prices]);
 }

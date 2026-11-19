@@ -11,13 +11,14 @@ import { PillTabs } from '../common/PillTabs';
 import { PriceSliderCard } from './PriceSliderCard';
 
 export interface PriceSliderModalProps {
+    storeId: string | null;
     onClose: () => void;
 }
 
-export const PriceSliderModal = ({ onClose }: PriceSliderModalProps) => {
+export const PriceSliderModal = ({ storeId, onClose }: PriceSliderModalProps) => {
     const foods = useFoodsSnapshot();
     const recipes = useRecipesSnapshot();
-    const { store, priceByFood } = useFoodPrices();
+    const { store, priceByFood } = useFoodPrices(storeId);
     const [photos] = useState(() => ingredientRecipesByFood(recipes));
     const [scope, setScope] = useState<PriceQueueScope>('missing');
     const [queue, setQueue] = useState(() => buildPriceQueue(Object.values(foods), priceByFood, 'missing'));

@@ -15,6 +15,7 @@ import { Euro } from "lucide-react";
 import { useFoodPrices } from "../../../../shared/hooks/useFoodPrices";
 import { PriceSliderModal } from "../prices/PriceSliderModal";
 import { FoodPriceSheet } from "../prices/FoodPriceSheet";
+import { PriceStorePicker } from "../prices/PriceStorePicker";
 import { FoodCookingModal } from "../cooking/FoodCookingModal";
 import { useFoodCookings } from "../../../../shared/hooks/useFoodCookings";
 
@@ -29,7 +30,8 @@ export const FoodsTable = () => {
   const [editing, setEditing] = useState<Food | null>(null);
   const [pendingDelete, setPendingDelete] = useState<Food | null>(null);
   const [pricing, setPricing] = useState(false);
-  const { store, priceByFood } = useFoodPrices();
+  const [priceStoreId, setPriceStoreId] = useState<string | null>(null);
+  const { stores, store, priceByFood } = useFoodPrices(priceStoreId);
   const [pricingFood, setPricingFood] = useState<Food | null>(null);
   const cookingsByFood = useFoodCookings();
   const [cooking, setCooking] = useState<Food | null>(null);
@@ -48,6 +50,7 @@ export const FoodsTable = () => {
       filters={
         <>
           <PillTabs tabs={FOOD_SEASON_FILTERS} value={season} onChange={setSeason} compact />
+          {store && <PriceStorePicker stores={stores} value={store} onChange={setPriceStoreId} />}
           <button
             type="button"
             onClick={() => setPricing(true)}
@@ -77,7 +80,7 @@ export const FoodsTable = () => {
         ))}
       </DataList>
 
-      {pricing && <PriceSliderModal onClose={() => setPricing(false)} />}
+      {pricing && <PriceSliderModal storeId={store?.id ?? null} onClose={() => setPricing(false)} />}
       {pricingFood && store && (
         <FoodPriceSheet
           food={pricingFood}

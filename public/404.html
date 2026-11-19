@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Artemis Foodlab</title>
+    <script>
+      (function () {
+        var segments = window.location.pathname.split("/").filter(Boolean);
+        var base = "/" + (segments[0] || "") + "/";
+        var rest = segments.slice(1).join("/");
+        window.location.replace(base + (rest ? "#/" + rest : ""));
+      })();
+    </script>
+  </head>
+  <body style="font-family: system-ui, sans-serif; background: #f0ebe1; color: #1e293b; padding: 2rem; text-align: center">
+    <p>Redirection vers Artemis Foodlab…</p>
+    <p><a href="/" id="fallback">Ouvrir l'application</a></p>
+    <script>
+      document.getElementById("fallback").href = "/" + (window.location.pathname.split("/").filter(Boolean)[0] || "") + "/";
+    </script>
+  </body>
+</html>

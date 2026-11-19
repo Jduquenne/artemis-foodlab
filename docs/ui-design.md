@@ -7,6 +7,7 @@ Layout, theming and responsive rules. UI text is always in French.
 - Responsive is mandatory, through Tailwind prefixes.
 - **No-scroll layout**: everything fits in the viewport on desktop (`md:` and above). Scrolling is tolerated on mobile.
 - No-scroll pattern: `h-full flex flex-col overflow-hidden` + one `flex-1 min-h-0 overflow-y-auto` zone.
+- Never a horizontal scroll. Grid columns holding truncated text use `minmax(0, 1fr)`, never plain `1fr` (a `1fr` track never gets narrower than its widest one-line text, so a long name pushed the shopping rows off a phone screen, v6.159.1); a `truncate` text inside a flex row needs `min-w-0`.
 
 ## Styling
 

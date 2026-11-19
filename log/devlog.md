@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-19 — Shopping: no more horizontal scroll on phones (v6.159.1)
+- Done: customer feedback, on phones a horizontal scroll was sometimes needed to see the name, the quantity and the chevron. Cause: the list grids used `repeat(N, 1fr)`; a `1fr` track is at least as wide as its min-content, i.e. the full one-line (`truncate`) name, so a long name widened the column past the screen. Fixed with `minmax(0, 1fr)` in `ShoppingAislesView`, `ShoppingMealsView` and `HouseholdPanel`; `HouseholdCheckRow` name gets `min-w-0` (it could not shrink, so no ellipsis). Rule added to `docs/ui-design.md` § Layout.
+- tsc + lint pass; **not checked in a browser** (to test with `npm run dev`, phone width ~360 px: a food with a very long name in « Par rayon », « Par repas » and a long household item → ellipsis, quantity and › visible, no horizontal scroll).
+- Still open: same `repeat(N, 1fr)` pattern in `FreezerCategoryDetail.tsx:91` (not touched, out of scope; to fix if the freezer shows the same symptom).
+
 ## 2026-11-19 — Shopping rows reduced to name and quantity (v6.159.0)
 - Done: customer feedback after the shopping redesign (too much information per line). In « Par rayon », `ShoppingItemRow` now shows only the marker, the name, the quantity and the chevron ›: removed the preparation, the meta line (recipe / « N recettes », « ajouté », « à préciser », « congélo », place badge, « ≈ X € » / « prix ? ») and the sub-quantity (« sur X », « j'ai X », total under « j'ai tout »). All of it stays in the detail sheet; the preparation was not there, so `ShoppingItemSheet` now shows « Préparation : … ». Dead code removed: `ShoppingRowQuantity.sub`, `lineCosts`, `countRecipes`, the `placeName` / `atPlace` / `foodBags` / `costs` props of `ShoppingAislesView` and `ShoppingCategoryCard`. « Par repas » was already minimal, unchanged. Aisle counter and « N déjà à la maison » kept.
 - tsc + lint pass; **not checked in a browser** (to test with `npm run dev`: both modes, a line with a preparation, an extra, a line with freezer bags, with a price store selected; check the sheet shows each removed piece).

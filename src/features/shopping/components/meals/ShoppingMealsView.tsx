@@ -29,7 +29,7 @@ export const ShoppingMealsView = ({ cards, colCount, ...cardProps }: ShoppingMea
     }
 
     return (
-        <div className="grid gap-4 pb-4 items-start" style={{ gridTemplateColumns: `repeat(${colCount}, 1fr)` }}>
+        <div className="grid gap-4 pb-4 items-start" style={{ gridTemplateColumns: `repeat(${colCount}, minmax(0, 1fr))` }}>
             {columns.map((col, ci) => (
                 <div key={ci} className="flex flex-col gap-4">
                     {col.map((card, i) => (

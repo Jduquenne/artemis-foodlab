@@ -1,8 +1,6 @@
-import { ChevronRight, Loader2, Snowflake } from 'lucide-react';
+import { ChevronRight, Loader2 } from 'lucide-react';
 import { ConsolidatedIngredient, ShoppingMode } from '../../../../core/domain/shopping';
-import { countRecipes } from '../../../../core/logic/shopping/shoppingChecks';
 import { homeStockState, shoppingRowQuantity } from '../../../../core/logic/shopping/shoppingRowLabel';
-import { formatEuro } from '../../../../core/logic/price/priceLogic';
 import { useAnyPendingKey } from '../../../../shared/hooks/useAnyPendingKey';
 import { CheckToggleIcon } from '../../../../shared/components/ui/CheckToggleIcon';
 import { HomeStockMarker } from './HomeStockMarker';
@@ -13,10 +11,6 @@ export interface ShoppingItemRowProps {
     isChecked: boolean;
     stock: number;
     sourceChecked: Set<string>;
-    placeName: string | null;
-    atPlace: boolean;
-    inFreezer: boolean;
-    cost?: number | null;
     onToggle: (key: string) => void;
     onOpenStock: (key: string) => void;
     onOpenDetail: (key: string) => void;
@@ -28,16 +22,11 @@ export const ShoppingItemRow = ({
     isChecked,
     stock,
     sourceChecked,
-    placeName,
-    atPlace,
-    inFreezer,
-    cost,
     onToggle,
     onOpenStock,
     onOpenDetail,
 }: ShoppingItemRowProps) => {
     const pending = useAnyPendingKey([`shopping-check:${item.key}`, `shopping-stock:${item.key}`]);
-    const recipes = countRecipes(item);
     const usesStock = mode === 'home' && item.totalQuantity > 0 && !item.isExtra;
     const quantity = shoppingRowQuantity(item, mode, stock, sourceChecked);
 
@@ -62,30 +51,12 @@ export const ShoppingItemRow = ({
                 className="flex-1 min-w-0 flex items-center gap-3 pl-3 pr-1.5 py-2 min-h-13 text-left hover:bg-subtle-tint transition-colors lg:min-h-10 lg:py-1.5"
             >
                 {marker}
-                <span className="flex-1 min-w-0 flex flex-col gap-0.5">
-                    <span className={`text-[15px] font-semibold text-slate-900 truncate lg:text-sm ${isChecked ? 'line-through' : ''}`}>
-                        {item.name}
-                        {item.preparation && <span className="font-normal text-slate-400"> · {item.preparation}</span>}
-                    </span>
-                    <span className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-slate-400">
-                        {item.isExtra
-                            ? <span className="text-[11px] font-bold px-1.5 rounded-md bg-muted text-slate-500">ajouté</span>
-                            : recipes > 0 && <span className="truncate">{recipes === 1 ? item.sources[0].recipeName : `${recipes} recettes`}</span>}
-                        {item.toSpecify && <span className="text-[11px] font-bold px-1.5 rounded-md bg-amber-50 dark:bg-amber-900/20 text-amber-600">à préciser</span>}
-                        {inFreezer && (
-                            <span className="inline-flex items-center gap-0.5 text-[11px] font-bold px-1.5 rounded-md bg-cyan-50 dark:bg-cyan-900/20 text-cyan-600">
-                                <Snowflake className="w-2.5 h-2.5" />congélo
-                            </span>
-                        )}
-                        {placeName && atPlace && <span className="text-[11px] font-bold px-1.5 rounded-md bg-orange-100 dark:bg-orange-900/40 text-orange-600">{placeName}</span>}
-                        {cost === null && <span className="text-[11px] font-bold text-amber-600">prix ?</span>}
-                        {cost !== undefined && cost !== null && <span className="text-[11px] font-bold text-slate-500 tabular-nums">≈ {formatEuro(cost)}</span>}
-                    </span>
+                <span className={`flex-1 min-w-0 text-[15px] font-semibold text-slate-900 truncate lg:text-sm ${isChecked ? 'line-through' : ''}`}>
+                    {item.name}
                 </span>
                 {quantity.main && (
-                    <span className="shrink-0 flex flex-col items-end tabular-nums">
-                        <span className={`text-[15px] font-bold lg:text-sm ${quantity.positive ? 'text-green-600' : 'text-slate-900'}`}>{quantity.main}</span>
-                        {quantity.sub && <span className="text-[11px] text-slate-400">{quantity.sub}</span>}
+                    <span className={`shrink-0 text-[15px] font-bold tabular-nums lg:text-sm ${quantity.positive ? 'text-green-600' : 'text-slate-900'}`}>
+                        {quantity.main}
                     </span>
                 )}
             </button>

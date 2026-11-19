@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { FreezerBag } from '../../../../core/domain/freezer';
 import { HouseholdItem } from '../../../../core/domain/household';
 import { IngredientGroup, ShoppingMode } from '../../../../core/domain/shopping';
 import { assignIngredientColumns } from '../../../../core/logic/shopping/shoppingGrouping';
@@ -15,10 +14,6 @@ export interface ShoppingAislesViewProps {
     checked: Set<string>;
     stocks: Record<string, number>;
     sourceChecked: Set<string>;
-    placeName: string | null;
-    atPlace: Set<string>;
-    foodBags: Map<string, FreezerBag[]>;
-    costs: Map<string, number | null>;
     householdItems: HouseholdItem[];
     onToggle: (key: string) => void;
     onOpenStock: (key: string) => void;
@@ -35,10 +30,6 @@ export const ShoppingAislesView = ({
     checked,
     stocks,
     sourceChecked,
-    placeName,
-    atPlace,
-    foodBags,
-    costs,
     householdItems,
     onToggle,
     onOpenStock,
@@ -70,10 +61,6 @@ export const ShoppingAislesView = ({
                                 checked={checked}
                                 stocks={stocks}
                                 sourceChecked={sourceChecked}
-                                placeName={placeName}
-                                atPlace={atPlace}
-                                foodBags={foodBags}
-                                costs={costs}
                                 onToggle={onToggle}
                                 onOpenStock={onOpenStock}
                                 onOpenDetail={onOpenDetail}

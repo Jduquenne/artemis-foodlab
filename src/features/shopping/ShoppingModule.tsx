@@ -46,7 +46,7 @@ import { useProfileStore } from '../../shared/store/useProfileStore';
 import { useAccompanimentStore } from '../../shared/store/useAccompanimentStore';
 import { shoppingFilterPills } from '../../core/logic/shopping/shoppingFilterPills';
 import { formatBagDate } from '../../core/utils/dateUtils';
-import { estimateCost, lineCosts } from '../../core/logic/price/priceLogic';
+import { estimateCost } from '../../core/logic/price/priceLogic';
 import { shoppingLinesToPrice } from '../../core/logic/shopping/shoppingPriceLines';
 import { EstimateSheet } from './components/price/EstimateSheet';
 import { useFoodPrices } from '../../shared/hooks/useFoodPrices';
@@ -222,10 +222,6 @@ export const ShoppingModule = () => {
         () => (foodPrices.store ? estimateCost(priceLines, foods, foodPrices.priceByFood) : null),
         [priceLines, foods, foodPrices]
     );
-    const costs = useMemo(
-        () => (foodPrices.store ? lineCosts(priceLines, foods, foodPrices.priceByFood) : new Map<string, number | null>()),
-        [priceLines, foods, foodPrices]
-    );
 
     const coveredByGroup = useMemo(
         () => countCoveredByGroup(allGroupedItems, stocks, sourceChecked),
@@ -395,10 +391,6 @@ export const ShoppingModule = () => {
                             checked={checked}
                             stocks={stocks}
                             sourceChecked={sourceChecked}
-                            placeName={placeName}
-                            atPlace={atPlace}
-                            foodBags={foodBags}
-                            costs={costs}
                             householdItems={shownHouseholdItems}
                             onToggle={handleToggleItem}
                             onOpenStock={setStockKey}

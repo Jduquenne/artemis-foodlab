@@ -1,5 +1,4 @@
 import { ConsolidatedIngredient, ShoppingMode } from '../../../../core/domain/shopping';
-import { FreezerBag } from '../../../../core/domain/freezer';
 import { isCoveredAtHome } from '../../../../core/logic/shopping/shoppingChecks';
 import { sortCheckedLast } from '../../../../core/logic/shopping/shoppingGrouping';
 import { ShoppingItemRow } from './ShoppingItemRow';
@@ -12,10 +11,6 @@ export interface ShoppingCategoryCardProps {
     checked: Set<string>;
     stocks: Record<string, number>;
     sourceChecked: Set<string>;
-    placeName: string | null;
-    atPlace: Set<string>;
-    foodBags?: Map<string, FreezerBag[]>;
-    costs: Map<string, number | null>;
     onToggle: (key: string) => void;
     onOpenStock: (key: string) => void;
     onOpenDetail: (key: string) => void;
@@ -29,10 +24,6 @@ export const ShoppingCategoryCard = ({
     checked,
     stocks,
     sourceChecked,
-    placeName,
-    atPlace,
-    foodBags,
-    costs,
     onToggle,
     onOpenStock,
     onOpenDetail,
@@ -58,10 +49,6 @@ export const ShoppingCategoryCard = ({
                     isChecked={checked.has(item.key)}
                     stock={stocks[item.key] ?? 0}
                     sourceChecked={sourceChecked}
-                    placeName={placeName}
-                    atPlace={atPlace.has(item.key)}
-                    inFreezer={!!item.foodId && (foodBags?.get(item.foodId)?.length ?? 0) > 0}
-                    cost={costs.get(item.key)}
                     onToggle={onToggle}
                     onOpenStock={onOpenStock}
                     onOpenDetail={onOpenDetail}

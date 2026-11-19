@@ -6,7 +6,6 @@ export type HomeStockState = "none" | "partial" | "full";
 
 export interface ShoppingRowQuantity {
   main: string;
-  sub: string | null;
   positive: boolean;
 }
 
@@ -25,16 +24,13 @@ export function shoppingRowQuantity(
   stock: number,
   sourceChecked: Set<string>,
 ): ShoppingRowQuantity {
-  if (item.totalQuantity <= 0) return { main: item.isExtra ? "" : "—", sub: null, positive: false };
+  if (item.totalQuantity <= 0) return { main: item.isExtra ? "" : "—", positive: false };
   const effective = effectiveQuantity(item, sourceChecked);
   const needed = remainingToBuy(item, { [item.key]: stock }, sourceChecked);
-  if (mode === "store") {
-    return { main: formatShoppingQuantity(needed, item.unit), sub: stock > 0 ? `sur ${formatShoppingQuantity(effective, item.unit)}` : null, positive: false };
-  }
-  if (effective === 0) return { main: "déjà pris", sub: null, positive: true };
-  if (needed === 0) return { main: "j'ai tout", sub: formatShoppingQuantity(effective, item.unit), positive: true };
-  if (stock > 0) return { main: formatShoppingQuantity(needed, item.unit), sub: `j'ai ${formatShoppingQuantity(stock, item.unit)}`, positive: false };
-  return { main: formatShoppingQuantity(effective, item.unit), sub: null, positive: false };
+  if (mode === "store") return { main: formatShoppingQuantity(needed, item.unit), positive: false };
+  if (effective === 0) return { main: "déjà pris", positive: true };
+  if (needed === 0) return { main: "j'ai tout", positive: true };
+  return { main: formatShoppingQuantity(needed, item.unit), positive: false };
 }
 
 export function shoppingItemSummary(item: ConsolidatedIngredient, stock: number, sourceChecked: Set<string>): string {

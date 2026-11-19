@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-19 — Shopping rows reduced to name and quantity (v6.159.0)
+- Done: customer feedback after the shopping redesign (too much information per line). In « Par rayon », `ShoppingItemRow` now shows only the marker, the name, the quantity and the chevron ›: removed the preparation, the meta line (recipe / « N recettes », « ajouté », « à préciser », « congélo », place badge, « ≈ X € » / « prix ? ») and the sub-quantity (« sur X », « j'ai X », total under « j'ai tout »). All of it stays in the detail sheet; the preparation was not there, so `ShoppingItemSheet` now shows « Préparation : … ». Dead code removed: `ShoppingRowQuantity.sub`, `lineCosts`, `countRecipes`, the `placeName` / `atPlace` / `foodBags` / `costs` props of `ShoppingAislesView` and `ShoppingCategoryCard`. « Par repas » was already minimal, unchanged. Aisle counter and « N déjà à la maison » kept.
+- tsc + lint pass; **not checked in a browser** (to test with `npm run dev`: both modes, a line with a preparation, an extra, a line with freezer bags, with a price store selected; check the sheet shows each removed piece).
+
 ## 2026-11-17 — Session end: where to resume
 - State: front pushed up to v6.158.1 (last commit `7aeecc21`); v6.158.2 (docs: D-065 live in prod, issues closed, this entry) waiting for the owner's commit. API D-064 (prices) and D-065 (cooking sheets) live in prod.
 - Issues closed today (`dev/issues.json`): #44 to #49 (prices), #56 (recipe price), #57 and #58 (cooking sheets). Still open: #41 (price idea, kept for #50) and #50 (price graph, later).

@@ -49,6 +49,11 @@ export const ShoppingItemSheet = ({
 
     return (
         <Sheet title={item.name} subtitle={shoppingItemSummary(item, stock, sourceChecked)} onClose={onClose}>
+            {item.preparation && (
+                <p className="text-sm text-slate-600">
+                    <span className="font-semibold text-slate-400">Préparation :</span> {item.preparation}
+                </p>
+            )}
             {item.toSpecify && (
                 <p className="text-sm text-amber-600 bg-amber-50 dark:bg-amber-900/20 rounded-2xl px-3.5 py-2.5">
                     À préciser : l'aliment n'a pas été choisi pour ce repas.

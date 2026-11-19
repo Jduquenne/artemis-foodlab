@@ -150,7 +150,3 @@ export function priceEntryPayload(values: PriceEntryValues, gramsPerUnit: number
     purchasedGrams: roundTo(values.quantity * gramsPerUnit, PURCHASED_GRAMS_DECIMALS),
   };
 }
-
-export function lineCosts(lines: readonly PricedLine[], foods: Record<string, Food>, prices: Map<string, FoodPrice>): Map<string, number | null> {
-  return new Map(lines.filter((line) => line.quantity > 0).map((line) => [line.key, lineCost(line, foods, prices)]));
-}

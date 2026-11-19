@@ -50,10 +50,6 @@ export function isCoveredAtHome(
   return ing.totalQuantity > 0 && remainingToBuy(ing, stocks, sourceChecked) === 0;
 }
 
-export function countRecipes(ing: ConsolidatedIngredient): number {
-  return new Set(ing.sources.map((s) => s.recipeId)).size;
-}
-
 export function checkableCardIngredients(
   ingredients: RecipeCardIngredient[],
   checkableKeys: ReadonlySet<string>,

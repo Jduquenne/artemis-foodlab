@@ -88,7 +88,7 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
             <p className="text-xs">Ajoute un aliment ou un batch cooking</p>
           </div>
         ) : (
-          <div className="grid gap-2 pb-4" style={{ gridTemplateColumns: `repeat(${colCount}, 1fr)` }}>
+          <div className="grid gap-2 pb-4" style={{ gridTemplateColumns: `repeat(${colCount}, minmax(0, 1fr))` }}>
             {columns.map((col, ci) => (
               <div key={ci} className="flex flex-col gap-2">
                 {col.map(item => (

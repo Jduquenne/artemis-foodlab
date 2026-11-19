@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-19 — Freezer: same horizontal-scroll fix (v6.159.2)
+- Done: the category detail grid (`FreezerCategoryDetail`) used `repeat(N, 1fr)` like the shopping lists → `minmax(0, 1fr)`; the « portions · âge » line of `BatchFreezerItemRow` gets `min-w-0` so it truncates. Food rows already had `min-w-0`. No other `repeat(N, 1fr)` grid left in `src/` except the desktop-only Planning week grid (`hidden sm:grid`, untouched). Closes the « still open » point of the v6.159.1 entry.
+- tsc + lint pass; **not checked in a browser** (to test with `npm run dev`, phone width ~360 px: a freezer category with a food or batch with a very long name → ellipsis, buttons visible, no horizontal scroll).
+
 ## 2026-11-19 — Shopping: no more horizontal scroll on phones (v6.159.1)
 - Done: customer feedback, on phones a horizontal scroll was sometimes needed to see the name, the quantity and the chevron. Cause: the list grids used `repeat(N, 1fr)`; a `1fr` track is at least as wide as its min-content, i.e. the full one-line (`truncate`) name, so a long name widened the column past the screen. Fixed with `minmax(0, 1fr)` in `ShoppingAislesView`, `ShoppingMealsView` and `HouseholdPanel`; `HouseholdCheckRow` name gets `min-w-0` (it could not shrink, so no ellipsis). Rule added to `docs/ui-design.md` § Layout.
 - tsc + lint pass; **not checked in a browser** (to test with `npm run dev`, phone width ~360 px: a food with a very long name in « Par rayon », « Par repas » and a long household item → ellipsis, quantity and › visible, no horizontal scroll).

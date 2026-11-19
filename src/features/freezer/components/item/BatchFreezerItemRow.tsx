@@ -82,7 +82,7 @@ export const BatchFreezerItemRow = ({ item, categoryId, onDelete }: BatchFreezer
             </div>
 
             <div className="mt-2 pl-[2.75rem] flex items-center justify-between gap-2">
-                <p className={`flex items-center gap-1 text-[11px] truncate ${age.stale && !isEmpty ? 'text-amber-600 font-medium' : 'text-slate-400'}`}>
+                <p className={`min-w-0 flex items-center gap-1 text-[11px] truncate ${age.stale && !isEmpty ? 'text-amber-600 font-medium' : 'text-slate-400'}`}>
                     {age.stale && !isEmpty && <AlertTriangle className="w-3 h-3 shrink-0" />}
                     <span>{isEmpty ? 'Épuisé' : `${item.portions} portion${item.portions > 1 ? 's' : ''}`}</span>
                     <span className="text-slate-300">·</span>

@@ -14,12 +14,13 @@ export interface PriceSliderCardProps {
     food: Food;
     photoRecipe: RecipeDetails | undefined;
     price: FoodPrice | undefined;
+    autoFocus: boolean;
     onSave: (pricePerKg: number) => void;
     onSkip: () => void;
     onPrevious: (() => void) | null;
 }
 
-export const PriceSliderCard = ({ food, photoRecipe, price, onSave, onSkip, onPrevious }: PriceSliderCardProps) => {
+export const PriceSliderCard = ({ food, photoRecipe, price, autoFocus, onSave, onSkip, onPrevious }: PriceSliderCardProps) => {
     const [value, setValue] = useState<number | null>(price?.pricePerKg ?? null);
     const pending = usePendingKey(`price-record:${food.id}`);
     const liquid = isLiquidFood(food);
@@ -67,7 +68,7 @@ export const PriceSliderCard = ({ food, photoRecipe, price, onSave, onSkip, onPr
                         onValueChange={setValue}
                         onKeyDown={(e) => { if (e.key === 'Enter') confirm(); }}
                         placeholder="0,00"
-                        autoFocus
+                        autoFocus={autoFocus}
                         aria-label={liquid ? 'Prix au litre' : 'Prix au kilo'}
                         className="flex-1 min-w-0 bg-transparent text-right text-2xl font-bold tabular-nums py-2 pl-2.5 pr-1.5 outline-none text-slate-900"
                     />

@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-19 — Price entry UX, step 3: improved slider (v6.162.0)
+- Done: `PriceSliderModal` gets a search « Aller à un aliment », a category select and a third scope « Anciens » (latest price older than 6 months, `PRICE_STALE_MONTHS`, threshold proposed by the agent and accepted with the plan); `buildPriceQueue` now takes `PriceQueueFilters` and `now` (pure), `priceQueueCategories`, `isStalePrice`. Price input autofocus only after OK / Passer / ‹, not after a filter change. Price entry UX redesign complete (3 steps). Docs: `docs/spec-admin.md`, roadmap item 15.
+- tsc + lint pass; **not checked in a browser** (to test with `npm run dev`, phone and desktop: type « tom » → queue of the matching foods, focus stays in the search; pick a category; « Anciens » with an old price (none may exist yet in prod: prices date from 2026-11-14); OK / Passer move on and focus the price; empty search result → « Aucun aliment ne correspond »; no scroll in the window on a phone).
+
 ## 2026-11-19 — Price entry UX, step 2: store picker (v6.161.0)
 - Done: `PriceStorePicker` in the foods table toolbar, shown only with 2+ stores (owner decision); it drives the price column, `FoodPriceSheet` and `PriceSliderModal` (new `storeId` prop) through `useFoodPrices(storeOverrideId)` (optional override, falls back to the account's effective store; the 6 other callers unchanged). The account's store is not modified. Docs: `docs/spec-admin.md`.
 - tsc + lint pass; **not checked in a browser** (to test with `npm run dev`: with one store → no picker; with two → pick the other store: the price column changes, a price recorded from the sheet or the slider lands in that store, Courses still uses the account's store).

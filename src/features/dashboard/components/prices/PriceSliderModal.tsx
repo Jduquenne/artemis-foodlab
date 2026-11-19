@@ -1,14 +1,22 @@
 import { useState } from 'react';
-import { X } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import { roundTo } from '../../../../core/utils/numberUtils';
 import { PRICE_PER_KG_DECIMALS } from '../../../../core/logic/price/priceLogic';
-import { PRICE_QUEUE_SCOPES, PriceQueueScope, buildPriceQueue, ingredientRecipesByFood } from '../../../../core/logic/price/priceQueueLogic';
+import {
+    PRICE_QUEUE_SCOPES,
+    PriceQueueFilters,
+    buildPriceQueue,
+    ingredientRecipesByFood,
+    priceQueueCategories,
+} from '../../../../core/logic/price/priceQueueLogic';
 import { useFoodPrices } from '../../../../shared/hooks/useFoodPrices';
 import { useFoodsSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 import { usePriceStore } from '../../../../shared/store/usePriceStore';
 import { withPending } from '../../../../shared/utils/withPending';
 import { PillTabs } from '../common/PillTabs';
 import { PriceSliderCard } from './PriceSliderCard';
+
+const INITIAL_FILTERS: PriceQueueFilters = { scope: 'missing', category: null, query: '' };
 
 export interface PriceSliderModalProps {
     storeId: string | null;
@@ -20,16 +28,28 @@ export const PriceSliderModal = ({ storeId, onClose }: PriceSliderModalProps) =>
     const recipes = useRecipesSnapshot();
     const { store, priceByFood } = useFoodPrices(storeId);
     const [photos] = useState(() => ingredientRecipesByFood(recipes));
-    const [scope, setScope] = useState<PriceQueueScope>('missing');
-    const [queue, setQueue] = useState(() => buildPriceQueue(Object.values(foods), priceByFood, 'missing'));
+    const [now] = useState(() => new Date());
+    const [categories] = useState(() => priceQueueCategories(Object.values(foods)));
+    const [filters, setFilters] = useState<PriceQueueFilters>(INITIAL_FILTERS);
+    const [queue, setQueue] = useState(() => buildPriceQueue(Object.values(foods), priceByFood, INITIAL_FILTERS, now));
     const [index, setIndex] = useState(0);
     const [savedCount, setSavedCount] = useState(0);
+    const [focusPrice, setFocusPrice] = useState(true);
 
-    const changeScope = (next: PriceQueueScope) => {
-        setScope(next);
-        setQueue(buildPriceQueue(Object.values(foods), priceByFood, next));
+    const changeFilters = (patch: Partial<PriceQueueFilters>) => {
+        const next = { ...filters, ...patch };
+        setFilters(next);
+        setQueue(buildPriceQueue(Object.values(foods), priceByFood, next, now));
         setIndex(0);
+        setFocusPrice(false);
     };
+
+    const move = (delta: number) => {
+        setIndex((i) => i + delta);
+        setFocusPrice(true);
+    };
+
+    const narrowed = filters.category !== null || filters.query.trim() !== '';
 
     const foodId = queue[index];
     const food = foodId ? foods[foodId] : undefined;
@@ -42,7 +62,7 @@ export const PriceSliderModal = ({ storeId, onClose }: PriceSliderModalProps) =>
         ).then((saved) => {
             if (!saved) return;
             setSavedCount((c) => c + 1);
-            setIndex((i) => i + 1);
+            move(1);
         }, () => undefined);
     };
 
@@ -76,10 +96,34 @@ export const PriceSliderModal = ({ storeId, onClose }: PriceSliderModalProps) =>
                 ) : (
                     <>
                         <div className="shrink-0 flex items-center justify-between gap-3">
-                            <PillTabs tabs={PRICE_QUEUE_SCOPES} value={scope} onChange={changeScope} compact />
+                            <PillTabs tabs={PRICE_QUEUE_SCOPES} value={filters.scope} onChange={(scope) => changeFilters({ scope })} compact />
                             <span className="text-sm font-bold text-slate-500 tabular-nums">
                                 {Math.min(index + 1, queue.length)} / {queue.length}
                             </span>
+                        </div>
+                        <div className="shrink-0 flex items-center gap-2">
+                            <label className="relative flex-1 min-w-0">
+                                <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                                <input
+                                    type="search"
+                                    value={filters.query}
+                                    onChange={(e) => changeFilters({ query: e.target.value })}
+                                    placeholder="Aller à un aliment"
+                                    aria-label="Aller à un aliment"
+                                    className="w-full pl-8 pr-2.5 py-1.5 rounded-lg border border-slate-200 bg-surface text-sm text-slate-800 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
+                                />
+                            </label>
+                            <select
+                                value={filters.category ?? ''}
+                                onChange={(e) => changeFilters({ category: e.target.value || null })}
+                                aria-label="Catégorie"
+                                className="min-w-0 w-36 shrink rounded-lg border border-slate-200 bg-surface px-2 py-1.5 text-sm text-slate-700 focus:outline-none focus:border-orange-400"
+                            >
+                                <option value="">Toutes catégories</option>
+                                {categories.map((category) => (
+                                    <option key={category} value={category}>{category}</option>
+                                ))}
+                            </select>
                         </div>
                         <div className="shrink-0 h-1 rounded-full bg-muted overflow-hidden">
                             <div
@@ -89,7 +133,9 @@ export const PriceSliderModal = ({ storeId, onClose }: PriceSliderModalProps) =>
                         </div>
                         {!food ? (
                             <div className="flex-1 flex flex-col items-center justify-center gap-2 text-center">
-                                <p className="text-xl font-black text-slate-900">{queue.length === 0 ? 'Rien à renseigner' : 'Terminé'}</p>
+                                <p className="text-xl font-black text-slate-900">
+                                    {queue.length > 0 ? 'Terminé' : narrowed ? 'Aucun aliment ne correspond' : 'Rien à renseigner'}
+                                </p>
                                 <p className="text-sm text-slate-500">
                                     {savedCount} prix enregistré{savedCount > 1 ? 's' : ''} pendant cette session.
                                 </p>
@@ -107,9 +153,10 @@ export const PriceSliderModal = ({ storeId, onClose }: PriceSliderModalProps) =>
                                 food={food}
                                 photoRecipe={photos.get(food.id)}
                                 price={priceByFood.get(food.id)}
+                                autoFocus={focusPrice}
                                 onSave={save}
-                                onSkip={() => setIndex((i) => i + 1)}
-                                onPrevious={index > 0 ? () => setIndex((i) => i - 1) : null}
+                                onSkip={() => move(1)}
+                                onPrevious={index > 0 ? () => move(-1) : null}
                             />
                         )}
                     </>

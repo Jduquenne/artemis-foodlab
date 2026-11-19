@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-19 — Price entry UX, step 1: food price sheet (v6.160.0)
+- Context: owner feedback, entering prices was too frustrating: the only way was the « Renseigner les prix » slider, with no way to reach a given food. Plan validated (owner): 1) food price sheet from the foods table, 2) store picker in the tools only when several stores exist, 3) improved slider (jump to a food, category filter, « Sans prix / Prix anciens / Tous »). Price per kg only. No API work (routes exist).
+- Done (step 1): the price cell of the foods table opens `FoodPriceSheet` (current price, entry, history of the store with deletion behind `ConfirmActionModal`); new hook `useFoodPriceHistory` (first front use of `GET /food-prices` history besides `deletePrice`). Docs: `docs/spec-admin.md`.
+- tsc + lint pass; **not checked in a browser** (to test with `npm run dev` against the dev API: Dashboard › Données › Aliments, search a food, tap its price → record a new one (list updates, sheet closes), reopen → history shows both; delete the latest → the previous becomes current in the table; delete an older one → it disappears from the history; a food without price shows « + prix »).
+- Next: step 2 store picker, step 3 slider.
+
 ## 2026-11-19 — Freezer: same horizontal-scroll fix (v6.159.2)
 - Done: the category detail grid (`FreezerCategoryDetail`) used `repeat(N, 1fr)` like the shopping lists → `minmax(0, 1fr)`; the « portions · âge » line of `BatchFreezerItemRow` gets `min-w-0` so it truncates. Food rows already had `min-w-0`. No other `repeat(N, 1fr)` grid left in `src/` except the desktop-only Planning week grid (`hidden sm:grid`, untouched). Closes the « still open » point of the v6.159.1 entry.
 - tsc + lint pass; **not checked in a browser** (to test with `npm run dev`, phone width ~360 px: a freezer category with a food or batch with a very long name → ellipsis, buttons visible, no horizontal scroll).

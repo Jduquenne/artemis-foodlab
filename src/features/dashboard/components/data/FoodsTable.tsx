@@ -14,6 +14,7 @@ import { PillTabs } from "../common/PillTabs";
 import { Euro } from "lucide-react";
 import { useFoodPrices } from "../../../../shared/hooks/useFoodPrices";
 import { PriceSliderModal } from "../prices/PriceSliderModal";
+import { FoodPriceSheet } from "../prices/FoodPriceSheet";
 import { FoodCookingModal } from "../cooking/FoodCookingModal";
 import { useFoodCookings } from "../../../../shared/hooks/useFoodCookings";
 
@@ -28,7 +29,8 @@ export const FoodsTable = () => {
   const [editing, setEditing] = useState<Food | null>(null);
   const [pendingDelete, setPendingDelete] = useState<Food | null>(null);
   const [pricing, setPricing] = useState(false);
-  const { priceByFood } = useFoodPrices();
+  const { store, priceByFood } = useFoodPrices();
+  const [pricingFood, setPricingFood] = useState<Food | null>(null);
   const cookingsByFood = useFoodCookings();
   const [cooking, setCooking] = useState<Food | null>(null);
 
@@ -69,12 +71,21 @@ export const FoodsTable = () => {
             cookings={cookingsByFood.get(food.id) ?? NO_COOKINGS}
             onEdit={setEditing}
             onEditCooking={setCooking}
+            onEditPrice={store ? setPricingFood : null}
             onAskDelete={setPendingDelete}
           />
         ))}
       </DataList>
 
       {pricing && <PriceSliderModal onClose={() => setPricing(false)} />}
+      {pricingFood && store && (
+        <FoodPriceSheet
+          food={pricingFood}
+          store={store}
+          price={priceByFood.get(pricingFood.id)}
+          onClose={() => setPricingFood(null)}
+        />
+      )}
       {cooking && (
         <FoodCookingModal
           food={cooking}

@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-24 — #64 audit 1/5: GeneratedMeal as a union (v6.166.15)
+- Done: `GeneratedMeal` (menu generator) was `recipeCode: string | null` plus `kept` / `locked` / `noMeal` flags, `null` meaning « already filled », « no meal » or « nothing found » depending on the flags. Now `{ key, day, slot, dessertCodes, reasons } & ({ kind: "recipe"; recipeCode; locked } | { kind: "empty" } | { kind: "noMeal" } | { kind: "kept" })`; `FixedMeal` (all but `kept`) types the meals passed back to the engine (`lockedMealsByKey`, `mealsAroundByKey`, `MenuEngineInput.fixed`). New `generatedMealLogic.ts`: `generatedMealCodes` (recipes a meal counts: kept → the planned ones, recipe → its code, else none; replaces 4 copies of the same ternary) and `generatedRecipeCode`. Engine, preview logic, write logic, hook and the 5 generator components follow. `docs/spec-planning.md` § Preview.
+- Behaviour unchanged by construction (same cases, same codes counted); validated by tsc + lint only, to test with `npm run dev`: generator → generate, lock a meal then « Autre proposition » (locked meal kept), « Proposer une autre recette » on a meal, a « pas de repas » habit, a slot already filled (« Déjà prévu »), kcal row, « Ajouter au planning ».
+- Next: audit 2/5, `AccompanimentOption` (+ `Input`, `Draft`).
+
 ## 2026-11-24 — #64: rule 3 rewritten, audit of hidden cases (v6.166.14)
 - Done (owner, option A): golden rule 20 rule 3 « `null` only at the API boundary » → « `null` means only « no value » » (two states, never one case among several); rule 2 now also covers fields that only exist for one `kind` / flag. AGENTS.md rule 20, `docs/conventions.md` § Absence and states, D-045 amendment.
 - Numbers: 597 `| null` in `src/`, 34 in `core/services/`, 563 elsewhere (`core/logic` 263, `core/domain` 63, `features` 157, `shared` 74, `core/utils` 6); almost all plain absences, kept.

@@ -1,4 +1,5 @@
 import {
+  FixedMeal,
   GeneratedMeal,
   GeneratedSlotType,
   AdvancedSettings,
@@ -12,6 +13,7 @@ import { DAYS } from "../../domain/planningConfig";
 import { firstAndLast } from "../../utils/collectionUtils";
 import { formatSourceDayShort, formatWeekdayShort, isoDateFromWeekDay } from "../../utils/dateUtils";
 import { mealKey } from "./menuEngineLogic";
+import { generatedMealCodes } from "./generatedMealLogic";
 import { DayNutrients, EMPTY_NUTRIENTS, addNutrients, hasDayLimits, nutrientsOutOfLimits, recipeNutrients } from "./dayNutritionLogic";
 
 export interface PreviewColumn {
@@ -38,24 +40,24 @@ export interface DayKcalSummary {
 }
 
 export function countGeneratedMeals(meals: readonly GeneratedMeal[]): number {
-  return meals.filter((meal) => !meal.kept && meal.recipeCode !== null).length;
+  return meals.filter((meal) => meal.kind === "recipe").length;
 }
 
 export function toggleMealLock(meals: readonly GeneratedMeal[], key: string): GeneratedMeal[] {
-  return meals.map((meal) => (meal.key === key && !meal.kept && meal.recipeCode !== null ? { ...meal, locked: !meal.locked } : meal));
+  return meals.map((meal) => (meal.key === key && meal.kind === "recipe" ? { ...meal, locked: !meal.locked } : meal));
 }
 
-export function lockedMealsByKey(meals: readonly GeneratedMeal[]): Record<string, GeneratedMeal> {
-  return Object.fromEntries(meals.filter((meal) => !meal.kept && meal.locked).map((meal) => [meal.key, meal]));
+export function lockedMealsByKey(meals: readonly GeneratedMeal[]): Record<string, FixedMeal> {
+  return Object.fromEntries(meals.flatMap((meal) => (meal.kind === "recipe" && meal.locked ? [[meal.key, meal]] : [])));
 }
 
-export function mealsAroundByKey(meals: readonly GeneratedMeal[], key: string): Record<string, GeneratedMeal> {
-  return Object.fromEntries(meals.filter((meal) => !meal.kept && meal.key !== key).map((meal) => [meal.key, meal]));
+export function mealsAroundByKey(meals: readonly GeneratedMeal[], key: string): Record<string, FixedMeal> {
+  return Object.fromEntries(meals.flatMap((meal) => (meal.kind !== "kept" && meal.key !== key ? [[meal.key, meal]] : [])));
 }
 
 export function rejectedForMeal(meals: readonly GeneratedMeal[], key: string): Record<string, string[]> {
-  const code = meals.find((meal) => meal.key === key)?.recipeCode;
-  return code ? { [key]: [code] } : {};
+  const meal = meals.find((item) => item.key === key);
+  return meal && meal.kind === "recipe" ? { [key]: [meal.recipeCode] } : {};
 }
 
 export function previewWeeks(days: readonly PeriodDay[]): PreviewWeek[] {
@@ -104,7 +106,7 @@ export function dayKcalSummary(
   const values = slots.flatMap((slot) => {
     const key = mealKey(date, slot);
     const meal = meals[key];
-    const codes = meal?.kept ? (existing[key] ?? []) : meal?.recipeCode ? [meal.recipeCode] : [];
+    const codes = meal ? generatedMealCodes(meal, existing) : [];
     return codes.map((code) => macros[code]?.kcal).filter((kcal): kcal is number => kcal !== undefined && kcal > 0);
   });
   const kcal = values.length > 0 ? Math.round(values.reduce((sum, value) => sum + value, 0)) : null;
@@ -129,8 +131,8 @@ function dayNutrition(
   for (const slot of slots) {
     const key = mealKey(date, slot);
     const meal = meals[key];
-    const codes = meal?.kept ? (existing[key] ?? []) : meal?.recipeCode ? [meal.recipeCode] : [];
-    if (!meal || meal.noMeal || codes.length === 0) {
+    const codes = meal ? generatedMealCodes(meal, existing) : [];
+    if (!meal || meal.kind === "noMeal" || codes.length === 0) {
       complete = false;
       continue;
     }

@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { AlertTriangle } from "lucide-react";
 import { AdvancedSettings, GeneratedMeal, GeneratedSlotType, PeriodDay } from "../../../../core/domain/menuGenerator";
+import { generatedRecipeCode } from "../../../../core/logic/menuGenerator/generatedMealLogic";
 import { dayKcalSummary, mealsByKey, previewWeeks } from "../../../../core/logic/menuGenerator/menuPreviewLogic";
 import { useActiveProfile } from "../../../../shared/hooks/useActiveProfile";
 import { useRecipeMetricsSnapshot, useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
@@ -77,7 +78,7 @@ export const GeneratorPreview = ({ days, slots, meals, existing, warnings, advan
       <div className="shrink-0 min-h-16 rounded-xl bg-muted px-3 py-2">
         <GeneratedMealDetail
           meal={selected}
-          recipeName={recipeNameOf(selected?.recipeCode ?? null)}
+          recipeName={recipeNameOf(selected ? generatedRecipeCode(selected) : null)}
           dessertNames={(selected?.dessertCodes ?? []).map((code) => recipeNameOf(code) ?? code)}
         />
       </div>

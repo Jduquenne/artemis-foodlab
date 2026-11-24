@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { GeneratedMeal, MenuGeneratorSettings, PeriodDay } from "../../core/domain/menuGenerator";
+import { FixedMeal, GeneratedMeal, MenuGeneratorSettings, PeriodDay } from "../../core/domain/menuGenerator";
 import { BulkPlanningResult } from "../../core/domain/planning";
 import { FreezerBatchStock, freezerBatchStocks, getFoodIdsInFreezer } from "../../core/logic/freezer/freezerStockLogic";
 import { existingDessertsByKey, existingMealsByKey } from "../../core/logic/menuGenerator/generatorSettingsLogic";
@@ -74,7 +74,7 @@ export function useMenuGenerator() {
   const compute = useCallback((
     settings: MenuGeneratorSettings,
     context: MenuGeneratorContext,
-    fixed: Record<string, GeneratedMeal>,
+    fixed: Record<string, FixedMeal>,
     rejected: Record<string, string[]>,
     seed: number,
   ): MenuGeneratorRun => ({

@@ -4,7 +4,7 @@ import { BulkPlanningResult, PlanningItemEntry } from "../../domain/planning";
 export function plannedEntries(meals: readonly GeneratedMeal[]): PlanningItemEntry[] {
   return meals.flatMap((meal) => {
     const base = { year: meal.day.year, week: meal.day.week, day: meal.day.day, slot: meal.slot };
-    const dish = !meal.kept && meal.recipeCode ? [{ ...base, code: meal.recipeCode, isDessert: false }] : [];
+    const dish = meal.kind === "recipe" ? [{ ...base, code: meal.recipeCode, isDessert: false }] : [];
     return [...dish, ...meal.dessertCodes.map((code) => ({ ...base, code, isDessert: true }))];
   });
 }

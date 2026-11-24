@@ -192,17 +192,21 @@ export interface MealReason {
   label: string;
 }
 
-export interface GeneratedMeal {
+export type GeneratedMealContent =
+  | { kind: "recipe"; recipeCode: string; locked: boolean }
+  | { kind: "empty" }
+  | { kind: "noMeal" }
+  | { kind: "kept" };
+
+export type GeneratedMeal = {
   key: string;
   day: PeriodDay;
   slot: GeneratedSlotType;
-  recipeCode: string | null;
-  kept: boolean;
-  locked: boolean;
-  noMeal: boolean;
   dessertCodes: string[];
   reasons: MealReason[];
-}
+} & GeneratedMealContent;
+
+export type FixedMeal = Exclude<GeneratedMeal, { kind: "kept" }>;
 
 export interface MenuGenerationResult {
   meals: GeneratedMeal[];

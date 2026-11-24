@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { GENERATED_SLOT_LABELS, GeneratedMeal, GeneratedSlotType } from "../../../../core/domain/menuGenerator";
+import { generatedRecipeCode } from "../../../../core/logic/menuGenerator/generatedMealLogic";
 import { mealKey } from "../../../../core/logic/menuGenerator/menuEngineLogic";
 import { DayKcalSummary, PreviewWeek } from "../../../../core/logic/menuGenerator/menuPreviewLogic";
 import { ChoicePills } from "./ChoicePills";
@@ -37,7 +38,7 @@ export const GeneratorDayList = ({ week, slots, meals, recipeNameOf, kcalOf, sel
             <span className="text-[11px] font-bold text-orange-600">{GENERATED_SLOT_LABELS[slot]}</span>
             <GeneratedMealCell
               meal={meal}
-              recipeName={recipeNameOf(meal.recipeCode)}
+              recipeName={recipeNameOf(generatedRecipeCode(meal))}
               dessertNames={meal.dessertCodes.map((code) => recipeNameOf(code) ?? code)}
               selected={selectedKey === meal.key}
               onSelect={onSelect}

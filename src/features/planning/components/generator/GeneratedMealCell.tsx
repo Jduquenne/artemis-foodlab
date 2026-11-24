@@ -14,26 +14,28 @@ export interface GeneratedMealCellProps {
 }
 
 export const GeneratedMealCell = ({ meal, recipeName, dessertNames, selected, onSelect, onToggleLock, onRegenerate }: GeneratedMealCellProps) => {
-  if (meal.kept || meal.noMeal) {
+  if (meal.kind === "kept" || meal.kind === "noMeal") {
     return (
       <button
         type="button"
         onClick={() => onSelect(meal.key)}
-        disabled={meal.kept}
+        disabled={meal.kind === "kept"}
         className="h-full min-h-20 flex items-center justify-center rounded-xl border border-dashed border-slate-200 px-2 text-[11px] font-semibold text-slate-400"
       >
         <span className="flex flex-col items-center gap-0.5">
-          {meal.kept ? "Déjà prévu" : "Pas de repas"}
+          {meal.kind === "kept" ? "Déjà prévu" : "Pas de repas"}
           {dessertNames.length > 0 && <span className="text-[10px] font-normal text-pink-500 line-clamp-2">+ {dessertNames.join(", ")}</span>}
         </span>
       </button>
     );
   }
 
+  const locked = meal.kind === "recipe" && meal.locked;
+
   return (
     <div
       className={`h-full min-h-20 flex flex-col rounded-xl border transition-colors ${
-        meal.locked ? "border-orange-300 bg-orange-50 dark:border-orange-800 dark:bg-orange-900/20" : "border-slate-200 bg-surface"
+        locked ? "border-orange-300 bg-orange-50 dark:border-orange-800 dark:bg-orange-900/20" : "border-slate-200 bg-surface"
       } ${selected ? "ring-2 ring-orange-400" : ""}`}
     >
       <button
@@ -58,24 +60,24 @@ export const GeneratedMealCell = ({ meal, recipeName, dessertNames, selected, on
         >
           {reasonBadges(meal.reasons).map((kind) => <MealReasonIcon key={kind} kind={kind} />)}
         </button>
-        {meal.recipeCode && (
+        {meal.kind === "recipe" && (
           <button
             type="button"
             onClick={() => onToggleLock(meal.key)}
-            aria-pressed={meal.locked}
-            aria-label={meal.locked ? "Déverrouiller ce repas" : "Garder ce repas"}
-            title={meal.locked ? "Déverrouiller" : "Garder ce repas"}
+            aria-pressed={locked}
+            aria-label={locked ? "Déverrouiller ce repas" : "Garder ce repas"}
+            title={locked ? "Déverrouiller" : "Garder ce repas"}
             className={`p-1 rounded-lg transition-colors ${
-              meal.locked ? "text-orange-600 hover:bg-orange-100 dark:hover:bg-orange-900/30" : "text-slate-400 hover:text-orange-600 hover:bg-muted"
+              locked ? "text-orange-600 hover:bg-orange-100 dark:hover:bg-orange-900/30" : "text-slate-400 hover:text-orange-600 hover:bg-muted"
             }`}
           >
-            {meal.locked ? <Lock size={13} /> : <LockOpen size={13} />}
+            {locked ? <Lock size={13} /> : <LockOpen size={13} />}
           </button>
         )}
         <button
           type="button"
           onClick={() => onRegenerate(meal.key)}
-          disabled={meal.locked}
+          disabled={locked}
           aria-label="Proposer une autre recette"
           title="Proposer une autre recette"
           className="p-1 rounded-lg text-slate-400 hover:text-orange-600 hover:bg-muted transition-colors disabled:opacity-30 disabled:pointer-events-none"

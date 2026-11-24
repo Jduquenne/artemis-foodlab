@@ -143,7 +143,7 @@ export const PlanningModule = () => {
     const macroCatalogue = useMacroCatalogue();
     const activeProfile = useActiveProfile();
     const dayKcal = useMemo(
-        () => weekDayKcal(macroCatalogue, planningData, activeProfile ?? undefined),
+        () => weekDayKcal(macroCatalogue, planningData, activeProfile),
         [macroCatalogue, planningData, activeProfile]
     );
 

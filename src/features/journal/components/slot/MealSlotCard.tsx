@@ -22,7 +22,7 @@ export const MealSlotCard = ({ slotType, slot }: MealSlotCardProps) => {
 
   const allIds = slot ? getAllRecipeIds(slot) : [];
   const totalMacros = useMemo(
-    () => (slot ? computeSlotMacros(catalogue, slot, portionOverrides, gramOverrides, ingredientOverrides, activeProfile ?? undefined) : { ...ZERO }),
+    () => (slot ? computeSlotMacros(catalogue, slot, portionOverrides, gramOverrides, ingredientOverrides, activeProfile) : { ...ZERO }),
     [catalogue, slot, portionOverrides, gramOverrides, ingredientOverrides, activeProfile],
   );
 

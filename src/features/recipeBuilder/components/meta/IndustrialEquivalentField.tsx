@@ -11,7 +11,7 @@ import { useCatalogueFoods } from "../../../../shared/hooks/useCatalogueFoods";
 import { useFoodsSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 
 export interface IndustrialEquivalentFieldProps {
-  value: IndustrialEquivalentDraft | null | undefined;
+  value: IndustrialEquivalentDraft | null;
   onChange: (value: IndustrialEquivalentDraft | null) => void;
 }
 

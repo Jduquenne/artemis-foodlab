@@ -221,7 +221,7 @@ export function computeSlotMacros(
   portionOverrides: Record<string, number>,
   gramOverrides: Record<string, number>,
   ingredientOverrides: Record<string, Record<string, number>> = {},
-  profile?: MacroProfile,
+  profile: MacroProfile | null,
 ): Macronutrients {
   return getAllRecipeIds(slot).reduce(
     (sum, id) =>
@@ -250,7 +250,7 @@ export function computeDayMacros(
   portionOverrides: Record<string, number>,
   gramOverrides: Record<string, number>,
   ingredientOverrides: Record<string, Record<string, number>> = {},
-  profile?: MacroProfile,
+  profile: MacroProfile | null,
 ): Macronutrients {
   return slots.reduce(
     (total, slot) => addMacros(total, computeSlotMacros(catalogue, slot, portionOverrides, gramOverrides, ingredientOverrides, profile)),

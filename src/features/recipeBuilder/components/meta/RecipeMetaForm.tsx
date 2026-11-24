@@ -39,7 +39,7 @@ export const RecipeMetaForm = ({ state, onChange }: RecipeMetaFormProps) => {
   const prefix = CATEGORY_PREFIX[state.categoryId] ?? state.categoryId.toUpperCase();
   const computedId = buildRecipeId(state.categoryId, state.recipeNumber);
   const isBase = state.kind === RecipeKind.BASE;
-  const cookedPerPortion = cookedWeightPerPortion({ cookedWeightGrams: state.cookedWeightGrams ?? undefined, defaultPortions: state.defaultPortions });
+  const cookedPerPortion = state.cookedWeightGrams === null ? null : cookedWeightPerPortion({ cookedWeightGrams: state.cookedWeightGrams, defaultPortions: state.defaultPortions });
   const recipes = useRecipesSnapshot();
   const categories = useCategoriesSnapshot();
   const source = useBuilderSourceRecipe(state);

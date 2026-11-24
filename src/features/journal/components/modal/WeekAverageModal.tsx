@@ -30,7 +30,7 @@ export const WeekAverageModal = ({ weekSlots, onClose }: WeekAverageModalProps) 
   const handleClose = () => { setIsClosing(true); setTimeout(onClose, 220); };
 
   const { average, countedDays } = useMemo(
-    () => computeWeekAverage(catalogue, weekSlots, days, portionOverrides, gramOverrides, ingredientOverrides, activeProfile ?? undefined),
+    () => computeWeekAverage(catalogue, weekSlots, days, portionOverrides, gramOverrides, ingredientOverrides, activeProfile),
     [catalogue, weekSlots, days, portionOverrides, gramOverrides, ingredientOverrides, activeProfile]
   );
 

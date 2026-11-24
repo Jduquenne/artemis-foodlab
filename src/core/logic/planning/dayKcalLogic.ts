@@ -5,7 +5,7 @@ import { MacroCatalogue, MacroProfile, computeDayMacros } from "../nutrition/mac
 export function weekDayKcal(
   catalogue: MacroCatalogue,
   slots: readonly MealSlot[],
-  profile: MacroProfile | undefined,
+  profile: MacroProfile | null,
 ): Record<string, number> {
   return Object.fromEntries(
     DAYS.map((day) => {

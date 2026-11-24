@@ -8,7 +8,7 @@ export interface DayColumnHeaderProps {
     dayIndex: number;
     monday: Date;
     kcal: number;
-    cost?: CostEstimate | null;
+    cost: CostEstimate | null;
     isSelectionMode: boolean;
     selected: boolean;
     confirmed: boolean;

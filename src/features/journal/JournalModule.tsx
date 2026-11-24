@@ -56,7 +56,7 @@ export const JournalModule = () => {
   }, [daySlots]);
 
   const totalMacros = useMemo(
-    () => computeDayMacros(catalogue, daySlots, portionOverrides, gramOverrides, ingredientOverrides, activeProfile ?? undefined),
+    () => computeDayMacros(catalogue, daySlots, portionOverrides, gramOverrides, ingredientOverrides, activeProfile),
     [catalogue, daySlots, portionOverrides, gramOverrides, ingredientOverrides, activeProfile]
   );
 

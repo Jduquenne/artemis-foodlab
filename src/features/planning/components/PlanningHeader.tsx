@@ -6,7 +6,7 @@ import { PlanningCostLabel } from "./PlanningCostLabel";
 export interface PlanningHeaderProps {
   weekNumber: number;
   weekRange: string;
-  weekCost?: CostEstimate | null;
+  weekCost: CostEstimate | null;
   selectedDayDate: string;
   isAnyEditing: boolean;
   isSelectionMode: boolean;

@@ -22,10 +22,6 @@ export default defineConfig([
   },
   {
     files: ['src/**/*.{ts,tsx}'],
-    ignores: [
-      'src/features/planning/**',
-      'src/features/recipeBuilder/**',
-    ],
     rules: {
       'no-restricted-syntax': [
         'error',

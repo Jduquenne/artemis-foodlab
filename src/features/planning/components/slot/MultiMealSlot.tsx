@@ -76,11 +76,11 @@ export const MultiMealSlot = ({
 
     const [firstId] = recipeIds;
     const isSingle = recipeIds.length === 1;
-    const firstRecipe = isSingle && firstId ? plannable[firstId] : undefined;
+    const [firstRecipe] = isSingle ? recipeIds.map((id) => plannable[id]) : [];
     const singleHasPhoto = Boolean(firstRecipe?.assets?.mealPhoto);
     const singleHasRecipesPage = Boolean(firstRecipe?.assets?.mealPhoto || firstRecipe?.assets?.instructionsPhoto);
     const singleIsDish = isDish(firstRecipe) || isBase(firstRecipe);
-    const singleHasFoodChoice = useHasMealChoices(recipeIds.length === 1 ? recipeIds[0] : undefined);
+    const singleHasFoodChoice = useHasMealChoices(firstId) && isSingle;
 
     const hasRecipes = slotHasRecipes({ recipeIds });
     const isFull = isSlotFull({ recipeIds });
@@ -129,7 +129,7 @@ export const MultiMealSlot = ({
     const showSingleBadge = !!singleRecipeId && !isAddMode && !copyTargetState && !!onSaveRecipeMeta && !isEditingPersons && (singleIsDish || singleBaseGrams > 0 || singleCurrentPersons !== undefined);
 
     const inFreezer = isSingle && !!firstId && (batchRecipeIds?.has(firstId) ?? false);
-    const displayPersons = persons ?? (recipeIds.length === 1 ? defaultPersonsOf(firstRecipe) : undefined);
+    const displayPersons = persons ?? defaultPersonsOf(firstRecipe);
     const isPersonsCustom = persons !== undefined;
     const showPersonsBadge = hasRecipes && !isAddMode && !copyTargetState && !editingMetaId && !isEditingPersons && displayPersons !== undefined && !!onOpenPersonsEditor;
 
@@ -255,7 +255,7 @@ export const MultiMealSlot = ({
             {isEditingPersons && onConfirmPersons && onCancelPersons && (
                 <PersonsEditor
                     initialValue={persons ?? defaultPersonsOf(firstRecipe) ?? 2}
-                    defaultPortion={recipeIds.length === 1 ? defaultPersonsOf(firstRecipe) : undefined}
+                    defaultPortion={defaultPersonsOf(firstRecipe)}
                     onConfirm={onConfirmPersons}
                     onCancel={onCancelPersons}
                     pending={isPersonsPending}

@@ -7,7 +7,7 @@ export interface DayTabsBarProps {
     selectedDay: string;
     monday: Date;
     dayKcal: Record<string, number>;
-    dayCost?: Record<string, CostEstimate> | null;
+    dayCost: Record<string, CostEstimate> | null;
     isSelectionMode: boolean;
     isDraft: (day: string) => boolean;
     isConfirmed: (day: string) => boolean;

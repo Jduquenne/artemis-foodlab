@@ -12,7 +12,7 @@ import {
   nextStockByUnit,
 } from "../../core/logic/shopping/shoppingCheckState";
 import {
-  ExtraInput,
+  ApiExtraBody,
   createExtra,
   deleteExtra,
   fetchExtras,
@@ -203,7 +203,7 @@ export function useShoppingPeriodChecks(
     if (updated) patchItemCheck(periodId, updated);
   };
 
-  const saveExtra = async (extraId: string | null, body: ExtraInput): Promise<boolean> => {
+  const saveExtra = async (extraId: string | null, body: ApiExtraBody): Promise<boolean> => {
     if (!periodId) return false;
     try {
       const saved = extraId ? await updateExtra(periodId, extraId, body) : await createExtra(periodId, body);

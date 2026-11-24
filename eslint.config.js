@@ -23,11 +23,8 @@ export default defineConfig([
   {
     files: ['src/**/*.{ts,tsx}'],
     ignores: [
-      'src/core/services/**',
       'src/features/planning/**',
       'src/features/recipeBuilder/**',
-      'src/shared/components/**',
-      'src/shared/hooks/**',
     ],
     rules: {
       'no-restricted-syntax': [

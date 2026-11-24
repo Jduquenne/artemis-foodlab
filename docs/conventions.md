@@ -24,6 +24,8 @@ Owner rule (2026-11-24, issue #64, front and API alike; AGENTS.md golden rule 20
 3. **`null` only at the API boundary**: `Api*` types, mappers and services, where the HTTP contract imposes it (`foodId: null`, `PUT` « absent = unchanged, null = cleared »); domain, logic and UI receive explicit types. (Applied progressively: the existing `| null` outside the boundary are a later step of #64.)
 4. **`undefined` only where JS produces it** (`Array.find`, `Map.get`, record lookup, a simple optional parameter or property): handle it on the spot (default, early return, explicit type), never pass it on nor compare it as a business state.
 
+A `Partial<T>` whose fields are nullable hides the same three states: fine for a form state merge (`{ ...prev, ...update }`), never read back with `!== undefined` as « keep the current value » (build the full value instead, e.g. `currentOverrideInput` in `journalOverrideLogic.ts`).
+
 Enforcement: ESLint `no-restricted-syntax` in `eslint.config.js` blocks rule 1 everywhere in `src/` except the folders still in its `ignores` list; each cleanup step of #64 removes its folder from that list. Rules 2 to 4 are checked in review (`docs/development.md` § Golden-rule checks gives the greps). TypeScript `noUncheckedIndexedAccess` is on (v6.166.6, D-045): `list[i]`, `record[key]` and `const [first] = list` are typed as possibly `undefined`. Prefer `for…of` / `.entries()` over index loops, destructuring with a guard for the first element, `flatMap` to drop missing record entries, and non-empty tuple types (`readonly [T, ...T[]]`) for constant lists read by position (`DAYS`, `GENERATED_SLOTS`, `LEGAL_DOCUMENTS`, `FREEZER_COLOR_KEYS`). `exactOptionalPropertyTypes` was rejected (D-045).
 
 ## Files

@@ -18,7 +18,7 @@ import { buildRecipeCards } from '../../core/logic/shopping/shoppingRecipeCards'
 import { getShoppingListForDays, getBasesForDays } from '../../core/services/shoppingListService';
 import { getRecords as getHouseholdRecords } from '../../core/services/householdService';
 import { syncWeekFromApi } from '../../core/services/planningService';
-import { ExtraInput } from '../../core/services/shoppingPeriodService';
+import { ApiExtraBody } from '../../core/services/shoppingPeriodService';
 import { markScrolling } from '../../shared/utils/scrollGuard';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { useAuthStore } from '../../shared/store/useAuthStore';
@@ -185,7 +185,7 @@ export const ShoppingModule = () => {
         [recipeCards]
     );
 
-    const submitExtra = (body: ExtraInput) => saveExtra(extraModal.extra?.id ?? null, body);
+    const submitExtra = (body: ApiExtraBody) => saveExtra(extraModal.extra?.id ?? null, body);
 
     const handleEditExtra = (extraId: string) => {
         setDetailKey(null);

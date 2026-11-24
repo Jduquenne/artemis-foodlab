@@ -1,6 +1,6 @@
 import { Ingredient, Unit } from "../../domain/ingredient";
 import { RecipeDetails } from "../../domain/recipe";
-import { JournalOverrides } from "../../domain/journal";
+import { JournalOverrideInput, JournalOverrides } from "../../domain/journal";
 import { ApiJournalOverride } from "../../logic/journal/journalApiMapper";
 import { omitKey } from "../../utils/collectionUtils";
 import { roundTo } from "../../utils/numberUtils";
@@ -55,5 +55,13 @@ export function applyOverrideResult(
             ),
           }
         : omitKey(current.ingredientOverrides, planningSlotItemId),
+  };
+}
+
+export function currentOverrideInput(current: JournalOverrides, planningSlotItemId: string): JournalOverrideInput {
+  return {
+    portionsOverride: current.portionOverrides[planningSlotItemId] ?? null,
+    gramsOverride: current.gramOverrides[planningSlotItemId] ?? null,
+    ingredientOverrides: current.ingredientOverrides[planningSlotItemId] ?? {},
   };
 }

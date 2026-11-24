@@ -12,6 +12,7 @@ import {
 import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
 import { FormModalShell } from "../../../../shared/components/ui/form/FormModalShell";
 import { FormField } from "../../../../shared/components/ui/form/FormField";
+import { FieldError } from "../../../../shared/components/ui/form/FieldError";
 import { FORM_INPUT_CLASS as INPUT_CLASS } from "../../../../shared/components/ui/formStyles";
 
 export interface FoodGroupFormModalProps {
@@ -80,7 +81,7 @@ export const FoodGroupFormModal = ({ group, groups, members, onClose, onSubmit }
       </FormField>
 
       {isCreate && (
-        <FormField label="Identifiant" error={idError} hint="Ne pourra plus être modifié.">
+        <FormField label="Identifiant" hint="Ne pourra plus être modifié.">
           <input
             value={effectiveId}
             onChange={(e) => {
@@ -90,6 +91,7 @@ export const FoodGroupFormModal = ({ group, groups, members, onClose, onSubmit }
             placeholder="fromages"
             className={`${INPUT_CLASS} font-mono ${idError ? "border-red-400" : ""}`}
           />
+          {idError && <FieldError message={idError} />}
         </FormField>
       )}
 

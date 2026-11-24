@@ -18,6 +18,7 @@ import { useFoodGroupsSnapshot } from "../../../../shared/hooks/useCatalogueSnap
 import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
 import { FormModalShell } from "./FormModalShell";
 import { FormField } from "./FormField";
+import { FieldError } from "./FieldError";
 import { SeasonMonthsField } from "./SeasonMonthsField";
 import { FORM_INPUT_CLASS as INPUT_CLASS } from "../../../../shared/components/ui/formStyles";
 
@@ -99,7 +100,7 @@ export const FoodFormModal = ({ food, foods, initialDraft, onClose, onSubmit }: 
       )}
     >
       {isCreate && (
-        <FormField label="Identifiant" error={idError}>
+        <FormField label="Identifiant">
           <input
             value={effectiveId}
             onChange={(e) => {
@@ -109,6 +110,7 @@ export const FoodFormModal = ({ food, foods, initialDraft, onClose, onSubmit }: 
             placeholder="fv-014"
             className={`${INPUT_CLASS} font-mono ${idError ? "border-red-400" : ""}`}
           />
+          {idError && <FieldError message={idError} />}
         </FormField>
       )}
 

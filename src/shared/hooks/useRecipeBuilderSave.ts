@@ -16,8 +16,8 @@ import { useRecipeBuilderStore } from "../store/useRecipeBuilderStore";
 export type RecipeBuilderSaveStatus = "idle" | "saving" | "done" | "error";
 
 export interface RecipeBuilderPhotos {
-  mealPhoto?: File | null;
-  bookPhoto?: File | null;
+  mealPhoto: File | null;
+  bookPhoto: File | null;
 }
 
 export function useRecipeBuilderSave() {

@@ -31,7 +31,7 @@ export async function replacePeriod(days: ShoppingDay[]): Promise<string | null>
   return period?.id ?? null;
 }
 
-export interface ExtraInput {
+export interface ApiExtraBody {
   name?: string;
   quantity?: number | null;
   unit?: string | null;
@@ -47,10 +47,10 @@ export interface ExtraInput {
 export const fetchExtras = (periodId: string) =>
   apiFetchJson<ApiShoppingExtra[]>(`/shopping-periods/${periodId}/extras`);
 
-export const createExtra = (periodId: string, body: ExtraInput) =>
+export const createExtra = (periodId: string, body: ApiExtraBody) =>
   apiFetchJson<ApiShoppingExtra>(`/shopping-periods/${periodId}/extras`, { method: "POST", body });
 
-export const updateExtra = (periodId: string, id: string, body: ExtraInput) =>
+export const updateExtra = (periodId: string, id: string, body: ApiExtraBody) =>
   apiFetchJson<ApiShoppingExtra>(`/shopping-periods/${periodId}/extras/${id}`, { method: "PUT", body });
 
 export async function deleteExtra(periodId: string, id: string): Promise<void> {
@@ -64,19 +64,19 @@ export const fetchSourceChecks = (periodId: string) =>
   apiFetchJson<ApiSourceCheck[]>(`/shopping-periods/${periodId}/source-checks`);
 
 type ItemCheckTarget = { foodId: string } | { householdItemId: string };
-type ItemCheckUpdates = Partial<{
-  isChecked: boolean;
-  stockOverride: number | null;
-  stockByUnit: Record<string, number> | null;
-  freezerBagIds: string[];
-  atPlace: boolean;
-}>;
+export interface ApiItemCheckBody {
+  isChecked?: boolean;
+  stockOverride?: number | null;
+  stockByUnit?: Record<string, number> | null;
+  freezerBagIds?: string[];
+  atPlace?: boolean;
+}
 
 export async function upsertItemCheck(
   periodId: string,
   existingId: string | undefined,
   target: ItemCheckTarget,
-  updates: ItemCheckUpdates,
+  updates: ApiItemCheckBody,
 ): Promise<ApiItemCheck> {
   if (existingId) {
     return apiFetchJson<ApiItemCheck>(`/shopping-periods/${periodId}/item-checks/${existingId}`, {

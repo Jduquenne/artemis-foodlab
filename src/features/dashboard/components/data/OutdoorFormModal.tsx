@@ -16,6 +16,7 @@ import {
 import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
 import { FormModalShell } from "../../../../shared/components/ui/form/FormModalShell";
 import { FormField } from "../../../../shared/components/ui/form/FormField";
+import { FieldError } from "../../../../shared/components/ui/form/FieldError";
 import { FORM_INPUT_CLASS as INPUT_CLASS } from "../../../../shared/components/ui/formStyles";
 import { PhotoField } from "../../../../shared/components/ui/PhotoField";
 
@@ -91,7 +92,7 @@ export const OutdoorFormModal = ({ activity, activities, onClose, onSubmit }: Ou
       )}
     >
       {isCreate && (
-        <FormField label="Identifiant" error={codeError}>
+        <FormField label="Identifiant">
           <input
             value={effectiveCode}
             onChange={(e) => {
@@ -101,6 +102,7 @@ export const OutdoorFormModal = ({ activity, activities, onClose, onSubmit }: Ou
             placeholder="od-001"
             className={`${INPUT_CLASS} font-mono ${codeError ? "border-red-400" : ""}`}
           />
+          {codeError && <FieldError message={codeError} />}
         </FormField>
       )}
 

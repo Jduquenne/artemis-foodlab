@@ -9,14 +9,14 @@ import { useCustomShoppingCategoryStore } from "../../../shared/store/useCustomS
 import { getCodeById, getIdByCode } from "../../../core/catalogue/recipeIdMap";
 import { searchFoods } from "../../../core/logic/recipeBuilder/ingredientSearchLogic";
 import { ApiShoppingExtra } from "../../../core/logic/shopping/shoppingApiMapper";
-import { ExtraInput } from "../../../core/services/shoppingPeriodService";
+import { ApiExtraBody } from "../../../core/services/shoppingPeriodService";
 import { parseDecimal } from "../../../core/utils/numberUtils";
 
 export interface AddExtraModalProps {
   extra: ApiShoppingExtra | null;
   plannedRecipes: { code: string; name: string }[];
   onClose: () => void;
-  onSubmit: (body: ExtraInput) => Promise<boolean>;
+  onSubmit: (body: ApiExtraBody) => Promise<boolean>;
 }
 
 const INPUT_CLASS =
@@ -69,7 +69,7 @@ export const AddExtraModal = ({ extra, plannedRecipes, onClose, onSubmit }: AddE
     }
     setError(null);
     setSubmitting(true);
-    const body: ExtraInput = {
+    const body: ApiExtraBody = {
       name: name.trim(),
       quantity: qty,
       unit: unit.trim() || null,

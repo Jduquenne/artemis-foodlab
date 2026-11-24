@@ -12,7 +12,7 @@ export interface FoodChoice {
   recipeIngredientId: string;
   profileId: string;
   foodId: string | null;
-  quantity?: number | null;
+  quantity: number | null;
 }
 
 export type FoodSelection = { kind: "default" } | { kind: "none" } | { kind: "food"; foodId: string };

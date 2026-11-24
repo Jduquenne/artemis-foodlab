@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { X, LogOut, ShieldCheck } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { changePassword, logout, updateMe } from "../../../core/services/authService";
+import { ApiUpdateMeBody, changePassword, logout, updateMe } from "../../../core/services/authService";
 import { useAuthStore } from "../../store/useAuthStore";
-import { PASSWORD_MIN_LENGTH, UpdateMeInput } from "../../../core/domain/user";
+import { PASSWORD_MIN_LENGTH } from "../../../core/domain/user";
 import { FORM_INPUT_CLASS as INPUT_CLASS } from "./formStyles";
 
 export interface AccountModalProps {
@@ -46,7 +46,7 @@ export const AccountModal = ({ onClose }: AccountModalProps) => {
   const saveProfile = async () => {
     setProfileError(null);
     setProfileSaved(false);
-    const body: UpdateMeInput = {};
+    const body: ApiUpdateMeBody = {};
     if (email.trim() !== user.email) body.email = email.trim();
     if (displayName.trim() !== (user.displayName ?? "")) body.displayName = displayName.trim() || null;
     if (placeName.trim() !== (user.shoppingPlaceName ?? "")) body.shoppingPlaceName = placeName.trim() || null;

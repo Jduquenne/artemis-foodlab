@@ -1,5 +1,5 @@
 import { apiFetchJson, performTokenRefresh, setAccessToken } from "./apiClient";
-import { AuthUser, UpdateMeInput } from "../domain/user";
+import { AuthUser } from "../domain/user";
 import { getStoredRefreshToken, setStoredRefreshToken } from "./refreshTokenStore";
 
 interface LoginResponse {
@@ -27,8 +27,17 @@ export async function startDemo(): Promise<AuthUser> {
   return adoptSession(data);
 }
 
+export interface ApiUpdateMeBody {
+  freezerName?: string;
+  shoppingPlaceName?: string | null;
+  displayName?: string | null;
+  email?: string;
+  shoppingCategoryOrder?: string[] | null;
+  priceStoreId?: string | null;
+}
+
 export async function updateMe(
-  body: UpdateMeInput,
+  body: ApiUpdateMeBody,
   opts?: { suppressGlobalError?: boolean },
 ): Promise<AuthUser> {
   return apiFetchJson<AuthUser>("/me", { method: "PUT", body, ...opts });

@@ -5,21 +5,12 @@ export interface AuthUser {
   email: string;
   role: UserRole;
   freezerName: string;
-  shoppingPlaceName?: string | null;
+  shoppingPlaceName: string | null;
   displayName: string | null;
   isDemo: boolean;
   demoExpiresAt: string | null;
-  shoppingCategoryOrder?: string[] | null;
-  priceStoreId?: string | null;
-}
-
-export interface UpdateMeInput {
-  freezerName?: string;
-  shoppingPlaceName?: string | null;
-  displayName?: string | null;
-  email?: string;
-  shoppingCategoryOrder?: string[] | null;
-  priceStoreId?: string | null;
+  shoppingCategoryOrder: string[] | null;
+  priceStoreId: string | null;
 }
 
 export interface AdminUser {
@@ -37,7 +28,7 @@ export interface CreateUserInput {
   email: string;
   password: string;
   role: UserRole;
-  displayName?: string | null;
+  displayName: string | null;
 }
 
 export const PASSWORD_MIN_LENGTH = 12;

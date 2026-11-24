@@ -29,13 +29,13 @@ export interface RecipeBuilderState {
   kind: RecipeKind;
   mealTypes: MealType[];
   defaultPortions: number;
-  portionsPerPerson?: number | null;
-  cookedWeightGrams?: number | null;
+  portionsPerPerson: number | null;
+  cookedWeightGrams: number | null;
   isDessert: boolean;
   batchCooking: boolean;
   isFromBook: boolean;
   bookPage: number | null;
   ingredients: DraftIngredient[];
   instructions: string[];
-  industrialEquivalent?: IndustrialEquivalentDraft | null;
+  industrialEquivalent: IndustrialEquivalentDraft | null;
 }

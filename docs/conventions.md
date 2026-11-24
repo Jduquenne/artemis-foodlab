@@ -19,7 +19,7 @@ Coding rules for this repo. The verifiable subset is summarised in `AGENTS.md` �
 
 Owner rule (2026-11-24, issue #64, front and API alike; AGENTS.md golden rule 20).
 
-1. **One form of absence per value**: never `X | null | undefined`, never an optional and nullable property or parameter `?: X | null`.
+1. **One form of absence per value**: never `X | null | undefined`, never an optional and nullable property or parameter `?: X | null`. Sole exception (owner, 2026-11-24): an HTTP partial-update body whose contract is « absent = unchanged, `null` = cleared », declared as an interface named `Api…Body` in `core/services/` (e.g. `ApiUpdateMeBody` in `authService.ts`); the ESLint rule lets `?: X | null` through only there.
 2. **No business meaning in an absence when there are more than two states**: use a discriminated union. Example: `FoodSelection = { kind: "default" } | { kind: "none" } | { kind: "food"; foodId }` (`core/domain/foodGroup.ts`) instead of `undefined` = no choice / `null` = none.
 3. **`null` only at the API boundary**: `Api*` types, mappers and services, where the HTTP contract imposes it (`foodId: null`, `PUT` « absent = unchanged, null = cleared »); domain, logic and UI receive explicit types. (Applied progressively: the existing `| null` outside the boundary are a later step of #64.)
 4. **`undefined` only where JS produces it** (`Array.find`, `Map.get`, record lookup, a simple optional parameter or property): handle it on the spot (default, early return, explicit type), never pass it on nor compare it as a business state.

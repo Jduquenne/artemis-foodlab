@@ -49,7 +49,7 @@ export interface RecipeDetails {
   isDessert?: boolean;
   isFromBook?: boolean;
   bookPage?: number;
-  announcedAt?: string | null;
+  announcedAt: string | null;
   industrialEquivalent?: IndustrialEquivalent;
 }
 
@@ -70,7 +70,6 @@ export interface PlannableItem {
   ingredients?: Ingredient[];
   batchCooking?: boolean;
   isDessert?: boolean;
-  announcedAt?: string | null;
 }
 
 export interface OutdoorEntry {

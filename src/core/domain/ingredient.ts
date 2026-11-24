@@ -41,6 +41,9 @@ export enum IngredientCategory {
   NON_PURCHASE = "Hors achat",
   FROZEN = "Surgelés",
   INTERNET = "Internet",
+  FRESH = "Produits frais",
+  VEGAN = "Vegan",
+  BIO = "Bio",
 }
 
 export interface Ingredient {

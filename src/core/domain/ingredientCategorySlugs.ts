@@ -19,6 +19,9 @@ const INGREDIENT_CATEGORY_ID: Record<IngredientCategory, string> = {
   [IngredientCategory.NON_PURCHASE]: "non-purchase",
   [IngredientCategory.FROZEN]: "frozen",
   [IngredientCategory.INTERNET]: "internet",
+  [IngredientCategory.FRESH]: "fresh",
+  [IngredientCategory.VEGAN]: "vegan",
+  [IngredientCategory.BIO]: "bio",
 };
 
 export function getIngredientCategoryId(category: IngredientCategory): string | undefined {

@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-24 — Food categories Produits frais, Vegan, Bio (v6.163.0)
+- Done: issue #59, front of API D-068 (categories `fresh` / `vegan` / `bio`, slugs chosen by the owner, « bio » rather than « organic »). `IngredientCategory.FRESH` / `VEGAN` / `BIO` (key names required by the API import script), slug table, default aisle order (owner: Vegan then Produits frais after Produits laitiers, Bio after Surgelés), recipe card ingredient order (same places), first food code of an empty category `pf-001` / `vg-001` / `bio-001` (`suggestFoodId`, proposed by the agent). Category selects use `Object.values` (nothing else to change). D-067 API commit `083aa64` recorded in `docs/api.md`. No food reclassified (admin, Dashboard).
+- tsc + lint pass; **not checked in a browser**. API D-068 on the dev database only, **NOT deployed**: do not push before the API session confirms prod. To test with `npm run dev` against the local API: Dashboard › Données › Aliments, new food in « Produits frais » → code `pf-001` suggested, saved; move a food to « Bio »; shopping: the new aisles appear at the right place (default order and with a saved order), « Ordre des rayons » lists them; recipe card export shows the ingredient under its category.
+- Still open: prod confirmation of D-068; owner's choices for #60, #61, #63.
+
 ## 2026-11-24 — #62 in prod (v6.162.5)
 - The owner tested #62 and pushed it; API D-067 (`stockByUnit`) live in prod (owner). Docs: `docs/api.md`, `docs/spec-shopping.md`.
 - Still open: close #62 on the owner's word; owner's choices for #59, #60, #61, #63.

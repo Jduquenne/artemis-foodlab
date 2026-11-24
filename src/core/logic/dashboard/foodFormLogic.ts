@@ -47,10 +47,19 @@ export function emptyFoodDraft(): FoodFormDraft {
   };
 }
 
+const FIRST_FOOD_PREFIX: Partial<Record<IngredientCategory, string>> = {
+  [IngredientCategory.FRESH]: "pf",
+  [IngredientCategory.VEGAN]: "vg",
+  [IngredientCategory.BIO]: "bio",
+};
+
 export function suggestFoodId(category: IngredientCategory | "", foods: Food[]): string {
   if (!category) return "";
   const siblings = foods.filter((food) => food.category === category && /^[a-z]+-\d+$/.test(food.id));
-  if (siblings.length === 0) return "";
+  if (siblings.length === 0) {
+    const prefix = FIRST_FOOD_PREFIX[category];
+    return prefix ? nextSequentialCode(prefix, foods.map((food) => food.id)) : "";
+  }
   const prefix = siblings[0].id.split("-")[0];
   return nextSequentialCode(prefix, siblings.map((food) => food.id));
 }

@@ -13,6 +13,8 @@ const CARD_CATEGORY_ORDER: IngredientCategory[] = [
   IngredientCategory.FRUIT_VEGETABLE,
   IngredientCategory.DRIED_FRUIT,
   IngredientCategory.DAIRY,
+  IngredientCategory.VEGAN,
+  IngredientCategory.FRESH,
   IngredientCategory.FARM,
   IngredientCategory.CANNED,
   IngredientCategory.SWEET_GROCERY,
@@ -22,6 +24,7 @@ const CARD_CATEGORY_ORDER: IngredientCategory[] = [
   IngredientCategory.BAKERY,
   IngredientCategory.NON_PURCHASE,
   IngredientCategory.FROZEN,
+  IngredientCategory.BIO,
   IngredientCategory.INTERNET,
 ];
 

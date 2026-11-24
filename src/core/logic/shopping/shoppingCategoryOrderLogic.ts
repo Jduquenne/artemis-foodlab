@@ -89,14 +89,31 @@ export function shoppingAisleOrderPayload(
 export interface ExtraAisleFields {
   categoryId: string | null;
   customShoppingCategoryId?: string | null;
+  isHousehold?: boolean;
 }
 
-export function extraAisleId(extra: { categoryId: string | null; customShoppingCategoryId?: string | null } | null): string {
+export const HOUSEHOLD_EXTRA_AISLE_ID = "household";
+
+type ExtraAisleSource = { categoryId: string | null; customShoppingCategoryId?: string | null; isHousehold?: boolean };
+
+export function extraAisleId(extra: ExtraAisleSource | null): string {
+  if (extra?.isHousehold) return HOUSEHOLD_EXTRA_AISLE_ID;
   return extra?.customShoppingCategoryId ?? extra?.categoryId ?? "";
 }
 
-export function extraAisleFields(aisle: ShoppingAisle | undefined, hadCustomCategory: boolean): ExtraAisleFields {
-  if (aisle?.kind === "custom") return { categoryId: null, customShoppingCategoryId: aisle.id };
-  const categoryId = aisle?.kind === "shared" ? aisle.id : null;
-  return hadCustomCategory ? { categoryId, customShoppingCategoryId: null } : { categoryId };
+export function extraAisleFields(
+  aisleId: string,
+  aisles: readonly ShoppingAisle[],
+  previous: ExtraAisleSource | null,
+): ExtraAisleFields {
+  if (aisleId === HOUSEHOLD_EXTRA_AISLE_ID) return { categoryId: null, customShoppingCategoryId: null, isHousehold: true };
+  const aisle = aisles.find((candidate) => candidate.id === aisleId);
+  const fields: ExtraAisleFields =
+    aisle?.kind === "custom"
+      ? { categoryId: null, customShoppingCategoryId: aisle.id }
+      : {
+          categoryId: aisle?.kind === "shared" ? aisle.id : null,
+          ...(previous?.customShoppingCategoryId ? { customShoppingCategoryId: null } : {}),
+        };
+  return previous?.isHousehold ? { ...fields, isHousehold: false } : fields;
 }

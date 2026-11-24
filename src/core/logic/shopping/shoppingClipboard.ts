@@ -2,6 +2,7 @@ import { HouseholdItem } from "../../domain/household";
 import { IngredientGroup } from "../../domain/shopping";
 import { formatQty, pluralizeUnit } from "../unit/unitFormatLogic";
 import { isIngredientNeeded, remainingToBuy } from "./shoppingChecks";
+import { splitHouseholdExtrasGroup } from "./shoppingGrouping";
 
 export function buildShoppingClipboardText(
   allGroupedItems: IngredientGroup[],
@@ -19,7 +20,9 @@ export function buildShoppingClipboardText(
 
   const lines: string[] = title ? [title, ""] : [];
 
-  for (const group of allGroupedItems) {
+  const { aisles, householdExtras } = splitHouseholdExtrasGroup(allGroupedItems);
+
+  for (const group of aisles) {
     const items = group.list.filter((i) => isIngredientNeeded(i, checked, stocks, sourceChecked));
 
     if (items.length === 0) continue;
@@ -39,8 +42,12 @@ export function buildShoppingClipboardText(
     lines.push("");
   }
 
-  if (uncheckedHouseholdItems.length > 0) {
-    lines.push(uncheckedHouseholdItems.map((item) => item.name).join(" - "));
+  const householdNames = [
+    ...uncheckedHouseholdItems.map((item) => item.name),
+    ...householdExtras.filter((item) => !checked.has(item.key)).map((item) => item.name),
+  ];
+  if (householdNames.length > 0) {
+    lines.push(householdNames.join(" - "));
     lines.push("");
   }
 

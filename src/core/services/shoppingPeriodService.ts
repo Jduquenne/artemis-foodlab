@@ -41,6 +41,7 @@ export interface ExtraInput {
   recipeId?: string | null;
   isChecked?: boolean;
   atPlace?: boolean;
+  isHousehold?: boolean;
 }
 
 export const fetchExtras = (periodId: string) =>

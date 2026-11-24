@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { HouseholdItem } from '../../../../core/domain/household';
 import { IngredientGroup, ShoppingMode } from '../../../../core/domain/shopping';
-import { assignIngredientColumns } from '../../../../core/logic/shopping/shoppingGrouping';
+import { assignIngredientColumns, splitHouseholdExtrasGroup } from '../../../../core/logic/shopping/shoppingGrouping';
 import { HouseholdShoppingCard } from '../HouseholdShoppingCard';
 import { ShoppingCategoryCard } from './ShoppingCategoryCard';
 
@@ -36,16 +36,26 @@ export const ShoppingAislesView = ({
     onOpenDetail,
     onManageHousehold,
 }: ShoppingAislesViewProps) => {
+    const shown = useMemo(() => splitHouseholdExtrasGroup(groups), [groups]);
     const columns = useMemo(
-        () => assignIngredientColumns(allGroups, groups, colCount),
-        [allGroups, groups, colCount]
+        () => assignIngredientColumns(splitHouseholdExtrasGroup(allGroups).aisles, shown.aisles, colCount),
+        [allGroups, shown, colCount]
     );
 
-    const householdCard = householdItems.length > 0 && (
-        <HouseholdShoppingCard items={householdItems} checked={checked} onToggle={onToggle} onManage={onManageHousehold} />
+    const householdCard = (householdItems.length > 0 || shown.householdExtras.length > 0) && (
+        <HouseholdShoppingCard
+            items={householdItems}
+            extras={shown.householdExtras}
+            mode={mode}
+            checked={checked}
+            sourceChecked={sourceChecked}
+            onToggle={onToggle}
+            onOpenDetail={onOpenDetail}
+            onManage={onManageHousehold}
+        />
     );
 
-    if (groups.length === 0) return <div className="pb-4">{householdCard}</div>;
+    if (shown.aisles.length === 0) return <div className="pb-4">{householdCard}</div>;
 
     return (
         <div className="grid gap-4 pb-4 items-start" style={{ gridTemplateColumns: `repeat(${colCount}, minmax(0, 1fr))` }}>

@@ -45,6 +45,7 @@ export interface ApiShoppingExtra {
   recipeId: string | null;
   isChecked: boolean;
   atPlace?: boolean;
+  isHousehold?: boolean;
   createdAt: string;
 }
 
@@ -60,5 +61,6 @@ export function extrasToIngredients(extras: ApiShoppingExtra[]): ConsolidatedIng
     isExtra: true,
     extraId: extra.id,
     ...(extra.customShoppingCategoryId ? { customCategoryId: extra.customShoppingCategoryId } : {}),
+    ...(extra.isHousehold ? { isHousehold: true } : {}),
   }));
 }

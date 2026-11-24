@@ -30,6 +30,7 @@ export interface ConsolidatedIngredient {
   extraId?: string;
   toSpecify?: boolean;
   customCategoryId?: string;
+  isHousehold?: boolean;
 }
 
 export type ShoppingMode = "home" | "store";

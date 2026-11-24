@@ -3,7 +3,7 @@ import { X, Search } from "lucide-react";
 import { Food, Unit } from "../../../core/domain/ingredient";
 import { useFoodsSnapshot } from "../../../shared/hooks/useCatalogueSnapshot";
 import { getIngredientCategoryId } from "../../../core/domain/ingredientCategorySlugs";
-import { extraAisleFields, extraAisleId, resolveShoppingAisles } from "../../../core/logic/shopping/shoppingCategoryOrderLogic";
+import { HOUSEHOLD_EXTRA_AISLE_ID, extraAisleFields, extraAisleId, resolveShoppingAisles } from "../../../core/logic/shopping/shoppingCategoryOrderLogic";
 import { useAuthStore } from "../../../shared/store/useAuthStore";
 import { useCustomShoppingCategoryStore } from "../../../shared/store/useCustomShoppingCategoryStore";
 import { getCodeById, getIdByCode } from "../../../core/catalogue/recipeIdMap";
@@ -73,7 +73,7 @@ export const AddExtraModal = ({ extra, plannedRecipes, onClose, onSubmit }: AddE
       name: name.trim(),
       quantity: qty,
       unit: unit.trim() || null,
-      ...extraAisleFields(aisles.find((aisle) => aisle.id === aisleId), Boolean(extra?.customShoppingCategoryId)),
+      ...extraAisleFields(aisleId, aisles, extra),
       foodId,
       recipeId: recipeCode ? getIdByCode(recipeCode) ?? null : null,
       ...(placeName ? { atPlace } : {}),
@@ -173,6 +173,7 @@ export const AddExtraModal = ({ extra, plannedRecipes, onClose, onSubmit }: AddE
                   {aisle.kind === "custom" ? `${aisle.label} · perso` : aisle.label}
                 </option>
               ))}
+              <option value={HOUSEHOLD_EXTRA_AISLE_ID}>Articles du quotidien</option>
             </select>
           </label>
 

@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-24 — #64: exactOptionalPropertyTypes dropped (v6.166.5)
+- Decision (owner, on the agent's advice): step 2 dropped. Of its 83 errors, about half are data objects built with `key: undefined` (no effect: JSON drops them, the domain reads `?.` / `??`) and half React props forwarded parent → child (normal idiom; fixes would reintroduce `?: T | undefined` or force `prop={undefined}` everywhere). Recorded as D-045 (`docs/decisions.md`) with the rule itself; `docs/conventions.md` updated. Data objects with `undefined` keys will be cleaned by hand in the folder steps.
+- Next: step 3 `noUncheckedIndexedAccess` (107 errors), then the folder cleanups.
+
 ## 2026-11-24 — #64 step 1: null / undefined rule written and enforced (v6.166.4)
 - Context: owner request after #61 (« je ne veux en aucun cas ce genre d'erreur non propre », « les projets le plus propre possible »); issue #64 shared with the API. Decisions (owner): rule validated, scope rules 1 and 2 first (the `| null` outside the API boundary later), TypeScript `exactOptionalPropertyTypes` (83 errors today) and `noUncheckedIndexedAccess` (107) added to the plan, each enabled with its fixes.
 - Done: AGENTS.md golden rule 20; `docs/conventions.md` § Absence and states; two greps in `docs/development.md` § Golden-rule checks (68 and 93 hits today); ESLint `no-restricted-syntax` (three selectors: `X | null | undefined`, optional nullable property, optional nullable parameter) on `src/` except the 7 folders still to clean (`ignores` in `eslint.config.js`). Selectors probed over all of `src/` (32 + 34 + 1 hits, same as the greps) and checked on a clean folder through `eslint --stdin` (3 errors) and an ignored one (0).

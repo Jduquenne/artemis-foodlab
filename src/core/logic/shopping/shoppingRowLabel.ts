@@ -29,7 +29,7 @@ export function shoppingRowQuantity(
   const needed = remainingToBuy(item, { [item.key]: stock }, sourceChecked);
   if (mode === "store") return { main: formatShoppingQuantity(needed, item.unit), positive: false };
   if (effective === 0) return { main: "déjà pris", positive: true };
-  if (needed === 0) return { main: "j'ai tout", positive: true };
+  if (needed === 0) return { main: "en stock", positive: true };
   return { main: formatShoppingQuantity(needed, item.unit), positive: false };
 }
 
@@ -38,7 +38,7 @@ export function shoppingItemSummary(item: ConsolidatedIngredient, stock: number,
   const effective = effectiveQuantity(item, sourceChecked);
   const needed = remainingToBuy(item, { [item.key]: stock }, sourceChecked);
   const parts = [`Total ${formatShoppingQuantity(effective, item.unit)}`];
-  if (stock > 0) parts.push(`j'ai ${formatShoppingQuantity(stock, item.unit)}`);
+  if (stock > 0) parts.push(`en stock ${formatShoppingQuantity(stock, item.unit)}`);
   parts.push(needed === 0 ? "rien à acheter" : `à acheter ${formatShoppingQuantity(needed, item.unit)}`);
   return parts.join(" · ");
 }

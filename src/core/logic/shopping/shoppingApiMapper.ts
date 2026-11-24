@@ -19,6 +19,7 @@ export interface ApiItemCheck {
   householdItemId: string | null;
   isChecked: boolean;
   stockOverride: number | null;
+  stockByUnit?: Record<string, number> | null;
   freezerBagIds: string[];
   stock: number;
   atPlace?: boolean;

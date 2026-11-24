@@ -9,6 +9,7 @@ import {
   SourceToggle,
   buildShoppingCheckState,
   collectSourceCheckRequests,
+  nextStockByUnit,
 } from "../../core/logic/shopping/shoppingCheckState";
 import {
   ExtraInput,
@@ -23,6 +24,7 @@ import {
   upsertSourceChecks,
 } from "../../core/services/shoppingPeriodService";
 import { PLACE_BATCH_MAX, chunkList, placeFoodIds } from "../../core/logic/shopping/shoppingPlaceLogic";
+import { useNotificationStore } from "../store/useNotificationStore";
 import { useRefreshStore } from "../store/useRefreshStore";
 import { withPending } from "../utils/withPending";
 
@@ -36,6 +38,12 @@ interface PeriodChecks {
 const NO_ITEM_CHECKS: ApiItemCheck[] = [];
 const NO_SOURCE_CHECKS: ApiSourceCheck[] = [];
 const NO_EXTRAS: ApiShoppingExtra[] = [];
+
+const UNLINKED_LINE_MESSAGE =
+  "Cet ingrédient n'est relié à aucun aliment du catalogue : il ne peut pas être coché ni avoir de stock.";
+
+const notifyUnlinked = () =>
+  useNotificationStore.getState().push({ message: UNLINKED_LINE_MESSAGE, variant: "error", duration: 4000 });
 
 const recipeCodeOf = (recipeApiId: string) => getCodeById(recipeApiId) ?? recipeApiId;
 const recipeApiIdOf = (recipeCode: string) => getIdByCode(recipeCode) ?? recipeCode;
@@ -108,7 +116,10 @@ export function useShoppingPeriodChecks(
       return;
     }
     const foodId = state.keyToFoodId.get(key);
-    if (!foodId) return;
+    if (!foodId) {
+      notifyUnlinked();
+      return;
+    }
     const existing = state.itemCheckByFoodId.get(foodId);
     const updated = await withPending(pendingKey, () =>
       upsertItemCheck(periodId, existing?.id, { foodId }, { isChecked: !existing?.isChecked }),
@@ -152,10 +163,14 @@ export function useShoppingPeriodChecks(
   const setStock = async (key: string, value: number): Promise<boolean> => {
     if (!periodId) return false;
     const foodId = state.keyToFoodId.get(key);
-    if (!foodId) return false;
+    if (!foodId) {
+      notifyUnlinked();
+      return false;
+    }
     const existing = state.itemCheckByFoodId.get(foodId);
+    const stockByUnit = nextStockByUnit(existing?.stockByUnit, state.keyToUnit.get(key) ?? "", value);
     const updated = await withPending(`shopping-stock:${key}`, () =>
-      upsertItemCheck(periodId, existing?.id, { foodId }, { stockOverride: value > 0 ? value : null }),
+      upsertItemCheck(periodId, existing?.id, { foodId }, { stockOverride: null, stockByUnit }),
     ).catch(() => null);
     if (!updated) return false;
     patchItemCheck(periodId, updated);

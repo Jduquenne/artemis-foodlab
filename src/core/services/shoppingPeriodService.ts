@@ -63,7 +63,13 @@ export const fetchSourceChecks = (periodId: string) =>
   apiFetchJson<ApiSourceCheck[]>(`/shopping-periods/${periodId}/source-checks`);
 
 type ItemCheckTarget = { foodId: string } | { householdItemId: string };
-type ItemCheckUpdates = Partial<{ isChecked: boolean; stockOverride: number | null; freezerBagIds: string[]; atPlace: boolean }>;
+type ItemCheckUpdates = Partial<{
+  isChecked: boolean;
+  stockOverride: number | null;
+  stockByUnit: Record<string, number> | null;
+  freezerBagIds: string[];
+  atPlace: boolean;
+}>;
 
 export async function upsertItemCheck(
   periodId: string,

@@ -29,7 +29,7 @@ export const StockEntrySheet = ({ item, needed, stock, onSave, onClose }: StockE
     return (
         <Sheet
             title={item.name}
-            subtitle={<>Il en faut <b className="text-slate-900">{formatShoppingQuantity(needed, item.unit)}</b> pour la période. Combien en as-tu ?</>}
+            subtitle={<>Il en faut <b className="text-slate-900">{formatShoppingQuantity(needed, item.unit)}</b> pour la période. Quelle quantité as-tu déjà ?</>}
             onClose={onClose}
         >
             <div className="flex items-center gap-3">
@@ -38,7 +38,7 @@ export const StockEntrySheet = ({ item, needed, stock, onSave, onClose }: StockE
                     onValueChange={setDraft}
                     onKeyDown={(e) => { if (e.key === 'Enter') save(draft ?? 0); }}
                     placeholder="0"
-                    aria-label={`Quantité que j'ai — ${item.name}`}
+                    aria-label={`Quantité en stock — ${item.name}`}
                     autoFocus
                     className="flex-1 min-w-0 text-3xl font-bold text-center tabular-nums bg-subtle border-2 border-slate-200 focus:border-orange-500 focus:outline-none rounded-2xl px-3 py-3 text-slate-900"
                 />
@@ -54,7 +54,7 @@ export const StockEntrySheet = ({ item, needed, stock, onSave, onClose }: StockE
                     onClick={() => save(needed)}
                     className="py-3 rounded-2xl bg-green-50 dark:bg-green-900/20 text-green-600 font-bold disabled:opacity-50"
                 >
-                    J'ai tout
+                    En stock
                 </button>
                 <button
                     type="button"
@@ -62,7 +62,7 @@ export const StockEntrySheet = ({ item, needed, stock, onSave, onClose }: StockE
                     onClick={() => save(0)}
                     className="py-3 rounded-2xl border border-slate-200 bg-surface text-slate-700 font-bold disabled:opacity-50"
                 >
-                    Je n'en ai pas
+                    À acheter
                 </button>
             </div>
             <button

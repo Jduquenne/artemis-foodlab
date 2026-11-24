@@ -5,6 +5,7 @@ import { buildSourceCheckKey } from "./shoppingChecks";
 
 export interface ShoppingCheckState {
   keyToFoodId: Map<string, string>;
+  keyToUnit: Map<string, string>;
   itemCheckByFoodId: Map<string, ApiItemCheck>;
   itemCheckByHouseholdId: Map<string, ApiItemCheck>;
   checked: Set<string>;
@@ -24,6 +25,20 @@ export interface SourceCheckRequest {
   target: { foodId: string; recipeId: string; day: string; slot: string };
 }
 
+export function itemCheckStockForUnit(ic: ApiItemCheck, unit: string): number {
+  return ic.stockByUnit?.[unit] ?? ic.stock;
+}
+
+export function nextStockByUnit(
+  current: Readonly<Record<string, number>> | null | undefined,
+  unit: string,
+  value: number,
+): Record<string, number> | null {
+  const next = Object.fromEntries(Object.entries(current ?? {}).filter(([key, stock]) => key !== unit && stock > 0));
+  if (value > 0) next[unit] = value;
+  return Object.keys(next).length > 0 ? next : null;
+}
+
 export function buildShoppingCheckState(
   ingredients: ConsolidatedIngredient[],
   householdItems: HouseholdItem[],
@@ -33,10 +48,12 @@ export function buildShoppingCheckState(
   recipeCodeOf: (recipeApiId: string) => string,
 ): ShoppingCheckState {
   const keyToFoodId = new Map<string, string>();
+  const keyToUnit = new Map<string, string>();
   const keysByFoodId = new Map<string, string[]>();
   for (const ing of ingredients) {
     if (!ing.foodId) continue;
     keyToFoodId.set(ing.key, ing.foodId);
+    keyToUnit.set(ing.key, ing.unit);
     keysByFoodId.set(ing.foodId, [...(keysByFoodId.get(ing.foodId) ?? []), ing.key]);
   }
 
@@ -54,7 +71,8 @@ export function buildShoppingCheckState(
     const ic = itemCheckByFoodId.get(foodId);
     if (!ic) continue;
     if (ic.isChecked) checked.add(key);
-    if (ic.stock > 0) stocks[key] = ic.stock;
+    const stock = itemCheckStockForUnit(ic, keyToUnit.get(key) ?? "");
+    if (stock > 0) stocks[key] = stock;
     if (ic.freezerBagIds.length > 0) freezerSelection[key] = ic.freezerBagIds;
   }
   for (const item of householdItems) {
@@ -80,6 +98,7 @@ export function buildShoppingCheckState(
 
   return {
     keyToFoodId,
+    keyToUnit,
     itemCheckByFoodId,
     itemCheckByHouseholdId,
     checked,

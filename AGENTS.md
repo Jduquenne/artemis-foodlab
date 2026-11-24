@@ -104,7 +104,7 @@ Detail and rationale in `docs/conventions.md`, `docs/architecture.md` and `docs/
 17. Before removing/renaming an export, grep all of `src/` for consumers.
 18. Reuse the shared utilities listed in `docs/conventions.md`; create a helper only for a pattern repeated ~5+ times.
 19. When an action changes persistent state, test the round trip, not only the single move.
-20. One form of absence per value: never `X | null | undefined`, never `?: X | null` (sole exception: `Api…Body` partial-update contracts, « absent = unchanged, null = cleared »); a state with more than two cases is a discriminated union (`kind`), never `undefined` vs `null`; `null` only at the API boundary (`Api*` types, mappers, services). Enforced by ESLint (`no-restricted-syntax` and `eqeqeq: "always"`, `eslint.config.js`) on all of `src/`.
+20. One form of absence per value: never `X | null | undefined`, never `?: X | null` (sole exception: `Api…Body` partial-update contracts, « absent = unchanged, null = cleared »); a state with more than two cases, or fields that only exist in one case, is a discriminated union (`kind`), never `undefined` vs `null` nor flags plus nullable fields; `null` means only « no value » (value or nothing), never one case among several. Enforced by ESLint (`no-restricted-syntax` and `eqeqeq: "always"`, `eslint.config.js`) on all of `src/`.
 
 ## Picking work
 

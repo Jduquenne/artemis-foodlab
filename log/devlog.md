@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-19 — Session end: where to resume
+- State: front committed up to v6.162.2 (`ee7da3df`); v6.162.3 (this entry) waiting for the owner's commit. Closed today by the owner: shopping rows reduced (v6.159.0), horizontal scroll on phones (shopping v6.159.1, freezer v6.159.2), price entry redesign (v6.160.0 → v6.162.1), mistyped addresses (v6.162.2, user-site repo declined).
+- Test first in prod after the push: 1) `https://jduquenne.github.io/artemis-foodlab/planning` → opens the Planning; 2) Dashboard › Données › Aliments: price cell → sheet, record, history, delete; store picker only with 2+ stores; slider search / category / « Anciens »; 3) shopping rows (name + quantity only) on a phone, long names truncated, no horizontal scroll (shopping, household, freezer).
+- Backlog (`dev/issues.json`): #10 Google sign-in (the only one ready, API first), #41 / #50 prices (later), #42 household stock (idea). Still to report by the owner: prices (item 15) and cooking sheets (item 16) tested in prod.
+- Open points: addresses with capitals or the bare root still get GitHub's 404 (only a user-site repo or a custom domain would fix it); `PRICE_STALE_MONTHS` = 6 chosen by the agent; portrait tablet never checked for shopping and Dashboard price tools.
+
 ## 2026-11-19 — Mistyped addresses redirected; price redesign closed (v6.162.1 → 6.162.2)
 - Done: price entry redesign tested by the owner (« déjà beaucoup mieux »), ideas for a later pass in `docs/roadmap.md` § Ideas (v6.162.1, docs only, not committed separately). A recruiter got a 404 with an address that « looked right »: the exact URL answers 200 (checked with curl), but `/Artemis-Foodlab/` (case), the root `jduquenne.github.io/` and a path without `#` (`/artemis-foodlab/planning`) answer 404. Added `public/404.html` (unknown path under the project → hash route, base read from the first segment). A user-site repo `jduquenne.github.io` that would also catch capitals and the root was proposed, then declined by the owner (no extra repo); files deleted. Docs: `docs/development.md` § Branches and deployment.
 - Problems: the actual address typed by the recruiter is unknown; case (phone auto-capitalisation or a copied link) is the most likely cause, and it stays **uncovered** (only a user-site repo or a custom domain would catch it). Deploy history could not be checked (`gh` not installed).

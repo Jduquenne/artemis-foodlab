@@ -3,6 +3,7 @@ import {
   AccompanimentChoice,
   AccompanimentDefault,
   AccompanimentOption,
+  AccompanimentSelection,
   ResolvedAccompaniment,
 } from "../../domain/accompaniment";
 import { FoodChoice } from "../../domain/foodGroup";
@@ -206,10 +207,12 @@ export function setAccompanimentChoice(
   choices: readonly AccompanimentChoice[],
   accompanimentId: string,
   profileId: string,
-  optionId: string | null | undefined,
+  selection: AccompanimentSelection,
 ): AccompanimentChoice[] {
   const others = choices.filter((c) => !(c.accompanimentId === accompanimentId && c.profileId === profileId));
-  return optionId === undefined ? others : [...others, { accompanimentId, profileId, optionId }];
+  if (selection.kind === "default") return others;
+  const optionId = selection.kind === "none" ? null : selection.optionId;
+  return [...others, { accompanimentId, profileId, optionId }];
 }
 
 export interface AccompanimentLine {

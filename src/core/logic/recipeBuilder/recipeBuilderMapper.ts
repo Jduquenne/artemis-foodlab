@@ -31,7 +31,7 @@ export function switchIngredientType(
 
 export function applyFoodPick(ingredient: DraftIngredient, name: string, food?: Food): DraftIngredient {
   const keepsGroup = Boolean(food?.groupId) && food?.groupId === ingredient.foodGroupId;
-  const unit = food?.unit;
+  const unit = food?.unit ?? null;
   return {
     ...ingredient,
     name,

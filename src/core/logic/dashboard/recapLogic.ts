@@ -15,8 +15,8 @@ export function isRecapChange(entry: RecapEntry): entry is RecapChange {
   return "from" in entry;
 }
 
-export function recapText(value: string | number | null | undefined): string {
-  if (value === null || value === undefined || value === "") return "—";
+export function recapText(value: string | number | null): string {
+  if (value === null || value === "") return "—";
   return String(value);
 }
 

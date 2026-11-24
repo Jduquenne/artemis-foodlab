@@ -23,7 +23,6 @@ export default defineConfig([
   {
     files: ['src/**/*.{ts,tsx}'],
     ignores: [
-      'src/core/logic/**',
       'src/core/services/**',
       'src/features/planning/**',
       'src/features/recipeBuilder/**',

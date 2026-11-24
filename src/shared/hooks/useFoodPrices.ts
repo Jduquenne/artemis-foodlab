@@ -11,7 +11,7 @@ export interface FoodPrices {
 }
 
 export function useFoodPrices(storeOverrideId: string | null = null): FoodPrices {
-  const priceStoreId = useAuthStore((s) => s.user?.priceStoreId);
+  const priceStoreId = useAuthStore((s) => s.user?.priceStoreId ?? null);
   const stores = usePriceStore((s) => s.stores);
   const prices = usePriceStore((s) => s.prices);
   return useMemo(() => {

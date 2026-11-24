@@ -18,7 +18,7 @@ export function hasDayLimits(limits: DayNutritionLimits): boolean {
   return NUTRIENT_KEYS.some((key) => limits.ranges[key].min !== null || limits.ranges[key].max !== null);
 }
 
-export function recipeNutrients(code: string | null | undefined, macros: Record<string, Macronutrients>): DayNutrients | null {
+export function recipeNutrients(code: string | null, macros: Record<string, Macronutrients>): DayNutrients | null {
   const values = code ? macros[code] : undefined;
   if (!values || !(values.kcal > 0)) return null;
   return { kcal: values.kcal, proteins: values.proteins, carbohydrates: values.carbohydrates, lipids: values.lipids };

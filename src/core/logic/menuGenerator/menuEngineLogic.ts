@@ -102,7 +102,7 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
     .filter((code): code is string => code !== null);
   const existingCodes = Object.values(input.existing).flat();
   const used = new Set([...existingCodes, ...fixedCodes]);
-  const categoryOf = (code: string | null | undefined) => (code ? (catalogue.recipes[code]?.categoryId ?? null) : null);
+  const categoryOf = (code: string | null) => (code ? (catalogue.recipes[code]?.categoryId ?? null) : null);
   const foodsOf = createFoodIndex(catalogue);
   const dietCache = new Map<string, RecipeDietProfile>();
   const matcher: HabitMatcher = {
@@ -174,7 +174,7 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
     return reason ? [reason] : null;
   };
   const covered = new Set<string>();
-  const cover = (code: string | null | undefined) => foodsOf(code).forEach((id) => covered.add(id));
+  const cover = (code: string | null) => foodsOf(code).forEach((id) => covered.add(id));
   [...existingCodes, ...fixedCodes, ...Object.values(reservations).map((r) => r.recipeCode)].forEach(cover);
   const required = new Set(settings.preferredFoods.filter((item) => item.mode === "atLeastOnce").map((item) => item.foodId));
   const toPlace = settings.preferredFoods.filter((item) => !covered.has(item.foodId)).map((item) => item.foodId);
@@ -195,7 +195,7 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
   const advanced = settings.advanced;
   const dayLimits = advanced.dayNutrition;
   const dayLimitsActive = hasDayLimits(dayLimits);
-  const nutrientsOf = (code: string | null | undefined) => recipeNutrients(code, input.macros);
+  const nutrientsOf = (code: string | null) => recipeNutrients(code, input.macros);
   const sumCodes = (codes: readonly string[]): DayNutrients | null => {
     const values = codes.map(nutrientsOf);
     return values.every((value): value is DayNutrients => value !== null) ? values.reduce(addNutrients, EMPTY_NUTRIENTS) : null;
@@ -252,11 +252,11 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
   const knownCodeOf = (key: string | undefined) =>
     key ? (input.existing[key]?.[0] ?? fixedOf(key)?.recipeCode ?? reservations[key]?.recipeCode ?? null) : null;
   let previousCode: string | null = null;
-  const starchesOf = (codes: readonly (string | null | undefined)[]) =>
+  const starchesOf = (codes: readonly (string | null)[]) =>
     new Set(codes.flatMap((code) => [...starchFoodIds(foodsOf(code), catalogue.foods)]));
   const starchHistory: Set<string>[] = [];
   const knownCategoryOf = (key: string | undefined) =>
-    key ? (categoryOf(input.existing[key]?.[0]) ?? categoryOf(fixedOf(key)?.recipeCode) ?? categoryOf(reservations[key]?.recipeCode)) : null;
+    key ? (categoryOf(input.existing[key]?.[0] ?? null) ?? categoryOf(fixedOf(key)?.recipeCode ?? null) ?? categoryOf(reservations[key]?.recipeCode ?? null)) : null;
 
   const meals: GeneratedMeal[] = [];
   const warnings: string[] = [...oneMealWarnings];
@@ -278,7 +278,7 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
       countInto(counts, countedFoods, meal.kept ? (input.existing[key] ?? []) : meal.recipeCode ? [meal.recipeCode] : [], blockKey);
       previousCode = meal.kept ? (input.existing[key]?.[0] ?? null) : meal.recipeCode;
       starchHistory.push(starchesOf(meal.kept ? (input.existing[key] ?? []) : [meal.recipeCode]));
-      cover(meal.kept ? input.existing[key]?.[0] : meal.recipeCode);
+      cover(meal.kept ? (input.existing[key]?.[0] ?? null) : meal.recipeCode);
       previousCategoryId = categoryId;
       if (categoryId) sameDayCategoryIds.push(categoryId);
     };
@@ -286,7 +286,7 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
     if (isKept(key)) {
       place(
         { key, day, slot, recipeCode: null, kept: true, locked: true, noMeal: false, dessertCodes: [], reasons: [{ kind: "kept", label: "Déjà rempli dans le planning" }] },
-        categoryOf(input.existing[key]?.[0]),
+        categoryOf(input.existing[key]?.[0] ?? null),
       );
       continue;
     }

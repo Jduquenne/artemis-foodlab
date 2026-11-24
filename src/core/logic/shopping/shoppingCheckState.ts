@@ -30,7 +30,7 @@ export function itemCheckStockForUnit(ic: ApiItemCheck, unit: string): number {
 }
 
 export function nextStockByUnit(
-  current: Readonly<Record<string, number>> | null | undefined,
+  current: Readonly<Record<string, number>> | null,
   unit: string,
   value: number,
 ): Record<string, number> | null {

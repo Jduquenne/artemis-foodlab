@@ -1,6 +1,7 @@
 import { IngredientCategory } from "../../domain/ingredient";
 import { getIngredientCategoryId } from "../../domain/ingredientCategorySlugs";
 import { CustomShoppingCategory, ShoppingAisle } from "../../domain/shopping";
+import { ApiShoppingExtra } from "./shoppingApiMapper";
 
 export const DEFAULT_SHOPPING_CATEGORY_ORDER: readonly IngredientCategory[] = [
   IngredientCategory.FRUIT_VEGETABLE,
@@ -41,7 +42,7 @@ export function defaultShoppingAisles(customCategories: readonly CustomShoppingC
 }
 
 export function resolveShoppingAisles(
-  saved: readonly string[] | null | undefined,
+  saved: readonly string[] | null,
   customCategories: readonly CustomShoppingCategory[],
 ): ShoppingAisle[] {
   if (!saved) return defaultShoppingAisles(customCategories);
@@ -87,7 +88,7 @@ export function shoppingAisleOrderPayload(
   return isDefault ? null : ids;
 }
 
-export interface ExtraAisleFields {
+export interface ApiExtraAisleBody {
   categoryId: string | null;
   customShoppingCategoryId?: string | null;
   isHousehold?: boolean;
@@ -95,7 +96,7 @@ export interface ExtraAisleFields {
 
 export const HOUSEHOLD_EXTRA_AISLE_ID = "household";
 
-type ExtraAisleSource = { categoryId: string | null; customShoppingCategoryId?: string | null; isHousehold?: boolean };
+type ExtraAisleSource = Pick<ApiShoppingExtra, "categoryId" | "customShoppingCategoryId" | "isHousehold">;
 
 export function extraAisleId(extra: ExtraAisleSource | null): string {
   if (extra?.isHousehold) return HOUSEHOLD_EXTRA_AISLE_ID;
@@ -106,10 +107,10 @@ export function extraAisleFields(
   aisleId: string,
   aisles: readonly ShoppingAisle[],
   previous: ExtraAisleSource | null,
-): ExtraAisleFields {
+): ApiExtraAisleBody {
   if (aisleId === HOUSEHOLD_EXTRA_AISLE_ID) return { categoryId: null, customShoppingCategoryId: null, isHousehold: true };
   const aisle = aisles.find((candidate) => candidate.id === aisleId);
-  const fields: ExtraAisleFields =
+  const fields: ApiExtraAisleBody =
     aisle?.kind === "custom"
       ? { categoryId: null, customShoppingCategoryId: aisle.id }
       : {

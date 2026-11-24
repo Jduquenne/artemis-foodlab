@@ -168,7 +168,7 @@ export function useShoppingPeriodChecks(
       return false;
     }
     const existing = state.itemCheckByFoodId.get(foodId);
-    const stockByUnit = nextStockByUnit(existing?.stockByUnit, state.keyToUnit.get(key) ?? "", value);
+    const stockByUnit = nextStockByUnit(existing?.stockByUnit ?? null, state.keyToUnit.get(key) ?? "", value);
     const updated = await withPending(`shopping-stock:${key}`, () =>
       upsertItemCheck(periodId, existing?.id, { foodId }, { stockOverride: null, stockByUnit }),
     ).catch(() => null);

@@ -14,12 +14,12 @@ export function emptyIndustrialDraft(): IndustrialEquivalentDraft {
   return { foodId: null, quantity: null, unit: Unit.G };
 }
 
-export function industrialDraftFromRecipe(equivalent: IndustrialEquivalent | null | undefined): IndustrialEquivalentDraft | null {
+export function industrialDraftFromRecipe(equivalent: IndustrialEquivalent | undefined): IndustrialEquivalentDraft | null {
   if (!equivalent) return null;
   return { foodId: equivalent.foodId, quantity: equivalent.quantity, unit: equivalent.unit };
 }
 
-export function isIndustrialDraftComplete(draft: IndustrialEquivalentDraft | null | undefined): draft is IndustrialEquivalentDraft & { foodId: string; quantity: number } {
+export function isIndustrialDraftComplete(draft: IndustrialEquivalentDraft | null): draft is IndustrialEquivalentDraft & { foodId: string; quantity: number } {
   return draft != null && draft.foodId !== null && draft.quantity !== null && draft.quantity > 0 && draft.unit !== Unit.NONE;
 }
 
@@ -27,17 +27,17 @@ export function pickIndustrialFood(draft: IndustrialEquivalentDraft, food: Food)
   return { ...draft, foodId: food.id, unit: isUnit(food.unit) && food.unit !== Unit.NONE ? food.unit : draft.unit };
 }
 
-export function industrialDraftToApi(draft: IndustrialEquivalentDraft | null | undefined, isBase: boolean): ApiIndustrialEquivalent | null {
+export function industrialDraftToApi(draft: IndustrialEquivalentDraft | null, isBase: boolean): ApiIndustrialEquivalent | null {
   if (!isBase || !isIndustrialDraftComplete(draft)) return null;
   return { foodId: draft.foodId, quantity: draft.quantity, unit: draft.unit };
 }
 
-export function validateIndustrialDraft(draft: IndustrialEquivalentDraft | null | undefined, isBase: boolean): string[] {
+export function validateIndustrialDraft(draft: IndustrialEquivalentDraft | null, isBase: boolean): string[] {
   if (!isBase || draft == null || isIndustrialDraftComplete(draft)) return [];
   return ["Version industrielle : choisis un aliment et une quantité supérieure à 0 par portion de la base."];
 }
 
-export function mapApiIndustrialEquivalent(api: ApiIndustrialEquivalent | null | undefined): IndustrialEquivalent | undefined {
+export function mapApiIndustrialEquivalent(api: ApiIndustrialEquivalent | null): IndustrialEquivalent | undefined {
   if (!api) return undefined;
   return { foodId: api.foodId, quantity: api.quantity, unit: isUnit(api.unit) ? api.unit : Unit.NONE };
 }

@@ -30,7 +30,7 @@ export function recipeFoodIds(recipe: RecipeDetails, catalogue: MenuCatalogue): 
   return found;
 }
 
-export function createFoodIndex(catalogue: MenuCatalogue): (code: string | null | undefined) => ReadonlySet<string> {
+export function createFoodIndex(catalogue: MenuCatalogue): (code: string | null) => ReadonlySet<string> {
   const cache = new Map<string, Set<string>>();
   const empty = new Set<string>();
   return (code) => {

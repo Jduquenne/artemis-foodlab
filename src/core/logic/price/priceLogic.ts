@@ -21,7 +21,7 @@ export interface CostEstimate {
   missing: PricedLine[];
 }
 
-export function effectivePriceStoreId(priceStoreId: string | null | undefined, stores: readonly PriceStore[]): string | null {
+export function effectivePriceStoreId(priceStoreId: string | null, stores: readonly PriceStore[]): string | null {
   if (priceStoreId && stores.some((s) => s.id === priceStoreId)) return priceStoreId;
   const [only] = stores;
   return stores.length === 1 && only ? only.id : null;
@@ -43,7 +43,7 @@ export function isLiquidUnit(unit: string): boolean {
 }
 
 export function quantityInGrams(quantity: number, unit: string, food: Food | undefined): number | null {
-  return toGrams(quantity, parseUnit(unit), food?.unitWeight);
+  return toGrams(quantity, parseUnit(unit), food?.unitWeight ?? null);
 }
 
 export function costOfQuantity(quantity: number, unit: string, food: Food | undefined, pricePerKg: number | undefined): number | null {

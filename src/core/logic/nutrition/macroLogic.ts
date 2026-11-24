@@ -54,7 +54,7 @@ export function roundMacros(m: Macronutrients): Macronutrients {
 export function toGrams(
   quantity: number,
   unit: Unit,
-  unitWeight?: number | null,
+  unitWeight: number | null,
 ): number | null {
   switch (unit) {
     case Unit.G:
@@ -115,7 +115,7 @@ export function calculateRecipeBaseGrams(recipe: RecipeDetails, foodDb: Record<s
   for (const ing of recipe.ingredients) {
     if (ing.quantity == null) continue;
     const food = ing.foodId ? foodDb[ing.foodId] : undefined;
-    const grams = toGrams(ing.quantity, ing.unit, food?.unitWeight);
+    const grams = toGrams(ing.quantity, ing.unit, food?.unitWeight ?? null);
     if (grams != null) total += grams;
   }
   return total > 0 ? total / recipe.defaultPortions : 0;

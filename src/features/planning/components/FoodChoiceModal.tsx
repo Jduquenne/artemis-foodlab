@@ -5,7 +5,7 @@ import { AccompanimentChoice } from '../../../core/domain/accompaniment';
 import { BaseVersion, BaseVersionChoice } from '../../../core/domain/baseVersion';
 import { NO_FOOD_VALUE, findMealChoice, foodSelectValue, foodsOfGroupSorted, mealChoiceSelection, parseFoodSelectValue, reachableQuantityPerPortion, resolveIngredientFood, setMealFoodChoice, setMealFoodQuantity } from '../../../core/logic/foodGroup/foodChoiceLogic';
 import { accompanimentsFor, findAccompanimentChoice, mealChoiceIngredients, resolveAccompaniment, setAccompanimentChoice } from '../../../core/logic/accompaniment/accompanimentLogic';
-import { ACCOMPANIMENT_NONE_VALUE, accompanimentOptionLabel } from '../../../core/logic/accompaniment/accompanimentFormLogic';
+import { ACCOMPANIMENT_NONE_VALUE, accompanimentOptionLabel, parseAccompanimentSelectValue } from '../../../core/logic/accompaniment/accompanimentFormLogic';
 import { setBaseVersion } from '../../../core/logic/baseVersion/baseVersionLogic';
 import { formatQty } from '../../../core/logic/unit/unitFormatLogic';
 import { DecimalInput } from '../../../shared/components/ui/DecimalInput';
@@ -94,9 +94,8 @@ export const FoodChoiceModal = ({ recipeId, pendingKey, initialChoices, initialA
                                             value={value}
                                             disabled={pending}
                                             onChange={(e) => {
-                                                const next = e.target.value;
-                                                const optionId = next === '' ? undefined : next === ACCOMPANIMENT_NONE_VALUE ? null : next;
-                                                setAccompanimentChoices((prev) => setAccompanimentChoice(prev, accompaniment.id, profile.id, optionId));
+                                                const selection = parseAccompanimentSelectValue(e.target.value);
+                                                setAccompanimentChoices((prev) => setAccompanimentChoice(prev, accompaniment.id, profile.id, selection));
                                             }}
                                             className={SELECT_CLASS}
                                         >
@@ -130,7 +129,7 @@ export const FoodChoiceModal = ({ recipeId, pendingKey, initialChoices, initialA
                                 <p className="text-xs font-bold text-slate-500">
                                     {ownerName && <span className="font-semibold text-slate-400">{ownerName} › </span>}
                                     {ingredient.name}
-                                    <span className="font-normal text-slate-400"> · {foodGroupLabel(groups, ingredient.foodGroupId)}</span>
+                                    <span className="font-normal text-slate-400"> · {foodGroupLabel(groups, ingredient.foodGroupId ?? null)}</span>
                                 </p>
                                 {profiles.filter((profile) => profileIds.includes(profile.id)).map((profile) => {
                                     const mealChoice = findMealChoice(choices, ingredient.id, profile.id);

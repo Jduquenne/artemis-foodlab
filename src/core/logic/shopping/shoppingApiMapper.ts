@@ -19,7 +19,7 @@ export interface ApiItemCheck {
   householdItemId: string | null;
   isChecked: boolean;
   stockOverride: number | null;
-  stockByUnit?: Record<string, number> | null;
+  stockByUnit: Record<string, number> | null;
   freezerBagIds: string[];
   stock: number;
   atPlace?: boolean;
@@ -40,12 +40,12 @@ export interface ApiShoppingExtra {
   quantity: number | null;
   unit: string | null;
   categoryId: string | null;
-  customShoppingCategoryId?: string | null;
+  customShoppingCategoryId: string | null;
   foodId: string | null;
   recipeId: string | null;
   isChecked: boolean;
   atPlace?: boolean;
-  isHousehold?: boolean;
+  isHousehold: boolean;
   createdAt: string;
 }
 

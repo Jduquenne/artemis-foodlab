@@ -45,7 +45,7 @@ export function foodsOfGroup(foods: readonly Food[], groupId: string): Food[] {
   return foods.filter((food) => food.groupId === groupId);
 }
 
-export function foodGroupLabel(groups: readonly FoodGroup[], groupId: string | null | undefined): string {
+export function foodGroupLabel(groups: readonly FoodGroup[], groupId: string | null): string {
   if (!groupId) return "—";
   return groups.find((group) => group.id === groupId)?.name ?? groupId;
 }

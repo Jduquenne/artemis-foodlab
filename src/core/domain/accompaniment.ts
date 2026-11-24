@@ -23,6 +23,8 @@ export interface AccompanimentDefault {
   optionId: string | null;
 }
 
+export type AccompanimentSelection = { kind: "default" } | { kind: "none" } | { kind: "option"; optionId: string };
+
 export interface AccompanimentChoice {
   accompanimentId: string;
   profileId: string;

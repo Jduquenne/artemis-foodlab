@@ -48,7 +48,7 @@ export function recipeCookingRows(
   }
   return [...rows.values()].map((row) => ({
     ...row,
-    rawGrams: toGrams(row.quantity, parseUnit(row.unit), foods[row.foodId]?.unitWeight),
+    rawGrams: toGrams(row.quantity, parseUnit(row.unit), foods[row.foodId]?.unitWeight ?? null),
   }));
 }
 

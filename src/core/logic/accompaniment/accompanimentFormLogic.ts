@@ -4,6 +4,7 @@ import {
   AccompanimentInput,
   AccompanimentOption,
   AccompanimentOptionKind,
+  AccompanimentSelection,
 } from "../../domain/accompaniment";
 import { Food, Unit } from "../../domain/ingredient";
 import { RecipeDetails } from "../../domain/recipe";
@@ -147,6 +148,11 @@ export function accompanimentOptionLabel(
 
 export const ACCOMPANIMENT_DEFAULT_VALUE = "";
 export const ACCOMPANIMENT_NONE_VALUE = "none";
+
+export function parseAccompanimentSelectValue(value: string): AccompanimentSelection {
+  if (value === ACCOMPANIMENT_DEFAULT_VALUE) return { kind: "default" };
+  return value === ACCOMPANIMENT_NONE_VALUE ? { kind: "none" } : { kind: "option", optionId: value };
+}
 
 export function accompanimentDefaultValue(defaults: readonly AccompanimentDefault[], accompanimentId: string): string {
   const found = defaults.find((d) => d.accompanimentId === accompanimentId);

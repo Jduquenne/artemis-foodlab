@@ -71,7 +71,7 @@ export const ShoppingModule = () => {
     const shoppingDays = useMenuStore((s) => s.shoppingDays);
     const currentPeriodId = useMenuStore((s) => s.currentPeriodId);
     const authStatus = useAuthStore((s) => s.status);
-    const savedCategoryOrder = useAuthStore((s) => s.user?.shoppingCategoryOrder);
+    const savedCategoryOrder = useAuthStore((s) => s.user?.shoppingCategoryOrder ?? null);
     const placeName = useAuthStore((s) => s.user?.shoppingPlaceName ?? null);
     const customCategories = useCustomShoppingCategoryStore((s) => s.categories);
     const categoryOrder = useMemo(

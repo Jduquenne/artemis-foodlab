@@ -28,7 +28,7 @@ export const AddExtraModal = ({ extra, plannedRecipes, onClose, onSubmit }: AddE
   const [name, setName] = useState(extra?.name ?? "");
   const [quantity, setQuantity] = useState(extra?.quantity != null ? String(extra.quantity) : "");
   const [unit, setUnit] = useState<string>(extra?.unit ?? "");
-  const savedOrder = useAuthStore((s) => s.user?.shoppingCategoryOrder);
+  const savedOrder = useAuthStore((s) => s.user?.shoppingCategoryOrder ?? null);
   const customCategories = useCustomShoppingCategoryStore((s) => s.categories);
   const aisles = useMemo(() => resolveShoppingAisles(savedOrder, customCategories), [savedOrder, customCategories]);
   const [aisleId, setAisleId] = useState<string>(() => extraAisleId(extra));

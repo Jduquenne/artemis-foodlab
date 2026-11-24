@@ -19,7 +19,7 @@ export interface ApiIngredient {
   category: string;
   foodId: string | null;
   baseId: string | null;
-  foodGroupId?: string | null;
+  foodGroupId: string | null;
   preparation: string | null;
 }
 
@@ -32,14 +32,14 @@ export interface ApiRecipe {
   mealTypes: string[];
   defaultPortions: number;
   portionsPerPerson?: number;
-  cookedWeightGrams?: number | null;
+  cookedWeightGrams: number | null;
   batchCooking: boolean;
   isDessert: boolean;
   isFromBook: boolean;
   bookPage: number | null;
   instructions: string | null;
   announcedAt: string | null;
-  industrialEquivalent?: ApiIndustrialEquivalent | null;
+  industrialEquivalent: ApiIndustrialEquivalent | null;
   ingredients: ApiIngredient[];
   assets: Partial<Record<RecipeAssetKey, RecipeAsset>>;
 }

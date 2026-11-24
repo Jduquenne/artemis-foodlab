@@ -67,7 +67,10 @@ export const AccompanimentOptionRow = ({ option, index, disabled, onChange, onRe
           hiddenIds={[]}
           disabled={disabled}
           placeholder="Ex : croûtons, pain…"
-          onPick={(foodId) => onChange({ ...option, foodId, unit: parseUnit(foods[foodId]?.unit) === Unit.NONE ? Unit.G : parseUnit(foods[foodId]?.unit) })}
+          onPick={(foodId) => {
+            const unit = parseUnit(foods[foodId]?.unit ?? null);
+            onChange({ ...option, foodId, unit: unit === Unit.NONE ? Unit.G : unit });
+          }}
         />
       )}
 

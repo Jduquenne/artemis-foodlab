@@ -13,7 +13,8 @@ import {
   setProfileFoodGroupDefaultApi,
   updateProfileApi,
 } from "../../core/services/profileService";
-import { withoutFoodGroupDefault } from "../../core/logic/foodGroup/foodChoiceLogic";
+import { selectionFoodId, withoutFoodGroupDefault } from "../../core/logic/foodGroup/foodChoiceLogic";
+import { FoodSelection } from "../../core/domain/foodGroup";
 import { pruneAccompanimentDefaults } from "../../core/logic/accompaniment/accompanimentLogic";
 import {
   replaceProfileInList,
@@ -29,7 +30,7 @@ interface ProfileState {
   createProfile: (input: CreateProfileInput) => Promise<Profile>;
   updateProfile: (id: string, input: UpdateProfileInput) => Promise<void>;
   deleteProfile: (id: string) => Promise<void>;
-  setFoodGroupDefault: (profileId: string, groupId: string, foodId: string | null) => Promise<void>;
+  setFoodGroupDefault: (profileId: string, groupId: string, selection: FoodSelection) => Promise<void>;
   setAccompanimentDefault: (profileId: string, accompanimentId: string, optionId: string | null) => Promise<void>;
   clearAccompanimentDefault: (profileId: string, accompanimentId: string) => Promise<void>;
   pruneAccompanimentDefaults: (accompaniments: readonly Accompaniment[]) => void;
@@ -61,9 +62,9 @@ export const useProfileStore = create<ProfileState>()(
         const remaining = get().profiles.filter((p) => p.id !== id);
         set({ profiles: remaining, activeProfileId: resolveActiveProfileId(remaining, get().activeProfileId) });
       },
-      setFoodGroupDefault: async (profileId, groupId, foodId) => {
-        if (foodId) {
-          const updated = await setProfileFoodGroupDefaultApi(profileId, groupId, foodId);
+      setFoodGroupDefault: async (profileId, groupId, selection) => {
+        if (selection.kind !== "default") {
+          const updated = await setProfileFoodGroupDefaultApi(profileId, groupId, selectionFoodId(selection));
           set({ profiles: replaceProfileInList(get().profiles, updated) });
           return;
         }

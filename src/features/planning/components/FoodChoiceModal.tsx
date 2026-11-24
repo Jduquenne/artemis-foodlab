@@ -3,7 +3,7 @@ import { Loader2, Shuffle } from 'lucide-react';
 import { FoodChoice } from '../../../core/domain/foodGroup';
 import { AccompanimentChoice } from '../../../core/domain/accompaniment';
 import { BaseVersion, BaseVersionChoice } from '../../../core/domain/baseVersion';
-import { findMealChoice, foodsOfGroupSorted, reachableQuantityPerPortion, resolveIngredientFood, setMealFoodChoice, setMealFoodQuantity } from '../../../core/logic/foodGroup/foodChoiceLogic';
+import { NO_FOOD_VALUE, findMealChoice, foodSelectValue, foodsOfGroupSorted, mealChoiceSelection, parseFoodSelectValue, reachableQuantityPerPortion, resolveIngredientFood, setMealFoodChoice, setMealFoodQuantity } from '../../../core/logic/foodGroup/foodChoiceLogic';
 import { accompanimentsFor, findAccompanimentChoice, mealChoiceIngredients, resolveAccompaniment, setAccompanimentChoice } from '../../../core/logic/accompaniment/accompanimentLogic';
 import { ACCOMPANIMENT_NONE_VALUE, accompanimentOptionLabel } from '../../../core/logic/accompaniment/accompanimentFormLogic';
 import { setBaseVersion } from '../../../core/logic/baseVersion/baseVersionLogic';
@@ -135,26 +135,27 @@ export const FoodChoiceModal = ({ recipeId, pendingKey, initialChoices, initialA
                                 {profiles.filter((profile) => profileIds.includes(profile.id)).map((profile) => {
                                     const mealChoice = findMealChoice(choices, ingredient.id, profile.id);
                                     const fallback = resolveIngredientFood(ingredient, profile.id, profile.foodGroupDefaults, []);
-                                    const fallbackName = fallback ? (foods[fallback.foodId]?.name ?? fallback.foodId) : '—';
+                                    const fallbackName = !fallback ? '—' : fallback.foodId === null ? 'Aucun' : (foods[fallback.foodId]?.name ?? fallback.foodId);
                                     const fallbackSource = fallback && fallback.source !== 'meal' ? SOURCE_LABELS[fallback.source] : '';
                                     return (
                                         <label key={profile.id} className="flex items-center gap-2">
                                             {profileDot(profile.color)}
                                             <span className="w-20 shrink-0 text-sm text-slate-700 truncate">{profile.name}</span>
                                             <select
-                                                value={mealChoice?.foodId ?? ''}
+                                                value={foodSelectValue(mealChoiceSelection(mealChoice ?? null))}
                                                 disabled={pending}
-                                                onChange={(e) => setChoices((prev) => setMealFoodChoice(prev, ingredient.id, profile.id, e.target.value || null))}
+                                                onChange={(e) => setChoices((prev) => setMealFoodChoice(prev, ingredient.id, profile.id, parseFoodSelectValue(e.target.value)))}
                                                 className={SELECT_CLASS}
                                             >
                                                 <option value="">{`${fallbackName} (${fallbackSource})`}</option>
+                                                <option value={NO_FOOD_VALUE}>Aucun (n'en mange pas)</option>
                                                 {options.map((food) => (
                                                     <option key={food.id} value={food.id}>{food.name}</option>
                                                 ))}
                                             </select>
                                             <DecimalInput
                                                 value={mealChoice?.quantity ?? null}
-                                                disabled={pending || !mealChoice}
+                                                disabled={pending || mealChoiceSelection(mealChoice ?? null).kind !== 'food'}
                                                 onValueChange={(quantity) => setChoices((prev) => setMealFoodQuantity(prev, ingredient.id, profile.id, quantity))}
                                                 placeholder={perPortion !== null ? formatQty(perPortion) : '—'}
                                                 aria-label={`Quantité par personne pour ${profile.name}`}

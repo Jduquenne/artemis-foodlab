@@ -41,7 +41,7 @@ export async function updateProfileApi(id: string, input: UpdateProfileInput): P
   );
 }
 
-export async function setProfileFoodGroupDefaultApi(profileId: string, groupId: string, foodId: string): Promise<Profile> {
+export async function setProfileFoodGroupDefaultApi(profileId: string, groupId: string, foodId: string | null): Promise<Profile> {
   return mapProfile(
     await apiFetchJson<ApiProfile>(`/profiles/${profileId}/food-group-defaults/${groupId}`, { method: "PUT", body: { foodId } }),
   );

@@ -1,4 +1,4 @@
-import { FoodChoice, FoodGroup, FoodGroupDefault, ResolvedFood } from "../../domain/foodGroup";
+import { FoodChoice, FoodGroup, FoodGroupDefault, FoodSelection, ResolvedFood } from "../../domain/foodGroup";
 import { Food, Ingredient } from "../../domain/ingredient";
 import { Profile } from "../../domain/profile";
 import { RecipeDetails } from "../../domain/recipe";
@@ -73,8 +73,39 @@ export function foodGroupsWithFoods(groups: readonly FoodGroup[], foods: Record<
     .filter((entry) => entry.foods.length > 0);
 }
 
-export function findFoodGroupDefault(defaults: readonly FoodGroupDefault[], groupId: string): string | null {
-  return defaults.find((d) => d.foodGroupId === groupId)?.foodId ?? null;
+export const NO_FOOD_VALUE = "__none__";
+
+const DEFAULT_SELECTION: FoodSelection = { kind: "default" };
+
+function selectionOfFoodId(foodId: string | null): FoodSelection {
+  return foodId === null ? { kind: "none" } : { kind: "food", foodId };
+}
+
+export function foodSelectValue(selection: FoodSelection): string {
+  if (selection.kind === "default") return "";
+  return selection.kind === "none" ? NO_FOOD_VALUE : selection.foodId;
+}
+
+export function parseFoodSelectValue(value: string): FoodSelection {
+  if (value === "") return DEFAULT_SELECTION;
+  return value === NO_FOOD_VALUE ? { kind: "none" } : { kind: "food", foodId: value };
+}
+
+export function sameFoodSelection(a: FoodSelection, b: FoodSelection): boolean {
+  return foodSelectValue(a) === foodSelectValue(b);
+}
+
+export function selectionFoodId(selection: Exclude<FoodSelection, { kind: "default" }>): string | null {
+  return selection.kind === "none" ? null : selection.foodId;
+}
+
+export function mealChoiceSelection(choice: FoodChoice | null): FoodSelection {
+  return choice ? selectionOfFoodId(choice.foodId) : DEFAULT_SELECTION;
+}
+
+export function foodGroupDefaultSelection(defaults: readonly FoodGroupDefault[], groupId: string): FoodSelection {
+  const found = defaults.find((d) => d.foodGroupId === groupId);
+  return found ? selectionOfFoodId(found.foodId) : DEFAULT_SELECTION;
 }
 
 export function withoutFoodGroupDefault<T extends Pick<Profile, "foodGroupDefaults">>(profile: T, groupId: string): T {
@@ -103,11 +134,13 @@ export function setMealFoodChoice(
   choices: readonly FoodChoice[],
   recipeIngredientId: string,
   profileId: string,
-  foodId: string | null,
+  selection: FoodSelection,
 ): FoodChoice[] {
   const current = findMealChoice(choices, recipeIngredientId, profileId);
   const others = choices.filter((c) => c !== current);
-  return foodId ? [...others, { recipeIngredientId, profileId, foodId, quantity: current?.quantity ?? null }] : others;
+  if (selection.kind === "default") return others;
+  const quantity = selection.kind === "none" ? null : current?.quantity ?? null;
+  return [...others, { recipeIngredientId, profileId, foodId: selectionFoodId(selection), quantity }];
 }
 
 export function setMealFoodQuantity(
@@ -145,7 +178,7 @@ export function splitGroupIngredient(
   const shares = new Map<string, FoodChoiceShare>();
   for (const profile of profiles) {
     const resolved = resolveIngredientFood(ingredient, profile.id, profile.foodGroupDefaults, mealChoices);
-    if (!resolved) continue;
+    if (!resolved || resolved.foodId === null) continue;
     const perPortion = resolved.quantityPerPortion !== null ? resolved.quantityPerPortion * choiceShare : recipePerPortion;
     const quantity = perPortion * portionsPerProfile;
     const byRecipeDefault = resolved.source === "recipe";
@@ -212,22 +245,34 @@ export function personalizeRecipeTree(
   rootPortions = 1,
 ): PersonalizedRecipeTree {
   const { profile, mealChoices } = personalization;
-  const changes = new Map<string, Map<string, Ingredient>>();
+  const changes = new Map<string, Map<string, Ingredient | null>>();
   for (const { ingredient, ownerCode, portionFactor } of reachableGroupIngredients(recipe, recipes, rootPortions)) {
     const resolved = resolveIngredientFood(ingredient, profile.id, profile.foodGroupDefaults, mealChoices);
     if (!resolved) continue;
+    const owner = changes.get(ownerCode) ?? new Map<string, Ingredient | null>();
+    const { foodId } = resolved;
+    if (foodId === null) {
+      owner.set(ingredient.id, null);
+      changes.set(ownerCode, owner);
+      continue;
+    }
     const quantity =
       resolved.quantityPerPortion !== null && portionFactor > 0 ? resolved.quantityPerPortion / portionFactor : ingredient.quantity;
-    if (resolved.foodId === ingredient.foodId && quantity === ingredient.quantity) continue;
-    const owner = changes.get(ownerCode) ?? new Map<string, Ingredient>();
-    owner.set(ingredient.id, { ...ingredient, foodId: resolved.foodId, name: foods[resolved.foodId]?.name ?? ingredient.name, quantity });
+    if (foodId === ingredient.foodId && quantity === ingredient.quantity) continue;
+    owner.set(ingredient.id, { ...ingredient, foodId, name: foods[foodId]?.name ?? ingredient.name, quantity });
     changes.set(ownerCode, owner);
   }
   if (changes.size === 0) return { recipe, recipes };
 
   const apply = (target: RecipeDetails): RecipeDetails => {
     const owned = changes.get(target.code);
-    return owned ? { ...target, ingredients: target.ingredients.map((ing) => owned.get(ing.id) ?? ing) } : target;
+    if (!owned) return target;
+    const ingredients = target.ingredients.flatMap((ing) => {
+      if (!owned.has(ing.id)) return [ing];
+      const replaced = owned.get(ing.id);
+      return replaced ? [replaced] : [];
+    });
+    return { ...target, ingredients };
   };
   const baseCodes = [...changes.keys()].filter((code) => code !== recipe.code && recipes[code]);
   const personalizedRecipes = baseCodes.length === 0

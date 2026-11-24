@@ -3,6 +3,7 @@ import { isBatchItem, isFoodItem } from "../../domain/freezerPredicates";
 import { formatQty, pluralizeUnit } from "../unit/unitFormatLogic";
 import { groupBy, sumBy } from "../../utils/collectionUtils";
 import { toNumber } from "../../utils/numberUtils";
+import { formatBatchQuantity } from "./batchQuantityLogic";
 
 export function bagQuantity(bag: Pick<FreezerBag, "quantity">): number {
   return toNumber(bag.quantity);
@@ -42,11 +43,13 @@ export interface FreezerBatchStock {
 }
 
 export function freezerBatchStocks(categories: FreezerCategory[]): FreezerBatchStock[] {
-  const batches = flattenFreezerItems(categories).filter(isBatchItem).filter((item) => item.portions > 0);
+  const batches = flattenFreezerItems(categories)
+    .filter(isBatchItem)
+    .filter((item) => item.unit === "portion" && item.quantity > 0);
   return [...groupBy(batches, (item: BatchFreezerItem) => item.recipeId).entries()]
     .map(([recipeCode, items]) => ({
       recipeCode,
-      portions: sumBy(items, (item) => item.portions),
+      portions: sumBy(items, (item) => item.quantity),
       addedDate: items.map((item) => item.addedDate).sort()[0],
     }))
     .sort((a, b) => a.addedDate.localeCompare(b.addedDate) || a.recipeCode.localeCompare(b.recipeCode));
@@ -56,7 +59,7 @@ export function getBatchRecipeIdsInFreezer(categories: FreezerCategory[]): Set<s
   return new Set(
     flattenFreezerItems(categories)
       .filter(isBatchItem)
-      .filter((item) => item.portions > 0)
+      .filter((item) => item.quantity > 0)
       .map((item) => item.recipeId),
   );
 }
@@ -99,26 +102,31 @@ export interface FreezerCategorySummary {
   foodCount: number;
   batchCount: number;
   portions: number;
+  grams: number;
 }
 
 export function summarizeFreezerCategory(category: FreezerCategory): FreezerCategorySummary {
   let foodCount = 0;
   let batchCount = 0;
   let portions = 0;
+  let grams = 0;
   for (const item of category.items) {
     if (item.type === 'batch') {
       batchCount++;
-      portions += toNumber(item.portions);
+      if (item.unit === "g") grams += toNumber(item.quantity);
+      else portions += toNumber(item.quantity);
     } else {
       foodCount++;
     }
   }
-  return { total: category.items.length, foodCount, batchCount, portions };
+  return { total: category.items.length, foodCount, batchCount, portions, grams };
 }
 
 export function formatFreezerCategoryCount(summary: FreezerCategorySummary): string {
   if (summary.total === 0) return "Vide";
   const items = `${summary.total} article${summary.total > 1 ? "s" : ""}`;
-  if (summary.portions === 0) return items;
-  return `${items} · ${summary.portions} portion${summary.portions > 1 ? "s" : ""}`;
+  const parts = [items];
+  if (summary.portions > 0) parts.push(formatBatchQuantity("portion", summary.portions));
+  if (summary.grams > 0) parts.push(formatBatchQuantity("g", summary.grams));
+  return parts.join(" · ");
 }

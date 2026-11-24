@@ -12,7 +12,7 @@ flowchart LR
   UI -->|actions| Store[shared/store Zustand]
   Store --> Svc[core/services]
   Svc -->|apiFetch| API[(meals-planning-api)]
-  Svc -->|cache after success| IDB[(IndexedDB / Dexie v14)]
+  Svc -->|cache after success| IDB[(IndexedDB / Dexie v15)]
   Svc --> Cat[core/catalogue in-memory]
   Cat -->|notify| Snap
   Snap --> Logic[core/logic pure functions]
@@ -106,10 +106,10 @@ Three layers, no exceptions:
 
 ## IndexedDB (Dexie)
 
-- Schema and current version: `src/core/services/databaseService.ts` (**version 14**). Tables: `planning`, `household`, `freezerCategories`, `recipes`, `foods`, `outdoorActivities`, `householdItems`, `recipeCategories`, `foodGroups`.
+- Schema and current version: `src/core/services/databaseService.ts` (**version 15**). Tables: `planning`, `household`, `freezerCategories`, `recipes`, `foods`, `outdoorActivities`, `householdItems`, `recipeCategories`, `foodGroups`.
 - Never modify an existing `.version(n)` block; any schema change = new `.version(n+1)`.
 - Adding a non-indexed field does **not** need a new version (Dexie versions indexes only).
-- A first v14 (categories enum → slug) was reverted before any commit (D-014); the current v14 (2026-10-15) only adds `foodGroups`.
+- A first v14 (categories enum → slug) was reverted before any commit (D-014); the current v14 (2026-10-15) only adds `foodGroups`. v15 (2026-11-24, issue #63) keeps the same stores and upgrades cached batch freezer items `{ portions }` to `{ unit: "portion", quantity }`.
 
 ## Client storage (localStorage)
 

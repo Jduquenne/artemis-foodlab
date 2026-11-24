@@ -2,15 +2,22 @@ import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
 import { searchBatchRecipes } from "../../../../core/logic/freezer/freezerSearchLogic";
 import { useRecipesSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
+import { BatchUnit } from "../../../../core/domain/freezer";
+import { BATCH_UNITS, BATCH_UNIT_LABELS } from "../../../../core/logic/freezer/batchQuantityLogic";
+import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
 
 export interface BatchTabProps {
   selectedRecipeId: string | null;
+  unit: BatchUnit;
   portions: number;
+  grams: number | null;
   onSelectRecipe: (id: string | null, name?: string) => void;
+  onUnitChange: (unit: BatchUnit) => void;
   onPortionsChange: (p: number) => void;
+  onGramsChange: (grams: number | null) => void;
 }
 
-export const BatchTab = ({ selectedRecipeId, portions, onSelectRecipe, onPortionsChange }: BatchTabProps) => {
+export const BatchTab = ({ selectedRecipeId, unit, portions, grams, onSelectRecipe, onUnitChange, onPortionsChange, onGramsChange }: BatchTabProps) => {
   const [search, setSearch] = useState("");
   const recipesDb = useRecipesSnapshot();
 
@@ -53,6 +60,41 @@ export const BatchTab = ({ selectedRecipeId, portions, onSelectRecipe, onPortion
       </div>
 
       {selectedRecipeId && (
+        <div className="flex flex-col gap-1.5">
+          <div className="grid grid-cols-2 gap-1 p-1 bg-muted rounded-xl" role="radiogroup" aria-label="Unité du lot">
+            {BATCH_UNITS.map((option) => (
+              <button
+                key={option}
+                type="button"
+                role="radio"
+                aria-checked={unit === option}
+                onClick={() => onUnitChange(option)}
+                className={`py-2 rounded-lg text-sm font-bold transition-colors ${unit === option ? "bg-surface text-orange-600 shadow-sm" : "text-slate-500 hover:text-slate-700"}`}
+              >
+                {BATCH_UNIT_LABELS[option]}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {selectedRecipeId && unit === "g" && (
+        <div className="flex flex-col gap-1.5">
+          <label className="text-xs font-bold text-slate-500 uppercase tracking-wide" htmlFor="batch-grams">Quantité en grammes</label>
+          <div className="flex items-center gap-2">
+            <DecimalInput
+              id="batch-grams"
+              value={grams}
+              onValueChange={onGramsChange}
+              placeholder="0"
+              className="w-32 px-3 py-2.5 bg-surface border border-slate-200 rounded-xl text-lg font-bold text-slate-900 text-center focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
+            />
+            <span className="text-sm font-semibold text-slate-500">g</span>
+          </div>
+        </div>
+      )}
+
+      {selectedRecipeId && unit === "portion" && (
         <div className="flex flex-col gap-1.5">
           <label className="text-xs font-bold text-slate-500 uppercase tracking-wide">Nombre de portions</label>
           <div className="flex items-center gap-4">

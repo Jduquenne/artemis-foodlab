@@ -1,6 +1,6 @@
 # Spec — Freezer
 
-Freezer categories containing items: foods (with bags) and batch-cooking dishes (portions). Categories are sorted alphabetically (manual reordering removed). The freezer name is `freezerName` on the user (`PUT /me`).
+Freezer categories containing items: foods (with bags) and batch-cooking dishes (portions or grams). Categories are sorted alphabetically (manual reordering removed). The freezer name is `freezerName` on the user (`PUT /me`).
 
 ## Category colour
 
@@ -12,14 +12,15 @@ Freezer categories containing items: foods (with bags) and batch-cooking dishes 
 ## Category grid — `FreezerCategoryCard`
 
 - Small rounded bar at the top (`h-1 w-10`, `accent.bar`) — not a full-width band (it clipped the ⋯ menu; the card is no longer `overflow-hidden`). Card `z-30` while its menu is open.
-- Coloured snowflake badge + name + subline `N articles · N portions` (portions = sum over batch items), via `summarizeFreezerCategory(category)` → `{ total, foodCount, batchCount, portions }`.
-- Typed chips: batch items in orange with `·N`, foods neutral, `+N` overflow. Hover `-translate-y-0.5 hover:shadow-md`. Empty state « Touche pour ajouter des articles ».
+- Coloured snowflake badge + name + subline `N articles · N portions · N g` (sums over portion batches and over grams batches, each part only when > 0), via `summarizeFreezerCategory(category)` → `{ total, foodCount, batchCount, portions, grams }`.
+- Typed chips: batch items in orange with `·N` (portions) or `·N g` (`shortBatchQuantity`), foods neutral, `+N` overflow. Hover `-translate-y-0.5 hover:shadow-md`. Empty state « Touche pour ajouter des articles ».
 
 ## Inside a category — `FreezerCategoryDetail`
 
 - Header snowflake in the category colour; empty state with `Snowflake` icon.
 - `FreezerItemRow` (food): subtitle `getFoodBagsSummary(item)` (« 3 sacs · 1,2 kg » if all units match, else « 3 sacs »), bags listed as a tree (`border-l-2`).
 - `BagRow`: bold quantity + preparation tag + **relative age**. `BatchFreezerItemRow`: same border/badge, relative age, `− N +` stepper.
+- **Batch in portions or grams** (issue #63, v6.166.0, API D-071, owner choice C: any recipe): `BatchFreezerItem { unit: "portion" | "g", quantity }` (was `portions`; Dexie v15 upgrades the cache). Adding a batch: after the recipe, a « Portions / Grammes » switch (`BatchTab`), portions with the − / + stepper (≥ 1), grams with a `DecimalInput` (> 0, at most 3 decimals, `isValidBatchQuantity`). Row: « 4 portions » / « 350 g » (`formatBatchQuantity`), stepper by 1 portion or 50 g (`BATCH_UNIT_STEP`, `steppedBatchQuantity`, `PUT { quantity }`); « − » is disabled when the step would reach 0 or less (`canDecrementBatch`), since the API refuses 0: an emptied batch is deleted, not kept at 0 (the old « − » to 0 failed with a 400 since the API required positive portions). Legacy batches at 0 still read « Épuisé ». The unit of an existing batch cannot be changed in the UI. « Ajouter au menu » shows the batch amount and plans the dish normally (no gram override). The menu generator only uses portion batches.
 - `freezerItemAge(iso, now?)` → `{ label, stale }`: « aujourd'hui / hier / il y a N j / N sem. / N mois / N ans »; `stale = days >= 90` → age shown in amber with `AlertTriangle`.
 - Bag units: `SELECTABLE_UNITS` (no `Unit.NONE`; a bag without unit could never be saved). Decimal input via `parseDecimal`.
 - Pending feedback on delete, portions, bags, rename, colour.

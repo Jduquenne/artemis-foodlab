@@ -20,6 +20,7 @@ import { usePlannedWeek } from "../../../../shared/hooks/usePlannedWeek";
 import { useNotificationStore } from "../../../../shared/store/useNotificationStore";
 import { withPending } from "../../../../shared/utils/withPending";
 import { BatchMenuSelection, BatchMenuWeekGrid } from "./BatchMenuWeekGrid";
+import { formatBatchQuantity } from "../../../../core/logic/freezer/batchQuantityLogic";
 
 export interface AddBatchToMenuModalProps {
   item: BatchFreezerItem;
@@ -75,7 +76,7 @@ export const AddBatchToMenuModal = ({ item, onClose }: AddBatchToMenuModalProps)
           <div className="min-w-0">
             <h2 className="text-base font-black text-slate-900">Ajouter au menu</h2>
             <p className="text-xs text-slate-500 truncate">
-              {item.recipeName} · {item.portions} portion{item.portions > 1 ? "s" : ""} au congélateur
+              {item.recipeName} · {formatBatchQuantity(item.unit, item.quantity)} au congélateur
             </p>
           </div>
           <button aria-label="Fermer" onClick={handleClose} className="p-2 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-muted transition-colors">

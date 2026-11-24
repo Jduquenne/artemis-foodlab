@@ -166,6 +166,29 @@ class AppDatabase extends Dexie {
       recipeCategories: "id",
       foodGroups: "id",
     });
+    this.version(15)
+      .stores({
+        planning: "id, [year+week], year, week",
+        household: "id",
+        freezerCategories: "id, position",
+        recipes: "id",
+        foods: "id",
+        outdoorActivities: "id",
+        householdItems: "id",
+        recipeCategories: "id",
+        foodGroups: "id",
+      })
+      .upgrade(async (tx) => {
+        const categories = await tx.table("freezerCategories").toArray();
+        for (const cat of categories) {
+          const updatedItems = (cat.items ?? []).map((item: Record<string, unknown>) => {
+            if (item.type !== "batch" || typeof item.portions !== "number") return item;
+            const { portions, ...rest } = item;
+            return { ...rest, unit: "portion", quantity: portions };
+          });
+          await tx.table("freezerCategories").update(cat.id, { items: updatedItems });
+        }
+      });
   }
 }
 

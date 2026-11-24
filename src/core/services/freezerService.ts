@@ -94,14 +94,15 @@ export const addItemToCategory = async (
     const recipeId = getIdByCode(item.recipeId) ?? item.recipeId;
     const created = await apiFetchJson<ApiFreezerItem>("/freezer-items", {
       method: "POST",
-      body: { type: "batch", categoryId, recipeId, portions: item.portions, addedDate },
+      body: { type: "batch", categoryId, recipeId, unit: item.unit, quantity: item.quantity, addedDate },
     });
     const newItem: BatchFreezerItem = {
       id: created.id,
       type: "batch",
       recipeId: item.recipeId,
       recipeName: created.batch?.recipeName ?? item.recipeName,
-      portions: item.portions,
+      unit: item.unit,
+      quantity: item.quantity,
       addedDate,
     };
     await withCategory(categoryId, cat => ({ items: [...cat.items, newItem] }));
@@ -185,16 +186,16 @@ export const updateBagInFoodItem = async (
   }));
 };
 
-export const updateBatchPortions = async (
+export const updateBatchQuantity = async (
   categoryId: string,
   itemId: string,
-  portions: number
+  quantity: number
 ): Promise<void> => {
-  await apiFetchJson(`/freezer-items/${itemId}`, { method: "PUT", body: { portions } });
+  await apiFetchJson(`/freezer-items/${itemId}`, { method: "PUT", body: { quantity } });
   await withCategory(categoryId, cat => ({
     items: cat.items.map(item =>
       item.id === itemId && item.type === "batch"
-        ? { ...item, portions }
+        ? { ...item, quantity }
         : item
     ),
   }));

@@ -1,5 +1,6 @@
 import {
   BatchFreezerItem,
+  BatchUnit,
   FoodFreezerItem,
   FreezerBag,
   FreezerCategory,
@@ -25,7 +26,8 @@ export interface ApiFreezerFoodDetail {
 export interface ApiFreezerBatchDetail {
   recipeId: string;
   recipeName: string;
-  portions: number;
+  unit: BatchUnit;
+  quantity: number;
   addedDate: string;
 }
 
@@ -63,7 +65,8 @@ export function mapApiItem(item: ApiFreezerItem): FreezerItem {
       type: "batch",
       recipeId: getCodeById(item.batch.recipeId) ?? item.batch.recipeId,
       recipeName: item.batch.recipeName,
-      portions: item.batch.portions,
+      unit: item.batch.unit,
+      quantity: item.batch.quantity,
       addedDate: item.batch.addedDate.slice(0, 10),
     };
     return batch;

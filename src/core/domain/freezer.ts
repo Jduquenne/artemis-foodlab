@@ -16,12 +16,15 @@ export interface FoodFreezerItem {
   bags: FreezerBag[];
 }
 
+export type BatchUnit = "portion" | "g";
+
 export interface BatchFreezerItem {
   id: string;
   type: "batch";
   recipeId: string;
   recipeName: string;
-  portions: number;
+  unit: BatchUnit;
+  quantity: number;
   addedDate: string;
 }
 

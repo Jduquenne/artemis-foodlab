@@ -11,6 +11,7 @@ import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
 import { useInlineRename } from "../../../../shared/hooks/useInlineRename";
 import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
 import { withPending } from "../../../../shared/utils/withPending";
+import { shortBatchQuantity } from "../../../../core/logic/freezer/batchQuantityLogic";
 
 export interface FreezerCategoryCardProps {
   category: FreezerCategory;
@@ -166,7 +167,7 @@ export const FreezerCategoryCard = ({ category, onClick }: FreezerCategoryCardPr
                     }`}
                   >
                     {name}
-                    {isBatch && item.portions > 0 ? ` ·${item.portions}` : ""}
+                    {isBatch && item.quantity > 0 ? ` ·${shortBatchQuantity(item.unit, item.quantity)}` : ""}
                   </span>
                 );
               })}

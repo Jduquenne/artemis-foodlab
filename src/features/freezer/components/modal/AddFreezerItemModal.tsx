@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { format } from "date-fns";
 import { X } from "lucide-react";
-import { FoodFreezerItem, BatchFreezerItem } from "../../../../core/domain/freezer";
+import { FoodFreezerItem, BatchFreezerItem, BatchUnit } from "../../../../core/domain/freezer";
 import { Unit } from "../../../../core/domain/ingredient";
 import { addItemToCategory } from "../../../../core/services/freezerService";
 import { isFreezerFoodNameTaken } from "../../../../core/logic/freezer/freezerItemsLogic";
@@ -9,6 +9,7 @@ import { FoodTab } from "./FoodTab";
 import { BatchTab } from "./BatchTab";
 import { parseDecimal } from "../../../../core/utils/numberUtils";
 import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
+import { isValidBatchQuantity } from "../../../../core/logic/freezer/batchQuantityLogic";
 import { withPending } from "../../../../shared/utils/withPending";
 
 export interface AddFreezerItemModalProps {
@@ -30,7 +31,10 @@ export const AddFreezerItemModal = ({ categoryId, existingFoodNames, onClose }: 
 
   const [selectedRecipeId, setSelectedRecipeId] = useState<string | null>(null);
   const [selectedRecipeName, setSelectedRecipeName] = useState<string>("");
+  const [batchUnit, setBatchUnit] = useState<BatchUnit>("portion");
   const [portions, setPortions] = useState(1);
+  const [grams, setGrams] = useState<number | null>(null);
+  const batchQuantity = batchUnit === "g" ? grams ?? 0 : portions;
 
   const handleClose = () => { setIsClosing(true); setTimeout(onClose, 300); };
 
@@ -39,7 +43,7 @@ export const AddFreezerItemModal = ({ categoryId, existingFoodNames, onClose }: 
   const parsedFoodQty = parseDecimal(foodQty);
   const canSave =
     tab === "food" ? !!foodId && foodName.trim().length > 0 && parsedFoodQty !== null && parsedFoodQty > 0 && !isDuplicateName
-      : selectedRecipeId !== null && portions > 0;
+      : selectedRecipeId !== null && isValidBatchQuantity(batchUnit, batchQuantity);
 
   const saveItem = async () => {
     if (tab === "food") {
@@ -61,7 +65,8 @@ export const AddFreezerItemModal = ({ categoryId, existingFoodNames, onClose }: 
         type: "batch",
         recipeId: selectedRecipeId!,
         recipeName: selectedRecipeName,
-        portions,
+        unit: batchUnit,
+        quantity: batchQuantity,
       };
       await addItemToCategory(categoryId, item);
     }
@@ -118,9 +123,13 @@ export const AddFreezerItemModal = ({ categoryId, existingFoodNames, onClose }: 
           ) : (
             <BatchTab
               selectedRecipeId={selectedRecipeId}
+              unit={batchUnit}
               portions={portions}
+              grams={grams}
               onSelectRecipe={(id, name) => { setSelectedRecipeId(id); setSelectedRecipeName(name ?? ""); }}
+              onUnitChange={setBatchUnit}
               onPortionsChange={setPortions}
+              onGramsChange={setGrams}
             />
           )}
         </div>

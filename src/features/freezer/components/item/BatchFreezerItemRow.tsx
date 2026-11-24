@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 import { ArrowRightLeft, CalendarPlus, ChefHat, MoreVertical, Trash2, AlertTriangle, Loader2 } from "lucide-react";
 import { BatchFreezerItem } from "../../../../core/domain/freezer";
-import { updateBatchPortions } from "../../../../core/services/freezerService";
+import { updateBatchQuantity } from "../../../../core/services/freezerService";
+import { canDecrementBatch, formatBatchQuantity, shortBatchQuantity, steppedBatchQuantity } from "../../../../core/logic/freezer/batchQuantityLogic";
 import { freezerItemAge } from "../../../../core/logic/freezer/freezerAgeLogic";
 import { AddBatchToMenuModal } from "../modal/AddBatchToMenuModal";
 import { MoveFreezerItemModal } from "../modal/MoveFreezerItemModal";
@@ -16,7 +17,9 @@ export interface BatchFreezerItemRowProps {
 }
 
 export const BatchFreezerItemRow = ({ item, categoryId, onDelete }: BatchFreezerItemRowProps) => {
-    const isEmpty = item.portions === 0;
+    const isEmpty = item.quantity === 0;
+    const canDecrement = canDecrementBatch(item.unit, item.quantity);
+    const stepLabel = item.unit === "g" ? "50 g" : "une portion";
     const [menuOpen, setMenuOpen] = useState(false);
     const [menuAddOpen, setMenuAddOpen] = useState(false);
     const [moveOpen, setMoveOpen] = useState(false);
@@ -25,15 +28,17 @@ export const BatchFreezerItemRow = ({ item, categoryId, onDelete }: BatchFreezer
     const deletePending = usePendingKey(`freezer-item-delete:${item.id}`);
     const portionsPending = usePendingKey(`freezer-portions:${item.id}`);
 
-    const handleDecrement = () => {
-        if (isEmpty || portionsPending) return;
-        withPending(`freezer-portions:${item.id}`, () => updateBatchPortions(categoryId, item.id, item.portions - 1)).catch(() => undefined);
+    const changeQuantity = (direction: 1 | -1) => {
+        if (portionsPending) return;
+        const quantity = steppedBatchQuantity(item.unit, item.quantity, direction);
+        withPending(`freezer-portions:${item.id}`, () => updateBatchQuantity(categoryId, item.id, quantity)).catch(() => undefined);
     };
 
-    const handleIncrement = () => {
-        if (portionsPending) return;
-        withPending(`freezer-portions:${item.id}`, () => updateBatchPortions(categoryId, item.id, item.portions + 1)).catch(() => undefined);
+    const handleDecrement = () => {
+        if (canDecrement) changeQuantity(-1);
     };
+
+    const handleIncrement = () => changeQuantity(1);
 
     return (
         <>
@@ -84,24 +89,24 @@ export const BatchFreezerItemRow = ({ item, categoryId, onDelete }: BatchFreezer
             <div className="mt-2 pl-[2.75rem] flex items-center justify-between gap-2">
                 <p className={`min-w-0 flex items-center gap-1 text-[11px] truncate ${age.stale && !isEmpty ? 'text-amber-600 font-medium' : 'text-slate-400'}`}>
                     {age.stale && !isEmpty && <AlertTriangle className="w-3 h-3 shrink-0" />}
-                    <span>{isEmpty ? 'Épuisé' : `${item.portions} portion${item.portions > 1 ? 's' : ''}`}</span>
+                    <span>{isEmpty ? 'Épuisé' : formatBatchQuantity(item.unit, item.quantity)}</span>
                     <span className="text-slate-300">·</span>
                     <span>{age.label}</span>
                 </p>
                 <div className="flex items-center gap-1.5 shrink-0">
                     <button
-                        aria-label="Consommer une portion"
+                        aria-label={`Retirer ${stepLabel}`}
                         onClick={handleDecrement}
-                        disabled={isEmpty || portionsPending}
+                        disabled={!canDecrement || portionsPending}
                         className="w-7 h-7 rounded-lg bg-muted text-slate-600 font-bold text-base flex items-center justify-center hover:bg-orange-100 hover:text-orange-600 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                     >
                         −
                     </button>
-                    <span className={`text-sm font-black w-5 text-center ${isEmpty ? 'text-slate-400' : 'text-slate-900'} ${portionsPending ? 'animate-pulse' : ''}`}>
-                        {item.portions}
+                    <span className={`text-sm font-black min-w-5 text-center tabular-nums ${isEmpty ? 'text-slate-400' : 'text-slate-900'} ${portionsPending ? 'animate-pulse' : ''}`}>
+                        {shortBatchQuantity(item.unit, item.quantity)}
                     </span>
                     <button
-                        aria-label="Ajouter une portion"
+                        aria-label={`Ajouter ${stepLabel}`}
                         onClick={handleIncrement}
                         disabled={portionsPending}
                         className="w-7 h-7 rounded-lg bg-muted text-slate-600 font-bold text-base flex items-center justify-center hover:bg-orange-100 hover:text-orange-600 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"

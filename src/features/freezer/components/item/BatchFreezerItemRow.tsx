@@ -2,7 +2,8 @@ import { useRef, useState } from "react";
 import { ArrowRightLeft, CalendarPlus, ChefHat, MoreVertical, Trash2, AlertTriangle, Loader2 } from "lucide-react";
 import { BatchFreezerItem } from "../../../../core/domain/freezer";
 import { updateBatchQuantity } from "../../../../core/services/freezerService";
-import { canDecrementBatch, formatBatchQuantity, shortBatchQuantity, steppedBatchQuantity } from "../../../../core/logic/freezer/batchQuantityLogic";
+import { canRemovePortion, formatBatchQuantity } from "../../../../core/logic/freezer/batchQuantityLogic";
+import { BatchGramsSheet } from "./BatchGramsSheet";
 import { freezerItemAge } from "../../../../core/logic/freezer/freezerAgeLogic";
 import { AddBatchToMenuModal } from "../modal/AddBatchToMenuModal";
 import { MoveFreezerItemModal } from "../modal/MoveFreezerItemModal";
@@ -18,20 +19,19 @@ export interface BatchFreezerItemRowProps {
 
 export const BatchFreezerItemRow = ({ item, categoryId, onDelete }: BatchFreezerItemRowProps) => {
     const isEmpty = item.quantity === 0;
-    const canDecrement = canDecrementBatch(item.unit, item.quantity);
-    const stepLabel = item.unit === "g" ? "50 g" : "une portion";
+    const canDecrement = canRemovePortion(item.quantity);
+    const [gramsOpen, setGramsOpen] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const [menuAddOpen, setMenuAddOpen] = useState(false);
     const [moveOpen, setMoveOpen] = useState(false);
     const menuButtonRef = useRef<HTMLButtonElement>(null);
     const age = freezerItemAge(item.addedDate);
     const deletePending = usePendingKey(`freezer-item-delete:${item.id}`);
-    const portionsPending = usePendingKey(`freezer-portions:${item.id}`);
+    const portionsPending = usePendingKey(`freezer-batch-quantity:${item.id}`);
 
     const changeQuantity = (direction: 1 | -1) => {
         if (portionsPending) return;
-        const quantity = steppedBatchQuantity(item.unit, item.quantity, direction);
-        withPending(`freezer-portions:${item.id}`, () => updateBatchQuantity(categoryId, item.id, quantity)).catch(() => undefined);
+        withPending(`freezer-batch-quantity:${item.id}`, () => updateBatchQuantity(categoryId, item.id, item.quantity + direction)).catch(() => undefined);
     };
 
     const handleDecrement = () => {
@@ -93,30 +93,43 @@ export const BatchFreezerItemRow = ({ item, categoryId, onDelete }: BatchFreezer
                     <span className="text-slate-300">·</span>
                     <span>{age.label}</span>
                 </p>
-                <div className="flex items-center gap-1.5 shrink-0">
+                {item.unit === "g" ? (
                     <button
-                        aria-label={`Retirer ${stepLabel}`}
-                        onClick={handleDecrement}
-                        disabled={!canDecrement || portionsPending}
-                        className="w-7 h-7 rounded-lg bg-muted text-slate-600 font-bold text-base flex items-center justify-center hover:bg-orange-100 hover:text-orange-600 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                    >
-                        −
-                    </button>
-                    <span className={`text-sm font-black min-w-5 text-center tabular-nums ${isEmpty ? 'text-slate-400' : 'text-slate-900'} ${portionsPending ? 'animate-pulse' : ''}`}>
-                        {shortBatchQuantity(item.unit, item.quantity)}
-                    </span>
-                    <button
-                        aria-label={`Ajouter ${stepLabel}`}
-                        onClick={handleIncrement}
+                        type="button"
+                        onClick={() => setGramsOpen(true)}
                         disabled={portionsPending}
-                        className="w-7 h-7 rounded-lg bg-muted text-slate-600 font-bold text-base flex items-center justify-center hover:bg-orange-100 hover:text-orange-600 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                        className={`shrink-0 px-2.5 h-7 rounded-lg bg-muted text-sm font-black text-slate-900 tabular-nums hover:bg-orange-100 hover:text-orange-600 disabled:opacity-30 transition-colors ${portionsPending ? 'animate-pulse' : ''}`}
+                        aria-label={`Modifier la quantité — ${item.recipeName}`}
                     >
-                        +
+                        {formatBatchQuantity("g", item.quantity)}
                     </button>
-                </div>
+                ) : (
+                    <div className="flex items-center gap-1.5 shrink-0">
+                        <button
+                            aria-label="Retirer une portion"
+                            onClick={handleDecrement}
+                            disabled={!canDecrement || portionsPending}
+                            className="w-7 h-7 rounded-lg bg-muted text-slate-600 font-bold text-base flex items-center justify-center hover:bg-orange-100 hover:text-orange-600 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                        >
+                            −
+                        </button>
+                        <span className={`text-sm font-black min-w-5 text-center tabular-nums ${isEmpty ? 'text-slate-400' : 'text-slate-900'} ${portionsPending ? 'animate-pulse' : ''}`}>
+                            {item.quantity}
+                        </span>
+                        <button
+                            aria-label="Ajouter une portion"
+                            onClick={handleIncrement}
+                            disabled={portionsPending}
+                            className="w-7 h-7 rounded-lg bg-muted text-slate-600 font-bold text-base flex items-center justify-center hover:bg-orange-100 hover:text-orange-600 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                        >
+                            +
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
         {menuAddOpen && <AddBatchToMenuModal item={item} onClose={() => setMenuAddOpen(false)} />}
+        {gramsOpen && <BatchGramsSheet item={item} categoryId={categoryId} onClose={() => setGramsOpen(false)} />}
         {moveOpen && <MoveFreezerItemModal item={item} categoryId={categoryId} onClose={() => setMoveOpen(false)} />}
         </>
     );

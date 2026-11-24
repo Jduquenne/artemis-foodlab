@@ -1,7 +1,7 @@
 import { X, Copy, Users, Snowflake, Scale, Shuffle } from 'lucide-react';
 import { useHasMealChoices } from '../../../../shared/hooks/useHasMealChoices';
 import { ItemAction, ItemActionsMenu } from './ItemActionsMenu';
-import { isDish, isBase } from '../../../../core/domain/recipePredicates';
+import { isDish, isBase, plannableRecipe } from '../../../../core/domain/recipePredicates';
 import { MealPhoto } from './MealPhoto';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { usePlannableSnapshot, useRecipeMetricsSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
@@ -27,7 +27,7 @@ export const RecipeCell = ({ slotId, recipeId, onNavigate, onRemove, onCopy, hid
     const hasPhoto = Boolean(recipe?.assets?.mealPhoto);
     const hasRecipesPage = Boolean(recipe?.assets?.mealPhoto || recipe?.assets?.instructionsPhoto);
     const defaultGrams = baseGrams[recipeId] ?? 0;
-    const recipeIsDish = isDish(recipe) || isBase(recipe);
+    const recipeIsDish = isDish(plannableRecipe(recipe)) || isBase(plannableRecipe(recipe));
     const isCustom = persons !== undefined || (!recipeIsDish && grams !== undefined);
     const removePending = usePendingKey(`planning-recipe-remove:${slotId}:${recipeId}`);
     const hasFoodChoice = useHasMealChoices(recipeId);

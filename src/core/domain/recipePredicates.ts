@@ -1,7 +1,7 @@
 import { Category } from "./recipe";
 import { MAX_DESSERTS_PER_SLOT, MAX_RECIPES_PER_SLOT } from "./planningConfig";
 import { MealSlot } from "./planning";
-import { PlannableItem, RecipeKind } from "./recipe";
+import { PlannableItem, RecipeDetails, RecipeKind } from "./recipe";
 
 const NON_BROWSABLE_CATEGORY_IDS: readonly string[] = ["outdoor", "sweet-grocery"];
 const COOKED_WEIGHT_CATEGORY_IDS: readonly string[] = ["bases", "cereal-products", "pastries"];
@@ -10,28 +10,32 @@ export function supportsCookedWeight(recipe: { categoryId?: string } | undefined
   return !!recipe?.categoryId && COOKED_WEIGHT_CATEGORY_IDS.includes(recipe.categoryId);
 }
 
-export function isDessert(recipe: Pick<PlannableItem, "isDessert"> | undefined): boolean {
+export function isDessert(recipe: Pick<RecipeDetails, "isDessert"> | undefined): boolean {
   return recipe?.isDessert === true;
 }
 
-export function isBatchCookable(recipe: Pick<PlannableItem, "batchCooking"> | undefined): boolean {
+export function isBatchCookable(recipe: Pick<RecipeDetails, "batchCooking"> | undefined): boolean {
   return recipe?.batchCooking === true;
 }
 
-export function isDish(recipe: Pick<PlannableItem, "kind"> | undefined): boolean {
+export function isDish(recipe: Pick<RecipeDetails, "kind"> | undefined): boolean {
   return recipe?.kind === RecipeKind.DISH;
 }
 
-export function isIngredient(recipe: Pick<PlannableItem, "kind"> | undefined): boolean {
+export function isIngredient(recipe: Pick<RecipeDetails, "kind"> | undefined): boolean {
   return recipe?.kind === RecipeKind.INGREDIENT;
 }
 
-export function isBase(recipe: Pick<PlannableItem, "kind"> | undefined): boolean {
+export function isBase(recipe: Pick<RecipeDetails, "kind"> | undefined): boolean {
   return recipe?.kind === RecipeKind.BASE;
 }
 
 export function isOutdoor(recipe: Pick<PlannableItem, "categoryId"> | undefined): boolean {
   return recipe?.categoryId === "outdoor";
+}
+
+export function plannableRecipe(item: PlannableItem | undefined): RecipeDetails | undefined {
+  return item?.source === "recipe" ? item : undefined;
 }
 
 export function isRecipeCategory(category: Pick<Category, "id">): boolean {
@@ -42,7 +46,7 @@ export function isBrowsableCategory(category: Pick<Category, "id">): boolean {
   return !NON_BROWSABLE_CATEGORY_IDS.includes(category.id);
 }
 
-export function isPlannable(recipe: Pick<PlannableItem, "kind"> | undefined): boolean {
+export function isPlannable(recipe: Pick<RecipeDetails, "kind"> | undefined): boolean {
   return !isBase(recipe);
 }
 

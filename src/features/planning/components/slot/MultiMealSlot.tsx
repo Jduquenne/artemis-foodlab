@@ -4,7 +4,7 @@ import { PersonsEditor } from './PersonsEditor';
 import { SlotPersonsBadge } from './SlotPersonsBadge';
 import { useDraggable, useDroppable } from '@dnd-kit/core';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
-import { hasRecipes as slotHasRecipes, isSlotFull, isDish, isBase } from '../../../../core/domain/recipePredicates';
+import { hasRecipes as slotHasRecipes, isSlotFull, isDish, isBase, plannableRecipe } from '../../../../core/domain/recipePredicates';
 import { MultiRecipeGrid } from './MultiRecipeGrid';
 import { MultiSlotActions } from './MultiSlotActions';
 import { RecipeMetaEditor } from './RecipeMetaEditor';
@@ -67,7 +67,7 @@ export const MultiMealSlot = ({
     const { baseGrams } = useRecipeMetricsSnapshot();
     const [editingMetaId, setEditingMetaId] = useState<string | null>(null);
     const isMetaPending = usePendingKey(`planning-recipe-meta:${slotId}:${editingMetaId ?? ''}`);
-    const editingRecipe = editingMetaId ? plannable[editingMetaId] : undefined;
+    const editingRecipe = plannableRecipe(editingMetaId ? plannable[editingMetaId] : undefined);
     const editingIsDish = isDish(editingRecipe) || isBase(editingRecipe);
     const editingDefaultPersons = editingIsDish ? 1 : editingRecipe?.defaultPortions ?? 1;
     const editingDefaultGrams = editingMetaId ? Math.round(baseGrams[editingMetaId] ?? 0) : 0;
@@ -79,7 +79,8 @@ export const MultiMealSlot = ({
     const [firstRecipe] = isSingle ? recipeIds.map((id) => plannable[id]) : [];
     const singleHasPhoto = Boolean(firstRecipe?.assets?.mealPhoto);
     const singleHasRecipesPage = Boolean(firstRecipe?.assets?.mealPhoto || firstRecipe?.assets?.instructionsPhoto);
-    const singleIsDish = isDish(firstRecipe) || isBase(firstRecipe);
+    const firstDetails = plannableRecipe(firstRecipe);
+    const singleIsDish = isDish(firstDetails) || isBase(firstDetails);
     const singleHasFoodChoice = useHasMealChoices(firstId) && isSingle;
 
     const hasRecipes = slotHasRecipes({ recipeIds });
@@ -129,7 +130,7 @@ export const MultiMealSlot = ({
     const showSingleBadge = !!singleRecipeId && !isAddMode && !copyTargetState && !!onSaveRecipeMeta && !isEditingPersons && (singleIsDish || singleBaseGrams > 0 || singleCurrentPersons !== undefined);
 
     const inFreezer = isSingle && !!firstId && (batchRecipeIds?.has(firstId) ?? false);
-    const displayPersons = persons ?? defaultPersonsOf(firstRecipe);
+    const displayPersons = persons ?? defaultPersonsOf(firstDetails);
     const isPersonsCustom = persons !== undefined;
     const showPersonsBadge = hasRecipes && !isAddMode && !copyTargetState && !editingMetaId && !isEditingPersons && displayPersons !== undefined && !!onOpenPersonsEditor;
 
@@ -254,8 +255,8 @@ export const MultiMealSlot = ({
 
             {isEditingPersons && onConfirmPersons && onCancelPersons && (
                 <PersonsEditor
-                    initialValue={persons ?? defaultPersonsOf(firstRecipe) ?? 2}
-                    defaultPortion={defaultPersonsOf(firstRecipe)}
+                    initialValue={persons ?? defaultPersonsOf(firstDetails) ?? 2}
+                    defaultPortion={defaultPersonsOf(firstDetails)}
                     onConfirm={onConfirmPersons}
                     onCancel={onCancelPersons}
                     pending={isPersonsPending}

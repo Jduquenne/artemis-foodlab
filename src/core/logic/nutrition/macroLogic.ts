@@ -3,7 +3,7 @@ import { BaseVersionChoice } from "../../domain/baseVersion";
 import { Food, UNIT_WEIGHT_UNITS, Unit } from "../../domain/ingredient";
 import { Macronutrients } from "../../domain/nutrition";
 import { MealSlot } from "../../domain/planning";
-import { PlannableItem, RecipeDetails } from "../../domain/recipe";
+import { RecipeDetails } from "../../domain/recipe";
 import { getAllRecipeIds, isDish, isBase } from "../../domain/recipePredicates";
 import { Profile } from "../../domain/profile";
 import { FoodPersonalization, personalizeRecipeTree } from "../foodGroup/foodChoiceLogic";
@@ -122,7 +122,6 @@ export function calculateRecipeBaseGrams(recipe: RecipeDetails, foodDb: Record<s
 }
 
 export interface MacroCatalogue {
-  plannable: Record<string, PlannableItem>;
   recipes: Record<string, RecipeDetails>;
   foods: Record<string, Food>;
   recipeMacros: Record<string, Macronutrients>;
@@ -192,7 +191,6 @@ function computeDishMacros(
   personalization?: FoodPersonalization,
   baseVersions?: readonly BaseVersionChoice[],
 ): Macronutrients {
-  const recipe = catalogue.plannable[recipeId];
   const itemIngredientOverrides = ingredientOverrides[itemKey];
   const catalogueRecipe = catalogue.recipes[recipeId];
   const versioned = catalogueRecipe ? applyBaseVersions(catalogueRecipe, catalogue.recipes, baseVersions, catalogue.foods, { requireNutrition: true }) : catalogue.recipes;
@@ -207,7 +205,7 @@ function computeDishMacros(
   const m = isPersonalized && fullRecipe ? calculateRecipeMacros(fullRecipe, recipes, catalogue.foods) : catalogue.recipeMacros[recipeId];
   if (!m) return { ...ZERO };
   const baseGrams = isPersonalized && fullRecipe ? calculateRecipeBaseGrams(fullRecipe, catalogue.foods) : catalogue.baseGrams[recipeId];
-  if (!isDish(recipe) && !isBase(recipe) && baseGrams) {
+  if (!isDish(catalogueRecipe) && !isBase(catalogueRecipe) && baseGrams) {
     return scaleMacros(m, (gramOverrides[itemKey] ?? baseGrams) / baseGrams);
   }
   const gramsEaten = gramOverrides[itemKey];

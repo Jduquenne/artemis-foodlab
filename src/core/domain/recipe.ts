@@ -53,24 +53,7 @@ export interface RecipeDetails {
   industrialEquivalent?: IndustrialEquivalent;
 }
 
-export interface PlannableItem {
-  code: string;
-  apiId: string;
-  name: string;
-  categoryId: string;
-  instructions: string | null;
-  assets: Partial<Record<RecipeAssetKey, RecipeAsset>>;
-  isFromBook?: boolean;
-  bookPage?: number;
-  kind?: RecipeKind;
-  mealTypes?: MealType[];
-  defaultPortions?: number;
-  portionsPerPerson?: number;
-  cookedWeightGrams?: number;
-  ingredients?: Ingredient[];
-  batchCooking?: boolean;
-  isDessert?: boolean;
-}
+export type PlannableItem = (RecipeDetails & { source: "recipe" }) | (OutdoorEntry & { source: "outdoor" });
 
 export interface OutdoorEntry {
   code: string;

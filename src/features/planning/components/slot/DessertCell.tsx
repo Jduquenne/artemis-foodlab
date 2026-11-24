@@ -8,6 +8,7 @@ import { MealPhoto } from './MealPhoto';
 import { usePendingKey } from '../../../../shared/hooks/usePendingKey';
 import { buildRecipeDetailUrl } from '../../../../core/logic/recipe/recipeScalingLogic';
 import { plannedPortions } from '../../../../core/logic/recipe/portionsPerPersonLogic';
+import { plannableRecipe } from '../../../../core/domain/recipePredicates';
 import { usePlannableSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 
 export interface DessertCellProps {
@@ -40,7 +41,7 @@ export const DessertCell = ({ slotId, recipeId, onRemove, isAddMode, onCopy, isC
     const canNavigate = hasRecipePage && !isAddMode && !hideActions && !isEditingPersons;
 
     const handleClick = () => {
-        if (canNavigate) navigate(buildRecipeDetailUrl(recipeId, plannedPortions(persons, recipe)));
+        if (canNavigate) navigate(buildRecipeDetailUrl(recipeId, plannedPortions(persons, plannableRecipe(recipe))));
     };
 
     const openEditor = () => {

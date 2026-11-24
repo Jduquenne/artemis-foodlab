@@ -96,7 +96,7 @@ Three layers, no exceptions:
 - `RecipeDetails`: `categoryId`, `mealTypes`, `kind`, `assets`, `apiId`, `batchCooking?`, `isDessert?`, `isFromBook?`, `bookPage?`, `announcedAt?: string | null`. Assets: `mealPhoto`, `bookPhoto` only (`{ url, key? }`).
 - `MealSlot { id, apiId?, itemApiIds?, day, slot, recipeIds, dessertIds?, year, week, persons?, recipePersons?, recipeQuantities? }`; `MEAL_SLOTS`: lunch/dinner have `hasDessert: true`.
 - `FreezerCategory { id, name, color: string | null, position, items }`; `FreezerItem = FoodFreezerItem | BatchFreezerItem`; `FreezerBag { id, quantity, unit, preparation?, addedDate }`.
-- Recipes and outdoor activities are both "plannable items" (one identity in the API, `plannable_items`). See D-006.
+- Recipes and outdoor activities are both "plannable items" (one identity in the API, `plannable_items`). See D-006. Front: `PlannableItem = (RecipeDetails & { source: "recipe" }) | (OutdoorEntry & { source: "outdoor" })` (`core/domain/recipe.ts`, golden rule 20), built in memory by `buildPlannableItems` (`usePlannableSnapshot`); read the common fields (`name`, `assets`, `categoryId`) directly and go through `plannableRecipe(item)` (`recipePredicates.ts`) for recipe-only fields (kind, portions).
 
 ## Auth and roles
 

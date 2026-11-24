@@ -8,6 +8,7 @@ import { SLOT_DISPLAY } from "../../slotDisplay";
 import { SlotCopyProps } from "../../../../core/logic/planning/planningCopyLogic";
 import { buildRecipeDetailUrl } from "../../../../core/logic/recipe/recipeScalingLogic";
 import { plannedPortions } from "../../../../core/logic/recipe/portionsPerPersonLogic";
+import { plannableRecipe } from "../../../../core/domain/recipePredicates";
 import { usePlannableSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { useAnyPendingKey } from "../../../../shared/hooks/useAnyPendingKey";
 
@@ -68,7 +69,7 @@ export const PlanningSlot = ({
           recipeIds={recipeIds}
           onAdd={blocked ? () => {} : onOpenPicker}
           onRemoveRecipe={blocked ? () => {} : onRemoveRecipe}
-          onNavigateToRecipe={isAddMode || isCopyMode ? () => {} : (rid) => navigate(buildRecipeDetailUrl(rid, plannedPortions(savedMeal?.recipePersons?.[rid] ?? savedMeal?.persons, plannable[rid])))}
+          onNavigateToRecipe={isAddMode || isCopyMode ? () => {} : (rid) => navigate(buildRecipeDetailUrl(rid, plannedPortions(savedMeal?.recipePersons?.[rid] ?? savedMeal?.persons, plannableRecipe(plannable[rid]))))}
           isAddMode={isAddMode}
           onAddToSlot={isAddMode ? onAddToSlot : undefined}
           onCopyRecipe={!blocked ? onCopyRecipe : undefined}
@@ -98,7 +99,7 @@ export const PlanningSlot = ({
           persons={savedMeal?.persons}
           isEditingPersons={isEditingPersons}
           isAnyEditing={isAnyEditing || isCopyMode}
-          onNavigate={() => { if (recipeIds[0]) navigate(buildRecipeDetailUrl(recipeIds[0], plannedPortions(savedMeal?.persons, plannable[recipeIds[0]]))); }}
+          onNavigate={() => { if (recipeIds[0]) navigate(buildRecipeDetailUrl(recipeIds[0], plannedPortions(savedMeal?.persons, plannableRecipe(plannable[recipeIds[0]])))); }}
           onOpenPicker={blocked ? () => {} : onOpenPicker}
           onModify={blocked ? () => {} : onOpenPicker}
           onDelete={blocked ? () => {} : onDelete}

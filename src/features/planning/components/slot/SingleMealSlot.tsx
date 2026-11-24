@@ -2,7 +2,7 @@ import { Plus, Snowflake } from 'lucide-react';
 import { PersonsEditor } from './PersonsEditor';
 import { useDraggable, useDroppable } from '@dnd-kit/core';
 import { IS_TOUCH } from '../../../../shared/utils/deviceUtils';
-import { isOutdoor } from '../../../../core/domain/recipePredicates';
+import { isOutdoor, plannableRecipe } from '../../../../core/domain/recipePredicates';
 import { SlotPersonsBadge } from './SlotPersonsBadge';
 import { SlotActions } from './SlotActions';
 import { DessertColumn } from './DessertColumn';
@@ -65,7 +65,7 @@ export const SingleMealSlot = ({
     const recipe = firstId ? plannable[firstId] : undefined;
     const hasPhoto = Boolean(recipe?.assets?.mealPhoto);
     const hasRecipesPage = Boolean(recipe?.assets?.mealPhoto || recipe?.assets?.instructionsPhoto);
-    const defaultPortion = defaultPersonsOf(recipe);
+    const defaultPortion = defaultPersonsOf(plannableRecipe(recipe));
     const isDeletePending = usePendingKey(`planning-slot-delete:${slotId}`);
     const isPersonsPending = usePendingKey(`planning-persons:${slotId}`);
     const groupIngredients = useGroupIngredients(firstId);

@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-24 — D-068 to D-071 in prod (v6.166.1)
+- The owner pushed the fronts of #59, #60, #61 and #63 and confirmed API D-068 to D-071 live in prod. Docs: `docs/api.md` (API commit hashes not reported: TODO(owner)).
+- Still open: owner browser tests in prod (paths in the entries below); close #59 to #63 on the owner's word, then « synchronise discord »; agent choices of #63 to confirm (step 50 g, no « − » to 0, no unit change, plain « Ajouter au menu »); #64 audits (front + API).
+
 ## 2026-11-24 — Freezer batches in portions or grams (v6.166.0)
 - Done: issue #63 (owner choice C: any recipe, unit chosen when freezing), front of API D-071. `BatchFreezerItem.portions` → `unit: BatchUnit` (`"portion" | "g"`) + `quantity`; Dexie v15 (same stores, upgrade of cached batches); mapper, `addItemToCategory` (`unit` + `quantity`), `updateBatchQuantity` (was `updateBatchPortions`, `PUT { quantity }`); `core/logic/freezer/batchQuantityLogic.ts` (labels, step 1 portion / 50 g, validity, formatting); `summarizeFreezerCategory` counts grams apart; generator `freezerBatchStocks` keeps portion batches only. UI: « Portions / Grammes » switch and grams input in `BatchTab`, row and chip labels, « Ajouter au menu » label. Docs: `docs/spec-freezer.md`, `docs/api.md`, `docs/architecture.md` (Dexie v15), `docs/spec-planning.md`.
 - Choices by the agent (owner did not detail them): step 50 g; « − » never goes to 0 (API refuses it; to empty a batch, delete it); no unit change of an existing batch in the UI; « Ajouter au menu » plans the dish normally. To confirm with the owner.

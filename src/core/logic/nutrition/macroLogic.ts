@@ -64,7 +64,7 @@ export function toGrams(
     case Unit.ML:
       return quantity;
     default:
-      return UNIT_WEIGHT_UNITS.includes(unit) && unitWeight != null ? quantity * unitWeight : null;
+      return UNIT_WEIGHT_UNITS.includes(unit) && unitWeight !== null ? quantity * unitWeight : null;
   }
 }
 
@@ -76,13 +76,13 @@ export function calculateRecipeMacros(
   let total = { ...ZERO };
 
   for (const ingredient of recipe.ingredients) {
-    if (ingredient.quantity == null) continue;
+    if (ingredient.quantity === null) continue;
 
     if (ingredient.foodId) {
       const food = foodDb[ingredient.foodId];
       if (!food) continue;
       const grams = toGrams(ingredient.quantity, ingredient.unit, food.unitWeight);
-      if (grams == null) continue;
+      if (grams === null) continue;
       total = addMacros(total, scaleMacros(food.macros, grams / 100));
     } else if (ingredient.baseId) {
       const base = allRecipes[ingredient.baseId];
@@ -113,10 +113,10 @@ export function calculateOverriddenRecipeMacros(
 export function calculateRecipeBaseGrams(recipe: RecipeDetails, foodDb: Record<string, Food>): number {
   let total = 0;
   for (const ing of recipe.ingredients) {
-    if (ing.quantity == null) continue;
+    if (ing.quantity === null) continue;
     const food = ing.foodId ? foodDb[ing.foodId] : undefined;
     const grams = toGrams(ing.quantity, ing.unit, food?.unitWeight ?? null);
-    if (grams != null) total += grams;
+    if (grams !== null) total += grams;
   }
   return total > 0 ? total / recipe.defaultPortions : 0;
 }

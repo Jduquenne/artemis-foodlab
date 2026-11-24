@@ -54,7 +54,7 @@ export function recipeToFoodCardData(
 ): FoodCardData {
   const ing = recipe.ingredients[0];
   const quantitySuffix =
-    ing?.quantity != null && ing?.unit
+    ing && ing.quantity !== null && ing.unit
       ? ` - ${buildFoodQuantityLabel(ing.quantity, ing.unit)}`
       : '';
   return {

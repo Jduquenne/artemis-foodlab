@@ -12,13 +12,13 @@ export const EMPTY_JOURNAL_OVERRIDES: JournalOverrides = {
 };
 
 export function isOverridableIngredient(ingredient: Ingredient): boolean {
-  return ingredient.quantity != null && ingredient.unit !== Unit.NONE;
+  return ingredient.quantity !== null && ingredient.unit !== Unit.NONE;
 }
 
 export function scaleIngredientsByRatio(recipe: RecipeDetails, ratio: number): Record<string, number> {
   const result: Record<string, number> = {};
   for (const ingredient of recipe.ingredients) {
-    if (ingredient.quantity == null || ingredient.unit === Unit.NONE) continue;
+    if (ingredient.quantity === null || ingredient.unit === Unit.NONE) continue;
     result[ingredient.id] = roundTo(ingredient.quantity * ratio, 2);
   }
   return result;
@@ -39,11 +39,11 @@ export function applyOverrideResult(
 ): JournalOverrides {
   return {
     portionOverrides:
-      result.portionsOverride != null
+      result.portionsOverride !== null
         ? { ...current.portionOverrides, [planningSlotItemId]: result.portionsOverride }
         : omitKey(current.portionOverrides, planningSlotItemId),
     gramOverrides:
-      result.gramsOverride != null
+      result.gramsOverride !== null
         ? { ...current.gramOverrides, [planningSlotItemId]: result.gramsOverride }
         : omitKey(current.gramOverrides, planningSlotItemId),
     ingredientOverrides:

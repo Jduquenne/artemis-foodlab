@@ -90,8 +90,8 @@ export function mapApiItemsToSlotFields(items: ApiPlanningSlotItem[]): SlotItemF
     itemApiIds[code] = item.id;
     if (item.isDessert) dessertIds.push(code);
     else recipeIds.push(code);
-    if (item.personsOverride != null) recipePersons[code] = item.personsOverride;
-    if (item.gramsOverride != null) recipeQuantities[code] = item.gramsOverride;
+    if (item.personsOverride !== null) recipePersons[code] = item.personsOverride;
+    if (item.gramsOverride !== null) recipeQuantities[code] = item.gramsOverride;
     if (item.foodChoices && item.foodChoices.length > 0) foodChoices[code] = item.foodChoices;
     if (item.accompanimentChoices && item.accompanimentChoices.length > 0) accompanimentChoices[code] = item.accompanimentChoices;
     if (item.baseVersionChoices && item.baseVersionChoices.length > 0) baseVersionChoices[code] = mapApiBaseVersionChoices(item.baseVersionChoices);

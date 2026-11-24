@@ -10,7 +10,7 @@ export interface IngredientMobileCardProps {
 export const IngredientMobileCard = ({ ingredient, onEdit, onRemove }: IngredientMobileCardProps) => {
   const isBase = ingredient.ingredientType === "base";
   const qtyLabel =
-    ingredient.quantity != null
+    ingredient.quantity !== null
       ? `${ingredient.quantity}${ingredient.unit ? " " + ingredient.unit : ""}`
       : null;
 

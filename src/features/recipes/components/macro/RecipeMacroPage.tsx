@@ -53,8 +53,9 @@ export const RecipeMacroPage = () => {
   };
 
   const resetUnitWeight = (foodId: string) => {
-    const original = foods[foodId]?.unitWeight;
-    if (original != null) {
+    const food = foods[foodId];
+    if (food && food.unitWeight !== null) {
+      const original = food.unitWeight;
       setUnitWeights(prev => ({ ...prev, [foodId]: original }));
     } else {
       setUnitWeights(prev => { const next = { ...prev }; delete next[foodId]; return next; });

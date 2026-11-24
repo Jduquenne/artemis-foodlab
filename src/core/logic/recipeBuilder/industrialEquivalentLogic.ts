@@ -20,7 +20,7 @@ export function industrialDraftFromRecipe(equivalent: IndustrialEquivalent | und
 }
 
 export function isIndustrialDraftComplete(draft: IndustrialEquivalentDraft | null): draft is IndustrialEquivalentDraft & { foodId: string; quantity: number } {
-  return draft != null && draft.foodId !== null && draft.quantity !== null && draft.quantity > 0 && draft.unit !== Unit.NONE;
+  return draft !== null && draft.foodId !== null && draft.quantity !== null && draft.quantity > 0 && draft.unit !== Unit.NONE;
 }
 
 export function pickIndustrialFood(draft: IndustrialEquivalentDraft, food: Food): IndustrialEquivalentDraft {
@@ -33,7 +33,7 @@ export function industrialDraftToApi(draft: IndustrialEquivalentDraft | null, is
 }
 
 export function validateIndustrialDraft(draft: IndustrialEquivalentDraft | null, isBase: boolean): string[] {
-  if (!isBase || draft == null || isIndustrialDraftComplete(draft)) return [];
+  if (!isBase || draft === null || isIndustrialDraftComplete(draft)) return [];
   return ["Version industrielle : choisis un aliment et une quantité supérieure à 0 par portion de la base."];
 }
 

@@ -125,7 +125,7 @@ export const IngredientAdjustRow = ({
       {isBase && isExpanded && baseRecipe && (
         <div className="ml-6 mb-2 pl-3 border-l-2 border-orange-200 flex flex-col gap-0.5">
           {baseRecipe.ingredients.map((baseIng, bi) => {
-            const scaledQty = baseIng.quantity != null
+            const scaledQty = baseIng.quantity !== null
               ? Math.round(baseIng.quantity * baseScaleFactor * 10) / 10
               : null;
             return (

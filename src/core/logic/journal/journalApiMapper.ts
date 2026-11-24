@@ -18,8 +18,8 @@ export function mapJournalOverrides(overrides: ApiJournalOverride[]): JournalOve
   const byProfile: JournalOverridesByProfile = {};
   for (const o of overrides) {
     const target = (byProfile[o.profileId] ??= { portionOverrides: {}, gramOverrides: {}, ingredientOverrides: {} });
-    if (o.portionsOverride != null) target.portionOverrides[o.planningSlotItemId] = o.portionsOverride;
-    if (o.gramsOverride != null) target.gramOverrides[o.planningSlotItemId] = o.gramsOverride;
+    if (o.portionsOverride !== null) target.portionOverrides[o.planningSlotItemId] = o.portionsOverride;
+    if (o.gramsOverride !== null) target.gramOverrides[o.planningSlotItemId] = o.gramsOverride;
     if (o.ingredientOverrides.length > 0) {
       target.ingredientOverrides[o.planningSlotItemId] = Object.fromEntries(
         o.ingredientOverrides.map((i) => [i.recipeIngredientId, i.gramsOverride]),

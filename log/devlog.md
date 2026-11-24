@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-24 — #64: eqeqeq on the front (v6.166.12)
+- Done: `eqeqeq: ["error", "always"]` in `eslint.config.js` (same rule as the API, D-072). The 38 loose comparisons were classified with the TypeScript checker (throwaway script `E:/Developpement/_claude/scripts/loose-eq-types.cjs`, not versioned: operand type of each `==` / `!=`): 33 on a `X | null` value → `=== null` / `!== null`, identical behaviour; 4 mixing a missing lookup and a `null` field (`foods[id]?.unitWeight` in `buildUnitWeightOverrides` and `RecipeMacroPage`, `extra?.quantity` in `AddExtraModal`, `recipe.ingredients[0]?.quantity` in `recipeToFoodCardData`) → the object is tested first, then `=== null` on the field; 1 on raw import JSON (`unknown`) → `!== null && !== undefined`, like its neighbours. Rule checked on a sample through `eslint --stdin`. Docs: AGENTS.md rule 20, `docs/conventions.md`.
+- tsc + lint pass; no behaviour change expected. Quick check: recipe macro page unit weight reset, editing a shopping extra with and without quantity, food card of an ingredient-kind recipe, journal overrides.
+
 ## 2026-11-24 — API hashes and #64 API progress (v6.166.11)
 - API session report: D-069, D-070, D-071 live in prod in API commit `adb5676` (migrations and CHECKs applied, 81 existing batches `unit: "portion"`, authenticated captures for #60, #61, #63); hash recorded in `docs/api.md`. D-068 (#59) hash still not reported (TODO(owner)).
 - #64 API side (API D-072, owner's go with the front's adjustments): slice 1 of 13 done (helpers and lint scaffolding, no contract change); `noUncheckedIndexedAccess` is its own slice (131 errors, all in API tests); ESLint messages in English; D-072 explains why the API enables `exactOptionalPropertyTypes` while the front does not (front D-045: React props).

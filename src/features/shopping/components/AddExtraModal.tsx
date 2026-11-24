@@ -26,7 +26,7 @@ export const AddExtraModal = ({ extra, plannedRecipes, onClose, onSubmit }: AddE
   const isEdit = extra !== null;
   const foods = useFoodsSnapshot();
   const [name, setName] = useState(extra?.name ?? "");
-  const [quantity, setQuantity] = useState(extra?.quantity != null ? String(extra.quantity) : "");
+  const [quantity, setQuantity] = useState(extra && extra.quantity !== null ? String(extra.quantity) : "");
   const [unit, setUnit] = useState<string>(extra?.unit ?? "");
   const savedOrder = useAuthStore((s) => s.user?.shoppingCategoryOrder ?? null);
   const customCategories = useCustomShoppingCategoryStore((s) => s.categories);

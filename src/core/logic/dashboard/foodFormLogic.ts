@@ -74,7 +74,7 @@ export function foodToDraft(food: Food): FoodFormDraft {
     name: food.name,
     category: food.category,
     unit: food.unit ?? "",
-    unitWeight: food.unitWeight != null ? String(food.unitWeight) : "",
+    unitWeight: food.unitWeight !== null ? String(food.unitWeight) : "",
     isFreezable: Boolean(food.isFreezable),
     groupId: food.groupId ?? "",
     months: normalizeMonths(food.months ?? []),

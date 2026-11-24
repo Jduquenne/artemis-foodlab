@@ -25,7 +25,7 @@ export function scaleRecipeToPortions(recipe: RecipeDetails, portions: number): 
     defaultPortions: portions,
     ingredients: recipe.ingredients.map(ing => ({
       ...ing,
-      quantity: ing.quantity == null ? null : roundTo(ing.quantity * factor, 2),
+      quantity: ing.quantity === null ? null : roundTo(ing.quantity * factor, 2),
     })),
   };
 }
@@ -38,8 +38,8 @@ export function buildUnitWeightOverrides(foods: Record<string, Food>, recipe: Re
   const map: Record<string, number> = {};
   for (const ing of recipe.ingredients) {
     if (ing.foodId && UNIT_WEIGHT_UNITS.includes(ing.unit)) {
-      const w = foods[ing.foodId]?.unitWeight;
-      if (w != null) map[ing.foodId] = w;
+      const food = foods[ing.foodId];
+      if (food && food.unitWeight !== null) map[ing.foodId] = food.unitWeight;
     }
   }
   return map;

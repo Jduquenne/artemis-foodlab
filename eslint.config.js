@@ -23,6 +23,7 @@ export default defineConfig([
   {
     files: ['src/**/*.{ts,tsx}'],
     rules: {
+      eqeqeq: ['error', 'always'],
       'no-restricted-syntax': [
         'error',
         {

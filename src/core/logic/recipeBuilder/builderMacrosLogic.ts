@@ -17,7 +17,7 @@ export function computeDraftTotal(
   let missing = 0;
 
   for (const ing of ingredients) {
-    if (ing.quantity == null || ing.quantity === 0) continue;
+    if (ing.quantity === null || ing.quantity === 0) continue;
 
     if (ing.foodId) {
       const food = foods[ing.foodId];
@@ -26,7 +26,7 @@ export function computeDraftTotal(
         continue;
       }
       const grams = toGrams(ing.quantity, ing.unit, food.unitWeight);
-      if (grams == null) {
+      if (grams === null) {
         missing++;
         continue;
       }

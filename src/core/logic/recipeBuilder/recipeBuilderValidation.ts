@@ -47,7 +47,7 @@ export function validateBuilderState(state: RecipeBuilderState): string[] {
   if (state.kind !== RecipeKind.BASE && state.mealTypes.length === 0) {
     errors.push("Sélectionne au moins un type de repas.");
   }
-  if (state.isFromBook && (state.bookPage == null || state.bookPage <= 0)) {
+  if (state.isFromBook && (state.bookPage === null || state.bookPage <= 0)) {
     errors.push("Indique la page du livre.");
   }
   errors.push(...validatePortionsPerPerson(state.portionsPerPerson, state.kind));

@@ -29,7 +29,7 @@ export function isValidSyncPayload(data: unknown): data is SyncPayload {
   if (d.planning !== null && d.planning !== undefined && !Array.isArray(d.planning)) return false;
   if (d.household !== null && d.household !== undefined && !Array.isArray(d.household)) return false;
   if (d.freezerCategories !== null && d.freezerCategories !== undefined && !Array.isArray(d.freezerCategories)) return false;
-  if (d.freezerName != null && typeof d.freezerName !== "string") return false;
+  if (d.freezerName !== null && d.freezerName !== undefined && typeof d.freezerName !== "string") return false;
   return true;
 }
 
@@ -39,8 +39,8 @@ export function detectScopes(data: SyncPayload): SyncScope[] {
     if (known.length > 0) return known;
   }
   const scopes: SyncScope[] = [];
-  if (data.planning != null) scopes.push("planning");
-  if (data.household != null) scopes.push("household");
-  if (data.freezerCategories != null || data.freezerName != null) scopes.push("freezer");
+  if (data.planning !== null) scopes.push("planning");
+  if (data.household !== null) scopes.push("household");
+  if (data.freezerCategories !== null || data.freezerName !== null) scopes.push("freezer");
   return scopes.length > 0 ? scopes : [...ALL_SCOPES];
 }

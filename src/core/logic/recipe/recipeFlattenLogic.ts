@@ -20,7 +20,7 @@ function collectLines(
 ): FlatRecipeLine[] {
   const lines: FlatRecipeLine[] = [];
   for (const ing of recipe.ingredients) {
-    if (ing.quantity == null) continue;
+    if (ing.quantity === null) continue;
     if (ing.baseId) {
       const base = recipes[ing.baseId];
       if (!base || visited.has(ing.baseId) || base.defaultPortions <= 0) continue;

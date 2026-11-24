@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-24 — #64 closed, #65 opened
+- Owner decision: #64 closed (front v6.166.4 to v6.166.19 + API D-072); the catalogue `Ingredient` type (`foodId?` / `baseId?` / `foodGroupId?`) gets its own issue, #65 (low priority, open), to be planned with the owner (shape of the union, Dexie cache, readers by folder). No code change; `dev/issues.json` only (not versioned), so no version bump.
+- Still open: owner browser tests of v6.166.15 to v6.166.19 (paths in the entries below); « synchronise discord » for #59 to #65 when the owner asks.
+
 ## 2026-11-24 — #64 audit 5/5: plannable item as a union (v6.166.19)
 - Done: `PlannableItem` was a hand-written interface with every recipe field optional, so a recipe and an outdoor activity looked alike. Now `(RecipeDetails & { source: "recipe" }) | (OutdoorEntry & { source: "outdoor" })`, built in memory by `buildPlannableItems` (nothing persisted changes: Dexie stores recipes and outdoor activities separately). New `plannableRecipe(item)` (`recipePredicates.ts`) gives the recipe or `undefined`, used for recipe-only reads (`isDish` / `isBase`, `defaultPersonsOf`, `plannedPortions`) in `RecipeCell`, `MultiMealSlot`, `SingleMealSlot`, `PlanningSlot`, `DessertCell`; the `isDessert` / `isBatchCookable` / `isDish` / `isIngredient` / `isBase` / `isPlannable` predicates take `Pick<RecipeDetails, …>`. `MacroCatalogue.plannable` removed: its only reader (`computeRecipeMacros`, kind check) now uses `catalogue.recipes`, which gives the same answer (an outdoor activity is in neither as a dish). `docs/architecture.md` § Catalogue.
 - Behaviour unchanged (an outdoor activity had no kind nor portions before either); validated by tsc + lint only, to test with `npm run dev`: planning with a recipe, an outdoor activity, a single and a multi-meal slot (photo, persons, « portions » editor), a dessert, navigation to a recipe from the planning (portions in the URL), journal macros of a dish and of a cereal product / pastry with grams.

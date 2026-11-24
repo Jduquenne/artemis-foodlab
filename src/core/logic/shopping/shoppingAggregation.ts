@@ -163,8 +163,8 @@ export function aggregateSlots(
       const addAccompanimentOption = (option: AccompanimentOption, profile: ShoppingCatalogue["profiles"][number], persons: number) => {
         const names = [profile.name].filter(Boolean);
         if (option.kind === "food") {
-          const food = option.foodId ? catalogue.foods[option.foodId] : undefined;
-          if (!food || option.quantityPerPerson === null) return;
+          const food = catalogue.foods[option.foodId];
+          if (!food) return;
           const qty = option.quantityPerPerson * persons;
           const ing: Ingredient = {
             id: `accompaniment-${option.id}`,
@@ -177,9 +177,9 @@ export function aggregateSlots(
           addIngredientToMap(ing, qty, buildIngredientSource(slot, recipeId, recipeName, ing, qty, undefined, names));
           return;
         }
-        const optionRecipe = option.recipeCode ? data[option.recipeCode] : undefined;
-        if (!optionRecipe || !option.recipeCode) return;
-        const perPerson = option.portionsPerPerson ?? 1;
+        const optionRecipe = data[option.recipeCode];
+        if (!optionRecipe) return;
+        const perPerson = option.portionsPerPerson;
         const mealChoices = slot.foodChoices?.[recipeId] ?? [];
         const personalization = { profile, mealChoices };
         const toSpecify = new Set(
@@ -294,9 +294,10 @@ export function aggregateBases(slots: MealSlot[], catalogue: ShoppingCatalogue):
       for (const accompaniment of accompaniments) {
         for (const profile of catalogue.profiles) {
           const { option } = resolveAccompaniment(accompaniment, profile, accompanimentChoices);
-          const optionRecipe = option?.kind === "recipe" && option.recipeCode ? data[option.recipeCode] : undefined;
-          if (!option?.recipeCode || !optionRecipe || optionRecipe.kind !== RecipeKind.BASE) continue;
-          addBase(option.recipeCode, optionRecipe, (option.portionsPerPerson ?? 1) * persons, Unit.PORTION);
+          if (option?.kind !== "recipe") continue;
+          const optionRecipe = data[option.recipeCode];
+          if (!optionRecipe || optionRecipe.kind !== RecipeKind.BASE) continue;
+          addBase(option.recipeCode, optionRecipe, option.portionsPerPerson * persons, Unit.PORTION);
         }
       }
     }

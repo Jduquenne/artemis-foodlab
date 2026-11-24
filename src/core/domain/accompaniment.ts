@@ -1,14 +1,21 @@
 export type AccompanimentOptionKind = "recipe" | "food";
 
-export interface AccompanimentOption {
+export interface AccompanimentRecipeOption {
   id: string;
-  kind: AccompanimentOptionKind;
-  recipeCode: string | null;
-  portionsPerPerson: number | null;
-  foodId: string | null;
-  quantityPerPerson: number | null;
-  unit: string | null;
+  kind: "recipe";
+  recipeCode: string;
+  portionsPerPerson: number;
 }
+
+export interface AccompanimentFoodOption {
+  id: string;
+  kind: "food";
+  foodId: string;
+  quantityPerPerson: number;
+  unit: string;
+}
+
+export type AccompanimentOption = AccompanimentRecipeOption | AccompanimentFoodOption;
 
 export interface Accompaniment {
   id: string;
@@ -31,16 +38,10 @@ export interface AccompanimentChoice {
   optionId: string | null;
 }
 
-export interface AccompanimentOptionInput {
-  id?: string;
-  kind: AccompanimentOptionKind;
-  recipeCode: string | null;
-  portionsPerPerson: number | null;
-  foodId: string | null;
-  quantityPerPerson: number | null;
-  unit: string | null;
-  isDefault: boolean;
-}
+export type AccompanimentOptionInput = { id?: string; isDefault: boolean } & (
+  | Omit<AccompanimentRecipeOption, "id">
+  | Omit<AccompanimentFoodOption, "id">
+);
 
 export interface AccompanimentInput {
   name: string;

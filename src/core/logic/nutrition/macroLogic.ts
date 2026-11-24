@@ -143,14 +143,14 @@ function accompanimentOptionMacros(
   personalization: MealPersonalization,
 ): Macronutrients {
   if (option.kind === "food") {
-    const food = option.foodId ? catalogue.foods[option.foodId] : undefined;
-    if (!food || option.quantityPerPerson === null) return { ...ZERO };
+    const food = catalogue.foods[option.foodId];
+    if (!food) return { ...ZERO };
     const grams = toGrams(option.quantityPerPerson, parseUnit(option.unit), food.unitWeight);
     return grams === null ? { ...ZERO } : scaleMacros(food.macros, grams / 100);
   }
-  const recipe = option.recipeCode ? catalogue.recipes[option.recipeCode] : undefined;
+  const recipe = catalogue.recipes[option.recipeCode];
   if (!recipe) return { ...ZERO };
-  const portions = option.portionsPerPerson ?? 1;
+  const portions = option.portionsPerPerson;
   const tree = personalizeRecipeTree(recipe, personalization, catalogue.recipes, catalogue.foods, portions);
   return scaleMacros(calculateRecipeMacros(tree.recipe, tree.recipes, catalogue.foods), portions);
 }

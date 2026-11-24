@@ -109,7 +109,7 @@ export function effectiveOptionRecipes(
 ): RecipeDetails[] {
   return accompanimentsFor(recipeCode, accompaniments).flatMap((accompaniment) => {
     const { option } = resolveAccompaniment(accompaniment, profile, mealChoices);
-    const recipe = option?.kind === "recipe" && option.recipeCode ? recipes[option.recipeCode] : undefined;
+    const recipe = option?.kind === "recipe" ? recipes[option.recipeCode] : undefined;
     return recipe ? [recipe] : [];
   });
 }
@@ -187,9 +187,10 @@ export function mealChoiceIngredients(
   for (const profile of profiles) {
     for (const accompaniment of applying) {
       const { option } = resolveAccompaniment(accompaniment, profile, accompanimentChoices);
-      const optionRecipe = option?.kind === "recipe" && option.recipeCode ? recipes[option.recipeCode] : undefined;
-      if (!option || !optionRecipe) continue;
-      for (const entry of reachableGroupIngredients(optionRecipe, recipes, option.portionsPerPerson ?? 1)) {
+      if (option?.kind !== "recipe") continue;
+      const optionRecipe = recipes[option.recipeCode];
+      if (!optionRecipe) continue;
+      for (const entry of reachableGroupIngredients(optionRecipe, recipes, option.portionsPerPerson)) {
         const id = entry.ingredient.id;
         const existing = result.get(id);
         if (existing) {
@@ -236,14 +237,13 @@ function optionLines(
   dishPortions: number,
 ): AccompanimentLine[] {
   if (option.kind === "food") {
-    const food = option.foodId ? foods[option.foodId] : undefined;
+    const food = foods[option.foodId];
     if (!food) return [];
-    const quantity = option.quantityPerPerson === null ? null : roundTo(option.quantityPerPerson * dishPortions, 2);
-    return [{ id: option.id, name: food.name, quantity, unit: quantity === null ? "" : parseUnit(option.unit) }];
+    return [{ id: option.id, name: food.name, quantity: roundTo(option.quantityPerPerson * dishPortions, 2), unit: parseUnit(option.unit) }];
   }
-  const recipe = option.recipeCode ? recipes[option.recipeCode] : undefined;
+  const recipe = recipes[option.recipeCode];
   if (!recipe) return [];
-  const portions = option.portionsPerPerson ?? 1;
+  const portions = option.portionsPerPerson;
   const personalized = personalizeRecipeTree(recipe, personalization, recipes, foods, portions).recipe;
   const factor = (portions * dishPortions) / personalized.defaultPortions;
   return personalized.ingredients.map((ingredient) => ({

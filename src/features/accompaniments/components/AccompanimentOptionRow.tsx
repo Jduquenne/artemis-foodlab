@@ -21,7 +21,7 @@ export const AccompanimentOptionRow = ({ option, index, disabled, onChange, onRe
   const recipes = useRecipesSnapshot();
   const foods = useFoodsSnapshot();
   const isRecipe = option.kind === "recipe";
-  const pickedName = isRecipe
+  const pickedName = option.kind === "recipe"
     ? (option.recipeCode ? (recipes[option.recipeCode]?.name ?? "Recette supprimée") : null)
     : (option.foodId ? (foods[option.foodId]?.name ?? "Aliment supprimé") : null);
 
@@ -49,13 +49,13 @@ export const AccompanimentOptionRow = ({ option, index, disabled, onChange, onRe
           <button
             type="button"
             disabled={disabled}
-            onClick={() => onChange(isRecipe ? { ...option, recipeCode: null } : { ...option, foodId: null })}
+            onClick={() => onChange(option.kind === "recipe" ? { ...option, recipeCode: null } : { ...option, foodId: null })}
             className="text-xs font-bold text-slate-400 hover:text-orange-600 transition-colors disabled:opacity-50"
           >
             Changer
           </button>
         </div>
-      ) : isRecipe ? (
+      ) : option.kind === "recipe" ? (
         <RecipeSearchInput
           disabled={disabled}
           search={searchOptionRecipes}
@@ -75,7 +75,7 @@ export const AccompanimentOptionRow = ({ option, index, disabled, onChange, onRe
       )}
 
       <div className="flex items-center gap-2">
-        {isRecipe ? (
+        {option.kind === "recipe" ? (
           <>
             <DecimalInput
               value={option.portionsPerPerson}

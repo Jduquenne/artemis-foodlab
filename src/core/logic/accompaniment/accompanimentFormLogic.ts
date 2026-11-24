@@ -2,7 +2,7 @@ import {
   Accompaniment,
   AccompanimentDefault,
   AccompanimentInput,
-  AccompanimentOption,
+  AccompanimentOptionInput,
   AccompanimentOptionKind,
   AccompanimentSelection,
 } from "../../domain/accompaniment";
@@ -17,16 +17,14 @@ export const MAX_ACCOMPANIMENT_OPTIONS = 10;
 export const MAX_ACCOMPANIMENT_NAME = 50;
 const MAX_OPTION_RECIPE_SUGGESTIONS = 8;
 
-export interface AccompanimentOptionDraft {
-  key: string;
-  id?: string;
-  kind: AccompanimentOptionKind;
-  recipeCode: string | null;
-  portionsPerPerson: number | null;
-  foodId: string | null;
-  quantityPerPerson: number | null;
-  unit: Unit;
-}
+export type AccompanimentOptionDraft = { key: string; id?: string } & (
+  | { kind: "recipe"; recipeCode: string | null; portionsPerPerson: number | null }
+  | { kind: "food"; foodId: string | null; quantityPerPerson: number | null; unit: Unit }
+);
+
+type AccompanimentOptionLabelSource =
+  | { kind: "recipe"; recipeCode: string | null; portionsPerPerson: number | null }
+  | { kind: "food"; foodId: string | null; quantityPerPerson: number | null; unit: string };
 
 export interface AccompanimentDraft {
   id: string | null;
@@ -42,8 +40,8 @@ export function emptyAccompanimentDraft(): AccompanimentDraft {
 
 export function emptyOptionDraft(key: string, kind: AccompanimentOptionKind): AccompanimentOptionDraft {
   return kind === "recipe"
-    ? { key, kind, recipeCode: null, portionsPerPerson: 1, foodId: null, quantityPerPerson: null, unit: Unit.G }
-    : { key, kind, recipeCode: null, portionsPerPerson: null, foodId: null, quantityPerPerson: null, unit: Unit.G };
+    ? { key, kind: "recipe", recipeCode: null, portionsPerPerson: 1 }
+    : { key, kind: "food", foodId: null, quantityPerPerson: null, unit: Unit.G };
 }
 
 export function draftFromAccompaniment(accompaniment: Accompaniment): AccompanimentDraft {
@@ -51,35 +49,40 @@ export function draftFromAccompaniment(accompaniment: Accompaniment): Accompanim
     id: accompaniment.id,
     name: accompaniment.name,
     recipeCodes: [...accompaniment.recipeCodes],
-    options: accompaniment.options.map((option) => ({
-      key: option.id,
-      id: option.id,
-      kind: option.kind,
-      recipeCode: option.recipeCode,
-      portionsPerPerson: option.portionsPerPerson,
-      foodId: option.foodId,
-      quantityPerPerson: option.quantityPerPerson,
-      unit: option.unit ? parseUnit(option.unit) : Unit.G,
-    })),
+    options: accompaniment.options.map((option): AccompanimentOptionDraft =>
+      option.kind === "recipe"
+        ? { key: option.id, id: option.id, kind: "recipe", recipeCode: option.recipeCode, portionsPerPerson: option.portionsPerPerson }
+        : {
+            key: option.id,
+            id: option.id,
+            kind: "food",
+            foodId: option.foodId,
+            quantityPerPerson: option.quantityPerPerson,
+            unit: option.unit ? parseUnit(option.unit) : Unit.G,
+          },
+    ),
     defaultKey: accompaniment.defaultOptionId,
   };
 }
 
-export function draftToInput(draft: AccompanimentDraft): AccompanimentInput {
-  return {
-    name: draft.name.trim(),
-    recipeCodes: draft.recipeCodes,
-    options: draft.options.map((option) => ({
-      ...(option.id ? { id: option.id } : {}),
-      kind: option.kind,
-      recipeCode: option.kind === "recipe" ? option.recipeCode : null,
-      portionsPerPerson: option.kind === "recipe" ? option.portionsPerPerson : null,
-      foodId: option.kind === "food" ? option.foodId : null,
-      quantityPerPerson: option.kind === "food" ? option.quantityPerPerson : null,
-      unit: option.kind === "food" ? option.unit : null,
-      isDefault: option.key === draft.defaultKey,
-    })),
-  };
+function optionDraftToInput(option: AccompanimentOptionDraft, isDefault: boolean): AccompanimentOptionInput | null {
+  const common = { ...(option.id ? { id: option.id } : {}), isDefault };
+  if (option.kind === "recipe") {
+    if (!option.recipeCode || option.portionsPerPerson === null) return null;
+    return { ...common, kind: "recipe", recipeCode: option.recipeCode, portionsPerPerson: option.portionsPerPerson };
+  }
+  if (!option.foodId || option.quantityPerPerson === null) return null;
+  return { ...common, kind: "food", foodId: option.foodId, quantityPerPerson: option.quantityPerPerson, unit: option.unit };
+}
+
+export function draftToInput(draft: AccompanimentDraft): AccompanimentInput | null {
+  const options: AccompanimentOptionInput[] = [];
+  for (const option of draft.options) {
+    const input = optionDraftToInput(option, option.key === draft.defaultKey);
+    if (!input) return null;
+    options.push(input);
+  }
+  return { name: draft.name.trim(), recipeCodes: draft.recipeCodes, options };
 }
 
 export function removeOptionDraft(draft: AccompanimentDraft, key: string): AccompanimentDraft {
@@ -133,7 +136,7 @@ export function searchOptionRecipes(query: string, recipes: Record<string, Recip
 }
 
 export function accompanimentOptionLabel(
-  option: Pick<AccompanimentOption, "kind" | "recipeCode" | "portionsPerPerson" | "foodId" | "quantityPerPerson" | "unit">,
+  option: AccompanimentOptionLabelSource,
   recipes: Record<string, RecipeDetails>,
   foods: Record<string, Food>,
 ): string {
@@ -143,7 +146,7 @@ export function accompanimentOptionLabel(
     return portions === 1 ? name : `${name} × ${formatQty(portions)}`;
   }
   const name = option.foodId ? (foods[option.foodId]?.name ?? "Aliment supprimé") : "Aliment à choisir";
-  return option.quantityPerPerson === null ? name : `${name} ${formatQty(option.quantityPerPerson)} ${option.unit ?? ""}`.trim();
+  return option.quantityPerPerson === null ? name : `${name} ${formatQty(option.quantityPerPerson)} ${option.unit}`.trim();
 }
 
 export const ACCOMPANIMENT_DEFAULT_VALUE = "";

@@ -1,4 +1,4 @@
-import { Accompaniment, AccompanimentInput, AccompanimentOptionKind } from "../../domain/accompaniment";
+import { Accompaniment, AccompanimentInput, AccompanimentOption, AccompanimentOptionKind } from "../../domain/accompaniment";
 import { getCodeById, getIdByCode } from "../../catalogue/recipeIdMap";
 
 export interface ApiAccompanimentOption {
@@ -39,20 +39,21 @@ export interface ApiAccompanimentPayload {
 const toCode = (id: string): string => getCodeById(id) ?? id;
 const toId = (code: string): string => getIdByCode(code) ?? code;
 
+function mapAccompanimentOption(option: ApiAccompanimentOption): AccompanimentOption[] {
+  if (option.kind === "recipe") {
+    if (option.recipeId === null) return [];
+    return [{ id: option.id, kind: "recipe", recipeCode: toCode(option.recipeId), portionsPerPerson: option.portionsPerPerson ?? 1 }];
+  }
+  if (option.foodId === null || option.quantityPerPerson === null || option.unit === null) return [];
+  return [{ id: option.id, kind: "food", foodId: option.foodId, quantityPerPerson: option.quantityPerPerson, unit: option.unit }];
+}
+
 export function mapAccompaniment(api: ApiAccompaniment): Accompaniment {
   return {
     id: api.id,
     name: api.name,
     recipeCodes: api.recipeIds.map(toCode),
-    options: api.options.map((option) => ({
-      id: option.id,
-      kind: option.kind,
-      recipeCode: option.recipeId ? toCode(option.recipeId) : null,
-      portionsPerPerson: option.portionsPerPerson,
-      foodId: option.foodId,
-      quantityPerPerson: option.quantityPerPerson,
-      unit: option.unit,
-    })),
+    options: api.options.flatMap(mapAccompanimentOption),
     defaultOptionId: api.defaultOptionId,
   };
 }
@@ -68,16 +69,12 @@ export function buildAccompanimentPayload(input: AccompanimentInput): ApiAccompa
     options: input.options.map((option) => {
       const common = { ...(option.id ? { id: option.id } : {}), kind: option.kind, isDefault: option.isDefault };
       if (option.kind === "recipe") {
-        return {
-          ...common,
-          ...(option.recipeCode ? { recipeId: toId(option.recipeCode) } : {}),
-          ...(option.portionsPerPerson !== null ? { portionsPerPerson: option.portionsPerPerson } : {}),
-        };
+        return { ...common, recipeId: toId(option.recipeCode), portionsPerPerson: option.portionsPerPerson };
       }
       return {
         ...common,
-        ...(option.foodId ? { foodId: option.foodId } : {}),
-        ...(option.quantityPerPerson !== null ? { quantityPerPerson: option.quantityPerPerson } : {}),
+        foodId: option.foodId,
+        quantityPerPerson: option.quantityPerPerson,
         ...(option.unit ? { unit: option.unit } : {}),
       };
     }),

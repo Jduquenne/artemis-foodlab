@@ -54,6 +54,7 @@ export const AccompanimentEditor = ({ initial, onDone }: AccompanimentEditorProp
     setError(validation);
     if (validation) return;
     const input = draftToInput(draft);
+    if (!input) return;
     const { id } = draft;
     const saved = await withPending(saveKey, () => (id ? updateAccompaniment(id, input) : createAccompaniment(input))).catch(() => undefined);
     if (saved) onDone();

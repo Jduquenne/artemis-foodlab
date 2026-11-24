@@ -15,6 +15,17 @@ Coding rules for this repo. The verifiable subset is summarised in `AGENTS.md` �
 - Props interfaces named `<ComponentName>Props`.
 - Prefer validation guards over casts on API strings (`parseUnit` / `isUnit` in `core/logic/unit/unitLogic.ts` instead of `as Unit`).
 
+## Absence and states (null / undefined)
+
+Owner rule (2026-11-24, issue #64, front and API alike; AGENTS.md golden rule 20).
+
+1. **One form of absence per value**: never `X | null | undefined`, never an optional and nullable property or parameter `?: X | null`.
+2. **No business meaning in an absence when there are more than two states**: use a discriminated union. Example: `FoodSelection = { kind: "default" } | { kind: "none" } | { kind: "food"; foodId }` (`core/domain/foodGroup.ts`) instead of `undefined` = no choice / `null` = none.
+3. **`null` only at the API boundary**: `Api*` types, mappers and services, where the HTTP contract imposes it (`foodId: null`, `PUT` « absent = unchanged, null = cleared »); domain, logic and UI receive explicit types. (Applied progressively: the existing `| null` outside the boundary are a later step of #64.)
+4. **`undefined` only where JS produces it** (`Array.find`, `Map.get`, record lookup, a simple optional parameter or property): handle it on the spot (default, early return, explicit type), never pass it on nor compare it as a business state.
+
+Enforcement: ESLint `no-restricted-syntax` in `eslint.config.js` blocks rule 1 everywhere in `src/` except the folders still in its `ignores` list; each cleanup step of #64 removes its folder from that list. Rules 2 to 4 are checked in review (`docs/development.md` § Golden-rule checks gives the greps). Planned in #64: TypeScript `exactOptionalPropertyTypes` (no explicit `undefined` in an optional property) and `noUncheckedIndexedAccess` (an index lookup may be missing).
+
 ## Files
 
 - One component per file.

@@ -44,6 +44,8 @@ grep -rnE "as unknown as|eslint-disable|: any\b|<any>" src
 grep -rnE "dark:[a-z:]*(text|bg)-slate-|bg-slate-900/" src
 grep -rn "/artemis-foodlab/" src
 grep -rn "core/services" src/core/logic
+grep -rnE "\| null \| undefined|\| undefined \| null|\?: [^=;]*\| null" src
+grep -rnE "[!=]== undefined|\? undefined :" src
 ```
 
 Comments (rule "zero comments", except `src/vite-env.d.ts`) are not reliably greppable; review the diff.
@@ -52,6 +54,8 @@ Known pre-existing hits:
 
 - Second command: **0 occurrence** since 2026-10-08 (all pairs replaced by the named theme colours, D-031, `docs/ui-design.md` § Theming). Any hit is now a regression.
 - Third command: `src/shared/components/ui/legalContent.ts` — the public app address in the legal notice. Permanent exception.
+- Fifth command (golden rule 20, rule 1): also enforced by ESLint outside the folders of its `ignores` list; on 2026-11-24, 32 « `X | null | undefined` » and 35 optional nullable properties or parameters, all in `core/domain`, `core/logic`, `core/services`, `features/planning`, `features/recipeBuilder`, `shared/components`, `shared/hooks` (issue #64 cleans them folder by folder). Any hit elsewhere is a regression.
+- Sixth command (golden rule 20, rules 2 and 4): review aid, not zero yet (93 hits on 2026-11-24); a hit is fine when it handles a JS-produced `undefined` on the spot, wrong when `undefined` is a business state.
 
 ## Branches and deployment
 

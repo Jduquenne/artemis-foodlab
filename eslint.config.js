@@ -20,4 +20,33 @@ export default defineConfig([
       globals: globals.browser,
     },
   },
+  {
+    files: ['src/**/*.{ts,tsx}'],
+    ignores: [
+      'src/core/domain/**',
+      'src/core/logic/**',
+      'src/core/services/**',
+      'src/features/planning/**',
+      'src/features/recipeBuilder/**',
+      'src/shared/components/**',
+      'src/shared/hooks/**',
+    ],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'TSUnionType:has(> TSNullKeyword):has(> TSUndefinedKeyword)',
+          message: 'One form of absence per value: never "X | null | undefined" (AGENTS.md golden rule 20).',
+        },
+        {
+          selector: 'TSPropertySignature[optional=true] > TSTypeAnnotation TSUnionType:has(> TSNullKeyword)',
+          message: 'One form of absence per value: never an optional and nullable property "?: X | null" (AGENTS.md golden rule 20).',
+        },
+        {
+          selector: ':matches(Identifier, AssignmentPattern)[optional=true] > TSTypeAnnotation TSUnionType:has(> TSNullKeyword)',
+          message: 'One form of absence per value: never an optional and nullable parameter "?: X | null" (AGENTS.md golden rule 20).',
+        },
+      ],
+    },
+  },
 ])

@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-24 — API hashes and #64 API progress (v6.166.11)
+- API session report: D-069, D-070, D-071 live in prod in API commit `adb5676` (migrations and CHECKs applied, 81 existing batches `unit: "portion"`, authenticated captures for #60, #61, #63); hash recorded in `docs/api.md`. D-068 (#59) hash still not reported (TODO(owner)).
+- #64 API side (API D-072, owner's go with the front's adjustments): slice 1 of 13 done (helpers and lint scaffolding, no contract change); `noUncheckedIndexedAccess` is its own slice (131 errors, all in API tests); ESLint messages in English; D-072 explains why the API enables `exactOptionalPropertyTypes` while the front does not (front D-045: React props).
+- Next on the front: `eqeqeq: "always"` (32 loose `== null` / `!= null`).
+
 ## 2026-11-24 — #64 step 4d: features clean, rule enforced everywhere (v6.166.10)
 - Done: the ESLint `ignores` list is gone; rule 1 applies to all of `src/`. Last violations: `DayColumnHeader.cost`, `PlanningHeader.weekCost`, `DayTabsBar.dayCost` become required `X | null` (their only caller always passes one), `IndustrialEquivalentField.value` `IndustrialEquivalentDraft | null`. Review of fabricated `undefined` (rules 2 and 4): the active profile (`Profile | null`) is no longer turned into `undefined` for the macro functions (`computeSlotMacros`, `computeDayMacros`, `computeWeekAverage`, `weekDayKcal` take `MacroProfile | null`; callers in `PlanningModule`, `JournalModule`, `MealSlotCard`, `WeekAverageModal`); `RecipeMetaForm` computes the cooked weight per portion only when a weight exists; `MultiMealSlot` gets its single recipe by destructuring and drops the redundant `recipeIds.length === 1 ? … : undefined` (same values). Remaining `?? undefined` are API mappers converting `null` to an optional domain field (boundary, rule 3) and one `null`-typed prop (`PriceSliderCard.onPrevious`, part of the later « null outside the boundary » step).
 - tsc + lint pass; **not checked in a browser**. Quick check: Planning day headers and tabs (kcal, cost), header week cost, a one-dish multi slot (persons badge, « Choix du repas » entry, persons editor default), journal day macros and week average with and without an active profile, Recipe Builder cooked weight hint and industrial equivalent field.

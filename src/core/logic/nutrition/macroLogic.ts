@@ -103,9 +103,10 @@ export function calculateOverriddenRecipeMacros(
   allRecipes: Record<string, RecipeDetails>,
   foodDb: Record<string, Food>,
 ): Macronutrients {
-  const ingredients = recipe.ingredients.map((ing) =>
-    ing.id in ingredientOverrides ? { ...ing, quantity: ingredientOverrides[ing.id] } : ing,
-  );
+  const ingredients = recipe.ingredients.map((ing) => {
+    const quantity = ingredientOverrides[ing.id];
+    return quantity === undefined ? ing : { ...ing, quantity };
+  });
   return calculateRecipeMacros({ ...recipe, ingredients, defaultPortions: 1 }, allRecipes, foodDb);
 }
 
@@ -203,9 +204,9 @@ function computeDishMacros(
     return calculateOverriddenRecipeMacros(fullRecipe, itemIngredientOverrides, recipes, catalogue.foods);
   }
   const isPersonalized = versioned !== catalogue.recipes || (!!tree && (tree.recipe !== catalogueRecipe || tree.recipes !== versioned));
-  const m = isPersonalized ? calculateRecipeMacros(fullRecipe, recipes, catalogue.foods) : catalogue.recipeMacros[recipeId];
+  const m = isPersonalized && fullRecipe ? calculateRecipeMacros(fullRecipe, recipes, catalogue.foods) : catalogue.recipeMacros[recipeId];
   if (!m) return { ...ZERO };
-  const baseGrams = isPersonalized ? calculateRecipeBaseGrams(fullRecipe, catalogue.foods) : catalogue.baseGrams[recipeId];
+  const baseGrams = isPersonalized && fullRecipe ? calculateRecipeBaseGrams(fullRecipe, catalogue.foods) : catalogue.baseGrams[recipeId];
   if (!isDish(recipe) && !isBase(recipe) && baseGrams) {
     return scaleMacros(m, (gramOverrides[itemKey] ?? baseGrams) / baseGrams);
   }

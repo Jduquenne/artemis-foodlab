@@ -47,9 +47,12 @@ export const InstructionsModal = ({ instructions, onChange, onClose }: Instructi
 
   const move = (i: number, dir: -1 | 1) => {
     const j = i + dir;
-    if (j < 0 || j >= steps.length) return;
+    const current = steps[i];
+    const other = steps[j];
+    if (current === undefined || other === undefined) return;
     const next = [...steps];
-    [next[i], next[j]] = [next[j], next[i]];
+    next[i] = other;
+    next[j] = current;
     onChange(next);
   };
 
@@ -65,8 +68,9 @@ export const InstructionsModal = ({ instructions, onChange, onClose }: Instructi
     if (lines.length <= 1) return;
     e.preventDefault();
     const el = e.currentTarget;
-    const before = steps[i].slice(0, el.selectionStart);
-    const after = steps[i].slice(el.selectionEnd);
+    const step = steps[i] ?? "";
+    const before = step.slice(0, el.selectionStart);
+    const after = step.slice(el.selectionEnd);
     focusIndexRef.current = i + lines.length - 1;
     onChange(spliceInstructionPaste(steps, i, before, after, lines));
   };

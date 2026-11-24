@@ -67,7 +67,7 @@ export const ShoppingItemSheet = ({
                     <h3 className="text-[11px] font-extrabold text-slate-400 uppercase tracking-widest">Pour quels repas · coche ce qui est déjà pris</h3>
                     {groups.map((group) => (
                         <SourceGroupRow
-                            key={group[0].recipeId}
+                            key={group[0]?.recipeId}
                             ingredientKey={item.key}
                             group={group}
                             sourceChecked={sourceChecked}

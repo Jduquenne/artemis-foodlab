@@ -15,7 +15,7 @@ export const LazyRender = ({ children, className, style, rootMargin = '300px' }:
     const el = ref.current;
     if (!el) return;
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      ([entry]) => { if (entry?.isIntersecting) setVisible(true); },
       { rootMargin },
     );
     observer.observe(el);

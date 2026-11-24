@@ -116,7 +116,7 @@ export const ShoppingModule = () => {
         const weekKeys = new Set(shoppingDays.map(d => `${d.year}-${d.week}`));
         for (const key of weekKeys) {
             const [year, week] = key.split('-').map(Number);
-            syncWeekFromApi(year, week);
+            if (year !== undefined && week !== undefined) syncWeekFromApi(year, week);
         }
     }, [authStatus, shoppingDays, refreshTick]);
 

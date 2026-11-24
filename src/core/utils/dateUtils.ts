@@ -41,7 +41,7 @@ export const formatDateMedium = (iso: string): string =>
   format(parseISO(iso), "d MMM yyyy", { locale: fr });
 
 export function formatNewsDate(dateStr: string): string {
-  const [year, month, day] = dateStr.split("-").map(Number);
+  const [year = 0, month = 1, day = 1] = dateStr.split("-").map(Number);
   return new Intl.DateTimeFormat("fr-FR", {
     day: "numeric",
     month: "long",

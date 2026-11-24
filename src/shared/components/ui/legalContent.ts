@@ -12,7 +12,7 @@ export interface LegalDocument {
   sections: LegalSection[];
 }
 
-export const LEGAL_DOCUMENTS: LegalDocument[] = [
+export const LEGAL_DOCUMENTS: readonly [LegalDocument, ...LegalDocument[]] = [
   {
     id: "privacy",
     label: "Confidentialité",

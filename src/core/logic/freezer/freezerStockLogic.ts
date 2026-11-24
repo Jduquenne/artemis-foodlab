@@ -1,7 +1,7 @@
 import { BatchFreezerItem, FoodFreezerItem, FreezerBag, FreezerCategory, FreezerItem } from "../../domain/freezer";
 import { isBatchItem, isFoodItem } from "../../domain/freezerPredicates";
 import { formatQty, pluralizeUnit } from "../unit/unitFormatLogic";
-import { groupBy, sumBy } from "../../utils/collectionUtils";
+import { earliestText, groupBy, sumBy } from "../../utils/collectionUtils";
 import { toNumber } from "../../utils/numberUtils";
 import { formatBatchQuantity } from "./batchQuantityLogic";
 
@@ -28,8 +28,8 @@ export function getFoodBagsSummary(item: FoodFreezerItem): string {
   if (count === 0) return "Vide";
   const bagsLabel = `${count} sac${count > 1 ? "s" : ""}`;
   const units = new Set(item.bags.map((b) => b.unit));
-  if (units.size === 1) {
-    const unit = item.bags[0].unit;
+  const [unit] = units;
+  if (units.size === 1 && unit !== undefined) {
     const total = totalBagQuantity(item.bags);
     return `${bagsLabel} · ${formatQty(total)}${unit ? " " + pluralizeUnit(unit, total) : ""}`;
   }
@@ -50,7 +50,7 @@ export function freezerBatchStocks(categories: FreezerCategory[]): FreezerBatchS
     .map(([recipeCode, items]) => ({
       recipeCode,
       portions: sumBy(items, (item) => item.quantity),
-      addedDate: items.map((item) => item.addedDate).sort()[0],
+      addedDate: earliestText(items.map((item) => item.addedDate)),
     }))
     .sort((a, b) => a.addedDate.localeCompare(b.addedDate) || a.recipeCode.localeCompare(b.recipeCode));
 }

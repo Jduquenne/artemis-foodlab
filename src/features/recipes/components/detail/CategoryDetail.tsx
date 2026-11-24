@@ -55,7 +55,7 @@ export const CategoryDetail = () => {
         const el = sentinelRef.current;
         if (!el) return;
         const observer = new IntersectionObserver(([entry]) => {
-            if (entry.isIntersecting) {
+            if (entry?.isIntersecting) {
                 setVisibleCount(prev => Math.min(prev + BATCH_SIZE, filteredRecipes.length));
             }
         }, { threshold: 0.1 });
@@ -108,22 +108,26 @@ export const CategoryDetail = () => {
 
             <div ref={scrollRef} className="flex-1 justify-center min-h-0 overflow-y-auto" onScroll={() => { markScrolling(); onScroll(); }}>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-3 pb-2">
-                    {visibleRecipes.map((recipe, i) => (
+                    {visibleRecipes.map((recipe, i) => {
+                        const details = recipesDb[recipe.id];
+                        if (!details) return null;
+                        return (
                         <LazyRender key={recipe.id} className={`aspect-[10/11] ${initial ? '' : 'animate-fade-in-up'}`} style={initial ? undefined : { animationDelay: `${i * 25}ms` }}>
                             <FlipCard
                                 name={recipe.name}
                                 frontContent={
                                     recipe.isIngredientKind
-                                        ? <FoodPhotoCard recipe={recipesDb[recipe.id]} fill />
-                                        : <RecipePhotoCard recipeId={recipe.id} recipe={recipesDb[recipe.id]} fill />
+                                        ? <FoodPhotoCard recipe={details} fill />
+                                        : <RecipePhotoCard recipeId={recipe.id} recipe={details} fill />
                                 }
-                                backContent={recipe.isIngredientKind ? undefined : <RecipeIngredientsCard recipeId={recipe.id} recipe={recipesDb[recipe.id]} fill />}
+                                backContent={recipe.isIngredientKind ? undefined : <RecipeIngredientsCard recipeId={recipe.id} recipe={details} fill />}
                                 recipeUrl={recipe.recipeUrl}
                                 onClick={() => navigate(`/recipes/detail/${recipe.id}?category=${categoryId}`)}
-                                onAddToPlanning={isPlannable(recipesDb[recipe.id]) ? () => navigate(`/planning?addRecipe=${recipe.id}`) : undefined}
+                                onAddToPlanning={isPlannable(details) ? () => navigate(`/planning?addRecipe=${recipe.id}`) : undefined}
                             />
                         </LazyRender>
-                    ))}
+                    );
+                    })}
                 </div>
                 {visibleCount < filteredRecipes.length && (
                     <div ref={sentinelRef} className="flex justify-center items-center gap-2 py-6 text-slate-400">

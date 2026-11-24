@@ -77,7 +77,7 @@ export const PlanningUsageCard = () => {
                       <div className="hidden sm:block w-12 h-1 rounded-full bg-slate-100 overflow-hidden">
                         <div
                           className="h-full bg-emerald-500 origin-left"
-                          style={{ transform: `scaleX(${dish.plannedCount / insights.mostPlanned[0].plannedCount})` }}
+                          style={{ transform: `scaleX(${dish.plannedCount / (insights.mostPlanned[0]?.plannedCount ?? dish.plannedCount)})` }}
                         />
                       </div>
                       <span className="shrink-0 w-8 text-right text-sm font-black tabular-nums text-slate-700">

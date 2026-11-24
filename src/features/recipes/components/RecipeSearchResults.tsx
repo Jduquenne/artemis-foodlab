@@ -38,18 +38,22 @@ export const RecipeSearchResults = ({ results, searchQuery, foodName, scrollKey 
                 </div>
             ) : (
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-3 pb-4">
-                    {results.map((recipe) => (
+                    {results.map((recipe) => {
+                        const details = recipesDb[recipe.recipeId];
+                        if (!details) return null;
+                        return (
                         <LazyRender key={recipe.id} className="aspect-[10/11]">
                             <FlipCard
                                 name={recipe.name}
-                                frontContent={<RecipePhotoCard recipeId={recipe.recipeId} recipe={recipesDb[recipe.recipeId]} fill />}
-                                backContent={<RecipeIngredientsCard recipeId={recipe.recipeId} recipe={recipesDb[recipe.recipeId]} fill />}
+                                frontContent={<RecipePhotoCard recipeId={recipe.recipeId} recipe={details} fill />}
+                                backContent={<RecipeIngredientsCard recipeId={recipe.recipeId} recipe={details} fill />}
                                 recipeUrl={recipe.recipeUrl}
                                 onClick={() => navigate(`/recipes/detail/${recipe.recipeId}`)}
-                                onAddToPlanning={isPlannable(recipesDb[recipe.recipeId]) ? () => navigate(`/planning?addRecipe=${recipe.recipeId}`) : undefined}
+                                onAddToPlanning={isPlannable(details) ? () => navigate(`/planning?addRecipe=${recipe.recipeId}`) : undefined}
                             />
                         </LazyRender>
-                    ))}
+                    );
+                    })}
                 </div>
             )}
         </div>

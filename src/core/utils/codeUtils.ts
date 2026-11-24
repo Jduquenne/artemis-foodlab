@@ -12,8 +12,8 @@ export function highestSequence(codes: readonly string[], prefix: string): numbe
 
 export function nextSequentialCode(prefix: string, codes: readonly string[], minWidth = 3): string {
   const digitsWidth = codes.reduce((width, code) => {
-    const match = new RegExp(`^${prefix}-(\\d+)$`).exec(code);
-    return match ? Math.max(width, match[1].length) : width;
+    const digits = new RegExp(`^${prefix}-(\\d+)$`).exec(code)?.[1];
+    return digits ? Math.max(width, digits.length) : width;
   }, minWidth);
   return `${prefix}-${padNumber(highestSequence(codes, prefix) + 1, digitsWidth)}`;
 }

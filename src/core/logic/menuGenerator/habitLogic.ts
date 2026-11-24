@@ -12,6 +12,7 @@ import {
   RecipeDietProfile,
 } from "../../domain/menuGenerator";
 import { DAYS } from "../../domain/planningConfig";
+import { cyclicItem } from "../../utils/collectionUtils";
 import { RecipeDetails } from "../../domain/recipe";
 import { foldText, normalizeQuery, rankByQuery } from "../../utils/textUtils";
 import { MenuCatalogue, isGeneratableDish } from "./candidateLogic";
@@ -132,7 +133,7 @@ export function respectsStrictHabits(recipe: RecipeDetails, habits: SlotHabits, 
 }
 
 function dayIndexes(days: readonly string[]): number[] {
-  return DAYS.map((_, index) => index).filter((index) => days.includes(DAYS[index]));
+  return DAYS.flatMap((day, index) => (days.includes(day) ? [index] : []));
 }
 
 export function formatHabitDays(days: readonly string[]): string {
@@ -143,7 +144,7 @@ export function formatHabitDays(days: readonly string[]): string {
     if (last && last[1] === index - 1) last[1] = index;
     else ranges.push([index, index]);
   }
-  const name = (index: number) => DAYS[index].toLowerCase();
+  const name = (index: number) => cyclicItem(DAYS, index).toLowerCase();
   return ranges
     .map(([start, end]) => (start === end ? name(start) : end === start + 1 ? `${name(start)}, ${name(end)}` : `${name(start)} → ${name(end)}`))
     .join(", ");

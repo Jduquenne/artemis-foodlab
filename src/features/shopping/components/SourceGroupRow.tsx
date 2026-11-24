@@ -26,11 +26,13 @@ export const SourceGroupRow = ({ ingredientKey, group, sourceChecked, onToggleSo
     if (pending) return;
     onToggleSource(ingredientKey, group, !allChecked);
   };
+  const [src] = group;
+  if (!src) return null;
 
   if (group.length > 1) {
     const sorted = [...group].sort((a, b) => compareText(a.isoDate, b.isoDate));
     const totalQty = sumBy(group, s => s.quantity);
-    const unit = group[0].unit;
+    const unit = src.unit;
     const uniqueSlots = [...new Set(group.map(s => s.slot))];
     const slotLabel = uniqueSlots.length === 1 ? (SLOT_LABELS[uniqueSlots[0] as SlotType] ?? uniqueSlots[0]) : null;
 
@@ -47,7 +49,7 @@ export const SourceGroupRow = ({ ingredientKey, group, sourceChecked, onToggleSo
         <div className="min-w-0 flex-1">
           <div className="flex items-center justify-between gap-2">
             <p className={`text-sm font-semibold text-slate-800 leading-tight ${allChecked ? 'line-through' : ''}`}>
-              {group[0].recipeName}
+              {src.recipeName}
             </p>
             <span className="text-xs font-medium text-orange-500 shrink-0">
               {formatSourceQty(totalQty, unit)}
@@ -64,7 +66,6 @@ export const SourceGroupRow = ({ ingredientKey, group, sourceChecked, onToggleSo
     );
   }
 
-  const src = group[0];
   const isChecked = sourceChecked.has(buildSourceCheckKey(ingredientKey, src));
 
   return (

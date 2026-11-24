@@ -71,6 +71,7 @@ export function moveShoppingAisle<T>(order: readonly T[], from: number, to: numb
   if (from === to || from < 0 || to < 0 || from >= order.length || to >= order.length) return [...order];
   const next = [...order];
   const [moved] = next.splice(from, 1);
+  if (moved === undefined) return [...order];
   next.splice(to, 0, moved);
   return next;
 }
@@ -82,7 +83,7 @@ export function shoppingAisleOrderPayload(
   const defaults = defaultShoppingAisles(customCategories);
   const knownIds = new Set(defaults.map((aisle) => aisle.id));
   const ids = orderIds.filter((id) => knownIds.has(id));
-  const isDefault = ids.length === defaults.length && ids.every((id, index) => id === defaults[index].id);
+  const isDefault = ids.length === defaults.length && ids.every((id, index) => id === defaults[index]?.id);
   return isDefault ? null : ids;
 }
 

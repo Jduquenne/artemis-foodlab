@@ -57,8 +57,8 @@ const PASSWORD_ALPHABET = "abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456
 export function generatePassword(length = 16): string {
   const values = crypto.getRandomValues(new Uint32Array(length));
   let result = "";
-  for (let i = 0; i < length; i += 1) {
-    result += PASSWORD_ALPHABET[values[i] % PASSWORD_ALPHABET.length];
+  for (const value of values) {
+    result += PASSWORD_ALPHABET.charAt(value % PASSWORD_ALPHABET.length);
   }
   return result;
 }

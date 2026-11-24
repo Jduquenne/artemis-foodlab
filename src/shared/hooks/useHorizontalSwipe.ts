@@ -9,13 +9,15 @@ export function useHorizontalSwipe(onSwipe: (direction: SwipeDirection) => void)
   const start = useRef<{ x: number; y: number } | null>(null);
 
   const onTouchStart = (e: TouchEvent) => {
-    start.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    const touch = e.touches[0];
+    start.current = touch ? { x: touch.clientX, y: touch.clientY } : null;
   };
 
   const onTouchEnd = (e: TouchEvent) => {
-    if (!start.current) return;
-    const dx = e.changedTouches[0].clientX - start.current.x;
-    const dy = e.changedTouches[0].clientY - start.current.y;
+    const touch = e.changedTouches[0];
+    if (!start.current || !touch) return;
+    const dx = touch.clientX - start.current.x;
+    const dy = touch.clientY - start.current.y;
     start.current = null;
     if (Math.abs(dx) < MIN_SWIPE_DISTANCE || Math.abs(dy) > Math.abs(dx)) return;
     onSwipe(dx < 0 ? "left" : "right");

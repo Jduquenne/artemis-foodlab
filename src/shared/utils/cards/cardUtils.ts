@@ -167,16 +167,16 @@ export function buildInstructionText(
   for (const step of instructions) {
     if (curY > maxY) break;
     const lines = wrapToLines(step, areaWidth - INSTRUCTION_TEXT_INDENT, ctx);
-    for (let li = 0; li < lines.length; li++) {
+    for (const [li, line] of lines.entries()) {
       if (curY > maxY) break;
       if (li === 0) {
         const dy = parts.length > 0 ? ` dy="${lineH}"` : "";
         parts.push(
-          `<tspan x="${bulletX}"${dy}>•</tspan><tspan x="${textX}">${escapeXml(lines[0])}</tspan>`,
+          `<tspan x="${bulletX}"${dy}>•</tspan><tspan x="${textX}">${escapeXml(line)}</tspan>`,
         );
       } else {
         parts.push(
-          `<tspan x="${textX}" dy="${lineH}">${escapeXml(lines[li])}</tspan>`,
+          `<tspan x="${textX}" dy="${lineH}">${escapeXml(line)}</tspan>`,
         );
       }
       curY += lineH;
@@ -224,32 +224,31 @@ export function buildRecetteIngredients(
   let cumY = yStart;
   const ctx = makeMeasureCtx(`${fontSize}px Oswald, Arial Narrow, sans-serif`);
 
-  for (let i = 0; i < ingredients.length; i++) {
-    const item = ingredients[i];
+  for (const [i, item] of ingredients.entries()) {
     const subLines = wrapLineAtMaxChars(item.text, lineMaxChars);
 
-    for (let si = 0; si < subLines.length; si++) {
+    for (const [si, subLine] of subLines.entries()) {
       const isVeryFirst = i === 0 && si === 0;
 
       if (isVeryFirst) {
         tspanParts.push(
-          `  <tspan x="${xStart}" dy="0">${escapeXml(subLines[si])}</tspan>`,
+          `  <tspan x="${xStart}" dy="0">${escapeXml(subLine)}</tspan>`,
         );
       } else if (si === 0) {
         const dy = item.isNewCategory ? lineH + catExtraH : lineH;
         cumY += dy;
         tspanParts.push(
-          `  <tspan x="${xStart}" dy="${dy.toFixed(2)}">${escapeXml(subLines[si])}</tspan>`,
+          `  <tspan x="${xStart}" dy="${dy.toFixed(2)}">${escapeXml(subLine)}</tspan>`,
         );
       } else {
         cumY += lineH;
         tspanParts.push(
-          `  <tspan x="${xStart}" dy="${lineH.toFixed(2)}">${escapeXml(subLines[si])}</tspan>`,
+          `  <tspan x="${xStart}" dy="${lineH.toFixed(2)}">${escapeXml(subLine)}</tspan>`,
         );
       }
 
       if (si === 0 && item.baseLabel) {
-        const textWidth = ctx.measureText(subLines[0]).width;
+        const textWidth = ctx.measureText(subLine).width;
         const badgeX = xStart + textWidth + RECETTE_BADGE_GAP;
         rectParts.push(
           `<rect x="${badgeX.toFixed(1)}" y="${(cumY - badgeOffsetY).toFixed(1)}" width="${badgeW.toFixed(1)}" height="${badgeH.toFixed(1)}" rx="1.5" fill="${colors.band}" />`,

@@ -226,7 +226,7 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
     const blockSlots = sequence.filter(({ day }) => blockKeyOf(day) === blockKey);
     return {
       blockKey,
-      label: blocks.get(blockSlots[0].day.date)?.label ?? blockKey,
+      label: blocks.get(blockSlots[0]?.day.date ?? "")?.label ?? blockKey,
       dayCount: new Set(blockSlots.map(({ day }) => day.date)).size,
       slots: blockSlots
         .filter(({ key }) => !isKept(key) && !fixedOf(key) && !reservations[key] && !habitsOf(key).noMeal)
@@ -270,7 +270,7 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
   let sameDayCategoryIds: string[] = [];
 
   for (const [index, { day, slot, key }] of sequence.entries()) {
-    if (index > 0 && sequence[index - 1].day.date !== day.date) sameDayCategoryIds = [];
+    if (index > 0 && sequence[index - 1]?.day.date !== day.date) sameDayCategoryIds = [];
     const blockKey = blockKeyOf(day);
     const countOf = (quotaId: string) => counts.get(quotaCounterKey(quotaId, blockKey)) ?? 0;
     const place = (meal: GeneratedMeal, categoryId: string | null) => {

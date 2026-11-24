@@ -117,7 +117,7 @@ export const PlanningSlot = ({
           copySourceDessertId={copyProps.copySourceDessertId}
           dessertCopyTargetState={copyProps.dessertCopyTargetState}
           onSelectDessertAsTarget={copyProps.dessertCopyTargetState ? onSelectAsTarget : undefined}
-          inFreezer={recipeIds.length > 0 && batchRecipeIds?.has(recipeIds[0])}
+          inFreezer={recipeIds[0] !== undefined && batchRecipeIds?.has(recipeIds[0])}
           foodChoices={savedMeal?.foodChoices}
           onChooseFood={!blocked ? onChooseFood : undefined}
         />

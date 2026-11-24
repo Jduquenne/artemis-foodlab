@@ -2,7 +2,7 @@ import { MealType } from "./recipe";
 
 export type GeneratedSlotType = MealType.LUNCH | MealType.DINNER;
 
-export const GENERATED_SLOTS: readonly GeneratedSlotType[] = [MealType.LUNCH, MealType.DINNER];
+export const GENERATED_SLOTS: readonly [GeneratedSlotType, ...GeneratedSlotType[]] = [MealType.LUNCH, MealType.DINNER];
 
 export const GENERATED_SLOT_LABELS: Record<GeneratedSlotType, string> = {
   [MealType.LUNCH]: "Déjeuner",

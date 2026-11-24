@@ -7,10 +7,12 @@ export type MacroMedians = Partial<Record<FilterMacroKey, number>>;
 export type TypeMedians = Record<RecipeFilterType, MacroMedians>;
 
 export function median(values: number[]): number | null {
-  if (values.length === 0) return null;
   const sorted = [...values].sort((a, b) => a - b);
   const middle = Math.floor(sorted.length / 2);
-  return sorted.length % 2 === 0 ? (sorted[middle - 1] + sorted[middle]) / 2 : sorted[middle];
+  const upper = sorted[middle];
+  if (upper === undefined) return null;
+  const lower = sorted[middle - 1];
+  return sorted.length % 2 === 0 && lower !== undefined ? (lower + upper) / 2 : upper;
 }
 
 export function computeMedians(
@@ -18,9 +20,10 @@ export function computeMedians(
   recipeMacros: Record<string, Macronutrients>,
   type: RecipeFilterType,
 ): MacroMedians {
-  const references = Object.entries(recipes)
-    .filter(([id, recipe]) => id in recipeMacros && matchesFilterType(recipe, type))
-    .map(([id]) => recipeMacros[id]);
+  const references = Object.entries(recipes).flatMap(([id, recipe]) => {
+    const macros = recipeMacros[id];
+    return macros && matchesFilterType(recipe, type) ? [macros] : [];
+  });
   const medians: MacroMedians = {};
   for (const { key } of MACRO_DISPLAYS) {
     const value = median(references.map((macros) => macros[key]));

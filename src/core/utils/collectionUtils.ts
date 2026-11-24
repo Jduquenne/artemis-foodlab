@@ -67,3 +67,18 @@ export function removeById<T extends { id: string }>(items: readonly T[], id: st
 export function setEnabledById<T extends { id: string; enabled: boolean }>(items: readonly T[], id: string, enabled: boolean): T[] {
   return items.map((item) => (item.id === id ? { ...item, enabled } : item));
 }
+
+export function cyclicItem<T>(list: readonly [T, ...T[]], index: number): T {
+  const length = list.length;
+  return list[((index % length) + length) % length] ?? list[0];
+}
+
+export function firstAndLast<T>(list: readonly T[]): { first: T; last: T } | null {
+  const first = list[0];
+  const last = list[list.length - 1];
+  return first !== undefined && last !== undefined ? { first, last } : null;
+}
+
+export function earliestText(values: readonly string[]): string {
+  return [...values].sort()[0] ?? "";
+}

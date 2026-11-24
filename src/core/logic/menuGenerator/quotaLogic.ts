@@ -2,6 +2,7 @@ import { MealReason, PeriodDay, QUOTA_BLOCK_DAYS, QuotaStrictness, QuotaTarget, 
 import { formatSourceDayShort } from "../../utils/dateUtils";
 import { RecipeDetails } from "../../domain/recipe";
 import { pickRandom } from "../../utils/randomUtils";
+import { firstAndLast } from "../../utils/collectionUtils";
 import { HabitMatcher, HabitNames, habitTargetLabel, matchesHabitTarget, validateHabitTarget } from "./habitLogic";
 
 export const QUOTA_SCORE = 3;
@@ -75,7 +76,9 @@ export function periodBlocks(days: readonly PeriodDay[]): Map<string, { blockKey
   for (let start = 0; start < days.length; start += QUOTA_BLOCK_DAYS) {
     const blockDays = days.slice(start, start + QUOTA_BLOCK_DAYS);
     const number = start / QUOTA_BLOCK_DAYS + 1;
-    const range = `${formatSourceDayShort(blockDays[0].date)} → ${formatSourceDayShort(blockDays[blockDays.length - 1].date)}`;
+    const bounds = firstAndLast(blockDays);
+    if (!bounds) continue;
+    const range = `${formatSourceDayShort(bounds.first.date)} → ${formatSourceDayShort(bounds.last.date)}`;
     for (const day of blockDays) result.set(day.date, { blockKey: `block-${number}`, label: `Semaine ${number} (${range})` });
   }
   return result;

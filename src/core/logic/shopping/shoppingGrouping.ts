@@ -70,10 +70,7 @@ export function assignIngredientColumns(
   const stableAssignment = distributeToColumns(allGroups, (g) => g.list.length, colCount);
   const colForKey = new Map<string, number>();
   stableAssignment.forEach((col, ci) => col.forEach((g) => colForKey.set(g.key, ci)));
-  const cols: IngredientGroup[][] = Array.from({ length: colCount }, () => []);
-  for (const group of filteredGroups) {
-    const ci = colForKey.get(group.key) ?? 0;
-    cols[ci].push(group);
-  }
-  return cols;
+  return Array.from({ length: colCount }, (_, ci) =>
+    filteredGroups.filter((group) => (colForKey.get(group.key) ?? 0) === ci),
+  );
 }

@@ -74,7 +74,9 @@ export const MultiMealSlot = ({
     const isPersonsPending = usePendingKey(`planning-persons:${slotId}`);
     const isSingleRemovePending = usePendingKey(`planning-recipe-remove:${slotId}:${recipeIds[0] ?? ''}`);
 
-    const firstRecipe = recipeIds.length === 1 ? plannable[recipeIds[0]] : undefined;
+    const [firstId] = recipeIds;
+    const isSingle = recipeIds.length === 1;
+    const firstRecipe = isSingle && firstId ? plannable[firstId] : undefined;
     const singleHasPhoto = Boolean(firstRecipe?.assets?.mealPhoto);
     const singleHasRecipesPage = Boolean(firstRecipe?.assets?.mealPhoto || firstRecipe?.assets?.instructionsPhoto);
     const singleIsDish = isDish(firstRecipe) || isBase(firstRecipe);
@@ -126,7 +128,7 @@ export const MultiMealSlot = ({
     const singleMetaEditable = !!singleRecipeId && !!onSaveRecipeMeta && (singleIsDish || singleBaseGrams > 0 || singleCurrentPersons !== undefined);
     const showSingleBadge = !!singleRecipeId && !isAddMode && !copyTargetState && !!onSaveRecipeMeta && !isEditingPersons && (singleIsDish || singleBaseGrams > 0 || singleCurrentPersons !== undefined);
 
-    const inFreezer = recipeIds.length === 1 && (batchRecipeIds?.has(recipeIds[0]) ?? false);
+    const inFreezer = isSingle && !!firstId && (batchRecipeIds?.has(firstId) ?? false);
     const displayPersons = persons ?? (recipeIds.length === 1 ? defaultPersonsOf(firstRecipe) : undefined);
     const isPersonsCustom = persons !== undefined;
     const showPersonsBadge = hasRecipes && !isAddMode && !copyTargetState && !editingMetaId && !isEditingPersons && displayPersons !== undefined && !!onOpenPersonsEditor;
@@ -156,7 +158,7 @@ export const MultiMealSlot = ({
 
                 {recipeIds.length === 1 && (
                     <button
-                        onClick={!isTargetMode && singleHasRecipesPage ? () => onNavigateToRecipe(recipeIds[0]) : undefined}
+                        onClick={!isTargetMode && singleHasRecipesPage && isSingle && firstId ? () => onNavigateToRecipe(firstId) : undefined}
                         className={`w-full h-full ${!singleHasRecipesPage || isTargetMode ? 'cursor-default' : ''}`}
                     >
                         {singleHasPhoto && firstRecipe && (

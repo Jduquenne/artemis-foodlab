@@ -1,6 +1,7 @@
 import { RecipeDetails, RecipeKind } from "../../domain/recipe";
 import { BaseEntry, ConsolidatedIngredient, IngredientSource, RecipeCard, RecipeCardIngredient } from "../../domain/shopping";
 import { compareByName, compareText } from "../../utils/sortUtils";
+import { earliestText } from "../../utils/collectionUtils";
 
 export function groupAndSortSources(sources: IngredientSource[]): IngredientSource[][] {
   const seen = new Map<string, IngredientSource[]>();
@@ -9,8 +10,8 @@ export function groupAndSortSources(sources: IngredientSource[]): IngredientSour
     if (existing) { existing.push(src); } else { seen.set(src.recipeId, [src]); }
   }
   return [...seen.values()].sort((a, b) => {
-    const minA = a.reduce((m, s) => s.isoDate < m ? s.isoDate : m, a[0].isoDate);
-    const minB = b.reduce((m, s) => s.isoDate < m ? s.isoDate : m, b[0].isoDate);
+    const minA = earliestText(a.map((s) => s.isoDate));
+    const minB = earliestText(b.map((s) => s.isoDate));
     return compareText(minA, minB);
   });
 }

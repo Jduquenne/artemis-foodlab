@@ -9,6 +9,7 @@ import {
 } from "../../domain/menuGenerator";
 import { Macronutrients } from "../../domain/nutrition";
 import { DAYS } from "../../domain/planningConfig";
+import { firstAndLast } from "../../utils/collectionUtils";
 import { formatSourceDayShort, formatWeekdayShort, isoDateFromWeekDay } from "../../utils/dateUtils";
 import { mealKey } from "./menuEngineLogic";
 import { DayNutrients, EMPTY_NUTRIENTS, addNutrients, hasDayLimits, nutrientsOutOfLimits, recipeNutrients } from "./dayNutritionLogic";
@@ -63,11 +64,13 @@ export function previewWeeks(days: readonly PeriodDay[]): PreviewWeek[] {
     const key = `${day.year}-W${day.week}`;
     weeks.set(key, [...(weeks.get(key) ?? []), day]);
   }
-  return [...weeks.entries()].map(([key, weekDays]) => {
-    const { year, week } = weekDays[0];
+  return [...weeks.entries()].flatMap(([key, weekDays]) => {
+    const bounds = firstAndLast(weekDays);
+    if (!bounds) return [];
+    const { year, week } = bounds.first;
     const inPeriod = new Set(weekDays.map((day) => day.date));
-    const first = weekDays[0].date;
-    const last = weekDays[weekDays.length - 1].date;
+    const first = bounds.first.date;
+    const last = bounds.last.date;
     const range = first === last ? formatSourceDayShort(first) : `${formatSourceDayShort(first)} → ${formatSourceDayShort(last)}`;
     return {
       key,

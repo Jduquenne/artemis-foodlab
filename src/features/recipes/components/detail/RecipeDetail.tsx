@@ -79,7 +79,13 @@ export const RecipeDetail = () => {
   const cost = useRecipeCost(recipe, portions);
   const cookingRows = useRecipeCooking(recipe, portions);
 
-  const linkedBases = useMemo(() => (scaledRecipe ? getLinkedBases(recipes, scaledRecipe) : []), [recipes, scaledRecipe]);
+  const linkedBases = useMemo(
+    () => (scaledRecipe ? getLinkedBases(recipes, scaledRecipe) : []).flatMap((base) => {
+      const recipe = recipes[base.id];
+      return recipe ? [{ ...base, recipe }] : [];
+    }),
+    [recipes, scaledRecipe],
+  );
 
   if (!recipe) return <RecipeNotFound />;
   if (!scaledRecipe || (!mealPhotoUrl && !instructionsPhotoUrl)) return null;
@@ -138,8 +144,8 @@ export const RecipeDetail = () => {
         {linkedBases.length > 0 && (
           <div className="hidden sm:flex flex-1 min-h-0 items-center justify-end pr-3">
             <div className="flex flex-col items-center gap-3">
-              {linkedBases.map(({ id, name, portions: basePortions }) => (
-                <LinkedBaseLink key={id} id={id} name={name} portions={basePortions} recipe={recipes[id]} />
+              {linkedBases.map(({ id, name, portions: basePortions, recipe: baseRecipe }) => (
+                <LinkedBaseLink key={id} id={id} name={name} portions={basePortions} recipe={baseRecipe} />
               ))}
             </div>
           </div>
@@ -189,8 +195,8 @@ export const RecipeDetail = () => {
           )}
           {linkedBases.length > 0 && (
             <div className="flex flex-wrap gap-3 items-start justify-center w-full">
-              {linkedBases.map(({ id, name, portions: basePortions }) => (
-                <LinkedBaseLink key={id} id={id} name={name} portions={basePortions} recipe={recipes[id]} compact />
+              {linkedBases.map(({ id, name, portions: basePortions, recipe: baseRecipe }) => (
+                <LinkedBaseLink key={id} id={id} name={name} portions={basePortions} recipe={baseRecipe} compact />
               ))}
             </div>
           )}

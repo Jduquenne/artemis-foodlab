@@ -274,10 +274,15 @@ export function personalizeRecipeTree(
     });
     return { ...target, ingredients };
   };
-  const baseCodes = [...changes.keys()].filter((code) => code !== recipe.code && recipes[code]);
-  const personalizedRecipes = baseCodes.length === 0
+  const bases = [...changes.keys()]
+    .filter((code) => code !== recipe.code)
+    .flatMap((code): [string, RecipeDetails][] => {
+      const base = recipes[code];
+      return base ? [[code, base]] : [];
+    });
+  const personalizedRecipes = bases.length === 0
     ? recipes
-    : { ...recipes, ...Object.fromEntries(baseCodes.map((code) => [code, apply(recipes[code])])) };
+    : { ...recipes, ...Object.fromEntries(bases.map(([code, base]) => [code, apply(base)])) };
   return { recipe: apply(recipe), recipes: personalizedRecipes };
 }
 

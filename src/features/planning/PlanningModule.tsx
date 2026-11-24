@@ -34,6 +34,7 @@ import { useSearchParams } from 'react-router-dom';
 import { SlotType, MealSlot } from '../../core/domain/planning';
 import { isDessert, canAddDessert } from '../../core/domain/recipePredicates';
 import { MEAL_SLOTS, DAYS } from '../../core/domain/planningConfig';
+import { cyclicItem } from '../../core/utils/collectionUtils';
 import { SLOT_DISPLAY } from './slotDisplay';
 import { useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
 import { computeSlotCopyProps } from '../../core/logic/planning/planningCopyLogic';
@@ -454,7 +455,7 @@ export const PlanningModule = () => {
                     hasShoppingDays={shopping.hasShoppingDays}
                     onPrevWeek={() => changeWeek(-1)}
                     onNextWeek={() => changeWeek(1)}
-                    onDateChange={(dateStr, dayIndex) => setSearchParams(p => { p.set('d', dateStr); p.set('day', DAYS[dayIndex]); return p; }, { replace: true })}
+                    onDateChange={(dateStr, dayIndex) => setSearchParams(p => { p.set('d', dateStr); p.set('day', cyclicItem(DAYS, dayIndex)); return p; }, { replace: true })}
                     onEnterSelectionMode={enterSelectionMode}
                     onOpenGenerator={isAdmin ? () => setGeneratorOpen(true) : undefined}
                 />
@@ -528,7 +529,7 @@ export const PlanningModule = () => {
                                     day={day}
                                     dayIndex={i}
                                     monday={monday}
-                                    kcal={dayKcal[day]}
+                                    kcal={dayKcal[day] ?? 0}
                                     cost={planningCost?.days[day] ?? null}
                                     isSelectionMode={isSelectionMode}
                                     selected={selected}
@@ -621,7 +622,7 @@ export const PlanningModule = () => {
             <WeekNavZone direction="next" visible={!!activeDragId} isActive={weekNavZone === 'next'} />
 
             <DragOverlay dropAnimation={null}>
-                {activeMeal && activeMeal.recipeIds.length > 0 && (
+                {activeMeal?.recipeIds[0] && (
                     <MealDragOverlay recipeId={activeMeal.recipeIds[0]} />
                 )}
             </DragOverlay>

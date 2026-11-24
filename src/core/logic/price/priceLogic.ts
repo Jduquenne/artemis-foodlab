@@ -23,7 +23,8 @@ export interface CostEstimate {
 
 export function effectivePriceStoreId(priceStoreId: string | null | undefined, stores: readonly PriceStore[]): string | null {
   if (priceStoreId && stores.some((s) => s.id === priceStoreId)) return priceStoreId;
-  return stores.length === 1 ? stores[0].id : null;
+  const [only] = stores;
+  return stores.length === 1 && only ? only.id : null;
 }
 
 export function latestPricesByFood(prices: readonly FoodPrice[], storeId: string | null): Map<string, FoodPrice> {

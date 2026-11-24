@@ -72,10 +72,9 @@ function isMainMeal(recipe: RecipeDetails): boolean {
 }
 
 export function seasonalMealIds(month: number, catalogue: SeasonCatalogue): Set<string> {
-  return new Set(Object.keys(catalogue.recipes).filter((id) => {
-    const recipe = catalogue.recipes[id];
-    return isMainMeal(recipe) && isSeasonalRecipe(recipe, month, catalogue);
-  }));
+  return new Set(Object.entries(catalogue.recipes)
+    .filter(([, recipe]) => isMainMeal(recipe) && isSeasonalRecipe(recipe, month, catalogue))
+    .map(([id]) => id));
 }
 
 export function recipeSeasonMonths(recipe: RecipeDetails, catalogue: SeasonCatalogue): number[] {

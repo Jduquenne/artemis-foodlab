@@ -50,7 +50,7 @@ export const FreezerBagsSection = ({ bags, selectedBagIds, onToggleBag }: Freeze
                     + {unselectedCount} sac(s) non sélectionné(s)
                 </button>
             )}
-            {selected.length > 0 && (
+            {selected[0] && (
                 <p className="text-xs text-cyan-600 font-semibold px-3">
                     {formatQty(totalBagQuantity(selected))} {pluralizeUnit(selected[0].unit, 0)} déduits de la liste
                 </p>

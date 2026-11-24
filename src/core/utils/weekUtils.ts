@@ -1,4 +1,5 @@
 import { getISOWeek, getISOWeekYear } from "date-fns";
+import { cyclicItem } from "./collectionUtils";
 import { DAYS } from "../domain/planningConfig";
 
 export { getISOWeek as getWeekNumber, getISOWeekYear as getWeekYear } from "date-fns";
@@ -43,4 +44,4 @@ export const getWeekRange = (monday: Date) => {
   return `${formatDateShort(monday)} au ${formatDateShort(sunday)}`;
 };
 
-export const dayNameOf = (date: Date): string => DAYS[(date.getDay() + 6) % 7];
+export const dayNameOf = (date: Date): string => cyclicItem(DAYS, date.getDay() + 6);

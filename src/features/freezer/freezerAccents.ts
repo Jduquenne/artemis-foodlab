@@ -1,4 +1,5 @@
 import { FreezerCategory } from "../../core/domain/freezer";
+import { cyclicItem } from "../../core/utils/collectionUtils";
 
 export interface FreezerAccent {
   bar: string;
@@ -6,7 +7,11 @@ export interface FreezerAccent {
   swatch: string;
 }
 
-export const FREEZER_ACCENTS: Record<string, FreezerAccent> = {
+export const FREEZER_COLOR_KEYS = ["rose", "orange", "amber", "lime", "emerald", "teal", "sky", "blue", "violet", "fuchsia"] as const;
+
+export type FreezerColorKey = (typeof FREEZER_COLOR_KEYS)[number];
+
+export const FREEZER_ACCENTS: Record<FreezerColorKey, FreezerAccent> = {
   rose: { bar: 'bg-rose-400', badge: 'bg-rose-100 text-rose-600 dark:bg-rose-900/40 dark:text-rose-300', swatch: 'bg-rose-400' },
   orange: { bar: 'bg-orange-400', badge: 'bg-orange-100 text-orange-600 dark:bg-orange-900/40 dark:text-orange-300', swatch: 'bg-orange-400' },
   amber: { bar: 'bg-amber-400', badge: 'bg-amber-100 text-amber-600 dark:bg-amber-900/40 dark:text-amber-300', swatch: 'bg-amber-400' },
@@ -19,11 +24,13 @@ export const FREEZER_ACCENTS: Record<string, FreezerAccent> = {
   fuchsia: { bar: 'bg-fuchsia-400', badge: 'bg-fuchsia-100 text-fuchsia-600 dark:bg-fuchsia-900/40 dark:text-fuchsia-300', swatch: 'bg-fuchsia-400' },
 };
 
-export const FREEZER_COLOR_KEYS = Object.keys(FREEZER_ACCENTS);
+export function isFreezerColorKey(color: string): color is FreezerColorKey {
+  return (FREEZER_COLOR_KEYS as readonly string[]).includes(color);
+}
 
 export function getFreezerCategoryAccent(category: Pick<FreezerCategory, 'id' | 'color'>): FreezerAccent {
-  if (category.color && FREEZER_ACCENTS[category.color]) return FREEZER_ACCENTS[category.color];
+  if (category.color && isFreezerColorKey(category.color)) return FREEZER_ACCENTS[category.color];
   let hash = 0;
   for (let i = 0; i < category.id.length; i++) hash = (hash * 31 + category.id.charCodeAt(i)) | 0;
-  return FREEZER_ACCENTS[FREEZER_COLOR_KEYS[Math.abs(hash) % FREEZER_COLOR_KEYS.length]];
+  return FREEZER_ACCENTS[cyclicItem(FREEZER_COLOR_KEYS, Math.abs(hash))];
 }

@@ -43,9 +43,10 @@ export const ShoppingItemSheet = ({
     onDeleteExtra,
     onClose,
 }: ShoppingItemSheetProps) => {
-    const deletePending = usePendingKey(`shopping-extra-delete:${item.extraId ?? ''}`);
+    const extraId = item.origin === 'extra' ? item.extraId : null;
+    const deletePending = usePendingKey(`shopping-extra-delete:${extraId ?? ''}`);
     const groups = groupAndSortSources(item.sources);
-    const canFlagPlace = !!placeName && (!!item.foodId || !!item.isExtra);
+    const canFlagPlace = !!placeName && (!!item.foodId || extraId !== null);
 
     return (
         <Sheet title={item.name} subtitle={shoppingItemSummary(item, stock, sourceChecked)} onClose={onClose}>
@@ -54,7 +55,7 @@ export const ShoppingItemSheet = ({
                     <span className="font-semibold text-slate-400">Préparation :</span> {item.preparation}
                 </p>
             )}
-            {item.toSpecify && (
+            {item.origin === 'meal' && item.toSpecify && (
                 <p className="text-sm text-amber-600 bg-amber-50 dark:bg-amber-900/20 rounded-2xl px-3.5 py-2.5">
                     À préciser : l'aliment n'a pas été choisi pour ce repas.
                 </p>
@@ -80,11 +81,11 @@ export const ShoppingItemSheet = ({
             {canFlagPlace && placeName && (
                 <PlaceToggleRow itemKey={item.key} placeName={placeName} flagged={atPlace} onToggle={onToggleAtPlace} />
             )}
-            {item.isExtra && item.extraId && (
+            {extraId !== null && (
                 <div className="grid grid-cols-2 gap-2">
                     <button
                         type="button"
-                        onClick={() => item.extraId && onEditExtra(item.extraId)}
+                        onClick={() => onEditExtra(extraId)}
                         className="flex items-center justify-center gap-2 py-3 rounded-2xl border border-slate-200 bg-surface text-slate-700 font-bold"
                     >
                         <Pencil className="w-4 h-4" />
@@ -93,7 +94,7 @@ export const ShoppingItemSheet = ({
                     <button
                         type="button"
                         disabled={deletePending}
-                        onClick={() => item.extraId && onDeleteExtra(item.extraId).then((deleted) => { if (deleted) onClose(); }, () => undefined)}
+                        onClick={() => onDeleteExtra(extraId).then((deleted) => { if (deleted) onClose(); }, () => undefined)}
                         className="flex items-center justify-center gap-2 py-3 rounded-2xl border border-slate-200 bg-surface text-red-600 font-bold disabled:opacity-60"
                     >
                         {deletePending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}

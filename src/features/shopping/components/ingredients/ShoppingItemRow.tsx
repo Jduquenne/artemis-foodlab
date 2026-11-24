@@ -27,7 +27,7 @@ export const ShoppingItemRow = ({
     onOpenDetail,
 }: ShoppingItemRowProps) => {
     const pending = useAnyPendingKey([`shopping-check:${item.key}`, `shopping-stock:${item.key}`]);
-    const usesStock = mode === 'home' && item.totalQuantity > 0 && !item.isExtra;
+    const usesStock = mode === 'home' && item.totalQuantity > 0 && item.origin !== 'extra';
     const quantity = shoppingRowQuantity(item, mode, stock, sourceChecked);
 
     const handlePrimary = () => {

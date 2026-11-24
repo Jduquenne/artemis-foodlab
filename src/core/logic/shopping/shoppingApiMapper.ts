@@ -1,4 +1,4 @@
-import { ConsolidatedIngredient } from "../../domain/shopping";
+import { ExtraAisle, ExtraShoppingLine } from "../../domain/shopping";
 import { getIngredientCategoryFromSlug } from "../../domain/ingredientCategorySlugs";
 
 export interface ApiShoppingDay {
@@ -49,18 +49,22 @@ export interface ApiShoppingExtra {
   createdAt: string;
 }
 
-export function extrasToIngredients(extras: ApiShoppingExtra[]): ConsolidatedIngredient[] {
+function extraAisle(extra: ApiShoppingExtra): ExtraAisle {
+  if (extra.isHousehold) return { kind: "household" };
+  return extra.customShoppingCategoryId ? { kind: "custom", customCategoryId: extra.customShoppingCategoryId } : { kind: "category" };
+}
+
+export function extrasToIngredients(extras: ApiShoppingExtra[]): ExtraShoppingLine[] {
   return extras.map((extra) => ({
     key: `extra::${extra.id}`,
     name: extra.name,
-    foodId: extra.foodId ?? undefined,
+    ...(extra.foodId ? { foodId: extra.foodId } : {}),
     totalQuantity: extra.quantity ?? 0,
     unit: extra.unit ?? "",
-    category: extra.categoryId ? getIngredientCategoryFromSlug(extra.categoryId) : undefined,
+    category: extra.categoryId ? (getIngredientCategoryFromSlug(extra.categoryId) ?? null) : null,
     sources: [],
-    isExtra: true,
+    origin: "extra",
     extraId: extra.id,
-    ...(extra.customShoppingCategoryId ? { customCategoryId: extra.customShoppingCategoryId } : {}),
-    ...(extra.isHousehold ? { isHousehold: true } : {}),
+    aisle: extraAisle(extra),
   }));
 }

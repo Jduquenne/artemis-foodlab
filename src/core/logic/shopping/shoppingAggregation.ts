@@ -1,8 +1,8 @@
-import { Ingredient, IngredientCategory, Unit } from "../../domain/ingredient";
+import { Ingredient, Unit } from "../../domain/ingredient";
 import { RecipeDetails, RecipeKind } from "../../domain/recipe";
 import { MealSlot, ShoppingDay } from "../../domain/planning";
 import { getAllRecipeIds } from "../../domain/recipePredicates";
-import { BaseEntry, ConsolidatedIngredient, IngredientSource, ShoppingCatalogue } from "../../domain/shopping";
+import { BaseEntry, IngredientSource, MealShoppingLine, ShoppingCatalogue } from "../../domain/shopping";
 import { isoDateFromWeekDay } from "../../utils/dateUtils";
 import { compareByName } from "../../utils/sortUtils";
 import { AccompanimentOption } from "../../domain/accompaniment";
@@ -85,9 +85,9 @@ function buildIngredientSource(
 export function aggregateSlots(
   slots: MealSlot[],
   catalogue: ShoppingCatalogue,
-): ConsolidatedIngredient[] {
+): MealShoppingLine[] {
   const data = catalogue.recipes;
-  const map = new Map<string, ConsolidatedIngredient>();
+  const map = new Map<string, MealShoppingLine>();
   const prepMap = new Map<string, Set<string>>();
 
   function addIngredientToMap(
@@ -120,9 +120,10 @@ export function aggregateSlots(
         foodId: ing.foodId,
         totalQuantity: qty,
         unit: ing.unit,
-        category: ing.category as IngredientCategory | undefined,
+        category: ing.category,
         sources: [source],
-        ...(toSpecify && { toSpecify }),
+        origin: "meal",
+        toSpecify,
       });
     }
     if (ing.preparation) {

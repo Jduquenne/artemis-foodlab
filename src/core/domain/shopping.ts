@@ -17,21 +17,24 @@ export interface IngredientSource {
   profileNames?: string[];
 }
 
-export interface ConsolidatedIngredient {
+interface ShoppingLineCommon {
   key: string;
   name: string;
   foodId?: string;
   totalQuantity: number;
   unit: string;
-  category: IngredientCategory | undefined;
+  category: IngredientCategory | null;
   preparation?: string;
   sources: IngredientSource[];
-  isExtra?: boolean;
-  extraId?: string;
-  toSpecify?: boolean;
-  customCategoryId?: string;
-  isHousehold?: boolean;
 }
+
+export type ExtraAisle = { kind: "category" } | { kind: "custom"; customCategoryId: string } | { kind: "household" };
+
+export type MealShoppingLine = ShoppingLineCommon & { origin: "meal"; toSpecify: boolean };
+
+export type ExtraShoppingLine = ShoppingLineCommon & { origin: "extra"; extraId: string; aisle: ExtraAisle };
+
+export type ConsolidatedIngredient = MealShoppingLine | ExtraShoppingLine;
 
 export type ShoppingMode = "home" | "store";
 

@@ -24,7 +24,7 @@ export function shoppingRowQuantity(
   stock: number,
   sourceChecked: Set<string>,
 ): ShoppingRowQuantity {
-  if (item.totalQuantity <= 0) return { main: item.isExtra ? "" : "—", positive: false };
+  if (item.totalQuantity <= 0) return { main: item.origin === "extra" ? "" : "—", positive: false };
   const effective = effectiveQuantity(item, sourceChecked);
   const needed = remainingToBuy(item, { [item.key]: stock }, sourceChecked);
   if (mode === "store") return { main: formatShoppingQuantity(needed, item.unit), positive: false };

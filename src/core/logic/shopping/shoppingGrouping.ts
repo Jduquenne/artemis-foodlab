@@ -5,10 +5,19 @@ import { isCoveredAtHome } from "./shoppingChecks";
 const OTHERS_GROUP_KEY = "others";
 export const HOUSEHOLD_EXTRAS_GROUP_KEY = "household-extras";
 
+function isHouseholdExtra(ingredient: ConsolidatedIngredient): boolean {
+  return ingredient.origin === "extra" && ingredient.aisle.kind === "household";
+}
+
+function customCategoryIdOf(ingredient: ConsolidatedIngredient): string | null {
+  return ingredient.origin === "extra" && ingredient.aisle.kind === "custom" ? ingredient.aisle.customCategoryId : null;
+}
+
 function belongsToAisle(ingredient: ConsolidatedIngredient, aisle: ShoppingAisle): boolean {
-  if (ingredient.isHousehold) return false;
-  if (aisle.kind === "custom") return ingredient.customCategoryId === aisle.id;
-  return !ingredient.customCategoryId && ingredient.category === aisle.category;
+  if (isHouseholdExtra(ingredient)) return false;
+  const customCategoryId = customCategoryIdOf(ingredient);
+  if (aisle.kind === "custom") return customCategoryId === aisle.id;
+  return customCategoryId === null && ingredient.category === aisle.category;
 }
 
 function groupByCategory(
@@ -19,9 +28,9 @@ function groupByCategory(
   const groups: IngredientGroup[] = aisles
     .map((aisle) => ({ key: aisle.id, label: aisle.label, list: ingredients.filter((i) => belongsToAisle(i, aisle) && keep(i)) }))
     .filter((g) => g.list.length > 0);
-  const uncategorized = ingredients.filter((i) => !i.isHousehold && !aisles.some((aisle) => belongsToAisle(i, aisle)) && keep(i));
+  const uncategorized = ingredients.filter((i) => !isHouseholdExtra(i) && !aisles.some((aisle) => belongsToAisle(i, aisle)) && keep(i));
   if (uncategorized.length > 0) groups.push({ key: OTHERS_GROUP_KEY, label: "Autres", list: uncategorized });
-  const household = ingredients.filter((i) => i.isHousehold && keep(i));
+  const household = ingredients.filter((i) => isHouseholdExtra(i) && keep(i));
   if (household.length > 0) groups.push({ key: HOUSEHOLD_EXTRAS_GROUP_KEY, label: "Articles du quotidien", list: household });
   return groups;
 }

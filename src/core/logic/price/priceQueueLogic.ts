@@ -54,8 +54,9 @@ export function priceQueueCategories(foods: readonly Food[]): string[] {
 export function ingredientRecipesByFood(recipes: Record<string, RecipeDetails>): Map<string, RecipeDetails> {
   const byFood = new Map<string, RecipeDetails>();
   for (const recipe of Object.values(recipes)) {
-    const foodId = isIngredient(recipe) ? recipe.ingredients[0]?.foodId : undefined;
-    if (foodId && !byFood.has(foodId)) byFood.set(foodId, recipe);
+    const [first] = recipe.ingredients;
+    if (!isIngredient(recipe) || first?.link !== "food") continue;
+    if (!byFood.has(first.foodId)) byFood.set(first.foodId, recipe);
   }
   return byFood;
 }

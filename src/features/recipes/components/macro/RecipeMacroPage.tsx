@@ -108,12 +108,12 @@ export const RecipeMacroPage = () => {
               key={ing.id}
               ingredient={ing}
               currentQty={quantities[ing.id] ?? 0}
-              currentUnitWeight={ing.foodId ? (unitWeights[ing.foodId] ?? null) : null}
+              currentUnitWeight={ing.link === 'food' ? (unitWeights[ing.foodId] ?? null) : null}
               isExpanded={expandedBases.has(ing.id)}
               onQuantityChange={(value) => handleQuantityChange(ing.id, value)}
               onResetQuantity={() => setQuantities(prev => ({ ...prev, [ing.id]: ing.quantity ?? 0 }))}
-              onUnitWeightChange={(value) => ing.foodId && handleUnitWeightChange(ing.foodId, value)}
-              onResetUnitWeight={() => ing.foodId && resetUnitWeight(ing.foodId)}
+              onUnitWeightChange={(value) => { if (ing.link === 'food') handleUnitWeightChange(ing.foodId, value); }}
+              onResetUnitWeight={() => { if (ing.link === 'food') resetUnitWeight(ing.foodId); }}
               onToggleExpand={() => toggleBase(ing.id)}
             />
           ))}

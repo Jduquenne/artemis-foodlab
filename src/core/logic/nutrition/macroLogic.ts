@@ -78,13 +78,13 @@ export function calculateRecipeMacros(
   for (const ingredient of recipe.ingredients) {
     if (ingredient.quantity === null) continue;
 
-    if (ingredient.foodId) {
+    if (ingredient.link === "food") {
       const food = foodDb[ingredient.foodId];
       if (!food) continue;
       const grams = toGrams(ingredient.quantity, ingredient.unit, food.unitWeight);
       if (grams === null) continue;
       total = addMacros(total, scaleMacros(food.macros, grams / 100));
-    } else if (ingredient.baseId) {
+    } else if (ingredient.link === "base") {
       const base = allRecipes[ingredient.baseId];
       if (!base) continue;
       const basePortions = basePortionsOf(ingredient.quantity, ingredient.unit, base);
@@ -114,7 +114,7 @@ export function calculateRecipeBaseGrams(recipe: RecipeDetails, foodDb: Record<s
   let total = 0;
   for (const ing of recipe.ingredients) {
     if (ing.quantity === null) continue;
-    const food = ing.foodId ? foodDb[ing.foodId] : undefined;
+    const food = ing.link === "food" ? foodDb[ing.foodId] : undefined;
     const grams = toGrams(ing.quantity, ing.unit, food?.unitWeight ?? null);
     if (grams !== null) total += grams;
   }

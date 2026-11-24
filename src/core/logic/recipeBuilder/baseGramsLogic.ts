@@ -9,7 +9,7 @@ export function baseAllowsGrams(base: Pick<RecipeDetails, "cookedWeightGrams"> |
 
 export function recipesUsingBaseInGrams(baseCode: string, recipes: Record<string, RecipeDetails>): RecipeDetails[] {
   return Object.values(recipes).filter(
-    (recipe) => recipe.code !== baseCode && recipe.ingredients.some((ing) => ing.baseId === baseCode && ing.unit === Unit.G),
+    (recipe) => recipe.code !== baseCode && recipe.ingredients.some((ing) => ing.link === "base" && ing.baseId === baseCode && ing.unit === Unit.G),
   );
 }
 

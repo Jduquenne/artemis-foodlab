@@ -37,7 +37,7 @@ export function buildRecipeDetailUrl(recipeId: string, portions: number | undefi
 export function buildUnitWeightOverrides(foods: Record<string, Food>, recipe: RecipeDetails): Record<string, number> {
   const map: Record<string, number> = {};
   for (const ing of recipe.ingredients) {
-    if (ing.foodId && UNIT_WEIGHT_UNITS.includes(ing.unit)) {
+    if (ing.link === "food" && UNIT_WEIGHT_UNITS.includes(ing.unit)) {
       const food = foods[ing.foodId];
       if (food && food.unitWeight !== null) map[ing.foodId] = food.unitWeight;
     }

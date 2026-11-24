@@ -29,17 +29,17 @@ export const IngredientAdjustRow = ({
 }: IngredientAdjustRowProps) => {
   const recipes = useRecipesSnapshot();
   const foods = useFoodsSnapshot();
-  const hasData = !!(ing.foodId || ing.baseId);
-  const isBase = !!ing.baseId;
+  const hasData = ing.link !== 'free';
+  const isBase = ing.link === 'base';
   const originalQty = ing.quantity ?? 0;
   const isQtyModified = hasData && currentQty !== originalQty;
   const unitLabel = ing.unit || null;
 
-  const showUnitWeight = !!(ing.foodId && UNIT_WEIGHT_UNITS.includes(ing.unit));
-  const originalUnitWeight = ing.foodId ? (foods[ing.foodId]?.unitWeight ?? null) : null;
+  const showUnitWeight = ing.link === 'food' && UNIT_WEIGHT_UNITS.includes(ing.unit);
+  const originalUnitWeight = ing.link === 'food' ? (foods[ing.foodId]?.unitWeight ?? null) : null;
   const isUnitWeightModified = showUnitWeight && originalUnitWeight !== currentUnitWeight;
 
-  const baseRecipe = isBase && ing.baseId ? recipes[ing.baseId] : null;
+  const baseRecipe = ing.link === 'base' ? (recipes[ing.baseId] ?? null) : null;
   const baseScaleFactor = baseRecipe ? currentQty / Math.max(baseRecipe.defaultPortions, 1) : 0;
 
   return (
@@ -64,7 +64,7 @@ export const IngredientAdjustRow = ({
           {ing.preparation && (
             <span className="text-slate-400 text-xs ml-1">({ing.preparation})</span>
           )}
-          {ing.foodGroupId && (
+          {ing.link === 'food' && ing.foodGroupId !== null && (
             <span className="text-orange-500 text-xs font-bold ml-1">au choix</span>
           )}
         </span>

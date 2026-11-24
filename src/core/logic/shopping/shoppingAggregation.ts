@@ -1,4 +1,5 @@
-import { Ingredient, Unit } from "../../domain/ingredient";
+import { FoodIngredient, Ingredient, Unit } from "../../domain/ingredient";
+import { ingredientFoodId } from "../recipe/ingredientLinkLogic";
 import { RecipeDetails, RecipeKind } from "../../domain/recipe";
 import { MealSlot, ShoppingDay } from "../../domain/planning";
 import { getAllRecipeIds } from "../../domain/recipePredicates";
@@ -100,7 +101,8 @@ export function aggregateSlots(
     const existing = map.get(key);
     if (existing) {
       existing.totalQuantity += qty;
-      if (!existing.foodId && ing.foodId) existing.foodId = ing.foodId;
+      const foodId = ingredientFoodId(ing);
+      if (!existing.foodId && foodId !== null) existing.foodId = foodId;
       if (toSpecify) existing.toSpecify = true;
       const listed = existing.sources.find(
         (s) =>
@@ -117,7 +119,7 @@ export function aggregateSlots(
       map.set(key, {
         key,
         name: ing.name,
-        foodId: ing.foodId,
+        ...(ing.link === "food" ? { foodId: ing.foodId } : {}),
         totalQuantity: qty,
         unit: ing.unit,
         category: ing.category,
@@ -147,7 +149,7 @@ export function aggregateSlots(
         reachableGroupIngredients(details, recipes).map((entry) => [entry.ingredient.id, entry.portionFactor]),
       );
 
-      const addGroupIngredient = (ing: Ingredient, choiceShare: number, fromBaseId?: string) => {
+      const addGroupIngredient = (ing: FoodIngredient, choiceShare: number, fromBaseId?: string) => {
         for (const share of splitGroupIngredient(ing, details.defaultPortions, scaleFactor, catalogue.profiles, choices, choiceShare)) {
           const isDefault = share.foodId === ing.foodId;
           const shareIng = isDefault ? ing : { ...ing, foodId: share.foodId, name: catalogue.foods[share.foodId]?.name ?? ing.name };
@@ -173,7 +175,9 @@ export function aggregateSlots(
             quantity: option.quantityPerPerson,
             unit: parseUnit(option.unit),
             category: food.category,
+            link: "food",
             foodId: food.id,
+            foodGroupId: null,
           };
           addIngredientToMap(ing, qty, buildIngredientSource(slot, recipeId, recipeName, ing, qty, undefined, names));
           return;
@@ -191,8 +195,8 @@ export function aggregateSlots(
         const tree = personalizeRecipeTree(optionRecipe, personalization, data, catalogue.foods, perPerson);
         const scale = (perPerson * persons) / Math.max(optionRecipe.defaultPortions, 1);
         for (const optionIng of tree.recipe.ingredients) {
-          const base = optionIng.baseId ? tree.recipes[optionIng.baseId] : undefined;
-          if (optionIng.baseId && base) {
+          const base = optionIng.link === "base" ? tree.recipes[optionIng.baseId] : undefined;
+          if (optionIng.link === "base" && base) {
             const baseScale = (scale * (basePortionsOf(optionIng.quantity ?? 1, optionIng.unit, base) ?? 0)) / Math.max(base.defaultPortions, 1);
             for (const baseIng of base.ingredients) {
               const qty = (baseIng.quantity ?? 0) * baseScale;
@@ -218,13 +222,13 @@ export function aggregateSlots(
       }
 
       for (const ing of details.ingredients) {
-        if (ing.baseId) {
+        if (ing.link === "base") {
           const baseRecipe = recipes[ing.baseId];
           if (baseRecipe) {
             const basePortionScale = (basePortionsOf(ing.quantity ?? 1, ing.unit, baseRecipe) ?? 0) / baseRecipe.defaultPortions;
             const combinedScale = scaleFactor * basePortionScale;
             for (const baseIng of baseRecipe.ingredients) {
-              if (baseIng.foodGroupId && baseIng.foodId) {
+              if (baseIng.link === "food" && baseIng.foodGroupId !== null) {
                 const dishIng = { ...baseIng, quantity: (baseIng.quantity ?? 0) * basePortionScale };
                 const occurrence = basePortionScale / Math.max(details.defaultPortions, 1);
                 const total = portionFactors.get(baseIng.id) ?? 0;
@@ -238,7 +242,7 @@ export function aggregateSlots(
           }
         }
 
-        if (ing.foodGroupId) {
+        if (ing.link === "food" && ing.foodGroupId !== null) {
           addGroupIngredient(ing, 1);
           continue;
         }
@@ -281,7 +285,7 @@ export function aggregateBases(slots: MealSlot[], catalogue: ShoppingCatalogue):
       };
 
       for (const ing of details.ingredients) {
-        if (!ing.baseId) continue;
+        if (ing.link !== "base") continue;
         const baseRecipe = data[ing.baseId];
         if (!baseRecipe) continue;
         if (isIndustrialChoice(slot.baseVersionChoices?.[recipeId], baseRecipe, catalogue.foods)) continue;

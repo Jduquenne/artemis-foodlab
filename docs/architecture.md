@@ -12,7 +12,7 @@ flowchart LR
   UI -->|actions| Store[shared/store Zustand]
   Store --> Svc[core/services]
   Svc -->|apiFetch| API[(meals-planning-api)]
-  Svc -->|cache after success| IDB[(IndexedDB / Dexie v15)]
+  Svc -->|cache after success| IDB[(IndexedDB / Dexie v16)]
   Svc --> Cat[core/catalogue in-memory]
   Cat -->|notify| Snap
   Snap --> Logic[core/logic pure functions]
@@ -97,6 +97,7 @@ Three layers, no exceptions:
 - `MealSlot { id, apiId?, itemApiIds?, day, slot, recipeIds, dessertIds?, year, week, persons?, recipePersons?, recipeQuantities? }`; `MEAL_SLOTS`: lunch/dinner have `hasDessert: true`.
 - `FreezerCategory { id, name, color: string | null, position, items }`; `FreezerItem = FoodFreezerItem | BatchFreezerItem`; `FreezerBag { id, quantity, unit, preparation?, addedDate }`.
 - Recipes and outdoor activities are both "plannable items" (one identity in the API, `plannable_items`). See D-006. Front: `PlannableItem = (RecipeDetails & { source: "recipe" }) | (OutdoorEntry & { source: "outdoor" })` (`core/domain/recipe.ts`, golden rule 20), built in memory by `buildPlannableItems` (`usePlannableSnapshot`); read the common fields (`name`, `assets`, `categoryId`) directly and go through `plannableRecipe(item)` (`recipePredicates.ts`) for recipe-only fields (kind, portions).
+- A recipe ingredient (`Ingredient`, `core/domain/ingredient.ts`, issue #65, golden rule 20) is `IngredientCommon` & one link: `{ link: "food"; foodId; foodGroupId: string | null }` (« au choix » when `foodGroupId` is set, `foodId` = recipe default), `{ link: "base"; baseId }` (code of a base recipe) or `{ link: "free" }` (free text, counted as « non lié » by the dashboard). Mirrors the API rules (`foodId` and `baseId` together → 400, a group needs a food); mapped by `mapApiIngredientLink`. Narrow on `link` before reading an id; `ingredientFoodId(ing)` gives the food id or `null` when only the id matters; `FoodIngredient` types code that only handles food lines (`ReachableGroupIngredient`, shopping group shares).
 
 ## Auth and roles
 
@@ -106,10 +107,10 @@ Three layers, no exceptions:
 
 ## IndexedDB (Dexie)
 
-- Schema and current version: `src/core/services/databaseService.ts` (**version 15**). Tables: `planning`, `household`, `freezerCategories`, `recipes`, `foods`, `outdoorActivities`, `householdItems`, `recipeCategories`, `foodGroups`.
+- Schema and current version: `src/core/services/databaseService.ts` (**version 16**). Tables: `planning`, `household`, `freezerCategories`, `recipes`, `foods`, `outdoorActivities`, `householdItems`, `recipeCategories`, `foodGroups`.
 - Never modify an existing `.version(n)` block; any schema change = new `.version(n+1)`.
 - Adding a non-indexed field does **not** need a new version (Dexie versions indexes only).
-- A first v14 (categories enum → slug) was reverted before any commit (D-014); the current v14 (2026-10-15) only adds `foodGroups`. v15 (2026-11-24, issue #63) keeps the same stores and upgrades cached batch freezer items `{ portions }` to `{ unit: "portion", quantity }`.
+- A first v14 (categories enum → slug) was reverted before any commit (D-014); the current v14 (2026-10-15) only adds `foodGroups`. v15 (2026-11-24, issue #63) keeps the same stores and upgrades cached batch freezer items `{ portions }` to `{ unit: "portion", quantity }`. v16 (2026-11-24, issue #65) keeps the same stores and rewrites the cached recipe ingredients to the `link` union (`linkCachedIngredients`, `core/logic/recipe/ingredientLinkLogic.ts`: `baseId` → `base`, `foodId` → `food` with `foodGroupId` or `null`, else `free`; an already converted ingredient is left as is).
 
 ## Client storage (localStorage)
 

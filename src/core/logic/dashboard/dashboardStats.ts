@@ -61,7 +61,7 @@ function usedFoodIds(recipes: Record<string, RecipeDetails>): Set<string> {
   const used = new Set<string>();
   for (const recipe of Object.values(recipes)) {
     for (const ingredient of recipe.ingredients) {
-      if (ingredient.foodId) used.add(ingredient.foodId);
+      if (ingredient.link === "food") used.add(ingredient.foodId);
     }
   }
   return used;
@@ -106,7 +106,7 @@ export function getCatalogueIssues(
   const noMealType = recipeList.filter((r) => r.mealTypes.length === 0);
   const emptyDish = recipeList.filter((r) => isDish(r) && r.ingredients.length === 0);
   const unlinkedIngredients = recipeList.filter((r) =>
-    r.ingredients.some((ing) => !ing.foodId && !ing.baseId),
+    r.ingredients.some((ing) => ing.link === "free"),
   );
   const uncomputableMacros = recipeList.filter((r) => !recipeMacros[r.code]);
   const bookWithoutPage = recipeList.filter((r) => r.isFromBook && !r.bookPage);

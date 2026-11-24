@@ -15,12 +15,15 @@ function collectFoodIds(recipe: RecipeDetails, catalogue: MenuCatalogue, visited
   if (visited.has(recipe.code)) return;
   visited.add(recipe.code);
   for (const ingredient of recipe.ingredients) {
-    if (ingredient.foodGroupId) {
-      for (const food of foodsOfGroupSorted(catalogue.foods, ingredient.foodGroupId)) found.add(food.id);
+    if (ingredient.link === "food") {
+      if (ingredient.foodGroupId !== null) {
+        for (const food of foodsOfGroupSorted(catalogue.foods, ingredient.foodGroupId)) found.add(food.id);
+      }
+      found.add(ingredient.foodId);
+    } else if (ingredient.link === "base") {
+      const base = catalogue.recipes[ingredient.baseId];
+      if (base) collectFoodIds(base, catalogue, visited, found);
     }
-    if (ingredient.foodId) found.add(ingredient.foodId);
-    const base = ingredient.baseId ? catalogue.recipes[ingredient.baseId] : undefined;
-    if (base) collectFoodIds(base, catalogue, visited, found);
   }
 }
 

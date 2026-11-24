@@ -55,9 +55,14 @@ export function draftIngredientFromRecipe(ing: Ingredient): DraftIngredient {
     preparation: ing.preparation ?? "",
     category: ing.category,
   };
-  return ing.baseId
-    ? { ...common, ingredientType: "base", baseId: ing.baseId }
-    : { ...common, ingredientType: "food", foodId: ing.foodId ?? null, foodGroupId: ing.foodGroupId ?? null };
+  switch (ing.link) {
+    case "base":
+      return { ...common, ingredientType: "base", baseId: ing.baseId };
+    case "food":
+      return { ...common, ingredientType: "food", foodId: ing.foodId, foodGroupId: ing.foodGroupId };
+    case "free":
+      return { ...common, ingredientType: "food", foodId: null, foodGroupId: null };
+  }
 }
 
 export function recipeToBuilderState(

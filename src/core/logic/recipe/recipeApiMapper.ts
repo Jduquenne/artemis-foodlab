@@ -1,4 +1,4 @@
-import { Ingredient, IngredientCategory } from "../../domain/ingredient";
+import { Ingredient, IngredientLink, IngredientCategory } from "../../domain/ingredient";
 import {
   MealType,
   OutdoorEntry,
@@ -91,6 +91,12 @@ function buildCodeByApiId(recipes: ApiRecipe[]): Map<string, string> {
   return map;
 }
 
+function mapApiIngredientLink(ing: ApiIngredient, codeByApiId: Map<string, string>): IngredientLink {
+  if (ing.baseId) return { link: "base", baseId: codeByApiId.get(ing.baseId) ?? ing.baseId };
+  if (ing.foodId) return { link: "food", foodId: ing.foodId, foodGroupId: ing.foodGroupId };
+  return { link: "free" };
+}
+
 function mapApiIngredient(ing: ApiIngredient, codeByApiId: Map<string, string>): Ingredient {
   return {
     id: ing.id,
@@ -98,10 +104,8 @@ function mapApiIngredient(ing: ApiIngredient, codeByApiId: Map<string, string>):
     quantity: ing.quantity,
     unit: parseUnit(ing.unit),
     category: ing.category as IngredientCategory,
-    foodId: ing.foodId ?? undefined,
-    baseId: ing.baseId ? (codeByApiId.get(ing.baseId) ?? ing.baseId) : undefined,
-    foodGroupId: ing.foodGroupId ?? undefined,
-    preparation: ing.preparation ?? undefined,
+    ...(ing.preparation ? { preparation: ing.preparation } : {}),
+    ...mapApiIngredientLink(ing, codeByApiId),
   };
 }
 

@@ -1,5 +1,5 @@
 import { FoodChoice, FoodGroup, FoodGroupDefault, FoodSelection, ResolvedFood } from "../../domain/foodGroup";
-import { Food, Ingredient } from "../../domain/ingredient";
+import { Food, FoodIngredient, Ingredient } from "../../domain/ingredient";
 import { Profile } from "../../domain/profile";
 import { RecipeDetails } from "../../domain/recipe";
 import { compareByName } from "../../utils/sortUtils";
@@ -18,7 +18,7 @@ export interface FoodPersonalization {
 }
 
 export interface ReachableGroupIngredient {
-  ingredient: Ingredient;
+  ingredient: FoodIngredient;
   ownerCode: string;
   ownerName: string | null;
   portionFactor: number;
@@ -50,8 +50,8 @@ export function resolveIngredientFood(
   profileDefaults: readonly FoodGroupDefault[],
   mealChoices: readonly FoodChoice[],
 ): ResolvedFood | null {
-  if (!ingredient.foodId) return null;
-  if (!ingredient.foodGroupId) return { foodId: ingredient.foodId, source: "recipe", quantityPerPortion: null };
+  if (ingredient.link !== "food") return null;
+  if (ingredient.foodGroupId === null) return { foodId: ingredient.foodId, source: "recipe", quantityPerPortion: null };
 
   const choice = findMealChoice(mealChoices, ingredient.id, profileId);
   if (choice) return { foodId: choice.foodId, source: "meal", quantityPerPortion: choice.quantity ?? null };
@@ -170,7 +170,7 @@ export function splitGroupIngredient(
 ): FoodChoiceShare[] {
   const recipePerPortion = recipeQuantityPerPortion(ingredient, defaultPortions) ?? 0;
   const portions = scaleFactor * Math.max(defaultPortions, 1);
-  if (!ingredient.foodId) return [];
+  if (ingredient.link !== "food") return [];
   if (profiles.length === 0) {
     return [{ foodId: ingredient.foodId, quantity: recipePerPortion * portions, byRecipeDefault: true, profileIds: [] }];
   }
@@ -205,14 +205,14 @@ function collectGroupIngredients(
   if (path.has(recipe.code)) return;
   const nextPath = new Set(path).add(recipe.code);
   for (const ingredient of recipe.ingredients) {
-    if (ingredient.baseId) {
+    if (ingredient.link === "base") {
       const base = recipes[ingredient.baseId];
       const basePortions = base ? (basePortionsOf(ingredient.quantity ?? 0, ingredient.unit, base) ?? 0) : 0;
       const baseFactor = (factor * basePortions) / Math.max(base?.defaultPortions ?? 1, 1);
       if (base) collectGroupIngredients(base, rootCode, baseFactor, recipes, nextPath, found);
       continue;
     }
-    if (!ingredient.foodGroupId || !ingredient.foodId) continue;
+    if (ingredient.link !== "food" || ingredient.foodGroupId === null) continue;
     const existing = found.get(ingredient.id);
     if (existing) {
       found.set(ingredient.id, { ...existing, portionFactor: existing.portionFactor + factor });

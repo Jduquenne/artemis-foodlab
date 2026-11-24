@@ -21,7 +21,7 @@ function collectLines(
   const lines: FlatRecipeLine[] = [];
   for (const ing of recipe.ingredients) {
     if (ing.quantity === null) continue;
-    if (ing.baseId) {
+    if (ing.link === "base") {
       const base = recipes[ing.baseId];
       if (!base || visited.has(ing.baseId) || base.defaultPortions <= 0) continue;
       const basePortions = basePortionsOf(ing.quantity, ing.unit, base);
@@ -33,7 +33,7 @@ function collectLines(
     lines.push({
       key: `${keyPrefix}${ing.id}`,
       name: ing.name,
-      foodId: ing.foodId,
+      ...(ing.link === "food" ? { foodId: ing.foodId } : {}),
       quantity: ing.quantity * scale,
       unit: ing.unit,
       ...(baseName && { baseName }),

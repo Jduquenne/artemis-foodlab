@@ -68,7 +68,7 @@ export function buildPlanningUsageInsights(
         plannedCount: item?.plannedCount ?? 0,
         lastWeek: item?.lastWeek ?? null,
         foodIds: [
-          ...new Set(recipe.ingredients.map((ing) => ing.foodId).filter((id): id is string => Boolean(id))),
+          ...new Set(recipe.ingredients.flatMap((ing) => (ing.link === "food" ? [ing.foodId] : []))),
         ],
       };
     });

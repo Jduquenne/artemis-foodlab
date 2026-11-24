@@ -32,7 +32,7 @@ function collectDiet(recipe: RecipeDetails, recipes: Record<string, RecipeDetail
     if (MEAT_INGREDIENT_CATEGORIES.includes(ingredient.category)) diet.hasMeat = true;
     if (ingredient.category === IngredientCategory.DELI) diet.hasDeli = true;
     if (FISH_INGREDIENT_CATEGORIES.includes(ingredient.category)) diet.hasFish = true;
-    const base = ingredient.baseId ? recipes[ingredient.baseId] : undefined;
+    const base = ingredient.link === "base" ? recipes[ingredient.baseId] : undefined;
     if (base) collectDiet(base, recipes, visited, diet);
   }
 }
@@ -53,13 +53,16 @@ function usesExcluded(recipe: RecipeDetails, excluded: ReadonlySet<string>, cata
   if (visited.has(recipe.code)) return false;
   visited.add(recipe.code);
   return recipe.ingredients.some((ingredient) => {
-    if (ingredient.foodGroupId) {
+    if (ingredient.link === "free") return false;
+    if (ingredient.link === "base") {
+      const base = catalogue.recipes[ingredient.baseId];
+      return base ? usesExcluded(base, excluded, catalogue, visited) : false;
+    }
+    if (ingredient.foodGroupId !== null) {
       const members = foodsOfGroupSorted(catalogue.foods, ingredient.foodGroupId);
       return members.length > 0 && members.every((food) => excluded.has(food.id));
     }
-    if (ingredient.foodId) return excluded.has(ingredient.foodId);
-    const base = ingredient.baseId ? catalogue.recipes[ingredient.baseId] : undefined;
-    return base ? usesExcluded(base, excluded, catalogue, visited) : false;
+    return excluded.has(ingredient.foodId);
   });
 }
 

@@ -20,12 +20,12 @@ function collectSeasonalFoods(
   if (visited.has(recipe.code)) return;
   visited.add(recipe.code);
   for (const ingredient of recipe.ingredients) {
-    if (ingredient.foodId) {
+    if (ingredient.link === "food") {
       const food = catalogue.foods[ingredient.foodId];
       if (!food || !hasSeason(food.months)) continue;
       const frozen = ingredient.category === IngredientCategory.FROZEN || catalogue.seasonExemptFoodIds?.has(food.id);
       (frozen ? exempt : found).set(food.id, food);
-    } else if (ingredient.baseId) {
+    } else if (ingredient.link === "base") {
       const base = catalogue.recipes[ingredient.baseId];
       if (base) collectSeasonalFoods(base, catalogue, visited, found, exempt);
     }

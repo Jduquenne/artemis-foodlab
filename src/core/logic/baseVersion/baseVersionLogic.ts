@@ -9,8 +9,9 @@ export function reachableBaseCodes(recipe: RecipeDetails, recipes: Record<string
   const queue: RecipeDetails[] = [recipe];
   for (let current = queue.shift(); current !== undefined; current = queue.shift()) {
     for (const ingredient of current.ingredients) {
-      const base = ingredient.baseId ? recipes[ingredient.baseId] : undefined;
-      if (!ingredient.baseId || !base) continue;
+      if (ingredient.link !== "base") continue;
+      const base = recipes[ingredient.baseId];
+      if (!base) continue;
       found.add(ingredient.baseId);
       if (visited.has(ingredient.baseId)) continue;
       visited.add(ingredient.baseId);
@@ -71,7 +72,9 @@ export function industrialBaseRecipe(base: RecipeDetails, foods: Record<string, 
         quantity: equivalent.quantity * Math.max(base.defaultPortions, 1),
         unit: equivalent.unit,
         category: food.category,
+        link: "food",
         foodId: food.id,
+        foodGroupId: null,
       },
     ],
   };

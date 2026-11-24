@@ -121,7 +121,7 @@ export const FoodChoiceModal = ({ recipeId, pendingKey, initialChoices, initialA
 
                     {ingredients.map(({ entry, ownerName, profileIds }) => {
                         const { ingredient } = entry;
-                        const options = ingredient.foodGroupId ? foodsOfGroupSorted(foods, ingredient.foodGroupId) : [];
+                        const options = ingredient.foodGroupId !== null ? foodsOfGroupSorted(foods, ingredient.foodGroupId) : [];
                         const perPortion = reachableQuantityPerPortion(entry);
                         const unit = ingredient.unit || '';
                         return (
@@ -129,7 +129,7 @@ export const FoodChoiceModal = ({ recipeId, pendingKey, initialChoices, initialA
                                 <p className="text-xs font-bold text-slate-500">
                                     {ownerName && <span className="font-semibold text-slate-400">{ownerName} › </span>}
                                     {ingredient.name}
-                                    <span className="font-normal text-slate-400"> · {foodGroupLabel(groups, ingredient.foodGroupId ?? null)}</span>
+                                    <span className="font-normal text-slate-400"> · {foodGroupLabel(groups, ingredient.foodGroupId)}</span>
                                 </p>
                                 {profiles.filter((profile) => profileIds.includes(profile.id)).map((profile) => {
                                     const mealChoice = findMealChoice(choices, ingredient.id, profile.id);

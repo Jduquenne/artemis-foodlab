@@ -24,7 +24,7 @@ export interface LinkedBase {
 
 export function basePortionsNeeded(recipe: Pick<RecipeDetails, "ingredients">, baseId: string, base: RecipeDetails): number {
   const total = recipe.ingredients
-    .filter((ing) => ing.baseId === baseId)
+    .filter((ing) => ing.link === "base" && ing.baseId === baseId)
     .reduce((sum, ing) => sum + (basePortionsOf(ing.quantity ?? 0, ing.unit, base) ?? 0), 0);
   return Math.max(1, Math.round(total));
 }
@@ -36,7 +36,7 @@ export function getLinkedBases(
   const seen = new Set<string>();
   const result: LinkedBase[] = [];
   for (const ing of recipe.ingredients) {
-    if (ing.baseId && !seen.has(ing.baseId)) {
+    if (ing.link === "base" && !seen.has(ing.baseId)) {
       seen.add(ing.baseId);
       const base = recipes[ing.baseId];
       if (base?.assets?.mealPhoto) {

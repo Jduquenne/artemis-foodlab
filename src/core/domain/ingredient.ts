@@ -46,17 +46,23 @@ export enum IngredientCategory {
   BIO = "Bio",
 }
 
-export interface Ingredient {
+export interface IngredientCommon {
   id: string;
   name: string;
   quantity: number | null;
   unit: Unit;
   category: IngredientCategory;
-  foodId?: string;
-  baseId?: string;
-  foodGroupId?: string;
   preparation?: string;
 }
+
+export type IngredientLink =
+  | { link: "food"; foodId: string; foodGroupId: string | null }
+  | { link: "base"; baseId: string }
+  | { link: "free" };
+
+export type Ingredient = IngredientCommon & IngredientLink;
+
+export type FoodIngredient = Extract<Ingredient, { link: "food" }>;
 
 export interface Food {
   id: string;

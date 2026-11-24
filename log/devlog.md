@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-24 — #62 in prod (v6.162.5)
+- The owner tested #62 and pushed it; API D-067 (`stockByUnit`) live in prod (owner). Docs: `docs/api.md`, `docs/spec-shopping.md`.
+- Still open: close #62 on the owner's word; owner's choices for #59, #60, #61, #63.
+
 ## 2026-11-24 — Issues #59-#63 created; #62 stock per line (v6.162.4)
 - Done: issues #59 (food categories Produits frais / Vegan / Bio), #60 (« Articles du quotidien » for extras), #61 (« Aucun » for a family ingredient), #62 (bug: lines « j'ai tout » at home still shown in store), #63 (freezer batches in grams) added to `dev/issues.json` and synced to Discord. #62: two causes found in the code: one food on two lines (key = name + unit) sharing the single `stockOverride` of its item check (one line overwrote the other), and lines without catalogue food that silently could not be checked nor stocked. Fix: API D-067 `stockByUnit` (contract in `docs/api.md`), front `nextStockByUnit` / `itemCheckStockForUnit` (`shoppingCheckState.ts`), `setStock` writes the map with `stockOverride: null`; error notification for unlinked lines. Stock wording (owner: too familiar): sheet « Quelle quantité as-tu déjà ? », buttons « En stock » / « À acheter », row « en stock », summary « en stock X ». Docs: `docs/spec-shopping.md`, `docs/api.md`.
 - tsc + lint pass; **not checked in a browser**. API D-067 tested on the dev database only, **not deployed**: do not push before the API session confirms prod. To test with `npm run dev` against the local API: one food on two lines with different units (e.g. potatoes in g and in pièces): « En stock » on each line, both hidden in « En magasin », reload, still hidden; « À acheter » on one, the other stays covered; a line from a recipe ingredient without food: tap → red message.

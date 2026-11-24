@@ -1,5 +1,22 @@
-import { RecipeBuilderState } from "../../domain/recipeBuilderTypes";
+import { DraftIngredient, DraftIngredientCommon, RecipeBuilderState } from "../../domain/recipeBuilderTypes";
+import { IngredientCategory, Unit } from "../../domain/ingredient";
 import { RecipeKind } from "../../domain/recipe";
+
+export const emptyDraftIngredientCommon = (): DraftIngredientCommon => ({
+  id: crypto.randomUUID(),
+  name: "",
+  quantity: null,
+  unit: Unit.NONE,
+  preparation: "",
+  category: IngredientCategory.FRUIT_VEGETABLE,
+});
+
+export const emptyDraftIngredient = (): DraftIngredient => ({
+  ...emptyDraftIngredientCommon(),
+  ingredientType: "food",
+  foodId: null,
+  foodGroupId: null,
+});
 
 export const initialRecipeBuilderState = (): RecipeBuilderState => ({
   sourceCode: null,

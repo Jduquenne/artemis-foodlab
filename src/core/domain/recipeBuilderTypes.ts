@@ -7,19 +7,20 @@ export interface IndustrialEquivalentDraft {
   unit: Unit;
 }
 
-export interface DraftIngredient {
+export interface DraftIngredientCommon {
   id: string;
   apiId?: string;
-  ingredientType: "food" | "base";
   name: string;
-  foodId?: string;
-  baseId?: string;
-  foodGroupId?: string;
   quantity: number | null;
   unit: Unit;
   preparation: string;
   category: IngredientCategory;
 }
+
+export type DraftIngredient = DraftIngredientCommon & (
+  | { ingredientType: "food"; foodId: string | null; foodGroupId: string | null }
+  | { ingredientType: "base"; baseId: string | null }
+);
 
 export interface RecipeBuilderState {
   sourceCode: string | null;

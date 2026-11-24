@@ -11,7 +11,7 @@ export interface BaseUnitSelectProps {
 
 export const BaseUnitSelect = ({ ingredient, onChange, className = "" }: BaseUnitSelectProps) => {
   const recipes = useRecipesSnapshot();
-  const base = ingredient.baseId ? recipes[ingredient.baseId] : undefined;
+  const base = ingredient.ingredientType === "base" && ingredient.baseId ? recipes[ingredient.baseId] : undefined;
   const allowsGrams = baseAllowsGrams(base);
   const inGrams = ingredient.unit === Unit.G;
 

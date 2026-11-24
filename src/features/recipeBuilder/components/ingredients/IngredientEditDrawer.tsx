@@ -5,8 +5,8 @@ import { Unit, IngredientCategory, SELECTABLE_UNITS } from "../../../../core/dom
 import { IngredientFoodSearch } from "./IngredientFoodSearch";
 import { BaseRecipeSearch } from "./BaseRecipeSearch";
 import { BaseUnitSelect } from "./BaseUnitSelect";
-import { DraftIngredient } from "../../../../core/domain/recipeBuilderTypes";
-import { applyFoodPick } from "../../../../core/logic/recipeBuilder/recipeBuilderMapper";
+import { DraftIngredient, DraftIngredientCommon } from "../../../../core/domain/recipeBuilderTypes";
+import { applyBasePick, applyFoodPick } from "../../../../core/logic/recipeBuilder/recipeBuilderMapper";
 import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
 import { IngredientTypeToggle } from "./IngredientTypeToggle";
 import { IngredientChoiceToggle } from "./IngredientChoiceToggle";
@@ -25,7 +25,7 @@ const LABEL_CLASS = "block text-[10px] font-black text-slate-400 uppercase track
 export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: IngredientEditDrawerProps) => {
   const [isExiting, setIsExiting] = useState(false);
 
-  const update = (patch: Partial<DraftIngredient>) => onChange({ ...ingredient, ...patch });
+  const update = (patch: Partial<DraftIngredientCommon>) => onChange({ ...ingredient, ...patch });
 
   const close = () => {
     setIsExiting(true);
@@ -63,7 +63,7 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
             {isBase ? (
               <BaseRecipeSearch
                 value={ingredient.name}
-                onChange={(name, baseId) => update({ name, baseId })}
+                onChange={(name, baseId) => onChange(applyBasePick(ingredient, name, baseId))}
               />
             ) : (
               <IngredientFoodSearch

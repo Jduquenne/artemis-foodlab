@@ -56,7 +56,7 @@ function formatUnitSuffix(quantity: number, unit: Unit): string {
 }
 
 function formatNameWithNotes(ing: DraftIngredient): string {
-  const notes = [ing.preparation, ing.foodGroupId ? "au choix" : ""].filter(Boolean);
+  const notes = [ing.preparation, ing.ingredientType === "food" && ing.foodGroupId ? "au choix" : ""].filter(Boolean);
   return notes.length > 0 ? `${ing.name} (${notes.join(", ")})` : ing.name;
 }
 
@@ -66,9 +66,9 @@ function formatIngredientText(ing: DraftIngredient): string {
   return `${name} - ${ing.quantity}${formatUnitSuffix(ing.quantity, ing.unit)}`;
 }
 
-function extractBaseLabel(baseId: string | undefined): string | undefined {
-  if (!baseId) return undefined;
-  const num = parseInt(baseId.replace(/^base-0*/, ""), 10);
+function extractBaseLabel(ing: DraftIngredient): string | undefined {
+  if (ing.ingredientType !== "base" || !ing.baseId) return undefined;
+  const num = parseInt(ing.baseId.replace(/^base-0*/, ""), 10);
   return Number.isNaN(num) ? undefined : `B${num}`;
 }
 
@@ -99,7 +99,7 @@ function buildCategoryLines(withQuantity: DraftIngredient[], withoutQuantity: st
       lines.push({
         text,
         isNewCategory: false,
-        baseLabel: index === 0 ? extractBaseLabel(ing.baseId) : undefined,
+        baseLabel: index === 0 ? extractBaseLabel(ing) : undefined,
       });
     });
   }

@@ -19,7 +19,7 @@ export function computeDraftTotal(
   for (const ing of ingredients) {
     if (ing.quantity === null || ing.quantity === 0) continue;
 
-    if (ing.foodId) {
+    if (ing.ingredientType === "food" && ing.foodId) {
       const food = foods[ing.foodId];
       if (!food) {
         missing++;
@@ -31,7 +31,7 @@ export function computeDraftTotal(
         continue;
       }
       total = addMacros(total, scaleMacros(food.macros, grams / 100));
-    } else if (ing.baseId) {
+    } else if (ing.ingredientType === "base" && ing.baseId) {
       const base = recipes[ing.baseId];
       if (!base) {
         missing++;

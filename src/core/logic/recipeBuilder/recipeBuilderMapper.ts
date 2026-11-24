@@ -1,4 +1,4 @@
-import { Food, IngredientCategory, Unit } from "../../domain/ingredient";
+import { Food, Ingredient, IngredientCategory, Unit } from "../../domain/ingredient";
 import { RecipeDetails, RecipeKind } from "../../domain/recipe";
 import { DraftIngredient, RecipeBuilderState } from "../../domain/recipeBuilderTypes";
 import { getIngredientCategoryId } from "../../domain/ingredientCategorySlugs";
@@ -15,37 +15,49 @@ export function switchIngredientType(
   ing: DraftIngredient,
   type: "food" | "base",
 ): DraftIngredient {
-  return {
-    ...ing,
-    ingredientType: type,
-    name: "",
-    foodId: undefined,
-    baseId: undefined,
-    foodGroupId: undefined,
-    quantity: null,
-    unit: type === "base" ? Unit.PORTION : Unit.NONE,
-    preparation: "",
-    category: type === "base" ? IngredientCategory.RECIPE : IngredientCategory.FRUIT_VEGETABLE,
-  };
+  const common = { id: ing.id, ...(ing.apiId ? { apiId: ing.apiId } : {}), name: "", quantity: null, preparation: "" };
+  return type === "base"
+    ? { ...common, ingredientType: "base", baseId: null, unit: Unit.PORTION, category: IngredientCategory.RECIPE }
+    : { ...common, ingredientType: "food", foodId: null, foodGroupId: null, unit: Unit.NONE, category: IngredientCategory.FRUIT_VEGETABLE };
 }
 
 export function applyFoodPick(ingredient: DraftIngredient, name: string, food?: Food): DraftIngredient {
+  if (ingredient.ingredientType !== "food") return ingredient;
   const keepsGroup = Boolean(food?.groupId) && food?.groupId === ingredient.foodGroupId;
   const unit = food?.unit ?? null;
   return {
     ...ingredient,
     name,
-    foodId: food?.id,
+    foodId: food?.id ?? null,
     category: food?.category ?? ingredient.category,
     unit: isUnit(unit) ? unit : ingredient.unit,
-    foodGroupId: keepsGroup ? ingredient.foodGroupId : undefined,
+    foodGroupId: keepsGroup ? ingredient.foodGroupId : null,
   };
 }
 
+export function applyBasePick(ingredient: DraftIngredient, name: string, baseId: string): DraftIngredient {
+  return ingredient.ingredientType === "base" ? { ...ingredient, name, baseId } : ingredient;
+}
+
 export function toggleFoodChoice(ingredient: DraftIngredient, food: Food | undefined): DraftIngredient {
-  if (ingredient.foodGroupId) return { ...ingredient, foodGroupId: undefined };
+  if (ingredient.ingredientType !== "food") return ingredient;
+  if (ingredient.foodGroupId) return { ...ingredient, foodGroupId: null };
   if (!food?.groupId || food.id !== ingredient.foodId) return ingredient;
   return { ...ingredient, foodGroupId: food.groupId };
+}
+
+export function draftIngredientFromRecipe(ing: Ingredient): DraftIngredient {
+  const common = {
+    id: ing.id,
+    name: ing.name,
+    quantity: ing.quantity,
+    unit: ing.unit,
+    preparation: ing.preparation ?? "",
+    category: ing.category,
+  };
+  return ing.baseId
+    ? { ...common, ingredientType: "base", baseId: ing.baseId }
+    : { ...common, ingredientType: "food", foodId: ing.foodId ?? null, foodGroupId: ing.foodGroupId ?? null };
 }
 
 export function recipeToBuilderState(
@@ -53,19 +65,7 @@ export function recipeToBuilderState(
   recipe: RecipeDetails,
 ): RecipeBuilderState {
   const recipeNumber = recipeId.replace(/^[a-z]+-/, "");
-  const ingredients: DraftIngredient[] = recipe.ingredients.map((ing) => ({
-    id: ing.id,
-    apiId: ing.id,
-    ingredientType: ing.baseId ? "base" : "food",
-    name: ing.name,
-    foodId: ing.foodId,
-    baseId: ing.baseId,
-    foodGroupId: ing.foodGroupId,
-    quantity: ing.quantity,
-    unit: ing.unit,
-    preparation: ing.preparation ?? "",
-    category: ing.category,
-  }));
+  const ingredients = recipe.ingredients.map((ing): DraftIngredient => ({ ...draftIngredientFromRecipe(ing), apiId: ing.id }));
   return {
     sourceCode: recipeId,
     recipeNumber,
@@ -91,14 +91,13 @@ export function builderStateToApiBody(state: RecipeBuilderState): ApiRecipeInput
   const ingredients: ApiIngredientInput[] = state.ingredients
     .filter((ing) => ing.name.trim())
     .map((ing) => {
-      const isBaseIngredient = ing.ingredientType === "base";
       return {
         ...(ing.apiId ? { id: ing.apiId } : {}),
         name: ing.name.trim(),
         categoryId: getIngredientCategoryId(ing.category) ?? "",
-        foodId: !isBaseIngredient ? (ing.foodId ?? null) : null,
-        baseId: isBaseIngredient && ing.baseId ? (getIdByCode(ing.baseId) ?? null) : null,
-        foodGroupId: !isBaseIngredient && ing.foodId ? (ing.foodGroupId ?? null) : null,
+        foodId: ing.ingredientType === "food" ? ing.foodId : null,
+        baseId: ing.ingredientType === "base" && ing.baseId ? (getIdByCode(ing.baseId) ?? null) : null,
+        foodGroupId: ing.ingredientType === "food" && ing.foodId ? ing.foodGroupId : null,
         quantity: ing.quantity,
         unit: ing.unit === Unit.NONE ? null : ing.unit,
         preparation: ing.preparation || null,

@@ -13,12 +13,11 @@ export interface IngredientChoiceToggleProps {
 export const IngredientChoiceToggle = ({ ingredient, onChange, wide = false }: IngredientChoiceToggleProps) => {
   const foods = useFoodsSnapshot();
   const groups = useFoodGroupsSnapshot();
+  const placeholder = wide ? null : <span className="w-8 shrink-0" />;
+  if (ingredient.ingredientType !== "food") return placeholder;
   const food = ingredient.foodId ? foods[ingredient.foodId] : undefined;
   const groupId = ingredient.foodGroupId ?? food?.groupId;
-
-  if (ingredient.ingredientType !== "food" || !groupId) {
-    return wide ? null : <span className="w-8 shrink-0" />;
-  }
+  if (!groupId) return placeholder;
 
   const active = Boolean(ingredient.foodGroupId);
   const groupName = foodGroupLabel(groups, groupId);

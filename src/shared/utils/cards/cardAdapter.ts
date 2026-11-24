@@ -3,6 +3,7 @@ import { ZERO, roundMacros } from "../../../core/logic/nutrition/macroLogic";
 import { RecipeDetails } from "../../../core/domain/recipe";
 import { DraftIngredient, RecipeBuilderState } from "../../../core/domain/recipeBuilderTypes";
 import { formatIngredientsForIngredientCard } from "./ingredientLines";
+import { draftIngredientFromRecipe } from "../../../core/logic/recipeBuilder/recipeBuilderMapper";
 import { getCardColors } from "./cardColors";
 import { buildFoodQuantityLabel } from "./cardUtils";
 import {
@@ -18,18 +19,7 @@ function extractRecipeNumber(recipeId: string): number {
 }
 
 function ingredientsToDraft(recipe: Pick<RecipeDetails, "ingredients">): DraftIngredient[] {
-  return recipe.ingredients.map((ing) => ({
-    id: ing.id,
-    ingredientType: ing.baseId ? ("base" as const) : ("food" as const),
-    name: ing.name,
-    foodId: ing.foodId,
-    baseId: ing.baseId,
-    foodGroupId: ing.foodGroupId,
-    quantity: ing.quantity,
-    unit: ing.unit,
-    preparation: ing.preparation ?? "",
-    category: ing.category,
-  }));
+  return recipe.ingredients.map(draftIngredientFromRecipe);
 }
 
 export function recipeToPhotoCardData(

@@ -4,8 +4,8 @@ import { Unit, IngredientCategory, SELECTABLE_UNITS } from "../../../../core/dom
 import { IngredientFoodSearch } from "./IngredientFoodSearch";
 import { BaseRecipeSearch } from "./BaseRecipeSearch";
 import { BaseUnitSelect } from "./BaseUnitSelect";
-import { DraftIngredient } from "../../../../core/domain/recipeBuilderTypes";
-import { applyFoodPick } from "../../../../core/logic/recipeBuilder/recipeBuilderMapper";
+import { DraftIngredient, DraftIngredientCommon } from "../../../../core/domain/recipeBuilderTypes";
+import { applyBasePick, applyFoodPick } from "../../../../core/logic/recipeBuilder/recipeBuilderMapper";
 import { DecimalInput } from "../../../../shared/components/ui/DecimalInput";
 import { IngredientTypeToggle } from "./IngredientTypeToggle";
 import { IngredientChoiceToggle } from "./IngredientChoiceToggle";
@@ -17,7 +17,7 @@ export interface IngredientBuilderRowProps {
 }
 
 export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: IngredientBuilderRowProps) => {
-  const update = (patch: Partial<DraftIngredient>) => onChange({ ...ingredient, ...patch });
+  const update = (patch: Partial<DraftIngredientCommon>) => onChange({ ...ingredient, ...patch });
 
   const isBase = ingredient.ingredientType === "base";
 
@@ -29,7 +29,7 @@ export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: Ingredi
         <>
           <BaseRecipeSearch
             value={ingredient.name}
-            onChange={(name, baseId) => update({ name, baseId })}
+            onChange={(name, baseId) => onChange(applyBasePick(ingredient, name, baseId))}
           />
           <DecimalInput
             value={ingredient.quantity}

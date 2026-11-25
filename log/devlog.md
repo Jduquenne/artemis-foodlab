@@ -16,11 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
-## 2026-11-25 — #68: stale food codes in freezer items (docs, v6.167.9)
+## 2026-11-25 — #68: stale food codes in freezer items (docs, v6.167.9, D-075 details v6.167.10)
 - Cause (API audit, read-only): the old front renumbered `food-db.json` several times between 2026-02-26 and 2026-06-13; IndexedDB kept the old codes and `POST /import` stored them as sent (the FK only checks the code exists). Example: fv-059 = « Navet », then « Oignon jaune », then « Mûres »; « Oignon jaune » is fv-063 today. 72 / 177 freezer food items in prod (3 accounts) named another food; other tables consistent or written with current codes.
 - Front check: no pre-API code held or sent except through the legacy import (user-chosen old JSON); the freezer / planning / household caches are rebuilt from the API. Side effect fixed by the API change: freezer stock in the shopping list was counted on the wrong food for those items.
-- Owner decisions: remap the 66 exact-name matches, import guard (remap by exact name else `null` + anomaly): done by the API session and pushed to prod (owner, 2026-11-25; API commit hash TODO(owner)). The 6 items without exact match (« Lentille vertes sèches », « Buche de chèvre ou fromage frais »…) wait for the owner's validation of candidates. No front code change; `docs/api.md` § Import updated.
-- Still open: the 6 items; idea to remove the obsolete import (front `features/sync` + API `POST /import`).
+- Owner decisions: remap the 66 exact-name matches, import guard (remap by exact name else `null` + anomaly): done in prod (API D-075, commit `a2de747`): 66 relinked by exact name, 3 « Lentille vertes sèches » → fc-012 (owner), 3 « Buche de chèvre ou fromage frais » deleted (owner); no stale code left. No front code change; `docs/api.md` § Import updated.
+- Still open: owner check (📖 on « Oignon jaune » opens onion recipes, freezer stock in the shopping list on the right foods), then close #68; idea to remove the obsolete import (front `features/sync` + API `POST /import`).
 
 ## 2026-11-25 — #66: API D-073 and D-074 live in prod (docs, v6.167.8)
 - API session: both deployed (commit `fdb7e35`, migrations applied, constraints identical to dev), checked in prod with an authenticated session: grams batch 201 with `linkedQuantity: 0`, slot batch with a frozen choice → 200 with `freezerBatches`, over-take → 400, unit change on a linked batch → 409, `POST /planning-slots/move` → 200 with the link following the meal, give-back on a future day. Pending on the API side (next push): French messages for every malformed move body field (zod default English until then; shape and status unchanged, never parsed by the front).

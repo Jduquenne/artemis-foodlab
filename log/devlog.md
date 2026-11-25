@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-25 — #68: stale food codes in freezer items (docs, v6.167.9)
+- Cause (API audit, read-only): the old front renumbered `food-db.json` several times between 2026-02-26 and 2026-06-13; IndexedDB kept the old codes and `POST /import` stored them as sent (the FK only checks the code exists). Example: fv-059 = « Navet », then « Oignon jaune », then « Mûres »; « Oignon jaune » is fv-063 today. 72 / 177 freezer food items in prod (3 accounts) named another food; other tables consistent or written with current codes.
+- Front check: no pre-API code held or sent except through the legacy import (user-chosen old JSON); the freezer / planning / household caches are rebuilt from the API. Side effect fixed by the API change: freezer stock in the shopping list was counted on the wrong food for those items.
+- Owner decisions: remap the 66 exact-name matches, import guard (remap by exact name else `null` + anomaly): done by the API session and pushed to prod (owner, 2026-11-25; API commit hash TODO(owner)). The 6 items without exact match (« Lentille vertes sèches », « Buche de chèvre ou fromage frais »…) wait for the owner's validation of candidates. No front code change; `docs/api.md` § Import updated.
+- Still open: the 6 items; idea to remove the obsolete import (front `features/sync` + API `POST /import`).
+
 ## 2026-11-25 — #66: API D-073 and D-074 live in prod (docs, v6.167.8)
 - API session: both deployed (commit `fdb7e35`, migrations applied, constraints identical to dev), checked in prod with an authenticated session: grams batch 201 with `linkedQuantity: 0`, slot batch with a frozen choice → 200 with `freezerBatches`, over-take → 400, unit change on a linked batch → 409, `POST /planning-slots/move` → 200 with the link following the meal, give-back on a future day. Pending on the API side (next push): French messages for every malformed move body field (zod default English until then; shape and status unchanged, never parsed by the front).
 - Status updated in `docs/api.md`, D-046, roadmap item 19. The front of #66 (v6.167.0 to v6.167.8) can be pushed; owner browser tests: list given in the conversation and in the step 7 entry below (with the persons test corrected in the v6.167.7 entry).

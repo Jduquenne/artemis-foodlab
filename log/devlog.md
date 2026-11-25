@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-25 — #66 step 5: « Ajouter au menu » for a base batch (v6.167.4)
+- Done: `frozenBaseLogic.ts` (`isBaseBatch`, `dishesUsingBase`, `filterDishesByName`, `suggestedFrozenQuantity` with nested bases, `initialFrozenQuantity`, `frozenQuantityError`, `withFrozenBase`); `placeMainDishWithFrozenBase` (`planningService`); `BaseDishPicker` and `FrozenBaseAmountFields` (`features/freezer/components/modal/`); `AddBatchToMenuModal` branches on a base batch (recipe first, then week grid, persons and quantity), dish batches unchanged. `docs/spec-freezer.md`.
+- UI wording: the owner said « portions »; the field is « Personnes », like the planning persons badge (it drives the dish portions). To confirm with the owner.
+- Verified: tsc + lint, golden-rule greps; logic run through esbuild on sample recipes (dishes using the base incl. nested, suggestion in portions / grams / grams ingredient / nested base / no cooked weight, errors, initial quantity capped, `withFrozenBase` replacing an industrial choice). Not checked in a browser; saving needs D-073 deployed (dev API only).
+- Still open: steps 6 (« Du congélateur » in « Choix du repas ») and 7 (docs) of #66.
+
 ## 2026-11-25 — #66 step 4: freezer shows what is planned (v6.167.3)
 - Done: `batchStatusLabel` / `linkedQuantityLabel` (`batchQuantityLogic.ts`) on `BatchFreezerItemRow`: « 650 g · 350 g prévus au menu », « 3 portions · 1 portion prévue au menu », « Épuisé · prévu au menu » (at 0 and linked), « Épuisé ». No automatic deletion existed (the « − » stops at 1, the grams sheet refuses 0), nothing to remove. `docs/spec-freezer.md`.
 - Verified: tsc + lint; labels run through esbuild (7 cases, agreement portion / g, singular / plural). Not checked in a browser (needs D-073 for a non-zero `linkedQuantity`).

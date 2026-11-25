@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-25 — #66: persons stay with the day on a move (docs, v6.167.7)
+- Owner correction: « le nombre de personnes reste sur le jour, pas sur le repas ». It is already the behaviour: the lunch / dinner persons are the slot `persons` (« Personnes » writes `slot.persons`), which the API move leaves on each slot; before v6.167.1 the front reset them to the default on both days. Item overrides (a dessert's persons, grams) follow the item. The step 2 entry below (« a moved meal keeps its persons ») was wrong on that point; `docs/spec-planning.md` and D-046 corrected. No code change.
+- Test to run instead: move a lunch with « Personnes » set to 4 onto a day set to 2 → the dish shows 2 on its new day, and 4 stays on the old day.
+
 ## 2026-11-25 — #66 step 7: docs pass and D-046 (v6.167.6)
 - Done: `docs/decisions.md` D-046 (frozen base planned through a dish as a third base version moving the stock, atomic move); stale « so far » wording removed in `docs/spec-freezer.md` / `docs/spec-planning.md`; pointer from the dish batch « Ajouter au menu » to the base flow; roadmap item 19 updated. Front of #66 complete (v6.167.0 to v6.167.6).
 - Where to resume: wait for the API session to confirm D-073 + D-074 deployed in prod (migration applied, authenticated 200), then the owner pushes and tests. **Do not push before.**

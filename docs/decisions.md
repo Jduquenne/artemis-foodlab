@@ -422,7 +422,7 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
 ## D-046 — A frozen base batch is planned through a dish, as a third base version that moves the stock
 
 - **Date**: 2026-11-25
-- **Status**: accepted (owner, 2026-11-25, issue #66); API D-073 (frozen base version, stock) and D-074 (atomic move) on dev, **not live in prod yet**; front v6.167.0 to v6.167.5, not to be pushed before the API session confirms the deployment.
+- **Status**: accepted (owner, 2026-11-25, issue #66); API D-073 (frozen base version, stock) and D-074 (atomic move) **live in prod** (API commit `fdb7e35`, 2026-11-25); front v6.167.0 to v6.167.7.
 - **Context**: base batches (sauces, doughs…) could be added to the menu like a dish batch, but a base is never eaten alone. The owner wants a base batch to be planned only inside a dish that uses it, with the portions and the amount of base taken chosen at planning time.
 - **Decision**:
   - « Ajouter au menu » on a base batch lists only the dishes reaching the base (nested bases included); none → a message and no action.

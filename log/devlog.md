@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-25 — #66: API D-073 and D-074 live in prod (docs, v6.167.8)
+- API session: both deployed (commit `fdb7e35`, migrations applied, constraints identical to dev), checked in prod with an authenticated session: grams batch 201 with `linkedQuantity: 0`, slot batch with a frozen choice → 200 with `freezerBatches`, over-take → 400, unit change on a linked batch → 409, `POST /planning-slots/move` → 200 with the link following the meal, give-back on a future day. Pending on the API side (next push): French messages for every malformed move body field (zod default English until then; shape and status unchanged, never parsed by the front).
+- Status updated in `docs/api.md`, D-046, roadmap item 19. The front of #66 (v6.167.0 to v6.167.8) can be pushed; owner browser tests: list given in the conversation and in the step 7 entry below (with the persons test corrected in the v6.167.7 entry).
+
 ## 2026-11-25 — #66: persons stay with the day on a move (docs, v6.167.7)
 - Owner correction: « le nombre de personnes reste sur le jour, pas sur le repas ». It is already the behaviour: the lunch / dinner persons are the slot `persons` (« Personnes » writes `slot.persons`), which the API move leaves on each slot; before v6.167.1 the front reset them to the default on both days. Item overrides (a dessert's persons, grams) follow the item. The step 2 entry below (« a moved meal keeps its persons ») was wrong on that point; `docs/spec-planning.md` and D-046 corrected. No code change.
 - Test to run instead: move a lunch with « Personnes » set to 4 onto a day set to 2 → the dish shows 2 on its new day, and 4 stays on the old day.

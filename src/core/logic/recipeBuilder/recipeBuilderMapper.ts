@@ -99,7 +99,7 @@ export function builderStateToApiBody(state: RecipeBuilderState): ApiRecipeInput
       return {
         ...(ing.apiId ? { id: ing.apiId } : {}),
         name: ing.name.trim(),
-        categoryId: getIngredientCategoryId(ing.category) ?? "",
+        ...(ing.ingredientType === "food" && ing.foodId ? {} : { categoryId: getIngredientCategoryId(ing.category) ?? "" }),
         foodId: ing.ingredientType === "food" ? ing.foodId : null,
         baseId: ing.ingredientType === "base" && ing.baseId ? (getIdByCode(ing.baseId) ?? null) : null,
         foodGroupId: ing.ingredientType === "food" && ing.foodId ? ing.foodGroupId : null,

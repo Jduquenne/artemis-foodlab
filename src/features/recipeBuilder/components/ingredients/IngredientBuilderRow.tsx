@@ -1,3 +1,4 @@
+import { hasOwnCategory } from "../../../../core/logic/recipeBuilder/recipeBuilderState";
 import { Trash2 } from "lucide-react";
 import { PREPARATION_OPTIONS } from "../../../../core/domain/preparationOptions";
 import { Unit, IngredientCategory, SELECTABLE_UNITS } from "../../../../core/domain/ingredient";
@@ -73,15 +74,25 @@ export const IngredientBuilderRow = ({ ingredient, onChange, onRemove }: Ingredi
               <option key={p} value={p}>{p}</option>
             ))}
           </select>
-          <select
-            value={ingredient.category}
-            onChange={e => update({ category: e.target.value as IngredientCategory })}
-            className="w-28 px-1 py-2 bg-surface border border-slate-200 rounded-xl text-xs text-slate-600 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
-          >
-            {Object.values(IngredientCategory).map(c => (
-              <option key={c} value={c}>{c}</option>
-            ))}
-          </select>
+          {hasOwnCategory(ingredient) ? (
+            <select
+              value={ingredient.category}
+              onChange={e => update({ category: e.target.value as IngredientCategory })}
+              aria-label="Catégorie (rayon) de l'ingrédient libre"
+              className="w-28 px-1 py-2 bg-surface border border-slate-200 rounded-xl text-xs text-slate-600 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
+            >
+              {Object.values(IngredientCategory).map(c => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+            </select>
+          ) : (
+            <span
+              title="Catégorie de l'aliment (modifiable dans le Dashboard)"
+              className="w-28 px-1 py-2 text-xs text-slate-400 truncate"
+            >
+              {ingredient.category}
+            </span>
+          )}
         </>
       )}
 

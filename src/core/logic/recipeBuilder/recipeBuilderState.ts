@@ -2,6 +2,10 @@ import { DraftIngredient, DraftIngredientCommon, RecipeBuilderState } from "../.
 import { IngredientCategory, Unit } from "../../domain/ingredient";
 import { RecipeKind } from "../../domain/recipe";
 
+export function hasOwnCategory(ingredient: DraftIngredient): boolean {
+  return ingredient.ingredientType === "food" && ingredient.foodId === null;
+}
+
 export const emptyDraftIngredientCommon = (): DraftIngredientCommon => ({
   id: crypto.randomUUID(),
   name: "",

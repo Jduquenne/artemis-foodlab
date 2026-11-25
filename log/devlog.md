@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-25 — #69 step 2: Recipe Builder category only for free-text lines (v6.168.1)
+- Done: `hasOwnCategory` (`recipeBuilderState.ts`); `IngredientBuilderRow` and `IngredientEditDrawer` show the category select only for a free-text line, a linked food line shows its category read-only; `builderStateToApiBody` omits `categoryId` for a linked food line (`ApiIngredientInput.categoryId?`), base lines still send « recipe ». `docs/api.md` (D-077), `docs/spec-recipes.md`.
+- Verified: tsc + lint; payload run through esbuild (linked food: no categoryId, free text: its slug, base: recipe). Not checked in a browser. Do not push before D-077 is live in prod (the current API still requires `categoryId` on every ingredient).
+- Next: step 3 (food category change refreshes the cached recipes, docs, D-047).
+
 ## 2026-11-25 — #69 step 1: food origin for the menu generator (v6.168.0)
 - Context: API audit for #69 (ingredient category taken from its food): 1,276 food-linked ingredients held a stale category; aligning them moves 21 fish ingredients (Thon au naturel, Filets de maquereaux → Conserves, Filet de merlu → Surgelés) out of « Poisson », and the generator detected meat / fish / deli from that aisle. Owner decisions: API option B (D-077, category derived from the food on read, required only for free-text ingredients, which keep their select), food origin property (D-076), Pita and soja texturé → none (categories unchanged). Both on API dev only.
 - Done: `FoodOrigin` + labels (`core/domain/foodOrigin.ts`), `Food.origin`, `FoodInput.origin`; food form « Origine » select, recap and body (`foodFormLogic.ts`, `FoodFormModal`); `recipeDietProfile(recipe, catalogue)` reads the food origin instead of the ingredient category (recipe category rules unchanged). No Dexie version: the catalogue cache is fully replaced on the first sync after each start. `docs/api.md` (D-076), `docs/spec-admin.md`, `docs/spec-planning.md`.

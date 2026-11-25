@@ -1,3 +1,4 @@
+import { hasOwnCategory } from "../../../../core/logic/recipeBuilder/recipeBuilderState";
 import { useState } from "react";
 import { X } from "lucide-react";
 import { PREPARATION_OPTIONS } from "../../../../core/domain/preparationOptions";
@@ -131,15 +132,22 @@ export const IngredientEditDrawer = ({ ingredient, onChange, onClose }: Ingredie
 
               <div>
                 <label className={LABEL_CLASS}>Catégorie</label>
-                <select
-                  value={ingredient.category}
-                  onChange={e => update({ category: e.target.value as IngredientCategory })}
-                  className={FIELD_CLASS}
-                >
-                  {Object.values(IngredientCategory).map(c => (
-                    <option key={c} value={c}>{c}</option>
-                  ))}
-                </select>
+                {hasOwnCategory(ingredient) ? (
+                  <select
+                    value={ingredient.category}
+                    onChange={e => update({ category: e.target.value as IngredientCategory })}
+                    className={FIELD_CLASS}
+                  >
+                    {Object.values(IngredientCategory).map(c => (
+                      <option key={c} value={c}>{c}</option>
+                    ))}
+                  </select>
+                ) : (
+                  <p className="text-sm text-slate-500">
+                    {ingredient.category}
+                    <span className="block text-xs text-slate-400">Catégorie de l'aliment, modifiable dans le Dashboard.</span>
+                  </p>
+                )}
               </div>
             </>
           )}

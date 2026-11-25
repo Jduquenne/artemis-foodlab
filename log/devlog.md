@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-25 — #69 step 3: docs and D-047 (v6.168.2)
+- Checked: a food category change already reaches the cached recipes: `useCatalogueFoods` runs `syncCatalogueFromApi()` after `updateFood`, the recipes come back with the derived category and the signature change replaces the cache. No code change.
+- Done: `docs/decisions.md` D-047, `docs/spec-shopping.md` (aisle of a line), roadmap item 20.
+- Where to resume: wait for the API session to confirm D-076 + D-077 in prod, then the owner pushes v6.168.0 to v6.168.2. **Do not push before** (the generator would lose meat / fish detection, and recipe saves would fail).
+- Owner tests once live: (1) Dashboard › Aliments: edit a food, « Origine » shown and saved, recap line; (2) generator with « Végétarien »: no tuna / mackerel recipe, pita and soy recipes allowed; « Pescétarien »: tuna allowed; (3) Recipe Builder: linked line shows its category read-only (desktop and mobile), free-text line keeps the select, save a recipe with both; (4) shopping: olive oil in « Bio », frozen peas in « Surgelés », « Petit-lait » in « Hors achat »; (5) change a food's category in the Dashboard → its recipes and shopping lines follow after the save; (6) season filter: recipes with frozen peas no longer depend on the season.
+
 ## 2026-11-25 — #69 step 2: Recipe Builder category only for free-text lines (v6.168.1)
 - Done: `hasOwnCategory` (`recipeBuilderState.ts`); `IngredientBuilderRow` and `IngredientEditDrawer` show the category select only for a free-text line, a linked food line shows its category read-only; `builderStateToApiBody` omits `categoryId` for a linked food line (`ApiIngredientInput.categoryId?`), base lines still send « recipe ». `docs/api.md` (D-077), `docs/spec-recipes.md`.
 - Verified: tsc + lint; payload run through esbuild (linked food: no categoryId, free text: its slug, base: recipe). Not checked in a browser. Do not push before D-077 is live in prod (the current API still requires `categoryId` on every ingredient).

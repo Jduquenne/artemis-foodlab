@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-25 — #66 step 4: freezer shows what is planned (v6.167.3)
+- Done: `batchStatusLabel` / `linkedQuantityLabel` (`batchQuantityLogic.ts`) on `BatchFreezerItemRow`: « 650 g · 350 g prévus au menu », « 3 portions · 1 portion prévue au menu », « Épuisé · prévu au menu » (at 0 and linked), « Épuisé ». No automatic deletion existed (the « − » stops at 1, the grams sheet refuses 0), nothing to remove. `docs/spec-freezer.md`.
+- Verified: tsc + lint; labels run through esbuild (7 cases, agreement portion / g, singular / plural). Not checked in a browser (needs D-073 for a non-zero `linkedQuantity`).
+- Idea for the owner (not done): confirm before deleting a batch still planned (its meals fall back to home and the quantity is lost).
+- Still open: steps 5 to 7 of #66.
+
 ## 2026-11-25 — #66 step 3: a frozen base leaves the shopping list (v6.167.2)
 - Done: `applyFrozenBases` (`baseVersionLogic.ts`): every frozen base reachable from the dish becomes the same base without ingredients for that meal (same table returned when nothing changes); `aggregateSlots` applies it after `applyBaseVersions`, `aggregateBases` skips frozen bases (`isFrozenChoice`). Planning cost estimate follows (built on `aggregateSlots`); macros / journal unchanged (home version). Docs: `docs/spec-shopping.md` § Frozen base, `docs/spec-planning.md`.
 - Verified: tsc + lint; throwaway esbuild test (`E:/Developpement/_claude/tmp/frozen-test/`, not versioned): base emptied without touching the catalogue table, industrial-only / unreachable choices return the same table, `isFrozenChoice`, `withoutFrozenBases`, `sameBaseVersionChoices` sees a quantity change. Not checked in a browser (needs D-073 deployed to create a frozen choice).

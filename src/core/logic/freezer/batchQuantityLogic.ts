@@ -13,6 +13,19 @@ export function formatBatchQuantity(unit: BatchUnit, quantity: number): string {
   return `${quantity} portion${quantity > 1 ? "s" : ""}`;
 }
 
+export function linkedQuantityLabel(unit: BatchUnit, linkedQuantity: number): string | null {
+  if (linkedQuantity <= 0) return null;
+  const plural = linkedQuantity > 1 ? "s" : "";
+  const agreement = unit === "portion" ? `e${plural}` : plural;
+  return `${formatBatchQuantity(unit, linkedQuantity)} prévu${agreement} au menu`;
+}
+
+export function batchStatusLabel(unit: BatchUnit, quantity: number, linkedQuantity: number): string {
+  if (quantity === 0) return linkedQuantity > 0 ? "Épuisé · prévu au menu" : "Épuisé";
+  const linked = linkedQuantityLabel(unit, linkedQuantity);
+  return linked ? `${formatBatchQuantity(unit, quantity)} · ${linked}` : formatBatchQuantity(unit, quantity);
+}
+
 export function shortBatchQuantity(unit: BatchUnit, quantity: number): string {
   return unit === "g" ? `${formatQty(quantity)} g` : String(quantity);
 }

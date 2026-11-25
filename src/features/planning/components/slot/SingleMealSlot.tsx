@@ -15,6 +15,8 @@ import { defaultPersonsOf } from '../../../../core/logic/recipe/portionsPerPerso
 import { useProfileStore } from '../../../../shared/store/useProfileStore';
 import { foodChoiceStatus } from '../../../../core/logic/foodGroup/foodChoiceLogic';
 import { FoodChoice } from '../../../../core/domain/foodGroup';
+import { BaseVersionChoice } from '../../../../core/domain/baseVersion';
+import { hasFrozenChoice } from '../../../../core/logic/baseVersion/baseVersionLogic';
 import { FoodChoiceBadge } from './FoodChoiceBadge';
 
 export interface SingleMealSlotProps {
@@ -46,6 +48,7 @@ export interface SingleMealSlotProps {
     recipePersons?: Record<string, number>;
     onSetDessertPersons?: (id: string, n: number) => Promise<boolean>;
     foodChoices?: Record<string, FoodChoice[]>;
+    baseVersionChoices?: Record<string, BaseVersionChoice[]>;
     onChooseFood?: (recipeId: string) => void;
 }
 
@@ -58,7 +61,7 @@ export const SingleMealSlot = ({
     hasDessert, dessertIds, onAddDessert, onRemoveDessert,
     onCopyDessert, copySourceDessertId, dessertCopyTargetState, onSelectDessertAsTarget,
     inFreezer, recipePersons, onSetDessertPersons,
-    foodChoices, onChooseFood,
+    foodChoices, baseVersionChoices, onChooseFood,
 }: SingleMealSlotProps) => {
     const plannable = usePlannableSnapshot();
     const firstId = recipeIds[0];
@@ -73,7 +76,9 @@ export const SingleMealSlot = ({
     const choiceStatus = groupIngredients.length > 0 && firstId
         ? foodChoiceStatus(groupIngredients, profiles, foodChoices?.[firstId] ?? [])
         : null;
-    const hasMealChoices = useHasMealChoices(firstId);
+    const mainBaseVersions = firstId ? baseVersionChoices?.[firstId] : undefined;
+    const hasMealChoices = useHasMealChoices(firstId, mainBaseVersions);
+    const showFreezer = Boolean(inFreezer) || hasFrozenChoice(mainBaseVersions);
     const chooseMainFood = hasMealChoices && firstId && onChooseFood ? () => onChooseFood(firstId) : undefined;
 
     const { setNodeRef: setDropRef, isOver } = useDroppable({ id: slotId });
@@ -134,9 +139,9 @@ export const SingleMealSlot = ({
                 )}
             </button>
 
-            {hasPhoto && !isDragging && !isAddMode && (inFreezer || (!isEditingPersons && displayPersons !== undefined)) && (
+            {hasPhoto && !isDragging && !isAddMode && (showFreezer || (!isEditingPersons && displayPersons !== undefined)) && (
                 <div className="absolute top-1 right-1 z-20 flex items-center gap-1">
-                    {inFreezer && (
+                    {showFreezer && (
                         <div className="p-1 bg-cyan-500/80 text-white rounded-lg shadow-sm pointer-events-none">
                             <Snowflake size={10} />
                         </div>

@@ -1,4 +1,4 @@
-import { BaseVersionChoice, SelectableBaseVersion } from '../../../core/domain/baseVersion';
+import { BaseVersion, BaseVersionChoice } from '../../../core/domain/baseVersion';
 import { Food } from '../../../core/domain/ingredient';
 import { RecipeDetails } from '../../../core/domain/recipe';
 import { findBaseVersion, industrialEquivalentLabel } from '../../../core/logic/baseVersion/baseVersionLogic';
@@ -6,9 +6,10 @@ import { findBaseVersion, industrialEquivalentLabel } from '../../../core/logic/
 export interface BaseVersionSectionProps {
     bases: readonly RecipeDetails[];
     choices: readonly BaseVersionChoice[];
+    frozenLabels: Record<string, string>;
     foods: Record<string, Food>;
     disabled: boolean;
-    onChange: (baseCode: string, version: SelectableBaseVersion) => void;
+    onChange: (baseCode: string, version: BaseVersion) => void;
 }
 
 const optionClass = (selected: boolean) =>
@@ -18,43 +19,57 @@ const optionClass = (selected: boolean) =>
             : 'bg-surface border-slate-200 text-slate-600 hover:bg-muted'
     }`;
 
-export const BaseVersionSection = ({ bases, choices, foods, disabled, onChange }: BaseVersionSectionProps) => (
+const hintClass = (selected: boolean) => `text-[11px] ${selected ? 'text-orange-100' : 'text-slate-400'}`;
+
+interface VersionOption {
+    version: BaseVersion;
+    title: string;
+    hint: string;
+}
+
+function optionsFor(base: RecipeDetails, frozenLabel: string | undefined, foods: Record<string, Food>): VersionOption[] {
+    const equivalent = base.industrialEquivalent;
+    return [
+        { version: 'home', title: 'Maison', hint: 'Recette de la base' },
+        ...(equivalent ? [{ version: 'industrial' as const, title: 'Du commerce', hint: industrialEquivalentLabel(equivalent, foods) }] : []),
+        ...(frozenLabel ? [{ version: 'frozen' as const, title: 'Du congélateur', hint: `${frozenLabel} pris au lot` }] : []),
+    ];
+}
+
+export const BaseVersionSection = ({ bases, choices, frozenLabels, foods, disabled, onChange }: BaseVersionSectionProps) => (
     <>
         {bases.map((base) => {
-            const industrial = findBaseVersion(choices, base.code) === 'industrial';
-            const equivalent = base.industrialEquivalent;
+            const current = findBaseVersion(choices, base.code) ?? 'home';
+            const options = optionsFor(base, frozenLabels[base.code], foods);
+            const leavesFrozen = Boolean(frozenLabels[base.code]) && current !== 'frozen';
             return (
                 <section key={base.code} className="flex flex-col gap-2">
                     <p className="text-xs font-bold text-slate-500">
                         {base.name}
                         <span className="font-normal text-slate-400"> · version de la base</span>
                     </p>
-                    <div role="radiogroup" aria-label={`Version de ${base.name}`} className="grid grid-cols-2 gap-2">
-                        <button
-                            type="button"
-                            role="radio"
-                            aria-checked={!industrial}
-                            disabled={disabled}
-                            onClick={() => onChange(base.code, 'home')}
-                            className={optionClass(!industrial)}
-                        >
-                            <span className="text-sm font-bold">Maison</span>
-                            <span className={`text-[11px] ${!industrial ? 'text-orange-100' : 'text-slate-400'}`}>Recette de la base</span>
-                        </button>
-                        <button
-                            type="button"
-                            role="radio"
-                            aria-checked={industrial}
-                            disabled={disabled}
-                            onClick={() => onChange(base.code, 'industrial')}
-                            className={optionClass(industrial)}
-                        >
-                            <span className="text-sm font-bold">Du commerce</span>
-                            <span className={`text-[11px] ${industrial ? 'text-orange-100' : 'text-slate-400'}`}>
-                                {equivalent ? industrialEquivalentLabel(equivalent, foods) : ''}
-                            </span>
-                        </button>
+                    <div role="radiogroup" aria-label={`Version de ${base.name}`} className={`grid gap-2 ${options.length === 3 ? 'grid-cols-3' : 'grid-cols-2'}`}>
+                        {options.map((option) => {
+                            const selected = current === option.version;
+                            return (
+                                <button
+                                    key={option.version}
+                                    type="button"
+                                    role="radio"
+                                    aria-checked={selected}
+                                    disabled={disabled}
+                                    onClick={() => onChange(base.code, option.version)}
+                                    className={optionClass(selected)}
+                                >
+                                    <span className="text-sm font-bold">{option.title}</span>
+                                    <span className={hintClass(selected)}>{option.hint}</span>
+                                </button>
+                            );
+                        })}
                     </div>
+                    {leavesFrozen && (
+                        <p className="text-[11px] text-slate-400">À l'enregistrement, la quantité retourne au congélateur (sauf pour un repas passé).</p>
+                    )}
                 </section>
             );
         })}

@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-25 — #66 step 6: frozen base in « Choix du repas » (v6.167.5)
+- Done: `versionableBases`, `findFrozenChoice`, `selectBaseVersion`, `hasFrozenChoice` (`baseVersionLogic.ts`), `frozenChoiceLabels` (`frozenBaseLogic.ts`); `BaseVersionSection` builds its options per base (Maison, Du commerce when an equivalent exists, Du congélateur when the meal holds a frozen link) with a note when leaving the frozen version; `FoodChoiceModal` uses them (no more `useIndustrialBases` there); `useHasMealChoices` takes the meal base choices; `SingleMealSlot` shows the snowflake badge for a frozen base. `docs/spec-planning.md`.
+- Verified: tsc + lint, golden-rule greps; logic run through esbuild (listing with / without frozen choice, home → frozen round trip, frozen without saved link ignored, industrial on another base keeps the frozen one, labels with known / unknown batch). Not checked in a browser.
+- Still open: step 7 (final docs pass) of #66; owner tests once the API confirms D-073 / D-074 in prod.
+
 ## 2026-11-25 — #66 step 5: « Ajouter au menu » for a base batch (v6.167.4)
 - Done: `frozenBaseLogic.ts` (`isBaseBatch`, `dishesUsingBase`, `filterDishesByName`, `suggestedFrozenQuantity` with nested bases, `initialFrozenQuantity`, `frozenQuantityError`, `withFrozenBase`); `placeMainDishWithFrozenBase` (`planningService`); `BaseDishPicker` and `FrozenBaseAmountFields` (`features/freezer/components/modal/`); `AddBatchToMenuModal` branches on a base batch (recipe first, then week grid, persons and quantity), dish batches unchanged. `docs/spec-freezer.md`.
 - UI wording: the owner said « portions »; the field is « Personnes », like the planning persons badge (it drives the dish portions). To confirm with the owner.

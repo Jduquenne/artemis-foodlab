@@ -41,8 +41,12 @@ export function setBaseVersion(
   return version === null ? others : [...others, { baseCode, version }];
 }
 
+export function hasFrozenChoice(choices: readonly BaseVersionChoice[] | undefined): boolean {
+  return (choices ?? []).some((choice) => choice.version === "frozen");
+}
+
 export function hasFrozenBase(slot: Pick<MealSlot, "baseVersionChoices">): boolean {
-  return Object.values(slot.baseVersionChoices ?? {}).some((choices) => choices.some((choice) => choice.version === "frozen"));
+  return Object.values(slot.baseVersionChoices ?? {}).some(hasFrozenChoice);
 }
 
 export function withoutFrozenBases(choices: readonly BaseVersionChoice[]): BaseVersionChoice[] {
@@ -129,6 +133,35 @@ export function applyBaseVersions(
     if (substitute) substitutes[choice.baseCode] = substitute;
   }
   return Object.keys(substitutes).length === 0 ? recipes : { ...recipes, ...substitutes };
+}
+
+export type FrozenBaseChoice = Extract<BaseVersionChoice, { version: "frozen" }>;
+
+export function findFrozenChoice(choices: readonly BaseVersionChoice[] | undefined, baseCode: string): FrozenBaseChoice | null {
+  const choice = choices?.find((candidate) => candidate.baseCode === baseCode);
+  return choice?.version === "frozen" ? choice : null;
+}
+
+export function versionableBases(
+  recipe: RecipeDetails,
+  recipes: Record<string, RecipeDetails>,
+  choices: readonly BaseVersionChoice[] | undefined,
+): RecipeDetails[] {
+  return [...reachableBaseCodes(recipe, recipes)].flatMap((code) => {
+    const base = recipes[code];
+    return base && (base.industrialEquivalent || findFrozenChoice(choices, code)) ? [base] : [];
+  });
+}
+
+export function selectBaseVersion(
+  current: readonly BaseVersionChoice[],
+  initial: readonly BaseVersionChoice[],
+  baseCode: string,
+  version: BaseVersion,
+): BaseVersionChoice[] {
+  if (version !== "frozen") return setBaseVersion(current, baseCode, version === "industrial" ? "industrial" : null);
+  const frozen = findFrozenChoice(initial, baseCode);
+  return frozen ? [...current.filter((choice) => choice.baseCode !== baseCode), frozen] : [...current];
 }
 
 export function isFrozenChoice(choices: readonly BaseVersionChoice[] | undefined, baseCode: string): boolean {

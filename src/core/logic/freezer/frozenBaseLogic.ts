@@ -1,5 +1,5 @@
 import { BaseVersionChoice } from "../../domain/baseVersion";
-import { BatchFreezerItem, BatchUnit } from "../../domain/freezer";
+import { BatchFreezerItem, BatchUnit, FreezerCategory } from "../../domain/freezer";
 import { RecipeDetails, RecipeKind } from "../../domain/recipe";
 import { compareByName } from "../../utils/sortUtils";
 import { includesText, normalizeQuery } from "../../utils/textUtils";
@@ -7,6 +7,7 @@ import { reachableBaseCodes } from "../baseVersion/baseVersionLogic";
 import { basePortionsOf, cookedWeightPerPortion } from "../recipe/cookedWeightLogic";
 import { portionsPerPersonOf } from "../recipe/portionsPerPersonLogic";
 import { formatBatchQuantity, isValidBatchQuantity } from "./batchQuantityLogic";
+import { formatQty } from "../unit/unitFormatLogic";
 
 export function isBaseBatch(item: BatchFreezerItem, recipes: Record<string, RecipeDetails>): boolean {
   return recipes[item.recipeId]?.kind === RecipeKind.BASE;
@@ -72,6 +73,20 @@ export function frozenQuantityError(unit: BatchUnit, quantity: number | null, av
   }
   if (quantity > available) return `Il ne reste que ${formatBatchQuantity(unit, available)} au congélateur.`;
   return null;
+}
+
+export function frozenChoiceLabels(
+  choices: readonly BaseVersionChoice[],
+  categories: readonly FreezerCategory[],
+): Record<string, string> {
+  const batches = new Map(categories.flatMap((category) => category.items).map((item) => [item.id, item]));
+  const labels: Record<string, string> = {};
+  for (const choice of choices) {
+    if (choice.version !== "frozen") continue;
+    const batch = batches.get(choice.freezerItemId);
+    labels[choice.baseCode] = batch?.type === "batch" ? formatBatchQuantity(batch.unit, choice.quantity) : formatQty(choice.quantity);
+  }
+  return labels;
 }
 
 export function withFrozenBase(

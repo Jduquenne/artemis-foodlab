@@ -2,11 +2,12 @@ import { useMemo, useState } from 'react';
 import { Loader2, Shuffle } from 'lucide-react';
 import { FoodChoice } from '../../../core/domain/foodGroup';
 import { AccompanimentChoice } from '../../../core/domain/accompaniment';
-import { BaseVersionChoice, SelectableBaseVersion } from '../../../core/domain/baseVersion';
+import { BaseVersion, BaseVersionChoice } from '../../../core/domain/baseVersion';
 import { NO_FOOD_VALUE, findMealChoice, foodSelectValue, foodsOfGroupSorted, mealChoiceSelection, parseFoodSelectValue, reachableQuantityPerPortion, resolveIngredientFood, setMealFoodChoice, setMealFoodQuantity } from '../../../core/logic/foodGroup/foodChoiceLogic';
 import { accompanimentsFor, findAccompanimentChoice, mealChoiceIngredients, resolveAccompaniment, setAccompanimentChoice } from '../../../core/logic/accompaniment/accompanimentLogic';
 import { ACCOMPANIMENT_NONE_VALUE, accompanimentOptionLabel, parseAccompanimentSelectValue } from '../../../core/logic/accompaniment/accompanimentFormLogic';
-import { setBaseVersion } from '../../../core/logic/baseVersion/baseVersionLogic';
+import { selectBaseVersion, versionableBases } from '../../../core/logic/baseVersion/baseVersionLogic';
+import { frozenChoiceLabels } from '../../../core/logic/freezer/frozenBaseLogic';
 import { formatQty } from '../../../core/logic/unit/unitFormatLogic';
 import { DecimalInput } from '../../../shared/components/ui/DecimalInput';
 import { getProfileColorHex } from '../../../core/logic/profile/profileLogic';
@@ -15,7 +16,7 @@ import { useFoodGroupsSnapshot, useFoodsSnapshot, useRecipesSnapshot } from '../
 import { usePendingKey } from '../../../shared/hooks/usePendingKey';
 import { useProfileStore } from '../../../shared/store/useProfileStore';
 import { useAccompanimentStore } from '../../../shared/store/useAccompanimentStore';
-import { useIndustrialBases } from '../../../shared/hooks/useIndustrialBases';
+import { useFreezerCategories } from '../../../shared/hooks/useFreezerCategories';
 import { BaseVersionSection } from './BaseVersionSection';
 
 export interface FoodChoiceModalProps {
@@ -46,9 +47,14 @@ export const FoodChoiceModal = ({ recipeId, pendingKey, initialChoices, initialA
     const [choices, setChoices] = useState<FoodChoice[]>(initialChoices);
     const [accompanimentChoices, setAccompanimentChoices] = useState<AccompanimentChoice[]>(initialAccompanimentChoices);
     const [baseVersionChoices, setBaseVersionChoices] = useState<BaseVersionChoice[]>(initialBaseVersionChoices);
-    const industrialBases = useIndustrialBases(recipeId);
+    const freezerCategories = useFreezerCategories();
 
     const recipe = recipes[recipeId];
+    const versionBases = useMemo(
+        () => (recipe ? versionableBases(recipe, recipes, initialBaseVersionChoices) : []),
+        [recipe, recipes, initialBaseVersionChoices],
+    );
+    const frozenLabels = useMemo(() => frozenChoiceLabels(initialBaseVersionChoices, freezerCategories), [initialBaseVersionChoices, freezerCategories]);
     const accompaniments = useMemo(() => accompanimentsFor(recipeId, allAccompaniments), [recipeId, allAccompaniments]);
     const ingredients = useMemo(
         () => (recipe ? mealChoiceIngredients(recipe, recipes, allAccompaniments, profiles, accompanimentChoices) : []),
@@ -59,8 +65,8 @@ export const FoodChoiceModal = ({ recipeId, pendingKey, initialChoices, initialA
         if (await onSave(choices, accompanimentChoices, baseVersionChoices)) onClose();
     };
 
-    const changeBaseVersion = (baseCode: string, version: SelectableBaseVersion) =>
-        setBaseVersionChoices((prev) => setBaseVersion(prev, baseCode, version === 'industrial' ? 'industrial' : null));
+    const changeBaseVersion = (baseCode: string, version: BaseVersion) =>
+        setBaseVersionChoices((prev) => selectBaseVersion(prev, initialBaseVersionChoices, baseCode, version));
 
     const profileDot = (color: string) => (
         <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: getProfileColorHex(color) }} />
@@ -112,8 +118,9 @@ export const FoodChoiceModal = ({ recipeId, pendingKey, initialChoices, initialA
                     ))}
 
                     <BaseVersionSection
-                        bases={industrialBases}
+                        bases={versionBases}
                         choices={baseVersionChoices}
+                        frozenLabels={frozenLabels}
                         foods={foods}
                         disabled={pending}
                         onChange={changeBaseVersion}

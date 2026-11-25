@@ -3,7 +3,8 @@ import { BaseVersionChoice, SelectableBaseVersion } from "../../domain/baseVersi
 import { FoodChoice } from "../../domain/foodGroup";
 import { MealSlot, PlanningItemEntry, SlotType } from "../../domain/planning";
 import { getCodeById, getIdByCode } from "../../catalogue/recipeIdMap";
-import { buildSlotId } from "./planningSlotIdLogic";
+import { ParsedSlot, buildSlotId } from "./planningSlotIdLogic";
+import { DragMoveMode, DragMoveRequest } from "./planningDragLogic";
 import { SlotDiff } from "./slotDiffLogic";
 import { ApiFreezerItem } from "../freezer/freezerApiMapper";
 
@@ -201,4 +202,40 @@ export function buildBulkItemsPayload(entries: readonly PlanningItemEntry[]): Ap
     return itemId ? [{ year, week, day, slot, itemId, ...(isDessert ? { isDessert: true } : {}) }] : [];
   });
   return apiEntries.length > 0 ? { entries: apiEntries, onConflict: "skip" } : null;
+}
+
+export interface ApiSlotKey {
+  year: number;
+  week: number;
+  day: string;
+  slot: SlotType;
+}
+
+export interface ApiMoveSlotsPayload {
+  from: ApiSlotKey;
+  to: ApiSlotKey;
+  mode: DragMoveMode;
+  moveDesserts: boolean;
+  keptDessertIds?: string[];
+}
+
+export interface ApiMoveSlotsResponse {
+  slots: ApiPlanningSlot[];
+  freezerBatches: ApiFreezerItem[];
+}
+
+function slotKey({ year, week, day, slot }: ParsedSlot): ApiSlotKey {
+  return { year, week, day, slot };
+}
+
+export function buildMoveSlotsPayload(request: DragMoveRequest): ApiMoveSlotsPayload {
+  const keepsDesserts = request.mode === "move" && request.moveDesserts && request.keptDessertIds !== null;
+  const keptDessertIds = keepsDesserts ? (request.keptDessertIds ?? []).flatMap((code) => getIdByCode(code) ?? []) : [];
+  return {
+    from: slotKey(request.from),
+    to: slotKey(request.to),
+    mode: request.mode,
+    moveDesserts: request.moveDesserts,
+    ...(keptDessertIds.length > 0 ? { keptDessertIds } : {}),
+  };
 }

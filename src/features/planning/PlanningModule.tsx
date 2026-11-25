@@ -4,7 +4,7 @@ import { useFreezerStock } from '../../shared/hooks/useFreezerStock';
 import { X } from 'lucide-react';
 import { CopyModeBar } from './components/bars/CopyModeBar';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { getWeekSlots, saveSlot, deleteSlot, addDessertToSlot, removeDessertFromSlot, setRecipePersonsOnSlot, syncWeekFromApi } from '../../core/services/planningService';
+import { getWeekSlots, saveSlot, deleteSlot, addDessertToSlot, removeDessertFromSlot, setRecipePersonsOnSlot, syncWeekFromApi, moveMeal } from '../../core/services/planningService';
 import { useAuthStore } from '../../shared/store/useAuthStore';
 import { MealDragOverlay } from './components/MealDragOverlay';
 import { WeekNavZone } from './components/WeekNavZone';
@@ -47,7 +47,7 @@ import { useHorizontalSwipe, SwipeDirection } from '../../shared/hooks/useHorizo
 import { useDragEdgeWeekNav } from '../../shared/hooks/useDragEdgeWeekNav';
 import { ShoppingDaysPicker } from './components/ShoppingDaysPicker';
 import { DayColumnHeader } from './components/DayColumnHeader';
-import { computeDragMoveSlots, incomingDessertChoice } from '../../core/logic/planning/planningDragLogic';
+import { dragMoveMode, incomingDessertChoice } from '../../core/logic/planning/planningDragLogic';
 import { ParsedSlot, buildSlotId, parseFullSlotId } from '../../core/logic/planning/planningSlotIdLogic';
 import { buildEmptySlot, placeRecipeInSlot } from '../../core/logic/planning/planningSlotEditLogic';
 import { withPending } from '../../shared/utils/withPending';
@@ -255,19 +255,16 @@ export const PlanningModule = () => {
             return;
         }
 
-        await executeDragMove(fromMeal, toMeal, fromId, toId, from, to, true);
+        await executeDragMove(toMeal, fromId, toId, from, to, true, null);
     };
 
     const executeDragMove = async (
-        fromMeal: MealSlot, toMeal: MealSlot | undefined, fromId: string, toId: string,
-        from: ParsedSlot, to: ParsedSlot, moveDesserts: boolean, keptDessertIds?: string[],
+        toMeal: MealSlot | undefined, fromId: string, toId: string,
+        from: ParsedSlot, to: ParsedSlot, moveDesserts: boolean, keptDessertIds: string[] | null,
     ): Promise<boolean> => {
-        const { toSave, toDelete } = computeDragMoveSlots(fromMeal, toMeal, fromId, toId, from, to, moveDesserts, keptDessertIds);
+        const request = { from, to, mode: dragMoveMode(toMeal), moveDesserts, keptDessertIds };
         const ok = await withPending([`planning-move:${fromId}`, `planning-move:${toId}`], async () => {
-            await Promise.all([
-                ...(toDelete ? [deleteSlot(toDelete)] : []),
-                ...toSave.map(save),
-            ]);
+            await moveMeal(request);
             return true;
         }).catch(() => false);
         return ok === true;
@@ -284,7 +281,7 @@ export const PlanningModule = () => {
             }
         }
         setDragMoveChoice(moveDesserts ? 'move' : 'keep');
-        const ok = await executeDragMove(fromMeal, toMeal, fromId, toId, from, to, moveDesserts, keptDessertIds);
+        const ok = await executeDragMove(toMeal, fromId, toId, from, to, moveDesserts, keptDessertIds ?? null);
         setDragMoveChoice(null);
         if (ok) cancelDragMove();
     };

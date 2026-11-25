@@ -4,9 +4,11 @@ import { canAddDessert } from "../domain/recipePredicates";
 import { apiFetch, apiFetchJson } from "./apiClient";
 import {
   ApiBulkItemsResponse,
+  ApiMoveSlotsResponse,
   ApiPlanningSlot,
   ApiSlotItemsBatchResponse,
   buildBulkItemsPayload,
+  buildMoveSlotsPayload,
   buildSlotItemsBatchPayload,
   mapApiItemsToSlotFields,
   mapApiSlotToMealSlot,
@@ -17,6 +19,7 @@ import { recipesCatalogue } from "../catalogue/recipes";
 import { ParsedSlot, buildSlotId } from "../logic/planning/planningSlotIdLogic";
 import { replaceMainRecipe } from "../logic/planning/planningSlotEditLogic";
 import { hasFrozenBase } from "../logic/baseVersion/baseVersionLogic";
+import { DragMoveRequest } from "../logic/planning/planningDragLogic";
 import { applyFreezerBatches, syncFreezerFromApi } from "./freezerService";
 
 export const getWeekSlots = (year: number, week: number) =>
@@ -85,6 +88,15 @@ export async function deleteSlot(id: string): Promise<void> {
   }
   await db.planning.delete(id);
   if (existing && hasFrozenBase(existing)) await syncFreezerFromApi({ silent: true });
+}
+
+export async function moveMeal(request: DragMoveRequest): Promise<void> {
+  const { slots, freezerBatches } = await apiFetchJson<ApiMoveSlotsResponse>("/planning-slots/move", {
+    method: "POST",
+    body: buildMoveSlotsPayload(request),
+  });
+  await db.planning.bulkPut(slots.map(mapApiSlotToMealSlot));
+  await applyFreezerBatches(freezerBatches);
 }
 
 export async function syncWeekFromApi(year: number, week: number): Promise<void> {

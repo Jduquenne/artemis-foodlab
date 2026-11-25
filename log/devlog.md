@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-25 — #66 step 2: drag and drop through the atomic move route (v6.167.1)
+- Done: the planning drag and drop calls `POST /planning-slots/move` (API D-074) once instead of saving / deleting the two slots in parallel: `moveMeal` (`planningService`, cache rebuilt from the two returned slots, freezer from `freezerBatches`), `buildMoveSlotsPayload` + `ApiMoveSlotsResponse` (`planningApiMapper.ts`, dessert codes → catalogue uuids), `dragMoveMode` (`swap` when the destination has a dish, `move` otherwise: same cases as before). `computeDragMoveSlots`, `placeMeal` and `pickRecordLists` removed (no other consumer). Contract in `docs/api.md` § Planning.
+- Behaviour changes: a moved meal keeps its persons / grams overrides (they were reset; owner confirmation still pending, the API keeps them anyway); the emptied source slot stays in the API instead of being deleted (nothing visible); a move is now all or nothing.
+- Verified: tsc + lint only. Not testable against prod until D-073 / D-074 are deployed; then test: move to an empty slot, to a dessert-only slot (with > 3 desserts → choice modal), swap with another dish, desserts follow / stay, cross-week move, a meal holding a frozen base (batch unchanged).
+- Still open: steps 3 to 7 of #66.
+
 ## 2026-11-25 — #66 step 1: frozen base data layer (v6.167.0)
 - Owner decisions (issue #66): a base batch is never planned directly, only through a dish that contains it; portions and quantity taken chosen at planning; no recipe → message, no action; link stored by the API as a third base version `frozen`; quantity taken at planning, given back when the link disappears, except for a past meal (option A); deleted batch → home; batch emptied by links kept at 0; unit change of a linked batch refused (409); moving a meal through a new atomic route (D-074).
 - API: D-073 (frozen choice, stock, `linkedQuantity`, `freezerBatches` in the slot batch response, past-meal rule) and D-074 (`POST /planning-slots/move`, move | swap) on dev only. Contract in `docs/api.md` § Freezer (D-074 goes into the docs with step 2).

@@ -42,18 +42,6 @@ export function withRecordList<T>(
   return Object.keys(next).length > 0 ? next : undefined;
 }
 
-export function pickRecordLists<T>(
-  sources: readonly (Record<string, T[]> | undefined)[],
-  keys: readonly string[],
-): Record<string, T[]> | undefined {
-  const picked: Record<string, T[]> = {};
-  for (const key of keys) {
-    const found = sources.find((source) => source?.[key]?.length)?.[key];
-    if (found) picked[key] = found;
-  }
-  return Object.keys(picked).length > 0 ? picked : undefined;
-}
-
 export function upsertById<T extends { id: string }>(items: readonly T[], item: T): T[] {
   return items.some((existing) => existing.id === item.id)
     ? items.map((existing) => (existing.id === item.id ? item : existing))

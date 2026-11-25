@@ -1,3 +1,4 @@
+import { FoodOrigin } from "./foodOrigin";
 export interface OutdoorActivityInput {
   code: string;
   name: string;
@@ -18,5 +19,6 @@ export interface FoodInput {
   isFreezable: boolean;
   groupId: string | null;
   months?: number[];
+  origin: FoodOrigin;
   macros: { kcal: number; proteins: number; lipids: number; carbohydrates: number; fibers: number };
 }

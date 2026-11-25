@@ -1,5 +1,6 @@
 import { FoodGroup } from "../../domain/foodGroup";
 import { Food, IngredientCategory } from "../../domain/ingredient";
+import { FOOD_ORIGIN_LABELS, FoodOrigin } from "../../domain/foodOrigin";
 import { Macronutrients, NUTRIENT_DEFINITIONS, NutrientKey } from "../../domain/nutrition";
 import { FoodInput } from "../../domain/catalogueInput";
 import { getIngredientCategoryId } from "../../domain/ingredientCategorySlugs";
@@ -18,6 +19,7 @@ export interface FoodFormDraft {
   isFreezable: boolean;
   groupId: string;
   months: number[];
+  origin: FoodOrigin;
   macros: Record<keyof Macronutrients, string>;
 }
 
@@ -43,6 +45,7 @@ export function emptyFoodDraft(): FoodFormDraft {
     isFreezable: false,
     groupId: "",
     months: [],
+    origin: "none",
     macros: { kcal: "", proteins: "", lipids: "", carbohydrates: "", fibers: "" },
   };
 }
@@ -78,6 +81,7 @@ export function foodToDraft(food: Food): FoodFormDraft {
     isFreezable: Boolean(food.isFreezable),
     groupId: food.groupId ?? "",
     months: normalizeMonths(food.months ?? []),
+    origin: food.origin ?? "none",
     macros: {
       kcal: String(food.macros.kcal),
       proteins: String(food.macros.proteins),
@@ -126,6 +130,7 @@ export function buildFoodRecap(
       { label: "Unité", value: recapText(draft.unit) },
       { label: "Poids unitaire (g)", value: recapText(draft.unitWeight) },
       { label: "Congelable", value: recapBool(draft.isFreezable) },
+      { label: "Origine", value: FOOD_ORIGIN_LABELS[draft.origin] },
       { label: "Famille", value: foodGroupLabel(groups, draft.groupId) },
       { label: "Saison", value: formatMonths(draft.months) },
       ...EDITABLE_MACRO_KEYS.map((key) => ({ label: MACRO_LABELS[key], value: recapText(draft.macros[key]) })),
@@ -140,6 +145,7 @@ export function buildFoodRecap(
   add(diffEntry("Unité", recapText(before.unit), recapText(draft.unit)));
   add(diffEntry("Poids unitaire (g)", recapText(before.unitWeight), recapText(draft.unitWeight)));
   add(diffEntry("Congelable", recapBool(before.isFreezable), recapBool(draft.isFreezable)));
+  add(diffEntry("Origine", FOOD_ORIGIN_LABELS[before.origin], FOOD_ORIGIN_LABELS[draft.origin]));
   add(diffEntry("Famille", foodGroupLabel(groups, before.groupId), foodGroupLabel(groups, draft.groupId)));
   add(diffEntry("Saison", formatMonths(before.months), formatMonths(draft.months)));
   for (const key of EDITABLE_MACRO_KEYS) {
@@ -166,6 +172,7 @@ export function foodFormToBody(id: string, draft: FoodFormDraft, original: Food 
     unitWeight: parseDecimal(draft.unitWeight),
     isFreezable: draft.isFreezable,
     groupId: draft.groupId || null,
+    origin: draft.origin,
     ...monthsField(original, draft),
     macros: (() => {
       const editable = parseEditableMacros(draft.macros);

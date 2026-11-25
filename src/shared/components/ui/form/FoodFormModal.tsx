@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Food, IngredientCategory, Unit } from "../../../../core/domain/ingredient";
 import { Macronutrients, NUTRIENT_DEFINITIONS } from "../../../../core/domain/nutrition";
 import { FoodInput } from "../../../../core/domain/catalogueInput";
+import { FOOD_ORIGINS, FOOD_ORIGIN_LABELS, FoodOrigin } from "../../../../core/domain/foodOrigin";
 import {
   FoodFormDraft,
   buildFoodRecap,
@@ -176,6 +177,18 @@ export const FoodFormModal = ({ food, foods, initialDraft, onClose, onSubmit }: 
           <option value="">Aucune</option>
           {groups.map((group) => (
             <option key={group.id} value={group.id}>{group.name}</option>
+          ))}
+        </select>
+      </FormField>
+
+      <FormField label="Origine" hint="Sert au générateur de menus (régimes végétarien, pescétarien), indépendamment du rayon.">
+        <select
+          value={draft.origin}
+          onChange={(e) => patch({ origin: e.target.value as FoodOrigin })}
+          className={INPUT_CLASS}
+        >
+          {FOOD_ORIGINS.map((origin) => (
+            <option key={origin} value={origin}>{FOOD_ORIGIN_LABELS[origin]}</option>
           ))}
         </select>
       </FormField>

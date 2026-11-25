@@ -1,3 +1,4 @@
+import { FoodOrigin } from "./foodOrigin";
 import { Macronutrients } from "./nutrition";
 
 export enum Unit {
@@ -75,4 +76,5 @@ export interface Food {
   isFreezable?: boolean;
   groupId: string | null;
   months?: number[];
+  origin: FoodOrigin;
 }

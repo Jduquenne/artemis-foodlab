@@ -1,4 +1,3 @@
-import { IngredientCategory } from "../../domain/ingredient";
 import { DietFilter, GeneratedSlotType, MenuGeneratorSettings, RecipeDietProfile, SeasonMode } from "../../domain/menuGenerator";
 import { RecipeDetails, RecipeKind } from "../../domain/recipe";
 import { isDessert, isOutdoor } from "../../domain/recipePredicates";
@@ -8,8 +7,6 @@ import { SeasonCatalogue, isRecipeInSeason } from "../season/recipeSeasonLogic";
 
 export type MenuCatalogue = SeasonCatalogue;
 
-const MEAT_INGREDIENT_CATEGORIES: readonly IngredientCategory[] = [IngredientCategory.MEAT, IngredientCategory.DELI];
-const FISH_INGREDIENT_CATEGORIES: readonly IngredientCategory[] = [IngredientCategory.FISH];
 const RED_MEAT_CATEGORY_ID = "red-meat";
 const WHITE_MEAT_CATEGORY_ID = "white-meat";
 const DELI_CATEGORY_ID = "charcuterie";
@@ -20,7 +17,7 @@ export function isGeneratableDish(recipe: RecipeDetails, slot: GeneratedSlotType
   return recipe.kind === RecipeKind.DISH && !isDessert(recipe) && !isOutdoor(recipe) && recipe.mealTypes.includes(slot);
 }
 
-function collectDiet(recipe: RecipeDetails, recipes: Record<string, RecipeDetails>, visited: Set<string>, diet: RecipeDietProfile): void {
+function collectDiet(recipe: RecipeDetails, catalogue: MenuCatalogue, visited: Set<string>, diet: RecipeDietProfile): void {
   if (visited.has(recipe.code)) return;
   visited.add(recipe.code);
   if (MEAT_RECIPE_CATEGORY_IDS.includes(recipe.categoryId)) diet.hasMeat = true;
@@ -29,17 +26,20 @@ function collectDiet(recipe: RecipeDetails, recipes: Record<string, RecipeDetail
   if (recipe.categoryId === WHITE_MEAT_CATEGORY_ID) diet.hasWhiteMeat = true;
   if (recipe.categoryId === DELI_CATEGORY_ID) diet.hasDeli = true;
   for (const ingredient of recipe.ingredients) {
-    if (MEAT_INGREDIENT_CATEGORIES.includes(ingredient.category)) diet.hasMeat = true;
-    if (ingredient.category === IngredientCategory.DELI) diet.hasDeli = true;
-    if (FISH_INGREDIENT_CATEGORIES.includes(ingredient.category)) diet.hasFish = true;
-    const base = ingredient.link === "base" ? recipes[ingredient.baseId] : undefined;
-    if (base) collectDiet(base, recipes, visited, diet);
+    if (ingredient.link === "food") {
+      const origin = catalogue.foods[ingredient.foodId]?.origin;
+      if (origin === "meat" || origin === "deli") diet.hasMeat = true;
+      if (origin === "deli") diet.hasDeli = true;
+      if (origin === "fish") diet.hasFish = true;
+    }
+    const base = ingredient.link === "base" ? catalogue.recipes[ingredient.baseId] : undefined;
+    if (base) collectDiet(base, catalogue, visited, diet);
   }
 }
 
-export function recipeDietProfile(recipe: RecipeDetails, recipes: Record<string, RecipeDetails>): RecipeDietProfile {
+export function recipeDietProfile(recipe: RecipeDetails, catalogue: MenuCatalogue): RecipeDietProfile {
   const diet: RecipeDietProfile = { hasMeat: false, hasFish: false, hasRedMeat: false, hasWhiteMeat: false, hasDeli: false };
-  collectDiet(recipe, recipes, new Set(), diet);
+  collectDiet(recipe, catalogue, new Set(), diet);
   return diet;
 }
 
@@ -79,7 +79,7 @@ export function slotCandidates(
   return Object.values(catalogue.recipes)
     .filter((recipe) => isGeneratableDish(recipe, slot))
     .filter((recipe) => !settings.bannedRecipeCodes.includes(recipe.code))
-    .filter((recipe) => matchesDiet(recipeDietProfile(recipe, catalogue.recipes), settings.diet))
+    .filter((recipe) => matchesDiet(recipeDietProfile(recipe, catalogue), settings.diet))
     .filter((recipe) => !usesExcludedFood(recipe, settings.excludedFoodIds, catalogue))
     .sort(compareByName);
 }

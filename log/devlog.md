@@ -16,8 +16,14 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-25 — #69 step 1: food origin for the menu generator (v6.168.0)
+- Context: API audit for #69 (ingredient category taken from its food): 1,276 food-linked ingredients held a stale category; aligning them moves 21 fish ingredients (Thon au naturel, Filets de maquereaux → Conserves, Filet de merlu → Surgelés) out of « Poisson », and the generator detected meat / fish / deli from that aisle. Owner decisions: API option B (D-077, category derived from the food on read, required only for free-text ingredients, which keep their select), food origin property (D-076), Pita and soja texturé → none (categories unchanged). Both on API dev only.
+- Done: `FoodOrigin` + labels (`core/domain/foodOrigin.ts`), `Food.origin`, `FoodInput.origin`; food form « Origine » select, recap and body (`foodFormLogic.ts`, `FoodFormModal`); `recipeDietProfile(recipe, catalogue)` reads the food origin instead of the ingredient category (recipe category rules unchanged). No Dexie version: the catalogue cache is fully replaced on the first sync after each start. `docs/api.md` (D-076), `docs/spec-admin.md`, `docs/spec-planning.md`.
+- Verified: tsc + lint, golden-rule greps (no new hit); diet run through esbuild (canned tuna → fish, refused by vegetarian, accepted by pescatarian; pita in « Viande » with origin none → vegetarian; deli through a base). Not checked in a browser. Do not push before the API confirms D-076 / D-077 in prod.
+- Next: step 2 (Recipe Builder: category select only for free-text lines), step 3 (food category change refreshes cached recipes, docs, D-047).
+
 ## 2026-11-25 — #66 and #68 closed (v6.167.11)
-- Also closed (owner, v6.167.12): #41 (price umbrella, delivered through #43 to #49 and #56; the graph stays in #50) and #10 (Google sign-in, « bien plus tard », nothing done on either side). Open: #69 (medium), #42, #50, #67 (low).
+- Also closed (owner, v6.167.12): #41 (price estimate, delivered through #43 to #49 and #56; the graph stays in #50) and #10 (Google sign-in, « bien plus tard », nothing done on either side). Open: #69 (medium), #42, #50, #67 (low).
 - Owner: #68 checked (recipes button on « Oignon jaune », freezer stock in the shopping list) and #66 tested; both closed. Roadmap item 19 done.
 - Where to resume: #69 (send the API audit prompt kept in the issue; open question: category choice for free-text ingredients). Open questions on #66 left to the owner: a moved dessert keeps its own persons, « Personnes » wording, confirmation before deleting a planned batch. Idea: remove the obsolete import (front `features/sync` + API `POST /import`).
 

@@ -112,7 +112,7 @@ export function generateMenu(input: MenuEngineInput): MenuGenerationResult {
       if (cached) return cached;
       const recipe = catalogue.recipes[code];
       const diet = recipe
-        ? recipeDietProfile(recipe, catalogue.recipes)
+        ? recipeDietProfile(recipe, catalogue)
         : { hasMeat: false, hasFish: false, hasRedMeat: false, hasWhiteMeat: false, hasDeli: false };
       dietCache.set(code, diet);
       return diet;

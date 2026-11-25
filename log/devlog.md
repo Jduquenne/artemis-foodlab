@@ -17,6 +17,7 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 ---
 
 ## 2026-11-25 — #66 and #68 closed (v6.167.11)
+- Also closed (owner, v6.167.12): #41 (price umbrella, delivered through #43 to #49 and #56; the graph stays in #50) and #10 (Google sign-in, « bien plus tard », nothing done on either side). Open: #69 (medium), #42, #50, #67 (low).
 - Owner: #68 checked (recipes button on « Oignon jaune », freezer stock in the shopping list) and #66 tested; both closed. Roadmap item 19 done.
 - Where to resume: #69 (send the API audit prompt kept in the issue; open question: category choice for free-text ingredients). Open questions on #66 left to the owner: a moved dessert keeps its own persons, « Personnes » wording, confirmation before deleting a planned batch. Idea: remove the obsolete import (front `features/sync` + API `POST /import`).
 

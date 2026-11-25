@@ -20,6 +20,9 @@ import { ParsedSlot, buildSlotId } from "../logic/planning/planningSlotIdLogic";
 import { replaceMainRecipe } from "../logic/planning/planningSlotEditLogic";
 import { hasFrozenBase } from "../logic/baseVersion/baseVersionLogic";
 import { DragMoveRequest } from "../logic/planning/planningDragLogic";
+import { withFrozenBase } from "../logic/freezer/frozenBaseLogic";
+import { withRecordList } from "../utils/collectionUtils";
+import { BatchFreezerItem } from "../domain/freezer";
 import { applyFreezerBatches, syncFreezerFromApi } from "./freezerService";
 
 export const getWeekSlots = (year: number, week: number) =>
@@ -79,6 +82,26 @@ export async function placeMainDish(target: ParsedSlot, recipeId: string, choice
   await syncWeekFromApi(target.year, target.week);
   const existing = await db.planning.get(buildSlotId(target.year, target.week, target.day, target.slot));
   await saveSlot(replaceMainRecipe(existing, target, recipeId), choices);
+}
+
+export interface FrozenBasePlacement {
+  recipeId: string;
+  persons: number | undefined;
+  baseCode: string;
+  batch: BatchFreezerItem;
+  quantity: number;
+}
+
+export async function placeMainDishWithFrozenBase(target: ParsedSlot, placement: FrozenBasePlacement, choices: ChoiceContext): Promise<void> {
+  await syncWeekFromApi(target.year, target.week);
+  const existing = await db.planning.get(buildSlotId(target.year, target.week, target.day, target.slot));
+  const placed = replaceMainRecipe(existing, target, placement.recipeId);
+  const baseVersionChoices = withFrozenBase(placed.baseVersionChoices?.[placement.recipeId] ?? [], placement.baseCode, placement.batch, placement.quantity);
+  await saveSlot({
+    ...placed,
+    persons: placement.persons,
+    baseVersionChoices: withRecordList(placed.baseVersionChoices, placement.recipeId, baseVersionChoices),
+  }, choices);
 }
 
 export async function deleteSlot(id: string): Promise<void> {

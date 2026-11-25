@@ -436,7 +436,7 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
 ## D-047 — A food-linked ingredient takes its category from the food; diet detection uses a food origin
 
 - **Date**: 2026-11-25
-- **Status**: accepted (owner, 2026-11-25, issue #69); API D-076 (food origin) and D-077 phase 1 (category derived on read) on dev, **not live in prod yet**; front v6.168.0 to v6.168.2, not to be pushed before the API session confirms.
+- **Status**: accepted (owner, 2026-11-25, issue #69); API D-076 (food origin) and D-077 phase 1 (category derived on read) **live in prod** (owner, 2026-11-25); front v6.168.0 to v6.168.3 pushed.
 - **Context**: every recipe ingredient stored its own category (the shopping aisle), copied from the food when picked in the Recipe Builder and editable there, never following the food afterwards. Prod audit: 1,276 of 6,439 food-linked ingredients held a stale category (the food had been moved to a newer one: Bio, Surgelés, Internet, Produits frais, Conserves), none of them a deliberate choice. The same aisle was used by the menu generator to detect meat / fish / deli and by the season logic (« Surgelés » exempts from the season).
 - **Decision**:
   - A food-linked ingredient has **no category of its own**: the API returns the food's (option B, derived on read, same response field); the Recipe Builder shows it read-only and does not send it. Changing a food's category in the Dashboard therefore changes every recipe, the shopping aisles and the season exemption at once (the food save already resyncs the catalogue).

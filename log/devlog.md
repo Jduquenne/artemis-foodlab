@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-25 — #69: API D-076 and D-077 live in prod, front pushed (docs, v6.168.3)
+- Owner: API and front (v6.168.0 to v6.168.2) in prod. Status updated in `docs/api.md`, D-047, roadmap item 20. API commit hash not given: `TODO(owner)` in `docs/api.md`.
+- Next: owner browser tests (list in the step 3 entry below), then close #69; API phase 2 (clear the stored categories of food-linked ingredients) on the owner's go.
+
 ## 2026-11-25 — #69 step 3: docs and D-047 (v6.168.2)
 - Checked: a food category change already reaches the cached recipes: `useCatalogueFoods` runs `syncCatalogueFromApi()` after `updateFood`, the recipes come back with the derived category and the signature change replaces the cache. No code change.
 - Done: `docs/decisions.md` D-047, `docs/spec-shopping.md` (aisle of a line), roadmap item 20.

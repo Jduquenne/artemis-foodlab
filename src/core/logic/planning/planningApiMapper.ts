@@ -1,15 +1,15 @@
 import { AccompanimentChoice } from "../../domain/accompaniment";
-import { BaseVersion, BaseVersionChoice } from "../../domain/baseVersion";
+import { BaseVersionChoice, SelectableBaseVersion } from "../../domain/baseVersion";
 import { FoodChoice } from "../../domain/foodGroup";
 import { MealSlot, PlanningItemEntry, SlotType } from "../../domain/planning";
 import { getCodeById, getIdByCode } from "../../catalogue/recipeIdMap";
 import { buildSlotId } from "./planningSlotIdLogic";
 import { SlotDiff } from "./slotDiffLogic";
+import { ApiFreezerItem } from "../freezer/freezerApiMapper";
 
-export interface ApiBaseVersionChoice {
-  baseId: string;
-  version: BaseVersion;
-}
+export type ApiBaseVersionChoice =
+  | { baseId: string; version: SelectableBaseVersion }
+  | { baseId: string; version: "frozen"; freezerItemId: string; quantity: number };
 
 export interface ApiPlanningSlotItem {
   id: string;
@@ -21,6 +21,11 @@ export interface ApiPlanningSlotItem {
   foodChoices?: FoodChoice[];
   accompanimentChoices?: AccompanimentChoice[];
   baseVersionChoices?: ApiBaseVersionChoice[];
+}
+
+export interface ApiSlotItemsBatchResponse {
+  items: ApiPlanningSlotItem[];
+  freezerBatches?: ApiFreezerItem[];
 }
 
 export interface ApiPlanningSlot {
@@ -64,13 +69,21 @@ export interface SlotItemFields {
 }
 
 export function mapApiBaseVersionChoices(choices: readonly ApiBaseVersionChoice[]): BaseVersionChoice[] {
-  return choices.map((choice) => ({ baseCode: getCodeById(choice.baseId) ?? choice.baseId, version: choice.version }));
+  return choices.map((choice): BaseVersionChoice => {
+    const baseCode = getCodeById(choice.baseId) ?? choice.baseId;
+    return choice.version === "frozen"
+      ? { baseCode, version: "frozen", freezerItemId: choice.freezerItemId, quantity: choice.quantity }
+      : { baseCode, version: choice.version };
+  });
 }
 
 export function toApiBaseVersionChoices(choices: readonly BaseVersionChoice[]): ApiBaseVersionChoice[] {
-  return choices.flatMap((choice) => {
+  return choices.flatMap((choice): ApiBaseVersionChoice[] => {
     const baseId = getIdByCode(choice.baseCode);
-    return baseId ? [{ baseId, version: choice.version }] : [];
+    if (!baseId) return [];
+    return choice.version === "frozen"
+      ? [{ baseId, version: "frozen", freezerItemId: choice.freezerItemId, quantity: choice.quantity }]
+      : [{ baseId, version: choice.version }];
   });
 }
 

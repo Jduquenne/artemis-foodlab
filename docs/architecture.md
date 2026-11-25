@@ -12,7 +12,7 @@ flowchart LR
   UI -->|actions| Store[shared/store Zustand]
   Store --> Svc[core/services]
   Svc -->|apiFetch| API[(meals-planning-api)]
-  Svc -->|cache after success| IDB[(IndexedDB / Dexie v16)]
+  Svc -->|cache after success| IDB[(IndexedDB / Dexie v17)]
   Svc --> Cat[core/catalogue in-memory]
   Cat -->|notify| Snap
   Snap --> Logic[core/logic pure functions]
@@ -107,10 +107,10 @@ Three layers, no exceptions:
 
 ## IndexedDB (Dexie)
 
-- Schema and current version: `src/core/services/databaseService.ts` (**version 16**). Tables: `planning`, `household`, `freezerCategories`, `recipes`, `foods`, `outdoorActivities`, `householdItems`, `recipeCategories`, `foodGroups`.
+- Schema and current version: `src/core/services/databaseService.ts` (**version 17**). Tables: `planning`, `household`, `freezerCategories`, `recipes`, `foods`, `outdoorActivities`, `householdItems`, `recipeCategories`, `foodGroups`.
 - Never modify an existing `.version(n)` block; any schema change = new `.version(n+1)`.
 - Adding a non-indexed field does **not** need a new version (Dexie versions indexes only).
-- A first v14 (categories enum → slug) was reverted before any commit (D-014); the current v14 (2026-10-15) only adds `foodGroups`. v15 (2026-11-24, issue #63) keeps the same stores and upgrades cached batch freezer items `{ portions }` to `{ unit: "portion", quantity }`. v16 (2026-11-24, issue #65) keeps the same stores and rewrites the cached recipe ingredients to the `link` union (`linkCachedIngredients`, `core/logic/recipe/ingredientLinkLogic.ts`: `baseId` → `base`, `foodId` → `food` with `foodGroupId` or `null`, else `free`; an already converted ingredient is left as is).
+- A first v14 (categories enum → slug) was reverted before any commit (D-014); the current v14 (2026-10-15) only adds `foodGroups`. v15 (2026-11-24, issue #63) keeps the same stores and upgrades cached batch freezer items `{ portions }` to `{ unit: "portion", quantity }`. v16 (2026-11-24, issue #65) keeps the same stores and rewrites the cached recipe ingredients to the `link` union (`linkCachedIngredients`, `core/logic/recipe/ingredientLinkLogic.ts`: `baseId` → `base`, `foodId` → `food` with `foodGroupId` or `null`, else `free`; an already converted ingredient is left as is). v17 (2026-11-25, issue #66) keeps the same stores and adds `linkedQuantity: 0` to cached batch freezer items that lack it (`withLinkedQuantity`, `core/logic/freezer/freezerCacheLogic.ts`).
 
 ## Client storage (localStorage)
 

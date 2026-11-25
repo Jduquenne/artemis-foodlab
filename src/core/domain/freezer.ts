@@ -25,8 +25,11 @@ export interface BatchFreezerItem {
   recipeName: string;
   unit: BatchUnit;
   quantity: number;
+  linkedQuantity: number;
   addedDate: string;
 }
+
+export type NewBatchFreezerItem = Omit<BatchFreezerItem, "id" | "addedDate" | "linkedQuantity">;
 
 export type FreezerItem = FoodFreezerItem | BatchFreezerItem;
 

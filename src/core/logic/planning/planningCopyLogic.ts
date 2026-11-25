@@ -4,6 +4,7 @@ import { canAddDessert, isSlotFull } from "../../domain/recipePredicates";
 import { ParsedSlot } from "./planningSlotIdLogic";
 import { buildEmptySlot } from "./planningSlotEditLogic";
 import { withRecordList } from "../../utils/collectionUtils";
+import { withoutFrozenBases } from "../baseVersion/baseVersionLogic";
 
 export interface SlotCopyProps {
   multiCopyTargetState?: "source" | "selectable" | "selected";
@@ -32,7 +33,7 @@ export function buildCopiedSlot(
   const recipePersons = sourcePersons !== undefined ? { ...slot.recipePersons, [recipeId]: sourcePersons } : slot.recipePersons;
   const foodChoices = withRecordList(slot.foodChoices, recipeId, copy.sourceFoodChoices ?? []);
   const accompanimentChoices = withRecordList(slot.accompanimentChoices, recipeId, copy.sourceAccompanimentChoices ?? []);
-  const baseVersionChoices = withRecordList(slot.baseVersionChoices, recipeId, copy.sourceBaseVersionChoices ?? []);
+  const baseVersionChoices = withRecordList(slot.baseVersionChoices, recipeId, withoutFrozenBases(copy.sourceBaseVersionChoices ?? []));
   if (copy.isDessert) {
     const dessertIds = slot.dessertIds ?? [];
     if (!canAddDessert(slot) || dessertIds.includes(recipeId)) return null;

@@ -5,7 +5,7 @@ import { apiFetch, apiFetchJson } from "./apiClient";
 import {
   ApiBulkItemsResponse,
   ApiPlanningSlot,
-  ApiPlanningSlotItem,
+  ApiSlotItemsBatchResponse,
   buildBulkItemsPayload,
   buildSlotItemsBatchPayload,
   mapApiItemsToSlotFields,
@@ -16,6 +16,8 @@ import { ChoiceContext, pruneSlotChoices } from "../logic/accompaniment/accompan
 import { recipesCatalogue } from "../catalogue/recipes";
 import { ParsedSlot, buildSlotId } from "../logic/planning/planningSlotIdLogic";
 import { replaceMainRecipe } from "../logic/planning/planningSlotEditLogic";
+import { hasFrozenBase } from "../logic/baseVersion/baseVersionLogic";
+import { applyFreezerBatches, syncFreezerFromApi } from "./freezerService";
 
 export const getWeekSlots = (year: number, week: number) =>
   db.planning.where("[year+week]").equals([year, week]).toArray();
@@ -42,12 +44,13 @@ export async function saveSlot(input: MealSlot, choices: ChoiceContext): Promise
     return;
   }
 
-  const { items } = await apiFetchJson<{ items: ApiPlanningSlotItem[] }>(`/planning-slots/${apiId}/items/batch`, {
+  const { items, freezerBatches } = await apiFetchJson<ApiSlotItemsBatchResponse>(`/planning-slots/${apiId}/items/batch`, {
     method: "PUT",
     body: batchPayload,
   });
 
   await db.planning.put({ ...slot, apiId, ...mapApiItemsToSlotFields(items) });
+  await applyFreezerBatches(freezerBatches ?? []);
 }
 
 export async function bulkAddPlanningItems(entries: readonly PlanningItemEntry[]): Promise<BulkPlanningResult> {
@@ -81,6 +84,7 @@ export async function deleteSlot(id: string): Promise<void> {
     await apiFetch(`/planning-slots/${existing.apiId}`, { method: "DELETE" });
   }
   await db.planning.delete(id);
+  if (existing && hasFrozenBase(existing)) await syncFreezerFromApi({ silent: true });
 }
 
 export async function syncWeekFromApi(year: number, week: number): Promise<void> {

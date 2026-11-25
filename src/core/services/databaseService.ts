@@ -1,6 +1,7 @@
 import Dexie, { Table } from "dexie";
 import { getWeekNumber } from "../utils/weekUtils";
 import { linkCachedIngredients } from "../logic/recipe/ingredientLinkLogic";
+import { withLinkedQuantity } from "../logic/freezer/freezerCacheLogic";
 import { FoodGroup } from "../domain/foodGroup";
 import { FreezerCategory } from "../domain/freezer";
 import { HouseholdRecord, HouseholdItem } from "../domain/household";
@@ -205,6 +206,23 @@ class AppDatabase extends Dexie {
       .upgrade(async (tx) => {
         await tx.table("recipes").toCollection().modify((recipe: Record<string, unknown>) => {
           recipe.ingredients = linkCachedIngredients(recipe.ingredients);
+        });
+      });
+    this.version(17)
+      .stores({
+        planning: "id, [year+week], year, week",
+        household: "id",
+        freezerCategories: "id, position",
+        recipes: "id",
+        foods: "id",
+        outdoorActivities: "id",
+        householdItems: "id",
+        recipeCategories: "id",
+        foodGroups: "id",
+      })
+      .upgrade(async (tx) => {
+        await tx.table("freezerCategories").toCollection().modify((category: Record<string, unknown>) => {
+          category.items = withLinkedQuantity(category.items);
         });
       });
   }

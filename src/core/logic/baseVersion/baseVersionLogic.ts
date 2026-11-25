@@ -1,5 +1,6 @@
-import { BaseVersion, BaseVersionChoice } from "../../domain/baseVersion";
+import { BaseVersion, BaseVersionChoice, SelectableBaseVersion } from "../../domain/baseVersion";
 import { Food } from "../../domain/ingredient";
+import { MealSlot } from "../../domain/planning";
 import { IndustrialEquivalent, RecipeDetails } from "../../domain/recipe";
 import { formatQty } from "../unit/unitFormatLogic";
 
@@ -31,13 +32,26 @@ export function findBaseVersion(choices: readonly BaseVersionChoice[] | undefine
   return choices?.find((choice) => choice.baseCode === baseCode)?.version ?? null;
 }
 
-export function setBaseVersion(choices: readonly BaseVersionChoice[], baseCode: string, version: BaseVersion | null): BaseVersionChoice[] {
+export function setBaseVersion(
+  choices: readonly BaseVersionChoice[],
+  baseCode: string,
+  version: SelectableBaseVersion | null,
+): BaseVersionChoice[] {
   const others = choices.filter((choice) => choice.baseCode !== baseCode);
   return version === null ? others : [...others, { baseCode, version }];
 }
 
+export function hasFrozenBase(slot: Pick<MealSlot, "baseVersionChoices">): boolean {
+  return Object.values(slot.baseVersionChoices ?? {}).some((choices) => choices.some((choice) => choice.version === "frozen"));
+}
+
+export function withoutFrozenBases(choices: readonly BaseVersionChoice[]): BaseVersionChoice[] {
+  return choices.filter((choice) => choice.version !== "frozen");
+}
+
 function choiceKey(choice: BaseVersionChoice): string {
-  return `${choice.baseCode}|${choice.version}`;
+  const link = choice.version === "frozen" ? `|${choice.freezerItemId}|${choice.quantity}` : "";
+  return `${choice.baseCode}|${choice.version}${link}`;
 }
 
 export function sameBaseVersionChoices(

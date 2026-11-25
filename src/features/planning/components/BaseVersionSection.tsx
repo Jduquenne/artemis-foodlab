@@ -1,4 +1,4 @@
-import { BaseVersion, BaseVersionChoice } from '../../../core/domain/baseVersion';
+import { BaseVersionChoice, SelectableBaseVersion } from '../../../core/domain/baseVersion';
 import { Food } from '../../../core/domain/ingredient';
 import { RecipeDetails } from '../../../core/domain/recipe';
 import { findBaseVersion, industrialEquivalentLabel } from '../../../core/logic/baseVersion/baseVersionLogic';
@@ -8,7 +8,7 @@ export interface BaseVersionSectionProps {
     choices: readonly BaseVersionChoice[];
     foods: Record<string, Food>;
     disabled: boolean;
-    onChange: (baseCode: string, version: BaseVersion) => void;
+    onChange: (baseCode: string, version: SelectableBaseVersion) => void;
 }
 
 const optionClass = (selected: boolean) =>

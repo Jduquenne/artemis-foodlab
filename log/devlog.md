@@ -16,6 +16,13 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-25 — #66 step 1: frozen base data layer (v6.167.0)
+- Owner decisions (issue #66): a base batch is never planned directly, only through a dish that contains it; portions and quantity taken chosen at planning; no recipe → message, no action; link stored by the API as a third base version `frozen`; quantity taken at planning, given back when the link disappears, except for a past meal (option A); deleted batch → home; batch emptied by links kept at 0; unit change of a linked batch refused (409); moving a meal through a new atomic route (D-074).
+- API: D-073 (frozen choice, stock, `linkedQuantity`, `freezerBatches` in the slot batch response, past-meal rule) and D-074 (`POST /planning-slots/move`, move | swap) on dev only. Contract in `docs/api.md` § Freezer (D-074 goes into the docs with step 2).
+- Done: `BaseVersionChoice` union on `version` (`frozen` carries `freezerItemId` + `quantity`), `SelectableBaseVersion` for the radios and `setBaseVersion`; planning mapper both ways; `sameBaseVersionChoices` compares the link and quantity; copy drops frozen choices (`withoutFrozenBases`); `BatchFreezerItem.linkedQuantity` (API field optional, read as 0), `NewBatchFreezerItem`; `saveSlot` reads `{ items, freezerBatches }` and applies the batches to the freezer cache (`applyFreezerBatches`); `deleteSlot` reloads the freezer when the slot held a frozen base (`hasFrozenBase`); Dexie v17 fills `linkedQuantity: 0` on cached batches (`freezerCacheLogic.ts`). No visible change yet.
+- Verified: tsc + lint only, golden-rule greps (no new hit). Not checked in a browser; the API is not deployed, so nothing can be tested against prod.
+- Still open: steps 2 to 7 of #66 (plan in the issue and `docs/roadmap.md` item 19); do not push before the API confirms D-073 / D-074 in prod. Behaviour change to confirm with the owner for step 2: a moved meal keeps its persons / portions (the current drag resets them). #67 and #68 created (API prompt for #68 kept in the issue, not sent yet).
+
 ## 2026-11-24 — End of session (v6.166.21)
 - Done: #65 closed by the owner (delivered in v6.166.20, not yet tested in a browser); `docs/roadmap.md` § Current focus gains items 17 (issues #59 to #63, in prod) and 18 (absence rule, #64 and #65). Discord synced by the owner (#59 to #65).
 - Where to resume: nothing in progress. Open issues: #10 Google sign-in, #41 / #50 prices (graph later), #42 household storage (needs design with the owner), all low priority. Roadmap idea worth proposing: remove the obsolete data import (front `features/sync` + API `POST /import`). D-068 API commit hash still `TODO(owner)` in `docs/api.md` (ask the API session).

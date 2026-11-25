@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { format } from "date-fns";
 import { X } from "lucide-react";
-import { FoodFreezerItem, BatchFreezerItem, BatchUnit } from "../../../../core/domain/freezer";
+import { FoodFreezerItem, NewBatchFreezerItem, BatchUnit } from "../../../../core/domain/freezer";
 import { Unit } from "../../../../core/domain/ingredient";
 import { addItemToCategory } from "../../../../core/services/freezerService";
 import { isFreezerFoodNameTaken } from "../../../../core/logic/freezer/freezerItemsLogic";
@@ -61,7 +61,7 @@ export const AddFreezerItemModal = ({ categoryId, existingFoodNames, onClose }: 
       };
       await addItemToCategory(categoryId, item);
     } else {
-      const item: Omit<BatchFreezerItem, "id" | "addedDate"> = {
+      const item: NewBatchFreezerItem = {
         type: "batch",
         recipeId: selectedRecipeId!,
         recipeName: selectedRecipeName,

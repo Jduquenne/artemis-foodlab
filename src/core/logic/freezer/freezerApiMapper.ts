@@ -28,6 +28,7 @@ export interface ApiFreezerBatchDetail {
   recipeName: string;
   unit: BatchUnit;
   quantity: number;
+  linkedQuantity?: number;
   addedDate: string;
 }
 
@@ -67,6 +68,7 @@ export function mapApiItem(item: ApiFreezerItem): FreezerItem {
       recipeName: item.batch.recipeName,
       unit: item.batch.unit,
       quantity: item.batch.quantity,
+      linkedQuantity: item.batch.linkedQuantity ?? 0,
       addedDate: item.batch.addedDate.slice(0, 10),
     };
     return batch;

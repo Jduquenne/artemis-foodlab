@@ -10,7 +10,7 @@ import {
   mapApiFreezerCategory,
   mapApiItem,
 } from "../logic/freezer/freezerApiMapper";
-import { BatchFreezerItem, FoodFreezerItem, FreezerBag, FreezerCategory } from "../domain/freezer";
+import { BatchFreezerItem, FoodFreezerItem, FreezerBag, FreezerCategory, NewBatchFreezerItem } from "../domain/freezer";
 import { compareByName } from "../utils/sortUtils";
 
 const today = () => format(new Date(), "yyyy-MM-dd");
@@ -44,6 +44,14 @@ export async function syncFreezerFromApi(options: { silent?: boolean } = {}): Pr
   }
 }
 
+export async function applyFreezerBatches(batches: readonly ApiFreezerItem[]): Promise<void> {
+  if (batches.length === 0) return;
+  const updated = new Map(batches.map((batch) => [batch.id, mapApiItem(batch)]));
+  await db.freezerCategories.toCollection().modify((category: FreezerCategory) => {
+    category.items = category.items.map((item) => updated.get(item.id) ?? item);
+  });
+}
+
 export const createCategory = async (name: string, color: string | null = null): Promise<void> => {
   const created = await apiFetchJson<ApiFreezerCategory>("/freezer-categories", {
     method: "POST",
@@ -69,7 +77,7 @@ export const deleteCategory = async (id: string): Promise<void> => {
 
 export const addItemToCategory = async (
   categoryId: string,
-  item: Omit<FoodFreezerItem, "id"> | Omit<BatchFreezerItem, "id" | "addedDate">,
+  item: Omit<FoodFreezerItem, "id"> | NewBatchFreezerItem,
 ): Promise<void> => {
   if (item.type === "food") {
     const created = await apiFetchJson<ApiFreezerItem>("/freezer-items", {
@@ -103,6 +111,7 @@ export const addItemToCategory = async (
       recipeName: created.batch?.recipeName ?? item.recipeName,
       unit: item.unit,
       quantity: item.quantity,
+      linkedQuantity: 0,
       addedDate,
     };
     await withCategory(categoryId, cat => ({ items: [...cat.items, newItem] }));

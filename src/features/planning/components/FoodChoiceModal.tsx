@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { Loader2, Shuffle } from 'lucide-react';
 import { FoodChoice } from '../../../core/domain/foodGroup';
 import { AccompanimentChoice } from '../../../core/domain/accompaniment';
-import { BaseVersion, BaseVersionChoice } from '../../../core/domain/baseVersion';
+import { BaseVersionChoice, SelectableBaseVersion } from '../../../core/domain/baseVersion';
 import { NO_FOOD_VALUE, findMealChoice, foodSelectValue, foodsOfGroupSorted, mealChoiceSelection, parseFoodSelectValue, reachableQuantityPerPortion, resolveIngredientFood, setMealFoodChoice, setMealFoodQuantity } from '../../../core/logic/foodGroup/foodChoiceLogic';
 import { accompanimentsFor, findAccompanimentChoice, mealChoiceIngredients, resolveAccompaniment, setAccompanimentChoice } from '../../../core/logic/accompaniment/accompanimentLogic';
 import { ACCOMPANIMENT_NONE_VALUE, accompanimentOptionLabel, parseAccompanimentSelectValue } from '../../../core/logic/accompaniment/accompanimentFormLogic';
@@ -59,7 +59,7 @@ export const FoodChoiceModal = ({ recipeId, pendingKey, initialChoices, initialA
         if (await onSave(choices, accompanimentChoices, baseVersionChoices)) onClose();
     };
 
-    const changeBaseVersion = (baseCode: string, version: BaseVersion) =>
+    const changeBaseVersion = (baseCode: string, version: SelectableBaseVersion) =>
         setBaseVersionChoices((prev) => setBaseVersion(prev, baseCode, version === 'industrial' ? 'industrial' : null));
 
     const profileDot = (color: string) => (

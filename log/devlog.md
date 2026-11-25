@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-25 — #66 and #68 closed (v6.167.11)
+- Owner: #68 checked (recipes button on « Oignon jaune », freezer stock in the shopping list) and #66 tested; both closed. Roadmap item 19 done.
+- Where to resume: #69 (send the API audit prompt kept in the issue; open question: category choice for free-text ingredients). Open questions on #66 left to the owner: a moved dessert keeps its own persons, « Personnes » wording, confirmation before deleting a planned batch. Idea: remove the obsolete import (front `features/sync` + API `POST /import`).
+
 ## 2026-11-25 — #68: stale food codes in freezer items (docs, v6.167.9, D-075 details v6.167.10)
 - Cause (API audit, read-only): the old front renumbered `food-db.json` several times between 2026-02-26 and 2026-06-13; IndexedDB kept the old codes and `POST /import` stored them as sent (the FK only checks the code exists). Example: fv-059 = « Navet », then « Oignon jaune », then « Mûres »; « Oignon jaune » is fv-063 today. 72 / 177 freezer food items in prod (3 accounts) named another food; other tables consistent or written with current codes.
 - Front check: no pre-API code held or sent except through the legacy import (user-chosen old JSON); the freezer / planning / household caches are rebuilt from the API. Side effect fixed by the API change: freezer stock in the shopping list was counted on the wrong food for those items.

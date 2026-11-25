@@ -16,6 +16,17 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-25 — #66 step 7: docs pass and D-046 (v6.167.6)
+- Done: `docs/decisions.md` D-046 (frozen base planned through a dish as a third base version moving the stock, atomic move); stale « so far » wording removed in `docs/spec-freezer.md` / `docs/spec-planning.md`; pointer from the dish batch « Ajouter au menu » to the base flow; roadmap item 19 updated. Front of #66 complete (v6.167.0 to v6.167.6).
+- Where to resume: wait for the API session to confirm D-073 + D-074 deployed in prod (migration applied, authenticated 200), then the owner pushes and tests. **Do not push before.**
+- Owner browser tests once live, most risky first:
+  1. Drag and drop (v6.167.1, replaces the write path): move to an empty slot, to a dessert-only slot (> 3 desserts → choice), swap with another dish, desserts follow / stay, cross-week; persons kept after a move.
+  2. Base batch « Ajouter au menu » (v6.167.4): base without recipe → message; recipe list and search; grid; persons change updates the suggested quantity; quantity above the stock blocked; save → batch shows « … prévus au menu » and the quantity drops.
+  3. Shopping (v6.167.2): the dish no longer lists the base ingredients nor the base in « bases à préparer »; cost estimate lower.
+  4. « Choix du repas » (v6.167.5): « Du congélateur » selected; switch to Maison + save → quantity back in the batch; on a past meal → not given back; snowflake on the card.
+  5. Delete a slot holding a frozen base → freezer refreshed; copy a meal → copy is home; batch emptied by links → « Épuisé · prévu au menu ».
+- Open owner questions: persons kept on move (step 2), « Personnes » wording (step 5), confirmation before deleting a planned batch (idea, step 4).
+
 ## 2026-11-25 — #66 step 6: frozen base in « Choix du repas » (v6.167.5)
 - Done: `versionableBases`, `findFrozenChoice`, `selectBaseVersion`, `hasFrozenChoice` (`baseVersionLogic.ts`), `frozenChoiceLabels` (`frozenBaseLogic.ts`); `BaseVersionSection` builds its options per base (Maison, Du commerce when an equivalent exists, Du congélateur when the meal holds a frozen link) with a note when leaving the frozen version; `FoodChoiceModal` uses them (no more `useIndustrialBases` there); `useHasMealChoices` takes the meal base choices; `SingleMealSlot` shows the snowflake badge for a frozen base. `docs/spec-planning.md`.
 - Verified: tsc + lint, golden-rule greps; logic run through esbuild (listing with / without frozen choice, home → frozen round trip, frozen without saved link ignored, industrial on another base keeps the frozen one, labels with known / unknown batch). Not checked in a browser.

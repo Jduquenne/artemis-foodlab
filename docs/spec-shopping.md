@@ -42,6 +42,10 @@ Step 3 (v6.149.0), « Par repas » layout (`features/shopping/components/meals/`
 
 `slotScaleFactor` takes the recipe's `portionsPerPerson`: slot persons and per-recipe persons give `persons × reference ÷ defaultPortions`, a dessert gives `reference ÷ defaultPortions`, nothing set = 1 (the whole recipe), gram overrides unchanged. Accompaniment shares divide the parts by the reference (persons stay persons). Example: 20 pancakes, 4 per person, 4 persons planned = 0.8 of the recipe (16 pancakes).
 
+## Frozen base (issue #66, v6.167.2)
+
+A base taken from a freezer batch for a planned meal (`frozen` base version, `docs/spec-planning.md` § Base version choices) is not bought: `aggregateSlots` runs `applyFrozenBases` after `applyBaseVersions`, which replaces every frozen base reachable from the dish by the same base **without ingredients** for that meal only (its nested bases and « au choix » ingredients disappear with it), and `aggregateBases` skips it in « bases à préparer » (`isFrozenChoice`, direct bases as before). The planning cost estimate (`planningCostLogic`, built on `aggregateSlots`) follows. Macros, planning kcal and journal keep the home version (`applyBaseVersions` ignores `frozen`).
+
 ## Base ingredient in grams (D-042, v6.144.4)
 
 A base ingredient with the unit `g` (grams of the base's cooked weight) is converted to base portions (`basePortionsOf`, `docs/spec-recipes.md`) before scaling: the base's own ingredients are multiplied by `portions ÷ base defaultPortions` as for a portion quantity, and the « bases to cook » list shows portions. A `g` ingredient whose base has no cooked weight contributes nothing.

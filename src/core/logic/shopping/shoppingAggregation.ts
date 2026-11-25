@@ -9,7 +9,7 @@ import { compareByName } from "../../utils/sortUtils";
 import { AccompanimentOption } from "../../domain/accompaniment";
 import { reachableGroupIngredients, resolveIngredientFood, personalizeRecipeTree, splitGroupIngredient } from "../foodGroup/foodChoiceLogic";
 import { accompanimentsFor, resolveAccompaniment } from "../accompaniment/accompanimentLogic";
-import { applyBaseVersions, isIndustrialChoice } from "../baseVersion/baseVersionLogic";
+import { applyBaseVersions, applyFrozenBases, isFrozenChoice, isIndustrialChoice } from "../baseVersion/baseVersionLogic";
 import { portionsPerPersonOf } from "../recipe/portionsPerPersonLogic";
 import { basePortionsOf } from "../recipe/cookedWeightLogic";
 import { parseUnit } from "../unit/unitLogic";
@@ -144,7 +144,8 @@ export function aggregateSlots(
       const reference = portionsPerPersonOf(details);
       const scaleFactor = slotScaleFactor(slot, recipeId, details.defaultPortions, catalogue.baseGrams, reference);
       const choices = slot.foodChoices?.[recipeId] ?? [];
-      const recipes = applyBaseVersions(details, data, slot.baseVersionChoices?.[recipeId], catalogue.foods);
+      const baseVersions = slot.baseVersionChoices?.[recipeId];
+      const recipes = applyFrozenBases(details, applyBaseVersions(details, data, baseVersions, catalogue.foods), baseVersions);
       const portionFactors = new Map(
         reachableGroupIngredients(details, recipes).map((entry) => [entry.ingredient.id, entry.portionFactor]),
       );
@@ -288,7 +289,8 @@ export function aggregateBases(slots: MealSlot[], catalogue: ShoppingCatalogue):
         if (ing.link !== "base") continue;
         const baseRecipe = data[ing.baseId];
         if (!baseRecipe) continue;
-        if (isIndustrialChoice(slot.baseVersionChoices?.[recipeId], baseRecipe, catalogue.foods)) continue;
+        const baseVersions = slot.baseVersionChoices?.[recipeId];
+        if (isIndustrialChoice(baseVersions, baseRecipe, catalogue.foods) || isFrozenChoice(baseVersions, ing.baseId)) continue;
         addBase(ing.baseId, baseRecipe, (basePortionsOf(ing.quantity ?? 1, ing.unit, baseRecipe) ?? 0) * scaleFactor, ing.unit === Unit.G ? Unit.PORTION : ing.unit);
       }
 

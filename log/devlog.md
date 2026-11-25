@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-25 — #66 step 3: a frozen base leaves the shopping list (v6.167.2)
+- Done: `applyFrozenBases` (`baseVersionLogic.ts`): every frozen base reachable from the dish becomes the same base without ingredients for that meal (same table returned when nothing changes); `aggregateSlots` applies it after `applyBaseVersions`, `aggregateBases` skips frozen bases (`isFrozenChoice`). Planning cost estimate follows (built on `aggregateSlots`); macros / journal unchanged (home version). Docs: `docs/spec-shopping.md` § Frozen base, `docs/spec-planning.md`.
+- Verified: tsc + lint; throwaway esbuild test (`E:/Developpement/_claude/tmp/frozen-test/`, not versioned): base emptied without touching the catalogue table, industrial-only / unreachable choices return the same table, `isFrozenChoice`, `withoutFrozenBases`, `sameBaseVersionChoices` sees a quantity change. Not checked in a browser (needs D-073 deployed to create a frozen choice).
+- Still open: steps 4 to 7 of #66.
+
 ## 2026-11-25 — #66 step 2: drag and drop through the atomic move route (v6.167.1)
 - Done: the planning drag and drop calls `POST /planning-slots/move` (API D-074) once instead of saving / deleting the two slots in parallel: `moveMeal` (`planningService`, cache rebuilt from the two returned slots, freezer from `freezerBatches`), `buildMoveSlotsPayload` + `ApiMoveSlotsResponse` (`planningApiMapper.ts`, dessert codes → catalogue uuids), `dragMoveMode` (`swap` when the destination has a dish, `move` otherwise: same cases as before). `computeDragMoveSlots`, `placeMeal` and `pickRecordLists` removed (no other consumer). Contract in `docs/api.md` § Planning.
 - Behaviour changes: a moved meal keeps its persons / grams overrides (they were reset; owner confirmation still pending, the API keeps them anyway); the emptied source slot stays in the API instead of being deleted (nothing visible); a move is now all or nothing.

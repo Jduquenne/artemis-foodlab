@@ -131,6 +131,26 @@ export function applyBaseVersions(
   return Object.keys(substitutes).length === 0 ? recipes : { ...recipes, ...substitutes };
 }
 
+export function isFrozenChoice(choices: readonly BaseVersionChoice[] | undefined, baseCode: string): boolean {
+  return findBaseVersion(choices, baseCode) === "frozen";
+}
+
+export function applyFrozenBases(
+  recipe: RecipeDetails,
+  recipes: Record<string, RecipeDetails>,
+  choices: readonly BaseVersionChoice[] | undefined,
+): Record<string, RecipeDetails> {
+  const frozen = (choices ?? []).filter((choice) => choice.version === "frozen");
+  if (frozen.length === 0) return recipes;
+  const reachable = reachableBaseCodes(recipe, recipes);
+  const emptied: Record<string, RecipeDetails> = {};
+  for (const choice of frozen) {
+    const base = recipes[choice.baseCode];
+    if (base && reachable.has(choice.baseCode)) emptied[choice.baseCode] = { ...base, ingredients: [] };
+  }
+  return Object.keys(emptied).length === 0 ? recipes : { ...recipes, ...emptied };
+}
+
 export function industrialEquivalentLabel(equivalent: IndustrialEquivalent, foods: Record<string, Food>): string {
   const name = foods[equivalent.foodId]?.name ?? equivalent.foodId;
   return `${name} · ${formatQty(equivalent.quantity)} ${equivalent.unit} / portion`.replace("  ", " ");

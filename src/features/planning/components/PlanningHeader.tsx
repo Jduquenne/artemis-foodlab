@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { CalendarDays, ChevronLeft, ChevronRight, History, List, Loader2, MoreHorizontal, ShoppingCart, Sparkles } from "lucide-react";
+import { CalendarDays, ChevronLeft, ChevronRight, History, List, Loader2, MoreHorizontal, ShoppingCart, Sparkles, Users } from "lucide-react";
 import { FloatingMenu } from "../../../shared/components/ui/FloatingMenu";
 import { CostEstimate } from "../../../core/logic/price/priceLogic";
 import { PlanningCostLabel } from "./PlanningCostLabel";
@@ -23,13 +23,14 @@ export interface PlanningHeaderProps {
   copyingPreviousWeek: boolean;
   mobileWeekView: boolean;
   onToggleMobileWeekView: () => void;
+  onOpenPersonDefaults: () => void;
 }
 
 export const PlanningHeader = ({
   weekNumber, weekRange, weekCost, selectedDayDate,
   isAnyEditing, isSelectionMode, isAddMode, hasShoppingDays,
   onPrevWeek, onNextWeek, onDateChange, onEnterSelectionMode, onOpenGenerator,
-  onCopyPreviousWeek, copyingPreviousWeek, mobileWeekView, onToggleMobileWeekView,
+  onCopyPreviousWeek, copyingPreviousWeek, mobileWeekView, onToggleMobileWeekView, onOpenPersonDefaults,
 }: PlanningHeaderProps) => {
   const dateInputRef = useRef<HTMLInputElement>(null);
   const moreRef = useRef<HTMLButtonElement>(null);
@@ -101,6 +102,10 @@ export const PlanningHeader = ({
                 <History className="w-4 h-4 shrink-0" />
                 Reprendre la semaine précédente
               </button>
+              <button onClick={runMore(onOpenPersonDefaults)} className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-subtle transition-colors">
+                <Users className="w-4 h-4 shrink-0" />
+                Personnes par défaut
+              </button>
               {onOpenGenerator && (
                 <button onClick={runMore(onOpenGenerator)} className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-subtle transition-colors">
                   <Sparkles className="w-4 h-4 shrink-0" />
@@ -120,6 +125,18 @@ export const PlanningHeader = ({
           >
             {copyingPreviousWeek ? <Loader2 size={15} className="animate-spin text-orange-500" /> : <History size={15} className="text-orange-500" />}
             <span className="hidden lg:inline">Reprendre</span>
+          </button>
+        )}
+
+        {!isSelectionMode && !isAddMode && (
+          <button
+            onClick={isAnyEditing ? undefined : onOpenPersonDefaults}
+            aria-label="Personnes par défaut"
+            title="Personnes par défaut"
+            className={`hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-2xl shadow-sm border border-slate-200 bg-surface font-bold text-sm text-slate-600 hover:bg-muted transition-colors ${isAnyEditing ? "opacity-40 pointer-events-none" : ""}`}
+          >
+            <Users size={15} className="text-orange-500" />
+            <span className="hidden lg:inline">Personnes</span>
           </button>
         )}
 

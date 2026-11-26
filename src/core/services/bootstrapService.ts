@@ -1,3 +1,4 @@
+import { PersonDefault } from "../domain/personDefaults";
 import { Accompaniment } from "../domain/accompaniment";
 import { FoodGroup } from "../domain/foodGroup";
 import { ApiAccompaniment, mapAccompaniments } from "../logic/accompaniment/accompanimentApiMapper";
@@ -40,6 +41,7 @@ interface ApiBootstrap {
   journalOverrides: ApiJournalOverride[];
   currentShoppingPeriod: ApiShoppingPeriod | null;
   unreadFeedbackReplies?: number;
+  planningPersonDefaults?: PersonDefault[];
 }
 
 export interface BootstrapResult {
@@ -52,6 +54,7 @@ export interface BootstrapResult {
   foodPrices: FoodPrice[];
   foodCookings: FoodCooking[];
   unreadFeedbackReplies: number;
+  personDefaults: PersonDefault[];
 }
 
 export interface SyncBootstrapOptions {
@@ -85,6 +88,7 @@ export async function syncBootstrapFromApi(options: SyncBootstrapOptions = {}): 
       foodPrices: data.foodPrices ?? [],
       foodCookings: data.foodCookings ?? [],
       unreadFeedbackReplies: data.unreadFeedbackReplies ?? 0,
+      personDefaults: data.planningPersonDefaults ?? [],
     };
   } catch {
     return null;

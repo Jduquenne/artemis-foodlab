@@ -1,3 +1,4 @@
+import { PersonDefault } from "./personDefaults";
 import { Accompaniment } from "./accompaniment";
 import { Food, IngredientCategory } from "./ingredient";
 import { Profile } from "./profile";
@@ -64,6 +65,7 @@ export interface ShoppingCatalogue {
   foods: Record<string, Food>;
   profiles: Pick<Profile, "id" | "name" | "foodGroupDefaults" | "accompanimentDefaults">[];
   accompaniments?: readonly Accompaniment[];
+  personDefaults?: readonly PersonDefault[];
 }
 
 export interface RecipeCardIngredient {

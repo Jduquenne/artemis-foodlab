@@ -1,3 +1,4 @@
+import { withDefaultPersons } from "../planning/personDefaultsLogic";
 import { FoodIngredient, Ingredient, Unit } from "../../domain/ingredient";
 import { isRemovedIngredient } from "../../domain/ingredientPredicates";
 import { ingredientFoodId } from "../recipe/ingredientLinkLogic";
@@ -136,7 +137,8 @@ export function aggregateSlots(
     }
   }
 
-  for (const slot of slots) {
+  for (const rawSlot of slots) {
+    const slot = withDefaultPersons(rawSlot, catalogue.personDefaults ?? []);
     const allIds = getAllRecipeIds(slot);
     for (const recipeId of allIds) {
       const details = data[recipeId];
@@ -271,7 +273,8 @@ export function aggregateBases(slots: MealSlot[], catalogue: ShoppingCatalogue):
   const data = catalogue.recipes;
   const map = new Map<string, BaseEntry>();
 
-  for (const slot of slots) {
+  for (const rawSlot of slots) {
+    const slot = withDefaultPersons(rawSlot, catalogue.personDefaults ?? []);
     const allIds = getAllRecipeIds(slot);
     for (const recipeId of allIds) {
       const details = data[recipeId];

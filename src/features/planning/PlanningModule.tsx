@@ -70,6 +70,9 @@ import {
     useSensors,
     closestCenter,
 } from '@dnd-kit/core';
+import { usePersonDefaultsStore } from '../../shared/store/usePersonDefaultsStore';
+import { defaultPersonsFor } from '../../core/logic/planning/personDefaultsLogic';
+import { PersonDefaultsSheet } from './components/PersonDefaultsSheet';
 
 interface PendingDragMove {
     fromMeal: MealSlot;
@@ -120,6 +123,8 @@ export const PlanningModule = () => {
     const dessertMovePreference = usePlanningPreferencesStore(s => s.dessertMove);
     const setDessertMovePreference = usePlanningPreferencesStore(s => s.setDessertMove);
     const mobileWeekView = usePlanningPreferencesStore(s => s.mobileWeekView);
+    const personDefaults = usePersonDefaultsStore(s => s.defaults);
+    const [personDefaultsOpen, setPersonDefaultsOpen] = useState(false);
     const setMobileWeekView = usePlanningPreferencesStore(s => s.setMobileWeekView);
 
     const isAnyEditing = editingPersonsSlotId !== null;
@@ -453,6 +458,7 @@ export const PlanningModule = () => {
                 mealType={mealType}
                 slotId={slotId}
                 savedMeal={savedMeal}
+                defaultPersons={defaultPersonsFor(personDefaults, day, mealType.id)}
                 isEditingPersons={isEditingThis}
                 isDimmed={isDimmed}
                 isAnyEditing={isAnyEditing}
@@ -506,6 +512,7 @@ export const PlanningModule = () => {
                     onCopyPreviousWeek={prepareWeekCopy}
                     mobileWeekView={mobileWeekView}
                     onToggleMobileWeekView={() => setMobileWeekView(!mobileWeekView)}
+                    onOpenPersonDefaults={() => setPersonDefaultsOpen(true)}
                     copyingPreviousWeek={preparingWeekCopy}
                 />
 
@@ -654,6 +661,8 @@ export const PlanningModule = () => {
                         onClose={() => setFoodChoiceTarget(null)}
                     />
                 )}
+
+                {personDefaultsOpen && <PersonDefaultsSheet onClose={() => setPersonDefaultsOpen(false)} />}
 
                 {weekCopy && (
                     <ConfirmActionModal

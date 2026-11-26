@@ -67,6 +67,7 @@ import { PriceSection } from './components/price/PriceSection';
 import { PriceEntrySheet } from './components/price/PriceEntrySheet';
 import { PriceStoresSheet } from './components/price/PriceStoresSheet';
 import { PageHeading } from '../../shared/components/layout/PageHeading';
+import { usePersonDefaultsStore } from '../../shared/store/usePersonDefaultsStore';
 
 const SHOPPING_COLUMNS: readonly ColBreakpoint[] = [
     { minWidth: 1024, cols: 3 },
@@ -143,14 +144,15 @@ export const ShoppingModule = () => {
         }
     }, [authStatus, shoppingDays, refreshTick]);
 
+    const personDefaults = usePersonDefaultsStore((s) => s.defaults);
     const ingredients = useLiveQuery(
-        () => getShoppingListForDays(shoppingDays, { recipes, baseGrams, foods, profiles, accompaniments }),
-        [shoppingDays, recipes, baseGrams, foods, profiles, accompaniments]
+        () => getShoppingListForDays(shoppingDays, { recipes, baseGrams, foods, profiles, accompaniments, personDefaults }),
+        [shoppingDays, recipes, baseGrams, foods, profiles, accompaniments, personDefaults]
     );
 
     const basesRaw = useLiveQuery(
-        () => getBasesForDays(shoppingDays, { recipes, baseGrams, foods, profiles, accompaniments }),
-        [shoppingDays, recipes, baseGrams, foods, profiles, accompaniments]
+        () => getBasesForDays(shoppingDays, { recipes, baseGrams, foods, profiles, accompaniments, personDefaults }),
+        [shoppingDays, recipes, baseGrams, foods, profiles, accompaniments, personDefaults]
     );
     const bases = useMemo(() => basesRaw ?? [], [basesRaw]);
 

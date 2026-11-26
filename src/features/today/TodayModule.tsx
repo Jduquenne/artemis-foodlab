@@ -13,6 +13,7 @@ import { PageHeading } from '../../shared/components/layout/PageHeading';
 import { TodayHeroCard } from './components/TodayHeroCard';
 import { TodayMealsCard } from './components/TodayMealsCard';
 import { TodayThawCard } from './components/TodayThawCard';
+import { usePersonDefaultsStore } from '../../shared/store/usePersonDefaultsStore';
 
 const formatToday = (date: Date) =>
     date.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
@@ -29,10 +30,11 @@ export const TodayModule = () => {
     const recipes = useRecipesSnapshot();
     const freezer = useFreezerCategories();
     const shoppingDays = useMenuStore((s) => s.shoppingDays);
+    const personDefaults = usePersonDefaultsStore((s) => s.defaults);
 
     const allSlots = useMemo(() => [...thisWeek, ...nextWeek], [thisWeek, nextWeek]);
-    const todayMeals = plannedMealsOn(now, allSlots, items);
-    const tomorrowMeals = plannedMealsOn(tomorrow, allSlots, items);
+    const todayMeals = plannedMealsOn(now, allSlots, items, personDefaults);
+    const tomorrowMeals = plannedMealsOn(tomorrow, allSlots, items, personDefaults);
     const reminders = thawReminders(slotsOfDay(tomorrow, allSlots), recipes, freezer);
 
     return (

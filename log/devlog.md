@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — #79 default persons per meal (v6.170.37)
+- Done: household defaults per day × meal (API D-080), resolved at read time (slot → household default → recipe), used by the planning cells, shopping, planning cost and Aujourd'hui; `PersonDefaultsSheet` from the planning header / « ⋯ ». Contract gaps marked `TODO(owner)` in `docs/api.md` (PUT response and bootstrap key shapes assumed). **Needs D-080 live in prod and the real payloads.**
+- Test (dev API): set Lundi déjeuner = 2, Samedi dîner = 4 → empty-persons meals show 2 / 4, shopping quantities and cost follow, Aujourd'hui shows them; a meal with its own persons keeps it; clear a value → back to the recipe default; value 25 → error, Enregistrer disabled; reload → kept.
+
 ## 2026-11-26 — #109 feedback replies and deletion (v6.170.36)
 - API security review done (Prisma only, no HTML server-side, per-IP limit 10 per hour on POST /feedback, invisible / control characters stripped, null byte 500 fixed, 413 over 100 KB, text never logged) and #109 contract with real payloads (`docs/api.md`).
 - Done: admin Dashboard › Avis: reply / edit / delete the reply (not for demo feedback nor a deleted account), delete any feedback (confirmation), « Vider les avis traités » (confirmation, keeps unread replies); user: « Écrire » / « Mes avis » tabs with replies and a « Nouveau » tag, all marked read on opening; unread badge from `/bootstrap` (dot on ⚙, count in the menu). **Needs the API (#105, #109) live in prod.**

@@ -17,6 +17,7 @@ export interface PlanningSlotProps {
   mealType: MealSlotDef;
   slotId: string;
   savedMeal: MealSlot | undefined;
+  defaultPersons: number | undefined;
   isEditingPersons: boolean;
   isDimmed: boolean;
   isAnyEditing: boolean;
@@ -43,7 +44,7 @@ export interface PlanningSlotProps {
 }
 
 export const PlanningSlot = ({
-  mealType, slotId, savedMeal,
+  mealType, slotId, savedMeal, defaultPersons,
   isEditingPersons, isDimmed,
   isAnyEditing, isSelectionMode, isAddMode, isCopyMode,
   copyProps,
@@ -57,6 +58,7 @@ export const PlanningSlot = ({
   const navigate = useNavigate();
   const plannable = usePlannableSnapshot();
   const recipeIds = savedMeal?.recipeIds ?? [];
+  const slotPersons = savedMeal?.persons ?? defaultPersons;
   const mealContext = (persons: number | undefined): MealContext | undefined =>
     savedMeal ? { day: savedMeal.day, slot: mealType.id, persons: persons ?? null } : undefined;
   const blocked = isSelectionMode || isAddMode || isCopyMode;
@@ -72,7 +74,7 @@ export const PlanningSlot = ({
           recipeIds={recipeIds}
           onAdd={blocked ? () => {} : onOpenPicker}
           onRemoveRecipe={blocked ? () => {} : onRemoveRecipe}
-          onNavigateToRecipe={isAddMode || isCopyMode ? () => {} : (rid) => navigate(buildRecipeDetailUrl(rid, plannedPortions(savedMeal?.recipePersons?.[rid] ?? savedMeal?.persons, plannableRecipe(plannable[rid])), mealContext(savedMeal?.recipePersons?.[rid] ?? savedMeal?.persons)))}
+          onNavigateToRecipe={isAddMode || isCopyMode ? () => {} : (rid) => navigate(buildRecipeDetailUrl(rid, plannedPortions(savedMeal?.recipePersons?.[rid] ?? slotPersons, plannableRecipe(plannable[rid])), mealContext(savedMeal?.recipePersons?.[rid] ?? slotPersons)))}
           isAddMode={isAddMode}
           onAddToSlot={isAddMode ? onAddToSlot : undefined}
           onCopyRecipe={!blocked ? onCopyRecipe : undefined}
@@ -86,7 +88,7 @@ export const PlanningSlot = ({
           recipeQuantities={savedMeal?.recipeQuantities}
           onSaveRecipeMeta={!blocked ? onSaveRecipeMeta : undefined}
           batchRecipeIds={batchRecipeIds}
-          persons={savedMeal?.persons}
+          persons={slotPersons}
           isEditingPersons={isEditingPersons}
           onOpenPersonsEditor={isAddMode || isCopyMode ? () => {} : onEditPersons}
           onConfirmPersons={onConfirmPersons}
@@ -99,10 +101,10 @@ export const PlanningSlot = ({
           icon={SLOT_DISPLAY[mealType.id].icon}
           slotId={slotId}
           recipeIds={recipeIds}
-          persons={savedMeal?.persons}
+          persons={slotPersons}
           isEditingPersons={isEditingPersons}
           isAnyEditing={isAnyEditing || isCopyMode}
-          onNavigate={() => { if (recipeIds[0]) navigate(buildRecipeDetailUrl(recipeIds[0], plannedPortions(savedMeal?.persons, plannableRecipe(plannable[recipeIds[0]])), mealContext(savedMeal?.persons))); }}
+          onNavigate={() => { if (recipeIds[0]) navigate(buildRecipeDetailUrl(recipeIds[0], plannedPortions(slotPersons, plannableRecipe(plannable[recipeIds[0]])), mealContext(slotPersons))); }}
           onOpenPicker={blocked ? () => {} : onOpenPicker}
           onModify={blocked ? () => {} : onOpenPicker}
           onDelete={blocked ? () => {} : onDelete}

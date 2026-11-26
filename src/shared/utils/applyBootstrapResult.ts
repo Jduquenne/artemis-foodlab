@@ -7,6 +7,7 @@ import { useAccompanimentStore } from "../store/useAccompanimentStore";
 import { usePriceStore } from "../store/usePriceStore";
 import { useFoodCookingStore } from "../store/useFoodCookingStore";
 import { useFeedbackStore } from "../store/useFeedbackStore";
+import { usePersonDefaultsStore } from "../store/usePersonDefaultsStore";
 
 interface AppliedSignatures {
   profiles: string;
@@ -53,5 +54,6 @@ export function applyBootstrapResult(result: BootstrapResult): void {
     useFoodCookingStore.getState().replaceCookings(result.foodCookings);
   }
   useFeedbackStore.getState().setUnreadReplies(result.unreadFeedbackReplies);
+  usePersonDefaultsStore.getState().replaceDefaults(result.personDefaults);
   applied = next;
 }

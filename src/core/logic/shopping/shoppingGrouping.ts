@@ -1,4 +1,4 @@
-import { ConsolidatedIngredient, IngredientGroup, ShoppingAisle, ShoppingMode } from "../../domain/shopping";
+import { ConsolidatedIngredient, IngredientGroup, ShoppingAisle, ShoppingView } from "../../domain/shopping";
 import { distributeToColumns } from "../../utils/columnUtils";
 import { isCoveredAtHome } from "./shoppingChecks";
 
@@ -42,22 +42,24 @@ export function groupIngredients(
   return groupByCategory(ingredients, aisles);
 }
 
+export function isLineDone(
+  ingredient: ConsolidatedIngredient,
+  checked: Set<string>,
+  stocks: Record<string, number>,
+  sourceChecked: Set<string>,
+): boolean {
+  return checked.has(ingredient.key) || isCoveredAtHome(ingredient, stocks, sourceChecked);
+}
+
 export function filterGroupedIngredients(
   ingredients: ConsolidatedIngredient[],
   aisles: readonly ShoppingAisle[],
-  mode: ShoppingMode,
+  view: ShoppingView,
+  checked: Set<string>,
   stocks: Record<string, number>,
   sourceChecked: Set<string>,
 ): IngredientGroup[] {
-  return groupByCategory(ingredients, aisles, (i) => mode === "home" || !isCoveredAtHome(i, stocks, sourceChecked));
-}
-
-export function countCoveredByGroup(
-  groups: IngredientGroup[],
-  stocks: Record<string, number>,
-  sourceChecked: Set<string>,
-): Record<string, number> {
-  return Object.fromEntries(groups.map((g) => [g.key, g.list.filter((i) => isCoveredAtHome(i, stocks, sourceChecked)).length]));
+  return groupByCategory(ingredients, aisles, (i) => view === "all" || !isLineDone(i, checked, stocks, sourceChecked));
 }
 
 export function splitHouseholdExtrasGroup(groups: IngredientGroup[]): { aisles: IngredientGroup[]; householdExtras: ConsolidatedIngredient[] } {
@@ -67,8 +69,8 @@ export function splitHouseholdExtrasGroup(groups: IngredientGroup[]): { aisles: 
   };
 }
 
-export function sortCheckedLast(list: ConsolidatedIngredient[], checked: Set<string>): ConsolidatedIngredient[] {
-  return [...list.filter((i) => !checked.has(i.key)), ...list.filter((i) => checked.has(i.key))];
+export function sortDoneLast(list: ConsolidatedIngredient[], isDone: (item: ConsolidatedIngredient) => boolean): ConsolidatedIngredient[] {
+  return [...list.filter((i) => !isDone(i)), ...list.filter(isDone)];
 }
 
 export function assignIngredientColumns(

@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import { HouseholdItem } from '../../../../core/domain/household';
-import { IngredientGroup, ShoppingMode } from '../../../../core/domain/shopping';
-import { StockUpdate } from '../../../../core/logic/shopping/shoppingQuickStockLogic';
+import { IngredientGroup, ShoppingView } from '../../../../core/domain/shopping';
 import { assignIngredientColumns, splitHouseholdExtrasGroup } from '../../../../core/logic/shopping/shoppingGrouping';
 import { HouseholdShoppingCard } from '../HouseholdShoppingCard';
 import { ShoppingCategoryCard } from './ShoppingCategoryCard';
@@ -10,16 +9,12 @@ export interface ShoppingAislesViewProps {
     allGroups: IngredientGroup[];
     groups: IngredientGroup[];
     colCount: number;
-    mode: ShoppingMode;
-    coveredByGroup: Record<string, number>;
+    view: ShoppingView;
     checked: Set<string>;
     stocks: Record<string, number>;
     sourceChecked: Set<string>;
     householdItems: HouseholdItem[];
     onToggle: (key: string) => void;
-    onOpenStock: (key: string) => void;
-    onQuickStock: (key: string) => void;
-    onStockAll: (updates: StockUpdate[]) => void;
     onOpenDetail: (key: string) => void;
     onManageHousehold: () => void;
 }
@@ -28,16 +23,12 @@ export const ShoppingAislesView = ({
     allGroups,
     groups,
     colCount,
-    mode,
-    coveredByGroup,
+    view,
     checked,
     stocks,
     sourceChecked,
     householdItems,
     onToggle,
-    onOpenStock,
-    onQuickStock,
-    onStockAll,
     onOpenDetail,
     onManageHousehold,
 }: ShoppingAislesViewProps) => {
@@ -51,7 +42,7 @@ export const ShoppingAislesView = ({
         <HouseholdShoppingCard
             items={householdItems}
             extras={shown.householdExtras}
-            mode={mode}
+            view={view}
             checked={checked}
             sourceChecked={sourceChecked}
             onToggle={onToggle}
@@ -71,15 +62,10 @@ export const ShoppingAislesView = ({
                             <ShoppingCategoryCard
                                 label={group.label}
                                 items={group.list}
-                                mode={mode}
-                                coveredCount={coveredByGroup[group.key] ?? 0}
                                 checked={checked}
                                 stocks={stocks}
                                 sourceChecked={sourceChecked}
                                 onToggle={onToggle}
-                                onOpenStock={onOpenStock}
-                                onQuickStock={onQuickStock}
-                                onStockAll={onStockAll}
                                 onOpenDetail={onOpenDetail}
                             />
                         </div>

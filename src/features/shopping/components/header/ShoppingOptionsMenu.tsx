@@ -108,7 +108,7 @@ export const ShoppingOptionsMenu = ({
                                 <OptionsSwitchRow
                                     icon={<Euro className={ICON} />}
                                     label="Saisir le prix en cochant"
-                                    hint={askPriceOnCheck ? 'En magasin, cocher ouvre la saisie du prix' : "Cocher, c'est tout"}
+                                    hint={askPriceOnCheck ? 'Cocher ouvre la saisie du prix' : "Cocher, c'est tout"}
                                     checked={askPriceOnCheck}
                                     onToggle={() => onAskPriceOnCheckChange(!askPriceOnCheck)}
                                 />

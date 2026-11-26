@@ -4,8 +4,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { useNavigate } from 'react-router-dom';
 import { ConsolidatedIngredient, RecipeCard, ShoppingLayout } from '../../core/domain/shopping';
 import { ApiShoppingExtra, extrasToIngredients } from '../../core/logic/shopping/shoppingApiMapper';
-import { computeUncheckedCount, effectiveQuantity, remainingToBuy } from '../../core/logic/shopping/shoppingChecks';
-import { quickStockValue } from '../../core/logic/shopping/shoppingQuickStockLogic';
+import { computeUncheckedCount, effectiveQuantity, remainingToBuy, usesStockEntry } from '../../core/logic/shopping/shoppingChecks';
 import { isUnlinkedMealLine, recipesToFix } from '../../core/logic/shopping/shoppingUnlinkedLogic';
 import { recipeToBuilderState } from '../../core/logic/recipeBuilder/recipeBuilderMapper';
 import { useRecipeBuilderStore } from '../../shared/store/useRecipeBuilderStore';
@@ -16,7 +15,6 @@ import { PlaceFilter, filterIngredientsByPlace, placeFilterTitle } from '../../c
 import {
     groupIngredients,
     filterGroupedIngredients,
-    countCoveredByGroup,
 } from '../../core/logic/shopping/shoppingGrouping';
 import { buildRecipeCards } from '../../core/logic/shopping/shoppingRecipeCards';
 import { getShoppingListForDays, getBasesForDays } from '../../core/services/shoppingListService';
@@ -108,8 +106,8 @@ export const ShoppingModule = () => {
     const { foodBags } = useFreezerStock();
     const [layout, setLayout] = useState<ShoppingLayout>('aisles');
     const [showHousehold, setShowHousehold] = useState(false);
-    const mode = useShoppingModeStore((s) => s.mode);
-    const setMode = useShoppingModeStore((s) => s.setMode);
+    const view = useShoppingModeStore((s) => s.view);
+    const setView = useShoppingModeStore((s) => s.setView);
     const askPriceOnCheck = useShoppingModeStore((s) => s.askPriceOnCheck);
     const setAskPriceOnCheck = useShoppingModeStore((s) => s.setAskPriceOnCheck);
     const [placeFilter, setPlaceFilter] = useState<PlaceFilter>('all');
@@ -180,7 +178,6 @@ export const ShoppingModule = () => {
         toggleAtPlace,
         setAtPlaceForKeys,
         setStock,
-        setStocks,
         toggleSourceCheck,
         toggleSourceBatch,
         toggleFreezerBag,
@@ -231,8 +228,8 @@ export const ShoppingModule = () => {
     );
 
     const groupedItems = useMemo(
-        () => placeIngredients ? filterGroupedIngredients(placeIngredients, categoryOrder, mode, stocks, sourceChecked) : [],
-        [placeIngredients, categoryOrder, mode, stocks, sourceChecked]
+        () => placeIngredients ? filterGroupedIngredients(placeIngredients, categoryOrder, view, checked, stocks, sourceChecked) : [],
+        [placeIngredients, categoryOrder, view, checked, stocks, sourceChecked]
     );
 
     const shownHouseholdItems = useMemo(
@@ -247,11 +244,6 @@ export const ShoppingModule = () => {
     const estimate = useMemo(
         () => (foodPrices.store ? estimateCost(priceLines, foods, foodPrices.priceByFood) : null),
         [priceLines, foods, foodPrices]
-    );
-
-    const coveredByGroup = useMemo(
-        () => countCoveredByGroup(allGroupedItems, stocks, sourceChecked),
-        [allGroupedItems, stocks, sourceChecked]
     );
 
     const uncheckedCount = useMemo(
@@ -285,11 +277,6 @@ export const ShoppingModule = () => {
         });
     };
 
-    const handleQuickStock = (key: string) => {
-        const item = displayIngredients?.find((i) => i.key === key);
-        if (item) setStock(key, quickStockValue(item, stocks[key] ?? 0, sourceChecked)).catch(() => undefined);
-    };
-
     const quantityToPrice = (item: ConsolidatedIngredient) =>
         remainingToBuy(item, stocks, sourceChecked) || effectiveQuantity(item, sourceChecked);
 
@@ -299,7 +286,7 @@ export const ShoppingModule = () => {
 
     const handleToggleItem = (key: string) => {
         const item = displayIngredients?.find((i) => i.key === key);
-        const asksPrice = mode === 'store' && askPriceOnCheck && canEditPrices && !!foodPrices.store
+        const asksPrice = askPriceOnCheck && canEditPrices && !!foodPrices.store
             && !!item?.foodId && item.totalQuantity > 0 && !checked.has(key);
         toggleItem(key).then(() => {
             if (asksPrice) setPriceEntry({ key, inCart: true });
@@ -347,8 +334,8 @@ export const ShoppingModule = () => {
                     <ShoppingHeader
                         daysLabel={daysLabel}
                         remainingCount={hasList ? uncheckedCount : null}
-                        mode={mode}
-                        onModeChange={setMode}
+                        view={view}
+                        onViewChange={setView}
                         onAddExtra={currentPeriodId ? () => setExtraModal({ open: true, extra: null }) : null}
                         pills={filterPills}
                         estimate={hasList && estimate ? { total: estimate.total, missingCount: estimate.missing.length, onOpen: () => setShowEstimate(true) } : null}
@@ -421,22 +408,18 @@ export const ShoppingModule = () => {
                             hint={effectivePlaceFilter === 'place' ? "Ouvre le détail d'un article pour le marquer" : 'Tout est marqué comme à acheter sur place'}
                         />
                     ) : groupedItems.length === 0 && shownHouseholdItems.length === 0 ? (
-                        <ShoppingEmptyState title="Tout est couvert !" hint="Rien à acheter : tout est déjà à la maison" />
+                        <ShoppingEmptyState title="Tout est pris !" hint="Plus rien à acheter. Choisis « Tout » pour revoir la liste." />
                     ) : (
                         <ShoppingAislesView
                             allGroups={allGroupedItems}
                             groups={groupedItems}
                             colCount={colCount}
-                            mode={mode}
-                            coveredByGroup={coveredByGroup}
+                            view={view}
                             checked={checked}
                             stocks={stocks}
                             sourceChecked={sourceChecked}
                             householdItems={shownHouseholdItems}
                             onToggle={handleToggleItem}
-                            onOpenStock={setStockKey}
-                            onQuickStock={handleQuickStock}
-                            onStockAll={(updates) => { setStocks(updates).catch(() => undefined); }}
                             onOpenDetail={setDetailKey}
                             onManageHousehold={() => setShowHousehold(true)}
                         />
@@ -468,6 +451,7 @@ export const ShoppingModule = () => {
                     unlinked={isUnlinkedMealLine(detailItem)}
                     recipesToFix={recipesToFix(detailItem, recipes)}
                     onFixRecipe={isAdmin ? fixRecipe : null}
+                    onOpenStock={usesStockEntry(detailItem) ? () => { setDetailKey(null); setStockKey(detailItem.key); } : null}
                     onToggleAtPlace={toggleAtPlace}
                     onToggleSource={toggleSourceCheck}
                     onToggleBag={handleToggleFreezerBag}

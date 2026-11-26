@@ -37,7 +37,7 @@ export type ExtraShoppingLine = ShoppingLineCommon & { origin: "extra"; extraId:
 
 export type ConsolidatedIngredient = MealShoppingLine | ExtraShoppingLine;
 
-export type ShoppingMode = "home" | "store";
+export type ShoppingView = "all" | "toBuy";
 
 export type ShoppingLayout = "aisles" | "meals";
 

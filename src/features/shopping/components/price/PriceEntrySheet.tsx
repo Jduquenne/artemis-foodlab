@@ -87,7 +87,7 @@ export const PriceEntrySheet = ({
             {inCart && (
                 <p className="-mt-2 inline-flex items-center gap-1.5 text-xs font-bold text-orange-600">
                     <ShoppingCart className="w-3.5 h-3.5" />
-                    Dans le caddie
+                    Coché
                 </p>
             )}
             <div className="flex flex-col gap-2">

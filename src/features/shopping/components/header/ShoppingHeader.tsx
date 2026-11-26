@@ -1,23 +1,23 @@
 import { Plus } from 'lucide-react';
-import { ShoppingMode } from '../../../../core/domain/shopping';
+import { ShoppingView } from '../../../../core/domain/shopping';
 import { ActiveFilterPill, ActiveFilterPills } from './ActiveFilterPills';
 import { EstimateBadge, EstimateBadgeProps } from './EstimateBadge';
-import { ShoppingModeToggle } from './ShoppingModeToggle';
+import { ShoppingViewToggle } from './ShoppingViewToggle';
 import { ShoppingOptionsMenu, ShoppingOptionsMenuProps } from './ShoppingOptionsMenu';
 import { PageHeading } from '../../../../shared/components/layout/PageHeading';
 
 export interface ShoppingHeaderProps {
     daysLabel: string | null;
     remainingCount: number | null;
-    mode: ShoppingMode;
-    onModeChange: (mode: ShoppingMode) => void;
+    view: ShoppingView;
+    onViewChange: (view: ShoppingView) => void;
     onAddExtra: (() => void) | null;
     options: ShoppingOptionsMenuProps;
     pills: ActiveFilterPill[];
     estimate: EstimateBadgeProps | null;
 }
 
-export const ShoppingHeader = ({ daysLabel, remainingCount, mode, onModeChange, onAddExtra, options, pills, estimate }: ShoppingHeaderProps) => (
+export const ShoppingHeader = ({ daysLabel, remainingCount, view, onViewChange, onAddExtra, options, pills, estimate }: ShoppingHeaderProps) => (
     <div className="shrink-0 flex flex-col gap-3 lg:flex-row lg:flex-wrap lg:items-center lg:gap-x-6 lg:gap-y-2">
         <div className="flex items-center justify-between gap-2 lg:contents">
             <PageHeading
@@ -27,7 +27,7 @@ export const ShoppingHeader = ({ daysLabel, remainingCount, mode, onModeChange, 
                         {daysLabel ?? <span className="italic text-slate-400">Aucune période sélectionnée</span>}
                         {remainingCount !== null && (
                             <span className="text-orange-600 font-medium before:content-['·'] before:mx-1.5">
-                                {remainingCount} {mode === 'store' ? `restant${remainingCount !== 1 ? 's' : ''}` : 'à acheter'}
+                                {remainingCount} à acheter
                             </span>
                         )}
                         {estimate && <EstimateBadge {...estimate} />}
@@ -49,7 +49,7 @@ export const ShoppingHeader = ({ daysLabel, remainingCount, mode, onModeChange, 
             </div>
         </div>
         <div className="lg:order-1">
-            <ShoppingModeToggle mode={mode} onChange={onModeChange} />
+            <ShoppingViewToggle view={view} onChange={onViewChange} />
         </div>
         {pills.length > 0 && (
             <div className="lg:order-3 lg:basis-full">

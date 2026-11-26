@@ -1,22 +1,29 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { ShoppingMode } from "../../core/domain/shopping";
+import { ShoppingView } from "../../core/domain/shopping";
 
 interface ShoppingModeState {
-  mode: ShoppingMode;
+  view: ShoppingView;
   askPriceOnCheck: boolean;
-  setMode: (mode: ShoppingMode) => void;
+  setView: (view: ShoppingView) => void;
   setAskPriceOnCheck: (value: boolean) => void;
 }
 
 export const useShoppingModeStore = create<ShoppingModeState>()(
   persist(
     (set) => ({
-      mode: "home",
+      view: "all",
       askPriceOnCheck: false,
-      setMode: (mode) => set({ mode }),
+      setView: (view) => set({ view }),
       setAskPriceOnCheck: (askPriceOnCheck) => set({ askPriceOnCheck }),
     }),
-    { name: "cipe_shopping_mode", version: 1 }
+    {
+      name: "cipe_shopping_mode",
+      version: 2,
+      migrate: (persisted) => {
+        const askPriceOnCheck = typeof persisted === "object" && persisted !== null && "askPriceOnCheck" in persisted && persisted.askPriceOnCheck === true;
+        return { view: "all", askPriceOnCheck };
+      },
+    }
   )
 );

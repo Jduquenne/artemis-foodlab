@@ -1,70 +1,43 @@
 import { ChevronRight, Loader2 } from 'lucide-react';
-import { ConsolidatedIngredient, ShoppingMode } from '../../../../core/domain/shopping';
-import { homeStockState, shoppingRowQuantity } from '../../../../core/logic/shopping/shoppingRowLabel';
-import { usesHomeStock } from '../../../../core/logic/shopping/shoppingQuickStockLogic';
+import { ConsolidatedIngredient } from '../../../../core/domain/shopping';
+import { shoppingRowQuantity } from '../../../../core/logic/shopping/shoppingRowLabel';
 import { useAnyPendingKey } from '../../../../shared/hooks/useAnyPendingKey';
 import { CheckToggleIcon } from '../../../../shared/components/ui/CheckToggleIcon';
-import { HomeStockMarker } from './HomeStockMarker';
 
 export interface ShoppingItemRowProps {
     item: ConsolidatedIngredient;
-    mode: ShoppingMode;
     isChecked: boolean;
+    isDone: boolean;
     stock: number;
     sourceChecked: Set<string>;
     onToggle: (key: string) => void;
-    onOpenStock: (key: string) => void;
-    onQuickStock: (key: string) => void;
     onOpenDetail: (key: string) => void;
 }
 
 export const ShoppingItemRow = ({
     item,
-    mode,
     isChecked,
+    isDone,
     stock,
     sourceChecked,
     onToggle,
-    onOpenStock,
-    onQuickStock,
     onOpenDetail,
 }: ShoppingItemRowProps) => {
     const pending = useAnyPendingKey([`shopping-check:${item.key}`, `shopping-stock:${item.key}`]);
-    const usesStock = mode === 'home' && usesHomeStock(item);
-    const quantity = shoppingRowQuantity(item, mode, stock, sourceChecked);
-
-    const handlePrimary = () => {
-        if (pending) return;
-        if (usesStock) onOpenStock(item.key);
-        else onToggle(item.key);
-    };
-
-    const marker = pending
-        ? <Loader2 className="w-5 h-5 animate-spin text-orange-400 shrink-0" />
-        : usesStock
-            ? <HomeStockMarker state={homeStockState(item, stock, sourceChecked)} />
-            : <CheckToggleIcon checked={isChecked} className="w-5 h-5" checkedClassName="text-orange-500" />;
+    const quantity = shoppingRowQuantity(item, stock, sourceChecked);
 
     return (
-        <div className={`flex items-stretch border-t border-slate-200 first:border-t-0 ${isChecked ? 'opacity-50' : ''}`}>
-            {usesStock && (
-                <button
-                    type="button"
-                    onClick={() => { if (!pending) onQuickStock(item.key); }}
-                    aria-label={homeStockState(item, stock, sourceChecked) === 'full' ? `À acheter — ${item.name}` : `En stock — ${item.name}`}
-                    className="shrink-0 grid place-items-center pl-3 pr-1 hover:bg-subtle-tint transition-colors"
-                >
-                    {marker}
-                </button>
-            )}
+        <div className={`flex items-stretch border-t border-slate-200 first:border-t-0 ${isDone ? 'opacity-50' : ''}`}>
             <button
                 type="button"
-                onClick={handlePrimary}
-                aria-pressed={usesStock ? undefined : isChecked}
-                className={`flex-1 min-w-0 flex items-center gap-3 ${usesStock ? 'pl-2' : 'pl-3'} pr-1.5 py-2 min-h-13 text-left hover:bg-subtle-tint transition-colors lg:min-h-10 lg:py-1.5`}
+                onClick={() => { if (!pending) onToggle(item.key); }}
+                aria-pressed={isChecked}
+                className="flex-1 min-w-0 flex items-center gap-3 pl-3 pr-1.5 py-2 min-h-13 text-left hover:bg-subtle-tint transition-colors lg:min-h-10 lg:py-1.5"
             >
-                {!usesStock && marker}
-                <span className={`flex-1 min-w-0 text-[15px] font-semibold text-slate-900 truncate lg:text-sm ${isChecked ? 'line-through' : ''}`}>
+                {pending
+                    ? <Loader2 className="w-5 h-5 animate-spin text-orange-400 shrink-0" />
+                    : <CheckToggleIcon checked={isDone} className="w-5 h-5" checkedClassName="text-orange-500" />}
+                <span className={`flex-1 min-w-0 text-[15px] font-semibold text-slate-900 truncate lg:text-sm ${isDone ? 'line-through' : ''}`}>
                     {item.name}
                 </span>
                 {quantity.main && (

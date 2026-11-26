@@ -74,3 +74,7 @@ export function computeUncheckedCount(
   const householdUnchecked = householdItems.filter((i) => !checked.has(`household::${i.id}`)).length;
   return ingredientUnchecked + householdUnchecked;
 }
+
+export function usesStockEntry(ingredient: ConsolidatedIngredient): boolean {
+  return ingredient.totalQuantity > 0 && ingredient.origin !== "extra";
+}

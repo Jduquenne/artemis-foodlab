@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Link2Off, Loader2, Pencil, Trash2 } from 'lucide-react';
+import { Link2Off, Loader2, Package, Pencil, Trash2 } from 'lucide-react';
 import { RecipeToFix } from '../../../../core/logic/shopping/shoppingUnlinkedLogic';
 import { FreezerBag } from '../../../../core/domain/freezer';
 import { ConsolidatedIngredient, IngredientSource } from '../../../../core/domain/shopping';
@@ -28,6 +28,7 @@ export interface ShoppingItemSheetProps {
     unlinked: boolean;
     recipesToFix: RecipeToFix[];
     onFixRecipe: ((code: string) => void) | null;
+    onOpenStock: (() => void) | null;
     onClose: () => void;
 }
 
@@ -48,6 +49,7 @@ export const ShoppingItemSheet = ({
     unlinked,
     recipesToFix,
     onFixRecipe,
+    onOpenStock,
     onClose,
 }: ShoppingItemSheetProps) => {
     const extraId = item.origin === 'extra' ? item.extraId : null;
@@ -84,6 +86,16 @@ export const ShoppingItemSheet = ({
                         </button>
                     ))}
                 </div>
+            )}
+            {onOpenStock && (
+                <button
+                    type="button"
+                    onClick={onOpenStock}
+                    className="flex items-center justify-center gap-2 py-3 rounded-2xl border border-slate-200 bg-surface text-slate-700 font-bold"
+                >
+                    <Package className="w-4 h-4" />
+                    {stock > 0 ? "Modifier ce que j'ai déjà" : "J'en ai déjà…"}
+                </button>
             )}
             {freezerBags.length > 0 && (
                 <FreezerBagsSection bags={freezerBags} selectedBagIds={selectedBagIds} onToggleBag={onToggleBag} />

@@ -177,12 +177,6 @@ export function useShoppingPeriodChecks(
     return true;
   };
 
-  const setStocks = async (updates: readonly { key: string; value: number }[]): Promise<void> => {
-    for (const { key, value } of updates) {
-      if (!(await setStock(key, value))) return;
-    }
-  };
-
   const toggleSourceBatch = async (toggles: SourceToggle[], isChecked: boolean) => {
     if (!periodId) return;
     const requests = collectSourceCheckRequests(toggles, state.keyToFoodId, recipeApiIdOf);
@@ -242,7 +236,6 @@ export function useShoppingPeriodChecks(
     toggleAtPlace,
     setAtPlaceForKeys,
     setStock,
-    setStocks,
     toggleSourceCheck,
     toggleSourceBatch,
     toggleFreezerBag,

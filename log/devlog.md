@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — Shopping list: one list, « Tout / À acheter » (v6.170.41)
+- Owner: user feedback, people are lost with « À la maison / En magasin » and want to show or hide the checked items; modes merged (back to one list). Done: tap = check; done = checked or covered by stock / « déjà pris » (`isLineDone`), done lines last and greyed, done aisles fold; « Tout / À acheter » switch (`ShoppingViewToggle`, store v2, default Tout); partial stock from the detail sheet (« J'en ai déjà… »); price entry when checking applies to every check. Removed: `ShoppingModeToggle`, `HomeStockMarker`, `shoppingQuickStockLogic.ts` (quick stock of #84), `setStocks`, `countCoveredByGroup`. Next step: simplify the Options menu.
+- Test: tap lines → checked, go down, aisle folds when all done; « À acheter » → only what is left, household checked items hidden, « Tout est pris ! » when nothing left; detail sheet › J'en ai déjà… → partial stock, the line shows what is left; option « Saisir le prix en cochant » opens the price entry on check; Par repas unchanged.
+
 ## 2026-11-26 — Real payloads for D-080 and D-083 (v6.170.40)
 - API: D-081 / D-082 removed (commit `9cd0f4b`, not pushed; drop migration that aborts if a row exists), #106 nothing to remove, test suite 917/917. Real responses received: `PUT /planning-person-defaults` returns a bare array (the front expected `{ defaults }`: cause of the owner's save error); `PUT /shopping-periods/:id/days` returns the whole period with new day ids.
 - Done: `savePersonDefaults` reads the array; `updatePeriodDays` typed with `ApiShoppingPeriod` (the `unknown` of #82 is gone) and returns the days of the response, used by `useMenuStore`. `docs/api.md` updated, `TODO(owner)` of D-080 removed.

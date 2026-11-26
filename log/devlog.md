@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — #91 freeze a batch from the cooked meal (v6.170.32)
+- Done: on a recipe opened from a planned meal (strip « À cuisiner pour … », #88), a batch-cooking recipe offers « Mettre au congélateur » → `FreezeBatchSheet` (category, portions or grams, quantity prefilled with the portions) → batch created through `addItemToCategory`. Placed there rather than in the planning cell menus (no prop chain through the slot components; it is where the user is right after cooking). **Lot 4 done** (#88, #89, #72, #98, #91).
+- Test: plan a batch-cooking recipe, open it from the planning or Aujourd'hui → « Mettre au congélateur » → pick a category, 4 portions → notification, the batch shows in that freezer category; grams option; no freezer category → link to the freezer; a non-batch recipe → no button.
+
 ## 2026-11-26 — Meal times on Today, journal shortcut removed (v6.170.31)
 - Owner: the journal « Ce soir » shortcut duplicates the Today tiles → removed (`NextMealLink`, `nextMealLogic.ts`, `NEXT_MEAL_END_HOURS` deleted; `weekKeyOf` moved to `core/utils/weekUtils.ts`). Meal times set by the user (on the device, owner choice): start / end per period, shown on the tiles, a tile turns grey once its end is past; « Horaires » → `MealTimesSheet`.
 - Test: Aujourd'hui shows « 12h – 14h » on the lunch tile; after 14h it is grey with « terminé »; Horaires → change dinner to 19h30–21h → saved after reload; end before start → error, Enregistrer disabled; « Par défaut » restores; the journal no longer shows « Ce soir ».

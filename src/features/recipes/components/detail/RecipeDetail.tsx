@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight, ChefHat } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, ChefHat, Snowflake } from 'lucide-react';
 import { useFoodsSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 import { calculateRecipeMacros } from '../../../../core/logic/nutrition/macroLogic';
 import { getLinkedBases, getCategoryRecipeIds } from '../../../../core/logic/recipe/recipeListLogic';
@@ -24,6 +24,8 @@ import { useMediaSrc } from '../../../../shared/hooks/useMediaSrc';
 import { useMediaStore } from '../../../../shared/store/useMediaStore';
 import { mealContextLabel, parseMealContext } from '../../../../core/logic/planning/mealContextLogic';
 import { CookingModeView } from '../cooking/CookingModeView';
+import { FreezeBatchSheet } from './FreezeBatchSheet';
+import { isBatchCookable } from '../../../../core/domain/recipePredicates';
 
 export const RecipeDetail = () => {
   const { recipeId } = useParams();
@@ -39,6 +41,7 @@ export const RecipeDetail = () => {
   const portionsParam = searchParams.get('portions');
   const mealContext = parseMealContext(searchParams.get('meal'));
   const [cooking, setCooking] = useState(false);
+  const [freezing, setFreezing] = useState(false);
   const { isLeaving, goBack } = useModalBack(
     categoryId ? `/recipes/category/${categoryId}` : '/recipes',
   );
@@ -140,6 +143,12 @@ export const RecipeDetail = () => {
             <span className="font-bold text-orange-600">{mealContextLabel(mealContext)}</span>
             <span className="text-slate-500"> · quantités pour {portions} portion{portions > 1 ? 's' : ''}</span>
           </span>
+          {isBatchCookable(recipe) && (
+            <button type="button" onClick={() => setFreezing(true)} className="ml-auto shrink-0 flex items-center gap-1 text-xs font-bold text-sky-600 hover:text-sky-700">
+              <Snowflake className="w-3.5 h-3.5" />
+              Mettre au congélateur
+            </button>
+          )}
         </p>
       )}
 
@@ -217,6 +226,8 @@ export const RecipeDetail = () => {
           )}
         </div>
       )}
+
+      {freezing && <FreezeBatchSheet recipe={recipe} portions={portions} onClose={() => setFreezing(false)} />}
 
       {cooking && (
         <CookingModeView recipe={recipe} portions={portions} instructionsPhotoUrl={instructionsPhotoUrl} onClose={() => setCooking(false)} />

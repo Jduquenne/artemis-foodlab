@@ -6,6 +6,9 @@ import { ConsolidatedIngredient, RecipeCard, ShoppingLayout } from '../../core/d
 import { ApiShoppingExtra, extrasToIngredients } from '../../core/logic/shopping/shoppingApiMapper';
 import { computeUncheckedCount, effectiveQuantity, remainingToBuy } from '../../core/logic/shopping/shoppingChecks';
 import { quickStockValue } from '../../core/logic/shopping/shoppingQuickStockLogic';
+import { isUnlinkedMealLine, recipesToFix } from '../../core/logic/shopping/shoppingUnlinkedLogic';
+import { recipeToBuilderState } from '../../core/logic/recipeBuilder/recipeBuilderMapper';
+import { useRecipeBuilderStore } from '../../shared/store/useRecipeBuilderStore';
 import { FoodPrice } from '../../core/domain/price';
 import { updateMe } from '../../core/services/authService';
 import { buildShoppingClipboardText } from '../../core/logic/shopping/shoppingClipboard';
@@ -117,6 +120,13 @@ export const ShoppingModule = () => {
     const foodPrices = useFoodPrices();
     const setUser = useAuthStore((s) => s.setUser);
     const isAdmin = useIsAdmin();
+    const loadBuilderRecipe = useRecipeBuilderStore((s) => s.loadFromRecipe);
+    const fixRecipe = (code: string) => {
+        const recipe = recipes[code];
+        if (!recipe) return;
+        loadBuilderRecipe(recipeToBuilderState(code, recipe));
+        navigate('/recipe-builder');
+    };
     const isDemo = useIsDemo();
     const canEditPrices = isAdmin && !isDemo;
     const [stockKey, setStockKey] = useState<string | null>(null);
@@ -451,6 +461,9 @@ export const ShoppingModule = () => {
                             onDelete={() => setPriceToDelete(foodPrices.priceByFood.get(detailItem.foodId ?? '') ?? null)}
                         />
                     ) : null}
+                    unlinked={isUnlinkedMealLine(detailItem)}
+                    recipesToFix={recipesToFix(detailItem, recipes)}
+                    onFixRecipe={isAdmin ? fixRecipe : null}
                     onToggleAtPlace={toggleAtPlace}
                     onToggleSource={toggleSourceCheck}
                     onToggleBag={handleToggleFreezerBag}

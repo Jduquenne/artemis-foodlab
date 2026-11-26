@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
-import { Loader2, Pencil, Trash2 } from 'lucide-react';
+import { Link2Off, Loader2, Pencil, Trash2 } from 'lucide-react';
+import { RecipeToFix } from '../../../../core/logic/shopping/shoppingUnlinkedLogic';
 import { FreezerBag } from '../../../../core/domain/freezer';
 import { ConsolidatedIngredient, IngredientSource } from '../../../../core/domain/shopping';
 import { groupAndSortSources } from '../../../../core/logic/shopping/shoppingRecipeCards';
@@ -24,6 +25,9 @@ export interface ShoppingItemSheetProps {
     onToggleBag: (bagId: string) => void;
     onEditExtra: (extraId: string) => void;
     onDeleteExtra: (extraId: string) => Promise<boolean>;
+    unlinked: boolean;
+    recipesToFix: RecipeToFix[];
+    onFixRecipe: ((code: string) => void) | null;
     onClose: () => void;
 }
 
@@ -41,6 +45,9 @@ export const ShoppingItemSheet = ({
     onToggleBag,
     onEditExtra,
     onDeleteExtra,
+    unlinked,
+    recipesToFix,
+    onFixRecipe,
     onClose,
 }: ShoppingItemSheetProps) => {
     const extraId = item.origin === 'extra' ? item.extraId : null;
@@ -59,6 +66,24 @@ export const ShoppingItemSheet = ({
                 <p className="text-sm text-amber-600 bg-amber-50 dark:bg-amber-900/20 rounded-2xl px-3.5 py-2.5">
                     À préciser : l'aliment n'a pas été choisi pour ce repas.
                 </p>
+            )}
+            {unlinked && (
+                <div className="flex flex-col gap-2 text-sm text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 rounded-2xl px-3.5 py-2.5">
+                    <p className="flex items-start gap-2">
+                        <Link2Off className="w-4 h-4 mt-0.5 shrink-0" />
+                        <span>Cet ingrédient n'est relié à aucun aliment du catalogue : pas de coche par repas, pas de stock ni de prix.</span>
+                    </p>
+                    {onFixRecipe && recipesToFix.map((recipe) => (
+                        <button
+                            key={recipe.code}
+                            type="button"
+                            onClick={() => onFixRecipe(recipe.code)}
+                            className="self-start text-xs font-bold text-orange-600 hover:text-orange-700 underline underline-offset-2"
+                        >
+                            Corriger « {recipe.name} » dans le Recipe Builder
+                        </button>
+                    ))}
+                </div>
             )}
             {freezerBags.length > 0 && (
                 <FreezerBagsSection bags={freezerBags} selectedBagIds={selectedBagIds} onToggleBag={onToggleBag} />

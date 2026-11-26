@@ -1,10 +1,11 @@
 import { useState, useMemo } from "react";
-import { ArrowLeft, Plus, Pencil, Snowflake } from "lucide-react";
+import { ArrowLeft, Plus, Pencil, Snowflake, Sparkles, Loader2 } from "lucide-react";
 import { BatchFreezerItem, FreezerCategory, FreezerItem } from "../../../../core/domain/freezer";
-import { isPlannedBatch } from "../../../../core/domain/freezerPredicates";
+import { isExhaustedBatch, isPlannedBatch } from "../../../../core/domain/freezerPredicates";
+import { usePendingKey } from "../../../../shared/hooks/usePendingKey";
 import { plannedBatchDeleteConsequence } from "../../../../core/logic/freezer/batchQuantityLogic";
 import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
-import { removeItemFromCategory, updateCategoryName } from "../../../../core/services/freezerService";
+import { removeItemFromCategory, removeItemsFromCategory, updateCategoryName } from "../../../../core/services/freezerService";
 import { FreezerItemRow } from "../item/FreezerItemRow";
 import { AddFreezerItemModal } from "../modal/AddFreezerItemModal";
 import { InlineNameEditor } from "../InlineNameEditor";
@@ -42,6 +43,16 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
     () => distributeFreezerItemsToColumns(category.items, colCount),
     [category.items, colCount]
   );
+
+  const exhaustedIds = useMemo(
+    () => category.items.filter(isExhaustedBatch).map((item) => item.id),
+    [category.items]
+  );
+  const cleanKey = `freezer-clean-exhausted:${category.id}`;
+  const cleaning = usePendingKey(cleanKey);
+  const removeExhausted = () => {
+    withPending(cleanKey, () => removeItemsFromCategory(category.id, exhaustedIds)).catch(() => undefined);
+  };
 
   const existingFoodNames = useMemo(
     () => category.items.filter(i => i.type === "food").map(i => i.name),
@@ -89,6 +100,18 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
           {category.items.length} {category.items.length === 1 ? "article" : "articles"}
         </span>
       </div>
+
+      {exhaustedIds.length > 0 && (
+        <button
+          type="button"
+          onClick={removeExhausted}
+          disabled={cleaning}
+          className="shrink-0 self-start flex items-center gap-2 px-3 py-1.5 rounded-xl bg-muted text-xs font-bold text-slate-500 hover:text-orange-600 transition-colors disabled:opacity-50"
+        >
+          {cleaning ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5" />}
+          Retirer les lots épuisés ({exhaustedIds.length})
+        </button>
+      )}
 
       <div className="flex-1 min-h-0 overflow-y-auto" onScroll={markScrolling}>
         {category.items.length === 0 ? (

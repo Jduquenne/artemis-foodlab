@@ -209,3 +209,7 @@ export const updateBatchQuantity = async (
     ),
   }));
 };
+
+export const removeItemsFromCategory = async (categoryId: string, itemIds: readonly string[]): Promise<void> => {
+  for (const itemId of itemIds) await removeItemFromCategory(categoryId, itemId);
+};

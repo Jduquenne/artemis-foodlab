@@ -23,7 +23,7 @@ export const TodayMealsCard = ({ title, meals, emptyText }: TodayMealsCardProps)
             {meals.length === 0 ? (
                 <p className="text-sm text-slate-400 italic">{emptyText}</p>
             ) : (
-            <div className="flex flex-col gap-3 md:grid md:grid-cols-4 md:min-h-0">
+            <div className="flex flex-col gap-3 md:grid md:grid-cols-4 md:min-h-0 tablet:grid-cols-2">
             {meals.map((meal) => (
                 <div key={meal.slot} className="flex flex-col gap-1 min-w-0">
                     <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400">{SLOT_LABELS[meal.slot]}</span>

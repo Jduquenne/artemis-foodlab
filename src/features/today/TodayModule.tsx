@@ -45,12 +45,12 @@ export const TodayModule = () => {
                 <PageHeading title="Aujourd'hui" subtitle={<span className="first-letter:uppercase inline-block">{formatToday(now)}</span>} />
             </div>
 
-            <div className="flex-1 min-h-0 overflow-y-auto md:overflow-hidden flex flex-col gap-4 pb-4 md:pb-0 md:grid md:grid-cols-3 md:grid-rows-[minmax(0,3fr)_minmax(0,2fr)]">
-                <div className="md:col-span-2 min-h-0">
+            <div className="flex-1 min-h-0 overflow-y-auto md:overflow-hidden flex flex-col gap-4 pb-4 md:pb-0 md:grid md:grid-cols-3 md:grid-rows-[minmax(0,3fr)_minmax(0,2fr)] tablet:grid-cols-2 tablet:grid-rows-[minmax(0,5fr)_auto_minmax(0,3fr)]">
+                <div className="shrink-0 md:shrink md:min-h-0 md:col-span-2">
                     <TodayHeroCard meals={todayMeals} />
                 </div>
 
-                <div className="flex flex-col gap-4 min-h-0">
+                <div className="shrink-0 md:shrink md:min-h-0 flex flex-col gap-4 tablet:col-span-2 tablet:grid tablet:grid-cols-2">
                     <TodayNutritionCard
                         profileName={activeProfile?.name ?? null}
                         macros={macros}
@@ -61,7 +61,7 @@ export const TodayModule = () => {
                     <button
                         type="button"
                         onClick={() => navigate('/shopping')}
-                        className="shrink-0 bg-surface border border-slate-200 rounded-2xl shadow-sm p-4 flex items-center gap-3 text-left hover:border-orange-300 transition-colors"
+                        className="shrink-0 bg-surface border border-slate-200 rounded-2xl shadow-sm p-4 flex items-center gap-3 text-left hover:border-orange-300 transition-colors tablet:self-start"
                     >
                         <ShoppingCart className="w-5 h-5 text-orange-500 shrink-0" />
                         <span className="flex-1 min-w-0 text-sm font-semibold text-slate-700">
@@ -73,7 +73,7 @@ export const TodayModule = () => {
                     </button>
                 </div>
 
-                <div className="md:col-span-3 min-h-0 md:overflow-y-auto">
+                <div className="shrink-0 md:shrink md:min-h-0 md:col-span-3 md:overflow-y-auto tablet:col-span-2">
                     <TodayMealsCard title="Demain" meals={tomorrowMeals} emptyText="Rien de prévu demain." />
                 </div>
             </div>

@@ -16,6 +16,9 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — Today on phones and portrait tablet (v6.170.29)
+- Owner: « la version mobile ne va pas du tout, ainsi que la version tablette ». Causes found in the code (no browser check): on phones the stacked blocks carried `min-h-0` inside a scrolling flex column, so they shrank instead of scrolling; on a portrait tablet (820 px) the 3-column desktop bento left about 250 px for the right column. Fix: `shrink-0` on phones (`md:shrink md:min-h-0` above), tiles 2 per row (8 rem, 10 rem from `sm:`), smaller tile text on phones; `tablet:` layout 2 columns (tiles full width, journal and shopping side by side, tomorrow full width in 2 columns). Test: 360 × 640, 390 × 844, iPad Air 820 × 1180 portrait, desktop: nothing squashed, no horizontal scroll, desktop unchanged.
+
 ## 2026-11-26 — Page heading aligned on every screen (v6.170.28)
 - Owner: titles not aligned when switching screens (line height, subtitle size, gap under the header, freezer title smaller on tablet, header row height). Done: `PageHeading` (title + mandatory subtitle, same classes) on the 9 main screens and sub-screens; freezer and categories show their count as subtitle; root gap 16 px (Journal and Shopping were 12 px; Planning 8 px on phones, 16 px from `sm:`); planning week subtitle now regular weight like the others. `docs/ui-design.md` § Page heading. Test: switch quickly between Aujourd'hui, Journal, Menu, Recettes, Courses, Congélateur on desktop, tablet and phone: the title stays at the same place and size; freezer rename still works; recipe category count shown.
 

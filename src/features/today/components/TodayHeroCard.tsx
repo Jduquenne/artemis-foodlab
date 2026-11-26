@@ -16,12 +16,12 @@ export const TodayHeroCard = ({ meals }: TodayHeroCardProps) => {
     const items = usePlannableSnapshot();
 
     return (
-        <section className="bg-surface border border-slate-200 rounded-2xl shadow-sm p-4 flex flex-col gap-3 min-h-0 md:h-full">
+        <section className="bg-surface border border-slate-200 rounded-2xl shadow-sm p-4 flex flex-col gap-3 md:min-h-0 md:h-full">
             <h2 className="text-xs font-black uppercase tracking-widest text-orange-600 shrink-0">Au menu aujourd'hui</h2>
             {meals.length === 0 ? (
                 <p className="text-sm text-slate-400 italic">Rien de prévu aujourd'hui.</p>
             ) : (
-                <div className={`grid gap-3 flex-1 min-h-0 grid-cols-1 sm:grid-cols-2 auto-rows-[10rem] md:auto-rows-auto ${meals.length > 2 ? 'md:grid-rows-2' : 'md:grid-rows-1'}`}>
+                <div className={`grid gap-3 grid-cols-2 auto-rows-[8rem] sm:auto-rows-[10rem] md:flex-1 md:min-h-0 md:auto-rows-auto ${meals.length > 2 ? 'md:grid-rows-2' : 'md:grid-rows-1'}`}>
                     {meals.map((meal) => {
                         const main = meal.entries.find((entry) => !entry.isDessert) ?? meal.entries[0];
                         if (!main) return null;
@@ -35,11 +35,11 @@ export const TodayHeroCard = ({ meals }: TodayHeroCardProps) => {
                                 className="relative min-h-0 rounded-2xl overflow-hidden bg-muted text-left group"
                             >
                                 <AsyncImage asset={items[main.code]?.assets?.mealPhoto} alt={main.name} fill className="object-cover transition-transform duration-300 group-hover:scale-105" />
-                                <span className="absolute inset-x-0 bottom-0 flex flex-col gap-0.5 p-3 bg-black/55 text-white">
-                                    <span className="text-[11px] font-black uppercase tracking-widest text-orange-300">
+                                <span className="absolute inset-x-0 bottom-0 flex flex-col gap-0.5 p-2 sm:p-3 bg-black/55 text-white">
+                                    <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-widest text-orange-300 truncate">
                                         {SLOT_LABELS[meal.slot]}{main.persons !== undefined && ` · ${main.persons} pers.`}
                                     </span>
-                                    <span className="text-base font-black leading-tight line-clamp-2">
+                                    <span className="text-sm sm:text-base font-black leading-tight line-clamp-2">
                                         {meal.entries.filter((entry) => !entry.isDessert).map((entry) => entry.name).join(', ') || main.name}
                                     </span>
                                     {desserts.length > 0 && (

@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — Meal times on Today, journal shortcut removed (v6.170.31)
+- Owner: the journal « Ce soir » shortcut duplicates the Today tiles → removed (`NextMealLink`, `nextMealLogic.ts`, `NEXT_MEAL_END_HOURS` deleted; `weekKeyOf` moved to `core/utils/weekUtils.ts`). Meal times set by the user (on the device, owner choice): start / end per period, shown on the tiles, a tile turns grey once its end is past; « Horaires » → `MealTimesSheet`.
+- Test: Aujourd'hui shows « 12h – 14h » on the lunch tile; after 14h it is grey with « terminé »; Horaires → change dinner to 19h30–21h → saved after reload; end before start → error, Enregistrer disabled; « Par défaut » restores; the journal no longer shows « Ce soir ».
+
 ## 2026-11-26 — Today without macros, thaw reminders for tomorrow (D-052, #98, v6.170.30)
 - Owner: « Aujourd'hui » looked like the journal; roles decided (D-052): Aujourd'hui = the day at a glance, actions only; Journal = macros and fine adjustments. Done: macro card removed (`TodayNutritionCard` deleted); #98 « À sortir pour demain » (`TodayThawCard`, `thawReminders`): frozen base batches linked to tomorrow's meals, then freezer foods used by tomorrow's recipes; dish batches planned with « Ajouter au menu » are not linked, so not reminded.
 - Open question for the owner: the journal « Ce soir : … » shortcut (#90) is an action; keep it in the journal or remove it now that Aujourd'hui is the home?

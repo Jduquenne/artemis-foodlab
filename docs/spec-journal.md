@@ -4,7 +4,7 @@ Daily macro tracking per profile, based on the meals planned in the Menu. Profil
 
 ## Day view
 
-- **Next meal shortcut** (issue #90): under the day navigation, `NextMealLink` (`shared/components/ui/`) shows « Ce soir : Lasagnes › » for the next planned meal from now (`findNextMeal`, `core/logic/planning/nextMealLogic.ts`: today's slots in order, a slot is past after `NEXT_MEAL_END_HOURS` (breakfast 10 h, lunch 14 h, snack 17 h, dinner 22 h), else tomorrow, ISO week change included; first catalogue recipe of the slot, outdoor activities skipped) and opens the recipe with the slot persons (`buildRecipeDetailUrl`). Hidden when nothing is planned. Independent of the day shown in the journal.
+- The former « Ce soir : … » shortcut (issue #90) was removed on 2026-11-26 (D-052: actions live on « Aujourd'hui », whose meal tiles open the recipes).
 
 - Macros of the day for the **active profile**, against its targets (`MacroSummary`, with `ProfileSwitcher` in its header).
 - Per planned meal, portion (stepper) or grams override for the whole meal (`RecipePortionRow`). Next to the stepper, « −25 % » / « +25 % » (issue #94) change the portions by a quarter of the reference portion (`nudgeJournalPortions`, `portionStepLogic.ts`: 2-decimal result, never under a quarter of the reference nor above `maxJournalPortions`), same `setPortionOverride` path and pending key as the stepper. The stepper uses `withPending`. The grams field and the per-ingredient fields (`IngredientOverrideRow`) are `DecimalInput`s that **save once, on blur or Enter** (never on each keystroke: concurrent saves could land out of order); while typing, a local draft is shown.

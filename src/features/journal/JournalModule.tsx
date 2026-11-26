@@ -13,7 +13,6 @@ import { markScrolling } from "../../shared/utils/scrollGuard";
 import { DayNav } from "./components/DayNav";
 import { MacroSummary } from "./components/MacroSummary";
 import { MealSlotCard } from "./components/slot/MealSlotCard";
-import { NextMealLink } from "../../shared/components/ui/NextMealLink";
 
 const SLOT_ORDER = ["breakfast", "lunch", "snack", "dinner"] as const;
 
@@ -78,7 +77,6 @@ export const JournalModule = () => {
   return (
     <div className="h-full flex flex-col gap-4 overflow-hidden">
       <DayNav date={selectedDate} onPrev={goToPrev} onNext={goToNext} />
-      <NextMealLink />
 
       {isLoading ? (
         <div className="flex-1 flex items-center justify-center">

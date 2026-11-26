@@ -24,6 +24,8 @@ export const formatWeeksAgo = (weeks: number | null): string => {
   return months < 12 ? `il y a ${months} mois` : `il y a ${Math.round(months / 12)} an${months >= 24 ? "s" : ""}`;
 };
 
+export const weekKeyOf = (date: Date): { year: number; week: number } => ({ year: getISOWeekYear(date), week: getISOWeek(date) });
+
 export const getMonday = (d: Date) => {
   const date = new Date(d);
   const day = date.getDay();

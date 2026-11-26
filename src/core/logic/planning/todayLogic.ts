@@ -1,8 +1,7 @@
 import { MealSlot, SlotType } from "../../domain/planning";
 import { MEAL_SLOTS } from "../../domain/planningConfig";
 import { PlannableItem } from "../../domain/recipe";
-import { dayNameOf } from "../../utils/weekUtils";
-import { weekKeyOf } from "./nextMealLogic";
+import { dayNameOf, weekKeyOf } from "../../utils/weekUtils";
 
 export interface TodayEntry {
   code: string;

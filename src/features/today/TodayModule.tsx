@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { addDays } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import { ChevronRight, ShoppingCart } from 'lucide-react';
-import { weekKeyOf } from '../../core/logic/planning/nextMealLogic';
+import { weekKeyOf } from '../../core/utils/weekUtils';
 import { plannedMealsOn, slotsOfDay } from '../../core/logic/planning/todayLogic';
 import { thawReminders } from '../../core/logic/freezer/thawLogic';
 import { usePlannedWeek } from '../../shared/hooks/usePlannedWeek';
@@ -43,7 +43,7 @@ export const TodayModule = () => {
 
             <div className="flex-1 min-h-0 overflow-y-auto md:overflow-hidden flex flex-col gap-4 pb-4 md:pb-0 md:grid md:grid-cols-3 md:grid-rows-[minmax(0,3fr)_minmax(0,2fr)] tablet:grid-cols-2 tablet:grid-rows-[minmax(0,5fr)_minmax(0,2fr)_minmax(0,3fr)]">
                 <div className="shrink-0 md:shrink md:min-h-0 md:col-span-2">
-                    <TodayHeroCard meals={todayMeals} />
+                    <TodayHeroCard meals={todayMeals} now={now} />
                 </div>
 
                 <div className="shrink-0 md:shrink md:min-h-0 flex flex-col gap-4 tablet:col-span-2 tablet:grid tablet:grid-cols-2">

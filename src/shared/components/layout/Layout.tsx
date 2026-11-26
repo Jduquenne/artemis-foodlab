@@ -6,6 +6,7 @@ import { BarChart3, ChefHat } from 'lucide-react';
 import { SidebarLogo } from './SidebarLogo';
 import { SidebarNav } from './SidebarNav';
 import { SettingsPopover } from './SettingsPopover';
+import { ProfileQuickSwitch } from './ProfileQuickSwitch';
 import { NewsButton } from './NewsButton';
 import { DemoBanner } from './DemoBanner';
 import { useNewsStore } from '../../store/useNewsStore';
@@ -44,6 +45,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
           {isAdmin && (
             <SidebarLink to="/dashboard" label="Dashboard" icon={<BarChart3 className="w-5 h-5" />} active={location.pathname.startsWith('/dashboard')} />
           )}
+          <ProfileQuickSwitch />
           <NewsButton hasNew={hasNew} onOpen={handleOpenNews} />
           <SettingsPopover />
         </div>

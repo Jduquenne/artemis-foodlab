@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — Legacy import removal live in prod (docs, v6.170.2)
+- Owner: front v6.170.0 / v6.170.1 and API D-079 in prod. D-049, `docs/api.md` § Import (removed) and the roadmap idea updated; option A done.
+- Still open: API commit hashes `TODO(owner)` for D-068, D-078 and D-079; owner actions in the roadmap (legal pages, food rename backfill, `.claude/settings.local.json`, font licences); #50 once the Leclerc receipts (CSV) arrive.
+
 ## 2026-11-26 — Legacy import removed on the API side (API D-079, docs, v6.170.1)
 - Owner chose to remove the CLI import too (front recommendation). API session: D-079 implemented, **not live yet**: `POST /import` (route, controller, 2 MB limit, `limitImport`, `syncPayloadV3Schema`, service, repository), the CLI import `npm run import:user-data`, the D-075 import guard `foodName.ts`, their tests and docs. Kept: imported data, `releaseFrozenChoices`, `scripts/remapFreezerFoodCodes.ts`. Once live: 404 `NOT_FOUND` « Cette route n'existe pas. ».
 - Docs: `docs/api.md` § Import (removed), D-049 status, roadmap idea.

@@ -127,7 +127,7 @@ A separate Claude Code session owns `meals-planning-api` (sibling repo). Collabo
 
 ## Import (removed)
 
-Legacy `POST /import` (`SyncPayload` v3) is **removed** (front D-049, v6.170.0; API D-079, **not live yet**, commit hash `TODO(owner)`). Removed on the API side: the route, its controller, 2 MB body limit and rate limit (`limitImport`), `syncPayloadV3Schema`, the import service and repository, the CLI import (`npm run import:user-data`) and the D-075 import guard (`foodName.ts`). Kept: the data already imported (no migration), `releaseFrozenChoices` (planning writes), `scripts/remapFreezerFoodCodes.ts` (D-075 prod data fix tool). Once live, `POST /import` answers 404 with or without a token: `{"error":{"code":"NOT_FOUND","message":"Cette route n'existe pas."}}`. Former contract: see git history of this file and `docs/decisions.md` D-028.
+Legacy `POST /import` (`SyncPayload` v3) is **removed** (front D-049, v6.170.0; API D-079, **live in prod** 2026-11-26 (owner), commit hash `TODO(owner)`). Removed on the API side: the route, its controller, 2 MB body limit and rate limit (`limitImport`), `syncPayloadV3Schema`, the import service and repository, the CLI import (`npm run import:user-data`) and the D-075 import guard (`foodName.ts`). Kept: the data already imported (no migration), `releaseFrozenChoices` (planning writes), `scripts/remapFreezerFoodCodes.ts` (D-075 prod data fix tool). `POST /import` now answers 404 with or without a token: `{"error":{"code":"NOT_FOUND","message":"Cette route n'existe pas."}}`. Former contract: see git history of this file and `docs/decisions.md` D-028.
 
 ## Users (admin)
 

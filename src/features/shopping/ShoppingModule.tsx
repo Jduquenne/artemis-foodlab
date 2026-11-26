@@ -42,14 +42,12 @@ import { ShoppingEmptyState } from './components/ShoppingEmptyState';
 import { HouseholdPanel } from './components/household/HouseholdPanel';
 import { AddExtraModal } from './components/AddExtraModal';
 import { ShoppingHeader } from './components/header/ShoppingHeader';
-import { ActiveFilterPill } from './components/header/ActiveFilterPills';
 import { useShoppingModeStore } from '../../shared/store/useShoppingModeStore';
 import { useNotificationStore } from '../../shared/store/useNotificationStore';
 import { useRefreshStore } from '../../shared/store/useRefreshStore';
 import { useFoodsSnapshot, useHouseholdSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
 import { useProfileStore } from '../../shared/store/useProfileStore';
 import { useAccompanimentStore } from '../../shared/store/useAccompanimentStore';
-import { shoppingFilterPills } from '../../core/logic/shopping/shoppingFilterPills';
 import { formatBagDate } from '../../core/utils/dateUtils';
 import { estimateCost } from '../../core/logic/price/priceLogic';
 import { shoppingLinesToPrice } from '../../core/logic/shopping/shoppingPriceLines';
@@ -64,6 +62,7 @@ import { ConfirmActionModal } from '../../shared/components/ui/ConfirmActionModa
 import { PriceSection } from './components/price/PriceSection';
 import { PriceEntrySheet } from './components/price/PriceEntrySheet';
 import { PriceStoresSheet } from './components/price/PriceStoresSheet';
+import { PriceSettingsSheet } from './components/price/PriceSettingsSheet';
 import { PageHeading } from '../../shared/components/layout/PageHeading';
 import { usePersonDefaultsStore } from '../../shared/store/usePersonDefaultsStore';
 
@@ -117,6 +116,7 @@ export const ShoppingModule = () => {
     const [priceEntry, setPriceEntry] = useState<{ key: string; inCart: boolean } | null>(null);
     const [priceToDelete, setPriceToDelete] = useState<FoodPrice | null>(null);
     const [showPriceStores, setShowPriceStores] = useState(false);
+    const [showPriceSettings, setShowPriceSettings] = useState(false);
     const [showEstimate, setShowEstimate] = useState(false);
     const foodPrices = useFoodPrices();
     const setUser = useAuthStore((s) => s.setUser);
@@ -308,13 +308,6 @@ export const ShoppingModule = () => {
         );
 
     const hasList = !!ingredients && shoppingDays.length > 0;
-    const filterPills: ActiveFilterPill[] = shoppingFilterPills(effectivePlaceFilter, placeName, layout).map((pill) => ({
-        key: pill.kind,
-        label: pill.label,
-        clearLabel: pill.clearLabel,
-        onClear: pill.kind === 'place' ? () => setPlaceFilter('all') : () => setLayout('aisles'),
-    }));
-
     return (
         <>
             <div className="h-full flex flex-col gap-4 overflow-hidden">
@@ -337,21 +330,14 @@ export const ShoppingModule = () => {
                         view={view}
                         onViewChange={setView}
                         onAddExtra={currentPeriodId ? () => setExtraModal({ open: true, extra: null }) : null}
-                        pills={filterPills}
+                        layout={layout}
+                        onLayoutChange={setLayout}
+                        placeName={placeName}
+                        placeFilter={effectivePlaceFilter}
+                        onPlaceFilterChange={setPlaceFilter}
                         estimate={hasList && estimate ? { total: estimate.total, missingCount: estimate.missing.length, onOpen: () => setShowEstimate(true) } : null}
                         options={{
-                            placeName,
-                            placeFilter: effectivePlaceFilter,
-                            onPlaceFilterChange: setPlaceFilter,
-                            layout,
-                            onLayoutChange: setLayout,
-                            hasActiveFilter: filterPills.length > 0,
-                            priceStores: foodPrices.stores,
-                            activePriceStoreId: foodPrices.store?.id ?? null,
-                            onPriceStoreChange: selectPriceStore,
-                            onManagePriceStores: canEditPrices ? () => setShowPriceStores(true) : null,
-                            askPriceOnCheck: canEditPrices && foodPrices.store ? askPriceOnCheck : null,
-                            onAskPriceOnCheckChange: setAskPriceOnCheck,
+                            onOpenPriceSettings: foodPrices.stores.length > 0 || canEditPrices ? () => setShowPriceSettings(true) : null,
                             onOpenHousehold: () => setShowHousehold(true),
                             onOpenAisleOrder: () => setShowCategoryOrder(true),
                             onOpenPriceCalc: () => setShowPriceCalc(true),
@@ -490,6 +476,18 @@ export const ShoppingModule = () => {
                     danger
                     onConfirm={() => confirmDeletePrice(priceToDelete)}
                     onCancel={() => setPriceToDelete(null)}
+                />
+            )}
+
+            {showPriceSettings && (
+                <PriceSettingsSheet
+                    stores={foodPrices.stores}
+                    activeStoreId={foodPrices.store?.id ?? null}
+                    onSelectStore={selectPriceStore}
+                    askPriceOnCheck={canEditPrices && foodPrices.store ? askPriceOnCheck : null}
+                    onAskPriceOnCheckChange={setAskPriceOnCheck}
+                    onManageStores={canEditPrices ? () => { setShowPriceSettings(false); setShowPriceStores(true); } : null}
+                    onClose={() => setShowPriceSettings(false)}
                 />
             )}
 

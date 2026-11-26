@@ -4,11 +4,10 @@ import { ChevronRight } from 'lucide-react';
 export interface OptionsToolRowProps {
     icon: ReactNode;
     label: string;
-    hint: string;
     onSelect: () => void;
 }
 
-export const OptionsToolRow = ({ icon, label, hint, onSelect }: OptionsToolRowProps) => (
+export const OptionsToolRow = ({ icon, label, onSelect }: OptionsToolRowProps) => (
     <button
         type="button"
         role="menuitem"
@@ -18,10 +17,7 @@ export const OptionsToolRow = ({ icon, label, hint, onSelect }: OptionsToolRowPr
         <span className="grid place-items-center shrink-0 w-8 h-8 rounded-lg bg-subtle text-slate-500">
             {icon}
         </span>
-        <span className="flex-1 min-w-0 flex flex-col">
-            <span className="text-sm font-semibold text-slate-900 truncate">{label}</span>
-            <span className="text-xs text-slate-400 truncate">{hint}</span>
-        </span>
+        <span className="flex-1 min-w-0 text-sm font-semibold text-slate-900 truncate">{label}</span>
         <ChevronRight className="w-4 h-4 shrink-0 text-slate-400" />
     </button>
 );

@@ -1,27 +1,11 @@
 import { useCallback, useRef, useState } from 'react';
-import { CalendarDays, Clipboard, Share2, Euro, Globe, House, LayoutList, ListOrdered, MapPin, MapPinOff, Scale, Settings, SlidersHorizontal, Store, UtensilsCrossed } from 'lucide-react';
-import { PriceStore } from '../../../../core/domain/price';
-import { ShoppingLayout } from '../../../../core/domain/shopping';
-import { PlaceFilter } from '../../../../core/logic/shopping/shoppingPlaceLogic';
+import { CalendarDays, Clipboard, House, ListOrdered, Scale, Share2, SlidersHorizontal, Store } from 'lucide-react';
 import { FloatingMenu } from '../../../../shared/components/ui/FloatingMenu';
 import { OptionsMenuSection } from './OptionsMenuSection';
-import { OptionsRadioRow } from './OptionsRadioRow';
-import { OptionsSwitchRow } from './OptionsSwitchRow';
 import { OptionsToolRow } from './OptionsToolRow';
 
 export interface ShoppingOptionsMenuProps {
-    placeName: string | null;
-    placeFilter: PlaceFilter;
-    onPlaceFilterChange: (value: PlaceFilter) => void;
-    layout: ShoppingLayout;
-    onLayoutChange: (value: ShoppingLayout) => void;
-    hasActiveFilter: boolean;
-    priceStores: PriceStore[];
-    activePriceStoreId: string | null;
-    onPriceStoreChange: (id: string) => void;
-    onManagePriceStores: (() => void) | null;
-    askPriceOnCheck: boolean | null;
-    onAskPriceOnCheckChange: (value: boolean) => void;
+    onOpenPriceSettings: (() => void) | null;
     onOpenHousehold: () => void;
     onOpenAisleOrder: () => void;
     onOpenPriceCalc: () => void;
@@ -33,18 +17,7 @@ export interface ShoppingOptionsMenuProps {
 const ICON = 'w-4 h-4';
 
 export const ShoppingOptionsMenu = ({
-    placeName,
-    placeFilter,
-    onPlaceFilterChange,
-    layout,
-    onLayoutChange,
-    hasActiveFilter,
-    priceStores,
-    activePriceStoreId,
-    onPriceStoreChange,
-    onManagePriceStores,
-    askPriceOnCheck,
-    onAskPriceOnCheckChange,
+    onOpenPriceSettings,
     onOpenHousehold,
     onOpenAisleOrder,
     onOpenPriceCalc,
@@ -74,57 +47,22 @@ export const ShoppingOptionsMenu = ({
                     }`}
             >
                 <SlidersHorizontal className="w-4 h-4" />
-                Options
-                {hasActiveFilter && (
-                    <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-orange-500 ring-2 ring-surface" />
-                )}
+                Outils
             </button>
-            <FloatingMenu open={open} anchorRef={anchorRef} onClose={close} className="w-80 max-w-[calc(100vw-16px)] p-1.5">
-                <div role="menu" aria-label="Options de la liste" className="max-h-[75dvh] overflow-y-auto">
-                    {placeName && (
-                        <OptionsMenuSection title="Où j'achète">
-                            <OptionsRadioRow icon={<Globe className={ICON} />} label="Tout" hint="Toute la liste" checked={placeFilter === 'all'} onSelect={run(() => onPlaceFilterChange('all'))} />
-                            <OptionsRadioRow icon={<MapPin className={ICON} />} label={`Seulement ${placeName}`} hint={`Les articles marqués ${placeName}`} checked={placeFilter === 'place'} onSelect={run(() => onPlaceFilterChange('place'))} />
-                            <OptionsRadioRow icon={<MapPinOff className={ICON} />} label="Ailleurs" hint={`Tout sauf ${placeName}`} checked={placeFilter === 'elsewhere'} onSelect={run(() => onPlaceFilterChange('elsewhere'))} />
-                        </OptionsMenuSection>
-                    )}
-                    <OptionsMenuSection title="Affichage">
-                        <OptionsRadioRow icon={<LayoutList className={ICON} />} label="Par rayon" hint="Dans l'ordre de ton parcours" checked={layout === 'aisles'} onSelect={run(() => onLayoutChange('aisles'))} />
-                        <OptionsRadioRow icon={<UtensilsCrossed className={ICON} />} label="Par repas" hint="Recette par recette" checked={layout === 'meals'} onSelect={run(() => onLayoutChange('meals'))} />
+            <FloatingMenu open={open} anchorRef={anchorRef} onClose={close} className="w-64 max-w-[calc(100vw-16px)] p-1.5">
+                <div role="menu" aria-label="Outils de la liste" className="max-h-[75dvh] overflow-y-auto">
+                    <OptionsMenuSection title="Liste">
+                        <OptionsToolRow icon={<CalendarDays className={ICON} />} label="Changer les jours" onSelect={run(onChangeDays)} />
+                        {onShare && <OptionsToolRow icon={<Share2 className={ICON} />} label="Partager" onSelect={run(onShare)} />}
+                        {onCopy && <OptionsToolRow icon={<Clipboard className={ICON} />} label="Copier" onSelect={run(onCopy)} />}
                     </OptionsMenuSection>
-                    {(priceStores.length > 0 || onManagePriceStores) && (
-                        <OptionsMenuSection title="Magasin des prix">
-                            {priceStores.map((store) => (
-                                <OptionsRadioRow
-                                    key={store.id}
-                                    icon={<Store className={ICON} />}
-                                    label={store.name}
-                                    hint={store.city}
-                                    checked={store.id === activePriceStoreId}
-                                    onSelect={run(() => onPriceStoreChange(store.id))}
-                                />
-                            ))}
-                            {askPriceOnCheck !== null && (
-                                <OptionsSwitchRow
-                                    icon={<Euro className={ICON} />}
-                                    label="Saisir le prix en cochant"
-                                    hint={askPriceOnCheck ? 'Cocher ouvre la saisie du prix' : "Cocher, c'est tout"}
-                                    checked={askPriceOnCheck}
-                                    onToggle={() => onAskPriceOnCheckChange(!askPriceOnCheck)}
-                                />
-                            )}
-                            {onManagePriceStores && (
-                                <OptionsToolRow icon={<Settings className={ICON} />} label="Gérer les magasins" hint="Admin · nom et ville" onSelect={run(onManagePriceStores)} />
-                            )}
-                        </OptionsMenuSection>
-                    )}
-                    <OptionsMenuSection title="Outils">
-                        <OptionsToolRow icon={<House className={ICON} />} label="Articles du quotidien" hint="Papier toilette, lessive…" onSelect={run(onOpenHousehold)} />
-                        <OptionsToolRow icon={<ListOrdered className={ICON} />} label="Ordre des rayons" hint="Ton parcours en magasin" onSelect={run(onOpenAisleOrder)} />
-                        <OptionsToolRow icon={<Scale className={ICON} />} label="Prix au kilo" hint="Calculette" onSelect={run(onOpenPriceCalc)} />
-                        {onShare && <OptionsToolRow icon={<Share2 className={ICON} />} label="Partager la liste" hint="Messages, notes…" onSelect={run(onShare)} />}
-                        {onCopy && <OptionsToolRow icon={<Clipboard className={ICON} />} label="Copier la liste" hint="Ce qui reste à acheter" onSelect={run(onCopy)} />}
-                        <OptionsToolRow icon={<CalendarDays className={ICON} />} label="Changer les jours" hint="Raccourcis ou planning" onSelect={run(onChangeDays)} />
+                    <OptionsMenuSection title="Rangement">
+                        <OptionsToolRow icon={<ListOrdered className={ICON} />} label="Ordre des rayons" onSelect={run(onOpenAisleOrder)} />
+                        <OptionsToolRow icon={<House className={ICON} />} label="Articles du quotidien" onSelect={run(onOpenHousehold)} />
+                    </OptionsMenuSection>
+                    <OptionsMenuSection title="Prix">
+                        {onOpenPriceSettings && <OptionsToolRow icon={<Store className={ICON} />} label="Magasin des prix" onSelect={run(onOpenPriceSettings)} />}
+                        <OptionsToolRow icon={<Scale className={ICON} />} label="Prix au kilo" onSelect={run(onOpenPriceCalc)} />
                     </OptionsMenuSection>
                 </div>
             </FloatingMenu>

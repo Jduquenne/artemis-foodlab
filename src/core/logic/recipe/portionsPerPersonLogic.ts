@@ -16,3 +16,8 @@ export function plannedPortions(
   if (persons === undefined) return undefined;
   return Math.max(1, Math.round(persons * portionsPerPersonOf(recipe)));
 }
+
+export function kcalPerPersonLabel(recipe: { portionsPerPerson?: number } | undefined, kcalPerPortion: number | undefined): string | null {
+  if (!recipe || kcalPerPortion === undefined || kcalPerPortion <= 0) return null;
+  return `${Math.round(kcalPerPortion * portionsPerPersonOf(recipe))} kcal / pers.`;
+}

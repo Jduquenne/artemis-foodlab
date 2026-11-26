@@ -100,6 +100,7 @@ Per-account user data (`docs/api.md` § Accompaniments), never in the catalogue;
 
 `RecipePicker` / `DessertPicker` (modals adding a dish/dessert to a slot):
 
+- Each row shows the photo, the code and the kcal per person (`kcalPerPersonLabel`: kcal per portion from the macros snapshot × the reference portion per person, D-040; hidden when unknown), issue #77.
 - One click on a row saves directly (no confirmation step); the clicked row shows a spinner and the others are disabled until the save ends; the picker closes only on success.
 - Results capped at `MAX_PICKER_RESULTS = 30` (`useSearchMeals` / `useSearchDesserts`, `searchOutdoorRecipes` with the same `limit`). `useSearchRecipes` (Recipes module) and `useSearchIngredients` remain unlimited on purpose.
 - The search input stays instant; a `useDeferredValue(query)` feeds the search hooks so React prioritises typing.

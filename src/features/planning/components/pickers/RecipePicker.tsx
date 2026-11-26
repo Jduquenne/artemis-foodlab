@@ -5,7 +5,8 @@ import { MAX_PICKER_RESULTS, SearchRecipeResult } from '../../../../core/logic/r
 import { Check, Loader2, X, TreePine } from 'lucide-react';
 import { searchOutdoorRecipes } from '../../../../core/logic/recipe/recipeListLogic';
 import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
-import { useOutdoorSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
+import { useOutdoorSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
+import { kcalPerPersonLabel } from '../../../../core/logic/recipe/portionsPerPersonLogic';
 import { useModalDismiss } from '../../../../shared/hooks/useModalDismiss';
 
 export interface RecipePickerProps {
@@ -17,6 +18,7 @@ export interface RecipePickerProps {
 
 export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = [] }: RecipePickerProps) => {
     const recipesDb = useRecipesSnapshot();
+    const { macros } = useRecipeMetricsSnapshot();
     const outdoorDb = useOutdoorSnapshot();
     const [query, setQuery] = useState('');
     const deferredQuery = useDeferredValue(query);
@@ -61,6 +63,7 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
                         results.map((recipe) => {
                             const alreadyAdded = existingRecipeIds.includes(recipe.recipeId);
                             const isSaving = savingId === recipe.recipeId;
+                            const kcalLabel = kcalPerPersonLabel(recipesDb[recipe.recipeId], macros[recipe.recipeId]?.kcal);
                             return (
                                 <button
                                     key={recipe.recipeId}
@@ -75,7 +78,10 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
                                     <AsyncImage asset={recipesDb[recipe.recipeId]?.assets?.mealPhoto} alt={recipe.name} wrapperClassName="w-16 h-16 rounded-xl shadow-sm shrink-0" className="object-cover" />
                                     <div className="flex-1">
                                         <p className="font-black text-slate-800">{recipe.name}</p>
-                                        <p className="text-xs text-slate-400 uppercase font-bold">{recipe.recipeId}</p>
+                                        <p className="text-xs text-slate-400 font-bold">
+                                            <span className="uppercase">{recipe.recipeId}</span>
+                                            {kcalLabel && <span className="text-orange-500"> · {kcalLabel}</span>}
+                                        </p>
                                     </div>
                                     {isSaving ? (
                                         <div className="bg-orange-500 text-white p-2 rounded-full">

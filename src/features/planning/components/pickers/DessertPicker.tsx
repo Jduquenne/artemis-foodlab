@@ -4,7 +4,8 @@ import { SearchBar } from '../../../../shared/components/ui/SearchBar';
 import { useSearchDesserts } from '../../../../shared/hooks/useSearch';
 import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
 import { MAX_DESSERTS_PER_SLOT } from '../../../../core/domain/planningConfig';
-import { useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
+import { useRecipeMetricsSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
+import { kcalPerPersonLabel } from '../../../../core/logic/recipe/portionsPerPersonLogic';
 import { useModalDismiss } from '../../../../shared/hooks/useModalDismiss';
 
 export interface DessertPickerProps {
@@ -15,6 +16,7 @@ export interface DessertPickerProps {
 
 export const DessertPicker = ({ existingIds, onSelect, onClose }: DessertPickerProps) => {
     const recipesDb = useRecipesSnapshot();
+    const { macros } = useRecipeMetricsSnapshot();
     const [query, setQuery] = useState('');
     const deferredQuery = useDeferredValue(query);
     const [isClosing, setIsClosing] = useState(false);
@@ -56,6 +58,7 @@ export const DessertPicker = ({ existingIds, onSelect, onClose }: DessertPickerP
                         results.map((recipe) => {
                             const alreadyAdded = existingIds.includes(recipe.recipeId);
                             const isSaving = savingId === recipe.recipeId;
+                            const kcalLabel = kcalPerPersonLabel(recipesDb[recipe.recipeId], macros[recipe.recipeId]?.kcal);
                             return (
                                 <button
                                     key={recipe.recipeId}
@@ -70,7 +73,10 @@ export const DessertPicker = ({ existingIds, onSelect, onClose }: DessertPickerP
                                     <AsyncImage asset={recipesDb[recipe.recipeId]?.assets?.mealPhoto} alt={recipe.name} wrapperClassName="w-16 h-16 rounded-xl shadow-sm shrink-0" className="object-cover" />
                                     <div className="flex-1">
                                         <p className="font-black text-slate-800">{recipe.name}</p>
-                                        <p className="text-xs text-slate-400 uppercase font-bold">{recipe.recipeId}</p>
+                                        <p className="text-xs text-slate-400 font-bold">
+                                            <span className="uppercase">{recipe.recipeId}</span>
+                                            {kcalLabel && <span className="text-orange-500"> · {kcalLabel}</span>}
+                                        </p>
                                     </div>
                                     {isSaving ? (
                                         <div className="bg-orange-500 text-white p-2 rounded-full">

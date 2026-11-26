@@ -6,6 +6,7 @@ import { getNewsGroups } from "../../core/logic/news/newsLogic";
 import { NewsRecipeCard } from "./components/NewsRecipeCard";
 import { formatNewsDate } from "../../core/utils/dateUtils";
 import { buildRecipeDetailUrl } from "../../core/logic/recipe/recipeScalingLogic";
+import { useModalDismiss } from "../../shared/hooks/useModalDismiss";
 
 export interface NewsModalProps {
   onClose: () => void;
@@ -33,12 +34,12 @@ export const NewsModal = ({ onClose }: NewsModalProps) => {
     [onClose, navigate]
   );
 
+  const backdrop = useModalDismiss(handleClose);
+
   return (
     <div
       className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) handleClose();
-      }}
+      {...backdrop}
     >
       <div
         className={`bg-surface w-full max-w-md rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col max-h-[85dvh] ${

@@ -13,7 +13,7 @@ export interface RecipeCookingSheetProps {
 const grams = (value: number) => `${Math.round(value).toLocaleString('fr-FR')} g`;
 
 export const RecipeCookingSheet = ({ rows, portions, onClose }: RecipeCookingSheetProps) => (
-  <Sheet
+  <Sheet dismissable
     title="Cuisson"
     subtitle={`Pour ${portions} part${portions > 1 ? 's' : ''}. Temps et poids cuits indicatifs.`}
     onClose={onClose}

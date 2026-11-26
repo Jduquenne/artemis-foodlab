@@ -49,7 +49,7 @@ export const ShoppingItemSheet = ({
     const canFlagPlace = !!placeName && (!!item.foodId || extraId !== null);
 
     return (
-        <Sheet title={item.name} subtitle={shoppingItemSummary(item, stock, sourceChecked)} onClose={onClose}>
+        <Sheet dismissable title={item.name} subtitle={shoppingItemSummary(item, stock, sourceChecked)} onClose={onClose}>
             {item.preparation && (
                 <p className="text-sm text-slate-600">
                     <span className="font-semibold text-slate-400">Préparation :</span> {item.preparation}

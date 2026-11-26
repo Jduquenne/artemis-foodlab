@@ -19,7 +19,7 @@ export const RecipeCostSheet = ({ cost, portions, onClose }: RecipeCostSheetProp
   const subtitle = `Pour ${portions} part${portions > 1 ? 's' : ''}${store ? `, prix de ${store.name}, ${store.city}` : ''}. Montant indicatif.`;
 
   return (
-    <Sheet title="Détail du prix" subtitle={subtitle} onClose={onClose}>
+    <Sheet dismissable title="Détail du prix" subtitle={subtitle} onClose={onClose}>
       <div className="flex items-end justify-between gap-3">
         <p className={`text-4xl font-extrabold tabular-nums leading-none ${partial ? 'text-amber-600' : 'text-orange-600'}`}>
           ≈ {formatEuro(cost.total.total)}

@@ -19,6 +19,7 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 ## 2026-11-26 — UX lot 1 (quick wins, #70)
 - Owner: 37 sub-issues created (#71 to #107, test batch, backup `dev/issues.backup-2026-11-26.json`); option B (D-051): the agent commits each issue of a UX lot, never pushes. Grouped API prompt written for lot 5 and #92.
 - Lot 1: #71, #77, #78, #81, #87, #90, #94, #96, #99.
+- #71 (v6.170.5): `useModalDismiss` (Escape on the topmost window, backdrop click that must start and end on the backdrop, disabled while saving) wired on the reading / choice / confirmation windows and on `Sheet` with `dismissable` (item detail, cooking, cost, estimate sheets); form windows unchanged. `docs/ui-design.md` § Modals. Test: open each listed window, Escape and backdrop close it; a selection dragged from the content to the backdrop does not close; a confirmation over a detail sheet: Escape closes only the confirmation; a picker while saving does not close; stock / price entry sheets still close only with ×.
 
 ## 2026-11-26 — Product scope D-050 and umbrella issue #70 (docs, v6.170.3)
 - Owner discussion on the app's direction (ideas reviewed and dropped: autopilot, Wrapped, receipt scan, swipe, weight tracking). Final philosophy recorded: **Plan → Shop → Cook (one plate per person) → Pre-filled journal**, nothing else; stock management will come one day for the rest of the loop. D-050, `AGENTS.md` preamble, roadmap focus; umbrella issue #70 in `dev/issues.json` (sub-issues when started).

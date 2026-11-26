@@ -1,4 +1,5 @@
 import { Loader2 } from 'lucide-react';
+import { useModalDismiss } from '../../../shared/hooks/useModalDismiss';
 
 export interface MoveDessertsPromptProps {
     dessertCount: number;
@@ -10,9 +11,10 @@ export interface MoveDessertsPromptProps {
 
 export const MoveDessertsPrompt = ({ dessertCount, pendingChoice, onMove, onKeep, onCancel }: MoveDessertsPromptProps) => {
     const pending = pendingChoice !== null;
+    const backdrop = useModalDismiss(onCancel, !pending);
 
     return (
-        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4" {...backdrop}>
             <div className="bg-surface rounded-2xl shadow-2xl w-full max-w-sm p-5">
                 <p className="text-xs font-black text-orange-600 uppercase tracking-widest mb-1.5">Déplacer le repas</p>
                 <p className="text-sm text-slate-600 mb-5">

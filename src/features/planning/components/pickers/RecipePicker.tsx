@@ -6,6 +6,7 @@ import { Check, Loader2, X, TreePine } from 'lucide-react';
 import { searchOutdoorRecipes } from '../../../../core/logic/recipe/recipeListLogic';
 import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
 import { useOutdoorSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
+import { useModalDismiss } from '../../../../shared/hooks/useModalDismiss';
 
 export interface RecipePickerProps {
     onSelect: (recipe: SearchRecipeResult) => Promise<void>;
@@ -26,6 +27,7 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
     const outdoorResults = useMemo(() => searchOutdoorRecipes(outdoorDb, deferredQuery, MAX_PICKER_RESULTS), [outdoorDb, deferredQuery]);
 
     const handleClose = () => { setIsClosing(true); setTimeout(onClose, 300); };
+    const backdrop = useModalDismiss(handleClose, savingId === null);
 
     const pick = async (recipe: SearchRecipeResult) => {
         if (savingId) return;
@@ -38,7 +40,7 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
     };
 
     return (
-        <div className="fixed inset-0 z-100 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4">
+        <div className="fixed inset-0 z-100 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4" {...backdrop}>
             <div className={`bg-surface w-full max-w-2xl h-[80dvh] rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden ${isClosing ? 'modal-exit sm:modal-center-exit' : 'modal-enter sm:modal-center-enter'}`}>
                 <div className="p-6 border-b border-slate-200 flex justify-between items-center bg-orange-50 dark:bg-orange-950/30">
                     <div>

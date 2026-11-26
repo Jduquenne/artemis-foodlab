@@ -12,7 +12,7 @@ export const EstimateSheet = ({ estimate, store, onClose }: EstimateSheetProps) 
     const partial = estimate.missing.length > 0;
 
     return (
-        <Sheet
+        <Sheet dismissable
             title="Estimation"
             subtitle={`Prix de ${store.name}, ${store.city}, pour ce qui reste à acheter. Montant indicatif.`}
             onClose={onClose}

@@ -1,15 +1,19 @@
 import { ReactNode } from 'react';
 import { X } from 'lucide-react';
+import { useModalDismiss } from '../../hooks/useModalDismiss';
 
 export interface SheetProps {
     title: string;
     subtitle?: ReactNode;
     onClose: () => void;
+    dismissable?: boolean;
     children: ReactNode;
 }
 
-export const Sheet = ({ title, subtitle, onClose, children }: SheetProps) => (
-    <div className="fixed inset-0 z-50 bg-black/40 flex items-end sm:items-center justify-center sm:p-4">
+export const Sheet = ({ title, subtitle, onClose, dismissable = false, children }: SheetProps) => {
+    const backdrop = useModalDismiss(onClose, dismissable);
+    return (
+    <div className="fixed inset-0 z-50 bg-black/40 flex items-end sm:items-center justify-center sm:p-4" {...backdrop}>
         <div
             role="dialog"
             aria-modal="true"
@@ -33,4 +37,5 @@ export const Sheet = ({ title, subtitle, onClose, children }: SheetProps) => (
             {children}
         </div>
     </div>
-);
+    );
+};

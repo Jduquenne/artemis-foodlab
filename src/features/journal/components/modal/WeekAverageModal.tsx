@@ -11,6 +11,7 @@ import {
 } from "../../../../core/logic/journal/weekAverageLogic";
 import { toggleInList } from "../../../../core/utils/collectionUtils";
 import { NUTRIENT_DEFINITIONS } from "../../../../core/domain/nutrition";
+import { useModalDismiss } from "../../../../shared/hooks/useModalDismiss";
 
 export interface WeekAverageModalProps {
   weekSlots: MealSlot[];
@@ -28,6 +29,7 @@ export const WeekAverageModal = ({ weekSlots, onClose }: WeekAverageModalProps) 
   const [days, setDays] = useState<string[]>([...DEFAULT_AVERAGE_DAYS]);
 
   const handleClose = () => { setIsClosing(true); setTimeout(onClose, 220); };
+  const backdrop = useModalDismiss(handleClose);
 
   const { average, countedDays } = useMemo(
     () => computeWeekAverage(catalogue, weekSlots, days, portionOverrides, gramOverrides, ingredientOverrides, activeProfile),
@@ -35,7 +37,7 @@ export const WeekAverageModal = ({ weekSlots, onClose }: WeekAverageModalProps) 
   );
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" {...backdrop}>
       <div
         className={`w-full max-w-sm bg-surface rounded-2xl shadow-2xl flex flex-col overflow-hidden ${
           isClosing ? "modal-center-exit" : "modal-center-enter"

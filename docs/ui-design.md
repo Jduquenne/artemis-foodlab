@@ -52,7 +52,7 @@ Target: iPad Air 820×1180 (DPR 2), used in portrait.
 
 ## Modals and menus
 
-- No modal closes on backdrop click or Escape (project convention). Origin: written during the doc migration (2026-10-07), not found in the former `CLAUDE.md`; kept as is by the owner on 2026-10-08, to be revisited if it proves annoying in daily use. Existing modals that still close on backdrop (e.g. `NewsModal`) are left untouched until then.
+- **Dismiss** (issue #71, owner 2026-11-26, replaces the former « no modal closes on backdrop click or Escape »): a window **without unsaved input** (reading, choice, confirmation) closes with Escape or a click on its backdrop through `useModalDismiss(onDismiss, enabled)` (`shared/hooks/`): it returns the backdrop props (`onPointerDown` + `onClick`: closes only when the press starts and ends on the backdrop, so a text selection ending outside never closes), and Escape only closes the topmost open window (module-level stack, every caller registers even when disabled). `enabled = false` while a save is pending. Wired: `LegalModal`, `NewsModal`, `WeekAverageModal`, `RecipePicker`, `DessertPicker`, `MoveDessertsPrompt` (Escape = « Annuler »), `ConfirmActionModal` (= cancel), `Sheet` with `dismissable` (`ShoppingItemSheet`, `RecipeCookingSheet`, `RecipeCostSheet`, `EstimateSheet`). **Form windows keep the former rule** (close only through their buttons) so a typed entry is never lost; `PricePerKgModal` keeps its own backdrop close. Existing modals that still close on backdrop (e.g. `NewsModal`) are left untouched until then.
 - Mobile menus: overlay `fixed inset-0 z-10` + menu `z-20`.
 
 ## Component patterns

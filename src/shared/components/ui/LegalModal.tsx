@@ -2,6 +2,7 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import { formatDateMedium } from "../../../core/utils/dateUtils";
 import { LEGAL_DOCUMENTS, LegalDocument } from "./legalContent";
+import { useModalDismiss } from "../../hooks/useModalDismiss";
 
 export interface LegalModalProps {
   onClose: () => void;
@@ -12,8 +13,10 @@ export const LegalModal = ({ onClose, initialDoc = "privacy" }: LegalModalProps)
   const [activeId, setActiveId] = useState<LegalDocument["id"]>(initialDoc);
   const doc = LEGAL_DOCUMENTS.find((d) => d.id === activeId) ?? LEGAL_DOCUMENTS[0];
 
+  const backdrop = useModalDismiss(onClose);
+
   return (
-    <div className="fixed inset-0 z-100 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4">
+    <div className="fixed inset-0 z-100 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4" {...backdrop}>
       <div className="bg-surface w-full max-w-lg rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden max-h-[90dvh]">
         <div className="p-5 border-b border-slate-200 flex justify-between items-center shrink-0">
           <h2 className="text-lg font-black text-slate-900">Informations légales</h2>

@@ -5,6 +5,7 @@ import { useSearchDesserts } from '../../../../shared/hooks/useSearch';
 import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
 import { MAX_DESSERTS_PER_SLOT } from '../../../../core/domain/planningConfig';
 import { useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
+import { useModalDismiss } from '../../../../shared/hooks/useModalDismiss';
 
 export interface DessertPickerProps {
     existingIds: string[];
@@ -21,6 +22,7 @@ export const DessertPicker = ({ existingIds, onSelect, onClose }: DessertPickerP
     const results = useSearchDesserts(deferredQuery);
 
     const handleClose = () => { setIsClosing(true); setTimeout(onClose, 300); };
+    const backdrop = useModalDismiss(handleClose, savingId === null);
 
     const pick = async (recipeId: string) => {
         if (savingId) return;
@@ -33,7 +35,7 @@ export const DessertPicker = ({ existingIds, onSelect, onClose }: DessertPickerP
     };
 
     return (
-        <div className="fixed inset-0 z-100 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4">
+        <div className="fixed inset-0 z-100 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4" {...backdrop}>
             <div className={`bg-surface w-full max-w-2xl h-[70dvh] rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden ${isClosing ? 'modal-exit sm:modal-center-exit' : 'modal-enter sm:modal-center-enter'}`}>
                 <div className="p-6 border-b border-slate-200 flex justify-between items-center bg-orange-50 dark:bg-orange-950/30 shrink-0">
                     <div>

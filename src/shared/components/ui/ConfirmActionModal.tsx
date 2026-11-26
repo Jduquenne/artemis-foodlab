@@ -1,6 +1,7 @@
 import { ReactNode, useState } from "react";
 import { AlertTriangle } from "lucide-react";
 import { RecapEntry, isRecapChange } from "../../../core/logic/dashboard/recapLogic";
+import { useModalDismiss } from "../../hooks/useModalDismiss";
 
 export interface ConfirmActionModalProps {
   title: string;
@@ -38,6 +39,7 @@ export const ConfirmActionModal = ({
 
   const gateOpen = !confirmDisabled && (!requireText || typed.trim() === requireText);
   const disabled = submitting || !gateOpen;
+  const backdrop = useModalDismiss(onCancel, !submitting);
 
   const confirm = async () => {
     if (!gateOpen) return;
@@ -54,7 +56,7 @@ export const ConfirmActionModal = ({
     : "bg-orange-500 hover:bg-orange-600";
 
   return (
-    <div className="fixed inset-0 z-[110] bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4">
+    <div className="fixed inset-0 z-[110] bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4" {...backdrop}>
       <div className="bg-surface w-full max-w-sm rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden max-h-[90dvh]">
         <div className="p-5 pb-3 shrink-0">
           <h2 className="text-lg font-black text-slate-900">{title}</h2>

@@ -16,6 +16,9 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — By-meal view: meal header distinct from ingredients (v6.170.43)
+- Owner: on phones the meal line and an ingredient looked the same. Done: light orange header band, dish photo, « Mardi · Dîner » / « N repas » above a larger name (`recipeCardMealLabel`), small « tout cocher » button with the count on the right. Test on a phone: Par repas → each card header clearly different from its ingredient rows; tout cocher checks the meal and folds it; a recipe planned twice shows « 2 repas ».
+
 ## 2026-11-26 — Shopping header controls and a short « Outils » menu (v6.170.42)
 - Owner: the Options menu had too many words and choices. Done: visible controls under the title « Tout / À acheter », « Rayons / Repas », « 📍 Partout ▾ » (place, only when set); « Outils » menu with one-label rows in 3 groups (Liste, Rangement, Prix: about 7 rows instead of 14); store choice and « Saisir le prix en cochant » moved to `PriceSettingsSheet`. Removed: active filter pills (`ActiveFilterPills`, `shoppingFilterPills.ts`), `OptionsRadioRow`, `OptionsSwitchRow`, hints of `OptionsToolRow`.
 - Then (owner: « moche et pas responsive »): `ShoppingSegmented` shared by « Tout / À acheter » and « Rayons / Repas » (same height and frame as the header buttons, light orange selection), place button in the same frame; phones: two rows, the view toggle takes the width, layout as icons, place as a pin; `lg:` one row. Test at 360, 390, 820 (portrait tablet) and desktop widths: nothing overflows, the active choices are readable, the place pin turns orange when filtered.

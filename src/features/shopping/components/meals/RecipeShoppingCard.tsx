@@ -1,4 +1,8 @@
-import { MapPin } from 'lucide-react';
+import { MapPin, UtensilsCrossed } from 'lucide-react';
+import { recipeCardMealLabel } from '../../../../core/logic/shopping/shoppingRecipeCards';
+import { SLOT_LABELS } from '../../../../core/domain/slotLabels';
+import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
+import { usePlannableSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 import { IngredientSource, RecipeCardIngredient, RecipeBaseGroup } from '../../../../core/domain/shopping';
 import { allKeysAtPlace } from '../../../../core/logic/shopping/shoppingPlaceLogic';
 import { buildSourceCheckKey, checkableCardIngredients, isIngChecked } from '../../../../core/logic/shopping/shoppingChecks';
@@ -8,6 +12,7 @@ import { useAnyPendingKey } from '../../../../shared/hooks/useAnyPendingKey';
 import { CheckToggleIcon } from '../../../../shared/components/ui/CheckToggleIcon';
 
 export interface RecipeShoppingCardProps {
+    recipeId: string;
     recipeName: string;
     directIngredients: RecipeCardIngredient[];
     baseGroups: RecipeBaseGroup[];
@@ -22,6 +27,7 @@ export interface RecipeShoppingCardProps {
 }
 
 export const RecipeShoppingCard = ({
+    recipeId,
     recipeName,
     directIngredients,
     baseGroups,
@@ -34,6 +40,8 @@ export const RecipeShoppingCard = ({
     onToggleBatch,
     onOpenDetail,
 }: RecipeShoppingCardProps) => {
+    const plannable = usePlannableSnapshot();
+    const mealLabel = recipeCardMealLabel({ directIngredients, baseGroups }, SLOT_LABELS);
     const allIngs = [...directIngredients, ...baseGroups.flatMap(b => b.ingredients)];
     const checkable = checkableCardIngredients(allIngs, checkableKeys);
     const totalCount = checkable.length;
@@ -53,25 +61,32 @@ export const RecipeShoppingCard = ({
         onToggleBatch(checkable.map(ing => ({ ingredientKey: ing.ingredientKey, sources: ing.sources })), !allCardChecked);
     };
 
-    const status = allCardChecked
-        ? 'tout est pris'
-        : checkedCount > 0 ? `${checkedCount}/${totalCount} pris · touche pour tout cocher` : 'touche pour tout cocher';
 
     return (
         <div className="bg-surface border border-slate-200 rounded-xl shadow-sm overflow-hidden">
-            <div className="flex items-stretch">
+            <div className={`flex items-stretch bg-orange-50 dark:bg-orange-950/30 ${allCardChecked ? '' : 'border-b border-orange-100 dark:border-orange-900/40'}`}>
+                <div className="flex-1 min-w-0 flex items-center gap-3 px-3 py-2.5">
+                    <span className="relative shrink-0 w-11 h-11 rounded-xl overflow-hidden bg-orange-100 dark:bg-orange-900/40 grid place-items-center">
+                        {plannable[recipeId]?.assets?.mealPhoto
+                            ? <AsyncImage asset={plannable[recipeId]?.assets?.mealPhoto} alt={recipeName} fill className="object-cover" />
+                            : <UtensilsCrossed className="w-5 h-5 text-orange-400" />}
+                    </span>
+                    <span className="flex flex-col min-w-0">
+                        {mealLabel && <span className="text-[10px] font-black uppercase tracking-widest text-orange-600 truncate">{mealLabel}</span>}
+                        <span className={`text-base font-black leading-tight truncate ${allCardChecked ? 'line-through text-slate-400' : 'text-slate-900'}`}>{recipeName}</span>
+                    </span>
+                </div>
                 <button
                     type="button"
                     aria-pressed={allCardChecked}
                     onClick={handleToggleAll}
                     disabled={totalCount === 0}
-                    className="flex-1 min-w-0 flex items-center gap-3 px-3 py-2.5 text-left hover:bg-subtle-tint transition-colors"
+                    title={allCardChecked ? 'Tout décocher' : 'Tout cocher'}
+                    aria-label={allCardChecked ? `Tout décocher — ${recipeName}` : `Tout cocher — ${recipeName}`}
+                    className="shrink-0 flex flex-col items-center justify-center gap-0.5 px-3 text-orange-600 hover:bg-orange-100 dark:hover:bg-orange-900/40 transition-colors disabled:opacity-40"
                 >
                     <CheckToggleIcon checked={allCardChecked} pending={pending} className="w-5 h-5" checkedClassName="text-orange-500" />
-                    <span className="flex flex-col min-w-0">
-                        <span className={`text-[15px] font-extrabold truncate lg:text-sm ${allCardChecked ? 'line-through text-slate-400' : 'text-slate-900'}`}>{recipeName}</span>
-                        <span className="text-xs text-slate-400 truncate">{status}</span>
-                    </span>
+                    <span className="text-[10px] font-bold tabular-nums">{checkedCount}/{totalCount}</span>
                 </button>
                 {placeName && allIngs.length > 0 && (
                     <button

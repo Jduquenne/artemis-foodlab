@@ -35,6 +35,7 @@ export const ShoppingMealsView = ({ cards, colCount, ...cardProps }: ShoppingMea
                     {col.map((card, i) => (
                         <div key={card.recipeId} className="animate-fade-in-up" style={{ animationDelay: `${(ci + i) * 60}ms` }}>
                             <RecipeShoppingCard
+                                recipeId={card.recipeId}
                                 recipeName={card.recipeName}
                                 directIngredients={card.directIngredients}
                                 baseGroups={card.baseGroups}

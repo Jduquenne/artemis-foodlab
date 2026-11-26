@@ -75,3 +75,12 @@ export function buildRecipeCards(
     }))
     .sort((a, b) => compareText(a.recipeName, b.recipeName));
 }
+
+export function recipeCardMealLabel(card: Pick<RecipeCard, "directIngredients" | "baseGroups">, slotLabels: Record<string, string>): string {
+  const meals = new Set<string>();
+  const sources = [...card.directIngredients, ...card.baseGroups.flatMap((group) => group.ingredients)].flatMap((ing) => ing.sources);
+  for (const source of sources) meals.add(`${source.isoDate}|${source.slot}`);
+  if (meals.size !== 1) return `${meals.size} repas`;
+  const first = sources[0];
+  return first ? `${first.day} · ${slotLabels[first.slot] ?? first.slot}` : "";
+}

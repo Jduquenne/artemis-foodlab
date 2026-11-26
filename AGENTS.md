@@ -4,6 +4,8 @@
 
 **Artemis Foodlab** is a meal-planning PWA (weekly menu, nutrition journal per profile, recipes, shopping list, freezer, household items) used in production by a few households. Stack: React 19, TypeScript, Vite 7, Tailwind CSS 4, Zustand, Dexie (IndexedDB), React Router (HashRouter), dnd-kit, date-fns, Lucide. Served by GitHub Pages; backed by `meals-planning-api` (separate sibling repo, Express + PostgreSQL + Prisma on Render + Supabase), which is the source of truth.
 
+**Product scope (D-050)**: the app is the loop **Plan → Shop → Cook (one plate per person) → Pre-filled journal**, and nothing else. A feature that does not serve this loop, or that adds data entry without saving the household time every week, is out of scope. Simplicity first: remove friction before adding features; no « usine à gaz ».
+
 Non-negotiable constraints: production app, not a POC — scalability and architectural clarity first; login required (no offline mode); UI in French; responsive; no-scroll layout on desktop.
 
 Languages: talk to the owner in **French**; everything written in the repo (docs, code, identifiers, commit messages) is in **English**, except UI text (French) and `README.md` (French, for humans).

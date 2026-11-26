@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — Product scope D-050 and umbrella issue #70 (docs, v6.170.3)
+- Owner discussion on the app's direction (ideas reviewed and dropped: autopilot, Wrapped, receipt scan, swipe, weight tracking). Final philosophy recorded: **Plan → Shop → Cook (one plate per person) → Pre-filled journal**, nothing else; stock management will come one day for the rest of the loop. D-050, `AGENTS.md` preamble, roadmap focus; umbrella issue #70 in `dev/issues.json` (sub-issues when started).
+- Next: friction audit (read-only), then the « plate per profile » minimal test. Owner also asked about persona agents testing the app (answer in session, nothing built).
+
 ## 2026-11-26 — Legacy import removal live in prod (docs, v6.170.2)
 - Owner: front v6.170.0 / v6.170.1 and API D-079 in prod. D-049, `docs/api.md` § Import (removed) and the roadmap idea updated; option A done.
 - Still open: API commit hashes `TODO(owner)` for D-068, D-078 and D-079; owner actions in the roadmap (legal pages, food rename backfill, `.claude/settings.local.json`, font licences); #50 once the Leclerc receipts (CSV) arrive.

@@ -5,6 +5,8 @@ The detailed backlog and future features live in `dev/issues.json` and `dev/refa
 
 ## Current focus
 
+Product scope (D-050, owner 2026-11-26): **Plan → Shop → Cook (one plate per person) → Pre-filled journal**, nothing else; umbrella issue `dev/issues.json` #70. Next: friction audit of the existing flows.
+
 1. ✅ Food groups and per-profile cheese choice on planned meals (D-033, `dev/issues.json` #25), first step toward the profile tastes feature (#20-#24). **In prod (API + front, 2026-10-15)**: Dashboard « Familles », Recipe Builder « au choix », meal actions menu, per-profile choice + quantity, shopping split, journal (v6.85.0 → v6.92.0). Owner feedback pending. Profile default per family: « Préférences par famille » in « Profils du foyer » (v6.98.0, every family). Tested and in prod (owner, 2026-10-16); #25 closed.
 2. ✅ Shopping aisles (owner, 2026-10-15/16): per-account aisle order (API D-053, **live in prod**; front v6.93.0-6.94.0) and custom per-account aisles (API D-054; front v6.95.0-6.97.0: grouping, management in « Ordre des rayons », aisle choice in the extra form). **In prod (API + front, 2026-10-16)**; awaiting user feedback.
 3. ✅ Food seasons (D-034, API D-055 **live in prod** 2026-10-16, 70 seasonal foods imported from the ADEME-based file): months on foods, step 1 Dashboard (v6.99.0), step 2 recipe season logic (v6.99.2, `recipeSeasonLogic.ts`). Used by the menu generator (season strict / preferred, B9) and by the recipe filter « De saison » (item 7). In prod: 71 seasonal foods, all fruits and vegetables (API session, 2026-10-21).

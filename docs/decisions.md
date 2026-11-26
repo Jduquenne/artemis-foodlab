@@ -467,3 +467,13 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
 - **Decision**: remove the import on both sides: front menu « Importer des données » (`SettingsPopover`), `features/sync` (`ImportModal`, `ScopeSelector`), `importService`, `core/logic/sync/importPayloadLogic.ts` and `importSummaryLogic.ts`; then the API route and its stale food code guard.
 - **Alternatives considered**: keeping it hidden or admin only (refused: dead code with a data risk, no remaining backup to import according to the owner).
 - **Consequences**: a legacy JSON backup can no longer be loaded. `core/logic/sync/` keeps `catalogueRefreshLogic.ts` (catalogue refresh).
+
+## D-050 — Product scope: Plan → Shop → Cook (one plate per person) → Pre-filled journal
+
+- **Date**: 2026-11-26
+- **Status**: accepted (owner, 2026-11-26); vision, no code yet (umbrella issue #70).
+- **Context**: after several feature ideas (autopilot, year « Wrapped », receipt scan, swipe, weight tracking with adaptive expenditure), the owner wants an app that saves time and stays precise, simple and never frustrating, « pas une usine à gaz ». The app's goal is to save time; full automation is not the goal: the user keeps the choices, the app does the tedious computing.
+- **Decision**: the app is this loop and nothing else: **Plan → Shop → Cook (one plate per person) → Pre-filled journal**. Every feature must serve it and save the household time every week without adding data entry. The differentiator is « one dish cooked, a right-sized plate for each profile ». Household stock management will come one day because the rest of the loop needs it (knowing what is already at home).
+- **Out of scope** (owner, 2026-11-26): weight logging, weight curve and adaptive expenditure (dedicated apps do it; health data); full autopilot with no user action; more generator setting layers. Profile targets stay entered by hand (at most a one-shot « help me compute » helper, no tracking).
+- **Next**: friction audit of the existing flows (remove before adding); then a minimal « plate per profile » test (one lever, the starch) used by the owner's household for 2 weeks before going further.
+- **Consequences**: `AGENTS.md` preamble (scope rule for every session), `docs/roadmap.md`; work tracked under `dev/issues.json` #70 with sub-issues when started.

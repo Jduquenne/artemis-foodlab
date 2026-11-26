@@ -127,13 +127,15 @@ A separate Claude Code session owns `meals-planning-api` (sibling repo). Collabo
 
 ## Import
 
+**Removed from the front** (D-049, v6.170.0): the front no longer calls `POST /import`; API removal pending (`TODO(owner)`). Former contract kept below for history until the API route is gone.
+
 `POST /import` (`requireAuth`, guest OK) with the raw **`SyncPayload` v3**. Read fields: `version: 3` (required), `planning[]`, `household[]`, `freezerCategories[]`, `freezerName`; `shoppingDays/Checked/Stocks` accepted but ignored.
 
 - **Replacement by scope**: each scope present is purged then reinserted; absent scope untouched; idempotent. UI must say "replaces your data". Replacing the planning cascades onto journal portion adjustments (warn the user).
 - **Stale food codes guard** (issue #68, API D-075, owner 2026-11-25; **live in prod**, API commit `a2de747`): the old front renumbered its foods several times before the API migration, so old exports carry codes that now name another food (audit: 72 of 177 freezer food items in prod, 3 accounts). On import, a freezer food code whose catalogue name differs from the item name is relinked to the only food with that name (case, accents, œ / æ and extra spaces ignored), else set to `null`; an unknown code → `null` as before; every change adds one French line to `anomalies` (e.g. « Congélateur "Oignon jaune" : l'aliment "fv-059" est « Mûres » dans le catalogue actuel, relié à "fv-063" (même nom). »). An item imported under a custom name (« Épinards en branches » on « Épinards ») loses its link (reported). Response shape unchanged; the front already shows `anomalies`. Normal freezer writes (`POST` / `PUT /freezer-items`) are not checked (users may name an item freely). Existing prod data fixed (3 accounts): 66 relinked by exact name, 3 « Lentille vertes sèches » → fc-012 « Lentilles vertes sèches » (owner), 3 « Buche de chèvre ou fromage frais » deleted (owner: the food no longer exists); no stale code left.
 - Overwrite guard: account already has data in a scope of the payload → **409** with a ready message listing the scopes; resend the same payload with `"overwrite": true`. `freezerName` alone never triggers 409.
 - 200 `{ summary: { planning?: { slots, items }, household?: { flags }, freezer?: { categories, items } }, anomalies: string[] }`; line-level tolerance (unknown codes listed in `anomalies`). Not a v3 payload → 400; body > 2 MB → 413; server transaction all or nothing; dedicated rate limit (429).
-- Front: `core/services/importService.ts` (`importToApi(payload, scopes, overwrite?)`), `features/sync/ImportModal.tsx`, `suppressGlobalError: true`.
+- Front: none since v6.170.0 (D-049; was `importService.ts` + `features/sync/ImportModal.tsx`).
 
 ## Users (admin)
 

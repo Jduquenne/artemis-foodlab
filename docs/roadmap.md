@@ -84,7 +84,7 @@ Milestones reconstructed from history; definitions of done marked "proposed" wer
 
 ## Ideas / later
 
-- Owner decisions of 2026-11-26: industrial base delivery B (D-038) set aside; menu generator stays admin only; #42 household storage later; #50 price history to be built from about 3 years of Leclerc receipts (CSV with prices) the owner will provide; next work: remove the obsolete import (`features/sync`, `POST /import`).
+- Owner decisions of 2026-11-26: industrial base delivery B (D-038) set aside; menu generator stays admin only; #42 household storage later; #50 price history to be built from about 3 years of Leclerc receipts (CSV with prices) the owner will provide; next work: remove the obsolete import (D-049, front done in v6.170.0).
 
 Future features (including profile food preferences, #20-#24) are tracked in `dev/issues.json`. Technical ideas noted along the way:
 
@@ -106,4 +106,4 @@ Future features (including profile food preferences, #20-#24) are tracked in `de
 - Search results show an ingredient-type recipe with the recipe card (flippable) instead of the food card used in its category view — not a bug, to think about.
 - Price entry, possible next pass (after the 2026-11-19 redesign, `docs/spec-admin.md` § Food prices): filter « Sans prix / Anciens » directly in the foods table; open the food price sheet from the recipe price breakdown (missing prices) and from the planning estimate; stale threshold as a setting instead of `PRICE_STALE_MONTHS`; price entry on a phone without the Dashboard (admin shortcut from the shopping sheet already exists).
 - Revisit the « no modal closes on backdrop click » convention after daily use.
-- Remove the data import (owner, 2026-10-08: obsolete since the API is the source of truth): front `features/sync` (`ImportModal`, `ScopeSelector`), `importService`, `core/logic/sync/importPayloadLogic.ts` + `importSummaryLogic.ts`, the entry in `SettingsPopover`; API side `POST /import` (prompt to relay to the API session). Not scheduled; would also settle the open question of activities created by the import without a photo.
+- ✅ Remove the data import (owner, 2026-10-08; scheduled 2026-11-26, D-049): front done in v6.170.0 (`features/sync`, `importService`, `importPayloadLogic.ts`, `importSummaryLogic.ts`, the « Importer des données » entry); API side `POST /import` to remove through the API session once the front is live.

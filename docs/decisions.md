@@ -458,3 +458,12 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
   - Display: last on the recipe cards as « Retiré : … », « retiré » tag on the macro page; in the journal it is not listed among the adjustable ingredients but stays in the stored override set, so its scaled quantity keeps being subtracted.
 - **Alternatives considered**: a negative quantity (refused: it would leak into shopping, totals and prices, and a sign meaning « removed » is a hidden state, golden rule 20); a food with negative macros (refused: pollutes the catalogue, the Dashboard and food choices); opening the cooked weight to every category (not needed once the removed grams are subtracted).
 - **Consequences**: `removed` in `IngredientLink` (Dexie v18), `isRemovedIngredient` (`core/domain/ingredientPredicates.ts`), Recipe Builder draft store v6 and `IngredientRemovedToggle`; the front always sends `removed` (an absent field resets it on a `PUT`). Limit: the whey composition varies with draining, the result stays an estimate. Contract: `docs/api.md` § Recipes.
+
+## D-049 — The legacy data import is removed
+
+- **Date**: 2026-11-26
+- **Status**: accepted (owner, 2026-11-26); front removed in v6.170.0; API `POST /import` removal to relay to the API session after the front is live (`TODO(owner)`). Supersedes the import part of D-028.
+- **Context**: D-028 kept `POST /import` so a household could load a legacy local backup (`SyncPayload` v3) into the API. The migration is over; the import is no longer used, and #68 showed it had brought stale food codes into the freezer of 3 accounts (guarded since by API D-075).
+- **Decision**: remove the import on both sides: front menu « Importer des données » (`SettingsPopover`), `features/sync` (`ImportModal`, `ScopeSelector`), `importService`, `core/logic/sync/importPayloadLogic.ts` and `importSummaryLogic.ts`; then the API route and its stale food code guard.
+- **Alternatives considered**: keeping it hidden or admin only (refused: dead code with a data risk, no remaining backup to import according to the owner).
+- **Consequences**: a legacy JSON backup can no longer be loaded. `core/logic/sync/` keeps `catalogueRefreshLogic.ts` (catalogue refresh).

@@ -1,11 +1,8 @@
-import { lazy, Suspense, useRef, useState } from "react";
-import { Settings, Upload, Bell, UserCircle, ScrollText, Users, Soup } from "lucide-react";
-import { isValidSyncPayload, SyncPayload } from "../../../core/logic/sync/importPayloadLogic";
+import { lazy, Suspense, useState } from "react";
+import { Settings, Bell, UserCircle, ScrollText, Users, Soup } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { SettingsMenuItem } from "./SettingsMenuItem";
-import { useIsDemo } from "../../hooks/useIsDemo";
 
-const ImportModal = lazy(() => import("../../../features/sync/ImportModal").then(m => ({ default: m.ImportModal })));
 const NotificationSettingsModal = lazy(() => import("../ui/NotificationSettingsModal").then(m => ({ default: m.NotificationSettingsModal })));
 const AccountModal = lazy(() => import("../ui/AccountModal").then(m => ({ default: m.AccountModal })));
 const ProfilesModal = lazy(() => import("../ui/profiles/ProfilesModal").then(m => ({ default: m.ProfilesModal })));
@@ -14,42 +11,15 @@ const LegalModal = lazy(() => import("../ui/LegalModal").then(m => ({ default: m
 
 export const SettingsPopover = () => {
   const [open, setOpen] = useState(false);
-  const [importModalData, setImportModalData] = useState<unknown>(null);
   const [notifSettingsOpen, setNotifSettingsOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
   const [profilesOpen, setProfilesOpen] = useState(false);
   const [accompanimentsOpen, setAccompanimentsOpen] = useState(false);
   const [legalOpen, setLegalOpen] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const isDemo = useIsDemo();
-
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    try {
-      const parsed = JSON.parse(await file.text());
-      if (!isValidSyncPayload(parsed)) {
-        alert("Ce fichier n'est pas une sauvegarde Artemis Foodlab valide.");
-        return;
-      }
-      setImportModalData(parsed);
-    } catch {
-      alert("Impossible de lire ce fichier de sauvegarde.");
-    } finally {
-      e.target.value = "";
-    }
-  };
 
   return (
     <>
       <div className="relative">
-        <input
-          type="file"
-          accept=".json"
-          ref={fileInputRef}
-          className="hidden"
-          onChange={handleFileChange}
-        />
         <button
           onClick={() => setOpen((o) => !o)}
           title="Paramètres"
@@ -69,9 +39,6 @@ export const SettingsPopover = () => {
               <SettingsMenuItem icon={<UserCircle className="w-4 h-4 text-slate-400 shrink-0" />} label="Compte" divided={false} onClick={() => { setAccountOpen(true); setOpen(false); }} />
               <SettingsMenuItem icon={<Users className="w-4 h-4 text-slate-400 shrink-0" />} label="Profils" onClick={() => { setProfilesOpen(true); setOpen(false); }} />
               <SettingsMenuItem icon={<Soup className="w-4 h-4 text-slate-400 shrink-0" />} label="Accompagnements" onClick={() => { setAccompanimentsOpen(true); setOpen(false); }} />
-              {!isDemo && (
-                <SettingsMenuItem icon={<Upload className="w-4 h-4 text-slate-400 shrink-0" />} label="Importer des données" onClick={() => { fileInputRef.current?.click(); setOpen(false); }} />
-              )}
               <SettingsMenuItem icon={<Bell className="w-4 h-4 text-slate-400 shrink-0" />} label="Notifications" onClick={() => { setNotifSettingsOpen(true); setOpen(false); }} />
               <SettingsMenuItem icon={<ScrollText className="w-4 h-4 text-slate-400 shrink-0" />} label="Informations légales" onClick={() => { setLegalOpen(true); setOpen(false); }} />
               <div className="flex items-center justify-between px-4 py-1.5 border-t border-slate-100">
@@ -88,13 +55,6 @@ export const SettingsPopover = () => {
       </div>
 
       <Suspense>
-        {!!importModalData && isValidSyncPayload(importModalData) && (
-          <ImportModal
-            payload={importModalData as SyncPayload}
-            onClose={() => setImportModalData(null)}
-          />
-        )}
-
         {notifSettingsOpen && <NotificationSettingsModal onClose={() => setNotifSettingsOpen(false)} />}
 
         {accountOpen && <AccountModal onClose={() => setAccountOpen(false)} />}

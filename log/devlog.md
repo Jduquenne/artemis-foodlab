@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — Legacy import removed from the front (D-049, v6.170.0)
+- Owner: go for option A, no legacy backup left to import.
+- Done: removed the « Importer des données » entry and its file input (`SettingsPopover`, `useIsDemo` no longer needed there), `features/sync/` (`ImportModal`, `ScopeSelector`), `core/services/importService.ts`, `core/logic/sync/importPayloadLogic.ts` and `importSummaryLogic.ts`; `catalogueRefreshLogic.ts` stays. Docs: D-049, `docs/api.md` § Import (front no longer calls it), `AGENTS.md` project map, `docs/spec-accounts.md`, roadmap idea.
+- Verified: tsc + lint only, no browser check (settings menu without « Importer des données », to check with `npm run dev`).
+- Next: owner pushes the front; then step A2: prompt to the API session to remove `POST /import` (and its D-075 stale code guard); then docs (api.md § Import removed, D-049 status).
+
 ## 2026-11-26 — Everything in prod closed by the owner (docs, v6.169.8)
 - Owner: « tout ce qui est en prod fonctionne bien, on peut clore tout ce qui reste ». Roadmap items 4, 6, 9 (delivery A), 10, 15, 16, 17 set to done, item 18 tests done.
 - Owner decisions: industrial base delivery B set aside; menu generator stays admin only; #42 later; #50 to be fed by about 3 years of Leclerc receipts (CSV with prices) the owner will provide; next: remove the obsolete import (option A).

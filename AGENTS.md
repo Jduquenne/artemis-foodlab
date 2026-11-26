@@ -63,11 +63,11 @@ src/
     domain/            types, config constants, domain predicates, labels
     utils/             generic pure helpers (numbers, collections, sort, text, codes, dates, weeks)
     logic/<feature>/   pure business logic (accompaniment, auth, dashboard, freezer, journal, media, news,
-                       nutrition, planning, profile, recipe, recipeBuilder, shopping, sync, unit)
+                       nutrition, planning, profile, recipe, recipeBuilder, shopping, sync (catalogue refresh), unit)
     catalogue/         in-memory mutable catalogue + change events + code↔uuid map
     services/          apiClient, one service per API resource, Dexie database, catalogue sync
   features/            accompaniments, dashboard, freezer, journal, news, planning,
-                       recipeBuilder, recipes, shopping (incl. household tab), sync (import)
+                       recipeBuilder, recipes, shopping (incl. household tab)
   shared/
     components/        layout/ (Layout, sidebar, settings, demo banner), ui/ (reusable)
     hooks/             all hooks (snapshots, pending, auth init, refresh, search…)

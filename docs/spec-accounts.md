@@ -40,7 +40,7 @@ A **profile** = one person (no credentials), max **3** per account (`MAX_PROFILE
 No public registration (decision 2026-10-05, D-013). « Essayer la démo » on `LoginScreen` → `POST /auth/demo` (`startDemo` in `authService`): a `guest` account with `isDemo`, pre-filled server-side, purged after expiry (~2 h). API guard rails and error codes: `docs/api.md` § Auth and session.
 
 - `useIsDemo`; `DemoBanner` (in `Layout`, countdown via `useDemoCountdown` + `core/logic/auth/demoLogic.ts`, local logout at expiry). Refresh is capped at `demoExpiresAt` (resuming on reload works, extending is impossible).
-- Hidden in demo: import (`SettingsPopover`), e-mail + password (`AccountModal`). Demo accounts are excluded from `UsersPanel` (`excludeDemoAccounts`).
+- Hidden in demo: e-mail + password (`AccountModal`). Demo accounts are excluded from `UsersPanel` (`excludeDemoAccounts`).
 - **Any new action forbidden in demo on the API side must also be hidden in the front via `useIsDemo`.**
 
 ## Google sign-in (planned, blocked)

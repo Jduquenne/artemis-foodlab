@@ -1,6 +1,9 @@
 import { useState, useMemo } from "react";
 import { ArrowLeft, Plus, Pencil, Snowflake } from "lucide-react";
-import { FreezerCategory } from "../../../../core/domain/freezer";
+import { BatchFreezerItem, FreezerCategory, FreezerItem } from "../../../../core/domain/freezer";
+import { isPlannedBatch } from "../../../../core/domain/freezerPredicates";
+import { plannedBatchDeleteConsequence } from "../../../../core/logic/freezer/batchQuantityLogic";
+import { ConfirmActionModal } from "../../../../shared/components/ui/ConfirmActionModal";
 import { removeItemFromCategory, updateCategoryName } from "../../../../core/services/freezerService";
 import { FreezerItemRow } from "../item/FreezerItemRow";
 import { AddFreezerItemModal } from "../modal/AddFreezerItemModal";
@@ -21,6 +24,13 @@ export interface FreezerCategoryDetailProps {
 
 export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetailProps) => {
   const [addOpen, setAddOpen] = useState(false);
+  const [confirmingBatch, setConfirmingBatch] = useState<BatchFreezerItem | null>(null);
+  const deleteItem = (itemId: string) => withPending(`freezer-item-delete:${itemId}`, () => removeItemFromCategory(category.id, itemId));
+  const requestDelete = (item: FreezerItem) => {
+    if (isPlannedBatch(item)) setConfirmingBatch(item);
+    else deleteItem(item.id).catch(() => undefined);
+  };
+  const confirmBatchDelete = (item: BatchFreezerItem) => deleteItem(item.id).then(() => { setConfirmingBatch(null); return true; }, () => false);
   const rename = useInlineRename(category.name, `freezer-category-rename:${category.id}`, (name) =>
     updateCategoryName(category.id, name),
   );
@@ -96,7 +106,7 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
                     key={item.id}
                     item={item}
                     categoryId={category.id}
-                    onDelete={() => withPending(`freezer-item-delete:${item.id}`, () => removeItemFromCategory(category.id, item.id)).catch(() => undefined)}
+                    onDelete={() => requestDelete(item)}
                   />
                 ))}
               </div>
@@ -114,6 +124,17 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
           Ajouter
         </button>
       </div>
+
+      {confirmingBatch && (
+        <ConfirmActionModal
+          title={`Supprimer « ${confirmingBatch.recipeName} » ?`}
+          consequence={plannedBatchDeleteConsequence(confirmingBatch.unit, confirmingBatch.linkedQuantity)}
+          confirmLabel="Supprimer"
+          danger
+          onConfirm={() => confirmBatchDelete(confirmingBatch)}
+          onCancel={() => setConfirmingBatch(null)}
+        />
+      )}
 
       {addOpen && <AddFreezerItemModal categoryId={category.id} existingFoodNames={existingFoodNames} onClose={() => setAddOpen(false)} />}
     </div>

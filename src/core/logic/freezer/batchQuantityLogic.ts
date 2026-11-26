@@ -38,3 +38,8 @@ export function isValidBatchQuantity(unit: BatchUnit, quantity: number): boolean
   if (quantity <= 0) return false;
   return unit === "portion" ? Number.isInteger(quantity) : roundTo(quantity, BATCH_GRAM_DECIMALS) === quantity;
 }
+
+export function plannedBatchDeleteConsequence(unit: BatchUnit, linkedQuantity: number): string {
+  const linked = linkedQuantityLabel(unit, linkedQuantity) ?? "Une quantité prévue au menu";
+  return `Ce lot a ${linked}. Les repas concernés repasseront en version maison : la base sera de nouveau à préparer et ses ingrédients dans les courses.`;
+}

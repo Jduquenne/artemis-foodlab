@@ -432,6 +432,7 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
   - A copy drops the frozen link (it would take the quantity twice); a drag and drop goes through an atomic API move that keeps items and links (`POST /planning-slots/move`, D-074), in which the slot persons stay with the day (owner: « le nombre de personnes reste sur le jour, pas sur le repas ») and the item overrides follow the item.
 - **Alternatives considered**: a dedicated `frozenBases` field on the planned item (refused: duplicates the base version mechanism); decrementing manually like dish batches (refused by the owner: the link must move the stock); giving back on a past meal (refused: counted as eaten); blocking the move of a past meal holding a frozen base (refused: frustrating), or dropping the link on move (loses the stock).
 - **Consequences**: front `BaseVersionChoice` union, `linkedQuantity` on batches (Dexie v17), `applyFreezerBatches` after planning writes, `frozenBaseLogic.ts`, `applyFrozenBases` in shopping, `moveMeal`. Contracts: `docs/api.md` § Planning (move) and § Freezer (frozen base).
+- **Follow-up (owner, 2026-11-26)**: a moved dessert keeps its own persons (item settings follow the item, slot persons stay on the day); the field of the base batch « Ajouter au menu » stays « Personnes » (same value as the planning « Personnes »); deleting a batch still planned asks for confirmation (front v6.169.7).
 
 ## D-047 — A food-linked ingredient takes its category from the food; diet detection uses a food origin
 

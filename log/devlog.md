@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — #66 comfort questions (v6.169.7)
+- Owner answers: (1) a moved dessert keeps its own persons (current behaviour, unchanged); (2) the base batch « Ajouter au menu » field stays « Personnes »; (3) confirm before deleting a batch still planned.
+- Done: `isPlannedBatch` (`core/domain/freezerPredicates.ts`), `plannedBatchDeleteConsequence` (`batchQuantityLogic.ts`); `FreezerCategoryDetail` opens `ConfirmActionModal` for a planned batch, other items still deleted at once. `docs/spec-freezer.md`, D-046 follow-up.
+- Verified: tsc + lint only, no browser check. Owner test: plan a base batch through « Ajouter au menu », then delete the batch → confirmation with the planned quantity; cancel keeps it; confirm deletes it and the meal falls back to home (base back in the shopping list); deleting an unplanned batch or a food item stays immediate.
+- Still open: D-068 and D-078 API hashes `TODO(owner)`; owner tests of v6.166.x (#59 to #65); backlog #42, #50; idea: remove the obsolete import.
+
 ## 2026-11-26 — #67 closed (docs, v6.169.6)
 - Owner: browser tests of #67 validated in prod; issue closed. Roadmap item 21 set to done, D-048 status updated.
 - Still open: D-068 and D-078 API commit hashes `TODO(owner)` in `docs/api.md`; owner tests of v6.166.x (#59 to #65); #66 comfort questions (dessert persons on a move, « Personnes » wording, confirmation before deleting a planned batch); low-priority backlog #42, #50; roadmap idea: remove the obsolete import (`features/sync`, `POST /import`).

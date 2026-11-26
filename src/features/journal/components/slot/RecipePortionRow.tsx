@@ -18,7 +18,7 @@ import { useActiveProfile } from "../../../../shared/hooks/useActiveProfile";
 import { accompanimentDetailsFor } from "../../../../core/logic/accompaniment/accompanimentLogic";
 import { portionsPerPersonOf } from "../../../../core/logic/recipe/portionsPerPersonLogic";
 import { cookedGramsFromPortions, cookedWeightPerPortion, portionsFromCookedGrams } from "../../../../core/logic/recipe/cookedWeightLogic";
-import { stepJournalPortions } from "../../../../core/logic/journal/portionStepLogic";
+import { nudgeJournalPortions, stepJournalPortions } from "../../../../core/logic/journal/portionStepLogic";
 import { formatQty, pluralizeUnit } from "../../../../core/logic/unit/unitFormatLogic";
 
 export interface RecipePortionRowProps {
@@ -166,6 +166,20 @@ export const RecipePortionRow = ({ recipeId, planningSlotItemId, mealChoices, ac
           >
             <Plus className="w-3 h-3" />
           </button>
+          {([-1, 1] as const).map((direction) => {
+            const nudged = nudgeJournalPortions(portions, direction, reference);
+            return (
+              <button
+                key={direction}
+                onClick={() => planningSlotItemId && nudged !== null && withPending(`journal-override:${key}`, () => setPortionOverride(planningSlotItemId, recipe, nudged)).catch(() => undefined)}
+                disabled={!planningSlotItemId || pending || nudged === null}
+                aria-label={`${direction === 1 ? "Un peu plus (+25 %)" : "Un peu moins (−25 %)"} — ${name}`}
+                className="ml-1 px-1 h-5 rounded bg-subtle text-[10px] font-bold text-slate-400 hover:text-orange-500 transition-colors disabled:opacity-40"
+              >
+                {direction === 1 ? "+25 %" : "−25 %"}
+              </button>
+            );
+          })}
         </div>
         <span className="text-[11px] text-slate-400 tabular-nums font-medium">
           {Math.round(kcal)} kcal

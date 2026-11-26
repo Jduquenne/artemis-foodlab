@@ -13,3 +13,12 @@ export function stepJournalPortions(current: number, direction: 1 | -1, referenc
   if (current <= MIN_JOURNAL_PORTIONS) return null;
   return Math.max(MIN_JOURNAL_PORTIONS, Math.ceil(current) - 1);
 }
+
+export const JOURNAL_PORTION_NUDGE = 0.25;
+
+export function nudgeJournalPortions(current: number, direction: 1 | -1, reference: number): number | null {
+  const step = reference * JOURNAL_PORTION_NUDGE;
+  const next = Math.round((current + direction * step) * 100) / 100;
+  if (next < step - 0.001 || next > maxJournalPortions(reference)) return null;
+  return next;
+}

@@ -15,16 +15,29 @@ export interface FeedbackCreated {
 
 export type FeedbackStatusFilter = "open" | "handled" | "all";
 
-export interface FeedbackItem {
+export const FEEDBACK_REPLY_MAX = 2000;
+
+export interface OwnFeedbackItem {
   id: string;
   message: string;
   screen: string | null;
   appVersion: string | null;
   rating: number | null;
-  fromDemo: boolean;
-  userEmail: string | null;
   createdAt: string;
   handledAt: string | null;
+  reply: string | null;
+  repliedAt: string | null;
+  replyReadAt: string | null;
+}
+
+export interface FeedbackItem extends OwnFeedbackItem {
+  fromDemo: boolean;
+  userEmail: string | null;
+}
+
+export interface FeedbackPurgeResult {
+  deleted: number;
+  keptWithUnreadReply: number;
 }
 
 export interface FeedbackArea {

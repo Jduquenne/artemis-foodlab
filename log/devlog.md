@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — #109 feedback replies and deletion (v6.170.36)
+- API security review done (Prisma only, no HTML server-side, per-IP limit 10 per hour on POST /feedback, invisible / control characters stripped, null byte 500 fixed, 413 over 100 KB, text never logged) and #109 contract with real payloads (`docs/api.md`).
+- Done: admin Dashboard › Avis: reply / edit / delete the reply (not for demo feedback nor a deleted account), delete any feedback (confirmation), « Vider les avis traités » (confirmation, keeps unread replies); user: « Écrire » / « Mes avis » tabs with replies and a « Nouveau » tag, all marked read on opening; unread badge from `/bootstrap` (dot on ⚙, count in the menu). **Needs the API (#105, #109) live in prod.**
+- Test (dev API): as admin reply to a feedback → it is handled, « pas encore lue »; as its author: dot on ⚙, « Donner mon avis · 1 réponse », sheet opens on « Mes avis » with « Nouveau »; reopen → no tag, no dot; admin sees « lue »; edit the reply → unread again; delete the reply; delete a feedback; Traités › Vider → notification with the counts; a demo feedback shows no « Répondre ».
+- To ask the API next time: the response body of `PUT /shopping-periods/:id/days` (typed `unknown` in `updatePeriodDays` because unknown, #82).
+
 ## 2026-11-26 — #82 change the shopping days without losing data (v6.170.35)
 - Done: `setShoppingDays(days, mode)`: « adjust » → `PUT /shopping-periods/:id/days` (API D-083, keeps checks, stocks, bags, extras, household flags), « new » → `PUT /current` as before. Shopping sheet: explicit « Nouvelle liste » (default) / « Garder coches et stocks »; planning selection: keep when the days overlap, else new list. Reason for two modes: keeping by default would carry last week's checks into next week's list. **Needs D-083 live in prod.**
 - Test (dev API): list with checks and stocks → Courses › Changer les jours › Garder coches et stocks › « Jusqu'à dimanche » → checks and stocks still there for the lines still listed; « Nouvelle liste » → everything empty; planning: add one day to the current selection → checks kept; select a different week → new list.

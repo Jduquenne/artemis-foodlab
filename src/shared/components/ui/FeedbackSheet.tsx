@@ -8,6 +8,8 @@ import { usePendingKey } from "../../hooks/usePendingKey";
 import { useNotificationStore } from "../../store/useNotificationStore";
 import { withPending } from "../../utils/withPending";
 import { Sheet } from "./Sheet";
+import { OwnFeedbackList } from "./OwnFeedbackList";
+import { useFeedbackStore } from "../../store/useFeedbackStore";
 
 const PENDING_KEY = "feedback-send";
 
@@ -17,6 +19,8 @@ export interface FeedbackSheetProps {
 }
 
 export const FeedbackSheet = ({ screen, onClose }: FeedbackSheetProps) => {
+  const unreadReplies = useFeedbackStore((s) => s.unreadReplies);
+  const [tab, setTab] = useState<"write" | "mine">(() => (unreadReplies > 0 ? "mine" : "write"));
   const [message, setMessage] = useState("");
   const [rating, setRating] = useState<number | null>(null);
   const isAdmin = useIsAdmin();
@@ -37,6 +41,24 @@ export const FeedbackSheet = ({ screen, onClose }: FeedbackSheetProps) => {
 
   return (
     <Sheet title="Donner mon avis" subtitle="Une idée, un bug, quelque chose qui t'agace ? On lit tout." onClose={onClose}>
+      <div className="flex gap-2" role="tablist">
+        {(["write", "mine"] as const).map((option) => (
+          <button
+            key={option}
+            type="button"
+            role="tab"
+            aria-selected={tab === option}
+            onClick={() => setTab(option)}
+            className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-bold transition-colors ${tab === option ? "bg-orange-500 text-white" : "bg-muted text-slate-500"}`}
+          >
+            {option === "write" ? "Écrire" : "Mes avis"}
+            {option === "mine" && unreadReplies > 0 && (
+              <span className={`min-w-4 h-4 px-1 rounded-full text-[10px] leading-4 ${tab === option ? "bg-white text-orange-600" : "bg-orange-500 text-white"}`}>{unreadReplies}</span>
+            )}
+          </button>
+        ))}
+      </div>
+      {tab === "mine" ? <OwnFeedbackList /> : (<>
       <label className="flex flex-col gap-1">
         <span className="text-xs font-bold text-slate-500">À propos de</span>
         <select
@@ -84,6 +106,7 @@ export const FeedbackSheet = ({ screen, onClose }: FeedbackSheetProps) => {
         {pending && <Loader2 className="w-4 h-4 animate-spin" />}
         Envoyer
       </button>
+      </>)}
     </Sheet>
   );
 };

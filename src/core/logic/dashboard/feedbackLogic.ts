@@ -1,4 +1,4 @@
-import { FEEDBACK_AREAS, FEEDBACK_GENERAL_AREA, FeedbackArea, FeedbackItem, FeedbackStatusFilter } from "../../domain/feedback";
+import { FEEDBACK_AREAS, FEEDBACK_GENERAL_AREA, FeedbackArea, FeedbackItem, FeedbackPurgeResult, FeedbackStatusFilter, OwnFeedbackItem } from "../../domain/feedback";
 
 export function isFeedbackHandled(item: FeedbackItem): boolean {
   return item.handledAt !== null;
@@ -29,4 +29,22 @@ export function feedbackAreaOf(pathname: string, areas: readonly FeedbackArea[])
 export function feedbackAreaLabel(screen: string | null): string | null {
   if (screen === null) return null;
   return FEEDBACK_AREAS.find((area) => area.id === screen)?.label ?? screen;
+}
+
+export function canReplyToFeedback(item: FeedbackItem): boolean {
+  return !item.fromDemo && item.userEmail !== null;
+}
+
+export function hasUnreadReply(item: OwnFeedbackItem): boolean {
+  return item.reply !== null && item.replyReadAt === null;
+}
+
+export function removeFeedback(list: readonly FeedbackItem[], id: string): FeedbackItem[] {
+  return list.filter((item) => item.id !== id);
+}
+
+export function feedbackPurgeMessage({ deleted, keptWithUnreadReply }: FeedbackPurgeResult): string {
+  const plural = (count: number) => (count > 1 ? "s" : "");
+  const kept = keptWithUnreadReply > 0 ? `, ${keptWithUnreadReply} gardé${plural(keptWithUnreadReply)} (réponse pas encore lue)` : "";
+  return `${deleted} avis supprimé${plural(deleted)}${kept}.`;
 }

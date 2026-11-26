@@ -2,6 +2,7 @@ import { lazy, Suspense, useState } from "react";
 import { Settings, Bell, UserCircle, ScrollText, Users, Soup, RotateCcw, MessageSquareHeart } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { usePlanningPreferencesStore } from "../../store/usePlanningPreferencesStore";
+import { useFeedbackStore } from "../../store/useFeedbackStore";
 import { ThemeToggle } from "./ThemeToggle";
 import { SettingsMenuItem } from "./SettingsMenuItem";
 
@@ -20,6 +21,7 @@ export const SettingsPopover = () => {
   const [accompanimentsOpen, setAccompanimentsOpen] = useState(false);
   const [legalOpen, setLegalOpen] = useState(false);
   const [feedbackOpen, setFeedbackOpen] = useState(false);
+  const unreadReplies = useFeedbackStore((s) => s.unreadReplies);
   const location = useLocation();
   const dessertMove = usePlanningPreferencesStore((s) => s.dessertMove);
   const setDessertMove = usePlanningPreferencesStore((s) => s.setDessertMove);
@@ -36,7 +38,10 @@ export const SettingsPopover = () => {
               : "text-slate-400 hover:bg-muted hover:text-slate-600"
           }`}
         >
-          <Settings className="w-5 h-5" />
+          <span className="relative block">
+            <Settings className="w-5 h-5" />
+            {unreadReplies > 0 && <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-orange-500 ring-2 ring-surface" aria-label="Nouvelle réponse à un avis" />}
+          </span>
         </button>
 
         {open && (
@@ -50,7 +55,7 @@ export const SettingsPopover = () => {
                 <SettingsMenuItem icon={<RotateCcw className="w-4 h-4 text-slate-400 shrink-0" />} label="Redemander pour les desserts" onClick={() => { setDessertMove("ask"); setOpen(false); }} />
               )}
               <SettingsMenuItem icon={<Bell className="w-4 h-4 text-slate-400 shrink-0" />} label="Notifications" onClick={() => { setNotifSettingsOpen(true); setOpen(false); }} />
-              <SettingsMenuItem icon={<MessageSquareHeart className="w-4 h-4 text-orange-500 shrink-0" />} label="Donner mon avis" onClick={() => { setFeedbackOpen(true); setOpen(false); }} />
+              <SettingsMenuItem icon={<MessageSquareHeart className="w-4 h-4 text-orange-500 shrink-0" />} label={unreadReplies > 0 ? `Donner mon avis · ${unreadReplies} réponse${unreadReplies > 1 ? "s" : ""}` : "Donner mon avis"} onClick={() => { setFeedbackOpen(true); setOpen(false); }} />
               <SettingsMenuItem icon={<ScrollText className="w-4 h-4 text-slate-400 shrink-0" />} label="Informations légales" onClick={() => { setLegalOpen(true); setOpen(false); }} />
               <div className="flex items-center justify-between px-4 py-1.5 border-t border-slate-100">
                 <span className="text-sm text-slate-700">Thème</span>

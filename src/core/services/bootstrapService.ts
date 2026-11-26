@@ -39,6 +39,7 @@ interface ApiBootstrap {
   profiles: ApiProfile[];
   journalOverrides: ApiJournalOverride[];
   currentShoppingPeriod: ApiShoppingPeriod | null;
+  unreadFeedbackReplies?: number;
 }
 
 export interface BootstrapResult {
@@ -50,6 +51,7 @@ export interface BootstrapResult {
   priceStores: PriceStore[];
   foodPrices: FoodPrice[];
   foodCookings: FoodCooking[];
+  unreadFeedbackReplies: number;
 }
 
 export interface SyncBootstrapOptions {
@@ -82,6 +84,7 @@ export async function syncBootstrapFromApi(options: SyncBootstrapOptions = {}): 
       priceStores: data.priceStores ?? [],
       foodPrices: data.foodPrices ?? [],
       foodCookings: data.foodCookings ?? [],
+      unreadFeedbackReplies: data.unreadFeedbackReplies ?? 0,
     };
   } catch {
     return null;

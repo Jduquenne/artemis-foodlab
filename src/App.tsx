@@ -10,6 +10,7 @@ import { useAuthInit } from './shared/hooks/useAuthInit';
 import { useIsAdmin } from './shared/hooks/useIsAdmin';
 import { useDelayedFlag } from './shared/hooks/useDelayedFlag';
 
+const TodayModule = lazy(() => import('./features/today/TodayModule').then(({ TodayModule: m }) => ({ default: m })));
 const JournalModule = lazy(() => import('./features/journal/JournalModule').then(({ JournalModule: m }) => ({ default: m })));
 const RecipeModule = lazy(() => import('./features/recipes/RecipeModule').then(({ RecipeModule: m }) => ({ default: m })));
 const CategoryDetail = lazy(() => import('./features/recipes/components/detail/CategoryDetail').then(({ CategoryDetail: m }) => ({ default: m })));
@@ -49,7 +50,9 @@ function App() {
           <Layout>
             <Suspense>
               <Routes>
-                <Route path="/" element={<Navigate to="/journal" replace />} />
+                <Route path="/" element={<Navigate to="/today" replace />} />
+
+                <Route path="/today" element={<TodayModule />} />
 
                 <Route path="/journal" element={<JournalModule />} />
 
@@ -64,7 +67,7 @@ function App() {
                 <Route path="/freezer" element={<FreezerModule />} />
                 {isAdmin && <Route path="/recipe-builder" element={<RecipeBuilderModule />} />}
                 {isAdmin && <Route path="/dashboard" element={<DashboardModule />} />}
-                <Route path="*" element={<Navigate to="/journal" replace />} />
+                <Route path="*" element={<Navigate to="/today" replace />} />
               </Routes>
             </Suspense>
           </Layout>

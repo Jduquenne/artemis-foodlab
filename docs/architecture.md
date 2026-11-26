@@ -141,7 +141,7 @@ Persisted keys: `theme`, `last_recipe_search`, `cipe_shopping_price_calc`, `cipe
 ## Routing
 
 - All routes use `React.lazy`; the route table is inline in `src/App.tsx` (`HashRouter`, Vite `base: "/artemis-foodlab/"`).
-- `/recipe-builder` and `/dashboard` are mounted only for `user.role === "admin"`; an unknown route redirects to `/journal`. `/household` redirects to `/shopping` (household is a tab of the Shopping view).
+- `/recipe-builder` and `/dashboard` are mounted only for `user.role === "admin"`; an unknown route and `/` redirect to `/today` (home screen since issue #72, owner 2026-11-26; was `/journal`). `/household` redirects to `/shopping` (household is a tab of the Shopping view).
 - Sidebar: 5 entries (Journal · Menu · Recettes · Courses · Congélateur) + Recipe Builder (`ChefHat`) and Dashboard icons at the bottom for admins, rendered in `Layout.tsx`.
 
 ## Public assets

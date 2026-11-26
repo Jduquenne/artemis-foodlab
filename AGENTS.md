@@ -70,7 +70,7 @@ src/
     catalogue/         in-memory mutable catalogue + change events + code↔uuid map
     services/          apiClient, one service per API resource, Dexie database, catalogue sync
   features/            accompaniments, dashboard, freezer, journal, news, planning,
-                       recipeBuilder, recipes, shopping (incl. household tab)
+                       recipeBuilder, recipes, shopping (incl. household tab), today (home)
   shared/
     components/        layout/ (Layout, sidebar, settings, demo banner), ui/ (reusable)
     hooks/             all hooks (snapshots, pending, auth init, refresh, search…)

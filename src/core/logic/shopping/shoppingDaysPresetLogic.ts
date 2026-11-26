@@ -3,6 +3,14 @@ import { ShoppingDay } from "../../domain/planning";
 import { MAX_SHOPPING_DAYS } from "../../domain/planningConfig";
 import { dayNameOf, getWeekNumber, getWeekYear } from "../../utils/weekUtils";
 
+export type ShoppingDaysMode = "adjust" | "new";
+
+const sameDay = (a: ShoppingDay, b: ShoppingDay) => a.year === b.year && a.week === b.week && a.day === b.day;
+
+export function defaultShoppingDaysMode(current: readonly ShoppingDay[], next: readonly ShoppingDay[]): ShoppingDaysMode {
+  return current.some((day) => next.some((other) => sameDay(day, other))) ? "adjust" : "new";
+}
+
 export type ShoppingDaysPreset = "untilSunday" | "nextSevenDays" | "nextWeek";
 
 export const SHOPPING_DAYS_PRESETS: readonly ShoppingDaysPreset[] = ["untilSunday", "nextSevenDays", "nextWeek"];

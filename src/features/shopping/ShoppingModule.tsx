@@ -27,6 +27,7 @@ import { markScrolling } from '../../shared/utils/scrollGuard';
 import { useMenuStore } from '../../shared/store/useMenuStore';
 import { SHOPPING_DAYS_PENDING_KEY, ShoppingDaysSheet } from './components/sheets/ShoppingDaysSheet';
 import { ShoppingDay } from '../../core/domain/planning';
+import { ShoppingDaysMode } from '../../core/logic/shopping/shoppingDaysPresetLogic';
 import { useAuthStore } from '../../shared/store/useAuthStore';
 import { resolveShoppingAisles } from '../../core/logic/shopping/shoppingCategoryOrderLogic';
 import { useCustomShoppingCategoryStore } from '../../shared/store/useCustomShoppingCategoryStore';
@@ -80,8 +81,8 @@ export const ShoppingModule = () => {
     const currentPeriodId = useMenuStore((s) => s.currentPeriodId);
     const setShoppingDays = useMenuStore((s) => s.setShoppingDays);
     const [showDays, setShowDays] = useState(false);
-    const pickShoppingDays = (days: ShoppingDay[]) => {
-        withPending(SHOPPING_DAYS_PENDING_KEY, () => setShoppingDays(days))
+    const pickShoppingDays = (days: ShoppingDay[], mode: ShoppingDaysMode) => {
+        withPending(SHOPPING_DAYS_PENDING_KEY, () => setShoppingDays(days, mode))
             .then(() => setShowDays(false))
             .catch(() => undefined);
     };

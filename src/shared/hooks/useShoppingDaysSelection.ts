@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ShoppingDay } from "../../core/domain/planning";
 import { MAX_SHOPPING_DAYS } from "../../core/domain/planningConfig";
+import { defaultShoppingDaysMode } from "../../core/logic/shopping/shoppingDaysPresetLogic";
 import { useMenuStore } from "../store/useMenuStore";
 import { withPending } from "../utils/withPending";
 import { usePendingKey } from "./usePendingKey";
@@ -25,7 +26,7 @@ export function useShoppingDaysSelection(year: number, week: number) {
 
   const confirm = async () => {
     const ok = await withPending(PENDING_KEY, async () => {
-      await setShoppingDays(draftDays);
+      await setShoppingDays(draftDays, defaultShoppingDaysMode(shoppingDays, draftDays));
       return true;
     }).catch(() => false);
     if (ok) setIsSelectionMode(false);

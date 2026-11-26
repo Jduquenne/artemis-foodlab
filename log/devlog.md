@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — #82 change the shopping days without losing data (v6.170.35)
+- Done: `setShoppingDays(days, mode)`: « adjust » → `PUT /shopping-periods/:id/days` (API D-083, keeps checks, stocks, bags, extras, household flags), « new » → `PUT /current` as before. Shopping sheet: explicit « Nouvelle liste » (default) / « Garder coches et stocks »; planning selection: keep when the days overlap, else new list. Reason for two modes: keeping by default would carry last week's checks into next week's list. **Needs D-083 live in prod.**
+- Test (dev API): list with checks and stocks → Courses › Changer les jours › Garder coches et stocks › « Jusqu'à dimanche » → checks and stocks still there for the lines still listed; « Nouvelle liste » → everything empty; planning: add one day to the current selection → checks kept; select a different week → new list.
+
 ## 2026-11-26 — No raw HTML nor code execution (golden rule 21, v6.170.34)
 - Owner: no security hole through the feedback (no script, no misuse). Front state: feedback and replies rendered as React text (escaped), no clickable links; the only HTML sink is `SvgCard` (catalogue data escaped with `escapeXml`). Done: ESLint `HTML_SINK_RULES` (no `dangerouslySetInnerHTML`, `innerHTML` / `outerHTML` assignment, `insertAdjacentHTML`, `eval`, `new Function`), `SvgCard` the only exception; golden rule 21 in `AGENTS.md`; probes confirmed both rule families fire. Server-side review asked to the API session (injection, spam through demo accounts, limits).
 

@@ -31,6 +31,13 @@ export async function replacePeriod(days: ShoppingDay[]): Promise<string | null>
   return period?.id ?? null;
 }
 
+export async function updatePeriodDays(periodId: string, days: ShoppingDay[]): Promise<void> {
+  await apiFetchJson<unknown>(`/shopping-periods/${periodId}/days`, {
+    method: "PUT",
+    body: { days: days.map(d => ({ year: d.year, week: d.week, day: d.day })) },
+  });
+}
+
 export interface ApiExtraBody {
   name?: string;
   quantity?: number | null;

@@ -462,7 +462,7 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
 ## D-049 — The legacy data import is removed
 
 - **Date**: 2026-11-26
-- **Status**: accepted (owner, 2026-11-26); front removed in v6.170.0; API `POST /import` removal to relay to the API session after the front is live (`TODO(owner)`). Supersedes the import part of D-028.
+- **Status**: accepted (owner, 2026-11-26); front removed in v6.170.0; API D-079 implemented (route, CLI import `npm run import:user-data` and the D-075 import guard removed), **not live yet** (commit hash `TODO(owner)`). Supersedes the import part of D-028.
 - **Context**: D-028 kept `POST /import` so a household could load a legacy local backup (`SyncPayload` v3) into the API. The migration is over; the import is no longer used, and #68 showed it had brought stale food codes into the freezer of 3 accounts (guarded since by API D-075).
 - **Decision**: remove the import on both sides: front menu « Importer des données » (`SettingsPopover`), `features/sync` (`ImportModal`, `ScopeSelector`), `importService`, `core/logic/sync/importPayloadLogic.ts` and `importSummaryLogic.ts`; then the API route and its stale food code guard.
 - **Alternatives considered**: keeping it hidden or admin only (refused: dead code with a data risk, no remaining backup to import according to the owner).

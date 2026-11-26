@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — Legacy import removed on the API side (API D-079, docs, v6.170.1)
+- Owner chose to remove the CLI import too (front recommendation). API session: D-079 implemented, **not live yet**: `POST /import` (route, controller, 2 MB limit, `limitImport`, `syncPayloadV3Schema`, service, repository), the CLI import `npm run import:user-data`, the D-075 import guard `foodName.ts`, their tests and docs. Kept: imported data, `releaseFrozenChoices`, `scripts/remapFreezerFoodCodes.ts`. Once live: 404 `NOT_FOUND` « Cette route n'existe pas. ».
+- Docs: `docs/api.md` § Import (removed), D-049 status, roadmap idea.
+- Next: owner pushes the front (v6.170.0, still 2 commits ahead of `origin` at writing time) **then** the API; give the D-079 commit hash; then close the import removal. Hashes still `TODO(owner)`: D-068, D-078, D-079.
+
 ## 2026-11-26 — Legacy import removed from the front (D-049, v6.170.0)
 - Owner: go for option A, no legacy backup left to import.
 - Done: removed the « Importer des données » entry and its file input (`SettingsPopover`, `useIsDemo` no longer needed there), `features/sync/` (`ImportModal`, `ScopeSelector`), `core/services/importService.ts`, `core/logic/sync/importPayloadLogic.ts` and `importSummaryLogic.ts`; `catalogueRefreshLogic.ts` stays. Docs: D-049, `docs/api.md` § Import (front no longer calls it), `AGENTS.md` project map, `docs/spec-accounts.md`, roadmap idea.

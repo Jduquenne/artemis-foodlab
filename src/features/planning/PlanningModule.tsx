@@ -55,6 +55,7 @@ import { ParsedSlot, buildSlotId, parseFullSlotId } from '../../core/logic/plann
 import { buildEmptySlot, placeRecipeInSlot } from '../../core/logic/planning/planningSlotEditLogic';
 import { withPending } from '../../shared/utils/withPending';
 import { MoveDessertsPrompt } from './components/MoveDessertsPrompt';
+import { WeekListView } from './components/WeekListView';
 import { usePlanningPreferencesStore } from '../../shared/store/usePlanningPreferencesStore';
 import { DessertChoiceModal } from './components/DessertChoiceModal';
 import { TABLET_WEEK_GRID_COLS } from './planningLayout';
@@ -118,6 +119,8 @@ export const PlanningModule = () => {
     const [dessertPromptOpen, setDessertPromptOpen] = useState(false);
     const dessertMovePreference = usePlanningPreferencesStore(s => s.dessertMove);
     const setDessertMovePreference = usePlanningPreferencesStore(s => s.setDessertMove);
+    const mobileWeekView = usePlanningPreferencesStore(s => s.mobileWeekView);
+    const setMobileWeekView = usePlanningPreferencesStore(s => s.setMobileWeekView);
 
     const isAnyEditing = editingPersonsSlotId !== null;
 
@@ -541,6 +544,33 @@ export const PlanningModule = () => {
                     )}
 
                     {!isSelectionMode && (
+                        <div className="sm:hidden flex justify-end gap-1 pb-1.5">
+                            {([false, true] as const).map((week) => (
+                                <button
+                                    key={String(week)}
+                                    type="button"
+                                    onClick={() => setMobileWeekView(week)}
+                                    aria-pressed={mobileWeekView === week}
+                                    className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-colors ${mobileWeekView === week ? 'bg-orange-500 text-white' : 'bg-muted text-slate-500'}`}
+                                >
+                                    {week ? 'Semaine' : 'Jour'}
+                                </button>
+                            ))}
+                        </div>
+                    )}
+
+                    {!isSelectionMode && mobileWeekView && (
+                        <WeekListView
+                            days={DAYS}
+                            monday={monday}
+                            slots={planningData}
+                            dayKcal={dayKcal}
+                            selectedDay={selectedDay}
+                            onOpenDay={(day) => { setSelectedDay(day); setMobileWeekView(false); }}
+                        />
+                    )}
+
+                    {!isSelectionMode && !mobileWeekView && (
                         <div key={slideKey} className={`sm:hidden flex flex-col gap-1.5 h-full ${slideKey > 0 ? (slideDir === 'left' ? 'animate-slide-from-right' : 'animate-slide-from-left') : ''}`} {...swipeHandlers}>
                             {MEAL_SLOTS.map(mealType => (
                                 <div key={mealType.id} className="flex flex-col gap-0.5 min-h-0" style={{ flex: SLOT_DISPLAY[mealType.id].flex }}>

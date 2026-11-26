@@ -34,6 +34,10 @@ A dessert-only destination must never give its own dessert to the origin slot (p
 
 Each slot save diffs items (`diffSlotItems`) and sends **one** batch call `PUT /planning-slots/:id/items/batch`; the local cache is rebuilt from the full response. A move A→B is two batch calls (not atomic). Decision: D-009.
 
+## Mobile week list (issue #80)
+
+On phones (`< sm:`) a « Jour / Semaine » switch sits above the meals (`usePlanningPreferencesStore.mobileWeekView`, remembered on the device). « Semaine » shows `WeekListView` (`features/planning/components/`): one compact card per day (« Lundi 24/11 », day kcal of the active profile, then one line per filled slot « Déjeuner · Lasagnes + 1 dessert », « Rien de prévu » when empty; `weekListDays`, `core/logic/planning/weekListLogic.ts`, names from the plannable snapshot, outdoor activities included), scrollable; tapping a day opens it in the day view. Read only: no drag, no actions.
+
 ## Copy the previous week (issue #75)
 
 « Reprendre » (`History`, every account) in `PlanningHeader`: syncs and reads the previous ISO week (`previousWeekOf`, `core/logic/planning/weekCopyLogic.ts`), turns every dish and dessert of it into bulk entries for the displayed week, same day and slot (`weekCopyEntries`); nothing → info « La semaine précédente est vide : rien à reprendre. ». Otherwise `ConfirmActionModal` « Reprendre la semaine précédente ? » (« N repas et M desserts de la semaine S seront ajoutés sur les créneaux vides… », consequence: filled slots unchanged, persons and meal choices not copied), then one `bulkAddPlanningItems` call (`onConflict: "skip"`, pending keys `planning-copy-week-prepare` / `planning-copy-week`) and the generator's `menuWriteMessage` notification. Limit: the bulk route only writes items, so slot persons, per-recipe persons, grams, food / accompaniment / base version choices are left to their defaults.

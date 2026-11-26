@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — Everything in prod closed by the owner (docs, v6.169.8)
+- Owner: « tout ce qui est en prod fonctionne bien, on peut clore tout ce qui reste ». Roadmap items 4, 6, 9 (delivery A), 10, 15, 16, 17 set to done, item 18 tests done.
+- Owner decisions: industrial base delivery B set aside; menu generator stays admin only; #42 later; #50 to be fed by about 3 years of Leclerc receipts (CSV with prices) the owner will provide; next: remove the obsolete import (option A).
+- Still open: D-068 and D-078 API hashes `TODO(owner)`; owner actions in the roadmap (legal pages, food rename backfill, `.claude/settings.local.json`, font licences).
+
 ## 2026-11-26 — #66 comfort questions (v6.169.7)
 - Owner answers: (1) a moved dessert keeps its own persons (current behaviour, unchanged); (2) the base batch « Ajouter au menu » field stays « Personnes »; (3) confirm before deleting a batch still planned.
 - Done: `isPlannedBatch` (`core/domain/freezerPredicates.ts`), `plannedBatchDeleteConsequence` (`batchQuantityLogic.ts`); `FreezerCategoryDetail` opens `ConfirmActionModal` for a planned batch, other items still deleted at once. `docs/spec-freezer.md`, D-046 follow-up.

@@ -19,6 +19,7 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 ## 2026-11-26 — UX lot 3 (planning, #70)
 - Lot 3: #75, #76, #80, #73. Front only.
 - #75 (v6.170.20): « Reprendre » in the planning header copies the previous week's dishes and desserts onto the empty slots of the displayed week (`weekCopyLogic.ts`, one bulk call, confirmation, notification). Persons and meal choices not copied (bulk route limit). Test: previous week with meals, current week partly filled → confirmation with counts → only empty slots filled, notification lists skipped slots; previous week empty → info message; breakfast / snack multi recipes and desserts copied.
+- #76 (v6.170.21): empty search in the dish picker shows « Récents », « Souvent planifiés » (history of that slot, `recipe-usage?slots=<slot>`) and « De saison » (lunch / dinner), 6 each, no duplicates (`pickerSuggestionLogic.ts`, `usePickerSuggestions`); rows extracted to `renderRow`. Test: open the picker on a lunch → three sections; on a breakfast → breakfast history only, no season section; type a letter → normal results; a new account → only « De saison ».
 
 ## 2026-11-26 — UX lot 2 (shopping, #70)
 - Lot 2: #83, #84, #85, #86. Front only.

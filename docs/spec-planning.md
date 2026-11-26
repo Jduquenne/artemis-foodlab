@@ -105,6 +105,7 @@ Per-account user data (`docs/api.md` § Accompaniments), never in the catalogue;
 `RecipePicker` / `DessertPicker` (modals adding a dish/dessert to a slot):
 
 - Each row shows the photo, the code and the kcal per person (`kcalPerPersonLabel`: kcal per portion from the macros snapshot × the reference portion per person, D-040; hidden when unknown), issue #77.
+- **Suggestions** (issue #76, `RecipePicker` only): with an empty search, sections « Récents » (last planned week first), « Souvent planifiés » (planned more than once, most first) and « De saison » (lunch / dinner only, `useInSeasonRecipes`, not recently planned, by name), `PICKER_SUGGESTION_SIZE` = 6 each, no recipe in two sections (`pickerSuggestions`, `core/logic/planning/pickerSuggestionLogic.ts`). History = `GET /planning-slots/recipe-usage?slots=<the picker's slot>` (`usePickerSuggestions`, failure → no history sections); `getRecipeUsage` now takes the slots (default lunch, dinner). Same rows as the results.
 - One click on a row saves directly (no confirmation step); the clicked row shows a spinner and the others are disabled until the save ends; the picker closes only on success.
 - Results capped at `MAX_PICKER_RESULTS = 30` (`useSearchMeals` / `useSearchDesserts`, `searchOutdoorRecipes` with the same `limit`). `useSearchRecipes` (Recipes module) and `useSearchIngredients` remain unlimited on purpose.
 - The search input stays instant; a `useDeferredValue(query)` feeds the search hooks so React prioritises typing.

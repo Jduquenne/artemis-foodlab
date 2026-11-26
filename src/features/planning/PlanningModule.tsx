@@ -608,6 +608,7 @@ export const PlanningModule = () => {
                 {!isSelectionMode && pickerSlot && (
                     <RecipePicker
                         slotName={`${pickerSlot.day} · ${SLOT_DISPLAY[pickerSlot.slot].label}`}
+                        slot={pickerSlot.slot}
                         existingRecipeIds={
                             MEAL_SLOTS.find(m => m.id === pickerSlot.slot)?.multi
                                 ? (planningData.find(p => p.day === pickerSlot.day && p.slot === pickerSlot.slot)?.recipeIds ?? [])

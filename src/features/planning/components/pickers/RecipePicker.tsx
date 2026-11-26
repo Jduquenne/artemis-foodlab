@@ -8,15 +8,19 @@ import { AsyncImage } from '../../../../shared/components/ui/AsyncImage';
 import { useOutdoorSnapshot, useRecipeMetricsSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 import { kcalPerPersonLabel } from '../../../../core/logic/recipe/portionsPerPersonLogic';
 import { useModalDismiss } from '../../../../shared/hooks/useModalDismiss';
+import { usePickerSuggestions } from '../../../../shared/hooks/usePickerSuggestions';
+import { SlotType } from '../../../../core/domain/planning';
 
 export interface RecipePickerProps {
     onSelect: (recipe: SearchRecipeResult) => Promise<void>;
     onClose: () => void;
     slotName: string;
+    slot: SlotType;
     existingRecipeIds?: string[];
 }
 
-export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = [] }: RecipePickerProps) => {
+export const RecipePicker = ({ onSelect, onClose, slotName, slot, existingRecipeIds = [] }: RecipePickerProps) => {
+    const suggestions = usePickerSuggestions(slot);
     const recipesDb = useRecipesSnapshot();
     const { macros } = useRecipeMetricsSnapshot();
     const outdoorDb = useOutdoorSnapshot();
@@ -41,6 +45,46 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
         }
     };
 
+    const renderRow = (recipe: SearchRecipeResult) => {
+        const alreadyAdded = existingRecipeIds.includes(recipe.recipeId);
+        const isSaving = savingId === recipe.recipeId;
+        const kcalLabel = kcalPerPersonLabel(recipesDb[recipe.recipeId], macros[recipe.recipeId]?.kcal);
+        return (
+            <button
+                key={recipe.recipeId}
+                disabled={alreadyAdded || !!savingId}
+                onClick={() => pick(recipe)}
+                className={`w-full flex items-center gap-4 p-3 rounded-2xl border transition-all group text-left ${
+                    alreadyAdded || (savingId && !isSaving)
+                        ? 'opacity-40 cursor-not-allowed border-slate-200'
+                        : 'border-slate-200 hover:border-orange-200 hover:bg-orange-50 dark:hover:bg-orange-950/20'
+                }`}
+            >
+                <AsyncImage asset={recipesDb[recipe.recipeId]?.assets?.mealPhoto} alt={recipe.name} wrapperClassName="w-16 h-16 rounded-xl shadow-sm shrink-0" className="object-cover" />
+                <div className="flex-1">
+                    <p className="font-black text-slate-800">{recipe.name}</p>
+                    <p className="text-xs text-slate-400 font-bold">
+                        <span className="uppercase">{recipe.recipeId}</span>
+                        {kcalLabel && <span className="text-orange-500"> · {kcalLabel}</span>}
+                    </p>
+                </div>
+                {isSaving ? (
+                    <div className="bg-orange-500 text-white p-2 rounded-full">
+                        <Loader2 size={20} className="animate-spin" />
+                    </div>
+                ) : alreadyAdded ? (
+                    <div className="bg-strong text-slate-500 p-2 rounded-full">
+                        <Check size={20} />
+                    </div>
+                ) : (
+                    <div className="opacity-0 group-hover:opacity-100 bg-orange-500 text-white p-2 rounded-full transition-opacity">
+                        <Check size={20} />
+                    </div>
+                )}
+            </button>
+        );
+    };
+
     return (
         <div className="fixed inset-0 z-100 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4" {...backdrop}>
             <div className={`bg-surface w-full max-w-2xl h-[80dvh] rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden ${isClosing ? 'modal-exit sm:modal-center-exit' : 'modal-enter sm:modal-center-enter'}`}>
@@ -60,45 +104,14 @@ export const RecipePicker = ({ onSelect, onClose, slotName, existingRecipeIds = 
 
                 <div className="flex-1 overflow-y-auto p-4 space-y-3">
                     {results.length > 0 ? (
-                        results.map((recipe) => {
-                            const alreadyAdded = existingRecipeIds.includes(recipe.recipeId);
-                            const isSaving = savingId === recipe.recipeId;
-                            const kcalLabel = kcalPerPersonLabel(recipesDb[recipe.recipeId], macros[recipe.recipeId]?.kcal);
-                            return (
-                                <button
-                                    key={recipe.recipeId}
-                                    disabled={alreadyAdded || !!savingId}
-                                    onClick={() => pick(recipe)}
-                                    className={`w-full flex items-center gap-4 p-3 rounded-2xl border transition-all group text-left ${
-                                        alreadyAdded || (savingId && !isSaving)
-                                            ? 'opacity-40 cursor-not-allowed border-slate-200'
-                                            : 'border-slate-200 hover:border-orange-200 hover:bg-orange-50 dark:hover:bg-orange-950/20'
-                                    }`}
-                                >
-                                    <AsyncImage asset={recipesDb[recipe.recipeId]?.assets?.mealPhoto} alt={recipe.name} wrapperClassName="w-16 h-16 rounded-xl shadow-sm shrink-0" className="object-cover" />
-                                    <div className="flex-1">
-                                        <p className="font-black text-slate-800">{recipe.name}</p>
-                                        <p className="text-xs text-slate-400 font-bold">
-                                            <span className="uppercase">{recipe.recipeId}</span>
-                                            {kcalLabel && <span className="text-orange-500"> · {kcalLabel}</span>}
-                                        </p>
-                                    </div>
-                                    {isSaving ? (
-                                        <div className="bg-orange-500 text-white p-2 rounded-full">
-                                            <Loader2 size={20} className="animate-spin" />
-                                        </div>
-                                    ) : alreadyAdded ? (
-                                        <div className="bg-strong text-slate-500 p-2 rounded-full">
-                                            <Check size={20} />
-                                        </div>
-                                    ) : (
-                                        <div className="opacity-0 group-hover:opacity-100 bg-orange-500 text-white p-2 rounded-full transition-opacity">
-                                            <Check size={20} />
-                                        </div>
-                                    )}
-                                </button>
-                            );
-                        })
+                        results.map(renderRow)
+                    ) : query.length < 1 && suggestions.length > 0 ? (
+                        suggestions.map((section) => (
+                            <div key={section.key} className="space-y-3">
+                                <p className="text-xs font-bold uppercase tracking-widest text-slate-400 px-1">{section.label}</p>
+                                {section.recipeIds.map((id) => renderRow({ id, recipeId: id, name: recipesDb[id]?.name ?? id, matchedIngredients: [] }))}
+                            </div>
+                        ))
                     ) : (
                         <p className="text-center text-slate-400 mt-10 italic">
                             {query.length < 1 ? "Tapez le nom ou le numéro d'un plat..." : "Aucun plat trouvé."}

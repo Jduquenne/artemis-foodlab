@@ -16,6 +16,9 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — Lot 5 trimmed: #74, #93, #95, #106 cancelled (docs, v6.170.39)
+- Owner: #74 cancelled (the confirmation before a delete is safer), #93 « mangé comme prévu », #95 free meal and #106 usage metrics cancelled. Nothing was coded on the front for them. API side: removal of D-081 (free meals) and D-082 (journal confirmations) requested; D-080 (default persons) stays, the front feature is hidden (D-053). `docs/api.md` updated. Lot 5 = #105, #109, #82, #79 (hidden). Next: lot 6 (#92 first).
+
 ## 2026-11-26 — Default persons hidden behind a feature flag (D-053, v6.170.38)
 - Owner: error when saving, and doubts the feature will be used; keep it hidden until relevant, remove it after some months otherwise. Done: `FEATURE_FLAGS` (`core/domain/featureFlags.ts`), `personDefaults: false` hides the planning header button and the « ⋯ » entry, and `applyBootstrapResult` ignores the defaults, so the app behaves as before #79. D-053, `docs/conventions.md` § Hidden features, `docs/roadmap.md` § Hidden features (review by 2027-02-26).
 - Test: no « Personnes » button nor « Personnes par défaut » entry; meals keep the recipe / slot persons.

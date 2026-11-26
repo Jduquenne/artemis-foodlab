@@ -23,6 +23,7 @@ import { useModalBack } from '../../../../shared/hooks/useModalBack';
 import { useMediaSrc } from '../../../../shared/hooks/useMediaSrc';
 import { useMediaStore } from '../../../../shared/store/useMediaStore';
 import { mealContextLabel, parseMealContext } from '../../../../core/logic/planning/mealContextLogic';
+import { CookingModeView } from '../cooking/CookingModeView';
 
 export const RecipeDetail = () => {
   const { recipeId } = useParams();
@@ -37,6 +38,7 @@ export const RecipeDetail = () => {
   const categoryId = searchParams.get('category');
   const portionsParam = searchParams.get('portions');
   const mealContext = parseMealContext(searchParams.get('meal'));
+  const [cooking, setCooking] = useState(false);
   const { isLeaving, goBack } = useModalBack(
     categoryId ? `/recipes/category/${categoryId}` : '/recipes',
   );
@@ -126,6 +128,7 @@ export const RecipeDetail = () => {
             onOpenCooking={cookingRows.length > 0 ? () => setOpenSheet('cooking') : undefined}
             onEdit={isAdmin ? handleEditInBuilder : undefined}
             onOpenMacros={() => navigate(`/recipes/detail/${recipeId}/macros`)}
+            onStartCooking={() => setCooking(true)}
           />
         </div>
       </div>
@@ -215,6 +218,9 @@ export const RecipeDetail = () => {
         </div>
       )}
 
+      {cooking && (
+        <CookingModeView recipe={recipe} portions={portions} instructionsPhotoUrl={instructionsPhotoUrl} onClose={() => setCooking(false)} />
+      )}
       {openSheet === 'cost' && cost && (
         <RecipeCostSheet cost={cost} portions={portions} onClose={() => setOpenSheet(null)} />
       )}

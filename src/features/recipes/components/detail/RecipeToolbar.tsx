@@ -1,4 +1,4 @@
-import { Calculator, ChevronRight, Flame, Minus, Pencil, Plus, Users } from 'lucide-react';
+import { Calculator, ChefHat, ChevronRight, Flame, Minus, Pencil, Plus, Users } from 'lucide-react';
 import { RecipeCost } from '../../../../core/logic/price/recipeCostLogic';
 import { RecipeCostInfo } from './RecipeCostInfo';
 
@@ -10,12 +10,13 @@ export interface RecipeToolbarProps {
   onOpenCooking?: () => void;
   onEdit?: () => void;
   onOpenMacros: () => void;
+  onStartCooking: () => void;
 }
 
 const STEP_BUTTON = 'grid place-items-center w-9 h-9 rounded-xl text-slate-500 hover:text-orange-600 hover:bg-muted active:bg-strong transition-colors disabled:opacity-30 disabled:pointer-events-none';
 const ACTION_BUTTON = 'flex-1 sm:flex-none flex items-center justify-center gap-1.5 min-w-11 min-h-11 sm:min-h-0 px-3 text-xs font-bold text-slate-500 hover:text-orange-600 hover:bg-muted active:bg-strong transition-colors';
 
-export const RecipeToolbar = ({ portions, onPortionsChange, cost, onOpenCost, onOpenCooking, onEdit, onOpenMacros }: RecipeToolbarProps) => (
+export const RecipeToolbar = ({ portions, onPortionsChange, cost, onOpenCost, onOpenCooking, onEdit, onOpenMacros, onStartCooking }: RecipeToolbarProps) => (
   <div className="flex flex-col sm:flex-row items-stretch w-full sm:w-auto rounded-2xl bg-surface shadow-sm overflow-hidden divide-y sm:divide-y-0 sm:divide-x divide-muted">
     <div className="flex items-stretch divide-x divide-muted">
       <div className="flex items-center gap-1 px-1.5 py-1.5" role="group" aria-label="Nombre de parts">
@@ -59,6 +60,10 @@ export const RecipeToolbar = ({ portions, onPortionsChange, cost, onOpenCost, on
     </div>
 
     <div className="flex items-stretch divide-x divide-muted">
+      <button type="button" aria-label="Mode cuisine" title="Mode cuisine" onClick={onStartCooking} className={`${ACTION_BUTTON} text-orange-600`}>
+        <ChefHat className="w-4 h-4" />
+        <span className="sm:hidden md:inline">Cuisiner</span>
+      </button>
       {onOpenCooking && (
         <button type="button" aria-label="Cuisson des ingrédients" title="Cuisson des ingrédients" onClick={onOpenCooking} className={ACTION_BUTTON}>
           <Flame className="w-4 h-4" />

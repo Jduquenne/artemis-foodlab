@@ -1,5 +1,6 @@
 import { lazy, Suspense, useState } from "react";
-import { Settings, Bell, UserCircle, ScrollText, Users, Soup } from "lucide-react";
+import { Settings, Bell, UserCircle, ScrollText, Users, Soup, RotateCcw } from "lucide-react";
+import { usePlanningPreferencesStore } from "../../store/usePlanningPreferencesStore";
 import { ThemeToggle } from "./ThemeToggle";
 import { SettingsMenuItem } from "./SettingsMenuItem";
 
@@ -16,6 +17,8 @@ export const SettingsPopover = () => {
   const [profilesOpen, setProfilesOpen] = useState(false);
   const [accompanimentsOpen, setAccompanimentsOpen] = useState(false);
   const [legalOpen, setLegalOpen] = useState(false);
+  const dessertMove = usePlanningPreferencesStore((s) => s.dessertMove);
+  const setDessertMove = usePlanningPreferencesStore((s) => s.setDessertMove);
 
   return (
     <>
@@ -39,6 +42,9 @@ export const SettingsPopover = () => {
               <SettingsMenuItem icon={<UserCircle className="w-4 h-4 text-slate-400 shrink-0" />} label="Compte" divided={false} onClick={() => { setAccountOpen(true); setOpen(false); }} />
               <SettingsMenuItem icon={<Users className="w-4 h-4 text-slate-400 shrink-0" />} label="Profils" onClick={() => { setProfilesOpen(true); setOpen(false); }} />
               <SettingsMenuItem icon={<Soup className="w-4 h-4 text-slate-400 shrink-0" />} label="Accompagnements" onClick={() => { setAccompanimentsOpen(true); setOpen(false); }} />
+              {dessertMove !== "ask" && (
+                <SettingsMenuItem icon={<RotateCcw className="w-4 h-4 text-slate-400 shrink-0" />} label="Redemander pour les desserts" onClick={() => { setDessertMove("ask"); setOpen(false); }} />
+              )}
               <SettingsMenuItem icon={<Bell className="w-4 h-4 text-slate-400 shrink-0" />} label="Notifications" onClick={() => { setNotifSettingsOpen(true); setOpen(false); }} />
               <SettingsMenuItem icon={<ScrollText className="w-4 h-4 text-slate-400 shrink-0" />} label="Informations légales" onClick={() => { setLegalOpen(true); setOpen(false); }} />
               <div className="flex items-center justify-between px-4 py-1.5 border-t border-slate-100">

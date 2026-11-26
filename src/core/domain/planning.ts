@@ -23,6 +23,8 @@ export interface MealSlot {
   baseVersionChoices?: Record<string, BaseVersionChoice[]>;
 }
 
+export type DessertMovePreference = "ask" | "move" | "keep";
+
 export interface PlanningItemEntry {
   year: number;
   week: number;

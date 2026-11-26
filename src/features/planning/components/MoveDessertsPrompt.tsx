@@ -1,16 +1,18 @@
+import { useState } from 'react';
 import { Loader2 } from 'lucide-react';
 import { useModalDismiss } from '../../../shared/hooks/useModalDismiss';
 
 export interface MoveDessertsPromptProps {
     dessertCount: number;
     pendingChoice: 'move' | 'keep' | null;
-    onMove: () => void;
-    onKeep: () => void;
+    onMove: (remember: boolean) => void;
+    onKeep: (remember: boolean) => void;
     onCancel: () => void;
 }
 
 export const MoveDessertsPrompt = ({ dessertCount, pendingChoice, onMove, onKeep, onCancel }: MoveDessertsPromptProps) => {
     const pending = pendingChoice !== null;
+    const [remember, setRemember] = useState(false);
     const backdrop = useModalDismiss(onCancel, !pending);
 
     return (
@@ -22,7 +24,7 @@ export const MoveDessertsPrompt = ({ dessertCount, pendingChoice, onMove, onKeep
                 </p>
                 <div className="flex flex-col gap-2">
                     <button
-                        onClick={onMove}
+                        onClick={() => onMove(remember)}
                         disabled={pending}
                         className="w-full py-2.5 rounded-xl bg-orange-500 text-white text-sm font-bold hover:bg-orange-600 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                     >
@@ -30,13 +32,23 @@ export const MoveDessertsPrompt = ({ dessertCount, pendingChoice, onMove, onKeep
                         Déplacer aussi {dessertCount > 1 ? 'les desserts' : 'le dessert'}
                     </button>
                     <button
-                        onClick={onKeep}
+                        onClick={() => onKeep(remember)}
                         disabled={pending}
                         className="w-full py-2.5 rounded-xl bg-muted text-slate-700 text-sm font-bold hover:bg-slate-200 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                     >
                         {pendingChoice === 'keep' && <Loader2 className="w-4 h-4 animate-spin" />}
                         Laisser sur place
                     </button>
+                    <label className="flex items-center gap-2 px-1 py-1.5 text-xs font-semibold text-slate-500 cursor-pointer">
+                        <input
+                            type="checkbox"
+                            checked={remember}
+                            disabled={pending}
+                            onChange={(e) => setRemember(e.target.checked)}
+                            className="w-4 h-4 accent-orange-500"
+                        />
+                        Retenir mon choix sur cet appareil
+                    </label>
                     <button
                         onClick={onCancel}
                         disabled={pending}

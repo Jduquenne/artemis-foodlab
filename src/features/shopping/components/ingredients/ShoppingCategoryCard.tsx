@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { Check, ChevronDown } from 'lucide-react';
 import { ConsolidatedIngredient, ShoppingMode } from '../../../../core/domain/shopping';
 import { isCoveredAtHome } from '../../../../core/logic/shopping/shoppingChecks';
 import { sortCheckedLast } from '../../../../core/logic/shopping/shoppingGrouping';
@@ -34,14 +36,40 @@ export const ShoppingCategoryCard = ({
     const counter = mode === 'store'
         ? `${checkedCount}/${items.length}`
         : inStock > 0 ? `${inStock}/${items.length} en stock` : null;
+    const done = mode === 'store' && items.length > 0 && checkedCount === items.length;
+    const [unfolded, setUnfolded] = useState(false);
+    const [wasDone, setWasDone] = useState(done);
+    if (wasDone !== done) {
+        setWasDone(done);
+        setUnfolded(false);
+    }
+    const folded = done && !unfolded;
 
     return (
         <div className="bg-surface border border-slate-200 rounded-xl shadow-sm overflow-hidden">
-            <div className="flex items-baseline justify-between gap-2 px-3 pt-2.5 pb-1">
-                <h2 className="text-orange-600 font-black uppercase tracking-widest text-xs">{label}</h2>
-                {counter && <span className="text-xs text-slate-400 font-medium tabular-nums">{counter}</span>}
-            </div>
-            {shown.map((item) => (
+            {done ? (
+                <button
+                    type="button"
+                    onClick={() => setUnfolded((u) => !u)}
+                    aria-expanded={!folded}
+                    className={`w-full flex items-center justify-between gap-2 px-3 text-left ${folded ? 'py-2.5' : 'pt-2.5 pb-1'}`}
+                >
+                    <h2 className="flex items-center gap-1.5 text-emerald-600 font-black uppercase tracking-widest text-xs">
+                        <Check className="w-3.5 h-3.5" />
+                        {label}
+                    </h2>
+                    <span className="flex items-center gap-1 text-xs text-slate-400 font-medium tabular-nums">
+                        {counter}
+                        <ChevronDown className={`w-3.5 h-3.5 transition-transform ${folded ? '' : 'rotate-180'}`} />
+                    </span>
+                </button>
+            ) : (
+                <div className="flex items-baseline justify-between gap-2 px-3 pt-2.5 pb-1">
+                    <h2 className="text-orange-600 font-black uppercase tracking-widest text-xs">{label}</h2>
+                    {counter && <span className="text-xs text-slate-400 font-medium tabular-nums">{counter}</span>}
+                </div>
+            )}
+            {!folded && shown.map((item) => (
                 <ShoppingItemRow
                     key={item.key}
                     item={item}
@@ -54,7 +82,7 @@ export const ShoppingCategoryCard = ({
                     onOpenDetail={onOpenDetail}
                 />
             ))}
-            {mode === 'store' && coveredCount > 0 && (
+            {!folded && mode === 'store' && coveredCount > 0 && (
                 <p className="px-3 py-2 text-xs text-slate-400 border-t border-slate-200">
                     {coveredCount} déjà à la maison
                 </p>

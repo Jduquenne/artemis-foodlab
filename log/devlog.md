@@ -16,6 +16,13 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — #67 step 1: removed ingredient data layer (v6.169.0)
+- API D-078 (field `removed` on recipe ingredients) implemented on the API side, **not live yet**; contract in `docs/api.md` § Recipes. Owner decisions (2026-11-26): boolean on a food-linked line only, forbidden on a food-group line, not adjustable in the journal, cooked weight not opened to other categories (subtracting the removed grams gives the finished weight).
+- Done: `removed: boolean` on the `food` variant of `IngredientLink`; `isRemovedIngredient` (`core/domain/ingredientPredicates.ts`); API mapper reads it; Dexie v18 adds `removed: false` to cached food lines; `calculateRecipeMacros` subtracts a removed line and floors each nutrient at 0 (`floorMacrosAtZero`); `calculateRecipeBaseGrams` subtracts its grams (yogurt: 1,125 − 500 = 625 g).
+- Verified: tsc + lint only.
+- **Do not push before D-078 is live in prod.**
+- Next: step 2 exclusions (shopping, place, prices, price queue, season, generator preferred foods, Dashboard stats), step 3 Recipe Builder (checkbox, validation, `removed` always sent, live macros), step 4 display (recipe detail, cards, journal), step 5 docs and D-048.
+
 ## 2026-11-26 — #69 closed (docs, v6.168.5)
 - Owner: browser tests of #69 validated in prod; issue closed. Roadmap item 20 set to done.
 - Still open: owner tests of v6.166.x (#59 to #65); #66 comfort questions (dessert persons on a move, « Personnes » wording, confirmation before deleting a planned batch); D-068 API hash `TODO(owner)`; low-priority backlog #67, #42, #50; roadmap idea: remove the obsolete import (`features/sync`, `POST /import`).

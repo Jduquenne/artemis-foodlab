@@ -93,6 +93,7 @@ export function industrialBaseRecipe(base: RecipeDetails, foods: Record<string, 
         link: "food",
         foodId: food.id,
         foodGroupId: null,
+        removed: false,
       },
     ],
   };

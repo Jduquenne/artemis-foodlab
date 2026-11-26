@@ -4,6 +4,7 @@ import { Food, UNIT_WEIGHT_UNITS, Unit } from "../../domain/ingredient";
 import { Macronutrients } from "../../domain/nutrition";
 import { MealSlot } from "../../domain/planning";
 import { RecipeDetails } from "../../domain/recipe";
+import { isRemovedIngredient } from "../../domain/ingredientPredicates";
 import { getAllRecipeIds, isDish, isBase } from "../../domain/recipePredicates";
 import { Profile } from "../../domain/profile";
 import { FoodPersonalization, personalizeRecipeTree } from "../foodGroup/foodChoiceLogic";
@@ -38,6 +39,16 @@ export function scaleMacros(m: Macronutrients, factor: number): Macronutrients {
     lipids: m.lipids * factor,
     carbohydrates: m.carbohydrates * factor,
     fibers: m.fibers * factor,
+  };
+}
+
+export function floorMacrosAtZero(m: Macronutrients): Macronutrients {
+  return {
+    kcal: Math.max(m.kcal, 0),
+    proteins: Math.max(m.proteins, 0),
+    lipids: Math.max(m.lipids, 0),
+    carbohydrates: Math.max(m.carbohydrates, 0),
+    fibers: Math.max(m.fibers, 0),
   };
 }
 
@@ -83,7 +94,7 @@ export function calculateRecipeMacros(
       if (!food) continue;
       const grams = toGrams(ingredient.quantity, ingredient.unit, food.unitWeight);
       if (grams === null) continue;
-      total = addMacros(total, scaleMacros(food.macros, grams / 100));
+      total = addMacros(total, scaleMacros(food.macros, (ingredient.removed ? -grams : grams) / 100));
     } else if (ingredient.link === "base") {
       const base = allRecipes[ingredient.baseId];
       if (!base) continue;
@@ -94,7 +105,7 @@ export function calculateRecipeMacros(
     }
   }
 
-  return scaleMacros(total, 1 / recipe.defaultPortions);
+  return scaleMacros(floorMacrosAtZero(total), 1 / recipe.defaultPortions);
 }
 
 export function calculateOverriddenRecipeMacros(
@@ -116,7 +127,7 @@ export function calculateRecipeBaseGrams(recipe: RecipeDetails, foodDb: Record<s
     if (ing.quantity === null) continue;
     const food = ing.link === "food" ? foodDb[ing.foodId] : undefined;
     const grams = toGrams(ing.quantity, ing.unit, food?.unitWeight ?? null);
-    if (grams !== null) total += grams;
+    if (grams !== null) total += isRemovedIngredient(ing) ? -grams : grams;
   }
   return total > 0 ? total / recipe.defaultPortions : 0;
 }

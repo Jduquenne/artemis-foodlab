@@ -57,7 +57,7 @@ export interface IngredientCommon {
 }
 
 export type IngredientLink =
-  | { link: "food"; foodId: string; foodGroupId: string | null }
+  | { link: "food"; foodId: string; foodGroupId: string | null; removed: boolean }
   | { link: "base"; baseId: string }
   | { link: "free" };
 

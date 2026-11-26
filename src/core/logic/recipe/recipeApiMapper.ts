@@ -21,6 +21,7 @@ export interface ApiIngredient {
   baseId: string | null;
   foodGroupId: string | null;
   preparation: string | null;
+  removed: boolean;
 }
 
 export interface ApiRecipe {
@@ -93,7 +94,7 @@ function buildCodeByApiId(recipes: ApiRecipe[]): Map<string, string> {
 
 function mapApiIngredientLink(ing: ApiIngredient, codeByApiId: Map<string, string>): IngredientLink {
   if (ing.baseId) return { link: "base", baseId: codeByApiId.get(ing.baseId) ?? ing.baseId };
-  if (ing.foodId) return { link: "food", foodId: ing.foodId, foodGroupId: ing.foodGroupId };
+  if (ing.foodId) return { link: "food", foodId: ing.foodId, foodGroupId: ing.foodGroupId, removed: ing.removed === true };
   return { link: "free" };
 }
 

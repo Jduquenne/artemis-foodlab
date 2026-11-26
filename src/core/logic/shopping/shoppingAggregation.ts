@@ -179,6 +179,7 @@ export function aggregateSlots(
             link: "food",
             foodId: food.id,
             foodGroupId: null,
+            removed: false,
           };
           addIngredientToMap(ing, qty, buildIngredientSource(slot, recipeId, recipeName, ing, qty, undefined, names));
           return;

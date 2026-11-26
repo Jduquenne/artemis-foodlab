@@ -1,4 +1,5 @@
 import { FoodIngredient, Ingredient, Unit } from "../../domain/ingredient";
+import { isRemovedIngredient } from "../../domain/ingredientPredicates";
 import { ingredientFoodId } from "../recipe/ingredientLinkLogic";
 import { RecipeDetails, RecipeKind } from "../../domain/recipe";
 import { MealSlot, ShoppingDay } from "../../domain/planning";
@@ -97,6 +98,7 @@ export function aggregateSlots(
     source: IngredientSource,
     toSpecify = false,
   ) {
+    if (isRemovedIngredient(ing)) return;
     const key = `${ing.name.toLowerCase()}-${ing.unit}`;
     const existing = map.get(key);
     if (existing) {

@@ -16,6 +16,7 @@ function collectFoodIds(recipe: RecipeDetails, catalogue: MenuCatalogue, visited
   visited.add(recipe.code);
   for (const ingredient of recipe.ingredients) {
     if (ingredient.link === "food") {
+      if (ingredient.removed) continue;
       if (ingredient.foodGroupId !== null) {
         for (const food of foodsOfGroupSorted(catalogue.foods, ingredient.foodGroupId)) found.add(food.id);
       }

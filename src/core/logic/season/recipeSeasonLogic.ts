@@ -21,6 +21,7 @@ function collectSeasonalFoods(
   visited.add(recipe.code);
   for (const ingredient of recipe.ingredients) {
     if (ingredient.link === "food") {
+      if (ingredient.removed) continue;
       const food = catalogue.foods[ingredient.foodId];
       if (!food || !hasSeason(food.months)) continue;
       const frozen = ingredient.category === IngredientCategory.FROZEN || catalogue.seasonExemptFoodIds?.has(food.id);

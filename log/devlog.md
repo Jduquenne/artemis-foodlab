@@ -16,6 +16,12 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — #67 step 2: removed ingredient exclusions (v6.169.1)
+- Done: a removed line is skipped by the shopping aggregation (`addIngredientToMap`, so the shopping list, « Par repas » cards, place filter and the planning day / week price estimate follow), by `flattenRecipeLines` (recipe price and cooking sheets), by the season split (`recipeSeasonLogic.ts`) and by the generator preferred foods (`preferredFoodLogic.ts`).
+- Kept on purpose (change from the step 0 plan): the generator diet and excluded foods (`candidateLogic.ts`: a removed fish still makes the dish non-vegetarian), the Dashboard « used foods » stat and the planning usage food filter (the food is still in the recipe), the recipe search by food.
+- Verified: tsc + lint only. **Do not push before D-078 is live in prod.**
+- Next: step 3 Recipe Builder (checkbox, validation, `removed` always sent, live macros), step 4 display (recipe detail, cards, journal), step 5 docs and D-048.
+
 ## 2026-11-26 — #67 step 1: removed ingredient data layer (v6.169.0)
 - API D-078 (field `removed` on recipe ingredients) implemented on the API side, **not live yet**; contract in `docs/api.md` § Recipes. Owner decisions (2026-11-26): boolean on a food-linked line only, forbidden on a food-group line, not adjustable in the journal, cooked weight not opened to other categories (subtracting the removed grams gives the finished weight).
 - Done: `removed: boolean` on the `food` variant of `IngredientLink`; `isRemovedIngredient` (`core/domain/ingredientPredicates.ts`); API mapper reads it; Dexie v18 adds `removed: false` to cached food lines; `calculateRecipeMacros` subtracts a removed line and floors each nutrient at 0 (`floorMacrosAtZero`); `calculateRecipeBaseGrams` subtracts its grams (yogurt: 1,125 − 500 = 625 g).

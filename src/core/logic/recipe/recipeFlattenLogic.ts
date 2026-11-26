@@ -1,3 +1,4 @@
+import { isRemovedIngredient } from "../../domain/ingredientPredicates";
 import { RecipeDetails } from "../../domain/recipe";
 import { basePortionsOf } from "./cookedWeightLogic";
 
@@ -20,7 +21,7 @@ function collectLines(
 ): FlatRecipeLine[] {
   const lines: FlatRecipeLine[] = [];
   for (const ing of recipe.ingredients) {
-    if (ing.quantity === null) continue;
+    if (ing.quantity === null || isRemovedIngredient(ing)) continue;
     if (ing.link === "base") {
       const base = recipes[ing.baseId];
       if (!base || visited.has(ing.baseId) || base.defaultPortions <= 0) continue;

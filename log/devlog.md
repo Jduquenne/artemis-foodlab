@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — Real payloads for D-080 and D-083 (v6.170.40)
+- API: D-081 / D-082 removed (commit `9cd0f4b`, not pushed; drop migration that aborts if a row exists), #106 nothing to remove, test suite 917/917. Real responses received: `PUT /planning-person-defaults` returns a bare array (the front expected `{ defaults }`: cause of the owner's save error); `PUT /shopping-periods/:id/days` returns the whole period with new day ids.
+- Done: `savePersonDefaults` reads the array; `updatePeriodDays` typed with `ApiShoppingPeriod` (the `unknown` of #82 is gone) and returns the days of the response, used by `useMenuStore`. `docs/api.md` updated, `TODO(owner)` of D-080 removed.
+- Test (dev API): Courses › Changer les jours › Garder coches et stocks → days and checks as expected; default persons stay hidden.
+
 ## 2026-11-26 — Lot 5 trimmed: #74, #93, #95, #106 cancelled (docs, v6.170.39)
 - Owner: #74 cancelled (the confirmation before a delete is safer), #93 « mangé comme prévu », #95 free meal and #106 usage metrics cancelled. Nothing was coded on the front for them. API side: removal of D-081 (free meals) and D-082 (journal confirmations) requested; D-080 (default persons) stays, the front feature is hidden (D-053). `docs/api.md` updated. Lot 5 = #105, #109, #82, #79 (hidden). Next: lot 6 (#92 first).
 

@@ -34,8 +34,7 @@ export const useMenuStore = create<MenuState>((set, get) => ({
   setShoppingDays: async (days, mode) => {
     const periodId = get().currentPeriodId;
     if (mode === "adjust" && periodId !== null && days.length > 0) {
-      await updatePeriodDays(periodId, days);
-      set({ shoppingDays: days });
+      set({ shoppingDays: await updatePeriodDays(periodId, days) });
       return;
     }
     const newPeriodId = await replacePeriod(days);

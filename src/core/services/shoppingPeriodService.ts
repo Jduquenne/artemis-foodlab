@@ -31,11 +31,12 @@ export async function replacePeriod(days: ShoppingDay[]): Promise<string | null>
   return period?.id ?? null;
 }
 
-export async function updatePeriodDays(periodId: string, days: ShoppingDay[]): Promise<void> {
-  await apiFetchJson<unknown>(`/shopping-periods/${periodId}/days`, {
+export async function updatePeriodDays(periodId: string, days: ShoppingDay[]): Promise<ShoppingDay[]> {
+  const period = await apiFetchJson<ApiShoppingPeriod>(`/shopping-periods/${periodId}/days`, {
     method: "PUT",
     body: { days: days.map(d => ({ year: d.year, week: d.week, day: d.day })) },
   });
+  return (period.days ?? []).map(d => ({ year: d.year, week: d.week, day: d.day }));
 }
 
 export interface ApiExtraBody {

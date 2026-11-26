@@ -21,6 +21,8 @@ import { syncWeekFromApi } from '../../core/services/planningService';
 import { ApiExtraBody } from '../../core/services/shoppingPeriodService';
 import { markScrolling } from '../../shared/utils/scrollGuard';
 import { useMenuStore } from '../../shared/store/useMenuStore';
+import { SHOPPING_DAYS_PENDING_KEY, ShoppingDaysSheet } from './components/sheets/ShoppingDaysSheet';
+import { ShoppingDay } from '../../core/domain/planning';
 import { useAuthStore } from '../../shared/store/useAuthStore';
 import { resolveShoppingAisles } from '../../core/logic/shopping/shoppingCategoryOrderLogic';
 import { useCustomShoppingCategoryStore } from '../../shared/store/useCustomShoppingCategoryStore';
@@ -70,6 +72,13 @@ export const ShoppingModule = () => {
     const navigate = useNavigate();
     const shoppingDays = useMenuStore((s) => s.shoppingDays);
     const currentPeriodId = useMenuStore((s) => s.currentPeriodId);
+    const setShoppingDays = useMenuStore((s) => s.setShoppingDays);
+    const [showDays, setShowDays] = useState(false);
+    const pickShoppingDays = (days: ShoppingDay[]) => {
+        withPending(SHOPPING_DAYS_PENDING_KEY, () => setShoppingDays(days))
+            .then(() => setShowDays(false))
+            .catch(() => undefined);
+    };
     const authStatus = useAuthStore((s) => s.status);
     const savedCategoryOrder = useAuthStore((s) => s.user?.shoppingCategoryOrder ?? null);
     const placeName = useAuthStore((s) => s.user?.shoppingPlaceName ?? null);
@@ -329,7 +338,7 @@ export const ShoppingModule = () => {
                             onOpenAisleOrder: () => setShowCategoryOrder(true),
                             onOpenPriceCalc: () => setShowPriceCalc(true),
                             onCopy: hasList ? () => { handleCopy().catch(() => undefined); } : null,
-                            onChangeDays: () => navigate('/planning'),
+                            onChangeDays: () => setShowDays(true),
                         }}
                     />
                 )}
@@ -343,15 +352,15 @@ export const ShoppingModule = () => {
                     ) : shoppingDays.length === 0 ? (
                         <ShoppingEmptyState
                             title="Aucune période de courses sélectionnée"
-                            hint="Va dans le planning pour choisir tes jours"
+                            hint="Choisis les jours de tes prochaines courses"
                             icon={<CalendarDays className="w-12 h-12 opacity-30" />}
                             action={
                                 <button
-                                    onClick={() => navigate('/planning')}
+                                    onClick={() => setShowDays(true)}
                                     className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-5 py-2.5 rounded-xl font-bold transition-colors"
                                 >
                                     <CalendarDays className="w-4 h-4" />
-                                    Aller au planning
+                                    Choisir les jours
                                 </button>
                             }
                         />
@@ -464,6 +473,15 @@ export const ShoppingModule = () => {
             )}
 
             {showPriceStores && <PriceStoresSheet onClose={() => setShowPriceStores(false)} />}
+
+            {showDays && (
+                <ShoppingDaysSheet
+                    hasPeriod={currentPeriodId !== null}
+                    onPick={pickShoppingDays}
+                    onOpenPlanning={() => navigate('/planning')}
+                    onClose={() => setShowDays(false)}
+                />
+            )}
 
             {showEstimate && estimate && foodPrices.store && (
                 <EstimateSheet estimate={estimate} store={foodPrices.store} onClose={() => setShowEstimate(false)} />

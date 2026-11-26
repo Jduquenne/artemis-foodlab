@@ -121,7 +121,7 @@ export const ShoppingOptionsMenu = ({
                         <OptionsToolRow icon={<ListOrdered className={ICON} />} label="Ordre des rayons" hint="Ton parcours en magasin" onSelect={run(onOpenAisleOrder)} />
                         <OptionsToolRow icon={<Scale className={ICON} />} label="Prix au kilo" hint="Calculette" onSelect={run(onOpenPriceCalc)} />
                         {onCopy && <OptionsToolRow icon={<Clipboard className={ICON} />} label="Copier la liste" hint="Ce qui reste à acheter" onSelect={run(onCopy)} />}
-                        <OptionsToolRow icon={<CalendarDays className={ICON} />} label="Changer les jours" hint="Ouvre le planning" onSelect={run(onChangeDays)} />
+                        <OptionsToolRow icon={<CalendarDays className={ICON} />} label="Changer les jours" hint="Raccourcis ou planning" onSelect={run(onChangeDays)} />
                     </OptionsMenuSection>
                 </div>
             </FloatingMenu>

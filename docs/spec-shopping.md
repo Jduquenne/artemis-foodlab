@@ -27,6 +27,10 @@ Step 3 (v6.149.0), « Par repas » layout (`features/shopping/components/meals/`
 - **Line** (`IngredientRow`): same size as the aisle rows; a tap checks that meal's share, the chevron opens the item detail sheet.
 - **Only lines linked to a catalogue food can be checked** (source checks are keyed by `foodId`; `useShoppingPeriodChecks.checkableKeys`). A free-text line shows no check circle and is ignored by the meal and base totals (`checkableCardIngredients`); before v6.149.1 it kept the meal « not all checked », so a second tap on the header checked again instead of unchecking.
 
+## Shopping days from the shopping screen (issue #81)
+
+« Options › Outils › Changer les jours » and the empty state « Choisir les jours » open `ShoppingDaysSheet` (`features/shopping/components/sheets/`, dismissable): three presets computed from today by `presetShoppingDays` (`core/logic/shopping/shoppingDaysPresetLogic.ts`: « Jusqu'à dimanche », « Les 7 prochains jours », « La semaine prochaine » Monday → Sunday; at most `MAX_SHOPPING_DAYS`), each with its date range and day count, then « Choisir dans le planning » (the former navigation). A preset calls `useMenuStore.setShoppingDays` (pending key `shopping-days-preset`), closes on success. When a period exists the subtitle warns that its checks, stocks and extras are erased (the period is recreated, see #82).
+
 ## Shopping list model
 
 - The list is **never stored**: it is recomputed on the client from the shopping days + the cached planning (`getShoppingListForDays`, `core/logic/shopping/` — aggregation, checks, recipe cards, grouping, clipboard, price).

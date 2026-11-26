@@ -13,4 +13,6 @@ export const MAX_SHOPPING_DAYS = 10;
 
 export type MealSlotDef = typeof MEAL_SLOTS[number];
 
+export const NEXT_MEAL_END_HOURS: Record<SlotType, number> = { breakfast: 10, lunch: 14, snack: 17, dinner: 22 };
+
 export const DAYS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"] as const;

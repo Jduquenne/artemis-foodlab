@@ -16,6 +16,9 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — No raw HTML nor code execution (golden rule 21, v6.170.34)
+- Owner: no security hole through the feedback (no script, no misuse). Front state: feedback and replies rendered as React text (escaped), no clickable links; the only HTML sink is `SvgCard` (catalogue data escaped with `escapeXml`). Done: ESLint `HTML_SINK_RULES` (no `dangerouslySetInnerHTML`, `innerHTML` / `outerHTML` assignment, `insertAdjacentHTML`, `eval`, `new Function`), `SvgCard` the only exception; golden rule 21 in `AGENTS.md`; probes confirmed both rule families fire. Server-side review asked to the API session (injection, spam through demo accounts, limits).
+
 ## 2026-11-26 — UX lot 5 (with the API, #70)
 - **Nothing of this lot may be pushed before API D-080 to D-085 are live in prod.**
 - #105 (v6.170.33): « Donner mon avis » (settings menu) → `FeedbackSheet` (2000-character counter, optional 1–5 stars) → `POST /feedback` with the chosen area (« À propos de » select of the app parts, preselected from the current screen, owner request) and the app version; admin Dashboard tab « Avis » (open / handled / all, mark handled / reopen). Real contract recorded in `docs/api.md`. Test against the dev API: send a message → « Merci pour ton avis ! »; 6th message within an hour → error banner (429); empty message → button disabled; stars: tap 4 → 4 stars, tap 4 again → none; as admin: Dashboard › Avis lists it under « Ouverts », « Marquer traité » moves it to « Traités », « Rouvrir » back.

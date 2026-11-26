@@ -55,6 +55,7 @@ export interface ApiIngredientInput {
   quantity: number | null;
   unit: string | null;
   preparation: string | null;
+  removed: boolean;
 }
 
 export interface ApiRecipeInput {

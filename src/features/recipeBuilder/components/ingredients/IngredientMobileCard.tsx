@@ -35,6 +35,9 @@ export const IngredientMobileCard = ({ ingredient, onEdit, onRemove }: Ingredien
       {ingredient.ingredientType === "food" && ingredient.foodGroupId && (
         <span className="text-[10px] font-bold text-white bg-orange-500 px-1.5 py-0.5 rounded shrink-0">Au choix</span>
       )}
+      {ingredient.ingredientType === "food" && ingredient.removed && (
+        <span className="text-[10px] font-bold text-white bg-orange-500 px-1.5 py-0.5 rounded shrink-0">Retiré</span>
+      )}
 
       {qtyLabel && (
         <span className="text-xs text-slate-400 shrink-0 tabular-nums">{qtyLabel}</span>

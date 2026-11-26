@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { RecipeBuilderState, DraftIngredient } from "../../core/domain/recipeBuilderTypes";
 import { initialRecipeBuilderState } from "../../core/logic/recipeBuilder/recipeBuilderState";
-import { migrateDraftV2ToV3, migrateDraftV3ToV4, migrateDraftV4ToV5 } from "../../core/logic/recipeBuilder/recipeBuilderMigration";
+import { migrateDraftV2ToV3, migrateDraftV3ToV4, migrateDraftV4ToV6 } from "../../core/logic/recipeBuilder/recipeBuilderMigration";
 
 interface RecipeBuilderStore {
   draft: RecipeBuilderState;
@@ -23,11 +23,11 @@ export const useRecipeBuilderStore = create<RecipeBuilderStore>()(
     }),
     {
       name: "cipe_recipe_builder",
-      version: 5,
+      version: 6,
       migrate: (persisted, version) => {
         const v3 = version === 2 ? { draft: migrateDraftV2ToV3(persisted) } : persisted;
         const v4 = version <= 3 ? { draft: migrateDraftV3ToV4(v3) } : v3;
-        return { draft: migrateDraftV4ToV5(v4) ?? initialRecipeBuilderState() };
+        return { draft: migrateDraftV4ToV6(v4) ?? initialRecipeBuilderState() };
       },
     }
   )

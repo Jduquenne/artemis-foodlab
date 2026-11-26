@@ -6,6 +6,14 @@ export function hasOwnCategory(ingredient: DraftIngredient): boolean {
   return ingredient.ingredientType === "food" && ingredient.foodId === null;
 }
 
+export function canBeRemoved(ingredient: DraftIngredient): boolean {
+  return ingredient.ingredientType === "food" && ingredient.foodId !== null && ingredient.foodGroupId === null;
+}
+
+export function isRemovedDraft(ingredient: DraftIngredient): boolean {
+  return ingredient.ingredientType === "food" && ingredient.removed;
+}
+
 export const emptyDraftIngredientCommon = (): DraftIngredientCommon => ({
   id: crypto.randomUUID(),
   name: "",
@@ -20,6 +28,7 @@ export const emptyDraftIngredient = (): DraftIngredient => ({
   ingredientType: "food",
   foodId: null,
   foodGroupId: null,
+  removed: false,
 });
 
 export const initialRecipeBuilderState = (): RecipeBuilderState => ({

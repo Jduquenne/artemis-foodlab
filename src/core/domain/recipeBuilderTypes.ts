@@ -18,7 +18,7 @@ export interface DraftIngredientCommon {
 }
 
 export type DraftIngredient = DraftIngredientCommon & (
-  | { ingredientType: "food"; foodId: string | null; foodGroupId: string | null }
+  | { ingredientType: "food"; foodId: string | null; foodGroupId: string | null; removed: boolean }
   | { ingredientType: "base"; baseId: string | null }
 );
 

@@ -4,6 +4,7 @@ import { RecipeBuilderState } from "../../domain/recipeBuilderTypes";
 import { getIngredientCategoryId } from "../../domain/ingredientCategorySlugs";
 import { getIdByCode } from "../../catalogue/recipeIdMap";
 import { buildRecipeDbId } from "./recipeCodeLogic";
+import { isRemovedDraft } from "./recipeBuilderState";
 import { validateIndustrialDraft } from "./industrialEquivalentLogic";
 import { validatePortionsPerPerson } from "./portionsPerPersonLogic";
 import { validateCookedWeight } from "./cookedWeightLogic";
@@ -57,6 +58,9 @@ export function validateBuilderState(state: RecipeBuilderState): string[] {
   if (named.length === 0) errors.push("Ajoute au moins un ingrédient.");
   if (named.some((ing) => !getIngredientCategoryId(ing.category))) {
     errors.push("Un ingrédient a une catégorie inconnue de l'API — resynchronise le catalogue.");
+  }
+  if (named.some((ing) => isRemovedDraft(ing) && (ing.quantity === null || ing.quantity <= 0))) {
+    errors.push("Un ingrédient retiré pendant la préparation doit avoir une quantité supérieure à 0.");
   }
   if (named.some((ing) => ing.ingredientType === "base" && ing.baseId && !getIdByCode(ing.baseId))) {
     errors.push("Une sous-recette (base) est introuvable dans le catalogue.");

@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — #67 step 3: Recipe Builder « retiré pendant la préparation » (v6.169.2)
+- Done: `removed: boolean` on the food variant of `DraftIngredient` (draft store v6: `migrateDraftV4ToV6` keeps a persisted `removed`, else `false`); `canBeRemoved` (food line linked to a food, not « au choix ») and `isRemovedDraft` (`recipeBuilderState.ts`); `toggleRemoved`; picking another food keeps the flag, clearing the food or making the line « au choix » drops it; `builderStateToApiBody` always sends `removed` (the API resets an absent field to `false` on a `PUT`); validation « Un ingrédient retiré pendant la préparation doit avoir une quantité supérieure à 0. »; live macros (`computeDraftTotal`) subtract the line and floor at 0. UI: `IngredientRemovedToggle` (`PackageMinus`, orange when active) after the « au choix » toggle on desktop rows, full-width button in the mobile edit drawer, « Retiré » badge on the mobile card.
+- Verified: tsc + lint only, no browser check (to test with `npm run dev` against an API that has D-078). **Do not push before D-078 is live in prod.**
+- Next: step 4 display (recipe detail, cards, journal ingredient list and adjustments), step 5 docs and D-048.
+
 ## 2026-11-26 — #67 step 2: removed ingredient exclusions (v6.169.1)
 - Done: a removed line is skipped by the shopping aggregation (`addIngredientToMap`, so the shopping list, « Par repas » cards, place filter and the planning day / week price estimate follow), by `flattenRecipeLines` (recipe price and cooking sheets), by the season split (`recipeSeasonLogic.ts`) and by the generator preferred foods (`preferredFoodLogic.ts`).
 - Kept on purpose (change from the step 0 plan): the generator diet and excluded foods (`candidateLogic.ts`: a removed fish still makes the dish non-vegetarian), the Dashboard « used foods » stat and the planning usage food filter (the food is still in the recipe), the recipe search by food.

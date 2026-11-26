@@ -2,7 +2,7 @@ import { Food } from "../../domain/ingredient";
 import { Macronutrients } from "../../domain/nutrition";
 import { RecipeDetails } from "../../domain/recipe";
 import { DraftIngredient } from "../../domain/recipeBuilderTypes";
-import { ZERO, addMacros, calculateRecipeMacros, scaleMacros, toGrams } from "../nutrition/macroLogic";
+import { ZERO, addMacros, calculateRecipeMacros, floorMacrosAtZero, scaleMacros, toGrams } from "../nutrition/macroLogic";
 import { basePortionsOf } from "../recipe/cookedWeightLogic";
 
 export function computeDraftTotal(
@@ -30,7 +30,7 @@ export function computeDraftTotal(
         missing++;
         continue;
       }
-      total = addMacros(total, scaleMacros(food.macros, grams / 100));
+      total = addMacros(total, scaleMacros(food.macros, (ing.removed ? -grams : grams) / 100));
     } else if (ing.ingredientType === "base" && ing.baseId) {
       const base = recipes[ing.baseId];
       if (!base) {
@@ -49,5 +49,5 @@ export function computeDraftTotal(
     }
   }
 
-  return { macros: total, missing };
+  return { macros: floorMacrosAtZero(total), missing };
 }

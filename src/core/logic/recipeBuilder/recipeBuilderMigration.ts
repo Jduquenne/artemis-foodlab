@@ -22,18 +22,18 @@ function idOrNull(value: unknown): string | null {
   return typeof value === "string" && value !== "" ? value : null;
 }
 
-function migrateIngredientV4ToV5(value: unknown): DraftIngredient[] {
+function migrateIngredientToV6(value: unknown): DraftIngredient[] {
   if (!isRecord(value)) return [];
-  const { ingredientType, foodId, baseId, foodGroupId, ...rest } = value;
+  const { ingredientType, foodId, baseId, foodGroupId, removed, ...rest } = value;
   const common: DraftIngredientCommon = { ...emptyDraftIngredientCommon(), ...rest };
   return ingredientType === "base"
     ? [{ ...common, ingredientType: "base", baseId: idOrNull(baseId) }]
-    : [{ ...common, ingredientType: "food", foodId: idOrNull(foodId), foodGroupId: idOrNull(foodGroupId) }];
+    : [{ ...common, ingredientType: "food", foodId: idOrNull(foodId), foodGroupId: idOrNull(foodGroupId), removed: removed === true }];
 }
 
-export function migrateDraftV4ToV5(persisted: unknown): RecipeBuilderState | null {
+export function migrateDraftV4ToV6(persisted: unknown): RecipeBuilderState | null {
   if (!isRecord(persisted) || !isRecord(persisted.draft)) return null;
   const { ingredients } = persisted.draft;
   const draft: RecipeBuilderState = { ...initialRecipeBuilderState(), ...persisted.draft };
-  return { ...draft, ingredients: Array.isArray(ingredients) ? ingredients.flatMap(migrateIngredientV4ToV5) : [] };
+  return { ...draft, ingredients: Array.isArray(ingredients) ? ingredients.flatMap(migrateIngredientToV6) : [] };
 }

@@ -9,6 +9,7 @@ import { isUnit } from "../unit/unitLogic";
 import { industrialDraftFromRecipe, industrialDraftToApi } from "./industrialEquivalentLogic";
 import { portionsPerPersonToApi } from "./portionsPerPersonLogic";
 import { cookedWeightToApi } from "./cookedWeightLogic";
+import { canBeRemoved } from "./recipeBuilderState";
 import { portionsPerPersonOf } from "../recipe/portionsPerPersonLogic";
 
 export function switchIngredientType(
@@ -18,7 +19,7 @@ export function switchIngredientType(
   const common = { id: ing.id, ...(ing.apiId ? { apiId: ing.apiId } : {}), name: "", quantity: null, preparation: "" };
   return type === "base"
     ? { ...common, ingredientType: "base", baseId: null, unit: Unit.PORTION, category: IngredientCategory.RECIPE }
-    : { ...common, ingredientType: "food", foodId: null, foodGroupId: null, unit: Unit.NONE, category: IngredientCategory.FRUIT_VEGETABLE };
+    : { ...common, ingredientType: "food", foodId: null, foodGroupId: null, removed: false, unit: Unit.NONE, category: IngredientCategory.FRUIT_VEGETABLE };
 }
 
 export function applyFoodPick(ingredient: DraftIngredient, name: string, food?: Food): DraftIngredient {
@@ -32,6 +33,7 @@ export function applyFoodPick(ingredient: DraftIngredient, name: string, food?: 
     category: food?.category ?? ingredient.category,
     unit: isUnit(unit) ? unit : ingredient.unit,
     foodGroupId: keepsGroup ? ingredient.foodGroupId : null,
+    removed: food ? ingredient.removed : false,
   };
 }
 
@@ -43,7 +45,13 @@ export function toggleFoodChoice(ingredient: DraftIngredient, food: Food | undef
   if (ingredient.ingredientType !== "food") return ingredient;
   if (ingredient.foodGroupId) return { ...ingredient, foodGroupId: null };
   if (!food?.groupId || food.id !== ingredient.foodId) return ingredient;
-  return { ...ingredient, foodGroupId: food.groupId };
+  return { ...ingredient, foodGroupId: food.groupId, removed: false };
+}
+
+export function toggleRemoved(ingredient: DraftIngredient): DraftIngredient {
+  if (ingredient.ingredientType !== "food") return ingredient;
+  if (ingredient.removed) return { ...ingredient, removed: false };
+  return canBeRemoved(ingredient) ? { ...ingredient, removed: true } : ingredient;
 }
 
 export function draftIngredientFromRecipe(ing: Ingredient): DraftIngredient {
@@ -59,9 +67,9 @@ export function draftIngredientFromRecipe(ing: Ingredient): DraftIngredient {
     case "base":
       return { ...common, ingredientType: "base", baseId: ing.baseId };
     case "food":
-      return { ...common, ingredientType: "food", foodId: ing.foodId, foodGroupId: ing.foodGroupId };
+      return { ...common, ingredientType: "food", foodId: ing.foodId, foodGroupId: ing.foodGroupId, removed: ing.removed };
     case "free":
-      return { ...common, ingredientType: "food", foodId: null, foodGroupId: null };
+      return { ...common, ingredientType: "food", foodId: null, foodGroupId: null, removed: false };
   }
 }
 
@@ -106,6 +114,7 @@ export function builderStateToApiBody(state: RecipeBuilderState): ApiRecipeInput
         quantity: ing.quantity,
         unit: ing.unit === Unit.NONE ? null : ing.unit,
         preparation: ing.preparation || null,
+        removed: ing.ingredientType === "food" && ing.removed && canBeRemoved(ing),
       };
     });
 

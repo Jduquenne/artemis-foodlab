@@ -23,6 +23,7 @@ Read this file first, then the relevant files in `docs/`.
 ## Absolute rules
 
 - **Git is owner-only.** Read commands (`status`, `diff`, `log`, `show`) are allowed; never run commands that modify the repo. When the owner asks for "a commit", reply with **the commit message only** (format in `docs/conventions.md` § Commits), after bumping the version.
+  - **Temporary exception (owner, 2026-11-26, D-051): UX lots of issue #70.** While working on a lot of #70 sub-issues, the agent may run `git add` + `git commit` itself, one commit per issue, with the usual message format and checklist (tsc, lint, version bump). Never `push`, `rebase`, `reset`, `amend`, branch or any history rewrite; stop at the end of each lot for the owner's browser tests, review (`git log -p`) and push. Outside these lots the rule above applies unchanged.
 - **Never run `npm run build`.** Verify with `npx tsc -b` + `npm run lint`.
 - **Never edit `.env` or any `.env*` file**, even "just to test" or fix a formatting detail. To test against a local API, use `curl`. If an env change is needed, ask the owner.
 - **Never read, copy or quote `../_private/`** (owner's private folder, outside every repo). Access is denied in the owner's user-level Claude Code settings (not versioned); do not work around it with shell commands.

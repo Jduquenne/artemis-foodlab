@@ -477,3 +477,12 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
 - **Out of scope** (owner, 2026-11-26): weight logging, weight curve and adaptive expenditure (dedicated apps do it; health data); full autopilot with no user action; more generator setting layers. Profile targets stay entered by hand (at most a one-shot « help me compute » helper, no tracking).
 - **Next**: friction audit of the existing flows (remove before adding); then a minimal « plate per profile » test (one lever, the starch) used by the owner's household for 2 weeks before going further.
 - **Consequences**: `AGENTS.md` preamble (scope rule for every session), `docs/roadmap.md`; work tracked under `dev/issues.json` #70 with sub-issues when started.
+
+## D-051 — Temporary commit exception for the UX lots of #70
+
+- **Date**: 2026-11-26
+- **Status**: accepted (owner, 2026-11-26, option B).
+- **Context**: the 37 sub-issues of #70 (#71 to #107) are mostly small UX tasks; the round trip « agent delivers, owner commits, owner says next » cost more than the work itself.
+- **Decision**: during a UX lot of #70, the agent commits each issue itself (`git add` + `git commit`, usual message and checklist), never pushes nor rewrites history, and stops at the end of the lot; the owner tests in the browser, reviews with `git log -p` and pushes. One devlog entry per lot. Lots: 1 quick wins, 2 shopping, 3 planning, 4 cooking and home, 5 with the API, 6 big projects.
+- **Alternatives considered**: keep the owner-only commits (safe but one round trip per issue).
+- **Consequences**: `AGENTS.md` § Absolute rules and `docs/conventions.md` § Commits carry the exception; it ends when the owner says so. The owner's Claude Code permissions must allow `git add` / `git commit` for it to work.

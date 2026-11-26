@@ -92,7 +92,8 @@ Any mutation triggered by a click (except a form with its own local `submitting`
 
 - Format: `feature: <description>` or `fix: <description>` (also `refactor:`, `chore:`, `docs:`). English, short, no bullet points, no technical details. (`feature:` is kept on purpose, not `feat:`.)
 - Footer: `Co-Authored-By` attribution line (and session line when provided by the harness).
-- One logical step = one commit; one issue = one commit. The owner commits; agents only propose the message.
+- One logical step = one commit; one issue = one commit. The owner commits; agents only propose the message. Exception (D-051): during the UX lots of issue #70 the agent commits itself, one commit per issue, never pushes (`AGENTS.md` § Absolute rules).
+- UX lots of #70: one `log/devlog.md` entry per lot, completed at each issue; browser tests listed once at the end of the lot.
 
 ## Versioning
 

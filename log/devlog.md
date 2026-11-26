@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — #67 closed (docs, v6.169.6)
+- Owner: browser tests of #67 validated in prod; issue closed. Roadmap item 21 set to done, D-048 status updated.
+- Still open: D-068 and D-078 API commit hashes `TODO(owner)` in `docs/api.md`; owner tests of v6.166.x (#59 to #65); #66 comfort questions (dessert persons on a move, « Personnes » wording, confirmation before deleting a planned batch); low-priority backlog #42, #50; roadmap idea: remove the obsolete import (`features/sync`, `POST /import`).
+
 ## 2026-11-26 — #67: API D-078 and front live in prod (docs, v6.169.5)
 - Owner: API D-078 and front v6.169.0 to v6.169.4 pushed to prod. Status updated in `docs/api.md`, D-048, roadmap item 21. API commit hash not given: `TODO(owner)` in `docs/api.md` and D-048.
 - Still open: owner browser tests of #67 (list in the step 5 entry below), then « clore issue 67 »; D-068 and D-078 API hashes `TODO(owner)`.

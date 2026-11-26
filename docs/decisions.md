@@ -448,7 +448,7 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
 ## D-048 — An ingredient removed during preparation keeps a positive quantity and real macros, flagged on the recipe line
 
 - **Date**: 2026-11-26
-- **Status**: accepted (owner, 2026-11-26, issue #67); API D-078 and the front **live in prod** (owner, 2026-11-26; API commit hash `TODO(owner)`); front v6.169.0 to v6.169.5.
+- **Status**: accepted (owner, 2026-11-26, issue #67); API D-078 and the front **live in prod** (owner, 2026-11-26; API commit hash `TODO(owner)`); front v6.169.0 to v6.169.6; tested and closed by the owner (2026-11-26).
 - **Context**: a user's homemade Greek yogurt is 1,000 g of milk + 125 g of yogurt, drained: about 500 g of whey is thrown away, carrying nutrients (lactose mostly). The cooked weight (D-041) models a loss of water only, so the recipe macros overestimated the carbohydrates. The user proposed a negative quantity or a food with negative macros.
 - **Decision**:
   - A recipe line linked to a food can be flagged **`removed`** (boolean on the `food` variant of the ingredient link): positive quantity (> 0, required), the food's real macros, never on a base, a free-text line or a line « au choix ».

@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — #67 step 5: docs and D-048 (v6.169.4)
+- Done: D-048 in `docs/decisions.md`; `docs/spec-recipes.md` § Ingredient removed during preparation, `docs/spec-journal.md` (removed ingredients bullet), `docs/spec-shopping.md` § Ingredient removed during preparation, glossary entry. Front complete (v6.169.0 to v6.169.4).
+- **Do not push before D-078 is live in prod.** Then fill the API commit hash in `docs/api.md` and D-048.
+- Owner tests once live: (1) Recipe Builder: create « Yaourt grec maison » (1,000 g lait demi-écrémé, 125 g yaourt entier, 500 g petit-lait marked « retiré »), live macros lower than without the flag, save, reopen: the flag is kept (desktop and mobile); empty quantity on a removed line → validation message; no toggle on a free-text, base or « au choix » line; (2) recipe detail: the card ends with « Retiré : Petit-lait - 500g », macros per portion lower, macro page shows « retiré »; (3) plan it: no petit-lait in the shopping list, the « Par repas » view nor the day cost; (4) journal: the line is not in the adjustable list; change portions or grams, macros stay consistent; (5) a draft open in the Recipe Builder survives the reload (draft store v6).
+
 ## 2026-11-26 — #67 step 4: display of a removed ingredient (v6.169.3)
 - Done: recipe cards (recipe detail, book, ingredients card, Recipe Builder preview; `formatIngredientsForIngredientCard`): removed lines leave their category group and come last as « Retiré : Petit-lait - 500g »; macro page (`IngredientAdjustRow`): « retiré » tag on the line and inside an expanded base, quantity still adjustable there (local what-if); journal: a removed line is no longer listed among the adjustable ingredients (`isOverridableIngredient`) but stays in the stored override set (`scaleIngredientsByRatio`), so its scaled quantity keeps being subtracted; accompaniment lines in the journal skip it (`optionLines`).
 - Verified: tsc + lint only, no browser check. **Do not push before D-078 is live in prod.**

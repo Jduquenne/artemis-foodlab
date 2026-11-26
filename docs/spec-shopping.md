@@ -47,6 +47,10 @@ Step 3 (v6.149.0), « Par repas » layout (`features/shopping/components/meals/`
 
 A base taken from a freezer batch for a planned meal (`frozen` base version, `docs/spec-planning.md` § Base version choices) is not bought: `aggregateSlots` runs `applyFrozenBases` after `applyBaseVersions`, which replaces every frozen base reachable from the dish by the same base **without ingredients** for that meal only (its nested bases and « au choix » ingredients disappear with it), and `aggregateBases` skips it in « bases à préparer » (`isFrozenChoice`, direct bases as before). The planning cost estimate (`planningCostLogic`, built on `aggregateSlots`) follows. Macros, planning kcal and journal keep the home version (`applyBaseVersions` ignores `frozen`).
 
+## Ingredient removed during preparation (D-048, issue #67)
+
+A recipe line flagged `removed` (`docs/spec-recipes.md`) is never bought: `addIngredientToMap` skips it, so it is absent from the list, the « Par repas » cards, the place filter and the planning day / week cost; `flattenRecipeLines` skips it for the recipe price.
+
 ## Base ingredient in grams (D-042, v6.144.4)
 
 A base ingredient with the unit `g` (grams of the base's cooked weight) is converted to base portions (`basePortionsOf`, `docs/spec-recipes.md`) before scaling: the base's own ingredients are multiplied by `portions ÷ base defaultPortions` as for a portion quantity, and the « bases to cook » list shows portions. A `g` ingredient whose base has no cooked weight contributes nothing.

@@ -9,6 +9,7 @@ Domain terms whose meaning is not obvious from the code. UI labels are French; c
 | **`displayName`** | Name of the **account** (edited in `AccountModal`), display only. |
 | **`freezerName`** | Display name of the account's freezer. |
 | **Persons / portions / parts** | Planning `persons` ≡ recipe portions (`persons / defaultPortions` is the scale factor). « Parts » in the UI. |
+| **Removed ingredient** (« retiré pendant la préparation », `removed`) | Recipe line linked to a food that is thrown away during the preparation (whey of a drained yogurt): positive quantity, subtracted from the recipe macros and weight, never bought (D-048). |
 | **Gram override** (`recipeQuantities`, `gramsOverride`) | Quantity in grams for a weighed meal or base; not a number of portions. |
 | **Cooked weight** (`cookedWeightGrams`, planned, D-041) | Weight of the whole finished dish after cooking (bread: less than the raw dough). Used only to convert grams eaten into a portion factor; macros still come from the ingredients. |
 | **Override (journal)** | Per-day adjustment of a planned meal for one profile: portions, grams, or per-ingredient quantities. Never modifies the recipe. |

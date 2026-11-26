@@ -1,3 +1,4 @@
+import { isRemovedIngredient } from "../../domain/ingredientPredicates";
 import {
   Accompaniment,
   AccompanimentChoice,
@@ -246,7 +247,7 @@ function optionLines(
   const portions = option.portionsPerPerson;
   const personalized = personalizeRecipeTree(recipe, personalization, recipes, foods, portions).recipe;
   const factor = (portions * dishPortions) / personalized.defaultPortions;
-  return personalized.ingredients.map((ingredient) => ({
+  return personalized.ingredients.filter((ingredient) => !isRemovedIngredient(ingredient)).map((ingredient) => ({
     id: ingredient.id,
     name: ingredient.name,
     quantity: ingredient.quantity === null ? null : roundTo(ingredient.quantity * factor, 2),

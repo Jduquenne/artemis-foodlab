@@ -67,6 +67,9 @@ export const IngredientAdjustRow = ({
           {ing.link === 'food' && ing.foodGroupId !== null && (
             <span className="text-orange-500 text-xs font-bold ml-1">au choix</span>
           )}
+          {ing.link === 'food' && ing.removed && (
+            <span className="text-orange-500 text-xs font-bold ml-1">retiré</span>
+          )}
         </span>
 
         <div className="flex flex-col items-end gap-1 shrink-0">
@@ -134,6 +137,9 @@ export const IngredientAdjustRow = ({
                   {baseIng.name}
                   {baseIng.preparation && (
                     <span className="text-slate-400 ml-1">({baseIng.preparation})</span>
+                  )}
+                  {baseIng.link === 'food' && baseIng.removed && (
+                    <span className="text-orange-500 font-bold ml-1">retiré</span>
                   )}
                 </span>
                 <span className="text-xs text-slate-500 tabular-nums shrink-0">

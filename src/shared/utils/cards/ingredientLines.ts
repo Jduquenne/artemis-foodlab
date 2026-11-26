@@ -1,5 +1,6 @@
 import { IngredientCategory, Unit } from "../../../core/domain/ingredient";
 import { DraftIngredient } from "../../../core/domain/recipeBuilderTypes";
+import { isRemovedDraft } from "../../../core/logic/recipeBuilder/recipeBuilderState";
 import { groupBy } from "../../../core/utils/collectionUtils";
 import { IngredientLineItem } from "./cardTypes";
 import { wrapLineAtMaxChars } from "./cardUtils";
@@ -41,6 +42,8 @@ const COMMA_JOIN_CATEGORIES = new Set<IngredientCategory>([
 ]);
 
 const CARD_LINE_MAX_CHARS = 45;
+
+const REMOVED_PREFIX = "Retiré : ";
 
 const WORD_UNITS = new Set<Unit>([
   Unit.FEUILLE,
@@ -126,9 +129,16 @@ function layoutCategory(
   return buildCategoryLines(items, []);
 }
 
+function removedLines(removed: DraftIngredient[]): IngredientLineItem[] {
+  return removed.flatMap((ing) =>
+    wrapLineAtMaxChars(`${REMOVED_PREFIX}${formatIngredientText(ing)}`, CARD_LINE_MAX_CHARS).map((text) => ({ text, isNewCategory: false })),
+  );
+}
+
 export function formatIngredientsForIngredientCard(ingredients: DraftIngredient[]): IngredientLineItem[] {
+  const named = ingredients.filter((ing) => ing.name.trim());
   const groups = groupBy(
-    ingredients.filter((ing) => ing.name.trim()),
+    named.filter((ing) => !isRemovedDraft(ing)),
     (ing) => ing.category,
   );
   const epicerieItems = [...EPICERIE_CATEGORIES].flatMap((cat) => groups.get(cat) ?? []);
@@ -156,6 +166,10 @@ export function formatIngredientsForIngredientCard(ingredients: DraftIngredient[
       result.push({ ...line, isNewCategory: result.length > 0 && index === 0 });
     });
   }
+
+  removedLines(named.filter(isRemovedDraft)).forEach((line, index) => {
+    result.push({ ...line, isNewCategory: result.length > 0 && index === 0 });
+  });
 
   return result;
 }

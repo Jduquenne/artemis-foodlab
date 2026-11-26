@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — #67 step 4: display of a removed ingredient (v6.169.3)
+- Done: recipe cards (recipe detail, book, ingredients card, Recipe Builder preview; `formatIngredientsForIngredientCard`): removed lines leave their category group and come last as « Retiré : Petit-lait - 500g »; macro page (`IngredientAdjustRow`): « retiré » tag on the line and inside an expanded base, quantity still adjustable there (local what-if); journal: a removed line is no longer listed among the adjustable ingredients (`isOverridableIngredient`) but stays in the stored override set (`scaleIngredientsByRatio`), so its scaled quantity keeps being subtracted; accompaniment lines in the journal skip it (`optionLines`).
+- Verified: tsc + lint only, no browser check. **Do not push before D-078 is live in prod.**
+- Next: step 5 docs (`spec-recipes.md`, `spec-journal.md`, `spec-shopping.md`, glossary) and D-048.
+
 ## 2026-11-26 — #67 step 3: Recipe Builder « retiré pendant la préparation » (v6.169.2)
 - Done: `removed: boolean` on the food variant of `DraftIngredient` (draft store v6: `migrateDraftV4ToV6` keeps a persisted `removed`, else `false`); `canBeRemoved` (food line linked to a food, not « au choix ») and `isRemovedDraft` (`recipeBuilderState.ts`); `toggleRemoved`; picking another food keeps the flag, clearing the food or making the line « au choix » drops it; `builderStateToApiBody` always sends `removed` (the API resets an absent field to `false` on a `PUT`); validation « Un ingrédient retiré pendant la préparation doit avoir une quantité supérieure à 0. »; live macros (`computeDraftTotal`) subtract the line and floor at 0. UI: `IngredientRemovedToggle` (`PackageMinus`, orange when active) after the « au choix » toggle on desktop rows, full-width button in the mobile edit drawer, « Retiré » badge on the mobile card.
 - Verified: tsc + lint only, no browser check (to test with `npm run dev` against an API that has D-078). **Do not push before D-078 is live in prod.**

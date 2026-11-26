@@ -1,5 +1,6 @@
 import { Ingredient, Unit } from "../../domain/ingredient";
 import { RecipeDetails } from "../../domain/recipe";
+import { isRemovedIngredient } from "../../domain/ingredientPredicates";
 import { JournalOverrideInput, JournalOverrides } from "../../domain/journal";
 import { ApiJournalOverride } from "../../logic/journal/journalApiMapper";
 import { omitKey } from "../../utils/collectionUtils";
@@ -12,7 +13,7 @@ export const EMPTY_JOURNAL_OVERRIDES: JournalOverrides = {
 };
 
 export function isOverridableIngredient(ingredient: Ingredient): boolean {
-  return ingredient.quantity !== null && ingredient.unit !== Unit.NONE;
+  return ingredient.quantity !== null && ingredient.unit !== Unit.NONE && !isRemovedIngredient(ingredient);
 }
 
 export function scaleIngredientsByRatio(recipe: RecipeDetails, ratio: number): Record<string, number> {

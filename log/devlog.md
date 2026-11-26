@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — UX lot 3 (planning, #70)
+- Lot 3: #75, #76, #80, #73. Front only.
+- #75 (v6.170.20): « Reprendre » in the planning header copies the previous week's dishes and desserts onto the empty slots of the displayed week (`weekCopyLogic.ts`, one bulk call, confirmation, notification). Persons and meal choices not copied (bulk route limit). Test: previous week with meals, current week partly filled → confirmation with counts → only empty slots filled, notification lists skipped slots; previous week empty → info message; breakfast / snack multi recipes and desserts copied.
+
 ## 2026-11-26 — UX lot 2 (shopping, #70)
 - Lot 2: #83, #84, #85, #86. Front only.
 - #83 (v6.170.16): checked-last order and the « N restants » header already existed; added: a fully checked aisle folds to its green header in store mode (tap to unfold). Test: En magasin, check every line of an aisle → it folds « ✓ Rayon · N/N »; tap → unfolds; uncheck one → normal card; À la maison: never folds.

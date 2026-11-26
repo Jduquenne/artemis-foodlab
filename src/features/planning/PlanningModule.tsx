@@ -4,7 +4,10 @@ import { useFreezerStock } from '../../shared/hooks/useFreezerStock';
 import { X } from 'lucide-react';
 import { CopyModeBar } from './components/bars/CopyModeBar';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { getWeekSlots, saveSlot, deleteSlot, addDessertToSlot, removeDessertFromSlot, setRecipePersonsOnSlot, syncWeekFromApi, moveMeal } from '../../core/services/planningService';
+import { getWeekSlots, saveSlot, deleteSlot, addDessertToSlot, removeDessertFromSlot, setRecipePersonsOnSlot, syncWeekFromApi, moveMeal, bulkAddPlanningItems } from '../../core/services/planningService';
+import { previousWeekOf, weekCopyEntries, weekCopySummary } from '../../core/logic/planning/weekCopyLogic';
+import { ConfirmActionModal } from '../../shared/components/ui/ConfirmActionModal';
+import { usePendingKey } from '../../shared/hooks/usePendingKey';
 import { useAuthStore } from '../../shared/store/useAuthStore';
 import { MealDragOverlay } from './components/MealDragOverlay';
 import { WeekNavZone } from './components/WeekNavZone';
@@ -28,7 +31,7 @@ import { useMacroCatalogue } from '../../shared/hooks/useMacroCatalogue';
 import { usePlanningCost } from '../../shared/hooks/usePlanningCost';
 import { useRefreshStore } from '../../shared/store/useRefreshStore';
 import { useNotificationStore } from '../../shared/store/useNotificationStore';
-import { BulkPlanningResult } from '../../core/domain/planning';
+import { BulkPlanningResult, PlanningItemEntry } from '../../core/domain/planning';
 import { menuWriteMessage } from '../../core/logic/menuGenerator/menuWriteLogic';
 import { useSearchParams } from 'react-router-dom';
 import { SlotType, MealSlot } from '../../core/domain/planning';
@@ -194,6 +197,28 @@ export const PlanningModule = () => {
         setGeneratorOpen(false);
         setSearchParams(p => { p.set('d', startDate); p.set('day', dayNameOf(new Date(startDate + 'T12:00:00'))); return p; }, { replace: true });
         pushNotification({ message: menuWriteMessage(result), duration: 6000, variant: 'info' });
+    };
+
+    const [weekCopy, setWeekCopy] = useState<{ entries: PlanningItemEntry[]; sourceWeek: number } | null>(null);
+    const preparingWeekCopy = usePendingKey('planning-copy-week-prepare');
+    const prepareWeekCopy = () => {
+        const source = previousWeekOf(monday);
+        withPending('planning-copy-week-prepare', async () => {
+            await syncWeekFromApi(source.year, source.week);
+            return weekCopyEntries(await getWeekSlots(source.year, source.week), { year, week: weekNumber });
+        }).then((entries) => {
+            if (!entries) return;
+            if (entries.length === 0) pushNotification({ message: 'La semaine précédente est vide : rien à reprendre.', duration: 4000, variant: 'info' });
+            else setWeekCopy({ entries, sourceWeek: source.week });
+        }, () => undefined);
+    };
+    const confirmWeekCopy = async (): Promise<boolean> => {
+        if (!weekCopy) return false;
+        const result = await withPending('planning-copy-week', () => bulkAddPlanningItems(weekCopy.entries)).catch(() => undefined);
+        if (!result) return false;
+        setWeekCopy(null);
+        pushNotification({ message: menuWriteMessage(result), duration: 6000, variant: 'info' });
+        return true;
     };
 
     const handleDeleteMeal = async (day: string, slot: SlotType) => {
@@ -475,6 +500,8 @@ export const PlanningModule = () => {
                     onDateChange={(dateStr, dayIndex) => setSearchParams(p => { p.set('d', dateStr); p.set('day', cyclicItem(DAYS, dayIndex)); return p; }, { replace: true })}
                     onEnterSelectionMode={enterSelectionMode}
                     onOpenGenerator={isAdmin ? () => setGeneratorOpen(true) : undefined}
+                    onCopyPreviousWeek={prepareWeekCopy}
+                    copyingPreviousWeek={preparingWeekCopy}
                 />
 
                 {isAddMode && addRecipeName && (
@@ -608,6 +635,17 @@ export const PlanningModule = () => {
                         initialBaseVersionChoices={planningData.find(p => p.day === foodChoiceTarget.day && p.slot === foodChoiceTarget.slot)?.baseVersionChoices?.[foodChoiceTarget.recipeId] ?? []}
                         onSave={(choices, accompanimentChoices, baseVersionChoices) => handleSaveFoodChoices(foodChoiceTarget.day, foodChoiceTarget.slot, foodChoiceTarget.recipeId, choices, accompanimentChoices, baseVersionChoices)}
                         onClose={() => setFoodChoiceTarget(null)}
+                    />
+                )}
+
+                {weekCopy && (
+                    <ConfirmActionModal
+                        title="Reprendre la semaine précédente ?"
+                        intro={`${weekCopySummary(weekCopy.entries)} de la semaine ${weekCopy.sourceWeek} seront ajoutés sur les créneaux vides de la semaine ${weekNumber}.`}
+                        consequence="Les créneaux déjà remplis ne changent pas. Les personnes et les choix du repas ne sont pas repris."
+                        confirmLabel="Reprendre"
+                        onConfirm={confirmWeekCopy}
+                        onCancel={() => setWeekCopy(null)}
                     />
                 )}
 

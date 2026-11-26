@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { ChevronLeft, ChevronRight, ShoppingCart, Sparkles } from "lucide-react";
+import { ChevronLeft, ChevronRight, History, Loader2, ShoppingCart, Sparkles } from "lucide-react";
 import { CostEstimate } from "../../../core/logic/price/priceLogic";
 import { PlanningCostLabel } from "./PlanningCostLabel";
 
@@ -17,12 +17,15 @@ export interface PlanningHeaderProps {
   onDateChange: (dateStr: string, dayIndex: number) => void;
   onEnterSelectionMode: () => void;
   onOpenGenerator?: () => void;
+  onCopyPreviousWeek: () => void;
+  copyingPreviousWeek: boolean;
 }
 
 export const PlanningHeader = ({
   weekNumber, weekRange, weekCost, selectedDayDate,
   isAnyEditing, isSelectionMode, isAddMode, hasShoppingDays,
   onPrevWeek, onNextWeek, onDateChange, onEnterSelectionMode, onOpenGenerator,
+  onCopyPreviousWeek, copyingPreviousWeek,
 }: PlanningHeaderProps) => {
   const dateInputRef = useRef<HTMLInputElement>(null);
 
@@ -68,6 +71,18 @@ export const PlanningHeader = ({
             <ChevronRight size={18} className="text-slate-600" />
           </button>
         </div>
+
+        {!isSelectionMode && !isAddMode && (
+          <button
+            onClick={isAnyEditing || copyingPreviousWeek ? undefined : onCopyPreviousWeek}
+            aria-label="Reprendre la semaine précédente"
+            title="Reprendre la semaine précédente"
+            className={`flex items-center gap-1.5 px-3 py-2 rounded-2xl shadow-sm border border-slate-200 bg-surface font-bold text-sm text-slate-600 hover:bg-muted transition-colors ${isAnyEditing ? "opacity-40 pointer-events-none" : ""}`}
+          >
+            {copyingPreviousWeek ? <Loader2 size={15} className="animate-spin text-orange-500" /> : <History size={15} className="text-orange-500" />}
+            <span className="hidden lg:inline">Reprendre</span>
+          </button>
+        )}
 
         {onOpenGenerator && !isSelectionMode && !isAddMode && (
           <button

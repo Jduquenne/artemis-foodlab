@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — #69 closed (docs, v6.168.5)
+- Owner: browser tests of #69 validated in prod; issue closed. Roadmap item 20 set to done.
+- Still open: owner tests of v6.166.x (#59 to #65); #66 comfort questions (dessert persons on a move, « Personnes » wording, confirmation before deleting a planned batch); D-068 API hash `TODO(owner)`; low-priority backlog #67, #42, #50; roadmap idea: remove the obsolete import (`features/sync`, `POST /import`).
+
 ## 2026-11-25 — #69: API hashes and phase 2 done (docs, v6.168.4)
 - API session: D-076 and D-077 phase 1 in commit `64513a8`, phase 2 in `b7c5653` (the API no longer stores a category for food-linked ingredients; all 6,439 read their food's). Prod origin counts: 11 meat, 15 fish, 8 deli, 361 none. `TODO(owner)` hashes for D-076 / D-077 filled in `docs/api.md`; D-047 and roadmap item 20 updated. Nothing to change in the front (already reading origin and omitting the category).
 - Still open: owner browser tests of #69 (list in the step 3 entry below), then close #69. D-068 hash still `TODO(owner)`.

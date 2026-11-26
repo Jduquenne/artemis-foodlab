@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — UX lot 5 (with the API, #70)
+- **Nothing of this lot may be pushed before API D-080 to D-085 are live in prod.**
+- #105 (v6.170.33): « Donner mon avis » (settings menu) → `FeedbackSheet` (2000-character counter, optional 1–5 stars) → `POST /feedback` with the chosen area (« À propos de » select of the app parts, preselected from the current screen, owner request) and the app version; admin Dashboard tab « Avis » (open / handled / all, mark handled / reopen). Real contract recorded in `docs/api.md`. Test against the dev API: send a message → « Merci pour ton avis ! »; 6th message within an hour → error banner (429); empty message → button disabled; stars: tap 4 → 4 stars, tap 4 again → none; as admin: Dashboard › Avis lists it under « Ouverts », « Marquer traité » moves it to « Traités », « Rouvrir » back.
+
 ## 2026-11-26 — #91 freeze a batch from the cooked meal (v6.170.32)
 - Done: on a recipe opened from a planned meal (strip « À cuisiner pour … », #88), a batch-cooking recipe offers « Mettre au congélateur » → `FreezeBatchSheet` (category, portions or grams, quantity prefilled with the portions) → batch created through `addItemToCategory`. Placed there rather than in the planning cell menus (no prop chain through the slot components; it is where the user is right after cooking). **Lot 4 done** (#88, #89, #72, #98, #91).
 - Test: plan a batch-cooking recipe, open it from the planning or Aujourd'hui → « Mettre au congélateur » → pick a category, 4 portions → notification, the batch shows in that freezer category; grams option; no freezer category → link to the freezer; a non-batch recipe → no button.

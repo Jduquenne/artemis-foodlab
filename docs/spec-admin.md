@@ -28,3 +28,7 @@ Building blocks in `features/dashboard/components/common/`: `PillTabs` (orange p
 - **Users**: `UsersPanel` (`core/services/usersService.ts`, `shared/hooks/useUsers.ts`, `userFormLogic.ts`: `validateUserForm`, `generatePassword`, `ROLE_LABELS`, recaps). Create (« Ajouter », password ≥ 12 with a Generate button, display name), role change and deletion → `ConfirmActionModal` with `requireText = user.email`. Actions are disabled on the admin's own row (the role lives in the JWT) and on the last admin. Rows show `displayName || email`. Demo accounts are hidden (`excludeDemoAccounts`).
 - Category editing: **no UI** (decision 2026-09-09, D-014). A light rename-only version could come later.
 - Server errors → global toast; the modal stays open.
+
+## Feedback (issue #105, API D-084)
+
+Dashboard tab « Avis » (`features/dashboard/components/feedback/`): filter « Ouverts » (default) / « Traités » / « Tous » (`PillTabs`, `GET /feedback?status=…` per filter through `useFeedbackList`, reload button), one row per feedback (`FeedbackRow`): message (line breaks kept), area label (`feedbackAreaLabel`: « Menu » for `/planning`, the raw value otherwise), author (`feedbackAuthorLabel`: email, « (démo) », « Compte supprimé » / « Compte démo supprimé » when `userEmail` is `null`), date, screen, version, rating stars; « Marquer traité » / « Rouvrir » (`PATCH`, pending key `feedback-handled:<id>`, the list is patched with the returned item and filtered locally, so a handled item leaves « Ouverts » at once).

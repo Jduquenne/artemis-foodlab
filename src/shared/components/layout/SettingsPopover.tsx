@@ -1,5 +1,6 @@
 import { lazy, Suspense, useState } from "react";
-import { Settings, Bell, UserCircle, ScrollText, Users, Soup, RotateCcw } from "lucide-react";
+import { Settings, Bell, UserCircle, ScrollText, Users, Soup, RotateCcw, MessageSquareHeart } from "lucide-react";
+import { useLocation } from "react-router-dom";
 import { usePlanningPreferencesStore } from "../../store/usePlanningPreferencesStore";
 import { ThemeToggle } from "./ThemeToggle";
 import { SettingsMenuItem } from "./SettingsMenuItem";
@@ -8,6 +9,7 @@ const NotificationSettingsModal = lazy(() => import("../ui/NotificationSettingsM
 const AccountModal = lazy(() => import("../ui/AccountModal").then(m => ({ default: m.AccountModal })));
 const ProfilesModal = lazy(() => import("../ui/profiles/ProfilesModal").then(m => ({ default: m.ProfilesModal })));
 const AccompanimentsModal = lazy(() => import("../../../features/accompaniments/AccompanimentsModal").then(m => ({ default: m.AccompanimentsModal })));
+const FeedbackSheet = lazy(() => import("../ui/FeedbackSheet").then(m => ({ default: m.FeedbackSheet })));
 const LegalModal = lazy(() => import("../ui/LegalModal").then(m => ({ default: m.LegalModal })));
 
 export const SettingsPopover = () => {
@@ -17,6 +19,8 @@ export const SettingsPopover = () => {
   const [profilesOpen, setProfilesOpen] = useState(false);
   const [accompanimentsOpen, setAccompanimentsOpen] = useState(false);
   const [legalOpen, setLegalOpen] = useState(false);
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
+  const location = useLocation();
   const dessertMove = usePlanningPreferencesStore((s) => s.dessertMove);
   const setDessertMove = usePlanningPreferencesStore((s) => s.setDessertMove);
 
@@ -46,6 +50,7 @@ export const SettingsPopover = () => {
                 <SettingsMenuItem icon={<RotateCcw className="w-4 h-4 text-slate-400 shrink-0" />} label="Redemander pour les desserts" onClick={() => { setDessertMove("ask"); setOpen(false); }} />
               )}
               <SettingsMenuItem icon={<Bell className="w-4 h-4 text-slate-400 shrink-0" />} label="Notifications" onClick={() => { setNotifSettingsOpen(true); setOpen(false); }} />
+              <SettingsMenuItem icon={<MessageSquareHeart className="w-4 h-4 text-orange-500 shrink-0" />} label="Donner mon avis" onClick={() => { setFeedbackOpen(true); setOpen(false); }} />
               <SettingsMenuItem icon={<ScrollText className="w-4 h-4 text-slate-400 shrink-0" />} label="Informations légales" onClick={() => { setLegalOpen(true); setOpen(false); }} />
               <div className="flex items-center justify-between px-4 py-1.5 border-t border-slate-100">
                 <span className="text-sm text-slate-700">Thème</span>
@@ -70,6 +75,8 @@ export const SettingsPopover = () => {
         {accompanimentsOpen && <AccompanimentsModal onClose={() => setAccompanimentsOpen(false)} />}
 
         {legalOpen && <LegalModal onClose={() => setLegalOpen(false)} />}
+
+        {feedbackOpen && <FeedbackSheet screen={location.pathname} onClose={() => setFeedbackOpen(false)} />}
       </Suspense>
     </>
   );

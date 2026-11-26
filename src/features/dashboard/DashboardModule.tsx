@@ -3,6 +3,7 @@ import { DASHBOARD_TABS, DashboardTabId } from "./data/dashboardTabs";
 import { OverviewPanel } from "./components/overview/OverviewPanel";
 import { DataPanel } from "./components/data/DataPanel";
 import { PillTabs } from "./components/common/PillTabs";
+import { FeedbackPanel } from "./components/feedback/FeedbackPanel";
 
 export const DashboardModule = () => {
   const [tab, setTab] = useState<DashboardTabId>("overview");
@@ -19,6 +20,7 @@ export const DashboardModule = () => {
       <div className="flex-1 min-h-0">
         {tab === "overview" && <OverviewPanel />}
         {tab === "data" && <DataPanel />}
+        {tab === "feedback" && <FeedbackPanel />}
       </div>
     </div>
   );

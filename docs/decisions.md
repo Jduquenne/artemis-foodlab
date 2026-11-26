@@ -486,3 +486,12 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
 - **Decision**: during a UX lot of #70, the agent commits each issue itself (`git add` + `git commit`, usual message and checklist), never pushes nor rewrites history, and stops at the end of the lot; the owner tests in the browser, reviews with `git log -p` and pushes. One devlog entry per lot. Lots: 1 quick wins, 2 shopping, 3 planning, 4 cooking and home, 5 with the API, 6 big projects.
 - **Alternatives considered**: keep the owner-only commits (safe but one round trip per issue).
 - **Consequences**: `AGENTS.md` § Absolute rules and `docs/conventions.md` § Commits carry the exception; it ends when the owner says so. The owner's Claude Code permissions must allow `git add` / `git commit` for it to work.
+
+## D-052 — « Aujourd'hui » shows the day at a glance, the journal owns the macros
+
+- **Date**: 2026-11-26
+- **Status**: accepted (owner, 2026-11-26).
+- **Context**: once the « Aujourd'hui » home screen (issue #72) showed today's meals and the planned kcal with macro bars, the owner found it « ressemble beaucoup à Journal ».
+- **Decision**: two distinct roles. **Aujourd'hui** = everything about the day at a glance, actions only: what we eat today (photos, persons, recipe and cooking mode in one tap), what to take out of the freezer for tomorrow (#98), tomorrow's meals, the shopping shortcut; **no macros**. **Journal** = the macros of each profile and the fine adjustments (portions, grams, ingredients, ±25 %, week average), « la partie que les pointilleux kiffent ».
+- **Alternatives considered**: merging both into the journal with an action strip (fewer screens, refused by the owner: two distinct moments of the day).
+- **Consequences**: the macro card of « Aujourd'hui » is removed (v6.170.30); new features about the day's actions go to « Aujourd'hui », nutrition features go to the journal.

@@ -2,19 +2,17 @@ import { useMemo } from 'react';
 import { addDays } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import { ChevronRight, ShoppingCart } from 'lucide-react';
-import { computeDayMacros } from '../../core/logic/nutrition/macroLogic';
 import { weekKeyOf } from '../../core/logic/planning/nextMealLogic';
 import { plannedMealsOn, slotsOfDay } from '../../core/logic/planning/todayLogic';
+import { thawReminders } from '../../core/logic/freezer/thawLogic';
 import { usePlannedWeek } from '../../shared/hooks/usePlannedWeek';
-import { usePlannableSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
-import { useMacroCatalogue } from '../../shared/hooks/useMacroCatalogue';
-import { useActiveJournalOverrides } from '../../shared/hooks/useActiveJournalOverrides';
-import { useActiveProfile, useActiveTargets } from '../../shared/hooks/useActiveProfile';
+import { usePlannableSnapshot, useRecipesSnapshot } from '../../shared/hooks/useCatalogueSnapshot';
+import { useFreezerCategories } from '../../shared/hooks/useFreezerCategories';
 import { useMenuStore } from '../../shared/store/useMenuStore';
+import { PageHeading } from '../../shared/components/layout/PageHeading';
 import { TodayHeroCard } from './components/TodayHeroCard';
 import { TodayMealsCard } from './components/TodayMealsCard';
-import { TodayNutritionCard } from './components/TodayNutritionCard';
-import { PageHeading } from '../../shared/components/layout/PageHeading';
+import { TodayThawCard } from './components/TodayThawCard';
 
 const formatToday = (date: Date) =>
     date.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
@@ -28,16 +26,14 @@ export const TodayModule = () => {
     const thisWeek = usePlannedWeek(todayKey.year, todayKey.week);
     const nextWeek = usePlannedWeek(tomorrowKey.year, tomorrowKey.week);
     const items = usePlannableSnapshot();
-    const catalogue = useMacroCatalogue();
-    const activeProfile = useActiveProfile();
-    const { kcalTarget, macroTargets } = useActiveTargets();
-    const { portionOverrides, gramOverrides, ingredientOverrides } = useActiveJournalOverrides();
+    const recipes = useRecipesSnapshot();
+    const freezer = useFreezerCategories();
     const shoppingDays = useMenuStore((s) => s.shoppingDays);
 
     const allSlots = useMemo(() => [...thisWeek, ...nextWeek], [thisWeek, nextWeek]);
     const todayMeals = plannedMealsOn(now, allSlots, items);
     const tomorrowMeals = plannedMealsOn(tomorrow, allSlots, items);
-    const macros = computeDayMacros(catalogue, slotsOfDay(now, allSlots), portionOverrides, gramOverrides, ingredientOverrides, activeProfile);
+    const reminders = thawReminders(slotsOfDay(tomorrow, allSlots), recipes, freezer);
 
     return (
         <div className="h-full flex flex-col gap-4 overflow-hidden">
@@ -45,19 +41,13 @@ export const TodayModule = () => {
                 <PageHeading title="Aujourd'hui" subtitle={<span className="first-letter:uppercase inline-block">{formatToday(now)}</span>} />
             </div>
 
-            <div className="flex-1 min-h-0 overflow-y-auto md:overflow-hidden flex flex-col gap-4 pb-4 md:pb-0 md:grid md:grid-cols-3 md:grid-rows-[minmax(0,3fr)_minmax(0,2fr)] tablet:grid-cols-2 tablet:grid-rows-[minmax(0,5fr)_auto_minmax(0,3fr)]">
+            <div className="flex-1 min-h-0 overflow-y-auto md:overflow-hidden flex flex-col gap-4 pb-4 md:pb-0 md:grid md:grid-cols-3 md:grid-rows-[minmax(0,3fr)_minmax(0,2fr)] tablet:grid-cols-2 tablet:grid-rows-[minmax(0,5fr)_minmax(0,2fr)_minmax(0,3fr)]">
                 <div className="shrink-0 md:shrink md:min-h-0 md:col-span-2">
                     <TodayHeroCard meals={todayMeals} />
                 </div>
 
                 <div className="shrink-0 md:shrink md:min-h-0 flex flex-col gap-4 tablet:col-span-2 tablet:grid tablet:grid-cols-2">
-                    <TodayNutritionCard
-                        profileName={activeProfile?.name ?? null}
-                        macros={macros}
-                        kcalTarget={kcalTarget}
-                        macroTargets={macroTargets}
-                        onOpen={() => navigate('/journal')}
-                    />
+                    <TodayThawCard reminders={reminders} />
                     <button
                         type="button"
                         onClick={() => navigate('/shopping')}

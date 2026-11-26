@@ -16,6 +16,11 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — Today without macros, thaw reminders for tomorrow (D-052, #98, v6.170.30)
+- Owner: « Aujourd'hui » looked like the journal; roles decided (D-052): Aujourd'hui = the day at a glance, actions only; Journal = macros and fine adjustments. Done: macro card removed (`TodayNutritionCard` deleted); #98 « À sortir pour demain » (`TodayThawCard`, `thawReminders`): frozen base batches linked to tomorrow's meals, then freezer foods used by tomorrow's recipes; dish batches planned with « Ajouter au menu » are not linked, so not reminded.
+- Open question for the owner: the journal « Ce soir : … » shortcut (#90) is an action; keep it in the journal or remove it now that Aujourd'hui is the home?
+- Test: plan tomorrow a dish using a frozen base batch → « Lot prévu · pour X » with the amount; a recipe of tomorrow using a food that has bags in the freezer → « Au congélateur · pour X » with the bags; nothing → « Rien à décongeler pour demain. »; no macros left on Aujourd'hui; desktop / tablet / phone layouts as before.
+
 ## 2026-11-26 — Today on phones and portrait tablet (v6.170.29)
 - Owner: « la version mobile ne va pas du tout, ainsi que la version tablette ». Causes found in the code (no browser check): on phones the stacked blocks carried `min-h-0` inside a scrolling flex column, so they shrank instead of scrolling; on a portrait tablet (820 px) the 3-column desktop bento left about 250 px for the right column. Fix: `shrink-0` on phones (`md:shrink md:min-h-0` above), tiles 2 per row (8 rem, 10 rem from `sm:`), smaller tile text on phones; `tablet:` layout 2 columns (tiles full width, journal and shopping side by side, tomorrow full width in 2 columns). Test: 360 × 640, 390 × 844, iPad Air 820 × 1180 portrait, desktop: nothing squashed, no horizontal scroll, desktop unchanged.
 

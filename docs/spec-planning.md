@@ -34,7 +34,7 @@ A dessert-only destination must never give its own dessert to the origin slot (p
 
 Each slot save diffs items (`diffSlotItems`) and sends **one** batch call `PUT /planning-slots/:id/items/batch`; the local cache is rebuilt from the full response. A move A→B is two batch calls (not atomic). Decision: D-009.
 
-## Default persons per meal (issue #79, API D-080, **not live yet**)
+## Default persons per meal (issue #79, API D-080 live in prod 2026-11-26)
 
 **Hidden** (owner 2026-11-26, D-053: `FEATURE_FLAGS.personDefaults = false`, review by 2027-02-26): no entry point and the defaults from `/bootstrap` are ignored. A save attempt by the owner failed before hiding: the front expected `{ defaults }` while the API returns a bare array; fixed with the real payloads (v6.170.40).
 

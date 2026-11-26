@@ -16,6 +16,20 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — End of session: everything in prod, owner tests (docs, v6.170.44)
+- Owner: API (D-079 → D-085, #109, D-081 / D-082 removal `9cd0f4b`) and front (v6.170.5 → v6.170.43) pushed to prod. Docs: « live in prod » in `docs/api.md`, specs and roadmap; API hashes still `TODO(owner)` (D-068, D-078, D-079, D-080 → D-085, #109).
+- **Where to resume**: (1) owner test feedback on the paths below, fixes first; (2) #108 settings redesign (one « Réglages » screen); (3) framing of #92 plates per profile (decide plate vs `foodChoices.quantity` precedence with the API); (4) note the « demo account → real account » idea as an issue when the owner details it; hidden feature `personDefaults` review by 2027-02-26.
+- **Test first** (most used or most changed):
+  1. Courses: one list (tap = check, done lines last, aisles fold), « Tout / À acheter », « Rayons / Repas », place pin, « Outils » menu (Changer les jours, Partager, Copier, Ordre des rayons, Articles du quotidien, Magasin des prix, Prix au kilo), « J'en ai déjà… » in a line sheet, « Saisir le prix en cochant », « Par repas » headers; phone, tablet, desktop.
+  2. Changer les jours: « Nouvelle liste » vs « Garder coches et stocks », presets; from the planning (overlap keeps, new week resets).
+  3. Aujourd'hui (home): meals with photos and times (« Horaires », grey when over), « À sortir pour demain », shopping card, tomorrow; phone / tablet / desktop.
+  4. Journal: ±25 % (decimal portions), no « Ce soir » shortcut anymore.
+  5. Planning: « Reprendre » (previous week), picker suggestions and kcal, mobile « ⋯ » menu (week view, Reprendre, Générer), dessert choice remembered, profile badge in the sidebar.
+  6. Recette: « À cuisiner pour … » strip, « Cuisiner » mode (screen stays on), « Mettre au congélateur » for batch recipes.
+  7. Avis: send (area select, stars), admin Dashboard › Avis (reply, delete, Vider les traités), user « Mes avis » and the badge.
+  8. Windows: Escape / backdrop closes reading windows, not forms; page titles aligned on every screen.
+- Last commit messages: « feature: distinct meal headers in the by-meal shopping view », « feature: visible shopping view controls and a short tools menu », « feature: one shopping list with an all or to buy view », « fix: use the real API responses for default persons and shopping days », « docs: cancelled UX issues of lot 5 ».
+
 ## 2026-11-26 — By-meal view: meal header distinct from ingredients (v6.170.43)
 - Owner: on phones the meal line and an ingredient looked the same. Done: light orange header band, dish photo, « Mardi · Dîner » / « N repas » above a larger name (`recipeCardMealLabel`), small « tout cocher » button with the count on the right. Test on a phone: Par repas → each card header clearly different from its ingredient rows; tout cocher checks the meal and folds it; a recipe planned twice shows « 2 repas ».
 

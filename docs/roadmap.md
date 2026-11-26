@@ -5,7 +5,7 @@ The detailed backlog and future features live in `dev/issues.json` and `dev/refa
 
 ## Current focus
 
-Product scope (D-050, owner 2026-11-26): **Plan → Shop → Cook (one plate per person) → Pre-filled journal**, nothing else; umbrella issue `dev/issues.json` #70. Next: friction audit of the existing flows.
+Product scope (D-050, owner 2026-11-26): **Plan → Shop → Cook (one plate per person) → Pre-filled journal**, nothing else; umbrella issue `dev/issues.json` #70. UX lots 1 to 5 of #70 and the shopping list redesign (one list « Tout / À acheter », header controls, « Outils » menu, meal headers) **live in prod** (front v6.170.5 → v6.170.43, API D-079 → D-085 and #109, 2026-11-26); owner browser tests in progress (paths in `log/devlog.md`). Next: #108 settings, then the framing of #92 (plates per profile).
 
 1. ✅ Food groups and per-profile cheese choice on planned meals (D-033, `dev/issues.json` #25), first step toward the profile tastes feature (#20-#24). **In prod (API + front, 2026-10-15)**: Dashboard « Familles », Recipe Builder « au choix », meal actions menu, per-profile choice + quantity, shopping split, journal (v6.85.0 → v6.92.0). Owner feedback pending. Profile default per family: « Préférences par famille » in « Profils du foyer » (v6.98.0, every family). Tested and in prod (owner, 2026-10-16); #25 closed.
 2. ✅ Shopping aisles (owner, 2026-10-15/16): per-account aisle order (API D-053, **live in prod**; front v6.93.0-6.94.0) and custom per-account aisles (API D-054; front v6.95.0-6.97.0: grouping, management in « Ordre des rayons », aisle choice in the extra form). **In prod (API + front, 2026-10-16)**; awaiting user feedback.

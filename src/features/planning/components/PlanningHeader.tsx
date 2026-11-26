@@ -3,6 +3,7 @@ import { CalendarDays, ChevronLeft, ChevronRight, History, List, Loader2, MoreHo
 import { FloatingMenu } from "../../../shared/components/ui/FloatingMenu";
 import { CostEstimate } from "../../../core/logic/price/priceLogic";
 import { PlanningCostLabel } from "./PlanningCostLabel";
+import { PageHeading } from "../../../shared/components/layout/PageHeading";
 
 export interface PlanningHeaderProps {
   weekNumber: number;
@@ -43,16 +44,18 @@ export const PlanningHeader = ({
 
   return (
     <div className="flex items-center justify-between gap-3 shrink-0">
-      <div className="flex flex-col leading-tight">
-        <h1 className="text-xl sm:text-2xl tablet:text-3xl font-black text-slate-900">Ma Semaine</h1>
-        <button
-          onClick={() => !isAnyEditing && dateInputRef.current?.showPicker?.()}
-          className="sm:pointer-events-none text-left text-xs sm:text-sm font-bold text-slate-400 hover:text-orange-500 sm:hover:text-slate-400 transition-colors"
-        >
-          Sem. {weekNumber} · {weekRange}
-          {weekCost && weekCost.total > 0 && <> · <PlanningCostLabel estimate={weekCost} /></>}
-        </button>
-      </div>
+      <PageHeading
+        title="Ma Semaine"
+        subtitle={
+          <button
+            onClick={() => !isAnyEditing && dateInputRef.current?.showPicker?.()}
+            className="sm:pointer-events-none text-left hover:text-orange-500 sm:hover:text-slate-500 transition-colors"
+          >
+            Sem. {weekNumber} · {weekRange}
+            {weekCost && weekCost.total > 0 && <> · <PlanningCostLabel estimate={weekCost} /></>}
+          </button>
+        }
+      />
 
       <div className="flex items-center gap-2 shrink-0">
         <input

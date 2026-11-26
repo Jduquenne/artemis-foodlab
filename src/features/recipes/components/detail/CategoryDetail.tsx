@@ -20,6 +20,7 @@ import { FoodPhotoCard } from '../../../../shared/components/ui/FoodPhotoCard';
 import { RecipeIngredientsCard } from '../../../../shared/components/ui/RecipeIngredientsCard';
 import { LazyRender } from '../../../../shared/components/ui/LazyRender';
 import { categoryLabel } from '../../../../core/logic/recipe/categoryLogic';
+import { PageHeading } from '../../../../shared/components/layout/PageHeading';
 
 export const CategoryDetail = () => {
     const { categoryId } = useParams();
@@ -76,7 +77,7 @@ export const CategoryDetail = () => {
         <div className="h-full flex flex-col gap-4 overflow-hidden">
 
             <div className="flex items-center justify-between gap-3 shrink-0">
-                <div className="flex items-baseline gap-3 min-w-0 shrink">
+                <div className="flex items-center gap-3 min-w-0 shrink">
                     <button
                         aria-label="Retour aux recettes"
                         onClick={() => navigate('/recipes')}
@@ -84,14 +85,12 @@ export const CategoryDetail = () => {
                     >
                         <ArrowLeft className="w-5 h-5" />
                     </button>
-                    <h1 className="text-xl sm:text-2xl tablet:text-3xl font-black text-slate-900 truncate">
-                        {categoryLabel(categories, categoryId ?? '')}
-                    </h1>
-                    <span className="shrink-0 text-sm font-bold text-slate-400">
-                        {isRecipeFilterActive(recipeFilter)
+                    <PageHeading
+                        title={categoryLabel(categories, categoryId ?? '')}
+                        subtitle={isRecipeFilterActive(recipeFilter)
                             ? `${filteredRecipes.length} / ${recipes.length} recettes`
                             : `${recipes.length} recettes`}
-                    </span>
+                    />
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">

@@ -17,6 +17,7 @@ import { getFreezerCategoryAccent } from "../../freezerAccents";
 import { distributeFreezerItemsToColumns } from "../../../../core/logic/freezer/freezerItemsLogic";
 import { withPending } from "../../../../shared/utils/withPending";
 import { useInlineRename } from "../../../../shared/hooks/useInlineRename";
+import { PageHeading } from "../../../../shared/components/layout/PageHeading";
 
 export interface FreezerCategoryDetailProps {
   category: FreezerCategory;
@@ -85,20 +86,21 @@ export const FreezerCategoryDetail = ({ category, onBack }: FreezerCategoryDetai
             <div className={`shrink-0 w-8 h-8 rounded-xl flex items-center justify-center ${accent.badge}`}>
               <Snowflake className="w-4 h-4" />
             </div>
-            <h1 className="text-xl font-black text-slate-900 truncate">{category.name}</h1>
-            <button
-              aria-label="Renommer"
-              onClick={rename.start}
-              className="shrink-0 p-1.5 rounded-lg text-slate-300 hover:text-slate-500 hover:bg-muted transition-colors"
-            >
-              <Pencil className="w-3.5 h-3.5" />
-            </button>
+            <PageHeading
+              title={category.name}
+              titleAside={
+                <button
+                  aria-label="Renommer"
+                  onClick={rename.start}
+                  className="shrink-0 p-1.5 rounded-lg text-slate-300 hover:text-slate-500 hover:bg-muted transition-colors"
+                >
+                  <Pencil className="w-3.5 h-3.5" />
+                </button>
+              }
+              subtitle={`${category.items.length} ${category.items.length === 1 ? "article" : "articles"}`}
+            />
           </div>
         )}
-
-        <span className="shrink-0 text-sm font-bold text-slate-400">
-          {category.items.length} {category.items.length === 1 ? "article" : "articles"}
-        </span>
       </div>
 
       {exhaustedIds.length > 0 && (

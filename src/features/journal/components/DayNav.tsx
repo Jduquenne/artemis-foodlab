@@ -2,6 +2,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { format, isSameDay } from "date-fns";
 
 import { fr } from "date-fns/locale";
+import { PageHeading } from "../../../shared/components/layout/PageHeading";
 
 export interface DayNavProps {
   date: Date;
@@ -17,12 +18,7 @@ export const DayNav = ({ date, onPrev, onNext }: DayNavProps) => {
 
   return (
     <div className="flex items-center justify-between shrink-0">
-      <div>
-        <h1 className="text-xl sm:text-2xl tablet:text-3xl font-black text-slate-900 leading-tight">
-          Journal
-        </h1>
-        <p className="text-xs sm:text-sm text-slate-500">Suivi nutritionnel quotidien</p>
-      </div>
+      <PageHeading title="Journal" subtitle="Suivi nutritionnel quotidien" />
 
       <div className="flex items-center gap-1">
         <button

@@ -487,7 +487,7 @@ export const PlanningModule = () => {
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
         >
-            <div className="w-full h-[calc(100dvh-2rem)] tablet:h-[calc(100dvh-4rem)] flex flex-col gap-2 overflow-hidden tablet:overflow-visible">
+            <div className="w-full h-[calc(100dvh-2rem)] tablet:h-[calc(100dvh-4rem)] flex flex-col gap-2 sm:gap-4 overflow-hidden tablet:overflow-visible">
 
                 <PlanningHeader
                     weekNumber={weekNumber}

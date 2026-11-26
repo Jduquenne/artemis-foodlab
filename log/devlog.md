@@ -16,6 +16,9 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — Page heading aligned on every screen (v6.170.28)
+- Owner: titles not aligned when switching screens (line height, subtitle size, gap under the header, freezer title smaller on tablet, header row height). Done: `PageHeading` (title + mandatory subtitle, same classes) on the 9 main screens and sub-screens; freezer and categories show their count as subtitle; root gap 16 px (Journal and Shopping were 12 px; Planning 8 px on phones, 16 px from `sm:`); planning week subtitle now regular weight like the others. `docs/ui-design.md` § Page heading. Test: switch quickly between Aujourd'hui, Journal, Menu, Recettes, Courses, Congélateur on desktop, tablet and phone: the title stays at the same place and size; freezer rename still works; recipe category count shown.
+
 ## 2026-11-26 — UX lot 4 (cooking and home, #70)
 - Lot 4: #88, #89, #72, #98, #91.
 - #88 (v6.170.25): recipe opened from a planned meal shows « À cuisiner pour mardi soir · 3 personnes · quantités pour N portions » (`meal` URL parameter, `mealContextLogic.ts`), from the planning dish, breakfast / snack recipes and the journal « Ce soir » shortcut. Test: open tonight's dish from the planning → strip with day, moment and persons; change the portions in the toolbar → « quantités pour » follows; open the same recipe from Recettes → no strip.

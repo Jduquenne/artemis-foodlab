@@ -4,6 +4,7 @@ import { ActiveFilterPill, ActiveFilterPills } from './ActiveFilterPills';
 import { EstimateBadge, EstimateBadgeProps } from './EstimateBadge';
 import { ShoppingModeToggle } from './ShoppingModeToggle';
 import { ShoppingOptionsMenu, ShoppingOptionsMenuProps } from './ShoppingOptionsMenu';
+import { PageHeading } from '../../../../shared/components/layout/PageHeading';
 
 export interface ShoppingHeaderProps {
     daysLabel: string | null;
@@ -18,19 +19,21 @@ export interface ShoppingHeaderProps {
 
 export const ShoppingHeader = ({ daysLabel, remainingCount, mode, onModeChange, onAddExtra, options, pills, estimate }: ShoppingHeaderProps) => (
     <div className="shrink-0 flex flex-col gap-3 lg:flex-row lg:flex-wrap lg:items-center lg:gap-x-6 lg:gap-y-2">
-        <div className="flex items-start justify-between gap-2 lg:contents">
-            <div className="min-w-0">
-                <h1 className="text-xl sm:text-2xl tablet:text-3xl font-black text-slate-900">Liste de courses</h1>
-                <p className="text-slate-500 text-sm mt-0.5">
-                    {daysLabel ?? <span className="italic text-slate-400">Aucune période sélectionnée</span>}
-                    {remainingCount !== null && (
-                        <span className="text-orange-600 font-medium before:content-['·'] before:mx-1.5">
-                            {remainingCount} {mode === 'store' ? `restant${remainingCount !== 1 ? 's' : ''}` : 'à acheter'}
-                        </span>
-                    )}
-                    {estimate && <EstimateBadge {...estimate} />}
-                </p>
-            </div>
+        <div className="flex items-center justify-between gap-2 lg:contents">
+            <PageHeading
+                title="Liste de courses"
+                subtitle={
+                    <>
+                        {daysLabel ?? <span className="italic text-slate-400">Aucune période sélectionnée</span>}
+                        {remainingCount !== null && (
+                            <span className="text-orange-600 font-medium before:content-['·'] before:mx-1.5">
+                                {remainingCount} {mode === 'store' ? `restant${remainingCount !== 1 ? 's' : ''}` : 'à acheter'}
+                            </span>
+                        )}
+                        {estimate && <EstimateBadge {...estimate} />}
+                    </>
+                }
+            />
             <div className="flex gap-2 shrink-0 lg:order-2 lg:ml-auto">
                 {onAddExtra && (
                     <button

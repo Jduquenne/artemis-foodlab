@@ -14,6 +14,7 @@ import { useMenuStore } from '../../shared/store/useMenuStore';
 import { TodayHeroCard } from './components/TodayHeroCard';
 import { TodayMealsCard } from './components/TodayMealsCard';
 import { TodayNutritionCard } from './components/TodayNutritionCard';
+import { PageHeading } from '../../shared/components/layout/PageHeading';
 
 const formatToday = (date: Date) =>
     date.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
@@ -41,8 +42,7 @@ export const TodayModule = () => {
     return (
         <div className="h-full flex flex-col gap-4 overflow-hidden">
             <div className="shrink-0">
-                <h1 className="text-xl sm:text-2xl tablet:text-3xl font-black text-slate-900">Aujourd'hui</h1>
-                <p className="text-slate-500 text-sm mt-0.5 first-letter:uppercase">{formatToday(now)}</p>
+                <PageHeading title="Aujourd'hui" subtitle={<span className="first-letter:uppercase inline-block">{formatToday(now)}</span>} />
             </div>
 
             <div className="flex-1 min-h-0 overflow-y-auto md:overflow-hidden flex flex-col gap-4 pb-4 md:pb-0 md:grid md:grid-cols-3 md:grid-rows-[minmax(0,3fr)_minmax(0,2fr)]">

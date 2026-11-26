@@ -76,7 +76,7 @@ export const JournalModule = () => {
   }, []);
 
   return (
-    <div className="h-full flex flex-col gap-3 overflow-hidden">
+    <div className="h-full flex flex-col gap-4 overflow-hidden">
       <DayNav date={selectedDate} onPrev={goToPrev} onNext={goToNext} />
       <NextMealLink />
 

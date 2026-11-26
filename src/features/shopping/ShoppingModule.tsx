@@ -65,6 +65,7 @@ import { ConfirmActionModal } from '../../shared/components/ui/ConfirmActionModa
 import { PriceSection } from './components/price/PriceSection';
 import { PriceEntrySheet } from './components/price/PriceEntrySheet';
 import { PriceStoresSheet } from './components/price/PriceStoresSheet';
+import { PageHeading } from '../../shared/components/layout/PageHeading';
 
 const SHOPPING_COLUMNS: readonly ColBreakpoint[] = [
     { minWidth: 1024, cols: 3 },
@@ -326,7 +327,7 @@ export const ShoppingModule = () => {
 
     return (
         <>
-            <div className="h-full flex flex-col gap-3 overflow-hidden">
+            <div className="h-full flex flex-col gap-4 overflow-hidden">
                 {showHousehold ? (
                     <div className="shrink-0 flex items-center gap-2">
                         <button
@@ -337,7 +338,7 @@ export const ShoppingModule = () => {
                         >
                             <ArrowLeft className="w-5 h-5" />
                         </button>
-                        <h1 className="text-xl sm:text-2xl tablet:text-3xl font-black text-slate-900">Articles du quotidien</h1>
+                        <PageHeading title="Articles du quotidien" subtitle="Ce qu'on rachète régulièrement" />
                     </div>
                 ) : (
                     <ShoppingHeader

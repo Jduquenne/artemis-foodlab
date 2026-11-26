@@ -3,6 +3,7 @@ import { useAuthStore } from "../../../../shared/store/useAuthStore";
 import { updateMe } from "../../../../core/services/authService";
 import { InlineNameEditor } from "../InlineNameEditor";
 import { useInlineRename } from "../../../../shared/hooks/useInlineRename";
+import { PageHeading } from "../../../../shared/components/layout/PageHeading";
 
 export interface FreezerHeaderProps {
   categoryCount: number;
@@ -26,20 +27,22 @@ export const FreezerHeader = ({ categoryCount }: FreezerHeaderProps) => {
           pending={rename.pending}
         />
       ) : (
-        <div className="flex-1 flex items-center gap-2 min-w-0">
-          <h1 className="text-xl sm:text-2xl font-black text-slate-900 truncate">{freezerName}</h1>
-          <button
-            aria-label="Renommer"
-            onClick={rename.start}
-            className="shrink-0 p-1.5 rounded-lg text-slate-300 hover:text-slate-500 hover:bg-muted transition-colors"
-          >
-            <Pencil className="w-3.5 h-3.5" />
-          </button>
+        <div className="flex-1 min-w-0">
+          <PageHeading
+            title={freezerName}
+            titleAside={
+              <button
+                aria-label="Renommer"
+                onClick={rename.start}
+                className="shrink-0 p-1.5 rounded-lg text-slate-300 hover:text-slate-500 hover:bg-muted transition-colors"
+              >
+                <Pencil className="w-3.5 h-3.5" />
+              </button>
+            }
+            subtitle={`${categoryCount} ${categoryCount === 1 ? "catégorie" : "catégories"}`}
+          />
         </div>
       )}
-      <span className="shrink-0 text-sm font-bold text-slate-400">
-        {categoryCount} {categoryCount === 1 ? "catégorie" : "catégories"}
-      </span>
     </div>
   );
 };

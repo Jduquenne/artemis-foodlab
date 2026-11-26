@@ -18,6 +18,7 @@ import { filterRecipesByFilter, isRecipeFilterActive } from '../../core/logic/re
 import { RECIPE_FOOD_PARAM, recipesUsingFood } from '../../core/logic/recipe/recipeFoodFilterLogic';
 import { RecipeFoodFilterBanner } from './components/filter/RecipeFoodFilterBanner';
 import { RecipeSearchResults } from './components/RecipeSearchResults';
+import { PageHeading } from '../../shared/components/layout/PageHeading';
 
 export const RecipeModule = () => {
     const navigate = useNavigate();
@@ -97,8 +98,7 @@ export const RecipeModule = () => {
 
                 <div className={`${isSearchActive ? 'hidden sm:flex' : 'flex'} flex-1 items-center justify-between gap-3 min-w-0`}>
                     <div className="shrink-0">
-                        <h1 className="text-xl sm:text-2xl tablet:text-3xl font-black text-slate-900 leading-tight">Mes Recettes</h1>
-                        <p className="text-xs sm:text-sm text-slate-500">Que mangeons-nous aujourd'hui ?</p>
+                        <PageHeading title="Mes Recettes" subtitle="Que mangeons-nous aujourd'hui ?" />
                     </div>
                     <div className="flex items-center gap-2 min-w-0">
                         <div className="hidden sm:flex items-center gap-2 min-w-0 overflow-x-auto">

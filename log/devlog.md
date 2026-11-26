@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — #67: API D-078 and front live in prod (docs, v6.169.5)
+- Owner: API D-078 and front v6.169.0 to v6.169.4 pushed to prod. Status updated in `docs/api.md`, D-048, roadmap item 21. API commit hash not given: `TODO(owner)` in `docs/api.md` and D-048.
+- Still open: owner browser tests of #67 (list in the step 5 entry below), then « clore issue 67 »; D-068 and D-078 API hashes `TODO(owner)`.
+
 ## 2026-11-26 — #67 step 5: docs and D-048 (v6.169.4)
 - Done: D-048 in `docs/decisions.md`; `docs/spec-recipes.md` § Ingredient removed during preparation, `docs/spec-journal.md` (removed ingredients bullet), `docs/spec-shopping.md` § Ingredient removed during preparation, glossary entry. Front complete (v6.169.0 to v6.169.4).
 - **Do not push before D-078 is live in prod.** Then fill the API commit hash in `docs/api.md` and D-048.

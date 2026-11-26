@@ -56,6 +56,7 @@ import { useIsAdmin } from '../../shared/hooks/useIsAdmin';
 import { useIsDemo } from '../../shared/hooks/useIsDemo';
 import { usePriceStore } from '../../shared/store/usePriceStore';
 import { withPending } from '../../shared/utils/withPending';
+import { CAN_SHARE_TEXT, shareText } from '../../shared/utils/shareText';
 import { ConfirmActionModal } from '../../shared/components/ui/ConfirmActionModal';
 import { PriceSection } from './components/price/PriceSection';
 import { PriceEntrySheet } from './components/price/PriceEntrySheet';
@@ -248,9 +249,18 @@ export const ShoppingModule = () => {
         return `${n} jour${n > 1 ? 's' : ''} sélectionné${n > 1 ? 's' : ''}`;
     }, [shoppingDays]);
 
-    const handleCopy = async () => {
+    const listText = () => {
         const uncheckedHousehold = shownHouseholdItems.filter(i => !checked.has(`household::${i.id}`));
-        const text = buildShoppingClipboardText(allGroupedItems, checked, stocks, sourceChecked, uncheckedHousehold, placeFilterTitle(effectivePlaceFilter, placeName));
+        return buildShoppingClipboardText(allGroupedItems, checked, stocks, sourceChecked, uncheckedHousehold, placeFilterTitle(effectivePlaceFilter, placeName));
+    };
+
+    const handleShare = async () => {
+        const outcome = await shareText('Liste de courses', listText());
+        if (outcome === 'failed') useNotificationStore.getState().push({ message: 'Partage impossible : la liste reste disponible avec « Copier la liste »', variant: 'error', duration: 3500 });
+    };
+
+    const handleCopy = async () => {
+        const text = listText();
         const written = await navigator.clipboard.writeText(text).then(() => true, () => false);
         useNotificationStore.getState().push({
             message: written ? 'Liste copiée' : 'Copie refusée par le navigateur',
@@ -338,6 +348,7 @@ export const ShoppingModule = () => {
                             onOpenAisleOrder: () => setShowCategoryOrder(true),
                             onOpenPriceCalc: () => setShowPriceCalc(true),
                             onCopy: hasList ? () => { handleCopy().catch(() => undefined); } : null,
+                            onShare: hasList && CAN_SHARE_TEXT ? () => { handleShare().catch(() => undefined); } : null,
                             onChangeDays: () => setShowDays(true),
                         }}
                     />

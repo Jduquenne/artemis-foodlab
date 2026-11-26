@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
-import { CalendarDays, Clipboard, Euro, Globe, House, LayoutList, ListOrdered, MapPin, MapPinOff, Scale, Settings, SlidersHorizontal, Store, UtensilsCrossed } from 'lucide-react';
+import { CalendarDays, Clipboard, Share2, Euro, Globe, House, LayoutList, ListOrdered, MapPin, MapPinOff, Scale, Settings, SlidersHorizontal, Store, UtensilsCrossed } from 'lucide-react';
 import { PriceStore } from '../../../../core/domain/price';
 import { ShoppingLayout } from '../../../../core/domain/shopping';
 import { PlaceFilter } from '../../../../core/logic/shopping/shoppingPlaceLogic';
@@ -26,6 +26,7 @@ export interface ShoppingOptionsMenuProps {
     onOpenAisleOrder: () => void;
     onOpenPriceCalc: () => void;
     onCopy: (() => void) | null;
+    onShare: (() => void) | null;
     onChangeDays: () => void;
 }
 
@@ -48,6 +49,7 @@ export const ShoppingOptionsMenu = ({
     onOpenAisleOrder,
     onOpenPriceCalc,
     onCopy,
+    onShare,
     onChangeDays,
 }: ShoppingOptionsMenuProps) => {
     const [open, setOpen] = useState(false);
@@ -120,6 +122,7 @@ export const ShoppingOptionsMenu = ({
                         <OptionsToolRow icon={<House className={ICON} />} label="Articles du quotidien" hint="Papier toilette, lessive…" onSelect={run(onOpenHousehold)} />
                         <OptionsToolRow icon={<ListOrdered className={ICON} />} label="Ordre des rayons" hint="Ton parcours en magasin" onSelect={run(onOpenAisleOrder)} />
                         <OptionsToolRow icon={<Scale className={ICON} />} label="Prix au kilo" hint="Calculette" onSelect={run(onOpenPriceCalc)} />
+                        {onShare && <OptionsToolRow icon={<Share2 className={ICON} />} label="Partager la liste" hint="Messages, notes…" onSelect={run(onShare)} />}
                         {onCopy && <OptionsToolRow icon={<Clipboard className={ICON} />} label="Copier la liste" hint="Ce qui reste à acheter" onSelect={run(onCopy)} />}
                         <OptionsToolRow icon={<CalendarDays className={ICON} />} label="Changer les jours" hint="Raccourcis ou planning" onSelect={run(onChangeDays)} />
                     </OptionsMenuSection>

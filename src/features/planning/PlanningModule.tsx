@@ -504,6 +504,8 @@ export const PlanningModule = () => {
                     onEnterSelectionMode={enterSelectionMode}
                     onOpenGenerator={isAdmin ? () => setGeneratorOpen(true) : undefined}
                     onCopyPreviousWeek={prepareWeekCopy}
+                    mobileWeekView={mobileWeekView}
+                    onToggleMobileWeekView={() => setMobileWeekView(!mobileWeekView)}
                     copyingPreviousWeek={preparingWeekCopy}
                 />
 
@@ -541,22 +543,6 @@ export const PlanningModule = () => {
                             atMax={shopping.atMax}
                             onToggle={shopping.toggle}
                         />
-                    )}
-
-                    {!isSelectionMode && (
-                        <div className="sm:hidden flex justify-end gap-1 pb-1.5">
-                            {([false, true] as const).map((week) => (
-                                <button
-                                    key={String(week)}
-                                    type="button"
-                                    onClick={() => setMobileWeekView(week)}
-                                    aria-pressed={mobileWeekView === week}
-                                    className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-colors ${mobileWeekView === week ? 'bg-orange-500 text-white' : 'bg-muted text-slate-500'}`}
-                                >
-                                    {week ? 'Semaine' : 'Jour'}
-                                </button>
-                            ))}
-                        </div>
                     )}
 
                     {!isSelectionMode && mobileWeekView && (

@@ -36,7 +36,9 @@ Each slot save diffs items (`diffSlotItems`) and sends **one** batch call `PUT /
 
 ## Mobile week list (issue #80)
 
-On phones (`< sm:`) a « Jour / Semaine » switch sits above the meals (`usePlanningPreferencesStore.mobileWeekView`, remembered on the device). « Semaine » shows `WeekListView` (`features/planning/components/`): one compact card per day (« Lundi 24/11 », day kcal of the active profile, then one line per filled slot « Déjeuner · Lasagnes + 1 dessert », « Rien de prévu » when empty; `weekListDays`, `core/logic/planning/weekListLogic.ts`, names from the plannable snapshot, outdoor activities included), scrollable; tapping a day opens it in the day view. Read only: no drag, no actions.
+On phones (`< sm:`) the « ⋯ » menu of `PlanningHeader` holds « Voir la semaine / Voir le jour »; it toggles the view (`usePlanningPreferencesStore.mobileWeekView`, remembered on the device); it sits in the header so the no-scroll day view keeps its full height (owner, 2026-11-26: a switch row above the meals hid the dinner desserts on small phones).
+
+**Header on phones** (owner, 2026-11-26: the actions overflowed the row): title, week navigation, a « ⋯ » button (`MoreHorizontal`, spinner while « Reprendre » prepares) opening a `FloatingMenu` with « Voir la semaine / le jour », « Reprendre la semaine précédente » and, for admins, « Générer des menus », then the « Courses » cart. From `sm:` up, « Reprendre » and « Générer » stay separate buttons and the view toggle does not exist. « Semaine » shows `WeekListView` (`features/planning/components/`): one compact card per day (« Lundi 24/11 », day kcal of the active profile, then one line per filled slot « Déjeuner · Lasagnes + 1 dessert », « Rien de prévu » when empty; `weekListDays`, `core/logic/planning/weekListLogic.ts`, names from the plannable snapshot, outdoor activities included), scrollable; tapping a day opens it in the day view. Read only: no drag, no actions.
 
 ## Copy the previous week (issue #75)
 

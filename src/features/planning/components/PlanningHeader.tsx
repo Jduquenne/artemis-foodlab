@@ -1,5 +1,6 @@
-import { useRef } from "react";
-import { ChevronLeft, ChevronRight, History, Loader2, ShoppingCart, Sparkles } from "lucide-react";
+import { useRef, useState } from "react";
+import { CalendarDays, ChevronLeft, ChevronRight, History, List, Loader2, MoreHorizontal, ShoppingCart, Sparkles } from "lucide-react";
+import { FloatingMenu } from "../../../shared/components/ui/FloatingMenu";
 import { CostEstimate } from "../../../core/logic/price/priceLogic";
 import { PlanningCostLabel } from "./PlanningCostLabel";
 
@@ -19,15 +20,20 @@ export interface PlanningHeaderProps {
   onOpenGenerator?: () => void;
   onCopyPreviousWeek: () => void;
   copyingPreviousWeek: boolean;
+  mobileWeekView: boolean;
+  onToggleMobileWeekView: () => void;
 }
 
 export const PlanningHeader = ({
   weekNumber, weekRange, weekCost, selectedDayDate,
   isAnyEditing, isSelectionMode, isAddMode, hasShoppingDays,
   onPrevWeek, onNextWeek, onDateChange, onEnterSelectionMode, onOpenGenerator,
-  onCopyPreviousWeek, copyingPreviousWeek,
+  onCopyPreviousWeek, copyingPreviousWeek, mobileWeekView, onToggleMobileWeekView,
 }: PlanningHeaderProps) => {
   const dateInputRef = useRef<HTMLInputElement>(null);
+  const moreRef = useRef<HTMLButtonElement>(null);
+  const [moreOpen, setMoreOpen] = useState(false);
+  const runMore = (action: () => void) => () => { setMoreOpen(false); action(); };
 
   const handleChange = (val: string) => {
     if (!val) return;
@@ -73,11 +79,41 @@ export const PlanningHeader = ({
         </div>
 
         {!isSelectionMode && !isAddMode && (
+          <>
+            <button
+              ref={moreRef}
+              onClick={isAnyEditing ? undefined : () => setMoreOpen((o) => !o)}
+              aria-label="Plus d'actions"
+              aria-expanded={moreOpen}
+              className={`sm:hidden flex items-center px-3 py-2 rounded-2xl shadow-sm border border-slate-200 bg-surface text-slate-600 hover:bg-muted transition-colors ${isAnyEditing ? "opacity-40 pointer-events-none" : ""}`}
+            >
+              {copyingPreviousWeek ? <Loader2 size={15} className="animate-spin text-orange-500" /> : <MoreHorizontal size={15} />}
+            </button>
+            <FloatingMenu open={moreOpen} anchorRef={moreRef} onClose={() => setMoreOpen(false)}>
+              <button onClick={runMore(onToggleMobileWeekView)} className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-subtle transition-colors">
+                {mobileWeekView ? <CalendarDays className="w-4 h-4 shrink-0" /> : <List className="w-4 h-4 shrink-0" />}
+                {mobileWeekView ? "Voir le jour" : "Voir la semaine"}
+              </button>
+              <button onClick={runMore(onCopyPreviousWeek)} disabled={copyingPreviousWeek} className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-subtle transition-colors disabled:opacity-50">
+                <History className="w-4 h-4 shrink-0" />
+                Reprendre la semaine précédente
+              </button>
+              {onOpenGenerator && (
+                <button onClick={runMore(onOpenGenerator)} className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-subtle transition-colors">
+                  <Sparkles className="w-4 h-4 shrink-0" />
+                  Générer des menus
+                </button>
+              )}
+            </FloatingMenu>
+          </>
+        )}
+
+        {!isSelectionMode && !isAddMode && (
           <button
             onClick={isAnyEditing || copyingPreviousWeek ? undefined : onCopyPreviousWeek}
             aria-label="Reprendre la semaine précédente"
             title="Reprendre la semaine précédente"
-            className={`flex items-center gap-1.5 px-3 py-2 rounded-2xl shadow-sm border border-slate-200 bg-surface font-bold text-sm text-slate-600 hover:bg-muted transition-colors ${isAnyEditing ? "opacity-40 pointer-events-none" : ""}`}
+            className={`hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-2xl shadow-sm border border-slate-200 bg-surface font-bold text-sm text-slate-600 hover:bg-muted transition-colors ${isAnyEditing ? "opacity-40 pointer-events-none" : ""}`}
           >
             {copyingPreviousWeek ? <Loader2 size={15} className="animate-spin text-orange-500" /> : <History size={15} className="text-orange-500" />}
             <span className="hidden lg:inline">Reprendre</span>
@@ -89,7 +125,7 @@ export const PlanningHeader = ({
             onClick={isAnyEditing ? undefined : onOpenGenerator}
             aria-label="Générer des menus"
             title="Générer des menus"
-            className={`flex items-center gap-1.5 px-3 py-2 rounded-2xl shadow-sm border border-slate-200 bg-surface font-bold text-sm text-slate-600 hover:bg-muted transition-colors ${isAnyEditing ? "opacity-40 pointer-events-none" : ""}`}
+            className={`hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-2xl shadow-sm border border-slate-200 bg-surface font-bold text-sm text-slate-600 hover:bg-muted transition-colors ${isAnyEditing ? "opacity-40 pointer-events-none" : ""}`}
           >
             <Sparkles size={15} className="text-orange-500" />
             <span className="hidden lg:inline">Générer</span>

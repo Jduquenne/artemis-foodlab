@@ -7,6 +7,8 @@ export interface NextMeal {
   recipeId: string;
   persons: number | undefined;
   label: string;
+  day: string;
+  slot: SlotType;
 }
 
 const TODAY_LABELS: Record<SlotType, string> = {
@@ -43,7 +45,7 @@ function mealOfDay(slots: readonly MealSlot[], date: Date, fromHour: number | nu
     if (fromHour !== null && fromHour >= NEXT_MEAL_END_HOURS[def.id]) continue;
     const slot = slots.find((s) => s.year === year && s.week === week && s.day === day && s.slot === def.id);
     const recipeId = firstPlannedRecipe(slot, isKnown);
-    if (slot && recipeId) return { recipeId, persons: slot.recipePersons?.[recipeId] ?? slot.persons, label: labels[def.id] };
+    if (slot && recipeId) return { recipeId, persons: slot.recipePersons?.[recipeId] ?? slot.persons, label: labels[def.id], day, slot: def.id };
   }
   return null;
 }

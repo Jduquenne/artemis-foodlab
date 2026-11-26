@@ -11,6 +11,7 @@ import { plannedPortions } from "../../../../core/logic/recipe/portionsPerPerson
 import { plannableRecipe } from "../../../../core/domain/recipePredicates";
 import { usePlannableSnapshot } from "../../../../shared/hooks/useCatalogueSnapshot";
 import { useAnyPendingKey } from "../../../../shared/hooks/useAnyPendingKey";
+import { MealContext } from "../../../../core/logic/planning/mealContextLogic";
 
 export interface PlanningSlotProps {
   mealType: MealSlotDef;
@@ -56,6 +57,8 @@ export const PlanningSlot = ({
   const navigate = useNavigate();
   const plannable = usePlannableSnapshot();
   const recipeIds = savedMeal?.recipeIds ?? [];
+  const mealContext = (persons: number | undefined): MealContext | undefined =>
+    savedMeal ? { day: savedMeal.day, slot: mealType.id, persons: persons ?? null } : undefined;
   const blocked = isSelectionMode || isAddMode || isCopyMode;
   const isWriting = useAnyPendingKey([`planning-add-to-slot:${slotId}`, `planning-move:${slotId}`]);
 
@@ -69,7 +72,7 @@ export const PlanningSlot = ({
           recipeIds={recipeIds}
           onAdd={blocked ? () => {} : onOpenPicker}
           onRemoveRecipe={blocked ? () => {} : onRemoveRecipe}
-          onNavigateToRecipe={isAddMode || isCopyMode ? () => {} : (rid) => navigate(buildRecipeDetailUrl(rid, plannedPortions(savedMeal?.recipePersons?.[rid] ?? savedMeal?.persons, plannableRecipe(plannable[rid]))))}
+          onNavigateToRecipe={isAddMode || isCopyMode ? () => {} : (rid) => navigate(buildRecipeDetailUrl(rid, plannedPortions(savedMeal?.recipePersons?.[rid] ?? savedMeal?.persons, plannableRecipe(plannable[rid])), mealContext(savedMeal?.recipePersons?.[rid] ?? savedMeal?.persons)))}
           isAddMode={isAddMode}
           onAddToSlot={isAddMode ? onAddToSlot : undefined}
           onCopyRecipe={!blocked ? onCopyRecipe : undefined}
@@ -99,7 +102,7 @@ export const PlanningSlot = ({
           persons={savedMeal?.persons}
           isEditingPersons={isEditingPersons}
           isAnyEditing={isAnyEditing || isCopyMode}
-          onNavigate={() => { if (recipeIds[0]) navigate(buildRecipeDetailUrl(recipeIds[0], plannedPortions(savedMeal?.persons, plannableRecipe(plannable[recipeIds[0]])))); }}
+          onNavigate={() => { if (recipeIds[0]) navigate(buildRecipeDetailUrl(recipeIds[0], plannedPortions(savedMeal?.persons, plannableRecipe(plannable[recipeIds[0]])), mealContext(savedMeal?.persons))); }}
           onOpenPicker={blocked ? () => {} : onOpenPicker}
           onModify={blocked ? () => {} : onOpenPicker}
           onDelete={blocked ? () => {} : onDelete}

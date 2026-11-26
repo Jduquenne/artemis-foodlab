@@ -1,3 +1,4 @@
+import { MealContext, encodeMealContext } from "../planning/mealContextLogic";
 import { Food, UNIT_WEIGHT_UNITS } from "../../domain/ingredient";
 import { RecipeDetails } from "../../domain/recipe";
 import { roundTo } from "../../utils/numberUtils";
@@ -30,8 +31,12 @@ export function scaleRecipeToPortions(recipe: RecipeDetails, portions: number): 
   };
 }
 
-export function buildRecipeDetailUrl(recipeId: string, portions: number | undefined): string {
-  return portions ? `/recipes/detail/${recipeId}?portions=${portions}` : `/recipes/detail/${recipeId}`;
+export function buildRecipeDetailUrl(recipeId: string, portions: number | undefined, meal?: MealContext): string {
+  const params = [
+    ...(portions ? [`portions=${portions}`] : []),
+    ...(meal ? [`meal=${encodeURIComponent(encodeMealContext(meal))}`] : []),
+  ];
+  return params.length > 0 ? `/recipes/detail/${recipeId}?${params.join("&")}` : `/recipes/detail/${recipeId}`;
 }
 
 export function buildUnitWeightOverrides(foods: Record<string, Food>, recipe: RecipeDetails): Record<string, number> {

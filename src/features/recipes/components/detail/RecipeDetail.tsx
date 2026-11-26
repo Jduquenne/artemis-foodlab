@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, ChefHat } from 'lucide-react';
 import { useFoodsSnapshot, useRecipesSnapshot } from '../../../../shared/hooks/useCatalogueSnapshot';
 import { calculateRecipeMacros } from '../../../../core/logic/nutrition/macroLogic';
 import { getLinkedBases, getCategoryRecipeIds } from '../../../../core/logic/recipe/recipeListLogic';
@@ -22,6 +22,7 @@ import { RecipeBookCard } from '../../../../shared/components/ui/RecipeBookCard'
 import { useModalBack } from '../../../../shared/hooks/useModalBack';
 import { useMediaSrc } from '../../../../shared/hooks/useMediaSrc';
 import { useMediaStore } from '../../../../shared/store/useMediaStore';
+import { mealContextLabel, parseMealContext } from '../../../../core/logic/planning/mealContextLogic';
 
 export const RecipeDetail = () => {
   const { recipeId } = useParams();
@@ -35,6 +36,7 @@ export const RecipeDetail = () => {
   const instructionsPhotoUrl = useMediaSrc(recipe?.assets?.instructionsPhoto);
   const categoryId = searchParams.get('category');
   const portionsParam = searchParams.get('portions');
+  const mealContext = parseMealContext(searchParams.get('meal'));
   const { isLeaving, goBack } = useModalBack(
     categoryId ? `/recipes/category/${categoryId}` : '/recipes',
   );
@@ -127,6 +129,16 @@ export const RecipeDetail = () => {
           />
         </div>
       </div>
+
+      {mealContext && (
+        <p className="shrink-0 -mt-2 mb-3 flex items-center gap-2 px-3 py-2 rounded-xl bg-orange-50 dark:bg-orange-950/30 text-sm text-slate-700">
+          <ChefHat className="w-4 h-4 text-orange-500 shrink-0" />
+          <span className="min-w-0">
+            <span className="font-bold text-orange-600">{mealContextLabel(mealContext)}</span>
+            <span className="text-slate-500"> · quantités pour {portions} portion{portions > 1 ? 's' : ''}</span>
+          </span>
+        </p>
+      )}
 
       <div className="flex-1 min-h-0 flex items-center gap-2">
 

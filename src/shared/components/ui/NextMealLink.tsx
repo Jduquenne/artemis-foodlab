@@ -21,7 +21,7 @@ export const NextMealLink = () => {
   return (
     <button
       type="button"
-      onClick={() => navigate(buildRecipeDetailUrl(nextMeal.recipeId, nextMeal.persons))}
+      onClick={() => navigate(buildRecipeDetailUrl(nextMeal.recipeId, nextMeal.persons, { day: nextMeal.day, slot: nextMeal.slot, persons: nextMeal.persons ?? null }))}
       className="shrink-0 w-full flex items-center gap-2 px-3 py-2 rounded-xl bg-orange-50 dark:bg-orange-950/30 text-left hover:bg-orange-100 dark:hover:bg-orange-900/40 transition-colors"
     >
       <ChefHat className="w-4 h-4 text-orange-500 shrink-0" />

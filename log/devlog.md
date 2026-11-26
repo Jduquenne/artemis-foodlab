@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — UX lot 4 (cooking and home, #70)
+- Lot 4: #88, #89, #72, #98, #91.
+- #88 (v6.170.25): recipe opened from a planned meal shows « À cuisiner pour mardi soir · 3 personnes · quantités pour N portions » (`meal` URL parameter, `mealContextLogic.ts`), from the planning dish, breakfast / snack recipes and the journal « Ce soir » shortcut. Test: open tonight's dish from the planning → strip with day, moment and persons; change the portions in the toolbar → « quantités pour » follows; open the same recipe from Recettes → no strip.
+
 ## 2026-11-26 — UX lot 3 (planning, #70)
 - Lot 3: #75, #76, #80, #73. Front only.
 - #75 (v6.170.20): « Reprendre » in the planning header copies the previous week's dishes and desserts onto the empty slots of the displayed week (`weekCopyLogic.ts`, one bulk call, confirmation, notification). Persons and meal choices not copied (bulk route limit). Test: previous week with meals, current week partly filled → confirmation with counts → only empty slots filled, notification lists skipped slots; previous week empty → info message; breakfast / snack multi recipes and desserts copied.

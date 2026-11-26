@@ -73,6 +73,7 @@ import {
 import { usePersonDefaultsStore } from '../../shared/store/usePersonDefaultsStore';
 import { defaultPersonsFor } from '../../core/logic/planning/personDefaultsLogic';
 import { PersonDefaultsSheet } from './components/PersonDefaultsSheet';
+import { FEATURE_FLAGS } from '../../core/domain/featureFlags';
 
 interface PendingDragMove {
     fromMeal: MealSlot;
@@ -512,7 +513,7 @@ export const PlanningModule = () => {
                     onCopyPreviousWeek={prepareWeekCopy}
                     mobileWeekView={mobileWeekView}
                     onToggleMobileWeekView={() => setMobileWeekView(!mobileWeekView)}
-                    onOpenPersonDefaults={() => setPersonDefaultsOpen(true)}
+                    onOpenPersonDefaults={FEATURE_FLAGS.personDefaults ? () => setPersonDefaultsOpen(true) : undefined}
                     copyingPreviousWeek={preparingWeekCopy}
                 />
 

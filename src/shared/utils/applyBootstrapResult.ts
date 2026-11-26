@@ -1,3 +1,4 @@
+import { FEATURE_FLAGS } from "../../core/domain/featureFlags";
 import { BootstrapResult } from "../../core/services/bootstrapService";
 import { useJournalStore } from "../store/useJournalStore";
 import { useMenuStore } from "../store/useMenuStore";
@@ -54,6 +55,6 @@ export function applyBootstrapResult(result: BootstrapResult): void {
     useFoodCookingStore.getState().replaceCookings(result.foodCookings);
   }
   useFeedbackStore.getState().setUnreadReplies(result.unreadFeedbackReplies);
-  usePersonDefaultsStore.getState().replaceDefaults(result.personDefaults);
+  usePersonDefaultsStore.getState().replaceDefaults(FEATURE_FLAGS.personDefaults ? result.personDefaults : []);
   applied = next;
 }

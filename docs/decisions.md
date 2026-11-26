@@ -495,3 +495,12 @@ Lightweight ADRs. New architecture decisions are proposed by the agent, validate
 - **Decision**: two distinct roles. **Aujourd'hui** = everything about the day at a glance, actions only: what we eat today (photos, persons, recipe and cooking mode in one tap), what to take out of the freezer for tomorrow (#98), tomorrow's meals, the shopping shortcut; **no macros**. **Journal** = the macros of each profile and the fine adjustments (portions, grams, ingredients, ±25 %, week average), « la partie que les pointilleux kiffent ».
 - **Alternatives considered**: merging both into the journal with an action strip (fewer screens, refused by the owner: two distinct moments of the day).
 - **Consequences**: the macro card of « Aujourd'hui » is removed (v6.170.30); new features about the day's actions go to « Aujourd'hui », nutrition features go to the journal.
+
+## D-053 — Hidden features behind a flag, reviewed after a deadline
+
+- **Date**: 2026-11-26
+- **Status**: accepted (owner, 2026-11-26).
+- **Context**: the default persons per meal (#79) were coded but the owner doubts they will be used; he wants to keep them hidden until he decides they are relevant, and remove them if they still are not after some months.
+- **Decision**: a single flag file `core/domain/featureFlags.ts` (`FEATURE_FLAGS`, `as const`). A hidden feature has every entry point hidden **and** no effect on the data (its stored values are ignored), so the app behaves as before it existed. Each hidden feature is listed in `docs/roadmap.md` § Hidden features with the date it was hidden and a review date; at the review the owner turns it on (flag `true`, then the flag and its checks are removed) or the code is deleted.
+- **Alternatives considered**: removing the code now (loses finished work); a runtime / per-account toggle (not needed for a decision that only the owner makes).
+- **Consequences**: `personDefaults: false` (entry points in `PlanningHeader` hidden, `applyBootstrapResult` ignores the defaults).

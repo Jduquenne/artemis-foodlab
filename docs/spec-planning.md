@@ -36,6 +36,8 @@ Each slot save diffs items (`diffSlotItems`) and sends **one** batch call `PUT /
 
 ## Default persons per meal (issue #79, API D-080, **not live yet**)
 
+**Hidden** (owner 2026-11-26, D-053: `FEATURE_FLAGS.personDefaults = false`, review by 2027-02-26): no entry point and the defaults from `/bootstrap` are ignored. A save attempt by the owner failed before hiding (error not captured; likely the API in use did not have D-080 yet, or the assumed response shape): check with real payloads before turning it on.
+
 Per account (household), loaded from `/bootstrap` into `usePersonDefaultsStore`. Resolution at read time, never written to the slots (a later change of the default applies to every meal without its own persons): slot persons → household default for (day, slot) (`defaultPersonsFor` / `withDefaultPersons`, `core/logic/planning/personDefaultsLogic.ts`) → recipe default. Used by the planning cells (`PlanningSlot` `defaultPersons` → displayed persons, persons editor start value, recipe link portions), the shopping aggregation and the planning cost (`ShoppingCatalogue.personDefaults`, applied to each slot in `aggregateSlots` / `aggregateBases`), and « Aujourd'hui » (`plannedMealsOn`). Editing: `PersonDefaultsSheet` (7 days × 4 meals, integer 1..20, empty = recipe default, « Enregistrer » → full `PUT /planning-person-defaults`), opened from « Personnes » in the planning header (desktop) or « Personnes par défaut » in the « ⋯ » menu (phones). Limit: a default shows like a custom value in the persons badge.
 
 ## Today screen (issue #72)

@@ -68,6 +68,14 @@ Milestones reconstructed from history; definitions of done marked "proposed" wer
 - ✅ Layout, Journal, Planning.
 - ⬜ Courses, Recettes, Congélateur, Recipe Builder, Dashboard.
 
+## Hidden features
+
+Flags in `core/domain/featureFlags.ts` (D-053). At the review date: turn on (and remove the flag) or delete the code.
+
+| Flag | Feature | Hidden on | Review by |
+|---|---|---|---|
+| `personDefaults` | Default persons per meal (#79, API D-080) | 2026-11-26 | 2027-02-26 |
+
 ## Known bugs
 
 - ✅ **ISO week-year** (fixed 2026-10-08, v6.82.17): Planning and Journal stored weeks under the calendar year of the Monday instead of the ISO week-year (only weeks whose Monday is Dec 29-31: 2024-12-30, 2025-12-29, next 2029-12-31). Now `getWeekYear` (`core/utils/weekUtils.ts`). Prod inventory by the API session: no slot nor shopping day in week 1/52/53, no migration needed. API side: demo seeding (`planningWeekOf`) had the same bug, fixed by the API session on 2026-10-08 (ISO week-year, not deployed yet, owner to confirm); `POST /import` copies year/week verbatim (old buggy backups would bring the old keys back).

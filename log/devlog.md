@@ -16,6 +16,10 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 
 ---
 
+## 2026-11-26 — Default persons hidden behind a feature flag (D-053, v6.170.38)
+- Owner: error when saving, and doubts the feature will be used; keep it hidden until relevant, remove it after some months otherwise. Done: `FEATURE_FLAGS` (`core/domain/featureFlags.ts`), `personDefaults: false` hides the planning header button and the « ⋯ » entry, and `applyBootstrapResult` ignores the defaults, so the app behaves as before #79. D-053, `docs/conventions.md` § Hidden features, `docs/roadmap.md` § Hidden features (review by 2027-02-26).
+- Test: no « Personnes » button nor « Personnes par défaut » entry; meals keep the recipe / slot persons.
+
 ## 2026-11-26 — #79 default persons per meal (v6.170.37)
 - Done: household defaults per day × meal (API D-080), resolved at read time (slot → household default → recipe), used by the planning cells, shopping, planning cost and Aujourd'hui; `PersonDefaultsSheet` from the planning header / « ⋯ ». Contract gaps marked `TODO(owner)` in `docs/api.md` (PUT response and bootstrap key shapes assumed). **Needs D-080 live in prod and the real payloads.**
 - Test (dev API): set Lundi déjeuner = 2, Samedi dîner = 4 → empty-persons meals show 2 / 4, shopping quantities and cost follow, Aujourd'hui shows them; a meal with its own persons keeps it; clear a value → back to the recipe default; value 25 → error, Enregistrer disabled; reload → kept.

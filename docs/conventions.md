@@ -88,6 +88,10 @@ Any mutation triggered by a click (except a form with its own local `submitting`
 - When a feature changes state that persists after the action, test the **round trip**, not only the single move (a dessert swap bug was only visible on the way back).
 - Verify structural assumptions (id formats, mapping tables) against real code or data before coding, rather than relying on a description from memory.
 
+## Hidden features
+
+A finished feature the owner does not want to show yet stays in the code behind `FEATURE_FLAGS` (`core/domain/featureFlags.ts`, D-053): hide every entry point and ignore its data while the flag is `false`; list it in `docs/roadmap.md` § Hidden features with a review date.
+
 ## Commits
 
 - Format: `feature: <description>` or `fix: <description>` (also `refactor:`, `chore:`, `docs:`). English, short, no bullet points, no technical details. (`feature:` is kept on purpose, not `feat:`.)

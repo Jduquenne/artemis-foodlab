@@ -23,7 +23,7 @@ export interface PlanningHeaderProps {
   copyingPreviousWeek: boolean;
   mobileWeekView: boolean;
   onToggleMobileWeekView: () => void;
-  onOpenPersonDefaults: () => void;
+  onOpenPersonDefaults?: () => void;
 }
 
 export const PlanningHeader = ({
@@ -102,10 +102,12 @@ export const PlanningHeader = ({
                 <History className="w-4 h-4 shrink-0" />
                 Reprendre la semaine précédente
               </button>
-              <button onClick={runMore(onOpenPersonDefaults)} className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-subtle transition-colors">
-                <Users className="w-4 h-4 shrink-0" />
-                Personnes par défaut
-              </button>
+              {onOpenPersonDefaults && (
+                <button onClick={runMore(onOpenPersonDefaults)} className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-subtle transition-colors">
+                  <Users className="w-4 h-4 shrink-0" />
+                  Personnes par défaut
+                </button>
+              )}
               {onOpenGenerator && (
                 <button onClick={runMore(onOpenGenerator)} className="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-subtle transition-colors">
                   <Sparkles className="w-4 h-4 shrink-0" />
@@ -128,7 +130,7 @@ export const PlanningHeader = ({
           </button>
         )}
 
-        {!isSelectionMode && !isAddMode && (
+        {onOpenPersonDefaults && !isSelectionMode && !isAddMode && (
           <button
             onClick={isAnyEditing ? undefined : onOpenPersonDefaults}
             aria-label="Personnes par défaut"

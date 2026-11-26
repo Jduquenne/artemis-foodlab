@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { HouseholdItem } from '../../../../core/domain/household';
 import { IngredientGroup, ShoppingMode } from '../../../../core/domain/shopping';
+import { StockUpdate } from '../../../../core/logic/shopping/shoppingQuickStockLogic';
 import { assignIngredientColumns, splitHouseholdExtrasGroup } from '../../../../core/logic/shopping/shoppingGrouping';
 import { HouseholdShoppingCard } from '../HouseholdShoppingCard';
 import { ShoppingCategoryCard } from './ShoppingCategoryCard';
@@ -17,6 +18,8 @@ export interface ShoppingAislesViewProps {
     householdItems: HouseholdItem[];
     onToggle: (key: string) => void;
     onOpenStock: (key: string) => void;
+    onQuickStock: (key: string) => void;
+    onStockAll: (updates: StockUpdate[]) => void;
     onOpenDetail: (key: string) => void;
     onManageHousehold: () => void;
 }
@@ -33,6 +36,8 @@ export const ShoppingAislesView = ({
     householdItems,
     onToggle,
     onOpenStock,
+    onQuickStock,
+    onStockAll,
     onOpenDetail,
     onManageHousehold,
 }: ShoppingAislesViewProps) => {
@@ -73,6 +78,8 @@ export const ShoppingAislesView = ({
                                 sourceChecked={sourceChecked}
                                 onToggle={onToggle}
                                 onOpenStock={onOpenStock}
+                                onQuickStock={onQuickStock}
+                                onStockAll={onStockAll}
                                 onOpenDetail={onOpenDetail}
                             />
                         </div>

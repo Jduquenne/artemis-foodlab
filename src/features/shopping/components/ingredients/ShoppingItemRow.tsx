@@ -1,6 +1,7 @@
 import { ChevronRight, Loader2 } from 'lucide-react';
 import { ConsolidatedIngredient, ShoppingMode } from '../../../../core/domain/shopping';
 import { homeStockState, shoppingRowQuantity } from '../../../../core/logic/shopping/shoppingRowLabel';
+import { usesHomeStock } from '../../../../core/logic/shopping/shoppingQuickStockLogic';
 import { useAnyPendingKey } from '../../../../shared/hooks/useAnyPendingKey';
 import { CheckToggleIcon } from '../../../../shared/components/ui/CheckToggleIcon';
 import { HomeStockMarker } from './HomeStockMarker';
@@ -13,6 +14,7 @@ export interface ShoppingItemRowProps {
     sourceChecked: Set<string>;
     onToggle: (key: string) => void;
     onOpenStock: (key: string) => void;
+    onQuickStock: (key: string) => void;
     onOpenDetail: (key: string) => void;
 }
 
@@ -24,10 +26,11 @@ export const ShoppingItemRow = ({
     sourceChecked,
     onToggle,
     onOpenStock,
+    onQuickStock,
     onOpenDetail,
 }: ShoppingItemRowProps) => {
     const pending = useAnyPendingKey([`shopping-check:${item.key}`, `shopping-stock:${item.key}`]);
-    const usesStock = mode === 'home' && item.totalQuantity > 0 && item.origin !== 'extra';
+    const usesStock = mode === 'home' && usesHomeStock(item);
     const quantity = shoppingRowQuantity(item, mode, stock, sourceChecked);
 
     const handlePrimary = () => {
@@ -44,13 +47,23 @@ export const ShoppingItemRow = ({
 
     return (
         <div className={`flex items-stretch border-t border-slate-200 first:border-t-0 ${isChecked ? 'opacity-50' : ''}`}>
+            {usesStock && (
+                <button
+                    type="button"
+                    onClick={() => { if (!pending) onQuickStock(item.key); }}
+                    aria-label={homeStockState(item, stock, sourceChecked) === 'full' ? `À acheter — ${item.name}` : `En stock — ${item.name}`}
+                    className="shrink-0 grid place-items-center pl-3 pr-1 hover:bg-subtle-tint transition-colors"
+                >
+                    {marker}
+                </button>
+            )}
             <button
                 type="button"
                 onClick={handlePrimary}
                 aria-pressed={usesStock ? undefined : isChecked}
-                className="flex-1 min-w-0 flex items-center gap-3 pl-3 pr-1.5 py-2 min-h-13 text-left hover:bg-subtle-tint transition-colors lg:min-h-10 lg:py-1.5"
+                className={`flex-1 min-w-0 flex items-center gap-3 ${usesStock ? 'pl-2' : 'pl-3'} pr-1.5 py-2 min-h-13 text-left hover:bg-subtle-tint transition-colors lg:min-h-10 lg:py-1.5`}
             >
-                {marker}
+                {!usesStock && marker}
                 <span className={`flex-1 min-w-0 text-[15px] font-semibold text-slate-900 truncate lg:text-sm ${isChecked ? 'line-through' : ''}`}>
                     {item.name}
                 </span>

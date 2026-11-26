@@ -19,6 +19,7 @@ Entries before 2026-10-07 were migrated from the former agent memory and `CLAUDE
 ## 2026-11-26 — UX lot 2 (shopping, #70)
 - Lot 2: #83, #84, #85, #86. Front only.
 - #83 (v6.170.16): checked-last order and the « N restants » header already existed; added: a fully checked aisle folds to its green header in store mode (tap to unfold). Test: En magasin, check every line of an aisle → it folds « ✓ Rayon · N/N »; tap → unfolds; uncheck one → normal card; À la maison: never folds.
+- #84 (v6.170.17): at home, the marker of a line toggles en stock / à acheter in one tap (`quickStockValue`), the name still opens the stock sheet; « Tout en stock » in an aisle header (≥ 2 uncovered lines, `aisleInStockUpdates`, `setStocks` sequential). Test: À la maison, tap a line marker → full green, tap again → empty; tap the name → sheet; « Tout en stock » on an aisle → all lines covered, button gone; a partial line becomes full; extras and household items unchanged; En magasin: covered lines hidden as before.
 
 ## 2026-11-26 — UX lot 1 (quick wins, #70)
 - Owner: 37 sub-issues created (#71 to #107, test batch, backup `dev/issues.backup-2026-11-26.json`); option B (D-051): the agent commits each issue of a UX lot, never pushes. Grouped API prompt written for lot 5 and #92.

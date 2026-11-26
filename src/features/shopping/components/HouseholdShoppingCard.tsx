@@ -47,6 +47,7 @@ export const HouseholdShoppingCard = ({ items, extras, mode, checked, sourceChec
           sourceChecked={sourceChecked}
           onToggle={onToggle}
           onOpenStock={onToggle}
+          onQuickStock={onToggle}
           onOpenDetail={onOpenDetail}
         />
       ))}

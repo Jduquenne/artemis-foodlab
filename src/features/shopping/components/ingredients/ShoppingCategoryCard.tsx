@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { Check, ChevronDown } from 'lucide-react';
+import { Check, ChevronDown, Loader2 } from 'lucide-react';
+import { StockUpdate, aisleInStockUpdates } from '../../../../core/logic/shopping/shoppingQuickStockLogic';
+import { useAnyPendingKey } from '../../../../shared/hooks/useAnyPendingKey';
 import { ConsolidatedIngredient, ShoppingMode } from '../../../../core/domain/shopping';
 import { isCoveredAtHome } from '../../../../core/logic/shopping/shoppingChecks';
 import { sortCheckedLast } from '../../../../core/logic/shopping/shoppingGrouping';
@@ -15,6 +17,8 @@ export interface ShoppingCategoryCardProps {
     sourceChecked: Set<string>;
     onToggle: (key: string) => void;
     onOpenStock: (key: string) => void;
+    onQuickStock: (key: string) => void;
+    onStockAll: (updates: StockUpdate[]) => void;
     onOpenDetail: (key: string) => void;
 }
 
@@ -28,6 +32,8 @@ export const ShoppingCategoryCard = ({
     sourceChecked,
     onToggle,
     onOpenStock,
+    onQuickStock,
+    onStockAll,
     onOpenDetail,
 }: ShoppingCategoryCardProps) => {
     const shown = mode === 'store' ? sortCheckedLast(items, checked) : items;
@@ -44,6 +50,8 @@ export const ShoppingCategoryCard = ({
         setUnfolded(false);
     }
     const folded = done && !unfolded;
+    const stockUpdates = mode === 'home' ? aisleInStockUpdates(items, stocks, sourceChecked) : [];
+    const stocking = useAnyPendingKey(stockUpdates.map((u) => `shopping-stock:${u.key}`));
 
     return (
         <div className="bg-surface border border-slate-200 rounded-xl shadow-sm overflow-hidden">
@@ -66,7 +74,20 @@ export const ShoppingCategoryCard = ({
             ) : (
                 <div className="flex items-baseline justify-between gap-2 px-3 pt-2.5 pb-1">
                     <h2 className="text-orange-600 font-black uppercase tracking-widest text-xs">{label}</h2>
-                    {counter && <span className="text-xs text-slate-400 font-medium tabular-nums">{counter}</span>}
+                    <span className="flex items-baseline gap-2">
+                        {counter && <span className="text-xs text-slate-400 font-medium tabular-nums">{counter}</span>}
+                        {stockUpdates.length > 1 && (
+                            <button
+                                type="button"
+                                onClick={() => onStockAll(stockUpdates)}
+                                disabled={stocking}
+                                className="flex items-center gap-1 text-xs font-bold text-green-600 hover:text-green-700 disabled:opacity-50"
+                            >
+                                {stocking && <Loader2 className="w-3 h-3 animate-spin" />}
+                                Tout en stock
+                            </button>
+                        )}
+                    </span>
                 </div>
             )}
             {!folded && shown.map((item) => (
@@ -79,6 +100,7 @@ export const ShoppingCategoryCard = ({
                     sourceChecked={sourceChecked}
                     onToggle={onToggle}
                     onOpenStock={onOpenStock}
+                    onQuickStock={onQuickStock}
                     onOpenDetail={onOpenDetail}
                 />
             ))}

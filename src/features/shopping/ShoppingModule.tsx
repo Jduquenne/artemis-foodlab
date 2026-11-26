@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { ConsolidatedIngredient, RecipeCard, ShoppingLayout } from '../../core/domain/shopping';
 import { ApiShoppingExtra, extrasToIngredients } from '../../core/logic/shopping/shoppingApiMapper';
 import { computeUncheckedCount, effectiveQuantity, remainingToBuy } from '../../core/logic/shopping/shoppingChecks';
+import { quickStockValue } from '../../core/logic/shopping/shoppingQuickStockLogic';
 import { FoodPrice } from '../../core/domain/price';
 import { updateMe } from '../../core/services/authService';
 import { buildShoppingClipboardText } from '../../core/logic/shopping/shoppingClipboard';
@@ -165,6 +166,7 @@ export const ShoppingModule = () => {
         toggleAtPlace,
         setAtPlaceForKeys,
         setStock,
+        setStocks,
         toggleSourceCheck,
         toggleSourceBatch,
         toggleFreezerBag,
@@ -267,6 +269,11 @@ export const ShoppingModule = () => {
             variant: written ? 'info' : 'error',
             duration: 2500,
         });
+    };
+
+    const handleQuickStock = (key: string) => {
+        const item = displayIngredients?.find((i) => i.key === key);
+        if (item) setStock(key, quickStockValue(item, stocks[key] ?? 0, sourceChecked)).catch(() => undefined);
     };
 
     const quantityToPrice = (item: ConsolidatedIngredient) =>
@@ -414,6 +421,8 @@ export const ShoppingModule = () => {
                             householdItems={shownHouseholdItems}
                             onToggle={handleToggleItem}
                             onOpenStock={setStockKey}
+                            onQuickStock={handleQuickStock}
+                            onStockAll={(updates) => { setStocks(updates).catch(() => undefined); }}
                             onOpenDetail={setDetailKey}
                             onManageHousehold={() => setShowHousehold(true)}
                         />

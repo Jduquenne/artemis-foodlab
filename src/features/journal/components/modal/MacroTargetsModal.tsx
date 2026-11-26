@@ -76,6 +76,9 @@ export const MacroTargetsModal = ({ onClose }: MacroTargetsModalProps) => {
               <span className="text-xs text-slate-400 w-6">kcal</span>
             </div>
           </div>
+          <p className="-mt-2 text-[11px] leading-snug text-slate-400">
+            Calculées à partir des macros : 4 kcal par g de protéines et de glucides, 9 par g de lipides, 2 par g de fibres. Modifie les macros pour changer les calories.
+          </p>
           {NUTRIENT_DEFINITIONS.map(({ key, label, unit }) => (
             <div key={key} className="flex items-center justify-between gap-3">
               <label htmlFor={`macro-input-${key}`} className="text-sm font-semibold text-slate-600 shrink-0">{label}</label>

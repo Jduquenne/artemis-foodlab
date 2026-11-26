@@ -14,7 +14,7 @@ Daily macro tracking per profile, based on the meals planned in the Menu. Profil
 ## Week average and targets
 
 - `WeekAverageModal` (button « Moyenne », left of « Objectifs »): per-day average of macros over the chosen days (default Monday → Friday) of the displayed week. Pure computation `core/logic/journal/weekAverageLogic.ts`. Checked days **without any planned meal are excluded** from the denominator; the modal shows how many days were counted.
-- Targets: **calories are not editable**; they are computed with Atwater (`atwaterKcal`, `core/logic/nutrition/atwaterLogic.ts`: `4P + 9L + 4G + 2·fibres`) from the 4 macros and saved on validation. A kcal target saved before this change may be inconsistent until the next validation. Macro targets are integers. Targets are edited through the profile (`updateProfile`).
+- Targets: **calories are not editable**; they are computed with Atwater (`atwaterKcal`, `core/logic/nutrition/atwaterLogic.ts`: `4P + 9L + 4G + 2·fibres`) from the 4 macros and saved on validation. A kcal target saved before this change may be inconsistent until the next validation. A line under « Calories » explains it (issue #96): « Calculées à partir des macros : 4 kcal par g de protéines et de glucides, 9 par g de lipides, 2 par g de fibres. Modifie les macros pour changer les calories. » Macro targets are integers. Targets are edited through the profile (`updateProfile`).
 
 ## Per-ingredient, per-day quantities
 
